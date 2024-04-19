@@ -20,7 +20,7 @@ import {
 import {
   TechnologyContract,
   TechnologyContractLinks,
-} from '../../pages/project/components/sections/ContractsSection/ContractEntry'
+} from '../../pages/project/components/sections/common/ContractEntry'
 import { ContractsSectionProps } from '../../pages/project/components/sections/ContractsSection/ContractsSection'
 import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'

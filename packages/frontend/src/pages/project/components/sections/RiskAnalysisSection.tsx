@@ -4,14 +4,14 @@ import { UnderReviewBadge } from '../../../../components/badge/UnderReviewBadge'
 import { RoundedWarningIcon, ShieldIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { Markdown } from '../../../../components/Markdown'
-import { WarningBar } from '../../../../components/project/WarningBar'
 import { BigRosette } from '../../../../components/rosette'
 import { SentimentText } from '../../../../components/table/SentimentText'
+import { WarningBar } from '../../../../components/WarningBar'
 import { RiskValue, RiskValues } from '../../../../utils/risks/types'
 import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
 
-export interface RiskAnalysisProps {
+export interface RiskAnalysisSectionProps {
   id: ProjectSectionId
   title: string
   sectionOrder: number
@@ -22,7 +22,7 @@ export interface RiskAnalysisProps {
   isUnderReview?: boolean
 }
 
-export function RiskAnalysis({
+export function RiskAnalysisSection({
   id,
   title,
   sectionOrder,
@@ -31,7 +31,7 @@ export function RiskAnalysis({
   warning,
   redWarning,
   isUnderReview,
-}: RiskAnalysisProps) {
+}: RiskAnalysisSectionProps) {
   isUnderReview =
     isUnderReview ??
     Object.values(riskValues).every(

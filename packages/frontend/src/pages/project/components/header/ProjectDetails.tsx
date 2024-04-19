@@ -1,21 +1,21 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { ChartSection } from './sections/ChartSection'
-import { ContractsSection } from './sections/ContractsSection/ContractsSection'
-import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
-import { KnowledgeNuggetsSection } from './sections/KnowledgeNuggetsSection'
-import { MilestonesSection } from './sections/MilestonesSection'
-import { PermissionsSection } from './sections/PermissionsSection'
-import { RiskAnalysis } from './sections/RiskAnalysis'
-import { RiskSection } from './sections/RiskSection'
-import { StageSection } from './sections/StageSection'
-import { StateDerivationSection } from './sections/StateDerivationSection'
-import { StateValidationSection } from './sections/StateValidationSection'
-import { TechnologySection } from './sections/TechnologySection'
-import { ProjectDetailsSection } from './sections/types'
-import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
-import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
+import { ChartSection } from '../sections/ChartSection'
+import { ContractsSection } from '../sections/ContractsSection/ContractsSection'
+import { DetailedDescriptionSection } from '../sections/DetailedDescriptionSection'
+import { KnowledgeNuggetsSection } from '../sections/KnowledgeNuggetsSection/KnowledgeNuggetsSection'
+import { MilestonesSection } from '../sections/MilestonesSection/MilestonesSection'
+import { PermissionsSection } from '../sections/PermissionsSection'
+import { RiskAnalysisSection } from '../sections/RiskAnalysisSection'
+import { RiskSection } from '../sections/RiskSection'
+import { StageSection } from '../sections/StageSection'
+import { StateDerivationSection } from '../sections/StateDerivationSection'
+import { StateValidationSection } from '../sections/StateValidationSection'
+import { TechnologySection } from '../sections/TechnologySection'
+import { ProjectDetailsSection } from '../sections/types'
+import { UpcomingDisclaimer } from '../sections/UpcomingDisclaimer'
+import { UpgradesAndGovernanceSection } from '../sections/UpgradesAndGovernanceSection'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -63,7 +63,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             )
           case 'RiskAnalysisSection':
             return (
-              <RiskAnalysis
+              <RiskAnalysisSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}

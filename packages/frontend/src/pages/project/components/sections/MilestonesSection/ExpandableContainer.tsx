@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 
-import { cn } from '../utils/cn'
-import { Button } from './Button'
-import { ChevronDownIcon } from './icons'
+import { Button } from '../../../../../components/Button'
+import { ChevronDownIcon } from '../../../../../components/icons'
+import { cn } from '../../../../../utils/cn'
 
 interface ExpandableContainerProps {
   children: ReactNode

@@ -5,12 +5,12 @@ import {
 import partition from 'lodash/partition'
 import React from 'react'
 
+import { ContractEntry, TechnologyContract } from '../common/ContractEntry'
 import { ReferenceList, TechnologyReference } from '../common/ReferenceList'
 import { RiskList, TechnologyRisk } from '../common/RiskList'
 import { Section } from '../common/Section'
 import { ProjectSectionId } from '../common/sectionId'
 import { TechnologyIncompleteShort } from '../common/TechnologyIncomplete'
-import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ContractsUpdated } from './ContractsUpdated'
 
 export interface ContractsSectionProps {

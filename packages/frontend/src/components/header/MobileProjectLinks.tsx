@@ -1,9 +1,9 @@
 import React from 'react'
 
+import { LinkSectionLink } from '../../pages/project/components/LinkSectionLink'
 import { ProjectLink } from '../../pages/project/types'
 import { cn } from '../../utils/cn'
 import { ChevronDownIcon } from '../icons'
-import { LinkSectionLink } from '../project/links/LinkSectionLink'
 
 interface MobileProjectLinksProps {
   projectLinks: ProjectLink[]

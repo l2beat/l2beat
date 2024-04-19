@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { ProjectDetailsSection } from '../../../pages/project/components/sections/types'
+import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
+import { SummaryIcon } from '../../../components/icons/pages/SummaryIcon'
 import { cn } from '../../../utils/cn'
-import { HorizontalSeparator } from '../../HorizontalSeparator'
-import { SummaryIcon } from '../../icons/pages/SummaryIcon'
-import { UnderReviewCallout } from '../UnderReviewCallout'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
+import { ProjectDetailsSection } from './sections/types'
+import { UnderReviewCallout } from './UnderReviewCallout'
 
 interface Project {
   title: string

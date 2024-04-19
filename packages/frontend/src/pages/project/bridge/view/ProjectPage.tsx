@@ -8,12 +8,12 @@ import {
 } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
-import { DesktopProjectNavigation } from '../../../../components/project/navigation/DesktopProjectNavigation'
-import { MobileProjectNavigation } from '../../../../components/project/navigation/MobileProjectNavigation'
+import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import {
   ProjectDetails,
   ProjectDetailsProps,
-} from '../../components/ProjectDetails'
+} from '../../components/header/ProjectDetails'
+import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {

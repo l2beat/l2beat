@@ -9,7 +9,7 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
-import { TechnologyContract } from '../../pages/project/components/sections/ContractsSection/ContractEntry'
+import { TechnologyContract } from '../../pages/project/components/sections/common/ContractEntry'
 import { ProjectDetailsPermissionsSection } from '../../pages/project/components/sections/types'
 import { getExplorerUrl } from '../getExplorerUrl'
 

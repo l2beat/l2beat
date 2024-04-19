@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { cn } from '../../utils/cn'
+import { cn } from '../utils/cn'
 
 export interface CalloutProps {
   color?: 'red' | 'yellow' | 'blue'

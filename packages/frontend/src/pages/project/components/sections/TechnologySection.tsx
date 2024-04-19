@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Markdown } from '../../../../components/Markdown'
-import { UnderReviewCallout } from '../../../../components/project/UnderReviewCallout'
+import { UnderReviewCallout } from '../UnderReviewCallout'
 import { ReferenceList, TechnologyReference } from './common/ReferenceList'
 import { RiskList, TechnologyRisk } from './common/RiskList'
 import { Section } from './common/Section'

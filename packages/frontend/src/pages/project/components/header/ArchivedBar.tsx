@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
+import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { cn } from '../../../../utils/cn'
 
 export function ArchivedBar({ className }: { className?: string }) {
   return (

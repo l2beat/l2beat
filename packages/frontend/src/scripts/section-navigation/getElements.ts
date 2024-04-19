@@ -1,4 +1,4 @@
-import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/ids'
+import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../pages/project/components/ids'
 import { makeQuery } from '../query'
 
 export function getDesktopElements() {

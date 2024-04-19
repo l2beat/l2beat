@@ -4,8 +4,8 @@ import { ScalingFinalityViewEntryData } from '../../pages/scaling/finality/types
 import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 
 interface Props {

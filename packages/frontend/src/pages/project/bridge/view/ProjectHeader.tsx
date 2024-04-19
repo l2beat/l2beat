@@ -2,10 +2,10 @@ import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 import React from 'react'
 
 import { NoDataBadge } from '../../../../components/badge/NoDataBadge'
-import { DetailsHeader } from '../../../../components/header/DetailsHeader'
 import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
 import { RiskCell } from '../../../../components/table/RiskCell'
+import { DetailsHeader } from '../../components/header/DetailsHeader'
 import { ProjectLink } from '../../types'
 
 export interface ProjectHeaderProps {

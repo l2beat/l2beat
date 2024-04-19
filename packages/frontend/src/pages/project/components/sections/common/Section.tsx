@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
-import { UnderReviewCallout } from '../../../../../components/project/UnderReviewCallout'
 import { cn } from '../../../../../utils/cn'
+import { UnderReviewCallout } from '../../UnderReviewCallout'
 import { ProjectSectionId } from './sectionId'
 
 interface Props {

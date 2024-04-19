@@ -1,10 +1,10 @@
 import { ChartSectionProps } from './ChartSection'
 import { ContractsSectionProps } from './ContractsSection/ContractsSection'
 import { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
-import { KnowledgeNuggetsProps } from './KnowledgeNuggetsSection'
-import { MilestonesSectionProps } from './MilestonesSection'
+import { KnowledgeNuggetsProps } from './KnowledgeNuggetsSection/KnowledgeNuggetsSection'
+import { MilestonesSectionProps } from './MilestonesSection/MilestonesSection'
 import { PermissionsSectionProps } from './PermissionsSection'
-import { RiskAnalysisProps } from './RiskAnalysis'
+import { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import { RiskSectionProps } from './RiskSection'
 import { StageSectionProps } from './StageSection'
 import { StateDerivationSectionProps } from './StateDerivationSection'
@@ -36,7 +36,7 @@ export interface ProjectDetailsKnowledgeNuggetsSection {
 
 export interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
-  props: ProjectDetailsProps<RiskAnalysisProps>
+  props: ProjectDetailsProps<RiskAnalysisSectionProps>
 }
 
 export interface ProjectDetailsRiskSection {

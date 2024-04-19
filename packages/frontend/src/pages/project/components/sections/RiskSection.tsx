@@ -3,7 +3,7 @@ import React from 'react'
 
 import { ShieldIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
-import { WarningBar } from '../../../../components/project/WarningBar'
+import { WarningBar } from '../../../../components/WarningBar'
 import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
 

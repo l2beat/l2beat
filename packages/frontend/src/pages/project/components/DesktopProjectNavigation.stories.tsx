@@ -3,9 +3,9 @@ import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../.storybook/modes'
-import { ProjectDetailsSection } from '../../../pages/project/components/sections/types'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
+import { ProjectDetailsSection } from './sections/types'
 
 const sections: ProjectDetailsSection[] = range(10).map(() => ({
   type: 'DetailedDescriptionSection',

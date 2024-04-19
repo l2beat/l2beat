@@ -5,12 +5,9 @@ import {
 } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { ContractEntry, TechnologyContract } from './common/ContractEntry'
 import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
-import {
-  ContractEntry,
-  TechnologyContract,
-} from './ContractsSection/ContractEntry'
 
 export interface PermissionsSectionProps {
   id: ProjectSectionId

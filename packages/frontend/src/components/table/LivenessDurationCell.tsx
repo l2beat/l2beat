@@ -5,13 +5,13 @@ import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import {
   Tooltip,
   TooltipContent,
   TooltipContentType,
   TooltipTrigger,
 } from '../tooltip/Tooltip'
+import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 
 export function LivenessDurationCell(props: {

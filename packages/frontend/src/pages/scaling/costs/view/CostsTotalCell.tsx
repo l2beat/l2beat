@@ -2,9 +2,9 @@ import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
 import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
+import { Callout } from '../../../../components/Callout'
 import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
 import { RoundedWarningIcon } from '../../../../components/icons'
-import { Callout } from '../../../../components/project/Callout'
 import {
   Tooltip,
   TooltipContent,

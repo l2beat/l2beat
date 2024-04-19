@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { ProjectDetailsSection } from '../../../pages/project/components/sections/types'
-import { OverflowWrapper } from '../../OverflowWrapper'
+import { OverflowWrapper } from '../../../components/OverflowWrapper'
+import { ProjectDetailsSection } from './sections/types'
 
 interface Props {
   sections: ProjectDetailsSection[]

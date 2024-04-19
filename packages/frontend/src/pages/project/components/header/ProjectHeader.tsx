@@ -6,26 +6,26 @@ import {
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
+import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
 import {
   TokenBreakdown,
   TokenBreakdownProps,
-} from '../../../components/breakdown/TokenBreakdown'
-import { DetailsHeader } from '../../../components/header/DetailsHeader'
-import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
-import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { TvlStats } from '../../../components/header/TvlSummary'
-import { InfoIcon } from '../../../components/icons'
-import { StageBadge } from '../../../components/stages/StageBadge'
-import { StageTooltip } from '../../../components/stages/StageTooltip'
-import { TypeCell } from '../../../components/table/TypeCell'
+} from '../../../../components/breakdown/TokenBreakdown'
+import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
+import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
+import { TvlStats } from '../../../../components/header/TvlSummary'
+import { InfoIcon } from '../../../../components/icons'
+import { StageBadge } from '../../../../components/stages/StageBadge'
+import { StageTooltip } from '../../../../components/stages/StageTooltip'
+import { TypeCell } from '../../../../components/table/TypeCell'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '../../../components/tooltip/Tooltip'
-import { RiskValues } from '../../../utils/risks/types'
-import { ProjectLink } from '../types'
+} from '../../../../components/tooltip/Tooltip'
+import { RiskValues } from '../../../../utils/risks/types'
+import { ProjectLink } from '../../types'
+import { DetailsHeader } from './DetailsHeader'
 
 export interface ProjectHeaderProps {
   title: string

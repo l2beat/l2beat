@@ -7,16 +7,16 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
-import { DesktopProjectNavigation } from '../../../../components/project/navigation/DesktopProjectNavigation'
-import { MobileProjectNavigation } from '../../../../components/project/navigation/MobileProjectNavigation'
+import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import {
   ProjectDetails,
   ProjectDetailsProps,
-} from '../../components/ProjectDetails'
+} from '../../components/header/ProjectDetails'
 import {
   ProjectHeader,
   ProjectHeaderProps,
-} from '../../components/ProjectHeader'
+} from '../../components/header/ProjectHeader'
+import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 
 export interface ProjectPageProps {
   navbar: NavbarProps

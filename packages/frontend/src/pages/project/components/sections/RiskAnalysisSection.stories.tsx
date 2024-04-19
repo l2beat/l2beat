@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { RiskAnalysis as RiskAnalysisComponent } from './RiskAnalysis'
+import { RiskAnalysisSection as RiskAnalysisSectionComponent } from './RiskAnalysisSection'
 
-const meta: Meta<typeof RiskAnalysisComponent> = {
-  component: RiskAnalysisComponent,
+const meta: Meta<typeof RiskAnalysisSectionComponent> = {
+  component: RiskAnalysisSectionComponent,
   args: {
     id: 'risk-analysis',
     title: 'Risk analysis',
@@ -11,7 +11,7 @@ const meta: Meta<typeof RiskAnalysisComponent> = {
   },
 }
 export default meta
-type Story = StoryObj<typeof RiskAnalysisComponent>
+type Story = StoryObj<typeof RiskAnalysisSectionComponent>
 
 export const Configured: Story = {
   args: {

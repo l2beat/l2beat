@@ -16,7 +16,7 @@ import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
-import { ProjectHeaderProps } from '../components/ProjectHeader'
+import { ProjectHeaderProps } from '../components/header/ProjectHeader'
 import { getLinks } from './getLinks'
 
 export function getProjectHeader(

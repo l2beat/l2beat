@@ -10,9 +10,9 @@ import {
 } from '../../../../components/icons'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
-import { WarningBar } from '../../../../components/project/WarningBar'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageDisclaimer } from '../../../../components/stages/StageDisclaimer'
+import { WarningBar } from '../../../../components/WarningBar'
 import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
 

@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 
-import { formatNumber } from '../../utils'
-import { TypeCell } from '../table/TypeCell'
+import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
+import { TypeCell } from '../../../../components/table/TypeCell'
+import { formatNumber } from '../../../../utils'
 import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
-import { StatWithChange } from './stats/StatWithChange'
 
 const meta: Meta<typeof DetailsHeaderComponent> = {
   component: DetailsHeaderComponent,

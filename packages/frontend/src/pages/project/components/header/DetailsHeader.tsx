@@ -1,20 +1,23 @@
 import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectLink } from '../../pages/project/types'
-import { cn } from '../../utils/cn'
-import { RiskValues } from '../../utils/risks/types'
-import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ArchivedBar } from '../project/ArchivedBar'
-import { ImplementationUnderReviewBar } from '../project/ImplementationUnderReviewBar'
-import { UnderReviewBar } from '../project/UnderReviewBar'
-import { UpcomingBar } from '../project/UpcomingBar'
-import { WarningBar } from '../project/WarningBar'
-import { BigRosette } from '../rosette'
-import { DesktopProjectLinks } from './DesktopProjectLinks'
-import { MobileProjectLinks } from './MobileProjectLinks'
-import { ProjectSummary, ProjectSummaryStat } from './ProjectSummary'
-import { TvlStats, TvlSummary } from './TvlSummary'
+import { DesktopProjectLinks } from '../../../../components/header/DesktopProjectLinks'
+import { MobileProjectLinks } from '../../../../components/header/MobileProjectLinks'
+import {
+  ProjectSummary,
+  ProjectSummaryStat,
+} from '../../../../components/header/ProjectSummary'
+import { TvlStats, TvlSummary } from '../../../../components/header/TvlSummary'
+import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
+import { BigRosette } from '../../../../components/rosette'
+import { WarningBar } from '../../../../components/WarningBar'
+import { cn } from '../../../../utils/cn'
+import { RiskValues } from '../../../../utils/risks/types'
+import { ProjectLink } from '../../types'
+import { ArchivedBar } from './ArchivedBar'
+import { ImplementationUnderReviewBar } from './ImplementationUnderReviewBar'
+import { UnderReviewBar } from './UnderReviewBar'
+import { UpcomingBar } from './UpcomingBar'
 
 export interface HeaderProps {
   title: string

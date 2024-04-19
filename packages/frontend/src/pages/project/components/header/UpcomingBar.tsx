@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { UpcomingIcon } from '../icons/symbols/UpcomingIcon'
+import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
+import { cn } from '../../../../utils/cn'
 
 export function UpcomingBar({ className }: { className?: string }) {
   return (

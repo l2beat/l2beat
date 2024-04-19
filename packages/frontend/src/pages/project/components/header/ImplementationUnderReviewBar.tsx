@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { UnderReviewIcon } from '../icons'
+import { UnderReviewIcon } from '../../../../components/icons'
+import { cn } from '../../../../utils/cn'
 
 export function ImplementationUnderReviewBar({
   className,

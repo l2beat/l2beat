@@ -4,18 +4,15 @@ import {
 } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { Callout, CalloutProps } from '../../../../../components/Callout'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
-import {
-  Callout,
-  CalloutProps,
-} from '../../../../../components/project/Callout'
 import { cn } from '../../../../../utils/cn'
-import { ReferenceList, TechnologyReference } from '../common/ReferenceList'
-import { EtherscanLink } from './EtherscanLink'
-import { UnverifiedContractsWarning } from './UnverifiedContractsWarning'
+import { EtherscanLink } from '../ContractsSection/EtherscanLink'
+import { UnverifiedContractsWarning } from '../ContractsSection/UnverifiedContractsWarning'
+import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
