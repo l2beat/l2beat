@@ -7,9 +7,9 @@ import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDat
 import { getCharts } from '../../../../utils/project/getCharts'
 import { PagesData, Wrapped } from '../../../Page'
 import { getPageMetadata } from '../../common/getPageMetadata'
+import { getProjectHeader } from '../../common/getProjectHeader'
 import { ProjectPageProps } from '../view/ProjectPage'
 import { getProjectDetails } from './getProjectDetails'
-import { getProjectHeader } from './getProjectHeader'
 
 export function getProps(
   project: Layer3,
@@ -32,6 +32,7 @@ export function getProps(
         project,
         config,
         tvlApiResponse,
+        implementationChange,
         activityApiResponse,
       ),
       projectDetails: getProjectDetails(

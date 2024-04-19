@@ -13,7 +13,10 @@ import {
   ProjectDetails,
   ProjectDetailsProps,
 } from '../../components/ProjectDetails'
-import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
+import {
+  ProjectHeader,
+  ProjectHeaderProps,
+} from '../../components/ProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
