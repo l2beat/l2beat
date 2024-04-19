@@ -134,7 +134,7 @@ export const bobanetwork: Layer2 = opStackL2({
       url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-9-20T00:00:00Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
     coingeckoPlatform: 'boba-network',
   },
   usesBlobs: true,
