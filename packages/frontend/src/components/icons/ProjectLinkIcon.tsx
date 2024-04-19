@@ -8,27 +8,12 @@ import { GlobeIcon } from './symbols/GlobeIcon'
 import { SearchIcon } from './symbols/SearchIcon'
 import { UserIcon } from './symbols/UserIcon'
 
-interface LinkNameIconProps {
-  name: ProjectLink['name']
-}
-
-export interface ProjectLink {
-  name:
-    | 'Changelog'
-    | 'Website'
-    | 'App'
-    | 'Docs'
-    | 'Explorer'
-    | 'Repository'
-    | 'Social'
-    | 'rollup.codes'
-  links: string[]
+export interface LinkNameIconProps {
+  name: string
 }
 
 export function ProjectLinkIcon({ name }: LinkNameIconProps) {
   switch (name) {
-    case 'Changelog':
-      return <></>
     case 'Website':
       return <GlobeIcon />
     case 'App':
@@ -44,6 +29,6 @@ export function ProjectLinkIcon({ name }: LinkNameIconProps) {
     case 'rollup.codes':
       return <RollupCodesIcon />
     default:
-      throw Error('Invalid link name')
+      return null
   }
 }

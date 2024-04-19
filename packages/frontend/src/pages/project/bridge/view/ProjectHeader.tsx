@@ -5,8 +5,8 @@ import { NoDataBadge } from '../../../../components/badge/NoDataBadge'
 import { DetailsHeader } from '../../../../components/header/DetailsHeader'
 import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
-import { ProjectLink } from '../../../../components/icons'
 import { RiskCell } from '../../../../components/table/RiskCell'
+import { ProjectLink } from '../../types'
 
 export interface ProjectHeaderProps {
   title: string

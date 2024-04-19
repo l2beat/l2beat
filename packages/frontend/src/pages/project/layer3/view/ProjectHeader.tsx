@@ -11,9 +11,9 @@ import { DetailsHeader } from '../../../../components/header/DetailsHeader'
 import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
 import { TvlStats } from '../../../../components/header/TvlSummary'
-import { ProjectLink } from '../../../../components/icons'
 import { TypeCell } from '../../../../components/table/TypeCell'
 import { RiskValues } from '../../../../utils/risks/types'
+import { ProjectLink } from '../../types'
 
 export interface ProjectHeaderProps {
   title: string

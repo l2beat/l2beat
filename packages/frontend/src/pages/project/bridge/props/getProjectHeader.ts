@@ -1,14 +1,14 @@
-import { Bridge, ScalingProjectLinks } from '@l2beat/config'
+import { Bridge } from '@l2beat/config'
 import {
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { ProjectLink } from '../../../../components/icons'
 import { getDestination } from '../../../../utils/getDestination'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
+import { getLinks } from '../../common/getLinks'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
@@ -39,52 +39,4 @@ export function getProjectHeader(
     links: getLinks(project.display.links),
     warning: project.display.warning,
   }
-}
-
-function getLinks(links: Partial<ScalingProjectLinks>) {
-  const projectLinks: ProjectLink[] = []
-
-  if (links.websites) {
-    projectLinks.push({
-      name: 'Website',
-      links: links.websites,
-    })
-  }
-
-  if (links.apps) {
-    projectLinks.push({
-      name: 'App',
-      links: links.apps,
-    })
-  }
-
-  if (links.documentation) {
-    projectLinks.push({
-      name: 'Docs',
-      links: links.documentation,
-    })
-  }
-
-  if (links.explorers) {
-    projectLinks.push({
-      name: 'Explorer',
-      links: links.explorers,
-    })
-  }
-
-  if (links.repositories) {
-    projectLinks.push({
-      name: 'Repository',
-      links: links.repositories,
-    })
-  }
-
-  if (links.socialMedia) {
-    projectLinks.push({
-      name: 'Social',
-      links: links.socialMedia,
-    })
-  }
-
-  return projectLinks.filter((link) => link.links.length > 0)
 }

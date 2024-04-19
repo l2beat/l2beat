@@ -1,10 +1,10 @@
 import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
+import { ProjectLink } from '../../pages/project/types'
 import { cn } from '../../utils/cn'
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
-import { ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { ImplementationUnderReviewBar } from '../project/ImplementationUnderReviewBar'
 import { UnderReviewBar } from '../project/UnderReviewBar'

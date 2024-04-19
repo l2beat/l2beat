@@ -1,15 +1,12 @@
-import { Layer2, ScalingProjectLinks } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiResponse,
-  DiffHistoryApiResponse,
   ImplementationChangeReportApiResponse,
-  ProjectId,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
-import { ProjectLink } from '../../../../components/icons'
 import { formatNumber } from '../../../../utils'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
@@ -19,6 +16,7 @@ import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../../utils/tvl/getTvlStats'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
+import { getLinks } from '../../common/getLinks'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
@@ -27,7 +25,6 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
-  diffHistory?: DiffHistoryApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   const implementationChangeForProject =
@@ -93,7 +90,7 @@ export function getProjectHeader(
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
     showTvlBreakdown: config.features.tvlBreakdown,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    links: getLinks(project, project.display.links, diffHistory),
+    links: getLinks(project.display.links),
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
@@ -104,60 +101,4 @@ export function getProjectHeader(
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
   }
-}
-
-function getLinks(
-  project: Layer2,
-  links: ScalingProjectLinks,
-  diffHistory?: DiffHistoryApiResponse,
-): ProjectLink[] {
-  const items = [
-    {
-      name: 'Changelog',
-      links: isProjectInDiffHistory(project, diffHistory)
-        ? [`/scaling/projects/${project.display.slug}/changelog`]
-        : [],
-    },
-    {
-      name: 'Website',
-      links: links.websites,
-    },
-    {
-      name: 'App',
-      links: links.apps,
-    },
-    {
-      name: 'Docs',
-      links: links.documentation,
-    },
-    {
-      name: 'Explorer',
-      links: links.explorers,
-    },
-    {
-      name: 'Repository',
-      links: links.repositories,
-    },
-    {
-      name: 'Social',
-      links: links.socialMedia,
-    },
-    {
-      name: 'rollup.codes',
-      links: links.rollupCodes ? [links.rollupCodes] : [],
-    },
-  ] as const
-
-  return items.filter((link) => link.links.length > 0)
-}
-
-function isProjectInDiffHistory(
-  project: Layer2,
-  diffHistory?: DiffHistoryApiResponse,
-): boolean {
-  if (!diffHistory) return false
-  return (
-    diffHistory.find((diff) => ProjectId(diff.project) === project.id) !==
-    undefined
-  )
 }

@@ -22,7 +22,6 @@ export function getProps(
     l2CostsApiResponse,
     verificationStatus,
     manuallyVerifiedContracts,
-    diffHistory,
     implementationChange,
   } = pagesData
 
@@ -42,7 +41,6 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
-        diffHistory,
       ),
       projectDetails: getProjectDetails(
         project,

@@ -15,7 +15,7 @@ import { DetailsHeader } from '../../../../components/header/DetailsHeader'
 import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
 import { TvlStats } from '../../../../components/header/TvlSummary'
-import { InfoIcon, ProjectLink } from '../../../../components/icons'
+import { InfoIcon } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
 import { RiskValues } from '../../../../utils/risks/types'
+import { ProjectLink } from '../../types'
 
 export interface ProjectHeaderProps {
   title: string

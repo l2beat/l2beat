@@ -1,14 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { ProjectLink } from '../../pages/project/types'
 import { formatLink } from '../../utils/formatLink'
 import { HoverableDropdown } from '../HoverableDropdown'
-import {
-  OutLinkIcon,
-  ProductIcon,
-  ProjectLink,
-  ProjectLinkIcon,
-} from '../icons'
+import { OutLinkIcon, ProductIcon, ProjectLinkIcon } from '../icons'
 import { Link } from '../Link'
 import { PlainLink } from '../PlainLink'
 import { parseSocial } from '../project/links/LinkSectionLink'

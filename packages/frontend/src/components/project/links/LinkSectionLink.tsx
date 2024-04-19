@@ -1,16 +1,11 @@
 import React from 'react'
 
 import { formatLink } from '../../../utils/formatLink'
-import {
-  GlobeIcon,
-  ProductIcon,
-  ProductIconType,
-  ProjectLink,
-} from '../../icons'
+import { GlobeIcon, ProductIcon, ProductIconType } from '../../icons'
 import { Link } from '../../Link'
 
 interface Props {
-  name: ProjectLink['name']
+  name: string
   href: string
 }
 

@@ -100,3 +100,8 @@ export type ProjectDetailsSection = { excludeFromNavigation?: boolean } & (
   | ProjectDetailsContractsSection
   | ProjectDetailsUpcomingDisclaimer
 )
+
+export interface ProjectLink {
+  name: string
+  links: string[]
+}

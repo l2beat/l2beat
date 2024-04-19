@@ -1,4 +1,4 @@
-import { layer2s, Layer3, ScalingProjectLinks } from '@l2beat/config'
+import { layer2s, Layer3 } from '@l2beat/config'
 import {
   ActivityApiResponse,
   TvlApiCharts,
@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
-import { ProjectLink } from '../../../../components/icons'
 import { formatNumber } from '../../../../utils'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
@@ -16,6 +15,7 @@ import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../../utils/tvl/getTvlStats'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
+import { getLinks } from '../../common/getLinks'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(
@@ -94,39 +94,4 @@ export function getProjectHeader(
         ? 'Multiple'
         : layer2s.find((l) => l.id === project.hostChain)?.display.name,
   }
-}
-
-function getLinks(links: ScalingProjectLinks): ProjectLink[] {
-  const items = [
-    {
-      name: 'Website',
-      links: links.websites,
-    },
-    {
-      name: 'App',
-      links: links.apps,
-    },
-    {
-      name: 'Docs',
-      links: links.documentation,
-    },
-    {
-      name: 'Explorer',
-      links: links.explorers,
-    },
-    {
-      name: 'Repository',
-      links: links.repositories,
-    },
-    {
-      name: 'Social',
-      links: links.socialMedia,
-    },
-    {
-      name: 'rollup.codes',
-      links: links.rollupCodes ? [links.rollupCodes] : [],
-    },
-  ] as const
-
-  return items.filter((link) => link.links.length > 0)
 }

@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { ProjectLink } from '../../icons'
 import { LinkSectionLink } from './LinkSectionLink'
 
 interface Props {
-  name: ProjectLink['name']
+  name: string
   links: string[]
 }
 

@@ -1,7 +1,8 @@
 import React from 'react'
 
+import { ProjectLink } from '../../pages/project/types'
 import { cn } from '../../utils/cn'
-import { ChevronDownIcon, ProjectLink } from '../icons'
+import { ChevronDownIcon } from '../icons'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 
 interface MobileProjectLinksProps {
