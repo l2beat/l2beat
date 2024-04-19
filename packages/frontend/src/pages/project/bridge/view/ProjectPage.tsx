@@ -13,7 +13,7 @@ import { MobileProjectNavigation } from '../../../../components/project/navigati
 import {
   ProjectDetails,
   ProjectDetailsProps,
-} from '../../../project/components/ProjectDetails'
+} from '../../components/ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {

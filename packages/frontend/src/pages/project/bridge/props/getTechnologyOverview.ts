@@ -2,7 +2,7 @@ import { Bridge } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { makeTechnologyChoice } from '../../../../utils/project/makeTechnologyChoice'
-import { TechnologySectionProps } from '../../../project/components/TechnologySection'
+import { TechnologySectionProps } from '../../components/TechnologySection'
 
 export function getTechnologyOverview(
   project: Bridge,

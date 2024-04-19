@@ -5,17 +5,17 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { Config } from '../../../build/config'
-import { ProjectLink } from '../../../components/icons'
-import { formatNumber } from '../../../utils'
-import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
-import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
-import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
-import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
-import { getRiskValues } from '../../../utils/risks/values'
-import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
-import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
-import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
+import { Config } from '../../../../build/config'
+import { ProjectLink } from '../../../../components/icons'
+import { formatNumber } from '../../../../utils'
+import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
+import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
+import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
+import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { getRiskValues } from '../../../../utils/risks/values'
+import { getTvlBreakdown } from '../../../../utils/tvl/getTVLBreakdown'
+import { unifyTokensResponse } from '../../../../utils/tvl/getTvlStats'
+import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { ProjectHeaderProps } from '../view/ProjectHeader'
 
 export function getProjectHeader(

@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty'
 import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import { ProjectDetailsSection } from '../../../project/types'
+import { ProjectDetailsSection } from '../../types'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 

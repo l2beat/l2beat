@@ -1,6 +1,6 @@
 import { Layer3 } from '@l2beat/config'
 
-import { PageMetadata } from '../../Page'
+import { PageMetadata } from '../../../Page'
 
 export function getPageMetadata(project: Layer3): PageMetadata {
   return {

@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ProjectDetailsCharts } from '../../../utils/project/getCharts'
-import { getContractSection } from '../../../utils/project/getContractSection'
-import { getDiagramImage } from '../../../utils/project/getDiagramImage'
-import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
-import { getRiskSection } from '../../../utils/project/getRiskSection'
-import { getRiskValues } from '../../../utils/risks/values'
+import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
+import { getContractSection } from '../../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
+import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import { getRiskSection } from '../../../../utils/project/getRiskSection'
+import { getRiskValues } from '../../../../utils/risks/values'
 import {
   ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
@@ -25,7 +25,7 @@ import {
   ProjectDetailsStateValidationSection,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
-} from '../../project/types'
+} from '../../types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
