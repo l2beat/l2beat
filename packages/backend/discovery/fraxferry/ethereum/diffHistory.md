@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x3c3788f99ffbe9868b14a3bedcdc3cb5cf19705a
+
+# Diff at Sat, 20 Apr 2024 16:39:35 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19654781
+- current block number: 19697870
+
+## Description
+
+All Fraxtal-facing bridges have their %-fees removed, constant fees decreased and waiting periods reduced.
+Spot checks of fraxferry bridges facing other chains than fraxtal (not in discovery) show unchanged fees. 
+
+## Watched changes
+
+```diff
+    contract sfraxFerryBridgeFraxtal (0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47) {
+    +++ description: None
+      values.FEE_MAX:
+-        "100000000000000000000"
++        "1000000000000000000"
+      values.FEE_MIN:
+-        "5000000000000000000"
++        "1000000000000000000"
+      values.FEE_RATE:
+-        10
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
+```diff
+    contract fxsFerryBridgeFraxtal (0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6) {
+    +++ description: None
+      values.FEE_MAX:
+-        "100000000000000000000"
++        "1000000000000000000"
+      values.FEE_RATE:
+-        10
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
+```diff
+    contract sfrxFerryBridgeFraxtal (0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3) {
+    +++ description: None
+      values.FEE_MAX:
+-        5000000000000000
++        400000000000000
+      values.FEE_MIN:
+-        4000000000000000
++        400000000000000
+      values.FEE_RATE:
+-        4
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
+```diff
+    contract fraxFerryBridgeFraxtal (0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE) {
+    +++ description: None
+      values.FEE_MAX:
+-        "100000000000000000000"
++        "1000000000000000000"
+      values.FEE_MIN:
+-        "5000000000000000000"
++        "1000000000000000000"
+      values.FEE_RATE:
+-        10
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
+```diff
+    contract fpisFerryBridgeFraxtal (0x958815f476cD07354c0BC034EE5077B20fD93003) {
+    +++ description: None
+      values.FEE_MAX:
+-        "100000000000000000000"
++        "1000000000000000000"
+      values.FEE_MIN:
+-        "5000000000000000000"
++        "1000000000000000000"
+      values.FEE_RATE:
+-        10
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
 Generated with discovered.json: 0x26a1cf6926ad6177aed37b5d7137c132e16081a7
 
 # Diff at Sun, 14 Apr 2024 15:51:18 GMT:
