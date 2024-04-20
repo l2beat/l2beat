@@ -1,20 +1,23 @@
-Generated with discovered.json: 0xa2bf0fab071a4be225f3ce613fab8cf58cdff9b2
+Generated with discovered.json: 0x2473263d61a9731bd44e68196fd459ef89d09243
 
-# Diff at Sat, 20 Apr 2024 11:30:31 GMT:
+# Diff at Sat, 20 Apr 2024 16:06:01 GMT:
 
 - author: sekuba (<sekuba@users.noreply.githum.com>)
 - comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19531533
-- current block number: 19696331
+- current block number: 19697703
 
 ## Description
 
 Eigenlayer m2 mainnet release ([v0.2.3 release notes](https://hackmd.io/@-HV50kYcRqOjl_7du8m1AA/ryx1p-Bm1C))
 Stakers can now delegate stake to Operators, who can register with AVSs.
-The linked release notes describe this update well, below is the short changelog from manually reading over the contracts.
+Current Governance of Eigenlayer (excluding EigenDA): Community Multisig (9/13) OR Operations Multisig (3/6) (10d delay) can upgrade all Eigenlayer smart contracts.
+
+The linked release notes describe this update well, below is a shorter changelog from manually skimming over the contracts.
 
 ### AVSDirectory
 
-AVSs register/deregister their Operators here.
+AVSs register/deregister their Operators here. (only two functions)
+Payment of operators and slashing is not implemented yet.
 
 ### DelegationManager
 
@@ -22,17 +25,43 @@ Stakers use this contract for delegating/undelegating their stake.
 
 - (queue)Withdrawal functions are moved here now (from the StrategyManager)
 - Use EIP1271SignatureUtils to check signatures made by contracts (by stakers/eigenpods). This standard also allows human readable signatures on signing
-- Many events and comments added
+- Plenty events and comments added
 - onlyStrategyManagerOrEigenPodManager() modifier for the `delegateShares` functions
 
 ### StrategyManager
 
 Does the accounting for deposits / withdrawals of LSTs into / from strategies by individual stakers. (shares)
 
-- 
+- The DelegationManager is the entry for initiating a withdrawal, while the StrategyManager is the entry for depositing
+- Slashing is not implemented
 
-eigenpod:
-  all withdrawals now require beacon chain state proofs
+### EigenPodManager
+
+Lets ethereum native restakers create EigenPods and tracks the EigenPod's shares. Shares can be increased/decreased by the DelegationManager.
+
+- Withdrawal processing now interacts via the DelegationManager, not the StrategyManager
+- Withdrawals are started here and proven in the Eigenpod SC
+
+### Eigenpod
+
+Escrow smart contract that is the withdrawal address / credentials for ETH native eigenlayer restakers.
+
+- Beacon chain state proofs are introduced (using EIP-4788: Beacon block root oracle)
+- Withdrawals are sent here from the beacon chain, can be withdrawn from the pod via DelegationManager-->EigenPodManager-->Eigenpod
+- User (owner of the EigenPod) can only withdraw non-restaked ETH and other tokens that are accidentally sent to the pod directly with user-facing functions (onlyEigenPodOwner)
+
+### DelayedWithdrawalRouter
+
+Now only needed for withdrawals that are unrelated to shares (which in turn are managed by the DelegationManager):
+
+- Consensus rewards
+- ETH or tokens sent to the EigenPod directly (/ accidently)
+
+Maximum delay is raised from 7d to 30d.
+
+### Slasher
+
+Skeleton contract that is not used. (The previously deployed version was paused) Eigenlayer currently has no slashing functionality.
 
 ## Watched changes
 
@@ -328,6 +357,36 @@ eigenpod:
  .../src/contracts/libraries/Merkle.sol             |   80 +-
  .../src/contracts/permissions/Pausable.sol         |   23 +-
  139 files changed, 11631 insertions(+), 6331 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531533 (main branch discovery), not current.
+
+```diff
+    contract OperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "OperationsMultisig"
++        "EigenlayerOperationsMultisig"
+    }
+```
+
+```diff
+    contract EigenlayerMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      name:
+-        "EigenlayerMultisig"
++        "EigenlayerCommunityMultisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x4160c726f419fb6cd7fa8ba5138b175ccbb7b131

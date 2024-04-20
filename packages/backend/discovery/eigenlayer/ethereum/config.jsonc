@@ -2,7 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "eigenlayer",
-  "initialAddresses": ["0x858646372CC42E1A627fcE94aa7A7033e7CF075A"],
+  "initialAddresses": [
+    "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+    "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+  ],
   "names": {
     "0x858646372CC42E1A627fcE94aa7A7033e7CF075A": "StrategyManager",
     "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": "DelegationManager",
@@ -21,9 +24,10 @@
     "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": "METH-Strategy",
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
-    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "OperationsMultisig",
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenlayerOperationsMultisig",
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenlayerProxiedMultisig",
-    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenlayerMultisig"
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenlayerCommunityMultisig",
+    "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle"
   },
   "overrides": {
     "StrategyManager": {
@@ -149,14 +153,17 @@
     "EigenPodManager": {
       "ignoreInWatchMode": ["numPods"]
     },
-    "OperationsMultisig": {
+    "EigenlayerOperationsMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "EigenlayerProxiedMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "EigenlayerMultisig": {
+    "EigenlayerCommunityMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "EigenLayerBeaconOracle": {
+      "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
     },
     // ignore discovery, should be ignoreRelative in a strategy but it does not work
     "0xae78736Cd615f374D3085123A210448E74Fc6393": { "ignoreDiscovery": true },

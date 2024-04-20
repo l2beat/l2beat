@@ -2,6 +2,46 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "AVSDirectory",
+      "values": {
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_AVS_REGISTRATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "DelayedWithdrawalRouter",
       "values": {
         "MAX_WITHDRAWAL_DELAY_BLOCKS": {
@@ -253,7 +293,44 @@
       }
     },
     {
-      "name": "EigenlayerMultisig",
+      "name": "EigenlayerCommunityMultisig",
+      "description": "This multisig is 1/2 of the Eigenlayer SC system owners (full direct upgradability)",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenlayerOperationsMultisig",
+      "description": "This multisig is 1/2 of the Eigenlayer SC system owners (full upgradability with a timelock)",
       "values": {
         "VERSION": {
           "description": null,
@@ -416,42 +493,6 @@
           "type": null
         },
         "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OperationsMultisig",
-      "description": "The Operations Multisig (3/6) can execute routine upgrades, maintenance and pausing of all strategies directly. It can execute safety-critical updates with a 10-day timelock.",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": "Signers of the multisig, high severity if threshold changes",
-          "severity": "LOW",
-          "type": "PERMISSION"
-        },
-        "getThreshold": {
-          "description": "Multisig threshold",
-          "severity": "LOW",
-          "type": "PERMISSION"
-        },
-        "nonce": {
           "description": null,
           "severity": null,
           "type": null
