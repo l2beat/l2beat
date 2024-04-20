@@ -9,7 +9,7 @@ Generated with discovered.json: 0x3c3788f99ffbe9868b14a3bedcdc3cb5cf19705a
 ## Description
 
 All Fraxtal-facing bridges have their %-fees removed, constant fees decreased and waiting periods reduced.
-Spot checks of fraxferry bridges facing other chains than fraxtal (not in discovery) show unchanged fees. 
+Spot checks of fraxferry bridges facing other chains than fraxtal (not in discovery) show unchanged fees.
 
 ## Watched changes
 
