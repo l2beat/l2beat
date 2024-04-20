@@ -12,9 +12,6 @@ A transaction is executed to send ~2.5 ETH from the ValidatorPool contract to th
 This was enabled by the `withdrawTo()` function that was added in the previous upgrade. (see below) The source of funds is from the balance of the SecurityCouncil inside the ValidatorPool contract, leaving the SC with 0.12 ETH of balance in the ValidatorPool. The SC's balance inside the ValidatorPool comes from taxes in the `increaseBond()` function.
 Context: The previous reimbursement in this [tweet by Kroma](https://twitter.com/kroma_network/status/1775801214552375417).
 
-
-
-
 ## Watched changes
 
 ```diff
