@@ -51,19 +51,19 @@ export const bobanetwork: Layer2 = opStackL2({
       )
       return discovery.getMultisigPermission(
         'BobaMultisig',
-        'This Multisig is the owner of the ProxyAdmin. It can upgrade the rollup system and the bridge implementation, potentially gaining access to all funds.',
+        'Owner of the ProxyAdmin. It can upgrade the rollup system and the bridge implementation, potentially gaining access to all funds.',
       )
     })(),
   ],
   rpcUrl: 'https://mainnet.boba.network/',
   genesisTimestamp: new UnixTime(1713297000),
   associatedTokens: ['BOBA', 'OMG'],
-  isNodeAvailable: true,
+  isNodeAvailable: 'UnderReview',
   milestones: [
     {
       name: 'Boba Anchorage Upgrade',
       date: '2024-04-16T00:00:00Z',
-      link: 'https://boba.network/education/multichain/bobabnb/',
+      link: 'https://forum.boba.network/t/upgrade-boba-network-to-the-anchorage-framework/442',
       description: 'Boba upgrades to the OP stack (Bedrock).',
     },
     {
