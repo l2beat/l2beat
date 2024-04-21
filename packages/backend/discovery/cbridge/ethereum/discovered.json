@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 19698726,
+  "blockNumber": 19704406,
   "configHash": "0xaefd4ad630423ac7314704b457cb0518fe5a5ccfa2e6d8dc6956c0c61e5a129a",
   "version": 3,
   "contracts": [
@@ -77,7 +77,7 @@
       },
       "sinceTimestamp": 1638346811,
       "values": {
-        "addseq": 5200,
+        "addseq": 5203,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -99,8 +99,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0x817bc4b7a9aa2282420bc1e2a3650572d22fea32264aa1a3656aae5fc49bebf5",
-        "triggerTime": 1713373736
+        "ssHash": "0xfd7c46285b689dfcf5495bb5f63064a9b4ca578873c69de8be230c4a4e326349",
+        "triggerTime": 1713646500
       },
       "derivedName": "Bridge"
     },
