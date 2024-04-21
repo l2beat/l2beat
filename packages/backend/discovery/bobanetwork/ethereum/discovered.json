@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 19703104,
+  "blockNumber": 19704353,
   "configHash": "0x51a0650f2b40dad89e5c3cec0de0ff7033274dc8c655b202321b5f4bef825114",
   "version": 3,
   "contracts": [
@@ -236,10 +236,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1343419,
-        "latestOutputIndex": 107,
-        "nextBlockNumber": 1345219,
-        "nextOutputIndex": 108,
+        "latestBlockNumber": 1350619,
+        "latestOutputIndex": 111,
+        "nextBlockNumber": 1352419,
+        "nextOutputIndex": 112,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,
