@@ -1,4 +1,4 @@
-import { UnixTime, assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
