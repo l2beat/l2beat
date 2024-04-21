@@ -1,8 +1,8 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 19701933,
-  "configHash": "0x523bf42c88788ef93044d3f5baff2c55fcaeb8e5d8b586b21b48a76477f728b7",
+  "blockNumber": 19703104,
+  "configHash": "0x51a0650f2b40dad89e5c3cec0de0ff7033274dc8c655b202321b5f4bef825114",
   "version": 3,
   "contracts": [
     {
@@ -75,7 +75,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "BobaMultisig",
       "address": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
       "upgradeability": {
         "type": "gnosis safe",
@@ -97,7 +97,8 @@
         "getThreshold": 3,
         "nonce": 5,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -235,10 +236,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1336219,
-        "latestOutputIndex": 103,
-        "nextBlockNumber": 1338019,
-        "nextOutputIndex": 104,
+        "latestBlockNumber": 1343419,
+        "latestOutputIndex": 107,
+        "nextBlockNumber": 1345219,
+        "nextOutputIndex": 108,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,

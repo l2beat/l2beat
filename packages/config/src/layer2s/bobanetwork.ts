@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, assert } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -6,13 +6,14 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
-// const upgradeability = {
-//   upgradableBy: ['ProxyAdmin'],
-//   upgradeDelay: 'No delay',
-// }
+const upgradeability = {
+  upgradableBy: ['ProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
+  upgradeability,
   display: {
     name: 'Boba Network',
     shortName: 'Boba',
@@ -37,8 +38,24 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  nonTemplatePermissions: [
+    ...(() => {
+      const discoveredAdminOwner = discovery.getAddressFromValue(
+        'ProxyAdmin',
+        'owner',
+      )
+      const bobaMultisigAddress = discovery.getContract('BobaMultisig').address
+      assert(
+        discoveredAdminOwner === bobaMultisigAddress,
+        'Update the permissions section if this changes. (BobaMultisig is not the ProxyAdmin anymore)',
+      )
+      return discovery.getMultisigPermission(
+        'BobaMultisig',
+        'This Multisig is the owner of the ProxyAdmin. It can upgrade the rollup system and the bridge implementation, potentially gaining access to all funds.',
+      )
+    })(),
+  ],
   rpcUrl: 'https://mainnet.boba.network/',
-  // upgradeability,
   genesisTimestamp: new UnixTime(1713297000),
   associatedTokens: ['BOBA', 'OMG'],
   isNodeAvailable: true,

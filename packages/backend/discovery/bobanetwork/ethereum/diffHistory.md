@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe24048715cd88a1847beacbfe74e4b9db927b2ed
+Generated with discovered.json: 0x1a580cb8054ab8a01638a1246b4f714617ac0afa
 
-# Diff at Sun, 21 Apr 2024 06:16:57 GMT:
+# Diff at Sun, 21 Apr 2024 10:12:50 GMT:
 
 - author: sekuba (<sekuba@users.noreply.githum.com>)
 - comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19531460
-- current block number: 19701933
+- current block number: 19703104
 
 ## Description
 
@@ -42,7 +42,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x56121a8612474C3eB65D69a3b871f284705b9bC4)
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4)
     +++ description: None
 ```
 
@@ -112,9 +112,9 @@ Provide description of changes. This section will be preserved.
  .../contracts/common/StorageAccessible.sol         |  47 ++
  .../contracts/external/GnosisSafeMath.sol          |  54 +++
  .../contracts/interfaces/ISignatureValidator.sol   |  20 +
- .../.code/GnosisSafe/implementation/meta.txt       |   2 +
- .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     | 155 +++++++
- .../ethereum/.code/GnosisSafe/proxy/meta.txt       |   2 +
+ .../.code/BobaMultisig/implementation/meta.txt     |   2 +
+ .../.code/BobaMultisig/proxy/GnosisSafeProxy.sol   | 155 +++++++
+ .../ethereum/.code/BobaMultisig/proxy/meta.txt     |   2 +
  .../contracts/proxy/utils/Initializable.sol        |   0
  .../contracts/utils/Address.sol                    |   0
  .../contracts/utils/math/Math.sol                  |   0
