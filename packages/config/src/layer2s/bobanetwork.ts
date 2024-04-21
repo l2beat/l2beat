@@ -38,6 +38,20 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  finality: {
+    type: 'OPStack-blob',
+    minTimestamp: new UnixTime(1713308507),
+    genesisTimestamp: new UnixTime(1635396737),
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+  },
+  nonTemplateContracts: [
+    discovery.getContractDetails('L1ERC721Bridge', {
+      description:
+        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+      ...upgradeability,
+    })
+  ],
   nonTemplatePermissions: [
     ...(() => {
       const discoveredAdminOwner = discovery.getAddressFromValue(
@@ -56,7 +70,7 @@ export const bobanetwork: Layer2 = opStackL2({
     })(),
   ],
   rpcUrl: 'https://mainnet.boba.network/',
-  genesisTimestamp: new UnixTime(1713297000),
+  genesisTimestamp: new UnixTime(1635396737), // new UnixTime(1713297000) was Anchorage upgrade
   associatedTokens: ['BOBA', 'OMG'],
   isNodeAvailable: 'UnderReview',
   milestones: [
