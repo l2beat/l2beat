@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x56a0ceaef67fe02d33afeee06946f63f8f19e9b2
+
+# Diff at Sat, 20 Apr 2024 16:28:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19531659
+- current block number: 19697812
+
+## Description
+
+A new block submitter is added and two are removed, summing to 13 block submitters at the moment.
+
+## Watched changes
+
+```diff
+    contract LoopringIOExchangeOwner (0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) {
+    +++ description: None
+      values.blockSubmitters.13:
+-        "0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7"
+      values.blockSubmitters.12:
+-        "0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0"
++        "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341"
+    }
+```
+
 Generated with discovered.json: 0x945c280f2e0b87de6ea1bbcf044ad7c08f6a8191
 
 # Diff at Thu, 28 Mar 2024 09:16:53 GMT:
