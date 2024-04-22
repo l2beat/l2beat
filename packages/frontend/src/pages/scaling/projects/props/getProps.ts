@@ -24,6 +24,7 @@ export function getProps(
     manuallyVerifiedContracts,
     diffHistory,
     implementationChange,
+    tvlBreakdownApiResponse,
   } = pagesData
 
   const charts = getCharts(
@@ -43,6 +44,7 @@ export function getProps(
         implementationChange,
         activityApiResponse,
         diffHistory,
+        tvlBreakdownApiResponse,
       ),
       projectDetails: getProjectDetails(
         project,

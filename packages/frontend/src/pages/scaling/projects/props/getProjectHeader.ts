@@ -3,6 +3,7 @@ import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
   ImplementationChangeReportApiResponse,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
   TvlApiCharts,
   TvlApiResponse,
@@ -28,8 +29,11 @@ export function getProjectHeader(
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
   diffHistory?: DiffHistoryApiResponse,
+  tvlBreakdownApiResponse?: ProjectAssetsBreakdownApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const tvlBreakdownProject =
+    tvlBreakdownApiResponse?.breakdowns[project.id.toString()]
   const implementationChangeForProject =
     implementationChange?.projects[project.id.toString()]
   const implementationHasChanged =
@@ -91,7 +95,8 @@ export function getProjectHeader(
     purposes: project.display.purposes,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
-    showTvlBreakdown: config.features.tvlBreakdown,
+    showTvlBreakdown:
+      config.features.tvlBreakdown && !!apiProject && !!tvlBreakdownProject,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     links: getLinks(project, project.display.links, diffHistory),
     stage: project.stage,
