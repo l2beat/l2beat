@@ -4,6 +4,7 @@ import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
@@ -64,7 +65,13 @@ export const bobanetwork: Layer2 = opStackL2({
     })(),
   ],
   rpcUrl: 'https://mainnet.boba.network/',
-  genesisTimestamp: new UnixTime(1635396737), // new UnixTime(1713297000) was Anchorage upgrade
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://mainnet.boba.network/',
+    startBlock: 1,
+    assessCount: subtractOneAfterBlockInclusive(1713297000), // anchorage upgrade
+  },
+  genesisTimestamp: new UnixTime(1635396737), // boba network genesis
   associatedTokens: ['BOBA', 'OMG'],
   isNodeAvailable: 'UnderReview',
   milestones: [
