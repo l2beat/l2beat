@@ -5,7 +5,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
@@ -45,12 +44,10 @@ export class Tvl2Controller {
     minTimestamp: UnixTime
   }[]
   private readonly minTimestamp: UnixTime
-  private readonly maxTimestamp: () => UnixTime
 
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
-    indexers: ChildIndexer[],
     projects: ProjectId[],
     config: Tvl2Config,
   ) {
@@ -71,18 +68,9 @@ export class Tvl2Controller {
       .map((x) => x.minTimestamp)
       .reduce((a, b) => UnixTime.min(a, b))
       .toEndOf('day')
-    this.maxTimestamp = () => {
-      const safeHeights = indexers.map((i) => i.safeHeight)
-      return new UnixTime(Math.min(...safeHeights))
-    }
   }
 
-  async getTvl(): Promise<Tvl2Result> {
-    // TODO: We could calculate the max timestamp based on the indexer heights.
-    // The tricky part is that we need to consider which indexers are used for each project.
-    // This probably should be done based on the configs.
-    const maxTimestamp = this.maxTimestamp()
-
+  async getTvl(maxTimestamp: UnixTime): Promise<Tvl2Result> {
     // TODO: we should return daily, sixHourly and hourly results.
     const result: Tvl2Result = {
       daily: [],
@@ -97,9 +85,6 @@ export class Tvl2Controller {
   async getTvlAt(timestamp: UnixTime): Promise<Tvl2TimestampedResult> {
     const results: Record<string, Tvl2ProjectResult> = {}
     for (const project of this.projects) {
-      // TODO: As above, we should know what's the max timestamp based on the indexers that are relevant for this project.
-      // Skipping this idea for now.
-
       if (timestamp.gte(project.minTimestamp)) {
         results[project.id.toString()] = await this.getProjectTvl(
           project.id,
@@ -107,6 +92,7 @@ export class Tvl2Controller {
         )
       }
     }
+
     return {
       timestamp: timestamp.toNumber(),
       projects: results,

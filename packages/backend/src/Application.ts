@@ -79,6 +79,7 @@ export class Application {
 
     if (config.isReadonly) {
       this.start = async () => {
+        logger.for(this).info('Starting in readonly mode')
         await apiServer.start()
       }
       return

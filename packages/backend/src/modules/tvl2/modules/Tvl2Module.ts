@@ -78,7 +78,6 @@ export function createTvl2Module(
   const tvlController = new Tvl2Controller(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
-    modules.map((m) => m.indexers).flat(),
     config.projects.map((p) => p.projectId),
     config.tvl2,
   )
@@ -87,7 +86,7 @@ export function createTvl2Module(
     modules.map((m) => m.indexers).flat(),
     clock,
   )
-  const tvlRouter = createTvl2Router(tvlController)
+  const tvlRouter = createTvl2Router(tvlController, clock)
 
   const start = async () => {
     await hourlyIndexer.start()
