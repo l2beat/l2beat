@@ -68,7 +68,7 @@ export const bobanetwork: Layer2 = opStackL2({
   finality: {
     type: 'OPStack-blob',
     minTimestamp: new UnixTime(1713303530),
-    genesisTimestamp: new UnixTime(1635393439),
+    genesisTimestamp: new UnixTime(1635386025), // this timestamp is copied from the original pre-boba config. the calculated one using the first l2 block is 1635393439
     l2BlockTimeSeconds: 2,
     lag: 0,
   },
@@ -86,7 +86,7 @@ export const bobanetwork: Layer2 = opStackL2({
         address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
         selector: '0xd0f89344',
         functionSignature: 'function appendSequencerBatch()',
-        sinceTimestampInclusive: new UnixTime(1635386025),
+        sinceTimestampInclusive: new UnixTime(1635386025), // original timestamp from pre-bedrock boba config
         untilTimestampExclusive: new UnixTime(1713303530),
       },
     },
@@ -113,7 +113,7 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x8ca5cbb9',
         functionSignature:
           'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-        sinceTimestampInclusive: new UnixTime(1635386294),
+        sinceTimestampInclusive: new UnixTime(1635386294), // original timestamp from pre-bedrock boba config
         untilTimestampExclusive: new UnixTime(1713303530),
       },
     },
