@@ -32,9 +32,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
   }
 
-  async addOrUpdateManyConfigurations(
-    configurations: IndexerConfigurationRecord[],
-  ) {
+  async addOrUpdateMany(configurations: IndexerConfigurationRecord[]) {
     const rows = configurations.map((record) => toRow(record))
     const upsertOptimizationQuery = getUpsertOptimization(Object.keys(rows[0]))
 

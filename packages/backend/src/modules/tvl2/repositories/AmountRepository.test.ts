@@ -105,7 +105,7 @@ function setupConfigurations(
   const IDS = CONFIGS.map((c) => c.id)
 
   beforeEach(async () => {
-    await configurationsRepository.addOrUpdateManyConfigurations(CONFIGS)
+    await configurationsRepository.addOrUpdateMany(CONFIGS)
   })
 
   afterEach(async () => {

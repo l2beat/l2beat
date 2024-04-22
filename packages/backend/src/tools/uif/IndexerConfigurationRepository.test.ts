@@ -22,12 +22,12 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   })
 
   describe(
-    IndexerConfigurationRepository.prototype.addOrUpdateManyConfigurations.name,
+    IndexerConfigurationRepository.prototype.addOrUpdateMany.name,
     () => {
       it('adds new records', async () => {
         const newRecords = [CONFIGURATIONS[0], CONFIGURATIONS[1]]
 
-        await repository.addOrUpdateManyConfigurations(newRecords)
+        await repository.addOrUpdateMany(newRecords)
 
         const result = await repository.getAll()
 
@@ -44,16 +44,14 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
         ]
         for (const c of columns) {
           it(`updates ${c.column}`, async () => {
-            await repository.addOrUpdateManyConfigurations([
-              mock({ id: 'a'.repeat(12) }),
-            ])
+            await repository.addOrUpdateMany([mock({ id: 'a'.repeat(12) })])
             const recordsPostUpsert: IndexerConfigurationRecord[] = [
               {
                 ...CONFIGURATIONS[0],
                 [c.column]: c.value,
               },
             ]
-            await repository.addOrUpdateManyConfigurations(recordsPostUpsert)
+            await repository.addOrUpdateMany(recordsPostUpsert)
             const result = await repository.getAll()
             expect(result).toEqualUnsorted(recordsPostUpsert)
           })
@@ -67,7 +65,7 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addOrUpdateManyConfigurations(records)
+      await repository.addOrUpdateMany(records)
 
       const result = await repository.getSavedConfigurations('indexer-1')
 
@@ -80,7 +78,7 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addOrUpdateManyConfigurations(records)
+      await repository.addOrUpdateMany(records)
       await repository.updateSavedConfigurations(
         'indexer-1',
         records.slice(0, 3).map((r) => r.id), // test .whereIn clause
@@ -102,7 +100,7 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addOrUpdateManyConfigurations(records)
+      await repository.addOrUpdateMany(records)
       await repository.deleteConfigurationsExcluding('indexer-1', [
         CONFIGURATIONS[1].id,
         CONFIGURATIONS[2].id,
