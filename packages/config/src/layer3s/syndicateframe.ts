@@ -1,14 +1,11 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
+
 export const syndicateframe: Layer3 = opStackL3({
   discovery,
   hostChain: ProjectId('base'),
@@ -33,23 +30,9 @@ export const syndicateframe: Layer3 = opStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b',
-  ),
+  rpcUrl: 'https://rpc-frame.syndicate.io',
   genesisTimestamp: new UnixTime(1707371473),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
-  milestones: [],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   isNodeAvailable: 'UnderReview',
-  nonTemplateEscrows: [],
   nonTemplatePermissions: [
     {
       name: 'ProxyAdmin owner',
@@ -62,5 +45,4 @@ export const syndicateframe: Layer3 = opStackL3({
       ],
     },
   ],
-  rpcUrl: 'https://rpc-frame.syndicate.io',
 })

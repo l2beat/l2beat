@@ -51,6 +51,7 @@ export function getTestDatabase(
       },
       freshStart: false,
       enableQueryLogging: false,
+      isReadonly: false,
       ...opts,
     },
     Logger.SILENT,

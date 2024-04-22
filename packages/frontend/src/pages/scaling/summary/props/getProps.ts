@@ -32,7 +32,7 @@ export function getProps(
     wrapper: {
       preloadApis: [getChartUrl({ type: 'scaling-tvl' })],
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        image: 'https://l2beat.com/meta-images/pages/og-scaling-summary.png',
         url: 'https://l2beat.com/scaling/summary',
       }),
       banner: config.features.banner,

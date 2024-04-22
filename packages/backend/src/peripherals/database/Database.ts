@@ -22,6 +22,7 @@ export class Database {
     this.onMigrationsComplete = resolve
   })
   private readonly requiredMajorVersion: number
+  private readonly isReadonly: boolean
 
   constructor(
     private readonly config: DatabaseConfig,
@@ -49,10 +50,12 @@ export class Database {
       },
       pool: config.connectionPoolSize,
     })
+
+    this.isReadonly = config.isReadonly
   }
 
   async getKnex(trx?: Knex.Transaction) {
-    if (!this.migrated) {
+    if (!this.isReadonly && !this.migrated) {
       await this.migrationsComplete
     }
     return trx ?? this.knex

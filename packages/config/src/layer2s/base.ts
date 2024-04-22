@@ -43,9 +43,6 @@ export const base: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
-  ),
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
     type: 'OPStack-blob',
@@ -55,8 +52,6 @@ export const base: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686796655),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   isNodeAvailable: true,
   milestones: [
@@ -73,13 +68,6 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
@@ -107,11 +95,6 @@ export const base: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
     discovery.getContractDetails('Challenger1of2', {
       description:
         "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",

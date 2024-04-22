@@ -1,15 +1,10 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('hypr')
-
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const hypr: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
@@ -32,13 +27,7 @@ export const hypr: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x1bBde518ad01BaABFE30020407A7630FB17B545d',
-  ),
   genesisTimestamp: new UnixTime(1705509623),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
@@ -50,12 +39,4 @@ export const hypr: Layer2 = opStackL2({
   ],
   rpcUrl: 'https://rpc.hypr.network',
   associatedTokens: ['HYPR'],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  nonTemplateEscrows: [],
 })

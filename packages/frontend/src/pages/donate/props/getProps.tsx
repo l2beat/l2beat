@@ -56,7 +56,7 @@ export async function getProps(
       metadata: {
         title: 'Donate – L2BEAT',
         description: '',
-        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        image: 'https://l2beat.com/meta-images/pages/og-donate.png',
         url: 'https://l2beat.com/donate/',
       },
       banner: config.features.banner,

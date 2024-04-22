@@ -16,6 +16,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { coti } from './coti'
 import { cronos } from './cronos'
+import { cyberconnect } from './cyber'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -71,6 +72,7 @@ import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { rhinofi } from './rhinofi'
+import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
 import { sorare } from './sorare'
@@ -84,6 +86,7 @@ import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
+import { world } from './world'
 import { x1 } from './x1'
 import { xchain } from './xchain'
 import { zentachain } from './zentachain'
@@ -115,6 +118,7 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canto,
   capx,
+  cyberconnect,
   canvasconnect,
   coti,
   cronos,
@@ -173,6 +177,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   rhinofi,
+  rise,
   rss3,
   scroll,
   sorare,
@@ -185,6 +190,7 @@ export const layer2s: Layer2[] = [
   ten,
   termstructure,
   tradable,
+  world,
   x1,
   xchain,
   zentachain,

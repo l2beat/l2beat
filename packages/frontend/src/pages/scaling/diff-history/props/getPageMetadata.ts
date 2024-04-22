@@ -6,7 +6,7 @@ export function getPageMetadata(project: Layer2): PageMetadata {
   return {
     title: `${project.display.name} | Changelog – L2BEAT`,
     description: `${project.display.name} changelog overview on L2BEAT.`,
-    image: `https://l2beat.com/meta-images/${project.display.slug}.png`,
+    image: `https://l2beat.com/meta-images/projects/${project.display.slug}.png`,
     url: `https://l2beat.com/scaling/projects/${project.display.slug}/changelog`,
   }
 }

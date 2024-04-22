@@ -18,6 +18,7 @@ import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
+  readonly isReadonly: boolean
   readonly projects: Project[]
   readonly tokens: Token[]
   readonly logger: LoggerConfig
@@ -69,6 +70,7 @@ export interface DatabaseConfig {
     min: number
     max: number
   }
+  readonly isReadonly: boolean
 }
 
 export interface ClockConfig {

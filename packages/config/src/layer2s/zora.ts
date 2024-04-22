@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -40,9 +40,6 @@ export const zora: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631',
-  ),
   rpcUrl: 'https://rpc.zora.co',
   finality: {
     type: 'OPStack-blob',
@@ -52,8 +49,6 @@ export const zora: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686695915),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),
   isNodeAvailable: true,
   milestones: [
@@ -71,12 +66,6 @@ export const zora: Layer2 = opStackL2({
     },
   ],
   knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ZoraMultisig',
@@ -87,13 +76,5 @@ export const zora: Layer2 = opStackL2({
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-  ],
-  nonTemplateEscrows: [],
   usesBlobs: true,
 })

@@ -7,7 +7,7 @@ Generated with discovered.json: 0xcb6dde6da9c6efaf0d0432ff3429fae039c50dd4
 
 ## Description
 
-Standard OP Stack with no significat diff.
+Standard OP Stack with no significant diff.
 
 ## Initial discovery
 
