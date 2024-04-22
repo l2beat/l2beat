@@ -44,7 +44,6 @@ export class Tvl2Controller {
     id: ProjectId
     minTimestamp: UnixTime
   }[]
-  private readonly assetConfig: Map<string, { decimals: number }>
   private readonly minTimestamp: UnixTime
   private readonly maxTimestamp: () => UnixTime
 
@@ -57,9 +56,6 @@ export class Tvl2Controller {
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
     this.amountConfig = getAmountConfigMap(config)
-    this.assetConfig = new Map(
-      config.prices.map((x) => [createAssetId(x), { decimals: x.decimals }]),
-    )
     this.projects = projects.flatMap((id) => {
       const config = this.amountConfig.get(id)
       if (!config) {
@@ -151,11 +147,8 @@ export class Tvl2Controller {
       const price = prices.find((x) => createAssetId(x) === assetId)
       assert(price, 'Price not found')
 
-      const assetConfig = this.assetConfig.get(assetId)
-      assert(assetConfig, 'Asset config not found')
-
       results[amountConfig.source] +=
-        (Number(record.amount) * price.priceUsd) / 10 ** assetConfig.decimals
+        (Number(record.amount) * price.priceUsd) / 10 ** amountConfig.decimals
     }
     return results
   }

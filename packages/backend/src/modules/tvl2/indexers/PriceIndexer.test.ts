@@ -26,7 +26,6 @@ describe(PriceIndexer.name, () => {
       type: 'coingecko',
       coingeckoId: CoingeckoId('dai'),
       sinceTimestamp: UnixTime.ZERO,
-      decimals: 18,
     }
     it('syncs prices in range', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))

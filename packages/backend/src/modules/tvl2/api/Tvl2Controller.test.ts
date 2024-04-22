@@ -28,7 +28,6 @@ describe(Tvl2Controller.name, () => {
       const priceConfig = mockObject<PriceConfigEntry>({
         chain: amountConfig.chain,
         address: amountConfig.address,
-        decimals: 6,
       })
 
       const controller = new Tvl2Controller(
@@ -84,7 +83,6 @@ describe(Tvl2Controller.name, () => {
   const priceConfig = mockObject<PriceConfigEntry>({
     chain: amountConfig.chain,
     address: amountConfig.address,
-    decimals: 6,
   })
 
   describe(Tvl2Controller.prototype.getTvlAt.name, () => {
