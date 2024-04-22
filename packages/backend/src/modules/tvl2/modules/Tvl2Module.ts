@@ -44,21 +44,21 @@ export function createTvl2Module(
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const modules = [
-    // createPriceModule(
-    //   config.tvl2,
-    //   logger,
-    //   peripherals,
-    //   hourlyIndexer,
-    //   syncOptimizer,
-    // ),
-    // ...createChainModules(
-    //   config.tvl2,
-    //   peripherals,
-    //   logger,
-    //   hourlyIndexer,
-    //   syncOptimizer,
-    //   indexerService,
-    // ),
+    createPriceModule(
+      config.tvl2,
+      logger,
+      peripherals,
+      hourlyIndexer,
+      syncOptimizer,
+    ),
+    ...createChainModules(
+      config.tvl2,
+      peripherals,
+      logger,
+      hourlyIndexer,
+      syncOptimizer,
+      indexerService,
+    ),
     createCirculatingSupplyModule(
       config.tvl2,
       logger,
