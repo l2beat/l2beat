@@ -151,8 +151,6 @@ The project now uses shared implementations with other projects in the Superchai
 +        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
       values.startBlock:
 +        17473957
-      errors:
--        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x625726c858dBF78c0125436C943Bf4b4bE9d9033&startblock=0&endblock=19532317&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x625726c858dBF78c0125436C943Bf4b4bE9d9033&startblock=0&endblock=19532317&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED"}
     }
 ```
 
