@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xa5fa9f35f275df1e3c511462365e6ba39f6153f1
+Generated with discovered.json: 0xd8d108b7b19308cda326d243fc41e4d24ae821a2
 
 # Diff at Sat, 20 Apr 2024 19:31:25 GMT:
 
@@ -9,6 +9,8 @@ Generated with discovered.json: 0xa5fa9f35f275df1e3c511462365e6ba39f6153f1
 ## Description
 
 Cbridge bridge contracts were paused for a few minutes and the guards are set to a 'relaxed' state before the bridges are unpaused again.
+
+The Sentinel ProxyAdmin owner was changes from 'Celer Network: Deployer 2' to the CelerBridge Governance contract 'SimpleGovernance' called 'Bridge Governance (2)' on our website. Since the SimpleGovernance contract has a higher threshold than the deployer EOA, and additional Governance logic, this is an increase in security.
 
 ## Watched changes
 
