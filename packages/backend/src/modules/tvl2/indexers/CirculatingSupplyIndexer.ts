@@ -82,9 +82,8 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.$.amountRepository.deleteByConfigInTimeRange(
+    await this.$.amountRepository.deleteByConfigAfter(
       this.configId,
-      this.$.config.sinceTimestamp,
       new UnixTime(targetHeight),
     )
 

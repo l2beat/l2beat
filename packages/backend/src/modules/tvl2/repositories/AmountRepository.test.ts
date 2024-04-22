@@ -71,6 +71,33 @@ describeDatabase(AmountRepository.name, (database) => {
     })
   })
 
+  describe(AmountRepository.prototype.deleteByConfigAfter.name, () => {
+    it('deletes data in range for matching config', async () => {
+      await amountRepository.addMany([
+        amount('b', new UnixTime(1), 0n),
+        amount('b', new UnixTime(2), 0n),
+        amount('b', new UnixTime(3), 0n),
+      ])
+
+      await amountRepository.deleteByConfigAfter(
+        'b'.repeat(12),
+        new UnixTime(1),
+      )
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(1), 0n)])
+    })
+
+    it('does not delete data if matching config not found', async () => {
+      await amountRepository.addMany([amount('b', new UnixTime(2), 0n)])
+
+      await amountRepository.deleteByConfigAfter('c', new UnixTime(1))
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(2), 0n)])
+    })
+  })
+
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {
     await amountRepository.addMany([amount('a', UnixTime.ZERO, 111n)])
