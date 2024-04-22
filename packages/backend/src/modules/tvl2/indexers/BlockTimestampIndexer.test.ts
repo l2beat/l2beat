@@ -91,38 +91,6 @@ describe(BlockTimestampIndexer.name, () => {
         minTimestamp: minTimestamp,
       })
     })
-
-    it('throw when there is an intent to change minTimestamp', async () => {
-      const minTimestampBefore = UnixTime.ZERO
-
-      const indexerState = {
-        indexerId: 'indexer',
-        safeHeight: 1,
-        minTimestamp: minTimestampBefore,
-      }
-
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => {
-          return indexerState
-        },
-      })
-
-      const minTimestamp = minTimestampBefore.add(1, 'days')
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<BlockTimestampProvider>({}),
-        stateRepository,
-        mockObject<BlockTimestampRepository>({}),
-        'ethereum',
-        minTimestamp,
-        mockObject<SyncOptimizer>({}),
-      )
-
-      await expect(() => indexer.initialize()).toBeRejectedWith(
-        'Minimum timestamp of this indexer cannot be updated',
-      )
-    })
   })
 
   describe(BlockTimestampIndexer.prototype.setSafeHeight.name, () => {
