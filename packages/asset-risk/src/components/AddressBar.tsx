@@ -19,7 +19,7 @@ export function AddressBar() {
         value={address}
         onChange={(e) => setAddress(e.target.value)}
         placeholder="Input address"
-        className="border border-pink-900 rounded-md p-3 w-3/4 md:w-96 bg-zinc-900 focus:active:ring-0 outline-none placeholder:text-white/50 font-medium focus:ring-1 duration-100 ring-pink-900 transition-all"
+        className="border border-pink-900 rounded-md p-3 w-3/4 md:w-96 light:bg-zinc-100 dark:text-white focus:active:ring-0 outline-none placeholder:text-white/50 font-medium focus:ring-1 duration-100 ring-pink-900 transition-all"
       />
       <button
         onClick={handleWallet}

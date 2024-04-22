@@ -1,13 +1,11 @@
-import React from 'react'
-
 import { cn } from '../utils/cn'
 
-interface Props {
+export interface LogoProps {
   className?: string
   animated?: boolean
 }
 
-export function Logo({ className, animated = true }: Props) {
+export function Logo({ className, animated = true }: LogoProps) {
   return (
     <svg
       className={cn('overflow-visible', className)}
