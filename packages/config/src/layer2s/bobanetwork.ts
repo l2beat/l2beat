@@ -91,6 +91,18 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     {
       uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
+        to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
+        sinceTimestampInclusive: new UnixTime(1713303530),
+      },
+    },
+    {
+      uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
       ],
@@ -102,6 +114,20 @@ export const bobanetwork: Layer2 = opStackL2({
           'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
         sinceTimestampInclusive: new UnixTime(1635386294),
         untilTimestampExclusive: new UnixTime(1713303530),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741'),
+        selector: '0x9aaab648',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+        sinceTimestampInclusive: new UnixTime(1713303530),
       },
     },
   ],
