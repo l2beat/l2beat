@@ -62,7 +62,7 @@ export const bobanetwork: Layer2 = opStackL2({
     type: 'rpc',
     defaultUrl: 'https://mainnet.boba.network/',
     startBlock: 1,
-    assessCount: subtractOneAfterBlockInclusive(19670772),
+    assessCount: subtractOneAfterBlockInclusive(1149019), // boba L2 bedrock upgrade block number
   },
   finality: {
     type: 'OPStack-blob',
@@ -136,7 +136,7 @@ export const bobanetwork: Layer2 = opStackL2({
       name: 'Boba Anchorage Upgrade',
       date: '2024-04-16T00:00:00Z',
       link: 'https://forum.boba.network/t/upgrade-boba-network-to-the-anchorage-framework/442',
-      description: 'Boba upgrades to the OP stack (Bedrock).',
+      description: 'Boba upgrades to Bedrock (OP Stack).',
     },
     {
       name: 'Boba launches L2 on BNB',
