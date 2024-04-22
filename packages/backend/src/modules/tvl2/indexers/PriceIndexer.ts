@@ -123,14 +123,6 @@ export class PriceIndexer extends ChildIndexer {
       return
     }
 
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.token.sinceTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
-
     this.logger.debug('Initialized')
   }
 
