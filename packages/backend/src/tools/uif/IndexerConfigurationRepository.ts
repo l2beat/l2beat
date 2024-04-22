@@ -35,15 +35,17 @@ export class IndexerConfigurationRepository extends BaseRepository {
     configurations: IndexerConfigurationRecord[],
   ) {
     const rows = configurations.map((record) => toRow(record))
+    const upsertOptimizationQuery = getUpsertOptimization(rows[0])
 
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < rows.length; i += BATCH_SIZE) {
         const knex = await this.knex(trx)
+
         await knex('indexer_configurations')
           .insert(rows.slice(i, i + BATCH_SIZE))
           .onConflict(['id'])
           .merge()
-          .whereRaw('indexer_configurations.properties <> EXCLUDED.properties')
+          .whereRaw(upsertOptimizationQuery)
       }
     })
 
@@ -123,4 +125,12 @@ function toRecord(row: IndexerConfigurationRow): IndexerConfigurationRecord {
     minHeight: row.min_height,
     maxHeight: row.max_height,
   }
+}
+
+function getUpsertOptimization(row: IndexerConfigurationRow) {
+  const columns = Object.keys(row).filter((column) => column !== 'id')
+
+  return columns
+    .map((column) => `indexer_configurations.${column} <> EXCLUDED.${column}`)
+    .join(' OR ')
 }
