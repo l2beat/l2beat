@@ -43,6 +43,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
           .insert(rows.slice(i, i + BATCH_SIZE))
           .onConflict(['id'])
           .merge()
+          .whereRaw('indexer_configurations.properties <> EXCLUDED.properties')
       }
     })
 
