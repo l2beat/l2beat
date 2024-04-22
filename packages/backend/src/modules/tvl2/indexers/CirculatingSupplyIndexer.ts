@@ -1,5 +1,7 @@
+import { assert } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
-import { assert, CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
+import { CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
+import { isInteger } from 'lodash'
 
 import {
   ManagedChildIndexer,
@@ -65,13 +67,16 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
 
     return circulatingSupplies
       .filter((p) => this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
-      .map((circulatingSupply) => ({
-        configId: this.configId,
-        timestamp: circulatingSupply.timestamp,
-        amount:
-          BigInt(circulatingSupply.value) *
-          10n ** BigInt(this.$.config.decimals),
-      }))
+      .map((circulatingSupply) => {
+        assert(isInteger(circulatingSupply.value), 'Should be an integer')
+        return {
+          configId: this.configId,
+          timestamp: circulatingSupply.timestamp,
+          amount:
+            BigInt(circulatingSupply.value) *
+            10n ** BigInt(this.$.config.decimals),
+        }
+      })
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
