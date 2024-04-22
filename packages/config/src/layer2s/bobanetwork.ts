@@ -492,7 +492,7 @@ export const bobanetwork: Layer2 = {
     chainId: 288,
     explorerUrl: 'https://eth.bobascan.com/',
     explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
       type: 'etherscan',
     },
     coingeckoPlatform: 'boba',
