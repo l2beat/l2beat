@@ -1,10 +1,10 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
+import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
