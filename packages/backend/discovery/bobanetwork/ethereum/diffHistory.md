@@ -8,7 +8,9 @@ Generated with discovered.json: 0x7f162218174b3f92e9abc658d954d551e7cb002c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Boba upgrades to the Bedrock architecture (they call the upgrade 'Anchorage') on OP stack. The contracts have very similar logic with other op stack L2s and highest similarity-score with karak.
+Smart contract versions are the latest (some newer than optimism). Boba is allegedly using a multi-client setup (erigon and geth, to be researched).
+The Governance is currently fully relying on one single 3/4 Multisig, who is the ProxyAdmin.
 
 ## Watched changes
 

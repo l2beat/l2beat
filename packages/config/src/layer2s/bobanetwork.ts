@@ -6,14 +6,9 @@ import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
-  upgradeability,
   display: {
     name: 'Boba Network',
     shortName: 'Boba',
@@ -49,7 +44,6 @@ export const bobanetwork: Layer2 = opStackL2({
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
         'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
     }),
   ],
   nonTemplatePermissions: [
