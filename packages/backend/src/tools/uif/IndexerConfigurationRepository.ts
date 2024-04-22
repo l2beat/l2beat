@@ -14,6 +14,7 @@ export interface IndexerConfigurationRow {
   min_height: number
   max_height: number | null
 }
+
 export interface IndexerConfigurationRecord {
   id: string
   indexerId: string
@@ -35,7 +36,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     configurations: IndexerConfigurationRecord[],
   ) {
     const rows = configurations.map((record) => toRow(record))
-    const upsertOptimizationQuery = getUpsertOptimization(rows[0])
+    const upsertOptimizationQuery = getUpsertOptimization(Object.keys(rows[0]))
 
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < rows.length; i += BATCH_SIZE) {
@@ -127,10 +128,11 @@ function toRecord(row: IndexerConfigurationRow): IndexerConfigurationRecord {
   }
 }
 
-function getUpsertOptimization(row: IndexerConfigurationRow) {
-  const columns = Object.keys(row).filter((column) => column !== 'id')
-
+// Without this piece of code, on every upsert operation the table size grows
+// vacuuming the table does not help, this should be investigated further
+function getUpsertOptimization(columns: string[]) {
   return columns
+    .filter((column) => column !== 'id')
     .map((column) => `indexer_configurations.${column} <> EXCLUDED.${column}`)
     .join(' OR ')
 }

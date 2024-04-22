@@ -21,16 +21,44 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  it(
+  describe(
     IndexerConfigurationRepository.prototype.addOrUpdateManyConfigurations.name,
-    async () => {
-      const records = [CONFIGURATIONS[0], CONFIGURATIONS[1]]
+    () => {
+      it('adds new records', async () => {
+        const newRecords = [CONFIGURATIONS[0], CONFIGURATIONS[1]]
 
-      await repository.addOrUpdateManyConfigurations(records)
+        await repository.addOrUpdateManyConfigurations(newRecords)
 
-      const result = await repository.getAll()
+        const result = await repository.getAll()
 
-      expect(result).toEqualUnsorted(records)
+        expect(result).toEqualUnsorted(newRecords)
+      })
+
+      describe('updates existing record', () => {
+        const columns = [
+          { column: 'indexerId', value: 'new-indexer' },
+          { column: 'currentHeight', value: 123 },
+          { column: 'minHeight', value: 0 },
+          { column: 'maxHeight', value: 666 },
+          { column: 'properties', value: 'new-properties' },
+        ]
+        for (const c of columns) {
+          it(`updates ${c.column}`, async () => {
+            await repository.addOrUpdateManyConfigurations([
+              mock({ id: 'a'.repeat(12) }),
+            ])
+            const recordsPostUpsert: IndexerConfigurationRecord[] = [
+              {
+                ...CONFIGURATIONS[0],
+                [c.column]: c.value,
+              },
+            ]
+            await repository.addOrUpdateManyConfigurations(recordsPostUpsert)
+            const result = await repository.getAll()
+            expect(result).toEqualUnsorted(recordsPostUpsert)
+          })
+        }
+      })
     },
   )
 
