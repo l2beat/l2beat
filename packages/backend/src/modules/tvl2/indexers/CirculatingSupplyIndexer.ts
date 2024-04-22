@@ -31,21 +31,26 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     this.configId = createAmountId($.config)
   }
 
-  async update(_from: number, _to: number): Promise<number> {
-    const from = this.$.syncOptimizer.getTimestampToSync(new UnixTime(_from))
-    const to = this.getAdjustedTo(from, _to)
+  async update(from: number, to: number): Promise<number> {
+    const adjustedFrom = this.$.syncOptimizer.getTimestampToSync(
+      new UnixTime(from),
+    )
+    const adjustedTo = this.getAdjustedTo(adjustedFrom, to)
 
-    const amounts = await this.fetchAndOptimizeCirculatingSupplies(from, to)
+    const amounts = await this.fetchAndOptimizeCirculatingSupplies(
+      adjustedFrom,
+      adjustedTo,
+    )
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0n)
 
     await this.$.amountRepository.addMany(nonZeroAmounts)
 
-    return to.toNumber()
+    return adjustedTo.toNumber()
   }
 
-  private getAdjustedTo(from: UnixTime, _to: number): UnixTime {
-    const to = new UnixTime(_to).toStartOf('hour')
-    assert(from.lte(to), 'Programmer error: from > to')
+  private getAdjustedTo(from: UnixTime, to: number): UnixTime {
+    const alignedTo = new UnixTime(to).toStartOf('hour')
+    assert(from.lte(alignedTo), 'Programmer error: from > to')
 
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
     return UnixTime.min(to, from.add(maxDaysForOneCall, 'days'))
