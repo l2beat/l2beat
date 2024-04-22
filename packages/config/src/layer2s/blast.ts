@@ -167,6 +167,7 @@ export const blast: Layer2 = opStackL2({
     }),
   ],
   isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/blast-io/blast',
   stateDerivation: {
     nodeSoftware:
       'Node software can be found [here](https://github.com/blast-io/blast).',
