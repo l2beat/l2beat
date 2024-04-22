@@ -107,7 +107,10 @@ function getAmountsConfig(
           type: 'escrow',
           address: token.address ?? 'native',
           chain: chainConverter.toName(token.chainId),
-          sinceTimestamp: token.sinceTimestamp,
+          sinceTimestamp: UnixTime.max(
+            token.sinceTimestamp,
+            escrow.sinceTimestamp,
+          ),
           escrowAddress: escrow.address,
           project: project.projectId,
           source: toSource(token.type),
