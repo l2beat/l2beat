@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const aevo: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
@@ -51,10 +46,6 @@ export const aevo: Layer2 = opStackL2({
     ],
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x4082C9647c098a6493fb499EaE63b5ce3259c574',
-  ),
   transactionApi: {
     type: 'rpc',
     startBlock: 1,
@@ -62,8 +53,6 @@ export const aevo: Layer2 = opStackL2({
     assessCount: subtractOne,
   },
   genesisTimestamp: new UnixTime(1679202395),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: false,
   milestones: [
     {
@@ -79,19 +68,10 @@ export const aevo: Layer2 = opStackL2({
       date: '2024-01-16T00:00:00.00Z',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'AevoMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
-  nonTemplateContracts: [],
-  nonTemplateEscrows: [],
 })

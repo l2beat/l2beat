@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 19432769,
+  "blockNumber": 19698726,
   "configHash": "0xaefd4ad630423ac7314704b457cb0518fe5a5ccfa2e6d8dc6956c0c61e5a129a",
   "version": 3,
   "contracts": [
@@ -77,7 +77,7 @@
       },
       "sinceTimestamp": 1638346811,
       "values": {
-        "addseq": 5176,
+        "addseq": 5200,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -99,8 +99,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xfc4959c29ac17f087924c9e3825fd0400309d8317d63750eae40b44d04047a84",
-        "triggerTime": 1710276192
+        "ssHash": "0x817bc4b7a9aa2282420bc1e2a3650572d22fea32264aa1a3656aae5fc49bebf5",
+        "triggerTime": 1713373736
       },
       "derivedName": "Bridge"
     },
@@ -152,7 +152,7 @@
       },
       "sinceTimestamp": 1690520231,
       "values": {
-        "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+        "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       },
       "derivedName": "ProxyAdmin"
     },
@@ -220,7 +220,7 @@
         "numGovernors": 4,
         "numGuards": 2,
         "numPausers": 6,
-        "numRelaxedGuards": 0,
+        "numRelaxedGuards": 2,
         "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
         "pausersFull": [],
         "pausersPauseOnly": [
@@ -231,7 +231,7 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
         ],
-        "relaxed": false,
+        "relaxed": true,
         "relaxThreshold": 2
       },
       "derivedName": "Sentinel"

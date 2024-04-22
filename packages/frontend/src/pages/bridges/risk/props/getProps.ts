@@ -21,7 +21,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-bridges.png',
+        image: 'https://l2beat.com/meta-images/pages/og-bridges-risks.png',
         url: 'https://l2beat.com/bridges/risk',
       }),
       banner: config.features.banner,

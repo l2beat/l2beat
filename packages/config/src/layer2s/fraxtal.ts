@@ -1,4 +1,4 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -77,22 +77,9 @@ export const fraxtal: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2',
-  ),
   rpcUrl: 'https://rpc.frax.com',
   genesisTimestamp: new UnixTime(1706811599),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
-  milestones: [],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'FraxtalMultisig',

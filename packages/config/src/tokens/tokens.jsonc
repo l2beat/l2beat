@@ -410,6 +410,10 @@
       "address": "0x830eB1204380E9c44434Db8700257025358707c6"
     },
     {
+      "symbol": "GOG",
+      "address": "0x9ab7bb7fdc60f4357ecfef43986818a2a3569c62"
+    },
+    {
       "symbol": "gOHM",
       "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f"
     },
@@ -429,10 +433,6 @@
       "symbol": "GUSD",
       "address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
       "category": "stablecoin"
-    },
-    {
-      "symbol": "HBTC",
-      "address": "0x0316EB71485b0Ab14103307bf65a021042c6d380"
     },
     {
       "symbol": "HEART",

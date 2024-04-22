@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 19531659,
+  "blockNumber": 19697812,
   "configHash": "0xe1be664e5de50a753f9b75e72cb9efb6e582d287e4e7e1a629cba1c05d782bfb",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 50189,
+        "getBlockHeight": 50892,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -36,9 +36,9 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x2f031810001be8de3c1c24b9caa74cec59b295b384b646c995707ec4fd47ccde",
+        "getMerkleRoot": "0x177eae04dac252cbb6dcdbb8dc61608b0d750503d0cce565e0810bcff41d2fd8",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1711272707, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1713095399, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -72,8 +72,7 @@
           "0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
           "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
           "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
-          "0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0",
-          "0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7"
+          "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341"
         ],
         "open": false,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
@@ -346,7 +345,7 @@
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
         "getThreshold": 4,
-        "nonce": 184,
+        "nonce": 188,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -390,15 +389,15 @@
       },
       "sinceTimestamp": 1574241665,
       "values": {
-        "getTotalStaking": "524405020990853519330595",
+        "getTotalStaking": "524405020990849091170868",
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "MIN_CLAIM_DELAY": 7776000,
         "MIN_WITHDRAW_DELAY": 7776000,
-        "numAddresses": 965,
+        "numAddresses": 964,
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
-        "total": ["524405020990853519330595", 0, 1615983279]
+        "total": ["524405020990849091170868", 0, 1615983279]
       },
       "derivedName": "UserStakingPool"
     }
@@ -413,11 +412,11 @@
     "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
     "0x4374D3d032B3c96785094ec9f384f07077792768",
     "0x4774d954D20DB98492B0487BC9F91dc401dBA3aE",
+    "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341",
     "0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185",
     "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
     "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
     "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
-    "0x7961076f6130092c1C90bd0D2C6F7f54055FA6C7",
     "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
     "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
     "0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc",
@@ -425,7 +424,6 @@
     "0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
     "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
     "0xDB5C4078eC50Ad4Cdc47F4597a377528B1d7bcdB",
-    "0xdd4b5E28fe55196B8Bf44A040f2c11f85401fdC0",
     "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
     "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
     "0xeadb3d065f8d15cc05e92594523516aD36d1c834",

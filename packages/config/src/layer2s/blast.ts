@@ -83,9 +83,6 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x697402166Fbf2F22E970df8a6486Ef171dbfc524',
-  ),
   rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
@@ -110,8 +107,6 @@ export const blast: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'BlastMultisig',
@@ -187,11 +182,4 @@ export const blast: Layer2 = opStackL2({
         'The Munchables exploiter is prohibited from forcing transactions.',
     },
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  knowledgeNuggets: [],
 })

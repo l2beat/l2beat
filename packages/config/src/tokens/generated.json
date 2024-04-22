@@ -1621,6 +1621,21 @@
       "formula": "locked"
     },
     {
+      "id": "gog-guild-of-guardians",
+      "name": "Guild of Guardians",
+      "coingeckoId": "guild-of-guardians",
+      "address": "0x9AB7bb7FdC60f4357ECFef43986818A2A3569c62",
+      "symbol": "GOG",
+      "decimals": 18,
+      "deploymentTimestamp": 1635310797,
+      "coingeckoListingTimestamp": 1640131200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17362/large/V2QDNoLg_400x400.jpg?1696516913",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "hegic-hegic",
       "name": "Hegic",
       "coingeckoId": "hegic",
@@ -1691,21 +1706,6 @@
       "coingeckoListingTimestamp": 1639353600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21273/large/h_logo_1x.png?1696520644",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
-      "id": "hbtc-huobi-btc",
-      "name": "Huobi BTC",
-      "coingeckoId": "huobi-btc",
-      "address": "0x0316EB71485b0Ab14103307bf65a021042c6d380",
-      "symbol": "HBTC",
-      "decimals": 18,
-      "deploymentTimestamp": 1575874126,
-      "coingeckoListingTimestamp": 1602460800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12407/large/hbtc.png?1696512229",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

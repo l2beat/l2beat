@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9a3a63d115a94c4282aea8a94bf88911eac00254
+
+# Diff at Sat, 20 Apr 2024 08:12:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19616998
+- current block number: 19695350
+
+## Description
+
+A transaction is executed to send ~2.5 ETH from the ValidatorPool contract to the trusted validator and member of SC `0x3aa00bb915a8e78b0523e4c365e3e70a19d329e6`.
+This was enabled by the `withdrawTo()` function that was added in the previous upgrade. (see below) The source of funds is from the balance of the SecurityCouncil inside the ValidatorPool contract, leaving the SC with 0.12 ETH of balance in the ValidatorPool. The SC's balance inside the ValidatorPool comes from taxes in the `increaseBond()` function.
+Context: The previous reimbursement in this [tweet by Kroma](https://twitter.com/kroma_network/status/1775801214552375417).
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
++++ description: Increases with each Security Council action.
++++ type: L2
++++ severity: HIGH
+      values.transactionCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x68b9b451a1ae0f51c4cc2055cdd6530505b7c803
 
 # Diff at Tue, 09 Apr 2024 08:50:09 GMT:
