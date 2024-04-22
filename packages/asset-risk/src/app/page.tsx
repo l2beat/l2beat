@@ -2,8 +2,7 @@ import { AddressBar } from '~/components/AddressBar'
 
 export default function Home() {
   return (
-    <main>
-      <h1>Input address</h1>
+    <main className="flex justify-center items-center h-[calc(100vh-1.25rem)]">
       <AddressBar />
     </main>
   )
