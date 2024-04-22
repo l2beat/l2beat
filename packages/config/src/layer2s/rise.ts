@@ -7,14 +7,14 @@ export const rise: Layer2 = upcomingL2({
     name: 'RISE',
     slug: 'rise',
     description:
-      'RISE is a Parallel EVM Rollup that intends to unlock a new era of performance for Ethereum',
+      'RISE is a Parallel EVM Rollup that intends to unlock a new era of performance for Ethereum.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.riselabs.xyz/'],
+      websites: ['https://riselabs.xyz/'],
       apps: [],
-      documentation: ['https://www.riselabs.xyz/'],
+      documentation: ['https://riselabs.xyz/'],
       explorers: [],
       repositories: ['https://github.com/risechain'],
       socialMedia: ['https://twitter.com/rise_chain'],
