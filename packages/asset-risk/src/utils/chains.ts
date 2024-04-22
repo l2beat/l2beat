@@ -22,10 +22,12 @@ function createCustomChain({
   id,
   name,
   rpcUrl,
+  mutlicallAddress,
 }: {
   id: number
   name: string
   rpcUrl: string
+  mutlicallAddress?: Hex
 }) {
   return {
     id,
@@ -41,16 +43,13 @@ function createCustomChain({
       },
     },
     contracts: {
-      multicall3: {
-        address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-      },
+      multicall3: mutlicallAddress
+        ? {
+            address: mutlicallAddress,
+          }
+        : undefined,
     },
-  } satisfies Chain & {
-    // Making sure we always include the `multicall3` contract.
-    contracts: {
-      multicall3: ChainContract
-    }
-  }
+  } satisfies Chain
 }
 
 const supportedChains = [
