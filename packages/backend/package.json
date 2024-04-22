@@ -28,7 +28,8 @@
     "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts",
     "compare-orbit-chains": "ts-node --transpile-only scripts/compareOrbitChains.ts",
     "compare-opstack-chains": "ts-node --transpile-only scripts/compareOpStackChains.ts",
-    "compare-flat-sources": "ts-node --transpile-only scripts/compare-flat/index.ts"
+    "compare-flat-sources": "ts-node --transpile-only scripts/compareFlatSources.ts",
+    "create-opstack": "ts-node --transpile-only scripts/createOpStack.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
