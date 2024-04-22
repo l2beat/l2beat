@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 19711555,
+  "blockNumber": 19711601,
   "configHash": "0x94a8a249394f829f79086ceb6397da32067403ade7adc79b1f9430029d63e88b",
   "version": 3,
   "contracts": [
@@ -334,7 +334,7 @@
         "L2_ORACLE": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
         "l2Oracle": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 287624, 19711526],
+        "params": [1000000000, 287624, 19711594],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
@@ -374,7 +374,7 @@
       "sinceTimestamp": 1700167631,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292804347",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292804348",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

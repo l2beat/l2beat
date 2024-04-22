@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4052ff1c29d23174eb33e4dc60ccc3d042c9cabd
+Generated with discovered.json: 0x2e9670845d9ba903b0fd596d923b6b295fb9b15e
 
-# Diff at Mon, 22 Apr 2024 14:23:18 GMT:
+# Diff at Mon, 22 Apr 2024 14:42:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@d4b694a74243557c5ded556721185672f6639b7c block: 19532317
-- current block number: 19711507
+- current block number: 19711603
 
 ## Description
 
@@ -135,8 +135,6 @@ The project now uses shared implementations with other projects in the Superchai
 +        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
       values.l2OutputOracle:
 +        "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c"
-      values.opStackDA:
-+        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":true}
       values.OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT:
 +        "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c"
       values.OPTIMISM_PORTAL_SLOT:
@@ -145,8 +143,6 @@ The project now uses shared implementations with other projects in the Superchai
 +        "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
       values.optimismPortal:
 +        "0x1a0ad011913A150f69f6A19DF447A0CfD9551054"
-      values.sequencerInbox:
-+        "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf"
       values.START_BLOCK_SLOT:
 +        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
       values.startBlock:
@@ -638,24 +634,6 @@ The project now uses shared implementations with other projects in the Superchai
  .../implementation/src/libraries/Storage.sol       |   88 ++
  .../implementation/src/universal/ISemver.sol       |   13 +
  377 files changed, 24544 insertions(+), 12878 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19532317 (main branch discovery), not current.
-
-```diff
-    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
-    +++ description: None
-      values.opStackDA:
--        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":true}
-      values.sequencerInbox:
--        "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf"
-      errors:
-+        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x625726c858dBF78c0125436C943Bf4b4bE9d9033&startblock=0&endblock=19532317&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x625726c858dBF78c0125436C943Bf4b4bE9d9033&startblock=0&endblock=19532317&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED"}
-    }
 ```
 
 Generated with discovered.json: 0x8e8b7c912999391cfb5eb4ae8f11c842508f419d
