@@ -78,6 +78,7 @@ function getAmountsConfig(
             project,
             source: toSource(token.type),
             includeInTotal: true,
+            decimals: token.decimals,
           })
           break
         case 'circulatingSupply':
@@ -111,6 +112,7 @@ function getAmountsConfig(
           project: project.projectId,
           source: toSource(token.type),
           includeInTotal: true,
+          decimals: token.decimals,
         })
       }
     }
