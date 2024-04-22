@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
@@ -34,13 +34,6 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  finality: {
-    type: 'OPStack-blob',
-    minTimestamp: new UnixTime(1713308507),
-    genesisTimestamp: new UnixTime(1635396737),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-  },
   nonTemplateContracts: [
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
@@ -69,11 +62,49 @@ export const bobanetwork: Layer2 = opStackL2({
     type: 'rpc',
     defaultUrl: 'https://mainnet.boba.network/',
     startBlock: 1,
-    assessCount: subtractOneAfterBlockInclusive(1713297000), // anchorage upgrade
+    assessCount: subtractOneAfterBlockInclusive(19670772),
   },
-  genesisTimestamp: new UnixTime(1635396737), // boba network genesis
+  finality: {
+    type: 'OPStack-blob',
+    minTimestamp: new UnixTime(1713303530),
+    genesisTimestamp: new UnixTime(1635393439),
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+  },
+  genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA', 'OMG'],
   isNodeAvailable: 'UnderReview',
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
+        selector: '0xd0f89344',
+        functionSignature: 'function appendSequencerBatch()',
+        sinceTimestampInclusive: new UnixTime(1635386025),
+        untilTimestampExclusive: new UnixTime(1713303530),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xdE7355C971A5B733fe2133753Abd7e5441d441Ec'),
+        selector: '0x8ca5cbb9',
+        functionSignature:
+          'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
+        sinceTimestampInclusive: new UnixTime(1635386294),
+        untilTimestampExclusive: new UnixTime(1713303530),
+      },
+    },
+  ],
   milestones: [
     {
       name: 'Boba Anchorage Upgrade',
