@@ -344,11 +344,6 @@
           "severity": null,
           "type": null
         },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "overhead": {
           "description": null,
           "severity": null,
@@ -365,11 +360,6 @@
           "type": null
         },
         "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
