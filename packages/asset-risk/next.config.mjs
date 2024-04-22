@@ -1,3 +1,5 @@
+import './src/env.js'
+
 import createBundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundleAnalyzer = createBundleAnalyzer({
