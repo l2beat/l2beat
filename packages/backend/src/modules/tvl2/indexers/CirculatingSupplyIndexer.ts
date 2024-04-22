@@ -48,10 +48,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     assert(from.lte(to), 'Programmer error: from > to')
 
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
-
-    return to.gt(from.add(maxDaysForOneCall, 'days'))
-      ? from.add(maxDaysForOneCall, 'days')
-      : to
+    return UnixTime.min(to, from.add(maxDaysForOneCall, 'days'))
   }
 
   private async fetchAndOptimizeCirculatingSupplies(
