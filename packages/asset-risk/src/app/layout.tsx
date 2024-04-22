@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Serif } from 'next/font/google'
 
+import { Navbar } from '~/components/navbar/Navbar'
 import { cn } from '~/utils/cn'
 
 const roboto = Roboto({
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(roboto.className, robotoSerif.className)}>
+        <Navbar />
         {children}
       </body>
     </html>
