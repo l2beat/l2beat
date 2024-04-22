@@ -11,6 +11,7 @@ import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
+import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
 
 export function createTvl2Module(
@@ -58,6 +59,14 @@ export function createTvl2Module(
       syncOptimizer,
       indexerService,
     ),
+    createCirculatingSupplyModule(
+      config.tvl2,
+      logger,
+      peripherals,
+      hourlyIndexer,
+      syncOptimizer,
+      indexerService,
+    ),
   ]
 
   const statusRouter = createTvl2StatusRouter(
@@ -67,15 +76,11 @@ export function createTvl2Module(
   )
 
   const start = async () => {
-    logger = logger.for('Tvl2Module')
-
     await hourlyIndexer.start()
 
     for (const module of modules) {
       await module.start()
     }
-
-    logger.info('Started')
   }
 
   return {
