@@ -77,6 +77,13 @@ export class Application {
       getErrorReportingMiddleware(),
     )
 
+    if (config.isReadonly) {
+      this.start = async () => {
+        await apiServer.start()
+      }
+      return
+    }
+
     this.start = async () => {
       logger.for(this).info('Starting', { features: config.flags })
       const unusedFlags = Object.values(config.flags)

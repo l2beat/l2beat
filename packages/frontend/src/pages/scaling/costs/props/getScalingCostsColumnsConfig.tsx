@@ -3,7 +3,7 @@ import React from 'react'
 import { Badge } from '../../../../components/badge/Badge'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig, SortingConfig } from '../../../../components/table/types'
-import { LONG_HYPHEN } from '../../../../utils/constants'
+import { EM_DASH } from '../../../../utils/constants'
 import { getColumnHeaderUnderline } from '../../../../utils/table/getColumnHeaderUnderline'
 import { CostsDataDetails, ScalingCostsViewEntry } from '../types'
 import { CostsBreakdownValueCell } from '../view/CostsBreakdownValueCell'
@@ -40,7 +40,7 @@ export function getScalingCostsColumnsConfig() {
         project.data ? (
           <CostsBreakdownValueCell data={project.data} type="calldata" />
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         ),
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -58,7 +58,7 @@ export function getScalingCostsColumnsConfig() {
         project.data ? (
           <CostsBreakdownValueCell data={project.data} type="blobs" />
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         ),
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -76,7 +76,7 @@ export function getScalingCostsColumnsConfig() {
         project.data ? (
           <CostsBreakdownValueCell data={project.data} type="compute" />
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         ),
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -93,7 +93,7 @@ export function getScalingCostsColumnsConfig() {
         project.data ? (
           <CostsBreakdownValueCell data={project.data} type="overhead" />
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         ),
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -111,13 +111,13 @@ export function getScalingCostsColumnsConfig() {
         project.data ? (
           <CostsTxCountCell data={project.data} className="pr-4" />
         ) : (
-          <span className="pr-4">{LONG_HYPHEN}</span>
+          <span className="pr-4">{EM_DASH}</span>
         ),
       headClassName: '!pr-4',
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.data?.last24h.txCount?.value,
+          '1D': project.data?.last24h.txCount?.value,
           '7D': project.data?.last7d.txCount?.value,
           '30D': project.data?.last30d.txCount?.value,
           '90D': project.data?.last90d.txCount?.value,

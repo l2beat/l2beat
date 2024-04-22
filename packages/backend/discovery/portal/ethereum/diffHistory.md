@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe1506d2c2a77c9c3706cd6379696d915cd755128
+
+# Diff at Sat, 20 Apr 2024 16:33:52 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 18483329
+- current block number: 19697841
+
+## Description
+
+A Guardian is replaced. (Guardians are permissioned actors for bridging transfer signatures and SC upgrades)
+
+## Watched changes
+
+```diff
+    contract Wormhole (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      values.getCurrentGuardianSetIndex:
+-        3
++        4
+      values.guardianSet.0.0:
+-        "0x58CC3AE5C097b213cE3c81979e1B9f9570746AA5"
++        "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
+    }
+```
+
 Generated with discovered.json: 0x8bf5589032a5a15f5c7fe123d36f5db04cb97ef4
 
 # Diff at Thu, 02 Nov 2023 08:52:02 GMT:

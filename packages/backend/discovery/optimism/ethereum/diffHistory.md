@@ -1,3 +1,264 @@
+Generated with discovered.json: 0xd4cc5d9bc127f06ecb0a0d9f2bf520df2ffc72d5
+
+# Diff at Fri, 12 Apr 2024 12:08:01 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@dfabb973c54d735b834c25775233fa7ed54bdc53 block: 19532035
+- current block number: 19639423
+
+## Description
+
+Summary and rationale of the changes: <https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677>
+
+### SystemConfig
+
+The SystemConfig now contains the addresses of all the contracts.
+
+### OptimismPortal
+
+The L2OutputOracle and the SystemConfig variables are no longer immutable. They're only modifiable via an upgrade, but now there is the advantage that different chains can share the same implementation: if they are immutable, the address is hardcoded into the bytecode instead, but now the only things that changes is the state of the proxy.
+
+### L2OutputOracle
+
+Immutable variables, including the challenger and the proposer are no longer immutable.
+
+### L1StandardBridge
+
+The messenger and other bridge on L2 are no longer immutable.
+
+### L1CrossDomainMessenger
+
+The OptimismPortal variable is no longer immutable.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      implementations.0:
+-        "0x33A032ec93Ec0C492Ec4BF0B30D5f51986E5a314"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      values.version:
+-        "1.11.0"
++        "1.12.0"
+      values.BATCH_INBOX_SLOT:
++        "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597"
+      values.batchInbox:
++        "0xFF00000000000000000000000000000000000010"
+      values.L1_CROSS_DOMAIN_MESSENGER_SLOT:
++        "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636"
+      values.L1_ERC_721_BRIDGE_SLOT:
++        "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7"
+      values.L1_STANDARD_BRIDGE_SLOT:
++        "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376"
+      values.l1CrossDomainMessenger:
++        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.l1ERC721Bridge:
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      values.l1StandardBridge:
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      values.L2_OUTPUT_ORACLE_SLOT:
++        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
++        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT:
++        "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c"
+      values.OPTIMISM_PORTAL_SLOT:
++        "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac"
+      values.optimismMintableERC20Factory:
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      values.optimismPortal:
++        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+      values.START_BLOCK_SLOT:
++        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
+      values.startBlock:
++        17422444
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"
++        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      implementations.0:
+-        "0xa95B24af19f8907390eD15f8348A1a5e6Ccbc5C6"
++        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.otherMessenger:
++        "0x4200000000000000000000000000000000000007"
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      values.nonce:
+-        1
++        2
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.nonce:
+-        1
++        2
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x566511a1A09561e2896F8c0fD77E8544E59bFDB0"
++        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      implementations.0:
+-        "0x566511a1A09561e2896F8c0fD77E8544E59bFDB0"
++        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      values.version:
+-        "2.0.0"
++        "2.1.0"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"
++        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
+      implementations.0:
+-        "0xaBAbe63514dDd6277356F8cc3d6518aA8BDEB4de"
++        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
+      values.version:
+-        "2.4.0"
++        "2.5.0"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.nonce:
+-        1
++        2
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdfe97868233d1aa22e815a266982f2cf17685a27) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xDb5d932AF15D00F879CaBEbf008caDAAAa691e06"
++        "0xF243BEd163251380e78068d317ae10f26042B292"
+      implementations.0:
+-        "0xDb5d932AF15D00F879CaBEbf008caDAAAa691e06"
++        "0xF243BEd163251380e78068d317ae10f26042B292"
+      values.version:
+-        "1.7.0"
++        "1.8.0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessenger/implementation/meta.txt |   2 +-
+ .../src/L1/L1CrossDomainMessenger.sol              |  50 ++-
+ .../implementation/src/L1/L2OutputOracle.sol       | 151 ++++---
+ .../implementation/src/L1/OptimismPortal.sol       | 100 +++--
+ .../implementation/src/L1/SystemConfig.sol         | 166 +++++--
+ .../src/universal/CrossDomainMessenger.sol         |  42 +-
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++
+ .../contracts/token/ERC20/ERC20.sol                | 383 ++++++++++++++++
+ .../contracts/token/ERC20/IERC20.sol               |  82 ++++
+ .../token/ERC20/extensions/IERC20Metadata.sol      |  28 ++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 +++++
+ .../contracts/token/ERC721/IERC721.sol             | 143 ++++++
+ .../token/ERC721/extensions/IERC721Enumerable.sol  |  29 ++
+ .../contracts/utils/Address.sol                    | 222 ++++++++++
+ .../contracts/utils/Context.sol                    |  24 +
+ .../utils/introspection/ERC165Checker.sol          | 123 ++++++
+ .../contracts/utils/introspection/IERC165.sol      |  25 ++
+ .../contracts/utils/math/Math.sol                  | 226 ++++++++++
+ .../contracts/utils/math/SignedMath.sol            |  43 ++
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++
+ .../contracts/utils/AddressUpgradeable.sol         | 195 ++++++++
+ .../lib/solmate/src/utils/FixedPointMathLib.sol    | 366 +++++++++++++++
+ .../.code/L1ERC721Bridge/implementation/meta.txt   |   2 +
+ .../implementation/src/L1/L1ERC721Bridge.sol       | 121 +++++
+ .../implementation/src/L1/ResourceMetering.sol     | 162 +++++++
+ .../implementation/src/L1/SuperchainConfig.sol     |  94 ++++
+ .../implementation/src/L2/L2ERC721Bridge.sol       | 126 ++++++
+ .../implementation/src/libraries/Arithmetic.sol    |  28 ++
+ .../implementation/src/libraries/Burn.sol          |  32 ++
+ .../implementation/src/libraries/Constants.sol     |  46 ++
+ .../implementation/src/libraries/Encoding.sol      | 176 ++++++++
+ .../implementation/src/libraries/Hashing.sol       | 124 ++++++
+ .../implementation/src/libraries/Predeploys.sol    | 113 +++++
+ .../implementation/src/libraries/SafeCall.sol      | 142 ++++++
+ .../implementation/src/libraries/Storage.sol       |  88 ++++
+ .../implementation/src/libraries/Types.sol         |  70 +++
+ .../implementation/src/libraries/rlp/RLPWriter.sol | 163 +++++++
+ .../src/universal/CrossDomainMessenger.sol         | 406 +++++++++++++++++
+ .../implementation/src/universal/ERC721Bridge.sol  | 195 ++++++++
+ .../src/universal/IOptimismMintableERC20.sol       |  31 ++
+ .../src/universal/IOptimismMintableERC721.sol      |  48 ++
+ .../implementation/src/universal/ISemver.sol       |  13 +
+ .../src/universal/OptimismMintableERC20.sol        | 140 ++++++
+ .../src/universal/StandardBridge.sol               | 489 +++++++++++++++++++++
+ .../contracts/universal/Proxy.sol                  | 216 +++++++++
+ .../ethereum/.code/L1ERC721Bridge/proxy/meta.txt   |   2 +
+ .../L1StandardBridge/implementation/meta.txt       |   2 +-
+ .../implementation/src/L1/L1StandardBridge.sol     |  22 +-
+ .../src/universal/CrossDomainMessenger.sol         |  42 +-
+ .../src/universal/StandardBridge.sol               |  82 ++--
+ .../L2OutputOracle/implementation/meta.txt         |   2 +-
+ .../implementation/src/L1/L2OutputOracle.sol       | 151 ++++---
+ .../contracts/proxy/utils/Initializable.sol        | 138 ++++++
+ .../contracts/token/ERC20/ERC20.sol                | 383 ++++++++++++++++
+ .../contracts/token/ERC20/IERC20.sol               |  82 ++++
+ .../token/ERC20/extensions/IERC20Metadata.sol      |  28 ++
+ .../contracts/utils/Address.sol                    | 222 ++++++++++
+ .../contracts/utils/Context.sol                    |  24 +
+ .../contracts/utils/introspection/IERC165.sol      |  25 ++
+ .../implementation/meta.txt                        |   2 +
+ .../src/universal/IOptimismMintableERC20.sol       |  31 ++
+ .../implementation/src/universal/ISemver.sol       |  13 +
+ .../src/universal/OptimismMintableERC20.sol        | 140 ++++++
+ .../src/universal/OptimismMintableERC20Factory.sol | 132 ++++++
+ .../proxy/contracts/universal/Proxy.sol            | 217 +++++++++
+ .../OptimismMintableERC20Factory/proxy/meta.txt    |   2 +
+ .../OptimismPortal/implementation/meta.txt         |   2 +-
+ .../implementation/src/L1/L2OutputOracle.sol       | 151 ++++---
+ .../implementation/src/L1/OptimismPortal.sol       | 100 +++--
+ .../implementation/src/L1/SystemConfig.sol         | 166 +++++--
+ .../SystemConfig/implementation/meta.txt           |   2 +-
+ .../implementation/src/L1/SystemConfig.sol         | 166 +++++--
+ 73 files changed, 7739 insertions(+), 467 deletions(-)
+```
+
 Generated with discovered.json: 0xacb5d4376948d7d85443329dcc1ddcbba2f3598f
 
 # Diff at Thu, 28 Mar 2024 10:32:56 GMT:

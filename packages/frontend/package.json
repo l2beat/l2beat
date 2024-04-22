@@ -11,7 +11,6 @@
   },
   "scripts": {
     "build": "NODE_ENV=production gulp build",
-    "build:metaimages": "NODE_ENV=production GENERATE_METAIMAGES=true gulp build",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf build",
     "format:fix": "prettier --write .",
@@ -24,7 +23,8 @@
     "start:staging": "DEPLOYMENT_ENV=staging gulp watch",
     "start:production": "DEPLOYMENT_ENV=production gulp watch",
     "test": "mocha",
-    "tinify-logos": "node -r esbuild-register cli/tinifyLogos.ts",
+    "tinify-logos": "node -r esbuild-register scripts/logos/tinifyLogos.ts",
+    "generate-og": "node -r esbuild-register scripts/meta-images/generate.ts",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "(cd ../.. && wsrun -p @l2beat/{shared-pure,config} -recsm build --module es6) && storybook build"
