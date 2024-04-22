@@ -201,7 +201,7 @@ Generated with discovered.json: 0x310dac62fc3a977695365cb5f63945bc621c6113
 ## Description
 
 A root is challenged.
-Context: Kroma had issues on Apr 1. Sequencer was stopped and is now operational again. Around this incident there were multiple challenges created, so far no challenge was succesful.
+Context: Kroma had issues on Apr 1. Sequencer was stopped and is now operational again. Around this incident there were multiple challenges created, so far no challenge was successful.
 
 ## Watched changes
 
