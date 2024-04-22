@@ -34,24 +34,24 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   }
 
   override async multiUpdate(
-    _from: number,
-    _to: number,
+    from: number,
+    to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<number> {
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,
     )
     if (configurationsWithMissingData.length === 0) {
-      return _to
+      return to
     }
 
     const prices = await this.fetchAndOptimizePrices(
-      _from,
-      _to,
+      from,
+      to,
       configurationsWithMissingData,
     )
     if (prices.length === 0) {
-      return _to
+      return to
     }
 
     await this.$.priceRepository.addMany(prices)
@@ -60,26 +60,28 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       .map((p) => p.timestamp.toNumber())
       .reduce((a, b) => Math.max(a, b), 0)
 
-    return maxTo < _to ? _to : maxTo
+    return maxTo < to ? to : maxTo
   }
 
   private async fetchAndOptimizePrices(
-    _from: number,
-    _to: number,
+    from: number,
+    to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<PriceRecord[]> {
-    const from = this.$.syncOptimizer.getTimestampToSync(new UnixTime(_from))
+    const adjustedFrom = this.$.syncOptimizer.getTimestampToSync(
+      new UnixTime(from),
+    )
 
-    if (from.gt(new UnixTime(_to))) {
+    if (adjustedFrom.gt(new UnixTime(to))) {
       return []
     }
 
-    const to = this.getAdjustedTo(from, _to)
+    const adjustedTo = this.getAdjustedTo(adjustedFrom, to)
 
     const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
       this.$.coingeckoId,
-      from,
-      to,
+      adjustedFrom,
+      adjustedTo,
       undefined,
     )
 
@@ -100,15 +102,15 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       .flat()
   }
 
-  private getAdjustedTo(from: UnixTime, _to: number): UnixTime {
-    const to = new UnixTime(_to).toStartOf('hour')
-    assert(from.lte(to), 'Programmer error: from > to')
+  private getAdjustedTo(from: UnixTime, to: number): UnixTime {
+    const alignedTo = new UnixTime(to).toStartOf('hour')
+    assert(from.lte(alignedTo), 'Programmer error: from > to')
 
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
-    return to.gt(from.add(maxDaysForOneCall, 'days'))
+    return alignedTo.gt(from.add(maxDaysForOneCall, 'days'))
       ? from.add(maxDaysForOneCall, 'days')
-      : to
+      : alignedTo
   }
 
   override async removeData(
