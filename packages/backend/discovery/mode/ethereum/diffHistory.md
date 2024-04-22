@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xca37d1ab31e94736bf2d8d7def08442a973e63d5
+Generated with discovered.json: 0xcd419d81c5ff713c00b186c5c5ef76713cae6499
 
-# Diff at Mon, 22 Apr 2024 14:41:56 GMT:
+# Diff at Mon, 22 Apr 2024 14:44:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@d4b694a74243557c5ded556721185672f6639b7c block: 19582837
-- current block number: 19711601
+- current block number: 19711616
 
 ## Description
 
@@ -53,15 +53,6 @@ The project now uses shared implementations with other projects in the Superchai
 +        "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB"
       values.submissionInterval:
 +        1800
-    }
-```
-
-```diff
-    contract ProxyAdminOwner (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
-    +++ description: None
-      values.nonce:
--        20
-+        28
     }
 ```
 
