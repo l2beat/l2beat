@@ -34,6 +34,7 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  usesBlobs: true,
   nonTemplateContracts: [
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
