@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x6a4d1fe370b7475bbdb83cd03787f46b169711d4
+
+# Diff at Tue, 23 Apr 2024 13:25:12 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@c9af11bd773e0770f181b9628ed0e91c093b8bd0 block: 11123143
+- current block number: 11870389
+
+## Description
+
+The Endpoint- and UltraLightNodeV2 owners now point to a Multisig. (Was EOA before)
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4) {
+    +++ description: None
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827"
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++++++++
+ .../implementation/contracts/GnosisSafeL2.sol      |  86 +++++
+ .../implementation/contracts/base/Executor.sol     |  27 ++
+ .../contracts/base/FallbackManager.sol             |  53 +++
+ .../implementation/contracts/base/GuardManager.sol |  50 +++
+ .../contracts/base/ModuleManager.sol               | 133 +++++++
+ .../implementation/contracts/base/OwnerManager.sol | 149 ++++++++
+ .../implementation/contracts/common/Enum.sol       |   8 +
+ .../contracts/common/EtherPaymentFallback.sol      |  13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
+ .../contracts/common/SelfAuthorized.sol            |  16 +
+ .../contracts/common/SignatureDecoder.sol          |  36 ++
+ .../implementation/contracts/common/Singleton.sol  |  11 +
+ .../contracts/common/StorageAccessible.sol         |  47 +++
+ .../contracts/external/GnosisSafeMath.sol          |  54 +++
+ .../contracts/interfaces/ISignatureValidator.sol   |  20 +
+ .../.code/GnosisSafeL2/implementation/meta.txt     |   2 +
+ .../proxy/contracts/proxies/GnosisSafeProxy.sol    |  44 +++
+ .../polygonzkevm/.code/GnosisSafeL2/proxy/meta.txt |   2 +
+ 19 files changed, 1208 insertions(+)
+```
+
 Generated with discovered.json: 0x14c2c1953c2c6c06361ba149c9b0fd65b42d4395
 
 # Diff at Wed, 06 Mar 2024 11:41:58 GMT:
