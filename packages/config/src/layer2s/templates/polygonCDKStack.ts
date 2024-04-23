@@ -478,7 +478,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       ...shared.getMultisigPermission(
         'RollupManagerAdminMultisig',
-        `Admin of the Polygon Rollup Manager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
+        `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
       ),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
