@@ -120,7 +120,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 
   const sharedUpgradeability = {
-    upgradableBy: ['SharedProxyAdminOwner'],
+    upgradableBy: ['RollupManagerAdminMultisig'],
     upgradeDelay: exitWindowRisk.value,
     upgradeConsiderations: exitWindowRisk.description,
   }
@@ -446,7 +446,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             templateVars.discovery.getContractValue('ProxyAdmin', 'owner'), // could be EOA or multisig
           ),
         ],
-        description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
+        description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state.`,
       },
       {
         name: 'Sequencer',
@@ -484,7 +484,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       ...shared.getMultisigPermission(
         'RollupManagerAdminMultisig',
-        `Admin of the Polygon Rollup Manager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state.`,
+        `Admin of the Polygon Rollup Manager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
       ),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
