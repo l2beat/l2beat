@@ -76,12 +76,5 @@ export const zora: Layer2 = opStackL2({
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-  ],
   usesBlobs: true,
 })

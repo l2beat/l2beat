@@ -4940,6 +4940,24 @@
       }
     },
     {
+      "id": "mode:mbtc-merlin-btc",
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
+      "symbol": "mBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1712920053,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 34443,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free"
+      }
+    },
+    {
       "id": "mode:ezeth-renzo-restaked-eth",
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",

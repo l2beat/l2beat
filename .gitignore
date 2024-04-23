@@ -1,8 +1,19 @@
 node_modules
-.vscode
-**/yarn-error.log
+yarn-error.log
 packages/frontend/__screenshots__
-**/.DS_Store
-.idea
+.DS_Store
 .turbo
 .copilotignore
+
+# IDEs
+.vscode
+.idea
+
+# Next.js
+.next
+next-env.d.ts
+out
+build
+
+# TypeScript
+*.tsbuildinfo

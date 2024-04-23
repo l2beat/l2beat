@@ -1760,6 +1760,16 @@
         "bridge": "Stargate",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "mBTC",
+      "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
+      "coingeckoId": "merlin-s-seal-btc",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free"
+      }
     }
   ],
   "scroll": [

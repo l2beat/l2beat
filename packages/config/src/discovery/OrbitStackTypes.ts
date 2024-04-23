@@ -127,7 +127,7 @@ export const ORBIT_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
     description: 'Central actors allowed to submit transaction batches to L1.',
   },
   // TODO(radomski): Permission part of the templates need a rewrite, because
-  // it's a mess and it's impossible to solve this situtation.
+  // it's a mess and it's impossible to solve this situation.
   //
   // - Two contracts are EXECUTOR_ROLE at UpgradeExecutor.
   // - One is an EOA and the other is a Multisig.

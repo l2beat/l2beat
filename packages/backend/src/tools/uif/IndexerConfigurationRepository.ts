@@ -14,6 +14,7 @@ export interface IndexerConfigurationRow {
   min_height: number
   max_height: number | null
 }
+
 export interface IndexerConfigurationRecord {
   id: string
   indexerId: string
@@ -31,18 +32,19 @@ export class IndexerConfigurationRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
   }
 
-  async addOrUpdateManyConfigurations(
-    configurations: IndexerConfigurationRecord[],
-  ) {
+  async addOrUpdateMany(configurations: IndexerConfigurationRecord[]) {
     const rows = configurations.map((record) => toRow(record))
+    const upsertOptimizationQuery = getUpsertOptimization(Object.keys(rows[0]))
 
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < rows.length; i += BATCH_SIZE) {
         const knex = await this.knex(trx)
+
         await knex('indexer_configurations')
           .insert(rows.slice(i, i + BATCH_SIZE))
           .onConflict(['id'])
           .merge()
+          .whereRaw(upsertOptimizationQuery)
       }
     })
 
@@ -122,4 +124,13 @@ function toRecord(row: IndexerConfigurationRow): IndexerConfigurationRecord {
     minHeight: row.min_height,
     maxHeight: row.max_height,
   }
+}
+
+// Without this piece of code, on every upsert operation the table size grows
+// vacuuming the table does not help, this should be investigated further
+function getUpsertOptimization(columns: string[]) {
+  return columns
+    .filter((column) => column !== 'id')
+    .map((column) => `indexer_configurations.${column} <> EXCLUDED.${column}`)
+    .join(' OR ')
 }

@@ -68,7 +68,7 @@ describe(IndexerService.name, () => {
   it(IndexerService.prototype.upsertConfigurations.name, async () => {
     const indexerConfigurationsRepository =
       mockObject<IndexerConfigurationRepository>({
-        addOrUpdateManyConfigurations: async () => -1,
+        addOrUpdateMany: async () => -1,
       })
 
     const indexerService = new IndexerService(
@@ -98,7 +98,7 @@ describe(IndexerService.name, () => {
     )
 
     expect(
-      indexerConfigurationsRepository.addOrUpdateManyConfigurations,
+      indexerConfigurationsRepository.addOrUpdateMany,
     ).toHaveBeenOnlyCalledWith([
       {
         id: 'a',

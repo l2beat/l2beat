@@ -115,7 +115,7 @@ export const blast: Layer2 = opStackL2({
     {
       name: 'SystemConfig Owner.',
       description:
-        'Account priviliged to change System Config parameters such as Sequencer Address and gas limit.',
+        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
     },
   ],

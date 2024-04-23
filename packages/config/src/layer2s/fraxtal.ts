@@ -95,11 +95,6 @@ export const fraxtal: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
     discovery.getContractDetails('frxETH', {
       description:
         'Fraxtal uses Frax Ether (frxETH) as the designated gas token, allowing users to utilize frxETH to pay for blockspace.',

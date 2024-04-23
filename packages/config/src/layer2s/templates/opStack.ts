@@ -86,6 +86,7 @@ export interface OpStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
+  nodeSourceLink?: string
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
@@ -564,7 +565,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             {
               rollupNodeLink:
                 templateVars.isNodeAvailable === true
-                  ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                  ? templateVars.nodeSourceLink ??
+                    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
                   : '',
             },
           ),
