@@ -26,7 +26,6 @@ export interface ConfigFeatures {
   finality: boolean
   banner: boolean
   tvlBreakdown: boolean
-  diffHistory: boolean
   implementationChange: boolean
   gitcoinOption: boolean
   hiringBadge: boolean

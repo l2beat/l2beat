@@ -18,7 +18,8 @@ export function getScalingTvlView(
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ScalingTvlViewProps {
-  const orderedProjects = orderByTvl(projects, tvlApiResponse)
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const orderedProjects = orderByTvl(included, tvlApiResponse)
 
   return {
     items: orderedProjects.map((project) => {
@@ -83,4 +84,16 @@ function getScalingTvlViewEntry(
     tokens: getTokens(project.id, tvlApiResponse, true),
     stage: project.stage,
   }
+}
+
+function getIncludedProjects(
+  projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
+) {
+  return projects.filter(
+    (p) =>
+      tvlApiResponse?.projects[p.id.toString()] &&
+      !p.isUpcoming &&
+      !p.isArchived,
+  )
 }
