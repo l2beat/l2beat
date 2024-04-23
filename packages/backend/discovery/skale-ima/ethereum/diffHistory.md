@@ -8,11 +8,11 @@ Generated with discovered.json: 0x9488573bfe9b2c4fb7cce4020a4e875f65d8c509
 
 ## Description
 
-A `version` variable of MessageProxyForMainnet has been bumped up 
+A `version` variable of MessageProxyForMainnet has been bumped up
 from 1.5.0 to 2.1.0 with no changes to implementation.
 
 This `version` variable can be arbitrarily changed by the owner
-(emitting `VersionUpdated` event), but it doesn't seem to 
+(emitting `VersionUpdated` event), but it doesn't seem to
 have any impact on contracts in the project.
 
 ## Watched changes
