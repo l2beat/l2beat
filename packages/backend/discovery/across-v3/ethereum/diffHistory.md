@@ -8,7 +8,7 @@ Generated with discovered.json: 0x641b7dc530ac11c0c4ce777336a0452496b66115
 
 ## Description
 
-Liveness value in the HubPool (token escrow) is decreased from 1,5 to 1h. This is the time before a subitted root bundle is finalized and cannot be disputed anymore (And when relayers are reimbursed with tokens). 
+Liveness value in the HubPool (token escrow) is decreased from 1,5 to 1h. This is the time before a subitted root bundle is finalized and cannot be disputed anymore (And when relayers are reimbursed with tokens).
 
 ## Watched changes
 
