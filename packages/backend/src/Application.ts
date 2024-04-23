@@ -57,7 +57,7 @@ export class Application {
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createDiffHistoryModule(config, logger, peripherals),
       createImplementationChangeModule(config, logger, peripherals),
-      createStatusModule(config, logger),
+      createStatusModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
         config,
