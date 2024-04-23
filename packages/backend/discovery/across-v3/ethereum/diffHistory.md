@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x641b7dc530ac11c0c4ce777336a0452496b66115
+
+# Diff at Tue, 23 Apr 2024 12:22:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@0c5cebacabe91d4bb808f51a732583d8107ec7bc block: 19645947
+- current block number: 19718050
+
+## Description
+
+Liveness value in the HubPool (token escrow) is decreased from 1,5 to 1h. This is the time before a subitted root bundle is finalized and cannot be disputed anymore (And when relayers are reimbursed with tokens). 
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.liveness:
+-        5400
++        3600
+    }
+```
+
 Generated with discovered.json: 0x5c90684b94ec67ec0205143a888b5085c83eecf9
 
 # Diff at Sat, 13 Apr 2024 10:06:54 GMT:
