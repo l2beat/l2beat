@@ -99,6 +99,7 @@ export default async function Page({
               name: token.name,
               decimals: token.decimals,
               symbol: token.symbol,
+              iconUrl: token.iconUrl,
             },
             chain: {
               id: chainId,

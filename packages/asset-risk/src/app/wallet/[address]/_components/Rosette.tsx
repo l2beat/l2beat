@@ -1,7 +1,15 @@
+import { type ScalingProjectRiskView } from '@l2beat/config'
+import { type ValueWithSentiment } from '@l2beat/shared-pure'
+
 import { Icon } from '~/components/icons/Icon'
 import { cn } from '~/utils/cn'
 
 type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
+type WarningSentiment = 'bad' | 'warning'
+export type WarningValueWithSentiment = ValueWithSentiment<
+  string,
+  WarningSentiment
+>
 
 export function sentimentToFillColor(sentiment: Sentiment): string {
   switch (sentiment) {
@@ -25,6 +33,109 @@ type Risk =
   | 'proposerFailure'
 
 type RiskSentiments = Record<Risk, Sentiment>
+
+export interface RiskValue {
+  value: string
+  sentiment: Sentiment
+  // TODO: make required
+  description?: string
+  warning?: WarningValueWithSentiment
+}
+
+export type RiskValues = Record<Risk, RiskValue>
+
+interface BigRosetteProps {
+  risks: RiskValues
+  isUpcoming?: boolean
+  isUnderReview?: boolean
+  className?: string
+}
+
+export function getRiskSentiments(
+  riskView: ScalingProjectRiskView | RiskValues,
+  isUnderReview?: boolean,
+): RiskSentiments {
+  if (isUnderReview) {
+    return {
+      sequencerFailure: 'UnderReview',
+      stateValidation: 'UnderReview',
+      dataAvailability: 'UnderReview',
+      exitWindow: 'UnderReview',
+      proposerFailure: 'UnderReview',
+    }
+  }
+  return {
+    sequencerFailure: riskView.sequencerFailure.sentiment,
+    stateValidation: riskView.stateValidation.sentiment,
+    dataAvailability: riskView.dataAvailability.sentiment,
+    exitWindow: riskView.exitWindow.sentiment,
+    proposerFailure: riskView.proposerFailure.sentiment,
+  }
+}
+
+export function BigRosette({
+  risks,
+  className,
+  isUpcoming,
+  isUnderReview,
+}: BigRosetteProps) {
+  isUnderReview =
+    isUnderReview ??
+    Object.values(risks)
+      .flat()
+      .every(({ sentiment }) => sentiment === 'UnderReview')
+
+  const riskSentiments = getRiskSentiments(risks, isUnderReview)
+
+  return (
+    <div
+      data-role="rosette"
+      className={cn('relative w-[272px] p-12', className)}
+      data-rosette-hover-disabled={isUnderReview || (isUpcoming ?? false)}
+    >
+      <BigRosetteIcon
+        risks={riskSentiments}
+        isUpcoming={isUpcoming}
+        isUnderReview={isUnderReview}
+      />
+      <span
+        className="absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
+        data-role="rosette-text"
+        data-rosette="sequencer-failure"
+      >
+        Sequencer failure
+      </span>
+      <span
+        className="absolute -left-1 top-[77px] w-[10ch] rotate-[-64deg] text-center text-xs font-medium uppercase leading-tight"
+        data-role="rosette-text"
+        data-rosette="state-validation"
+      >
+        State validation
+      </span>
+      <span
+        className="absolute left-1/2 top-[10px] w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight"
+        data-role="rosette-text"
+        data-rosette="data-availability"
+      >
+        Data availability
+      </span>
+      <span
+        className="absolute left-[205px] top-[86px] w-[10ch] rotate-[69deg] text-center text-xs font-medium uppercase leading-tight"
+        data-role="rosette-text"
+        data-rosette="exit-window"
+      >
+        Exit window
+      </span>
+      <span
+        className="absolute bottom-[32px] right-[23px] w-[10ch] rotate-[-36deg] text-center text-xs font-medium uppercase leading-tight"
+        data-role="rosette-text"
+        data-rosette="validator-failure"
+      >
+        Proposer failure
+      </span>
+    </div>
+  )
+}
 
 export interface RosetteProps {
   risks: RiskSentiments

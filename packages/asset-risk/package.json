@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@l2beat/config": "*",
+    "@l2beat/shared-pure": "*",
     "@t3-oss/env-nextjs": "^0.10.0",
     "clsx": "^2.1.0",
     "earl": "^1.1.0",
