@@ -23,7 +23,7 @@ const isForcedBatchDisallowed =
 
 const upgradeability = {
   upgradableBy: ['ProxyAdminOwner'],
-  upgradeDelay: 'No delay',
+  upgradeDelay: 'None',
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
