@@ -32,8 +32,17 @@ export class PriceIndexer extends ChildIndexer {
     const to = this.getAdjustedTo(from, _to)
 
     const prices = await this.fetchAndOptimizePrices(from, to)
+    this.logger.info('Fetched prices in range', {
+      from: from.toNumber(),
+      to: to.toNumber(),
+      prices: prices.length,
+    })
 
     await this.priceRepository.addMany(prices)
+
+    this.logger.info('Saved prices into DB', {
+      prices: prices.length,
+    })
 
     return to.toNumber()
   }
@@ -115,11 +124,16 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.priceRepository.deleteAfterExclusive(
+    const deletedRecords = await this.priceRepository.deleteAfterExclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),
     )
+
+    this.logger.info('Deleted records', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return Promise.resolve(targetHeight)
   }
