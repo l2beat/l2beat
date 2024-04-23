@@ -113,13 +113,14 @@ export default async function Page({
         })
       }),
     )
-  )
-    .flat()
-    .filter((token) => token.balance === null || token.balance > 0n)
+  ).flat()
+
+  const successes = tokens.filter(({ balance }) => balance !== null)
+  const errors = tokens.filter(({ balance }) => balance === null)
 
   const grouped = Object.entries(
     groupBy(
-      tokens.filter(({ balance }) => balance !== null),
+      tokens.filter(({ balance }) => balance !== null && balance > 0n),
       'chain.id',
     ),
   )
@@ -129,36 +130,52 @@ export default async function Page({
   })
 
   return (
-    <main className="max-w-[1296px] px-4 md-px12 mx-auto mt-10">
-      <h1 className="mb-1 text-3xl font-bold">
-        Hello {resolvedEnsDomain ? resolvedEnsDomain : address}!
-      </h1>
-      {tokens.length === 0 && <p>You don&apos;t have any known tokens</p>}
-      {grouped.map(([chainIdString, tokens]) => {
-        const chainId = Number(chainIdString)
-        return (
-          <div key={chainId}>
-            <h2 className="mt-8 text-2xl font-bold">
-              {getChain(chainId).name}
-            </h2>
-            {tokens.map(({ token, balance }) => (
-              <div key={token.id} className="mt-4">
-                {balance === null ? (
-                  <p>
-                    We couldn&apos;t check your balance of {token.name} on{' '}
-                    {getChain(chainId).name}
-                  </p>
-                ) : (
-                  <p>
-                    You have {formatUnits(balance, token.decimals)} {token.name}{' '}
-                    on {getChain(chainId).name}
-                  </p>
-                )}
+    <main className="max-w-[1296px] px-4 md:px-12 mx-auto mt-10">
+      <div className="flex flex-col gap-12">
+        <div>
+          <h1 className="mb-1 text-3xl font-bold">
+            Hello {resolvedEnsDomain ? resolvedEnsDomain : address}!
+          </h1>
+          <p>
+            Scanned {tokens.length} tokens, success: {successes.length}, errors:{' '}
+            {errors.length}
+          </p>
+        </div>
+        <div className="flex flex-col gap-8">
+          {tokens.length === 0 && <p>You don&apos;t have any known tokens</p>}
+          {grouped.map(([chainIdString, tokens]) => {
+            const chainId = Number(chainIdString)
+            return (
+              <div key={chainId}>
+                <h2 className="text-2xl font-bold">{getChain(chainId).name}</h2>
+                {tokens.map(({ token, balance }) => (
+                  <div key={token.id} className="mt-4">
+                    {balance === null ? (
+                      <p>
+                        We couldn&apos;t check your balance of {token.name} on{' '}
+                        {getChain(chainId).name}
+                      </p>
+                    ) : (
+                      <p>
+                        You have {formatUnits(balance, token.decimals)}{' '}
+                        {token.name} on {getChain(chainId).name}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+            )
+          })}
+        </div>
+        {errors.length > 0 && (
+          <div>
+            Errors:{' '}
+            {errors
+              .map(({ token, chain }) => `${token.name} on ${chain.name}`)
+              .join(', ')}
           </div>
-        )
-      })}
+        )}
+      </div>
     </main>
   )
 }
