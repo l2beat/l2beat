@@ -23,6 +23,7 @@ export function getProps(
     verificationStatus,
     manuallyVerifiedContracts,
     implementationChange,
+    tvlBreakdownApiResponse,
   } = pagesData
 
   const charts = getCharts(
@@ -41,6 +42,7 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
+        tvlBreakdownApiResponse,
       ),
       projectDetails: getProjectDetails(
         project,
