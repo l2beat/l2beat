@@ -36,6 +36,12 @@ export default function RootLayout({
     // which causes a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="shortcut icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="mask-icon" href="/mask-icon.svg" />
+      </head>
       <body
         className={cn(roboto.variable, robotoSerif.variable, 'flex flex-col')}
       >
