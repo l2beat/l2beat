@@ -8,6 +8,11 @@ import { PolygonZkEvmTransaction, RawPolygonZkEvmBlock } from './types'
 
 export { decodeBatch }
 
+/**
+ * Code has been adapted from the original implementation in the Polygon ZK EVM
+ * Only few styling and type changes have been made since we do not need full batch context
+ * @see https://github.com/0xPolygonHermez/zkevm-node/blob/bf4aa0335ac761dc5d86cb1bca2e8cc087cd4024/state/encoding_batch_v2.go#L206
+ */
 function decodeBatch(txsData: Uint8Array): RawPolygonZkEvmBlock[] {
   const { changeL2Block } = constants
 
