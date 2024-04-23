@@ -2,6 +2,7 @@ import { Layer2, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
+  ProjectAssetsBreakdownApiResponse,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -25,8 +26,11 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
+  tvlBreakdownApiResponse?: ProjectAssetsBreakdownApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const tvlBreakdownProject =
+    tvlBreakdownApiResponse?.breakdowns[project.id.toString()]
   const implementationChangeForProject =
     implementationChange?.projects[project.id.toString()]
   const implementationHasChanged =
@@ -88,7 +92,8 @@ export function getProjectHeader(
     purposes: project.display.purposes,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
-    showTvlBreakdown: config.features.tvlBreakdown,
+    showTvlBreakdown:
+      config.features.tvlBreakdown && !!apiProject && !!tvlBreakdownProject,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
     links: getLinks(project.display.links),
     stage: project.stage,
