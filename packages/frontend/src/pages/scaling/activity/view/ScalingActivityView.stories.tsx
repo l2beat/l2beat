@@ -24,6 +24,7 @@ export const Primary: Story = {
         slug: 'zksync-era',
         category: 'ZK Rollup',
         provider: 'ZK Stack',
+        type: 'layer2',
         warning:
           'Withdrawals are delayed by 21h. The length of the delay can be arbitrarily set by a MultiSig.',
         redWarning: undefined,
@@ -108,6 +109,7 @@ export const Primary: Story = {
       {
         name: 'Ethereum',
         shortName: undefined,
+        type: undefined,
         slug: 'ethereum',
         dataSource: 'Blockchain RPC',
         category: undefined,
@@ -130,6 +132,7 @@ export const Primary: Story = {
         name: 'Mantle',
         shortName: undefined,
         slug: 'mantle',
+        type: 'layer2',
         category: 'Optimium',
         provider: 'OVM',
         warning:
@@ -151,6 +154,7 @@ export const Primary: Story = {
       {
         name: 'Arbitrum One',
         shortName: undefined,
+        type: 'layer2',
         slug: 'arbitrum',
         category: 'Optimistic Rollup',
         provider: 'Arbitrum',
@@ -260,6 +264,7 @@ export const Primary: Story = {
         name: 'ZKSpace',
         shortName: undefined,
         slug: 'zkspace',
+        type: 'layer2',
         category: 'ZK Rollup',
         provider: 'zkSync Lite',
         warning: undefined,

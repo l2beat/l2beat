@@ -37,7 +37,12 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
 import { getStage } from '../common/stages/getStage'
-import { type Layer2, type Layer2Display, Layer2FinalityConfig } from '../types'
+import {
+  type Layer2,
+  type Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+} from '../types'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -78,8 +83,10 @@ export interface OpStackConfigCommon {
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
+  nonTemplateTrackedTxs?: Layer2TxConfig[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
+  nodeSourceLink?: string
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
@@ -425,7 +432,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : [
+          : templateVars.nonTemplateTrackedTxs ?? [
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -558,7 +565,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             {
               rollupNodeLink:
                 templateVars.isNodeAvailable === true
-                  ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                  ? templateVars.nodeSourceLink ??
+                    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
                   : '',
             },
           ),

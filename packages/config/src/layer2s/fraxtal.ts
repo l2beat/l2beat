@@ -95,11 +95,6 @@ export const fraxtal: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
     discovery.getContractDetails('frxETH', {
       description:
         'Fraxtal uses Frax Ether (frxETH) as the designated gas token, allowing users to utilize frxETH to pay for blockspace.',
@@ -119,5 +114,19 @@ export const fraxtal: Layer2 = opStackL2({
       description: `Upgradable contract that manages the PAUSED_SLOT, a boolean value indicating whether the Superchain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. The address of the guardian can only be modified by the ProxyAdmin by upgrading the SuperchainConfig contract. This contract is a fork of Optimism's superchainConfig contract and may not be utilized by other chains.`,
     }),
   ],
+  chainConfig: {
+    name: 'fraxtal',
+
+    chainId: 252,
+    explorerUrl: 'https://fraxscan.com/',
+    explorerApi: {
+      url: 'https://api.fraxscan.com/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 1
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-02-01T06:05:11Z')),
+    coingeckoPlatform: 'fraxtal',
+  },
+  nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
 })

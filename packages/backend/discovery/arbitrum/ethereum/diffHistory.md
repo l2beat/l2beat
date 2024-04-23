@@ -51,7 +51,7 @@ Generated with discovered.json: 0x3ea08e093c4fc78a79b685a42dbbadc7258c49c0
 
 ## Description
 
-- changed futureBlocks from 12 to 64, changed futureSeconds from 3600 to 768. The futureBlocks value in the the SequencerInbox enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. The increase to 64, two epochs, is in line with Ethereum’s finality guarantees. The futureSeconds value is set to correspond to the new futureBlocks value (64\*12s).
+- changed futureBlocks from 12 to 64, changed futureSeconds from 3600 to 768. The futureBlocks value in the SequencerInbox enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. The increase to 64, two epochs, is in line with Ethereum’s finality guarantees. The futureSeconds value is set to correspond to the new futureBlocks value (64\*12s).
 - added a batchPosterManager multisig. It can update whether an address is authorized to be a batch poster at the sequencer inbox. The DAO still has the same ability to revoke the Sequencer role; i.e., the DAO could update the batch poster manager (along with any batch posters).
 - updated wasmModuleRoot to ArbOS v20. List of changes:
   https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957

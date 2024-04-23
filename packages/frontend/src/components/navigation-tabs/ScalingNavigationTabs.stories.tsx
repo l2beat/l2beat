@@ -18,7 +18,6 @@ export const ScalingNavigationTabs: Story = {
       costsPage: true,
       banner: false,
       tvlBreakdown: false,
-      diffHistory: false,
       implementationChange: false,
       gitcoinOption: false,
       hiringBadge: false,

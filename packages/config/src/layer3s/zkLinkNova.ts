@@ -14,10 +14,10 @@ export const zklinknova: Layer3 = underReviewL3({
     category: 'Validium',
     provider: 'zkLink Nexus',
     links: {
-      websites: ['https://zk.link'],
-      apps: ['https://playground-nexus.zk.link'],
-      documentation: ['https://docs.zk.link'],
-      explorers: ['https://scan-nexus.zk.link'],
+      websites: ['https://zklink.io', 'https://zk.link'],
+      apps: ['https://app.zklink.io', 'https://portal.zklink.io'],
+      documentation: ['https://docs.zklink.io'],
+      explorers: ['https://explorer.zklink.io'],
       repositories: ['https://github.com/zkLinkProtocol'],
       socialMedia: [
         'https://blog.zk.link',

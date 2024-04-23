@@ -1103,6 +1103,76 @@
   ],
   "arbitrum": [
     {
+      "symbol": "FRAX",
+      "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "FXS",
+      "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "FPI",
+      "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0x3405E88af759992937b84E58F2Fe691EF0EeA320",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "frxETH",
+      "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "sFRAX",
+      "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
       "symbol": "ARB",
       "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
       "type": "NMV",
@@ -1272,6 +1342,79 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "FRAX",
+      "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "FXS",
+      "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-share"
+    },
+    {
+      "symbol": "FPI",
+      "address": "0xC5d43A94e26fCa47A9b21CF547ae4AA0268670E1",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index"
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0x8368Dca5CE2a4Db530c0F6e535d90B6826428Dee",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index-share"
+    },
+    {
+      "symbol": "frxETH",
+      "address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
+    {
+      "symbol": "sFRAX",
+      "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      }
+    },
     {
       "symbol": "EXA",
       "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
@@ -1562,6 +1705,16 @@
         "bridge": "Stargate",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "mBTC",
+      "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
+      "coingeckoId": "merlin-s-seal-btc",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free"
+      }
     }
   ],
   "zksync2": [
@@ -1571,6 +1724,232 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "FRAX",
+      "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax"
+    },
+    {
+      "symbol": "FXS",
+      "address": "0x19BC97D3C223fC8a0fF0541D260f4f438d5FaF99",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-share"
+    },
+    {
+      "symbol": "FPI",
+      "address": "0xD405617DB7473b0A3158356Be7bC9EbEc6D88b85",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index"
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0x36711BA13B461f1998EC9f9B36A410799560f206",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index-share"
+    },
+    {
+      "symbol": "frxETH",
+      "address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-ether"
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "staked-frax-ether"
+    }
+  ],
+  "bobanetwork": [
+    {
+      "symbol": "FRAX",
+      "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax"
+    }
+  ],
+  "fraxtal": [
+    {
+      "symbol": "FRAX",
+      "address": "0xfc00000000000000000000000000000000000001",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax"
+    },
+    {
+      "symbol": "FXS",
+      "address": "0xfc00000000000000000000000000000000000002",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-share"
+    },
+    {
+      "symbol": "FPI",
+      "address": "0xfc00000000000000000000000000000000000003",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index"
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0xfc00000000000000000000000000000000000004",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index-share"
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0xfc00000000000000000000000000000000000005",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "staked-frax-ether"
+    },
+    {
+      "symbol": "sFRAX",
+      "address": "0xfc00000000000000000000000000000000000008",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "staked-frax"
+    }
+  ],
+  "polygonzkevm": [
+    {
+      "symbol": "FRAX",
+      "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax"
+    },
+    {
+      "symbol": "FXS",
+      "address": "0x6b856a14CeA1d7dCfaF80fA6936c0b75972cCacE",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-share"
+    },
+    {
+      "symbol": "FPI",
+      "address": "0x7E5845b1bFc9e6620893e48346bdB8541995a8D9",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index"
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0xdE7df9036801676aF0cB73661d93a098c0085fba",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-price-index-share"
+    },
+    {
+      "symbol": "frxETH",
+      "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "frax-ether"
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0x7c2aF1Fb79D0b1c67d4eb802d44C673D0A1D2C04",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "staked-frax-ether"
+    },
+    {
+      "symbol": "sFRAX",
+      "address": "0x2C37fb628b35dfdFD515d41B0cAAe11B542773C3",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Frax Ferry",
+        "slug": "fraxferry"
+      },
+      "coingeckoId": "staked-frax"
     }
   ]
 }
