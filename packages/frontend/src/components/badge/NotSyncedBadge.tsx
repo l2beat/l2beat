@@ -16,14 +16,14 @@ export function NotSyncedBadge({
   if (!syncedUntil)
     return (
       <div className={cn('inline', className)}>
-                <NotSynced/>
+        <NotSynced />
       </div>
     )
 
   return (
     <Tooltip className={cn('inline', className)}>
       <TooltipTrigger className="inline">
-        <NotSynced/>
+        <NotSynced />
       </TooltipTrigger>
       <TooltipContent>
         The data for this item is not synced since {syncedUntil}.
@@ -32,8 +32,10 @@ export function NotSyncedBadge({
   )
 }
 
-function NotSynced(){
-  return <Badge size="extraSmall" padding="regular" type="gray">
-  NOT SYNCED
-</Badge>
+function NotSynced() {
+  return (
+    <Badge size="extraSmall" padding="regular" type="gray">
+      NOT SYNCED
+    </Badge>
+  )
 }
