@@ -142,7 +142,9 @@ export default async function Page({
           </p>
         </div>
         <div className="flex flex-col gap-8">
-          {tokens.length === 0 && <p>You don&apos;t have any known tokens</p>}
+          {Object.keys(grouped).length === 0 && (
+            <p>You don&apos;t have any known tokens</p>
+          )}
           {grouped.map(([chainIdString, tokens]) => {
             const chainId = Number(chainIdString)
             return (
