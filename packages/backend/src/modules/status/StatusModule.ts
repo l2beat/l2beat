@@ -31,7 +31,7 @@ export function createStatusModule(
     () => setIndexerGauges(),
     logger.for('StatusModule'),
     {
-      metricsId: 'setIndexerGauges',
+      metricsId: 'StatusModule',
     },
   )
 
