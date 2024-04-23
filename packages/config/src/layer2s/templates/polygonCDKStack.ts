@@ -119,6 +119,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradeConsiderations: exitWindowRisk.description,
   }
 
+  const sharedUpgradeability = {
+    upgradableBy: ['SharedProxyAdminOwner'],
+    upgradeDelay: exitWindowRisk.value,
+    upgradeConsiderations: exitWindowRisk.description,
+  }
+
   assert(
     templateVars.rollupManagerContract.address ===
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
@@ -501,17 +507,17 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ),
         shared.getContractDetails(templateVars.rollupManagerContract.name, {
           description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails('Bridge', {
           description:
             'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails('GlobalExitRootV2', {
           description:
             'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails(
           'Timelock',
