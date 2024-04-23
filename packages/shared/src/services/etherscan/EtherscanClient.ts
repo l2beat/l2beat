@@ -111,7 +111,13 @@ export class EtherscanClient implements BlockNumberProvider {
       }
     }
 
-    throw new Error('Could not fetch block number')
+    throw new Error('Could not fetch block number', {
+      cause: {
+        current,
+        timestamp,
+        minTimestamp: this.minTimestamp,
+      },
+    })
   }
 
   async getContractSource(address: EthereumAddress) {
