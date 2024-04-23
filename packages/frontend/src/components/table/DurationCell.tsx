@@ -22,7 +22,7 @@ export function DurationCell(props: {
   const colorClassName = getDurationColorClassName(seconds)
 
   return (
-    <span className={!props.grayedOut ? colorClassName : 'text-[#737373]'}>
+    <span className={!props.grayedOut ? colorClassName : 'text-gray-500'}>
       {durationText}
     </span>
   )
