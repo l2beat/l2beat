@@ -14,7 +14,13 @@
     "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "ChallengerMultisig",
     "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "ZoraMultisig",
     "0xdC40a14d9abd6F410226f1E6de71aE03441ca506": "L1CrossDomainMessenger",
-    "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": "SystemConfig"
+    "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": "SystemConfig",
+    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
+    "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner"
   },
   "overrides": {
     "OptimismPortal": {
