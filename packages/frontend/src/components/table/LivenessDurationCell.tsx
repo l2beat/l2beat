@@ -22,6 +22,7 @@ export function LivenessDurationCell(props: {
   tooltipContent?: TooltipContentType
   warning?: string
   syncedUntil?: UnixTime
+  isSynced?: boolean
 }) {
   if (
     !props.durationInSeconds &&
@@ -53,22 +54,19 @@ export function LivenessDurationCell(props: {
     )
   }
 
-  const syncTarget = UnixTime.now().add(-1, 'hours').toStartOf('hour')
-  const notSynced = props.syncedUntil?.lt(syncTarget) ?? false
-
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
         <DurationCell
           durationInSeconds={props.durationInSeconds}
-          grayedOut={notSynced}
+          grayedOut={!props.isSynced}
         />
         {props.warning && (
           <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
       </TooltipTrigger>
       <TooltipContent>
-        {notSynced &&
+        {!props.isSynced &&
           props.syncedUntil &&
           `The data is not synced until ${formatTimestamp(
             props.syncedUntil?.toNumber(),

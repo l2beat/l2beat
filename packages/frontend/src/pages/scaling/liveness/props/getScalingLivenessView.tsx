@@ -84,14 +84,17 @@ function getLivenessData(
     stateUpdates: liveness.stateUpdates && {
       ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
+      isSynced: liveness.stateUpdates.syncedUntil?.gte(syncTarget) ?? false,
     },
     batchSubmissions: liveness.batchSubmissions && {
       ...liveness.batchSubmissions,
       warning: project.display.liveness?.warnings?.batchSubmissions,
+      isSynced: liveness.batchSubmissions.syncedUntil?.gte(syncTarget) ?? false,
     },
     proofSubmissions: liveness.proofSubmissions && {
       ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
+      isSynced: liveness.proofSubmissions.syncedUntil?.gte(syncTarget) ?? false,
     },
     syncStatus: {
       isSynced,
