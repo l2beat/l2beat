@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5af4a837b40edc6cec6ef7232f706a3020e6e398
+
+# Diff at Tue, 23 Apr 2024 06:47:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@367b214c529a223ad2c693de223af8c52dee62a2 block: 19610743
+- current block number: 19716400
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: The number of rollups that the manager can use.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.rollupCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x52ccc712d84f6a377b14c04b6db779a53ac555f5
 
 # Diff at Mon, 08 Apr 2024 11:46:45 GMT:

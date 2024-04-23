@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 19631886,
+  "blockNumber": 19716430,
   "configHash": "0x71290ff26c25629038a873aef85bc85cc2e38a8515afecd7c77b3f06880ed619",
   "version": 3,
   "contracts": [
@@ -114,7 +114,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x6521a2988a98840ce78ba3bcc93c33321d05c682976d6ee7074758b33256e732",
+        "getRoot": "0xa9ef3f2abdf9095e0ef0616734a472bc7d4c9ba4aff5d9bffdc9d96ecb0d06e8",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -154,7 +154,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x221e8142de16d29a7ecf037406f102d06997bbe5fb1420e6082e95cc85d48102",
+        "lastAccInputHash": "0xea51e926d0048cf42b7ee9eb41bd2db69ccbd5be0e96af4e617edca1b07ab434",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -221,17 +221,41 @@
           []
         ],
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1711986143,
+        "lastMint": 1713198959,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10129821158641559310000000000",
+        "totalSupply": "10141343050427983160000000000",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
+    },
+    {
+      "name": "PolygonDataCommittee",
+      "address": "0x45d53514c8aC4591E0302b0181112b266e77bf97",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xab3CBd6950b0294d6770e090C52736a2446EAeD7",
+        "admin": "0xe616A746d02879f98523f095748978192fEb7AA7"
+      },
+      "implementations": ["0xab3CBd6950b0294d6770e090C52736a2446EAeD7"],
+      "sinceTimestamp": 1713471371,
+      "values": {
+        "committeeHash": "0x6f6bcb8d60d275dd05d480576640ef5d0d04d81b9b34b0e9b1f4337044c58f73",
+        "getAmountOfMembers": 1,
+        "getProcotolName": "DataAvailabilityCommittee",
+        "members": [
+          [
+            "https://oev-network-da.eu-north-2.gateway.fm",
+            "0x20f2eA7Dedc9Ad84D3b583C7BeC11460D170E85E"
+          ]
+        ],
+        "owner": "0x7bDc4E494bFcbDD6d1258f007992c5f0742Dd424",
+        "requiredAmountOfSignatures": 0
+      }
     },
     {
       "name": "PolygonRollupManager",
@@ -309,15 +333,15 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xb90d2e97769d58ad8abe510965a7690f810e5b6ecee0af0dbac1a96d8db06b50",
+        "getRollupExitRoot": "0x1708f31c3d8216885917b5ec7507488e1123fa4021d0c9f48f1ff78f9d13593e",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1712832275,
+        "lastAggregationTimestamp": 1713853871,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 3,
+        "rollupCount": 4,
         "rollupsData": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -329,6 +353,10 @@
           ],
           [
             "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
@@ -351,8 +379,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 45955,
-        "totalVerifiedBatches": 45360,
+        "totalSequencedBatches": 66132,
+        "totalVerifiedBatches": 65873,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -370,8 +398,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 8399,
-        "getRoot": "0x344576ff17d812ef88a1fd9f848eae2ca6d26f6276f0bd8ad50c281b6c23f00d",
+        "depositCount": 14840,
+        "getRoot": "0x49391ececee10f9ead9b0be8b34fdefdba991bb8dba94dbc4c309d2be95f46dd",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -397,6 +425,63 @@
         "supplyController": "0x4a11078a99b118BbFee78a5c187D98D264360433",
         "symbol": "OKB",
         "totalSupply": "300000000000000000000000000"
+      }
+    },
+    {
+      "name": "PolygonValidiumStorageMigration",
+      "address": "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      },
+      "implementations": ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"],
+      "sinceTimestamp": 1713461567,
+      "values": {
+        "admin": "0x7bDc4E494bFcbDD6d1258f007992c5f0742Dd424",
+        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "calculatePolPerForceBatch": 0,
+        "dataAvailabilityProtocol": "0x45d53514c8aC4591E0302b0181112b266e77bf97",
+        "forceBatchAddress": "0x7bDc4E494bFcbDD6d1258f007992c5f0742Dd424",
+        "forceBatchTimeout": 432000,
+        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenNetwork": 0,
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
+        "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
+        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
+        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA": "0x80b8",
+        "INITIALIZE_TX_CONSTANT_BYTES": 32,
+        "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
+        "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
+        "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
+        "isSequenceWithDataAvailabilityAllowed": false,
+        "lastAccInputHash": "0xd92ef165787634b1c48ff4793fdef8e8e22afb6a2c2e6a5372e0e4d4f04bdad7",
+        "lastForceBatch": 0,
+        "lastForceBatchSequenced": 0,
+        "networkName": "oev-network",
+        "pendingAdmin": "0x0000000000000000000000000000000000000000",
+        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
+        "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
+        "SIGNATURE_INITIALIZE_TX_V": 27,
+        "TIMESTAMP_RANGE": 36,
+        "trustedSequencer": "0x07be30f5a66A5BBDA9D8402F637Bb82D03495D62",
+        "trustedSequencerURL": "https://oev-network-sequencer.eu-north-2.gateway.fm"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xe616A746d02879f98523f095748978192fEb7AA7",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1713471359,
+      "values": {
+        "owner": "0xf82704479c8254b9cf3D900bDD9d2926d94ae0f1"
       }
     },
     {
@@ -532,8 +617,10 @@
     }
   ],
   "eoas": [
+    "0x07be30f5a66A5BBDA9D8402F637Bb82D03495D62",
     "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08",
     "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+    "0x20f2eA7Dedc9Ad84D3b583C7BeC11460D170E85E",
     "0x21887c89368bf918346c62460e0c339113801C28",
     "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
     "0x491619874b866c3cDB7C8553877da223525ead01",
@@ -543,6 +630,7 @@
     "0x4c1665d6651ecEfa59B9B3041951608468b18891",
     "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
     "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+    "0x7bDc4E494bFcbDD6d1258f007992c5f0742Dd424",
     "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
     "0xA0B02B28920812324f1cC3255bd8840867d3f227",
     "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
@@ -553,6 +641,7 @@
     "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
     "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5",
     "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+    "0xf82704479c8254b9cf3D900bDD9d2926d94ae0f1",
     "0xFe45baf0F18c207152A807c1b05926583CFE2e4b"
   ],
   "abis": {
@@ -1001,6 +1090,12 @@
       "function updatePermit2Allowance(bool enabled)",
       "function version() pure returns (string)"
     ],
+    "0x45d53514c8aC4591E0302b0181112b266e77bf97": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1075,6 +1170,30 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0xab3CBd6950b0294d6770e090C52736a2446EAeD7": [
+      "constructor()",
+      "error CommitteeAddressDoesNotExist()",
+      "error EmptyURLNotAllowed()",
+      "error TooManyRequiredSignatures()",
+      "error UnexpectedAddrsAndSignaturesSize()",
+      "error UnexpectedAddrsBytesLength()",
+      "error UnexpectedCommitteeHash()",
+      "error WrongAddrOrder()",
+      "event CommitteeUpdated(bytes32 committeeHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function committeeHash() view returns (bytes32)",
+      "function getAmountOfMembers() view returns (uint256)",
+      "function getProcotolName() pure returns (string)",
+      "function initialize()",
+      "function members(uint256) view returns (string url, address addr)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function requiredAmountOfSignatures() view returns (uint256)",
+      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
+      "function transferOwnership(address newOwner)",
+      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
+    ],
     "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
@@ -1147,6 +1266,17 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xe616A746d02879f98523f095748978192fEb7AA7": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin, address _polygonZkEVM)",

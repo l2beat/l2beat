@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19610743,
+  "blockNumber": 19716400,
   "configHash": "0x5ca56ad5f4fc2677630f64ada63d0604a05ad86b5e79034eb1cfd47f19cec2c7",
   "version": 3,
   "contracts": [
@@ -82,14 +82,14 @@
           []
         ],
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1711986143,
+        "lastMint": 1713198959,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10129821158641559310000000000",
+        "totalSupply": "10141343050427983160000000000",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -146,7 +146,7 @@
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 3,
+        "rollupCount": 4,
         "rollupData": [
           "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
           1101,
@@ -189,7 +189,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0x4cbe667e1d63147bfd0e4018edc1e54f18961cbc0a6fd649fc08c09d20264342",
+        "lastAccInputHash": "0xa98589162ea2ff6dc0b17b75be9d9792457bcd6e01d79c1eb914d49cd10f8ee4",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",

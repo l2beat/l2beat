@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x9473396ba2606f28bd2a1ef95a0785abe6b27905
+
+# Diff at Tue, 23 Apr 2024 06:54:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@367b214c529a223ad2c693de223af8c52dee62a2 block: 19631886
+- current block number: 19716430
+
+## Description
+
+A new Rollup type is added wit `createNewRollup()`. That means that a new Rollup (not an upgrade of an existing) is prepared, in this case using the new chainid 4913 and a `PolygonValidiumStorageMigration` rollupContract.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        3
++        4
++++ description: Maps rollup contracts and their verifier. Any change either should be picked up also by the specific rollup config, unless it's a new rollup.
++++ severity: MEDIUM
+      values.rollupsData.3:
++        ["0x88AaB361f108C3c959F2928Da3cD8e47298016B5","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x45d53514c8aC4591E0302b0181112b266e77bf97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumStorageMigration (0x88AaB361f108C3c959F2928Da3cD8e47298016B5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xe616A746d02879f98523f095748978192fEb7AA7)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/utils/Strings.sol      |    0
+ .../contracts/utils/cryptography/ECDSA.sol         |    0
+ .../@openzeppelin/contracts/utils/math/Math.sol    |    0
+ .../access/OwnableUpgradeable.sol                  |    0
+ .../proxy/utils/Initializable.sol                  |    0
+ .../utils/AddressUpgradeable.sol                   |    0
+ .../utils/ContextUpgradeable.sol                   |    0
+ .../v2/consensus/validium/PolygonDataCommittee.sol |    0
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |    0
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |    0
+ .../implementation/meta.txt                        |    0
+ .../@openzeppelin/contracts/access/Ownable.sol     |    0
+ .../contracts/interfaces/IERC1967.sol              |    0
+ .../contracts/interfaces/draft-IERC1822.sol        |    0
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |    0
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |    0
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |    0
+ .../contracts/proxy/beacon/BeaconProxy.sol         |    0
+ .../contracts/proxy/beacon/IBeacon.sol             |    0
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |    0
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |    0
+ .../transparent/TransparentUpgradeableProxy.sol    |    0
+ .../@openzeppelin/contracts/utils/Address.sol      |    0
+ .../@openzeppelin/contracts/utils/Context.sol      |    0
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |    0
+ .../proxy/meta.txt                                 |    0
+ .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
+ .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
+ .../access/OwnableUpgradeable.sol                  |   95 +
+ .../proxy/utils/Initializable.sol                  |    0
+ .../utils/AddressUpgradeable.sol                   |    0
+ .../utils/ContextUpgradeable.sol                   |    0
+ .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |    0
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
+ .../implementation/meta.txt                        |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../proxy/meta.txt                                 |    2 +
+ .../access/IAccessControlUpgradeable.sol           |    0
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |    0
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |    0
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |    0
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |    0
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |    0
+ .../utils/introspection/ERC165Upgradeable.sol      |    0
+ .../utils/introspection/IERC165Upgradeable.sol     |    0
+ .../utils/math/MathUpgradeable.sol                 |    0
+ .../@openzeppelin/contracts5/access/Ownable.sol    |    0
+ .../contracts5/interfaces/IERC1967.sol             |    0
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |    0
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |    0
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |    0
+ .../contracts5/proxy/beacon/IBeacon.sol            |    0
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |    0
+ .../transparent/TransparentUpgradeableProxy.sol    |    0
+ .../@openzeppelin/contracts5/utils/Address.sol     |    0
+ .../@openzeppelin/contracts5/utils/Context.sol     |    0
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |    0
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |    0
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |    0
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |    0
+ .../contracts/interfaces/IVerifierRollup.sol       |    0
+ .../contracts/lib/EmergencyManager.sol             |    0
+ .../contracts/v2/PolygonRollupManager.sol          |    0
+ .../migration/PolygonRollupBaseEtrogNoGap.sol      |    0
+ .../migration/PolygonValidiumStorageMigration.sol  |    0
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |    0
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |    0
+ .../v2/interfaces/IPolygonRollupManager.sol        |    0
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |    0
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |    0
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |    0
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |    0
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |    0
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |    0
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |    0
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |    0
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |    0
+ .../implementation/meta.txt                        |    0
+ .../proxy/meta.txt                                 |    0
+ .../access/IAccessControlUpgradeable.sol           |   88 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |   82 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  116 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   70 +
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  345 ++++
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |   16 +
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |  118 ++
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |  211 +++
+ .../contracts/interfaces/IVerifierRollup.sol       |   13 +
+ .../contracts/lib/EmergencyManager.sol             |   73 +
+ .../contracts/v2/PolygonRollupManager.sol          | 1911 ++++++++++++++++++++
+ .../migration/PolygonRollupBaseEtrogNoGap.sol      |  945 ++++++++++
+ .../migration/PolygonValidiumStorageMigration.sol  |  347 ++++
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |  134 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |   20 +
+ .../v2/interfaces/IPolygonRollupManager.sol        |  170 ++
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |   15 +
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |  166 ++
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |   10 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   56 +
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |  153 ++
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |  245 +++
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  951 ++++++++++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../implementation/meta.txt                        |    2 +
+ .../proxy/meta.txt                                 |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../meta.txt                                       |    2 +
+ 159 files changed, 11640 insertions(+)
+```
+
 Generated with discovered.json: 0xca1dcfc893f3259ddea0aa19ddc937f9e0d76fa1
 
 # Diff at Wed, 10 Apr 2024 09:31:38 GMT:

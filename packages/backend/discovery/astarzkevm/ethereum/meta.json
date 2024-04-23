@@ -134,6 +134,11 @@
           "severity": null,
           "type": null
         },
+        "TIMESTAMP_RANGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "admin": {
           "description": null,
           "severity": null,
@@ -232,7 +237,7 @@
       }
     },
     {
-      "name": "FflonkVerifier",
+      "name": "AstarVerifier",
       "values": {}
     },
     {

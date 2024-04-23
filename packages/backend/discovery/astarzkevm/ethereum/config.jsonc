@@ -35,6 +35,7 @@
         "totalSequencedBatches",
         "totalVerifiedBatches"
       ],
+      "ignoreInWatchMode": ["rollupCount"],
       "fields": {
         "rollupData": {
           "type": "call",
