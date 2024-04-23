@@ -1,12 +1,15 @@
 {
-    "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
-    "chain": "ethereum",
-    "name": "zkasino",
-    "initialAddresses": ["0x9144e18c28338516f0ace99bc88de34aae59be45"],
-    "names": {
-      "0x7911FeA7b36Fbd58a771bbf907aAd2ef4BDCC491": "ZKasinoMultisig",
-      "0x9144e18c28338516f0ace99bc88de34aae59be45": "Bridge"
-    },
-    "overrides": {}
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "zkasino",
+  "initialAddresses": ["0x9144e18c28338516f0ace99bc88de34aae59be45"],
+  "names": {
+    "0x7911FeA7b36Fbd58a771bbf907aAd2ef4BDCC491": "ZKasinoMultisig",
+    "0x9144E18C28338516f0ACe99Bc88DE34aaE59Be45": "Bridge"
+  },
+  "overrides": {
+    "Bridge": {
+      "ignoreMethods": ["deposits", "getAllDeposits"] // too many values
+    }
+  }
 }
-  

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "arbitrum",
+  "name": "zkasino",
+  "initialAddresses": ["0x51e99A0D09EeCa8d7EFEc3062AC024B6d0989959"],
+  "names": {
+    "0x51e99A0D09EeCa8d7EFEc3062AC024B6d0989959": "Bankroll",
+    "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7": "BankrollFacet"
+  },
+  "overrides": {}
+}

@@ -4,16 +4,6 @@
     {
       "name": "Bridge",
       "values": {
-        "deposits": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getAllDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,

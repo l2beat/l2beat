@@ -1,0 +1,538 @@
+{
+  "name": "zkasino",
+  "chain": "arbitrum",
+  "blockNumber": 203744596,
+  "configHash": "0x69e72584533ae74612e34226361e92c8eb43d2e0c805cb586d87db6518d9c8c4",
+  "version": 3,
+  "contracts": [
+    {
+      "name": "L2ERC20Gateway",
+      "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
+        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      },
+      "implementations": ["0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"],
+      "sinceTimestamp": 1623784105,
+      "values": {
+        "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
+        "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
+        "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "exitNum": 20089,
+        "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      }
+    },
+    {
+      "name": "BeaconProxyFactory",
+      "address": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1623784070,
+      "values": {
+        "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+        "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
+      }
+    },
+    {
+      "name": "Bankroll",
+      "address": "0x51e99A0D09EeCa8d7EFEc3062AC024B6d0989959",
+      "upgradeability": {
+        "type": "EIP2535 diamond proxy",
+        "facets": [
+          "0x480E3FF1A824C5E1f999288e423ab7311470787d",
+          "0x743624F2Abc3C42d8183FeCc7586ad1D495C858d",
+          "0xfAa8d8B63A40120D57049dF66111E5313b3e20bF",
+          "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7"
+        ]
+      },
+      "implementations": [
+        "0x480E3FF1A824C5E1f999288e423ab7311470787d",
+        "0x743624F2Abc3C42d8183FeCc7586ad1D495C858d",
+        "0xfAa8d8B63A40120D57049dF66111E5313b3e20bF",
+        "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7"
+      ],
+      "sinceTimestamp": 1676671084,
+      "values": {
+        "facetAddresses": [
+          "0x480E3FF1A824C5E1f999288e423ab7311470787d",
+          "0x743624F2Abc3C42d8183FeCc7586ad1D495C858d",
+          "0xfAa8d8B63A40120D57049dF66111E5313b3e20bF",
+          "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7"
+        ],
+        "facets": [
+          ["0x480E3FF1A824C5E1f999288e423ab7311470787d", ["0x1f931c1c"]],
+          [
+            "0x743624F2Abc3C42d8183FeCc7586ad1D495C858d",
+            [
+              "0xcdffacc6",
+              "0x52ef6b2c",
+              "0xadfca15e",
+              "0x7a0ed627",
+              "0x01ffc9a7"
+            ]
+          ],
+          [
+            "0xfAa8d8B63A40120D57049dF66111E5313b3e20bF",
+            ["0x8da5cb5b", "0xf2fde38b"]
+          ],
+          [
+            "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7",
+            [
+              "0x298729d8",
+              "0xbfd7f9cc",
+              "0x893d20e8",
+              "0xb097d80e",
+              "0x8177334f",
+              "0x0a5748a8",
+              "0x3d9f0e52",
+              "0xf59b7f71",
+              "0xb0836e2e",
+              "0x2a0b5e9e",
+              "0x509cac54",
+              "0x4b865846",
+              "0x6c025ec2",
+              "0x1c20fadd",
+              "0x26792aca"
+            ]
+          ]
+        ],
+        "getOwner": "0xF0275f92bc1C69d2B7aF3eA9116e9174374cb479",
+        "getWrappedAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "owner": "0xF0275f92bc1C69d2B7aF3eA9116e9174374cb479"
+      },
+      "derivedName": "Diamond"
+    },
+    {
+      "name": "L2GatewayRouter",
+      "address": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
+        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      },
+      "implementations": ["0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"],
+      "sinceTimestamp": 1623784105,
+      "values": {
+        "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+        "router": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "L2WethGateway",
+      "address": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
+        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      },
+      "implementations": ["0x806421D09cDb253aa9d128a658e60c0B95eFFA01"],
+      "sinceTimestamp": 1624913237,
+      "values": {
+        "counterpartGateway": "0xd92023E9d9911199a6711321D1277285e6d4e2db",
+        "exitNum": 669,
+        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      }
+    },
+    {
+      "name": "aeWETH",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x8b194bEae1d3e0788A1a35173978001ACDFba668",
+        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      },
+      "implementations": ["0x8b194bEae1d3e0788A1a35173978001ACDFba668"],
+      "sinceTimestamp": 1622346702,
+      "values": {
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xac33225466df015cad7b0e1bf31afc69a49f20d95501a98d9644ad21163469a0",
+        "l1Address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "l2Gateway": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "201416558837381175141400"
+      }
+    },
+    {
+      "name": "UpgradeExecutor",
+      "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
+        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      },
+      "implementations": ["0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"],
+      "sinceTimestamp": 1678968508,
+      "values": {
+        "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1623784105,
+      "values": {
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1678968400,
+      "values": {
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      }
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "address": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1623784070,
+      "values": {
+        "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0xF0275f92bc1C69d2B7aF3eA9116e9174374cb479",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
+      },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1676303723,
+      "values": {
+        "domainSeparator": "0xb141f08469b859a0e9829be102a5b760effd1ea3499ef0efa7b5998877f9871f",
+        "getChainId": 42161,
+        "getOwners": [
+          "0xbbeB869bDe515b330b65f067AAef845D8c559CC5",
+          "0x8cCf7C95C0C8EE89d3662b315bAfEc929464dee7",
+          "0x62c4d57a469A21c0D1A5F39362195538174535E8"
+        ],
+        "getThreshold": 2,
+        "nonce": 103,
+        "VERSION": "1.3.0"
+      }
+    }
+  ],
+  "eoas": [
+    "0x62c4d57a469A21c0D1A5F39362195538174535E8",
+    "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+    "0x8cCf7C95C0C8EE89d3662b315bAfEc929464dee7",
+    "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+    "0xbbeB869bDe515b330b65f067AAef845D8c559CC5",
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "0xd92023E9d9911199a6711321D1277285e6d4e2db"
+  ],
+  "abis": {
+    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93": [
+      "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
+      "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
+      "event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)",
+      "function beaconProxyFactory() view returns (address)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function cloneableProxyHash() view returns (bytes32)",
+      "function counterpartGateway() view returns (address)",
+      "function exitNum() view returns (uint256)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function getUserSalt(address l1ERC20) pure returns (bytes32)",
+      "function initialize(address _l1Counterpart, address _router, address _beaconProxyFactory)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, bytes _data) payable returns (bytes)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256, uint256, bytes _data) payable returns (bytes res)",
+      "function postUpgradeInit()",
+      "function router() view returns (address)"
+    ],
+    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x3fE38087A94903A9D946fa1915e1772fe611000f": [
+      "function beacon() view returns (address)",
+      "function calculateExpectedAddress(bytes32 salt) view returns (address)",
+      "function calculateExpectedAddress(address user, bytes32 userSalt) view returns (address)",
+      "function cloneableProxyHash() view returns (bytes32)",
+      "function createProxy(bytes32 userSalt) returns (address)",
+      "function getSalt(address user, bytes32 userSalt) pure returns (bytes32)",
+      "function initialize(address _beacon)"
+    ],
+    "0x480E3FF1A824C5E1f999288e423ab7311470787d": [
+      "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
+      "function diamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
+    ],
+    "0x51e99A0D09EeCa8d7EFEc3062AC024B6d0989959": [
+      "constructor(address _contractOwner, address _diamondCutFacet) payable"
+    ],
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x743624F2Abc3C42d8183FeCc7586ad1D495C858d": [
+      "function facetAddress(bytes4 _functionSelector) view returns (address facetAddress_)",
+      "function facetAddresses() view returns (address[] facetAddresses_)",
+      "function facetFunctionSelectors(address _facet) view returns (bytes4[] _facetFunctionSelectors)",
+      "function facets() view returns (tuple(address facetAddress, bytes4[] functionSelectors)[] facets_)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
+    ],
+    "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event UpgradeExecuted(address indexed upgrade, uint256 value, bytes data)",
+      "function ADMIN_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function execute(address upgrade, bytes upgradeCallData) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address[] executors)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x806421D09cDb253aa9d128a658e60c0B95eFFA01": [
+      "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
+      "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
+      "event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function exitNum() view returns (uint256)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function initialize(address _l1Counterpart, address _router, address _l1Weth, address _l2Weth)",
+      "function l1Weth() view returns (address)",
+      "function l2Weth() view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, bytes _data) payable returns (bytes)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256, uint256, bytes _data) payable returns (bytes res)",
+      "function postUpgradeInit()",
+      "function router() view returns (address)"
+    ],
+    "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x8b194bEae1d3e0788A1a35173978001ACDFba668": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridgeBurn(address account, uint256 amount)",
+      "function bridgeMint(address account, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function deposit() payable",
+      "function depositTo(address account) payable",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol, uint8 _decimals, address _l2Gateway, address _l1Address)",
+      "function l1Address() view returns (address)",
+      "function l2Gateway() view returns (address)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool success)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function withdraw(uint256 amount)",
+      "function withdrawTo(address account, uint256 amount)"
+    ],
+    "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xdb216562328215E010F819B5aBe947bad4ca961e": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xe1Bf50052873b06589a280a7dDD2f6bA230Be8a7": [
+      "error AlreadySuspended(uint256 suspensionTime)",
+      "error InvalidGameAddress()",
+      "error TimeRemaingOnSuspension(uint256 suspensionTime)",
+      "error TransferFailed()",
+      "event BankRoll_Game_State_Changed(address gameAddress, bool isValid)",
+      "event BankRoll_Max_Payout_Changed(uint256 payout)",
+      "event Bankroll_Token_State_Changed(address tokenAddress, bool isValid)",
+      "function getIsGame(address game) view returns (bool)",
+      "function getIsValidWager(address game, address tokenAddress) view returns (bool)",
+      "function getOwner() view returns (address)",
+      "function getWrappedAddress() view returns (address)",
+      "function increaseSuspensionTime(uint256 suspensionTime)",
+      "function isPlayerSuspended(address player) view returns (bool, uint256)",
+      "function liftSuspension()",
+      "function permantlyBan()",
+      "function setGame(address game, bool isValid)",
+      "function setTokenAddress(address tokenAddress, bool isValid)",
+      "function setWrappedAddress(address wrapped)",
+      "function suspend(uint256 suspensionTime)",
+      "function transferPayout(address player, uint256 payout, address tokenAddress)",
+      "function withdrawFunds(address tokenAddress, address to, uint256 amount)",
+      "function withdrawNativeFunds(address to, uint256 amount)"
+    ],
+    "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": [
+      "constructor(address implementation_)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ],
+    "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278": [
+      "event DefaultGatewayUpdated(address newDefaultGateway)",
+      "event GatewaySet(address indexed l1Token, address indexed gateway)",
+      "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
+      "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function defaultGateway() view returns (address)",
+      "function finalizeInboundTransfer(address, address, address, uint256, bytes) payable",
+      "function getGateway(address _token) view returns (address gateway)",
+      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes)",
+      "function initialize(address _counterpartGateway, address _defaultGateway)",
+      "function l1TokenToGateway(address) view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, bytes _data) payable returns (bytes)",
+      "function outboundTransfer(address _token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes)",
+      "function postUpgradeInit()",
+      "function router() view returns (address)",
+      "function setDefaultGateway(address newL2DefaultGateway)",
+      "function setGateway(address[] _l1Token, address[] _gateway)"
+    ],
+    "0xF0275f92bc1C69d2B7aF3eA9116e9174374cb479": [
+      "constructor(address _singleton)"
+    ],
+    "0xfAa8d8B63A40120D57049dF66111E5313b3e20bF": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address owner_)",
+      "function transferOwnership(address _newOwner)"
+    ]
+  }
+}
