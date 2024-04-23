@@ -12,19 +12,35 @@ type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address: Hex
 }
 
-export default async function Page({
-  params: { address },
-}: {
+interface Props {
   params: { address: string }
-}) {
-  if (!isAddress(address)) {
-    return redirect('/')
-  }
+}
 
+async function getAddressDisplayName(address: Hex) {
   const ethereum = createPublicClient({
     chain: getChain(1),
     transport: http(),
   })
+
+  const resolvedEnsDomain = await ethereum.getEnsName({
+    address,
+  })
+
+  return resolvedEnsDomain ?? address
+}
+
+export async function generateMetadata({ params: { address } }: Props) {
+  if (!isAddress(address)) return {}
+  return {
+    title: `${await getAddressDisplayName(address)}'s Asset Risk Report – L2BEAT`,
+    description: 'Detailed risk assessment for your L2 assets.',
+  }
+}
+
+export default async function Page({ params: { address } }: Props) {
+  if (!isAddress(address)) {
+    return redirect('/')
+  }
 
   const groupedTokens = Object.entries(
     generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
@@ -123,9 +139,7 @@ export default async function Page({
     groupBy(tokens.filter(hasPositiveBalance), 'chain.id'),
   )
 
-  const resolvedEnsDomain = await ethereum.getEnsName({
-    address,
-  })
+  const vanityAddress = await getAddressDisplayName(address)
 
   return (
     <main className="max-w-[1296px] px-4 md:px-12 mx-auto py-10">
@@ -137,12 +151,10 @@ export default async function Page({
           <div className="flex flex-row gap-16 justify-between">
             <div>
               <h1 className="mb-1 text-3xl font-bold">
-                {resolvedEnsDomain ? resolvedEnsDomain : address}&apos;s Asset
-                Risk
+                {vanityAddress}&apos;s Asset Risk
               </h1>
               <p className="text-gray-500 dark:text-gray-600k">
-                Risk score assessment for{' '}
-                {resolvedEnsDomain ? resolvedEnsDomain : address}, based on{' '}
+                Risk score assessment for {vanityAddress}, based on{' '}
                 {tokens.length} known tokens. We successfully got info for{' '}
                 {successes.length} of them, while {errors.length} errored. Risk
                 is very important lorem ipsum dolor sit amet. Risk is very
