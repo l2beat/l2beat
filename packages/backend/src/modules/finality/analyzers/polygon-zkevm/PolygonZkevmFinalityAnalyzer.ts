@@ -50,14 +50,11 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
     const firstTransaction = hashes.at(0)
     const lastTransaction = hashes.at(-1)
 
-    // TODO: ???
-    assert(firstTransaction, 'First transaction not found')
-    assert(lastTransaction, 'Last transaction not found')
+    assert(firstTransaction && lastTransaction, 'Empty batch sequence received')
 
-    // TODO: sequential assumption
     const transactionsFromNode = await Promise.all([
       this.l2Provider.getTransaction(firstTransaction),
-      this.l2Provider.getTransaction(firstTransaction),
+      this.l2Provider.getTransaction(lastTransaction),
     ])
 
     const blockNumbers = transactionsFromNode
