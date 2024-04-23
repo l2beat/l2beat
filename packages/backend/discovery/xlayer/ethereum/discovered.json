@@ -1,12 +1,41 @@
 {
-  "name": "astarzkevm",
+  "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 19718007,
-  "configHash": "0x60944187b50cac1172125cbd826b05b86d82951b675e91f2b4e06350be8f39f3",
+  "blockNumber": 19718023,
+  "configHash": "0xac53bccd030e96720d132672fd1bf978f4d951f3e8bcc092fd40dbd2b16fb71d",
   "version": 3,
   "contracts": [
     {
-      "name": "AstarVerifier",
+      "name": "XLayerValidiumDAC",
+      "address": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
+        "admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204"
+      },
+      "implementations": ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"],
+      "sinceTimestamp": 1711787327,
+      "values": {
+        "committeeHash": "0xfa0cdb192e4e3d5bda14ab176fe857843eda35d462548ac406f8e2be43d29ec7",
+        "getAmountOfMembers": 2,
+        "getProcotolName": "DataAvailabilityCommittee",
+        "members": [
+          [
+            "http://okx-defi-xlayer-dac1-pro:8444",
+            "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"
+          ],
+          [
+            "http://okx-defi-xlayer-dac2-pro:8444",
+            "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"
+          ]
+        ],
+        "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
+        "requiredAmountOfSignatures": 2
+      },
+      "derivedName": "PolygonDataCommittee"
+    },
+    {
+      "name": "XLayerVerifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "upgradeability": {
         "type": "immutable"
@@ -28,33 +57,34 @@
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+      "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1708624547,
+      "sinceTimestamp": 1711787315,
       "values": {
-        "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
+        "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
       }
     },
     {
-      "name": "AstarValidiumEtrog",
-      "address": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+      "name": "XLayerValidiumEtrog",
+      "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
         "admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementations": ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"],
-      "sinceTimestamp": 1708632059,
+      "sinceTimestamp": 1711785755,
       "values": {
-        "admin": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+        "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-        "forceBatchAddress": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+        "dataAvailabilityProtocol": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+        "forceBatchAddress": "0x491619874b866c3cDB7C8553877da223525ead01",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenAddress": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
         "gasTokenNetwork": 0,
         "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
@@ -67,10 +97,10 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xe79db9ca4430e4dee89bcf14a8a7442436a3ccfaa1b4cae9f65ce88b7b37f1ad",
+        "lastAccInputHash": "0x6ebcc0deeae6d48f2512d5a806222b25951e02cc94b38703a2a6e9ef2be22d8d",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "networkName": "Astar zkEVM",
+        "networkName": "X Layer",
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
@@ -78,8 +108,8 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0xD49CD5f9776A54fAe89B68205F6Af69586F98203",
-        "trustedSequencerURL": "https://rpc.astar-zkevm.gelato.digital"
+        "trustedSequencer": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+        "trustedSequencerURL": "https://rpc.xlayer.tech"
       },
       "derivedName": "PolygonValidiumStorageMigration"
     },
@@ -104,8 +134,8 @@
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 4,
         "rollupData": [
-          "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          3776,
+          "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          196,
           "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
           9,
           4,
@@ -118,69 +148,27 @@
       "derivedName": "PolygonRollupManager"
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x6c4876Ecb5de33f76700f44d547C593065806dAC",
+      "name": "OKBImplementation",
+      "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 3 (33%)"
+        "type": "ZeppelinOS proxy",
+        "implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
+        "owner": "0x4A164CA582D169f7caad471250991Dd861ddA981"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1708443503,
+      "implementations": ["0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621"],
+      "sinceTimestamp": 1556264879,
       "values": {
-        "domainSeparator": "0x441d2a12799495cc46b37e56d46fc0f7f724dc7414f16f665f284d32eac972e0",
-        "getChainId": 1,
-        "getOwners": [
-          "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
-          "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8",
-          "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C"
-        ],
-        "getThreshold": 1,
-        "nonce": 2,
-        "VERSION": "1.3.0"
+        "decimals": 18,
+        "implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
+        "lawEnforcementRole": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
+        "name": "OKB",
+        "owner": "0xc3d82e22501f3D836727e335d3cf2151b07947d7",
+        "paused": false,
+        "proxyOwner": "0x4A164CA582D169f7caad471250991Dd861ddA981",
+        "supplyController": "0x4a11078a99b118BbFee78a5c187D98D264360433",
+        "symbol": "OKB",
+        "totalSupply": "300000000000000000000000000"
       }
-    },
-    {
-      "name": "AstarValidiumDAC",
-      "address": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xF4e87685e323818E0aE35dCdFc3B65106002E456",
-        "admin": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
-      },
-      "implementations": ["0xF4e87685e323818E0aE35dCdFc3B65106002E456"],
-      "sinceTimestamp": 1708624559,
-      "values": {
-        "committeeHash": "0xf3b713b9d34dd6c8f99950e7f622937def5d1044471824b807c8b9dbedf75d2f",
-        "getAmountOfMembers": 5,
-        "getProcotolName": "DataAvailabilityCommittee",
-        "members": [
-          [
-            "http://cdk-validium-dac-5-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444",
-            "0x08EbBdFf8cB6d1336515A89641e899bc8ce91F2C"
-          ],
-          [
-            "http://cdk-validium-dac-4-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444",
-            "0x37f0B74e0Fc72aDAAb1Fd39Ec6d779F596866aB8"
-          ],
-          [
-            "http://cdk-validium-dac-3-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444",
-            "0x8FB3cb4777EE1c2C35C48aC69a650026d18aFF08"
-          ],
-          [
-            "http://cdk-validium-dac-2-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444",
-            "0xCFb77B6abb27e04cE0DB347cCCd5544f51A98CBc"
-          ],
-          [
-            "http://cdk-validium-dac-1-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444",
-            "0xF54b295a221B5d3510D03d9B16E23BA151da012A"
-          ]
-        ],
-        "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-        "requiredAmountOfSignatures": 3
-      },
-      "derivedName": "PolygonDataCommittee"
     },
     {
       "name": "PolygonZkEVMTimelock",
@@ -198,54 +186,27 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       }
-    },
-    {
-      "name": "ProxyAdminOwner",
-      "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 6 (50%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1708444367,
-      "values": {
-        "domainSeparator": "0x9eb12473e8e7bb9cf5c92b4b3effda22cbfcab7b4fb961127d7b5c3c54d2c943",
-        "getChainId": 1,
-        "getOwners": [
-          "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa",
-          "0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0",
-          "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
-          "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
-          "0x4324c3960c7B2567D0C13ba17493bb364c407937",
-          "0x6c4876Ecb5de33f76700f44d547C593065806dAC"
-        ],
-        "getThreshold": 3,
-        "nonce": 5,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
-    "0x08EbBdFf8cB6d1336515A89641e899bc8ce91F2C",
-    "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
-    "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C",
-    "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8",
-    "0x37f0B74e0Fc72aDAAb1Fd39Ec6d779F596866aB8",
-    "0x4324c3960c7B2567D0C13ba17493bb364c407937",
-    "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
-    "0x8FB3cb4777EE1c2C35C48aC69a650026d18aFF08",
+    "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08",
+    "0x491619874b866c3cDB7C8553877da223525ead01",
+    "0x4a11078a99b118BbFee78a5c187D98D264360433",
+    "0x4A164CA582D169f7caad471250991Dd861ddA981",
+    "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
     "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-    "0xCFb77B6abb27e04cE0DB347cCCd5544f51A98CBc",
-    "0xD49CD5f9776A54fAe89B68205F6Af69586F98203",
-    "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa",
-    "0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0",
-    "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
-    "0xF54b295a221B5d3510D03d9B16E23BA151da012A"
+    "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+    "0xc3d82e22501f3D836727e335d3cf2151b07947d7",
+    "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
+    "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"
   ],
   "abis": {
+    "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
@@ -379,7 +340,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": [
+    "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -389,16 +350,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0x3b82Da772c825283d85d5d6717A77C6Ff582053b": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
@@ -527,63 +478,81 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6c4876Ecb5de33f76700f44d547C593065806dAC": [
-      "constructor(address _singleton)"
+    "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621": [
+      "function name() view returns (string)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function decimals() view returns (uint8)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function setLawEnforcementRole(address _newLawEnforcementRole)",
+      "function unpause()",
+      "function unfreeze(address _addr)",
+      "function setSupplyController(address _newSupplyController)",
+      "function paused() view returns (bool)",
+      "function balanceOf(address _addr) view returns (uint256)",
+      "function initialize()",
+      "function pause()",
+      "function freeze(address _addr)",
+      "function owner() view returns (address)",
+      "function symbol() view returns (string)",
+      "function decreaseSupply(uint256 _value) returns (bool success)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function lawEnforcementRole() view returns (address)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function increaseSupply(uint256 _value) returns (bool success)",
+      "function allowance(address _owner, address spender) view returns (uint256)",
+      "function wipeFrozenAddress(address _addr)",
+      "function isFrozen(address _addr) view returns (bool)",
+      "function supplyController() view returns (address)",
+      "function transferOwnership(address _newOwner)",
+      "constructor()",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Unpause()",
+      "event AddressFrozen(address indexed addr)",
+      "event AddressUnfrozen(address indexed addr)",
+      "event FrozenAddressWiped(address indexed addr)",
+      "event LawEnforcementRoleSet(address indexed oldLawEnforcementRole, address indexed newLawEnforcementRole)",
+      "event SupplyIncreased(address indexed to, uint256 value)",
+      "event SupplyDecreased(address indexed from, uint256 value)",
+      "event SupplyControllerSet(address indexed oldSupplyController, address indexed newSupplyController)"
     ],
-    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
+    "0x75231F58b43240C9718Dd58B4967c5114342a86c": [
+      "function proxyOwner() view returns (address owner)",
+      "function upgradeTo(address implementation)",
+      "function upgradeToAndCall(address implementation, bytes data) payable",
+      "function implementation() view returns (address impl)",
+      "function transferProxyOwnership(address newOwner)",
+      "constructor()",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
       "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+      "error CommitteeAddressDoesNotExist()",
+      "error EmptyURLNotAllowed()",
+      "error TooManyRequiredSignatures()",
+      "error UnexpectedAddrsAndSignaturesSize()",
+      "error UnexpectedAddrsBytesLength()",
+      "error UnexpectedCommitteeHash()",
+      "error WrongAddrOrder()",
+      "event CommitteeUpdated(bytes32 committeeHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function committeeHash() view returns (bytes32)",
+      "function getAmountOfMembers() view returns (uint256)",
+      "function getProcotolName() pure returns (string)",
+      "function initialize()",
+      "function members(uint256) view returns (string url, address addr)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function requiredAmountOfSignatures() view returns (uint256)",
+      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
+      "function transferOwnership(address newOwner)",
+      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
     "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin, address _polygonZkEVM)",
@@ -623,33 +592,6 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
-    ],
-    "0xF4e87685e323818E0aE35dCdFc3B65106002E456": [
-      "constructor()",
-      "error CommitteeAddressDoesNotExist()",
-      "error EmptyURLNotAllowed()",
-      "error TooManyRequiredSignatures()",
-      "error UnexpectedAddrsAndSignaturesSize()",
-      "error UnexpectedAddrsBytesLength()",
-      "error UnexpectedCommitteeHash()",
-      "error WrongAddrOrder()",
-      "event CommitteeUpdated(bytes32 committeeHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function committeeHash() view returns (bytes32)",
-      "function getAmountOfMembers() view returns (uint256)",
-      "function getProcotolName() pure returns (string)",
-      "function initialize()",
-      "function members(uint256) view returns (string url, address addr)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requiredAmountOfSignatures() view returns (uint256)",
-      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
-      "function transferOwnership(address newOwner)",
-      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
-    ],
-    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": [
-      "constructor(address _singleton)"
     ]
   }
 }
