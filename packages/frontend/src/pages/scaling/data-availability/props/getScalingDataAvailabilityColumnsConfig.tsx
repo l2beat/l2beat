@@ -12,7 +12,7 @@ import { ScalingDataAvailabilityViewEntry } from '../types'
 
 export function getScalingDataAvailabilityColumnsConfig() {
   const columns: ColumnConfig<ScalingDataAvailabilityViewEntry>[] = [
-    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    ...getProjectWithIndexColumns({ indexAsDefaultSort: true, showIsL3: true }),
     {
       name: 'Type',
       tooltip: <TypeColumnTooltip />,

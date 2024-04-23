@@ -13,7 +13,7 @@ export function getProps(
   return {
     props: {
       dataAvailabilityView: getScalingDataAvailabilityView(
-        config.layer2s,
+        [...config.layer2s, ...config.layer3s],
         pagesData,
       ),
       navbar: getNavbarProps(config, 'scaling'),

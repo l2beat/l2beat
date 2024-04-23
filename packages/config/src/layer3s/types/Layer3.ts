@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import {
+  DataAvailabilityWithSentiment,
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
@@ -31,6 +32,8 @@ export interface Layer3 {
   config: Layer3Config
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
+  /** Data availability of scaling project project */
+  dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */
