@@ -1,5 +1,6 @@
 import {
   Layer2Provider,
+  Layer3Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
@@ -21,12 +22,12 @@ export interface ScalingDataAvailabilityViewEntry {
   slug: string
   showProjectUnderReview?: boolean
   category: ScalingProjectCategory
-  provider: Layer2Provider | undefined
+  provider: Layer2Provider | Layer3Provider | undefined
   warning: string | undefined
   hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
-  stage: StageConfig
+  stage: StageConfig | undefined
   dataAvailability: DataAvailability
 }
 
