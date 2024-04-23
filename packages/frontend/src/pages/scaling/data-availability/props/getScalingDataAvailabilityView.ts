@@ -40,6 +40,7 @@ function getScalingDataAvailabilityViewEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
+    type: project.type,
     provider: project.display.provider,
     warning: project.display.warning,
     hasImplementationChanged,
