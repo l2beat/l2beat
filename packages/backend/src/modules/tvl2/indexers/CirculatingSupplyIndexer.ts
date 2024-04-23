@@ -53,8 +53,6 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     await this.$.amountRepository.addMany(nonZeroAmounts)
 
     this.logger.info('Saved amounts into DB', {
-      from: adjustedFrom.toNumber(),
-      to: adjustedTo.toNumber(),
       amounts: nonZeroAmounts.length,
     })
 

@@ -71,8 +71,6 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     await this.$.amountRepository.addMany(nonZeroAmounts)
 
     this.logger.info('Saved amounts for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
-      blockNumber,
       amounts: nonZeroAmounts.length,
       configurations: configurationsWithMissingData.length,
     })
