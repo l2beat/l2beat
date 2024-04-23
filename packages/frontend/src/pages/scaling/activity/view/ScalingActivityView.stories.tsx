@@ -60,7 +60,7 @@ export const Primary: Story = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/matter-labs/zksync-era)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/matter-labs/zksync-era)',
                 },
               ],
             },
@@ -191,7 +191,7 @@ export const Primary: Story = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/OffchainLabs/nitro/)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/OffchainLabs/nitro/)',
                 },
               ],
             },
