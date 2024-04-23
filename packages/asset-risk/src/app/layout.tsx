@@ -2,7 +2,9 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Serif } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 
+import { Footer } from '~/components/footer/Footer'
 import { Navbar } from '~/components/navbar/Navbar'
 import { cn } from '~/utils/cn'
 
@@ -30,10 +32,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={cn(roboto.variable, robotoSerif.variable)}>
-        <Navbar />
-        {children}
+    // We suppress the hydration warning because we're using the ThemeProvider,
+    // which causes a mismatch between the server and client render.
+    // This is completely fine and applies to the `html` tag only.
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(roboto.variable, robotoSerif.variable, 'flex flex-col')}
+      >
+        <ThemeProvider attribute="class">
+          <div className="flex flex-col min-h-screen flex-1">
+            <Navbar />
+            {children}
+          </div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

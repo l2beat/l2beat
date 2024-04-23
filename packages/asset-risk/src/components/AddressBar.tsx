@@ -36,8 +36,13 @@ export function AddressBar() {
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              void handleWallet()
+            }
+          }}
           placeholder="Input address or ENS name"
-          className="border border-pink-900 rounded-md p-3 w-3/4 md:w-96 bg-zinc-900 focus:active:ring-0 outline-none placeholder:text-white/50 font-medium focus:ring-1 duration-100 ring-pink-900 transition-all"
+          className="border border-pink-900 rounded-md p-3 w-3/4 md:w-96 bg-gray-100 dark:bg-zinc-900 focus:active:ring-0 outline-none placeholder:text-black/50 dark:placeholder:text-white/50 font-medium focus:ring-1 duration-100 ring-pink-900 transition-all"
         />
         <button
           onClick={handleWallet}

@@ -1,17 +1,12 @@
-import '~/utils/chains'
-
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import groupBy from 'lodash/groupBy'
-import {
-  createPublicClient,
-  formatUnits,
-  type Hex,
-  http,
-  isAddress,
-  parseAbi,
-} from 'viem'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { createPublicClient, type Hex, http, isAddress, parseAbi } from 'viem'
 
 import { getChain } from '~/utils/chains'
+
+import { ChainAssetRiskCard } from './_components/ChainAssetRiskCard'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address: Hex
@@ -23,7 +18,7 @@ export default async function Page({
   params: { address: string }
 }) {
   if (!isAddress(address)) {
-    throw new Error('Invalid address')
+    return redirect('/')
   }
 
   const ethereum = createPublicClient({
@@ -103,6 +98,7 @@ export default async function Page({
               id: token.id,
               name: token.name,
               decimals: token.decimals,
+              symbol: token.symbol,
             },
             chain: {
               id: chainId,
@@ -118,11 +114,12 @@ export default async function Page({
   const successes = tokens.filter(({ balance }) => balance !== null)
   const errors = tokens.filter(({ balance }) => balance === null)
 
+  const hasPositiveBalance = <T extends { balance?: bigint | null }>(
+    token: T,
+  ): token is T & { balance: bigint } => !!token.balance
+
   const grouped = Object.entries(
-    groupBy(
-      tokens.filter(({ balance }) => balance !== null && balance > 0n),
-      'chain.id',
-    ),
+    groupBy(tokens.filter(hasPositiveBalance), 'chain.id'),
   )
 
   const resolvedEnsDomain = await ethereum.getEnsName({
@@ -130,17 +127,37 @@ export default async function Page({
   })
 
   return (
-    <main className="max-w-[1296px] px-4 md:px-12 mx-auto mt-10">
+    <main className="max-w-[1296px] px-4 md:px-12 mx-auto py-10">
       <div className="flex flex-col gap-12">
-        <div>
-          <h1 className="mb-1 text-3xl font-bold">
-            Hello {resolvedEnsDomain ? resolvedEnsDomain : address}!
-          </h1>
-          <p>
-            Scanned {tokens.length} tokens, success: {successes.length}, errors:{' '}
-            {errors.length}
-          </p>
+        <div className="flex flex-col gap-8">
+          <div>
+            <Link href="/">&lt; Back</Link>
+          </div>
+          <div className="flex flex-row gap-16 justify-between">
+            <div>
+              <h1 className="mb-1 text-3xl font-bold">
+                {resolvedEnsDomain ? resolvedEnsDomain : address}&apos;s Asset
+                Risk
+              </h1>
+              <p className="text-gray-500 dark:text-gray-600k">
+                Risk score assessment for{' '}
+                {resolvedEnsDomain ? resolvedEnsDomain : address}, based on{' '}
+                {tokens.length} known tokens. We successfully got info for{' '}
+                {successes.length} of them, while {errors.length} errored. Risk
+                is very important lorem ipsum dolor sit amet. Risk is very
+                important lorem ipsum dolor sit amet. Risk is very important
+                lorem ipsum dolor sit amet.
+              </p>
+            </div>
+            <div className="dark:bg-zinc-900 bg-gray-100 h-32 w-32 flex-shrink-0 rounded-lg items-center justify-center flex">
+              risk score?
+            </div>
+          </div>
+          <div className="px-4 py-6 md:p-10 dark:bg-zinc-900 bg-gray-100 rounded-lg">
+            risk breakdown?
+          </div>
         </div>
+        <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t" />
         <div className="flex flex-col gap-8">
           {Object.keys(grouped).length === 0 && (
             <p>You don&apos;t have any known tokens</p>
@@ -148,35 +165,26 @@ export default async function Page({
           {grouped.map(([chainIdString, tokens]) => {
             const chainId = Number(chainIdString)
             return (
-              <div key={chainId}>
-                <h2 className="text-2xl font-bold">{getChain(chainId).name}</h2>
-                {tokens.map(({ token, balance }) => (
-                  <div key={token.id} className="mt-4">
-                    {balance === null ? (
-                      <p>
-                        We couldn&apos;t check your balance of {token.name} on{' '}
-                        {getChain(chainId).name}
-                      </p>
-                    ) : (
-                      <p>
-                        You have {formatUnits(balance, token.decimals)}{' '}
-                        {token.name} on {getChain(chainId).name}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <ChainAssetRiskCard
+                key={chainId}
+                id={chainId}
+                name={tokens[0]?.chain.name ?? ''}
+                tokens={tokens}
+              />
             )
           })}
+          {errors.length > 0 && (
+            <div className="text-center text-xs py-4">
+              Errors:{' '}
+              {errors
+                .map(
+                  ({ token, chain }) =>
+                    `${token.name} on ${chain.name} (${token.id})`,
+                )
+                .join(', ')}
+            </div>
+          )}
         </div>
-        {errors.length > 0 && (
-          <div>
-            Errors:{' '}
-            {errors
-              .map(({ token, chain }) => `${token.name} on ${chain.name}`)
-              .join(', ')}
-          </div>
-        )}
       </div>
     </main>
   )

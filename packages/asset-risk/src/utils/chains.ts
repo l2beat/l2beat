@@ -1,4 +1,4 @@
-import { type ChainContract, type Hex } from 'viem'
+import { type Hex } from 'viem'
 import {
   arbitrum, // 42161
   base, // 8453
