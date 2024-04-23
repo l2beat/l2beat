@@ -41,9 +41,22 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       adjustedFrom,
       adjustedTo,
     )
+
+    this.logger.info('Fetched amounts in range', {
+      from: adjustedFrom.toNumber(),
+      to: adjustedTo.toNumber(),
+      amounts: amounts.length,
+    })
+
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0n)
 
     await this.$.amountRepository.addMany(nonZeroAmounts)
+
+    this.logger.info('Saved amounts into DB', {
+      from: adjustedFrom.toNumber(),
+      to: adjustedTo.toNumber(),
+      amounts: nonZeroAmounts.length,
+    })
 
     return adjustedTo.toNumber()
   }
@@ -82,10 +95,15 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.$.amountRepository.deleteByConfigAfter(
+    const deletedRecords = await this.$.amountRepository.deleteByConfigAfter(
       this.configId,
       new UnixTime(targetHeight),
     )
+
+    this.logger.info('Deleted records', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return targetHeight
   }
