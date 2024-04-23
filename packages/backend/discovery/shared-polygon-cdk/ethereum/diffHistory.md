@@ -8,7 +8,11 @@ Generated with discovered.json: 0x9473396ba2606f28bd2a1ef95a0785abe6b27905
 
 ## Description
 
-A new Rollup type is added wit `createNewRollup()`. That means that a new Rollup (not an upgrade of an existing) is prepared, in this case using the new chainid 4913 and a `PolygonValidiumStorageMigration` rollupContract.
+### OEV Network created
+
+A new Rollup is added wit `createNewRollup()`. That means that a new Rollup (not an upgrade of an existing, not a new RollupType) is deployed, in this case using the new chainid 4913 and the rollup and verifier implementations of RollupType 4 (the same implementation that Astar , OKX and Polygon zkEVMs are using at the moment).
+
+The networkName string in the rollup contract is 'oev-network' which suggests the upcoming [oev network](https://l2beat.com/scaling/projects/oev). OEV network has not yet launched.
 
 ## Watched changes
 
