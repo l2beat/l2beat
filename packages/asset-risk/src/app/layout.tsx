@@ -8,11 +8,13 @@ import { cn } from '~/utils/cn'
 
 const roboto = Roboto({
   subsets: ['latin'],
+  variable: '--font-roboto',
   weight: ['400', '500', '700'],
 })
 
 const robotoSerif = Roboto_Serif({
   subsets: ['latin'],
+  variable: '--font-roboto-serif',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   style: ['italic', 'normal'],
 })
@@ -29,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={cn(roboto.className, robotoSerif.className)}>
+      <body className={cn(roboto.variable, robotoSerif.variable)}>
         <Navbar />
         {children}
       </body>
