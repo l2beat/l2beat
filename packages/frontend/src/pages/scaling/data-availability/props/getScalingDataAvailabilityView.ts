@@ -14,7 +14,7 @@ export function getScalingDataAvailabilityView(
   pagesData: DataAvailabilityPagesData,
 ): ScalingDataAvailabilityViewProps {
   const activeProjects = projects.filter(
-    (p) => !p.isUpcoming || (p.type === 'layer2' && !p.isArchived),
+    (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
   const orderedByTvl = orderByTvl(activeProjects, pagesData.tvlApiResponse)
 
