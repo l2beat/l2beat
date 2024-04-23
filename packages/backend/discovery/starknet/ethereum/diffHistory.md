@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x634fa2581932266657697cc158387579a7e9cefc
+
+# Diff at Tue, 23 Apr 2024 14:28:50 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@8820c130ebfb55b88a3d890b44871a746006e3b5 block: 19617533
+- current block number: 19718686
+
+## Description
+
+### Bridge changes
+
+- An upgradeDelay of three days is introduced to 7 starkgate bridges. This is correctly reflected on the frontend. (Affected bridges: wbtc, usdt, wsteth, STRK, reth, usdc, eth)
+- The ProxyGovernance for 6 bridges of the above 7 is changed to the BridgeMultisig alone. (Before each bridge had an additional EOA, affected bridges: wbtc, usdt, wsteth, STRK, reth, usdc)
+  - Special case: Out of the above, rETH and wstETH only had a single admin before, which is now also replaced by the BridgeMultisig
+
+These changes are reflected on our frontend.
+
+## Watched changes
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0xdc29f0F7742ec462Af475AceeCECC57601991D23"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0x8dB2469f3355d6769932B853F29e32df06122981"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.0:
+-        "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        0
++        259200
+      upgradeability.proxyGovernance.1:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      upgradeability.proxyGovernance.0:
+-        "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getUpgradeActivationDelay:
+-        0
++        259200
+    }
+```
+
 Generated with discovered.json: 0x0a699237c3f5ed3341ede06e075c71837e9cf706
 
 # Diff at Thu, 28 Mar 2024 11:09:14 GMT:

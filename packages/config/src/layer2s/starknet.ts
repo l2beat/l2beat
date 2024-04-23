@@ -280,14 +280,14 @@ export const starknet: Layer2 = {
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
-        upgradableBy: ['StarkGate WBTC owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-        upgradableBy: ['StarkGate USDC owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -297,7 +297,7 @@ export const starknet: Layer2 = {
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
-        upgradableBy: ['StarkGate USDT owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -308,7 +308,7 @@ export const starknet: Layer2 = {
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate wstETH owner'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -317,7 +317,7 @@ export const starknet: Layer2 = {
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate rETH owner'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -373,6 +373,7 @@ export const starknet: Layer2 = {
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
+        upgradableBy: ['BridgeMultisig']
       }),
     ],
     transactionApi: {
