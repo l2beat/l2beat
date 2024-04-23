@@ -38,9 +38,19 @@ export class BlockTimestampIndexer extends ChildIndexer {
     const blockNumber =
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
+    this.logger.info('Fetched block number for timestamp', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+    })
+
     await this.blockTimestampRepository.add({
       chain: this.chain,
       timestamp,
+      blockNumber,
+    })
+
+    this.logger.info('Saved block number for timestamp into DB', {
+      timestamp: timestamp.toNumber(),
       blockNumber,
     })
 
@@ -83,10 +93,16 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.blockTimestampRepository.deleteAfterExclusive(
-      this.chain,
-      new UnixTime(targetHeight),
-    )
+    const deletedRecords =
+      await this.blockTimestampRepository.deleteAfterExclusive(
+        this.chain,
+        new UnixTime(targetHeight),
+      )
+
+    this.logger.info('Deleted block timestamps after height', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return Promise.resolve(targetHeight)
   }
