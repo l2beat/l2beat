@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2473263d61a9731bd44e68196fd459ef89d09243
+Generated with discovered.json: 0xa6b8279a50f9f4e3f28c301665c8283ef042f7e5
 
-# Diff at Sat, 20 Apr 2024 16:06:01 GMT:
+# Diff at Tue, 23 Apr 2024 22:44:53 GMT:
 
-- author: sekuba (<sekuba@users.noreply.githum.com>)
-- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19531533
-- current block number: 19697703
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f6f4ef80f0b2193da88313a911968b74fcfed02f block: 19531533
+- current block number: 19721151
 
 ## Description
 
@@ -64,6 +64,30 @@ Maximum delay is raised from 7d to 30d.
 Skeleton contract that is not used. (The previously deployed version was paused) Eigenlayer currently has no slashing functionality.
 
 ## Watched changes
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.avs.8:
++        "0xE5445838C475A2980e6a88054ff1514230b83aEb"
+      values.avs.7:
++        "0xed2f4d90b073128ae6769a9A8D51547B1Df766C8"
+      values.avs.6:
++        "0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef"
+      values.avs.5:
++        "0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2"
+      values.avs.4:
++        "0x6026b61bDD2252160691CB3F6005B6B72E0Ec044"
+      values.avs.3:
++        "0x71a77037870169d47aad6c2C9360861A4C0df2bF"
+      values.avs.2:
++        "0x9FC952BdCbB7Daca7d420fA55b942405B073A89d"
+      values.avs.1:
++        "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7"
+      values.avs.0:
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+    }
+```
 
 ```diff
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {

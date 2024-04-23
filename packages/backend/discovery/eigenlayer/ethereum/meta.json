@@ -14,6 +14,11 @@
           "severity": null,
           "type": null
         },
+        "avs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "delegation": {
           "description": null,
           "severity": null,
