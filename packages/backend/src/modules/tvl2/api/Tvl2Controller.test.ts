@@ -5,7 +5,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Tvl2Config } from '../../../config/Config'
@@ -23,6 +22,7 @@ describe(Tvl2Controller.name, () => {
         chain: 'ethereum',
         source: 'canonical',
         sinceTimestamp: new UnixTime(100),
+        decimals: 8,
       })
 
       const priceConfig = mockObject<PriceConfigEntry>({
@@ -50,7 +50,6 @@ describe(Tvl2Controller.name, () => {
             },
           ],
         }),
-        [mockObject<ChildIndexer>({ safeHeight: 1000 })],
         [amountConfig.project],
         mockObject<Tvl2Config>({
           amounts: [amountConfig],
@@ -93,7 +92,6 @@ describe(Tvl2Controller.name, () => {
         const controller = new Tvl2Controller(
           mockObject<AmountRepository>(),
           mockObject<PriceRepository>(),
-          [mockObject<ChildIndexer>({ safeHeight: 1000 })],
           [projectId],
           mockObject<Tvl2Config>({
             amounts: [amountConfig],
@@ -113,7 +111,6 @@ describe(Tvl2Controller.name, () => {
         const controller = new Tvl2Controller(
           mockObject<AmountRepository>(),
           mockObject<PriceRepository>(),
-          [mockObject<ChildIndexer>({ safeHeight: 1000 })],
           [projectId],
           mockObject<Tvl2Config>({
             amounts: [amountConfig],
@@ -143,7 +140,6 @@ describe(Tvl2Controller.name, () => {
       const controller = new Tvl2Controller(
         mockObject<AmountRepository>(),
         mockObject<PriceRepository>(),
-        [mockObject<ChildIndexer>({ safeHeight: end.toNumber() })],
         [projectId],
         mockObject<Tvl2Config>({
           amounts: [amountConfig],
@@ -156,7 +152,7 @@ describe(Tvl2Controller.name, () => {
       }))
       controller.getTvlAt = mockGetTvlAt
 
-      const result = await controller.getTvl()
+      const result = await controller.getTvl(end)
 
       expect(mockGetTvlAt).toHaveBeenCalledTimes(4)
       expect(mockGetTvlAt).toHaveBeenNthCalledWith(1, start)

@@ -37,6 +37,8 @@ type AmountConfigMap = Map<
   (AmountConfigEntry & { configId: string })[]
 >
 
+const USD_DECIMALS = 2
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly projects: {
@@ -133,8 +135,11 @@ export class Tvl2Controller {
       const price = prices.find((x) => createAssetId(x) === assetId)
       assert(price, 'Price not found')
 
-      results[amountConfig.source] +=
+      const value =
         (Number(record.amount) * price.priceUsd) / 10 ** amountConfig.decimals
+
+      // we want to save the balance as an integer, keeping the USD decimal places
+      results[amountConfig.source] += Math.floor(value * 10 ** USD_DECIMALS)
     }
     return results
   }
