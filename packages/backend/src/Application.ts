@@ -5,7 +5,6 @@ import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -55,7 +54,6 @@ export class Application {
       createTvlModule(config, logger, peripherals, clock),
       createActivityModule(config, logger, peripherals, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
-      createDiffHistoryModule(config, logger, peripherals),
       createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger),
       trackedTxsModule,
