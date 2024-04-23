@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# this script is used to download the latest database dump from the production server
+# this script is used to download the latest database dump from the staging server
 # and load it into the local database to improve the local development experience
 
-# right now it replaces the tracked_txs_configs, indexer_state and liveness tables
+# right now it replaces the indexer_configurations, indexer_state and prices tables
 
 # Check if the Heroku CLI is installed
 if ! command -v heroku &> /dev/null; then
@@ -17,17 +17,17 @@ if ! command -v psql &> /dev/null; then
     exit 1
 fi
 
-# function that downloads the latest database dump from the production server
+# function that downloads the latest database dump from the staging server
 function download_dump() {
         echo "Logging into psql..."
-        echo "Downloading the tracked_txs_configs table to a csv file..."
-        heroku psql --app l2beat-production -c "\copy tracked_txs_configs TO 'txs_conf.csv' CSV"
+        echo "Downloading the indexer_configurations table to a csv file..."
+        heroku psql --app l2beat-staging -c "\copy indexer_configurations TO 'configs.csv' CSV"
         echo "Downloading the indexer_state table to a csv file..."
-        heroku psql --app l2beat-production -c "\copy indexer_state to 'index.csv' CSV"
-        echo "Downloading the finality table to a csv file. This can take few minutes..."
-        heroku psql --app l2beat-production -c "\copy finality to 'finality.csv' CSV"
-        echo "Downloading the liveness table to a csv file..."
-        heroku psql --app l2beat-production -c "\copy liveness to 'liveness.csv' CSV"
+        heroku psql --app l2beat-staging -c "\copy indexer_state to 'index.csv' CSV"
+        echo "Downloading the amounts table to a csv file. This can take few minutes..."
+        heroku psql --app l2beat-staging -c "\copy amounts to 'amounts.csv' CSV"
+        echo "Downloading the prices table to a csv file..."
+        heroku psql --app l2beat-staging -c "\copy prices to 'prices.csv' CSV"
 }
 
 # Get the current timestamp
@@ -86,19 +86,19 @@ else
     fi
 fi
 
-# restore the files 'txs_conf.csv', 'liveness.csv' and 'index.csv' to the local database
+# restore the files 'configs.csv', 'prices.csv' and 'index.csv' to the local database
 
-echo "Restoring the tracked_txs_configs table from the csv file..."
-psql -d l2beat_local -c "DELETE FROM tracked_txs_configs;"
-psql -d l2beat_local -c "\copy tracked_txs_configs FROM 'txs_conf.csv' DELIMITER ',' CSV;"
+echo "Restoring the indexer_configurations table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM indexer_configurations;"
+psql -d l2beat_local -c "\copy indexer_configurations FROM 'configs.csv' DELIMITER ',' CSV;"
 echo "Restoring the indexer_state table from the csv file..."
 psql -d l2beat_local -c "DELETE FROM indexer_state;"
 psql -d l2beat_local -c "\copy indexer_state FROM 'index.csv' DELIMITER ',' CSV;"
-echo "Restoring the finality table from the csv file..."
-psql -d l2beat_local -c "DELETE FROM finality;"
-psql -d l2beat_local -c "\copy finality FROM 'finality.csv' DELIMITER ',' CSV;"
-echo "Restoring the liveness table from the csv file..."
-psql -d l2beat_local -c "DELETE FROM liveness;"
-psql -d l2beat_local -c "\copy liveness FROM 'liveness.csv' DELIMITER ',' CSV;"
+echo "Restoring the amounts table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM amounts;"
+psql -d l2beat_local -c "\copy amounts FROM 'amounts.csv' DELIMITER ',' CSV;"
+echo "Restoring the prices table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM prices;"
+psql -d l2beat_local -c "\copy prices FROM 'prices.csv' DELIMITER ',' CSV;"
 
 echo "Database restored successfully."
