@@ -6,7 +6,6 @@ export function createPriceId(priceConfig: PriceConfigEntry): string {
 
   input.push(priceConfig.address.toString())
   input.push(priceConfig.chain)
-  input.push(priceConfig.type)
   // Since and until timestamps are not used in the ID calculation.
 
   switch (priceConfig.type) {
