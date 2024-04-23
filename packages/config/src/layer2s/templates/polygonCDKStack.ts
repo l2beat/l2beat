@@ -113,12 +113,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
   } as const
 
-  const upgradeability = {
-    upgradableBy: ['ProxyAdminOwner'],
-    upgradeDelay: exitWindowRisk.value,
-    upgradeConsiderations: exitWindowRisk.description,
-  }
-
   const sharedUpgradeability = {
     upgradableBy: ['RollupManagerAdminMultisig'],
     upgradeDelay: exitWindowRisk.value,
@@ -495,7 +489,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           templateVars.rollupModuleContract.name,
           {
             description: `The main contract of the ${templateVars.display.name}. Contains sequenced transaction batch hashes and forced transaction logic.`,
-            ...upgradeability,
+            ...sharedUpgradeability,
           },
         ),
         templateVars.discovery.getContractDetails(
