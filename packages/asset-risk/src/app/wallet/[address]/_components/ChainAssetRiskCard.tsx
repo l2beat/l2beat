@@ -56,6 +56,28 @@ export function ChainAssetRiskCard({
           <h2 className="text-2xl font-bold">{chainName}</h2>
           <StageBadge stage={chain.stage.stage} />
         </div>
+        <div className="flex flex-col gap-4">
+          {Object.entries(groupedRisks)
+            .sort(([categoryA], [categoryB]) =>
+              categoryA.localeCompare(categoryB),
+            )
+            .map(([category, risks]) => (
+              <div key={category} className="flex flex-col">
+                <h3 className="font-bold">{category}</h3>
+                <ul className="text-sm list-disc list-inside">
+                  {risks.map((risk) => (
+                    <li
+                      key={risk.text}
+                      className="text-gray-500 dark:text-gray-600k"
+                    >
+                      {risk.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+        </div>
+        <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t" />
         <div className="flex flex-col gap-4 w-full">
           {tokens.map(({ token, balance }) => {
             const bridge = bridges.find((bridge) => bridge.id === token.bridge)
@@ -132,28 +154,6 @@ export function ChainAssetRiskCard({
               </div>
             )
           })}
-        </div>
-        <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t" />
-        <div className="flex flex-col gap-4">
-          {Object.entries(groupedRisks)
-            .sort(([categoryA], [categoryB]) =>
-              categoryA.localeCompare(categoryB),
-            )
-            .map(([category, risks]) => (
-              <div key={category} className="flex flex-col">
-                <h3 className="font-bold">{category}</h3>
-                <ul className="text-sm list-disc list-inside">
-                  {risks.map((risk) => (
-                    <li
-                      key={risk.text}
-                      className="text-gray-500 dark:text-gray-600k"
-                    >
-                      {risk.text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
         </div>
       </div>
       <div>
