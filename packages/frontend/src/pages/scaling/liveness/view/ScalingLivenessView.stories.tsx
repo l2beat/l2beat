@@ -133,6 +133,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             syncedUntil: UnixTime.now(),
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+            isSynced: true,
           },
           batchSubmissions: {
             last30Days: {
@@ -152,10 +153,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now().add(-2, 'hours'),
             warning: undefined,
+            isSynced: false,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           syncStatus: {
             isSynced: false,
@@ -332,6 +335,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 1338,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
@@ -352,11 +356,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 27634,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           syncStatus: {
             isSynced: true,
@@ -610,6 +616,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           batchSubmissions: {
             last30Days: {
@@ -625,10 +632,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           syncStatus: {
             isSynced: true,
@@ -787,6 +796,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now().add(-2, 'hours'),
             warning: undefined,
+            isSynced: false,
           },
           batchSubmissions: {
             last30Days: {
@@ -805,11 +815,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 88067,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
+            isSynced: true,
           },
           syncStatus: {
             isSynced: false,
@@ -950,6 +962,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 80046,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
@@ -966,10 +979,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             allTime: undefined,
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           syncStatus: {
@@ -1125,6 +1140,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 180,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           batchSubmissions: {
@@ -1144,10 +1160,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 2380,
             },
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
+            isSynced: true,
             warning: undefined,
           },
           syncStatus: {
