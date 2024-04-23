@@ -9,7 +9,8 @@
     "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
-    "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "RegistryCoordinator"
+    "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "RegistryCoordinator",
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig"
   },
   "overrides": {
     "eigenDAServiceManager": {
@@ -24,6 +25,9 @@
     },
     "EigenPodManager": {
       "ignoreInWatchMode": ["numPods"]
+    },
+    "EigenLayerOperationsMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     },
     "RegistryCoordinator": {
       "fields": {
