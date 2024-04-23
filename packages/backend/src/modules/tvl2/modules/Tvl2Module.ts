@@ -47,16 +47,14 @@ export function createTvl2Module(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const priceModule = createPriceModule(
-    config.tvl2,
-    logger,
-    peripherals,
-    hourlyIndexer,
-    syncOptimizer,
-  )
-
   const modules = [
-    priceModule,
+    createPriceModule(
+      config.tvl2,
+      logger,
+      peripherals,
+      hourlyIndexer,
+      syncOptimizer,
+    ),
     ...createChainModules(
       config.tvl2,
       peripherals,
