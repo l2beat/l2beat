@@ -25,24 +25,25 @@ export class PriceIndexer extends ChildIndexer {
     this.indexerId = `price_indexer_${token.chain}_${token.address.toString()}`
   }
 
-  override async start(): Promise<void> {
-    this.logger.debug('Starting...')
-    await super.start()
-    this.logger.debug('Started')
-  }
-
   override async update(_from: number, _to: number): Promise<number> {
     _from -= 1 // TODO: refactor logic after uif update
-    this.logger.debug('Updating...')
 
     const from = this.getAdjustedFrom(_from)
     const to = this.getAdjustedTo(from, _to)
 
     const prices = await this.fetchAndOptimizePrices(from, to)
+    this.logger.info('Fetched prices in range', {
+      from: from.toNumber(),
+      to: to.toNumber(),
+      prices: prices.length,
+    })
 
     await this.priceRepository.addMany(prices)
 
-    this.logger.debug('Updated')
+    this.logger.info('Saved prices into DB', {
+      prices: prices.length,
+    })
+
     return to.toNumber()
   }
 
@@ -108,8 +109,6 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   async doInitialize() {
-    this.logger.debug('Initializing...')
-
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -122,20 +121,19 @@ export class PriceIndexer extends ChildIndexer {
       })
       return
     }
-
-    this.logger.debug('Initialized')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    this.logger.debug('Invalidating...')
-
-    await this.priceRepository.deleteAfterExclusive(
+    const deletedRecords = await this.priceRepository.deleteAfterExclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),
     )
 
-    this.logger.debug('Invalidated')
+    this.logger.info('Deleted records', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return Promise.resolve(targetHeight)
   }

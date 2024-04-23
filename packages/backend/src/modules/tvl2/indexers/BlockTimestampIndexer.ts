@@ -28,15 +28,7 @@ export class BlockTimestampIndexer extends ChildIndexer {
     this.indexerId = `block_timestamp_indexer_${chain}`
   }
 
-  override async start(): Promise<void> {
-    this.logger.debug('Starting...')
-    await super.start()
-    this.logger.debug('Started')
-  }
-
   override async update(from: number, to: number): Promise<number> {
-    this.logger.debug('Updating...')
-
     const timestamp = this.getTimestampToSync(from)
 
     if (timestamp.gt(new UnixTime(to))) {
@@ -46,13 +38,22 @@ export class BlockTimestampIndexer extends ChildIndexer {
     const blockNumber =
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
+    this.logger.info('Fetched block number for timestamp', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+    })
+
     await this.blockTimestampRepository.add({
       chain: this.chain,
       timestamp,
       blockNumber,
     })
 
-    this.logger.debug('Updated')
+    this.logger.info('Saved block number for timestamp into DB', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+    })
+
     return timestamp.toNumber()
   }
 
@@ -67,8 +68,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   override async initialize(): Promise<number> {
-    this.logger.debug('Initializing...')
-
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -83,8 +82,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
       return safeHeight
     }
 
-    this.logger.debug('Initialized')
-
     return indexerState.safeHeight
   }
 
@@ -96,14 +93,16 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    this.logger.debug('Invalidating...')
+    const deletedRecords =
+      await this.blockTimestampRepository.deleteAfterExclusive(
+        this.chain,
+        new UnixTime(targetHeight),
+      )
 
-    await this.blockTimestampRepository.deleteAfterExclusive(
-      this.chain,
-      new UnixTime(targetHeight),
-    )
-
-    this.logger.debug('Invalidated')
+    this.logger.info('Deleted block timestamps after height', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return Promise.resolve(targetHeight)
   }
