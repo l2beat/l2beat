@@ -124,6 +124,25 @@ export const scroll: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
+  chainConfig: {
+    name: 'scroll',
+    chainId: 534352,
+    explorerUrl: 'https://scrollscan.com/',
+    explorerApi: {
+      url: 'https://api.scrollscan.com/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1696917600),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 14,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'scroll',
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
