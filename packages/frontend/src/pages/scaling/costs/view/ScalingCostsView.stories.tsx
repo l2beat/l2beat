@@ -49,7 +49,7 @@ const meta: Meta<typeof ScalingCostsView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/OffchainLabs/nitro/)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/OffchainLabs/nitro/)',
                 },
               ],
             },
@@ -655,7 +655,7 @@ const meta: Meta<typeof ScalingCostsView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
                 },
               ],
             },
@@ -1236,7 +1236,7 @@ const meta: Meta<typeof ScalingCostsView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/l2beat/starkex-explorer)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/l2beat/starkex-explorer)',
                 },
               ],
             },
@@ -2426,7 +2426,7 @@ const meta: Meta<typeof ScalingCostsView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
                 },
               ],
             },
