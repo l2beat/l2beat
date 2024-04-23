@@ -78,6 +78,7 @@ function getAmountsConfig(
             project,
             source: toSource(token.type),
             includeInTotal: true,
+            decimals: token.decimals,
           })
           break
         case 'circulatingSupply':
@@ -90,6 +91,7 @@ function getAmountsConfig(
             project,
             source: toSource(token.type),
             includeInTotal: true,
+            decimals: token.decimals,
           })
           break
         case 'locked':
@@ -105,11 +107,15 @@ function getAmountsConfig(
           type: 'escrow',
           address: token.address ?? 'native',
           chain: chainConverter.toName(token.chainId),
-          sinceTimestamp: token.sinceTimestamp,
+          sinceTimestamp: UnixTime.max(
+            token.sinceTimestamp,
+            escrow.sinceTimestamp,
+          ),
           escrowAddress: escrow.address,
           project: project.projectId,
           source: toSource(token.type),
           includeInTotal: true,
+          decimals: token.decimals,
         })
       }
     }

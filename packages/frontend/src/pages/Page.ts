@@ -1,6 +1,5 @@
 import {
   ActivityApiResponse,
-  DiffHistoryApiResponse,
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
@@ -44,7 +43,6 @@ export interface PagesData {
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   livenessApiResponse: LivenessApiResponse | undefined
   finalityApiResponse: FinalityApiResponse | undefined
-  diffHistory: DiffHistoryApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }

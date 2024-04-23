@@ -14,10 +14,11 @@ const upgradeability = {
 export const rss3: Layer2 = opStackL2({
   discovery,
   display: {
-    name: 'RSS3',
+    shortName: 'RSS3',
+    name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
-      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack and Celestia DA, handling the value and ownership of AI and Open Information.',
+      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack, handling the value and ownership of AI and Open Information.',
     purposes: ['AI', 'Information'],
     links: {
       websites: ['https://rss3.io'],
@@ -39,7 +40,6 @@ export const rss3: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: discovery.getContract('L1StandardBridge').address,
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {
     name: 'rss3',
@@ -64,8 +64,6 @@ export const rss3: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1709858519),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   nonTemplatePermissions: [
     {
       name: 'SystemConfig Owner.',
@@ -88,22 +86,14 @@ export const rss3: Layer2 = opStackL2({
         'Contract that stores the Guardian address and allows it to pause the system.',
     }),
   ],
-  nonTemplateEscrows: [],
   l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   milestones: [
     {
-      name: 'RSS3 Mainnet Launch',
+      name: 'RSS3 Mainnet Alpha Launch',
       link: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
-      description: 'RSS3 Network mainnet is live.',
+      description: 'RSS3 Network Mainnet Alpha is live.',
     },
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  knowledgeNuggets: [],
 })

@@ -1,4 +1,4 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -77,22 +77,9 @@ export const fraxtal: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2',
-  ),
   rpcUrl: 'https://rpc.frax.com',
   genesisTimestamp: new UnixTime(1706811599),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
-  milestones: [],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'FraxtalMultisig',
@@ -108,11 +95,6 @@ export const fraxtal: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
     discovery.getContractDetails('frxETH', {
       description:
         'Fraxtal uses Frax Ether (frxETH) as the designated gas token, allowing users to utilize frxETH to pay for blockspace.',
@@ -132,6 +114,18 @@ export const fraxtal: Layer2 = opStackL2({
       description: `Upgradable contract that manages the PAUSED_SLOT, a boolean value indicating whether the Superchain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. The address of the guardian can only be modified by the ProxyAdmin by upgrading the SuperchainConfig contract. This contract is a fork of Optimism's superchainConfig contract and may not be utilized by other chains.`,
     }),
   ],
+  chainConfig: {
+    name: 'fraxtal',
+    chainId: 252,
+    explorerUrl: 'https://fraxscan.com/',
+    explorerApi: {
+      url: 'https://api.fraxscan.com/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 1
+    minTimestampForTvl: new UnixTime(1706810713),
+    coingeckoPlatform: 'fraxtal',
+  },
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
 })

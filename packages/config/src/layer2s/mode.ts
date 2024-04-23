@@ -12,6 +12,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const superchainUpgradeability = {
+  upgradableBy: ['SuperchainProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
 export const mode: Layer2 = opStackL2({
   discovery,
   display: {
@@ -37,19 +42,18 @@ export const mode: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  associatedTokens: [],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
-  ),
   rpcUrl: 'https://mainnet.mode.network/',
   genesisTimestamp: new UnixTime(1700125343),
-
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Mode starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Mode starts publishing data to blobs.',
+    },
     {
       name: 'Mode Network Mainnet Launch',
       link: 'https://twitter.com/modenetwork/status/1752760726907760933',
@@ -64,17 +68,36 @@ export const mode: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
   },
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ModeMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'ProxyAdminOwner',
+      'Owner of the ProxyAdmin: it can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. Also designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('SuperchainProxyAdmin'),
+      'Admin of the shared SuperchainConfig contract.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SuperchainProxyAdminOwner',
+      'Owner of the SuperchainProxyAdmin.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the ProxyAdminOwner.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      'Member of the ProxyAdminOwner.',
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'This address is designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
     ),
     ...discovery.getMultisigPermission(
       'ChallengerMultisig',
@@ -82,13 +105,12 @@ export const mode: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
+    discovery.getContractDetails('SuperchainConfig', {
       description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
+        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+      ...superchainUpgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
   chainConfig: {
     name: 'mode',
     chainId: 34443,

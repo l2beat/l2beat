@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { LONG_HYPHEN } from '../../utils/constants'
+import { EM_DASH } from '../../utils/constants'
 import { isZeroUSD } from '../../utils/utils'
 import { TokenControl } from '../chart/TokenControls'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
@@ -44,7 +44,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
         </>
       ) : (
         <div className="flex w-full justify-center">
-          <span className="text-base font-bold md:text-lg">{LONG_HYPHEN}</span>
+          <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
         </div>
       )}
     </>

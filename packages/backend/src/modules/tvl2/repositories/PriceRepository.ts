@@ -25,6 +25,12 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
+  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices').where('timestamp', timestamp.toDate())
+    return rows.map(toRecord)
+  }
+
   async addMany(records: PriceRecord[]) {
     const rows: PriceRow[] = records.map(toRow)
     const knex = await this.knex()

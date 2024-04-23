@@ -28,7 +28,7 @@ export function getProps(
         }),
       ],
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-bridges.png',
+        image: 'https://l2beat.com/meta-images/pages/og-bridges-summary.png',
         url: 'https://l2beat.com/bridges/summary',
       }),
       banner: config.features.banner,

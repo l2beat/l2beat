@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x5c90684b94ec67ec0205143a888b5085c83eecf9
+
+# Diff at Sat, 13 Apr 2024 10:06:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ce9ed778ed3251d8c0182e8225fd576d18383215 block: 19631863
+- current block number: 19645947
+
+## Description
+
+Tidy up config.jsonc:
+
+- no onchain changes
+- scope of discovery config stays the same (+Linea adapter added)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19631863 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x5B0bb17755FBa06028530682E2FD5bc373931768)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x89400dca91a7d0ef56df44dae3bda28049f2ef91
 
 # Diff at Thu, 11 Apr 2024 10:44:49 GMT:

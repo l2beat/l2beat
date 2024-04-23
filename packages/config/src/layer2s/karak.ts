@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -37,17 +37,12 @@ export const karak: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3',
-  ),
   rpcUrl: 'https://rpc.karak.network/',
   finality: {
     type: 'OPStack',
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
   milestones: [
     {
@@ -57,25 +52,10 @@ export const karak: Layer2 = opStackL2({
       description: 'Karak Network is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'KarakMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-  ],
-  nonTemplateEscrows: [],
 })

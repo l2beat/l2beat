@@ -15,7 +15,7 @@ const getTestStage = createGetStage({
       },
       rollupNodeSourceAvailable: {
         positive:
-          'A source-available node exists that can recreate the state from L1 data.',
+          'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
         negative:
           'No source-available node exists that can recreate the state from L1 data.',
         underReviewMessage:
@@ -90,7 +90,7 @@ describe(createGetStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data.',
+                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
               satisfied: true,
             },
           ],
@@ -150,7 +150,7 @@ describe(createGetStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data.',
+                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
               satisfied: true,
             },
           ],
@@ -202,7 +202,7 @@ describe(createGetStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data.',
+                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
               satisfied: true,
             },
           ],
@@ -250,7 +250,7 @@ describe(createGetStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data.',
+                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
               satisfied: true,
             },
           ],
@@ -298,7 +298,7 @@ describe(createGetStage.name, () => {
             },
             {
               description:
-                'A source-available node exists that can recreate the state from L1 data.',
+                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
               satisfied: true,
             },
           ],
@@ -349,7 +349,7 @@ describe(createGetStage.name, () => {
               },
               {
                 description:
-                  'A source-available node exists that can recreate the state from L1 data.',
+                  'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
                 satisfied: true,
               },
             ],
@@ -400,7 +400,7 @@ describe(createGetStage.name, () => {
               },
               {
                 description:
-                  'A source-available node exists that can recreate the state from L1 data.',
+                  'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
                 satisfied: true,
               },
             ],
