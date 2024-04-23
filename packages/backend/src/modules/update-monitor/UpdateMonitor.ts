@@ -178,12 +178,14 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
-
     const discovery = await runner.run(projectConfig, blockNumber, {
       logger: this.logger,
       runSanityCheck: true,
       injectInitialAddresses: true,
     })
+
+    if (!previousDiscovery || !discovery) return
+
     this.cachedDiscovery.set(
       this.getCacheKey(projectConfig.name, runner.chain),
       discovery,
@@ -229,7 +231,7 @@ export class UpdateMonitor {
   async getPreviousDiscovery(
     runner: DiscoveryRunner,
     projectConfig: DiscoveryConfig,
-  ): Promise<DiscoveryOutput> {
+  ): Promise<DiscoveryOutput | undefined> {
     const databaseEntry = await this.repository.findLatest(
       projectConfig.name,
       this.chainConverter.toChainId(runner.chain),
@@ -262,6 +264,7 @@ export class UpdateMonitor {
         project: projectConfig.name,
       },
     )
+
     return await runner.run(projectConfig, previousDiscovery.blockNumber, {
       logger: this.logger,
       runSanityCheck: true,
