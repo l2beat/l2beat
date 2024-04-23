@@ -12,6 +12,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const superchainUpgradeability = {
+  upgradableBy: ['SuperchainProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
 export const mode: Layer2 = opStackL2({
   discovery,
   display: {
@@ -103,7 +108,7 @@ export const mode: Layer2 = opStackL2({
     discovery.getContractDetails('SuperchainConfig', {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...upgradeability,
+      ...superchainUpgradeability,
     }),
   ],
   chainConfig: {
