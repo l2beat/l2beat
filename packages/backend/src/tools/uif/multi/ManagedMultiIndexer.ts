@@ -9,6 +9,7 @@ import { Configuration, SavedConfiguration } from './types'
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
   id: string
+  tag?: string
   indexerService: IndexerService
   configurations: Configuration<T>[]
   encode: (value: T) => string
@@ -17,29 +18,33 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
 }
 
 export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
+  private readonly indexerId
+
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
 
-    assetUniqueIndexerId(options.id)
+    this.indexerId = options.id
+    if (options.tag) {
+      this.indexerId += `::${options.tag}`
+    }
+    assetUniqueIndexerId(this.indexerId)
+
     for (const configuration of options.configurations) {
       assetUniqueConfigId(configuration.id)
     }
   }
 
   async getSafeHeight() {
-    return this.options.indexerService.getSafeHeight(this.options.id)
+    return this.options.indexerService.getSafeHeight(this.indexerId)
   }
 
   async setSafeHeight(safeHeight: number) {
-    return this.options.indexerService.setSafeHeight(
-      this.options.id,
-      safeHeight,
-    )
+    return this.options.indexerService.setSafeHeight(this.indexerId, safeHeight)
   }
 
   override async multiInitialize(): Promise<SavedConfiguration<T>[]> {
     return await this.options.indexerService.getSavedConfigurations(
-      this.options.id,
+      this.indexerId,
       this.options.decode,
     )
   }
@@ -48,12 +53,12 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     configurations: SavedConfiguration<T>[],
   ): Promise<void> {
     await this.options.indexerService.upsertConfigurations(
-      this.options.id,
+      this.indexerId,
       configurations,
       this.options.encode,
     )
     await this.options.indexerService.persistOnlyUsedConfigurations(
-      this.options.id,
+      this.indexerId,
       configurations.map((c) => c.id),
     )
   }
@@ -63,7 +68,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     currentHeight: number,
   ): Promise<void> {
     await this.options.indexerService.updateSavedConfigurations(
-      this.options.id,
+      this.indexerId,
       configurationIds,
       currentHeight,
     )
