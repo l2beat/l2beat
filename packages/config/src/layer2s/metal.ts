@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
@@ -16,7 +17,11 @@ export const metal: Layer2 = opStackL2({
     purposes: ['Universal'],
     links: {
       websites: ['https://metall2.com/'],
-      apps: ['https://bridge.metall2.com/','https://dollar.metalx.com/', 'https://metalpay.com/'],
+      apps: [
+        'https://bridge.metall2.com/',
+        'https://dollar.metalx.com/',
+        'https://metalpay.com/',
+      ],
       documentation: [],
       explorers: ['https://explorer.metall2.com'],
       repositories: [],
