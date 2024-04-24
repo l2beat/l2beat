@@ -33,12 +33,11 @@ describe(ActivityController.name, () => {
           hasProcessedAll: true,
         }),
       ]
-      const controller = new ActivityController(
+      const controller = createController({
         includedIds,
         processors,
-        mockRepository([]),
-        mockObject<Clock>({ getLastHour: () => NOW }),
-      )
+        clock: mockObject<Clock>({ getLastHour: () => NOW }),
+      })
 
       await expect(controller.getActivity()).toBeRejectedWith(
         'Assertion Error: Ethereum missing in daily transaction count',
@@ -62,10 +61,10 @@ describe(ActivityController.name, () => {
         }),
       ]
 
-      const controller = new ActivityController(
+      const controller = createController({
         includedIds,
         processors,
-        mockRepository([
+        repository: mockRepository([
           {
             projectId: ProjectId.ETHEREUM,
             timestamp: TODAY.add(-2, 'days'),
@@ -108,11 +107,12 @@ describe(ActivityController.name, () => {
             count: 2,
           },
         ]),
-        mockObject<Clock>({ getLastHour: () => NOW }),
-      )
+        clock: mockObject<Clock>({ getLastHour: () => NOW }),
+      })
 
-      expect(await controller.getActivity()).toEqual(
-        formatActivity({
+      expect(await controller.getActivity()).toEqual({
+        type: 'success',
+        data: formatActivity({
           combined: [
             [TODAY.add(-2, 'days'), 2, 2137],
             [TODAY.add(-1, 'days'), 1, 420],
@@ -124,7 +124,7 @@ describe(ActivityController.name, () => {
             ],
           },
         }),
-      )
+      })
     })
 
     it('groups data', async () => {
@@ -148,10 +148,10 @@ describe(ActivityController.name, () => {
         }),
       ]
 
-      const controller = new ActivityController(
+      const controller = createController({
         includedIds,
         processors,
-        mockRepository([
+        repository: mockRepository([
           {
             projectId: ProjectId.ETHEREUM,
             timestamp: TODAY.add(-2, 'days'),
@@ -184,11 +184,12 @@ describe(ActivityController.name, () => {
             count: 69,
           },
         ]),
-        mockObject<Clock>({ getLastHour: () => NOW }),
-      )
+        clock: mockObject<Clock>({ getLastHour: () => NOW }),
+      })
 
-      expect(await controller.getActivity()).toEqual(
-        formatActivity({
+      expect(await controller.getActivity()).toEqual({
+        type: 'success',
+        data: formatActivity({
           combined: [
             [TODAY.add(-2, 'days'), 1339, 2137],
             [TODAY.add(-1, 'days'), 70, 420],
@@ -204,7 +205,63 @@ describe(ActivityController.name, () => {
             ],
           },
         }),
-      )
+      })
+    })
+
+    it('returns error if data not synced', async () => {})
+  })
+
+  describe(ActivityController.prototype.getAggregatedActivity.name, () => {
+    throw new Error('NIY')
+  })
+
+  describe(ActivityController.prototype.mapSlugsToProjectIds.name, () => {
+    const activityController = createController({})
+
+    it('returns project ids for given slugs', () => {
+      const result = activityController.mapSlugsToProjectIds([
+        'arbitrum',
+        'optimism',
+        'starknet',
+        'zksync-era',
+      ])
+
+      expect(result).toEqual({
+        type: 'success',
+        data: [
+          ProjectId('arbitrum'),
+          ProjectId('optimism'),
+          ProjectId('starknet'),
+          ProjectId('zksync2'),
+        ],
+      })
+    })
+
+    it('returns error for empty slugs', () => {
+      const result = activityController.mapSlugsToProjectIds([])
+
+      expect(result).toEqual({
+        type: 'error',
+        error: 'EMPTY_PROJECTS',
+      })
+    })
+
+    it('returns error for unknown project', () => {
+      const result = activityController.mapSlugsToProjectIds(['unknown'])
+
+      expect(result).toEqual({
+        type: 'error',
+        error: 'UNKNOWN_PROJECT',
+      })
+    })
+
+    it('returns error for no transaction api', () => {
+      const result = activityController.mapSlugsToProjectIds(['aztecconnect'])
+
+      expect(result).toEqual({
+        type: 'error',
+        error: 'NO_TRANSACTION_API',
+      })
     })
   })
 })
@@ -235,6 +292,25 @@ function formatActivity({
       }
     }, {}),
   }
+}
+
+function createController({
+  includedIds,
+  processors,
+  repository,
+  clock,
+}: Partial<{
+  includedIds: ProjectId[]
+  processors: SequenceProcessor[]
+  repository: ActivityViewRepository
+  clock: Clock
+}>) {
+  return new ActivityController(
+    includedIds ?? [],
+    processors ?? [],
+    repository ?? mockRepository([]),
+    clock ?? mockObject<Clock>(),
+  )
 }
 
 function mockProcessor({

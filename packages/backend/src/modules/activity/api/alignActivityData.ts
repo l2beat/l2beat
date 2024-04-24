@@ -1,6 +1,7 @@
 import {
   ActivityApiChart,
   ActivityApiChartPoint,
+  Result,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -9,16 +10,20 @@ import { DailyTransactionCount } from './types'
 export function alignActivityData(
   apiChartData: DailyTransactionCount[],
   ethereumChartData: DailyTransactionCount[],
-): ActivityApiChartPoint[] {
+): Result<
+  ActivityApiChartPoint[],
+  'DATA_NOT_SYNCED' | 'ETHEREUM_DATA_DELAYED'
+> {
   const lastProjectTimestamp = apiChartData.at(-1)?.timestamp
   if (!lastProjectTimestamp) {
-    throw new Error('No data in activity chart')
+    // No data in activity chart
+    return { type: 'error', error: 'DATA_NOT_SYNCED' }
   }
   const ethChartTimestampIndex = ethereumChartData.findIndex(
     (x) => x.timestamp.toNumber() === lastProjectTimestamp.toNumber(),
   )
   if (ethChartTimestampIndex === -1) {
-    throw new Error('No matching timestamp in ethereum chart')
+    return { type: 'error', error: 'ETHEREUM_DATA_DELAYED' }
   }
   const alignedEthChartData = ethereumChartData.slice(
     0,
@@ -37,5 +42,9 @@ export function alignActivityData(
         ethPoint?.count ?? 0,
       ]
     })
-  return data
+
+  return {
+    type: 'success',
+    data,
+  }
 }

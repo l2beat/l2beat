@@ -1,9 +1,11 @@
+import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 import {
   ActivityApiCharts,
   ActivityApiResponse,
   assert,
   json,
   ProjectId,
+  Result,
 } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
@@ -18,6 +20,21 @@ import {
   DailyTransactionCountProjectsMap,
 } from './types'
 
+export type ActivityResult = Result<
+  ActivityApiResponse,
+  'DATA_NOT_SYNCED' | 'ETHEREUM_DATA_DELAYED'
+>
+
+export type AggregatedActivityResult = Result<
+  ActivityApiCharts,
+  'DATA_NOT_SYNCED' | 'ETHEREUM_DATA_DELAYED'
+>
+
+export type MapSlugsToProjectIdsResult = Result<
+  ProjectId[],
+  'UNKNOWN_PROJECT' | 'NO_TRANSACTION_API' | 'EMPTY_PROJECTS'
+>
+
 export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
@@ -26,7 +43,7 @@ export class ActivityController {
     private readonly clock: Clock,
   ) {}
 
-  async getActivity(): Promise<ActivityApiResponse> {
+  async getActivity(): Promise<ActivityResult> {
     const dbCounts = await this.getPostprocessedDailyCounts()
     const projectCounts: DailyTransactionCountProjectsMap = new Map()
     let ethereumCounts: DailyTransactionCount[] | undefined
@@ -43,27 +60,40 @@ export class ActivityController {
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
-    const combinedChartPoints = alignActivityData(
+    const combinedAlignmentResult = alignActivityData(
       toCombinedActivity(projectCounts),
       ethereumCounts,
     )
 
+    if (combinedAlignmentResult.type === 'error') {
+      return combinedAlignmentResult
+    }
+
     const projects: ActivityApiResponse['projects'] = {}
     for (const [projectId, counts] of projectCounts.entries()) {
+      const activityAlignmentResult = alignActivityData(counts, ethereumCounts)
+
+      if (activityAlignmentResult.type === 'error') {
+        return activityAlignmentResult
+      }
+
       projects[projectId.toString()] = formatActivityChart(
-        alignActivityData(counts, ethereumCounts),
+        activityAlignmentResult.data,
       )
     }
 
     return {
-      combined: formatActivityChart(combinedChartPoints),
-      projects,
+      type: 'success',
+      data: {
+        combined: formatActivityChart(combinedAlignmentResult.data),
+        projects,
+      },
     }
   }
 
   async getAggregatedActivity(
     projects: ProjectId[],
-  ): Promise<ActivityApiCharts> {
+  ): Promise<AggregatedActivityResult> {
     const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
       await this.viewRepository.getProjectsAggregatedDailyCount(projects),
       await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
@@ -78,7 +108,50 @@ export class ActivityController {
       processedEthereumCounts,
     )
 
-    return formatActivityChart(chartPoints)
+    if (chartPoints.type === 'error') {
+      return chartPoints
+    }
+
+    return {
+      type: 'success',
+      data: formatActivityChart(chartPoints.data),
+    }
+  }
+
+  mapSlugsToProjectIds(slugs: string[]): MapSlugsToProjectIdsResult {
+    if (slugs.length === 0) {
+      return {
+        type: 'error',
+        error: 'EMPTY_PROJECTS',
+      }
+    }
+
+    const projects: (Layer2 | Layer3)[] = []
+    const allProjects = [...layer2s, ...layer3s]
+    for (const s of slugs) {
+      const project = allProjects.find((project) => project.display.slug === s)
+
+      if (!project) {
+        return {
+          type: 'error',
+          error: 'UNKNOWN_PROJECT',
+        }
+      }
+
+      projects.push(project)
+    }
+
+    if (!projects.some((p) => p.config.transactionApi)) {
+      return {
+        type: 'error',
+        error: 'NO_TRANSACTION_API',
+      }
+    }
+
+    return {
+      type: 'success',
+      data: projects.map((p) => p.id),
+    }
   }
 
   getStatus(): json {

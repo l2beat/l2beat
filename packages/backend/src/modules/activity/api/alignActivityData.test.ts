@@ -22,11 +22,30 @@ describe(alignActivityData.name, () => {
 
     const result = alignActivityData(apiChartData, ethChartData)
 
-    expect(result).toEqual([
-      [lastDay.add(-2, 'days'), 1, 4],
-      [lastDay.add(-1, 'days'), 2, 5],
-      [lastDay, 3, 6],
-    ])
+    expect(result).toEqual({
+      type: 'success',
+      data: [
+        [lastDay.add(-2, 'days'), 1, 4],
+        [lastDay.add(-1, 'days'), 2, 5],
+        [lastDay, 3, 6],
+      ],
+    })
+  })
+
+  it('should return error when no data in activity chart', () => {
+    const result = alignActivityData(
+      [],
+      [
+        { timestamp: lastDay.add(-2, 'days'), count: 4 },
+        { timestamp: lastDay.add(-1, 'days'), count: 5 },
+        { timestamp: lastDay, count: 6 },
+      ],
+    )
+
+    expect(result).toEqual({
+      type: 'error',
+      error: 'DATA_NOT_SYNCED',
+    })
   })
 
   describe('more eth data than layer2 data', () => {
@@ -44,10 +63,13 @@ describe(alignActivityData.name, () => {
 
       const result = alignActivityData(apiChartData, ethChartData)
 
-      expect(result).toEqual([
-        [lastDay.add(-2, 'days'), 1, 4],
-        [lastDay.add(-1, 'days'), 2, 5],
-      ])
+      expect(result).toEqual({
+        type: 'success',
+        data: [
+          [lastDay.add(-2, 'days'), 1, 4],
+          [lastDay.add(-1, 'days'), 2, 5],
+        ],
+      })
     })
 
     it('cut back', () => {
@@ -64,15 +86,18 @@ describe(alignActivityData.name, () => {
 
       const result = alignActivityData(apiChartData, ethChartData)
 
-      expect(result).toEqual([
-        [lastDay.add(-1, 'days'), 2, 5],
-        [lastDay, 3, 6],
-      ])
+      expect(result).toEqual({
+        type: 'success',
+        data: [
+          [lastDay.add(-1, 'days'), 2, 5],
+          [lastDay, 3, 6],
+        ],
+      })
     })
   })
 
   describe('more layer2 data than eth data', () => {
-    it('throw when eth delayed', () => {
+    it('returns error when eth delayed', () => {
       const apiChartData: DailyTransactionCount[] = [
         { timestamp: lastDay.add(-2, 'days'), count: 1 },
         { timestamp: lastDay.add(-1, 'days'), count: 2 },
@@ -84,7 +109,12 @@ describe(alignActivityData.name, () => {
         { timestamp: lastDay.add(-1, 'days'), count: 5 },
       ]
 
-      expect(() => alignActivityData(apiChartData, ethChartData)).toThrow()
+      const result = alignActivityData(apiChartData, ethChartData)
+
+      expect(result).toEqual({
+        type: 'error',
+        error: 'ETHEREUM_DATA_DELAYED',
+      })
     })
 
     it('cut back', () => {
@@ -101,10 +131,13 @@ describe(alignActivityData.name, () => {
 
       const result = alignActivityData(apiChartData, ethChartData)
 
-      expect(result).toEqual([
-        [lastDay.add(-1, 'days'), 2, 5],
-        [lastDay, 3, 6],
-      ])
+      expect(result).toEqual({
+        type: 'success',
+        data: [
+          [lastDay.add(-1, 'days'), 2, 5],
+          [lastDay, 3, 6],
+        ],
+      })
     })
   })
 })
