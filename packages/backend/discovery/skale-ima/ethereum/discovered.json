@@ -1,7 +1,7 @@
 {
   "name": "skale-ima",
   "chain": "ethereum",
-  "blockNumber": 19532187,
+  "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
   "version": 3,
   "contracts": [
@@ -27,7 +27,7 @@
           "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
         ],
         "getThreshold": 3,
-        "nonce": 342,
+        "nonce": 343,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -157,7 +157,7 @@
         "MESSAGES_LENGTH": 10,
         "PAUSABLE_ROLE": "0x09b6fca8f5f3ab2900d9586d1d15872611c1bd42b268b973ad886d4f2646b560",
         "REVERT_REASON_LENGTH": 64,
-        "version": "1.5.0"
+        "version": "2.1.0"
       },
       "derivedName": "MessageProxyForMainnet"
     },
