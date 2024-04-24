@@ -7,7 +7,10 @@ import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { TooltipProvider } from '../../../../components/tooltip/TooltipProvider'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
+import { getSyncStatus } from '../props/getScalingLivenessView'
 import { ScalingLivenessView } from './ScalingLivenessView'
+
+const syncTarget = UnixTime.now().toStartOf('hour')
 
 const meta: Meta<typeof ScalingLivenessView> = {
   title: 'Pages/Scaling/LivenessView',
@@ -133,7 +136,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             syncedUntil: UnixTime.now(),
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           batchSubmissions: {
             last30Days: {
@@ -153,12 +156,15 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now().add(-2, 'hours'),
             warning: undefined,
-            isSynced: false,
+            syncStatus: getSyncStatus(
+              UnixTime.now().add(-2, 'hours'),
+              syncTarget,
+            ),
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           syncStatus: {
             isSynced: false,
@@ -335,7 +341,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 1338,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
@@ -356,13 +362,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 27634,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           syncStatus: {
             isSynced: true,
@@ -616,7 +622,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           batchSubmissions: {
             last30Days: {
@@ -632,12 +638,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           syncStatus: {
             isSynced: true,
@@ -796,7 +802,10 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             syncedUntil: UnixTime.now().add(-2, 'hours'),
             warning: undefined,
-            isSynced: false,
+            syncStatus: getSyncStatus(
+              UnixTime.now().add(-2, 'hours'),
+              syncTarget,
+            ),
           },
           batchSubmissions: {
             last30Days: {
@@ -815,13 +824,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 88067,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
             warning: undefined,
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
           syncStatus: {
             isSynced: false,
@@ -962,7 +971,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 80046,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning:
               'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
@@ -979,12 +988,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
             allTime: undefined,
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           syncStatus: {
@@ -1140,7 +1149,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 180,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           batchSubmissions: {
@@ -1160,12 +1169,12 @@ const meta: Meta<typeof ScalingLivenessView> = {
               maximumInSeconds: 2380,
             },
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           proofSubmissions: {
             syncedUntil: UnixTime.now(),
-            isSynced: true,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
             warning: undefined,
           },
           syncStatus: {

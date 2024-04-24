@@ -120,12 +120,18 @@ function getLivenessData(
   }
 }
 
-function getSyncStatus(
+export function getSyncStatus(
   syncedUntil: UnixTime,
   syncTarget: UnixTime,
 ): SyncStatus {
+  const isSynced = syncedUntil?.gte(syncTarget) ?? false
+  if (isSynced) {
+    return {
+      isSynced,
+    }
+  }
   return {
-    isSynced: syncedUntil?.gte(syncTarget) ?? false,
+    isSynced,
     displaySyncedUntil: `Values have not been synced since\n${formatTimestamp(
       syncedUntil.toNumber(),
       {
