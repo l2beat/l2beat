@@ -46,17 +46,35 @@ export function createStatusModule(
     for (const i of indexers) {
       const name = i.indexerId.replaceAll('-', '_')
       const gauge = gauges.get(name)
+
+      const tag = i.indexerId.split('::')[1]
       if (!gauge) {
-        gauges.set(
-          name,
-          new Gauge({
+        if (tag) {
+          gauges.set(
             name,
-            help: 'Value showing the safe height of the indexer',
-          }),
-        )
-        gauges.get(name)?.set(i.safeHeight)
+            new Gauge({
+              name,
+              help: 'Value showing the safe height of the indexer',
+              labelNames: ['tag'],
+            }),
+          )
+          gauges.get(name)?.set({ tag }, i.safeHeight)
+        } else {
+          gauges.set(
+            name,
+            new Gauge({
+              name,
+              help: 'Value showing the safe height of the indexer',
+            }),
+          )
+          gauges.get(name)?.set(i.safeHeight)
+        }
       } else {
-        gauge.set(i.safeHeight)
+        if (tag) {
+          gauge.set({ tag }, i.safeHeight)
+        } else {
+          gauge.set(i.safeHeight)
+        }
       }
     }
   }

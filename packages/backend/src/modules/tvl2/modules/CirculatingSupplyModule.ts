@@ -41,7 +41,8 @@ export function createCirculatingSupplyModule(
       syncOptimizer,
       minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       amountRepository: peripherals.getRepository(AmountRepository),
-      id: `circulating_supply_indexer_${circulatingSupply.coingeckoId.toString()}_${circulatingSupply.address.toString()}`,
+      id: `circulating_supply_indexer`,
+      tag: circulatingSupply.coingeckoId.toString(),
     })
   })
 

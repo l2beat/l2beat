@@ -46,7 +46,8 @@ export function createPriceModule(
         syncOptimizer,
         priceRepository: peripherals.getRepository(PriceRepository),
         coingeckoId: CoingeckoId(coingeckoId),
-        id: `price_indexer_${coingeckoId}`,
+        id: `price_indexer`,
+        tag: coingeckoId,
         configurations: prices.map((price) => ({
           properties: price,
           minHeight: price.sinceTimestamp.toNumber(),
