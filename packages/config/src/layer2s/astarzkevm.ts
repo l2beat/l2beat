@@ -21,6 +21,11 @@ const isForcedBatchDisallowed =
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
+const upgradeability = {
+  upgradableBy: ['ProxyAdminOwner'],
+  upgradeDelay: 'None',
+}
+
 export const astarzkevm: Layer2 = polygonCDKStack({
   daProvider: {
     name: 'DAC',
@@ -110,6 +115,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     discovery.getContractDetails('AstarValidiumDAC', {
       description:
         'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+      ...upgradeability,
     }),
   ],
   milestones: [

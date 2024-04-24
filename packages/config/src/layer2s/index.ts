@@ -87,8 +87,8 @@ import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { world } from './world'
-import { x1 } from './x1'
 import { xchain } from './xchain'
+import { xlayer } from './xlayer'
 import { zentachain } from './zentachain'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
@@ -191,7 +191,7 @@ export const layer2s: Layer2[] = [
   termstructure,
   tradable,
   world,
-  x1,
+  xlayer,
   xchain,
   zentachain,
   zircuit,
