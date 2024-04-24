@@ -35,8 +35,6 @@ export function createStatusModule(
     },
   )
 
-  // TODO: add labels for automatic grouping in grafana
-  // this can be achieved via tagging indexers e.g. name::tag
   const gauges = new Map<string, Gauge>()
   const setIndexerGauges = async () => {
     const indexers = await peripherals
@@ -44,11 +42,12 @@ export function createStatusModule(
       .getAll()
 
     for (const i of indexers) {
-      //TODO: what to do when there are "price_indexer" & "price_indexer::tag" indexers?
-      const name = i.indexerId.replaceAll('-', '_').split('::')[0]
-      const gauge = gauges.get(name)
+      const parts = i.indexerId.split('::')
+      const name = parts[0].replaceAll('-', '_')
+      const tag = parts[1]
 
-      const tag = i.indexerId.split('::')[1]
+      const gauge = gauges.get(getGaugeId(name, tag))
+
       if (!gauge) {
         if (tag) {
           gauges.set(
@@ -91,4 +90,12 @@ export function createStatusModule(
     start,
     routers,
   }
+}
+
+function getGaugeId(name: string, tag?: string): string {
+  if (tag === undefined) {
+    return name
+  }
+
+  return `${name}-with-tag`
 }
