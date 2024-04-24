@@ -298,6 +298,7 @@
     },
     {
       "name": "Sentinel",
+      "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
       "values": {
         "governors": {
           "description": null,
@@ -325,7 +326,7 @@
           "type": null
         },
         "numRelaxedGuards": {
-          "description": null,
+          "description": "Number of relaxed guards in the Sentinel.",
           "severity": null,
           "type": null
         },
@@ -345,13 +346,13 @@
           "type": null
         },
         "relaxThreshold": {
-          "description": null,
-          "severity": null,
+          "description": "Threshold of relaxed Guards needed to relax the Sentinel",
+          "severity": "MEDIUM",
           "type": null
         },
         "relaxed": {
-          "description": null,
-          "severity": null,
+          "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)",
+          "severity": "MEDIUM",
           "type": null
         }
       }
