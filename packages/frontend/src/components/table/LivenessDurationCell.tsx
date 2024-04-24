@@ -5,6 +5,7 @@ import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
 import { formatTimestamp } from '../../utils'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
 import { WarningBar } from '../project/WarningBar'
 import {
@@ -66,15 +67,20 @@ export function LivenessDurationCell(props: {
         )}
       </TooltipTrigger>
       <TooltipContent>
-        {!props.isSynced &&
-          props.syncedUntil &&
-          `The data is not synced until ${formatTimestamp(
-            props.syncedUntil?.toNumber(),
-            {
-              mode: 'datetime',
-              longMonthName: true,
-            },
-          )}.`}
+        {!props.isSynced && props.syncedUntil && (
+          <>
+            <span className="whitespace-pre text-balance font-medium">
+              {`Values have not been synced since\n${formatTimestamp(
+                props.syncedUntil?.toNumber(),
+                {
+                  mode: 'datetime',
+                  longMonthName: true,
+                },
+              )}.`}
+            </span>
+            <HorizontalSeparator className="my-2 dark:border-slate-600" />
+          </>
+        )}
         {props.tooltipContent}
         {props.warning && (
           <WarningBar
