@@ -100,7 +100,9 @@ export const xlayer: Layer2 = polygonCDKStack({
   rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
-    ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+    },
   },
   nonTemplateContracts: [
     discovery.getContractDetails('XLayerValidiumDAC', {
