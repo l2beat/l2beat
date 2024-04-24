@@ -7,7 +7,7 @@ Generated with discovered.json: 0xddba74a4bcf42b8a535864681246ae615dbc3434
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Normal OP stack rollup with superchain config.
 
 ## Initial discovery
 
