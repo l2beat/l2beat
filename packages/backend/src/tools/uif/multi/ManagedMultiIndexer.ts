@@ -8,7 +8,7 @@ import { Configuration, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
-  id: string
+  name: string
   tag?: string
   indexerService: IndexerService
   configurations: Configuration<T>[]
@@ -23,7 +23,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
 
-    this.indexerId = options.id
+    this.indexerId = options.name
     if (options.tag) {
       this.indexerId += `::${options.tag}`
     }

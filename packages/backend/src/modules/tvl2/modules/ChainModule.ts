@@ -141,7 +141,6 @@ function createChainModule(
       BlockTimestampRepository,
     ),
     parents: [blockTimestampIndexer],
-    id: `chain_amount_indexer`,
     tag: chainConfig.chain,
     configurations,
     encode,

@@ -18,7 +18,7 @@ import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface PriceIndexerDeps
-  extends ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry> {
+  extends Omit<ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry>, 'name'> {
   coingeckoQueryService: CoingeckoQueryService
   priceRepository: PriceRepository
   syncOptimizer: SyncOptimizer
@@ -27,7 +27,7 @@ export interface PriceIndexerDeps
 
 export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry> {
   constructor(private readonly $: PriceIndexerDeps) {
-    super($)
+    super({ ...$, name: 'price_indexer' })
   }
 
   override async multiUpdate(
