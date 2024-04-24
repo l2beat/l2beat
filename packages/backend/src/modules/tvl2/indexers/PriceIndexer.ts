@@ -50,17 +50,31 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       to,
       configurationsWithMissingData,
     )
+
     if (prices.length === 0) {
       return to
     }
 
-    await this.$.priceRepository.addMany(prices)
-
+    // There are multiple price configs with possibly different until timestamps.
+    // We need to find the latest until timestamp to return.
     const maxTo = prices
       .map((p) => p.timestamp.toNumber())
       .reduce((a, b) => Math.max(a, b), 0)
 
-    return maxTo < to ? to : maxTo
+    this.logger.info('Fetched prices in range', {
+      from,
+      maxTo,
+      prices: prices.length,
+      configurations: configurationsWithMissingData.length,
+    })
+
+    await this.$.priceRepository.addMany(prices)
+
+    this.logger.info('Saved prices into DB', {
+      prices: prices.length,
+    })
+
+    return maxTo > to ? to : maxTo
   }
 
   private async fetchAndOptimizePrices(
@@ -85,9 +99,13 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       undefined,
     )
 
+    const optimizedPrices = prices.filter((p) =>
+      this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+    )
+
     return configurations
       .map((c) =>
-        prices
+        optimizedPrices
           .filter((p) =>
             p.timestamp.gte(new UnixTime(c.minHeight)) && c.maxHeight
               ? p.timestamp.lte(new UnixTime(c.maxHeight))
