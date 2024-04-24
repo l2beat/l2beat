@@ -1,8 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { Layer2 } from './types'
 import { underReviewL2 } from './templates/underReview'
+import { Layer2 } from './types'
 
 export const metal: Layer2 = underReviewL2({
   id: 'metal',
@@ -25,7 +24,6 @@ export const metal: Layer2 = underReviewL2({
       repositories: [],
       socialMedia: ['https://twitter.com/metalpaysme'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   escrows: [
     {
@@ -38,5 +36,5 @@ export const metal: Layer2 = underReviewL2({
       sinceTimestamp: new UnixTime(1711057199),
       tokens: ['ETH'],
     },
-  ]
+  ],
 })
