@@ -29,11 +29,6 @@ import {
   DetailedTransactionBase,
 } from '../types/DetailedTransaction'
 
-type L2CostsResult = {
-  type: 'success'
-  data: L2CostsApiResponse
-}
-
 export type L2CostsTrackedTxsConfig = {
   entries: L2CostsTrackedTxsConfigEntry[]
 }
@@ -70,7 +65,7 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
 
 export class L2CostsController {
   private readonly taskQueue: TaskQueue<void>
-  getCachedL2CostsApiResponse: () => Promise<L2CostsResult>
+  getCachedL2CostsApiResponse: () => Promise<L2CostsApiResponse>
 
   constructor(
     private readonly l2CostsRepository: L2CostsRepository,
@@ -101,7 +96,7 @@ export class L2CostsController {
     }, thirtyMinutes)
   }
 
-  async getL2Costs(): Promise<L2CostsResult> {
+  async getL2Costs(): Promise<L2CostsApiResponse> {
     const projects: L2CostsApiResponse['projects'] = {}
 
     const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
@@ -187,11 +182,8 @@ export class L2CostsController {
     }
 
     return {
-      type: 'success',
-      data: {
-        projects,
-        combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
-      },
+      projects,
+      combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
     }
   }
 

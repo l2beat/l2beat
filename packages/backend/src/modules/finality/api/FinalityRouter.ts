@@ -8,7 +8,7 @@ export function createFinalityRouter(finalityController: FinalityController) {
   router.get('/api/finality', async (ctx) => {
     const result = await finalityController.getFinality()
 
-    ctx.body = result.data
+    ctx.body = result
   })
 
   return router

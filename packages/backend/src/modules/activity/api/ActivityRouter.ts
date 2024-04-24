@@ -1,9 +1,15 @@
 import Router from '@koa/router'
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { Context } from 'koa'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
-import { ActivityController } from './ActivityController'
+import {
+  ActivityController,
+  ActivityResult,
+  AggregatedActivityResult,
+  MapSlugsToProjectIdsResult,
+} from './ActivityController'
 
 export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
@@ -22,47 +28,24 @@ export function createActivityRouter(activityController: ActivityController) {
         }),
       }),
       async (ctx) => {
-        if (ctx.query.projectSlugs.length === 0) {
-          ctx.body = {
-            result: 'error',
-            error: 'EMPTY_PROJECTS',
-          }
-          return
-        }
-
         const slugs = ctx.query.projectSlugs
           .split(',')
           .map((slug) => slug.trim())
 
-        const projects: (Layer2 | Layer3)[] = []
-
-        for (const s of slugs) {
-          const project = [...layer2s, ...layer3s].find(
-            (project) => project.display.slug === s,
-          )
-
-          if (!project) {
-            ctx.body = {
-              result: 'error',
-              error: 'UNKNOWN_PROJECT',
-            }
-            return
-          }
-
-          projects.push(project)
-        }
-
-        if (!projects.some((p) => p.config.transactionApi)) {
-          ctx.body = {
-            result: 'error',
-            error: 'NO_TRANSACTION_API',
-          }
+        const projectIdsResult = activityController.mapSlugsToProjectIds(slugs)
+        if (projectIdsResult.type === 'error') {
+          handleActivityError(ctx, projectIdsResult)
           return
         }
 
         const data = await activityController.getAggregatedActivity(
-          projects.map((p) => p.id),
+          projectIdsResult.data,
         )
+        if (data.type === 'error') {
+          handleActivityError(ctx, data)
+          return
+        }
+
         ctx.body = data
       },
     ),
@@ -73,4 +56,28 @@ export function createActivityRouter(activityController: ActivityController) {
   })
 
   return router
+}
+
+function handleActivityError(
+  ctx: Context,
+  result: Extract<
+    ActivityResult | AggregatedActivityResult | MapSlugsToProjectIdsResult,
+    { type: 'error' }
+  >,
+) {
+  switch (result.error) {
+    case 'UNKNOWN_PROJECT':
+    case 'NO_TRANSACTION_API':
+    case 'DATA_NOT_SYNCED':
+    case 'ETHEREUM_DATA_DELAYED':
+      ctx.status = 404
+      break
+    case 'EMPTY_PROJECTS':
+      ctx.status = 401
+      break
+    default:
+      assertUnreachable(result)
+  }
+
+  ctx.body = result.error
 }
