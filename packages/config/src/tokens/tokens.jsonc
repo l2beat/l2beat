@@ -1878,12 +1878,6 @@
       "address": "0x244c238325fc1bdf6eded726ee1b47d55895d944",
       "type": "NMV",
       "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "SLR",
-      "address": "0xe027d939f7de6f521675907cf086f59e4d75b876",
-      "type": "NMV",
-      "formula": "circulatingSupply"
     }
   ],
   "bobanetwork": [

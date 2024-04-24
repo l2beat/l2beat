@@ -4501,21 +4501,6 @@
       }
     },
     {
-      "id": "zksync2:slr-solarcoin-on-mainnet",
-      "name": "SolarCoin on Mainnet",
-      "coingeckoId": "solarcoin",
-      "address": "0xE027D939f7dE6F521675907Cf086F59E4D75B876",
-      "symbol": "SLR",
-      "decimals": 18,
-      "deploymentTimestamp": 1686057892,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/152/large/solarcoin.png?1696501524",
-      "chainId": 324,
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
       "id": "zksync2:sfrxeth-staked-frax-ether",
       "name": "Staked Frax Ether",
       "coingeckoId": "staked-frax-ether",
