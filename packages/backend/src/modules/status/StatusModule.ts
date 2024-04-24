@@ -44,7 +44,8 @@ export function createStatusModule(
       .getAll()
 
     for (const i of indexers) {
-      const name = i.indexerId.replaceAll('-', '_')
+      //TODO: what to do when there are "price_indexer" & "price_indexer::tag" indexers?
+      const name = i.indexerId.replaceAll('-', '_').split('::')[0]
       const gauge = gauges.get(name)
 
       const tag = i.indexerId.split('::')[1]
