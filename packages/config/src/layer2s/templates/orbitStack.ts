@@ -288,6 +288,29 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
     },
+    dataAvailability: postsToExternalDA
+      ? (() => {
+          const DAC = templateVars.discovery.getContractValue<{
+            membersCount: number
+            requiredSignatures: number
+          }>('SequencerInbox', 'dacKeyset')
+          const { membersCount, requiredSignatures } = DAC
+
+          return addSentimentToDataAvailability({
+            layers: ['DAC'],
+            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
+            mode: 'Transactions data (compressed)',
+          })
+        })()
+      : addSentimentToDataAvailability({
+          layers: [
+            templateVars.postsBlobs
+              ? 'Ethereum (blobs or calldata)'
+              : 'Ethereum (calldata)',
+          ],
+          bridge: { type: 'Enshrined' },
+          mode: 'Transactions data (compressed)',
+        }),
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA

@@ -19,6 +19,6 @@ export const Primary: Story = {}
 
 export const WithImage: Story = {
   args: {
-    image: '/images/upgrades-and-governance/optimism.png',
+    image: '/fake-upgrades-and-governance.png',
   },
 }

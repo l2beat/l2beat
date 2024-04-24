@@ -1,0 +1,78 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "metal",
+  "initialAddresses": [
+    "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA" // SystemConfig
+  ],
+  "names": {
+    "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA": "SystemConfig",
+    "0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956": "OptimismPortal",
+    "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426": "L2OutputOracle",
+    "0x0a47A44f1B2bb753474f8c830322554A96C9934D": "L1CrossDomainMessenger",
+    "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": "MetalMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner",
+    "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig",
+    "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
+    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2"
+  },
+  "overrides": {
+    "0x4200000000000000000000000000000000000010": {
+      "ignoreDiscovery": true
+    },
+    "0x4200000000000000000000000000000000000007": {
+      "ignoreDiscovery": true
+    },
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
+        }
+      },
+      "ignoreInWatchMode": ["scalar"]
+    }
+  }
+}

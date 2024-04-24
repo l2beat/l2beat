@@ -213,11 +213,6 @@ export const optimism: Layer2 = opStackL2({
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
       ...upgradeability,
     }),
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
   ],
   chainConfig: {
     name: 'optimism',

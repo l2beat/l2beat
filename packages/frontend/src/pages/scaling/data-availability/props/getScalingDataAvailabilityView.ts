@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
@@ -10,10 +10,12 @@ import {
 import { ScalingDataAvailabilityViewProps } from '../view/ScalingDataAvailabilityView'
 
 export function getScalingDataAvailabilityView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   pagesData: DataAvailabilityPagesData,
 ): ScalingDataAvailabilityViewProps {
-  const activeProjects = projects.filter((p) => !p.isArchived && !p.isUpcoming)
+  const activeProjects = projects.filter(
+    (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
+  )
   const orderedByTvl = orderByTvl(activeProjects, pagesData.tvlApiResponse)
 
   return {
@@ -28,7 +30,7 @@ export function getScalingDataAvailabilityView(
 }
 
 function getScalingDataAvailabilityViewEntry(
-  project: Layer2,
+  project: Layer2 | Layer3,
   hasImplementationChanged?: boolean,
 ): ScalingDataAvailabilityViewEntry | undefined {
   if (!project.dataAvailability) return
@@ -38,13 +40,14 @@ function getScalingDataAvailabilityViewEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
+    type: project.type,
     provider: project.display.provider,
     warning: project.display.warning,
     hasImplementationChanged,
     showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
-    stage: project.stage,
+    stage: project.type === 'layer2' ? project.stage : undefined,
     dataAvailability: {
       layer: project.dataAvailability.layer,
       bridge: project.dataAvailability.bridge,

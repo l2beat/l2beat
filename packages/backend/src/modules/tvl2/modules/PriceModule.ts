@@ -10,7 +10,7 @@ import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface PriceModule {
+interface PriceModule {
   indexers: PriceIndexer[]
   start: () => Promise<void> | void
 }

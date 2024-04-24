@@ -18,7 +18,7 @@ export function getRiskSection(
     { id: 'data-availability', value: project.technology.dataAvailability },
     { id: 'operator', value: project.technology.operator },
     { id: 'force-transactions', value: project.technology.forceTransactions },
-    { id: 'exit-mechanisms', value: project.technology.exitMechanisms },
+    { id: 'withdrawals', value: project.technology.exitMechanisms },
     { id: 'mass-exit', value: project.technology.massExit },
     {
       id: 'other-considerations',

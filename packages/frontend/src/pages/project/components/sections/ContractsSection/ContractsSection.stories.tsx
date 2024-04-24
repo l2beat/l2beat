@@ -111,7 +111,7 @@ const props: ContractsSectionProps = {
       href: 'https://l2beat.com',
     },
   ],
-  architectureImage: '/images/architecture/optimism.png',
+  architectureImage: '/fake-architecture.png',
   verificationStatus: {
     projects: {},
     contracts: {
