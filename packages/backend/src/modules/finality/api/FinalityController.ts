@@ -67,6 +67,13 @@ export class FinalityController {
           }
         }
 
+        if (project.stateUpdate === 'disabled') {
+          return {
+            ...base,
+            stateUpdate: null,
+          }
+        }
+
         const stateUpdate =
           record.maximumStateUpdate !== null &&
           record.minimumStateUpdate !== null &&
