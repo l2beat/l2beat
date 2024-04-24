@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x5bfc86fa944292c5527f9ce286fa22c496536f90
+
+# Diff at Wed, 24 Apr 2024 08:48:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@64cf04758a7da5aaed34239f1c6d1672c16260ad block: 19704406
+- current block number: 19724145
+
+## Description
+
+The Sentinel is unrelaxed due to Two Sentinel-Guards being in the unrelaxed state. This restricts what the Sentinel-Governors can change in the bridge contracts in the Sentinel's name.
+No changes in the Bridge parameters.
+
+## Watched changes
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
++++ description: Number of relaxed guards in the Sentinel.
+      values.numRelaxedGuards:
+-        2
++        0
++++ description: An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)
++++ severity: MEDIUM
+      values.relaxed:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xd8d108b7b19308cda326d243fc41e4d24ae821a2
 
 # Diff at Sat, 20 Apr 2024 19:31:25 GMT:
