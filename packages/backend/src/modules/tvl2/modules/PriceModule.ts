@@ -18,7 +18,6 @@ import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface PriceModule {
-  indexers: PriceIndexer[]
   start: () => Promise<void> | void
 }
 
@@ -60,7 +59,6 @@ export function createPriceModule(
   )
 
   return {
-    indexers,
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()

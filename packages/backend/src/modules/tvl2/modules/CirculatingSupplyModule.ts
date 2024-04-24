@@ -11,7 +11,6 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface CirculatingSupplyModule {
-  indexers: CirculatingSupplyIndexer[]
   start: () => Promise<void> | void
 }
 
@@ -47,7 +46,6 @@ export function createCirculatingSupplyModule(
   })
 
   return {
-    indexers,
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()

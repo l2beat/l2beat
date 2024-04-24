@@ -30,7 +30,6 @@ import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface ChainModule {
-  indexers: [BlockTimestampIndexer, ChainAmountIndexer]
   start: () => Promise<void> | void
 }
 
@@ -156,7 +155,6 @@ function createChainModule(
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
     },
-    indexers: [blockTimestampIndexer, chainAmountIndexer],
   }
 }
 

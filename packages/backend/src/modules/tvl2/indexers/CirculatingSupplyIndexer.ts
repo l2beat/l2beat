@@ -22,12 +22,10 @@ export interface ChainAmountIndexerDeps extends ManagedChildIndexerOptions {
 }
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
-  readonly indexerId: string
   private readonly configId: string
 
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super($)
-    this.indexerId = $.id
     this.configId = createAmountId($.config)
   }
 
