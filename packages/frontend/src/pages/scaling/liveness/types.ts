@@ -44,7 +44,7 @@ export interface ScalingLivenessViewEntryData {
 }
 
 export type LivenessDetailsWithWarning = LivenessDetails & {
-  isSynced: boolean
+  syncStatus: SyncStatus
   warning?: string
 }
 

@@ -10,6 +10,7 @@ import {
 
 import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
+import { SyncStatus } from '../../../types'
 import {
   AnomalyIndicatorEntry,
   LivenessPagesData,
@@ -91,17 +92,23 @@ function getLivenessData(
     stateUpdates: liveness.stateUpdates && {
       ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
-      isSynced: liveness.stateUpdates.syncedUntil?.gte(syncTarget) ?? false,
+      syncStatus: getSyncStatus(liveness.stateUpdates.syncedUntil, syncTarget),
     },
     batchSubmissions: liveness.batchSubmissions && {
       ...liveness.batchSubmissions,
       warning: project.display.liveness?.warnings?.batchSubmissions,
-      isSynced: liveness.batchSubmissions.syncedUntil?.gte(syncTarget) ?? false,
+      syncStatus: getSyncStatus(
+        liveness.batchSubmissions.syncedUntil,
+        syncTarget,
+      ),
     },
     proofSubmissions: liveness.proofSubmissions && {
       ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
-      isSynced: liveness.proofSubmissions.syncedUntil?.gte(syncTarget) ?? false,
+      syncStatus: getSyncStatus(
+        liveness.proofSubmissions.syncedUntil,
+        syncTarget,
+      ),
     },
     syncStatus: {
       isSynced,
@@ -110,6 +117,22 @@ function getLivenessData(
         longMonthName: true,
       }),
     },
+  }
+}
+
+function getSyncStatus(
+  syncedUntil: UnixTime,
+  syncTarget: UnixTime,
+): SyncStatus {
+  return {
+    isSynced: syncedUntil?.gte(syncTarget) ?? false,
+    displaySyncedUntil: `Values have not been synced since\n${formatTimestamp(
+      syncedUntil.toNumber(),
+      {
+        mode: 'datetime',
+        longMonthName: true,
+      },
+    )}.`,
   }
 }
 

@@ -1,8 +1,8 @@
-import { LivenessApiProject, UnixTime } from '@l2beat/shared-pure'
+import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
-import { formatTimestamp } from '../../utils'
+import { SyncStatus } from '../../pages/types'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { HorizontalSeparator } from '../HorizontalSeparator'
@@ -23,8 +23,7 @@ export function LivenessDurationCell(props: {
   project?: ScalingLivenessViewEntry
   tooltipContent?: TooltipContentType
   warning?: string
-  syncedUntil?: UnixTime
-  isSynced?: boolean
+  syncStatus?: SyncStatus
 }) {
   if (
     !props.durationInSeconds &&
@@ -59,7 +58,7 @@ export function LivenessDurationCell(props: {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <GrayedOut grayOut={props.isSynced === false}>
+        <GrayedOut grayOut={props.syncStatus?.isSynced === false}>
           <DurationCell durationInSeconds={props.durationInSeconds} />
         </GrayedOut>
         {props.warning && (
@@ -67,20 +66,15 @@ export function LivenessDurationCell(props: {
         )}
       </TooltipTrigger>
       <TooltipContent>
-        {!props.isSynced && props.syncedUntil && (
-          <>
-            <span className="whitespace-pre text-balance font-medium">
-              {`Values have not been synced since\n${formatTimestamp(
-                props.syncedUntil?.toNumber(),
-                {
-                  mode: 'datetime',
-                  longMonthName: true,
-                },
-              )}.`}
-            </span>
-            <HorizontalSeparator className="my-2 dark:border-slate-600" />
-          </>
-        )}
+        {!props.syncStatus?.isSynced &&
+          props.syncStatus?.displaySyncedUntil && (
+            <>
+              <span className="whitespace-pre text-balance font-medium">
+                {props.syncStatus.displaySyncedUntil}
+              </span>
+              <HorizontalSeparator className="my-2 dark:border-slate-600" />
+            </>
+          )}
         {props.tooltipContent}
         {props.warning && (
           <WarningBar

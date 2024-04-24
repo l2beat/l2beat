@@ -29,8 +29,7 @@ export function LivenessDurationTimeRangeCell({
                 data={data?.last30Days}
               />
             }
-            syncedUntil={data?.syncedUntil}
-            isSynced={data?.isSynced}
+            syncStatus={data?.syncStatus}
             dataType={dataType}
             warning={data?.warning}
           />
@@ -45,8 +44,7 @@ export function LivenessDurationTimeRangeCell({
                 data={data?.last90Days}
               />
             }
-            syncedUntil={data?.syncedUntil}
-            isSynced={data?.isSynced}
+            syncStatus={data?.syncStatus}
             dataType={dataType}
             warning={data?.warning}
           />
@@ -61,8 +59,7 @@ export function LivenessDurationTimeRangeCell({
                 data={data?.allTime}
               />
             }
-            syncedUntil={data?.syncedUntil}
-            isSynced={data?.isSynced}
+            syncStatus={data?.syncStatus}
             dataType={dataType}
             warning={data?.warning}
           />
