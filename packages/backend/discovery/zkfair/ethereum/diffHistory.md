@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x66ade9f0c9cdf3ca8e16a2960ccaeb355a0fd5cf
+
+# Diff at Wed, 24 Apr 2024 15:27:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@6a7ceb7b00aa6aba87217de183c2311e454dcd88 block: 19532302
+- current block number: 19726116
+
+## Description
+
+The URLs on amazon aws for all 5 DAC members are changed. Their onchain addresses remain the same.
+
+## Watched changes
+
+```diff
+    contract DataAvailabilityCommittee (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
++++ description: URL and address of the DAC member
+      values.members.4.0:
+-        "http://ec2-18-163-127-148.ap-east-1.compute.amazonaws.com:8444"
++        "http://ec2-54-219-14-189.us-west-1.compute.amazonaws.com:8444"
++++ description: URL and address of the DAC member
+      values.members.3.0:
+-        "http://ec2-18-167-116-200.ap-east-1.compute.amazonaws.com:8444"
++        "http://ec2-18-144-4-166.us-west-1.compute.amazonaws.com:8444"
++++ description: URL and address of the DAC member
+      values.members.2.0:
+-        "http://ec2-43-198-25-156.ap-east-1.compute.amazonaws.com:8444"
++        "http://ec2-52-53-165-158.us-west-1.compute.amazonaws.com:8444"
++++ description: URL and address of the DAC member
+      values.members.1.0:
+-        "http://ec2-18-163-181-171.ap-east-1.compute.amazonaws.com:8444"
++        "http://ec2-54-153-117-150.us-west-1.compute.amazonaws.com:8444"
++++ description: URL and address of the DAC member
+      values.members.0.0:
+-        "http://ec2-18-166-77-46.ap-east-1.compute.amazonaws.com:8444"
++        "http://ec2-13-57-35-237.us-west-1.compute.amazonaws.com:8444"
+    }
+```
+
 Generated with discovered.json: 0x2d47f405a658acbfa64515a3572659d31fdc3fae
 
 # Diff at Thu, 28 Mar 2024 11:26:29 GMT:
