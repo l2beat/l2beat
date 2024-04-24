@@ -2,15 +2,28 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "metis",
-  "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
+  "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b", "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"],
   "names": {
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
     "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "StateCommitmentChain",
     "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
-    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
+    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken",
+    "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "LockingPool",
+    "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager",
+    "0x014e8248D3B681d4ed703dE60885052Ff4321F5d": "StakingPoolManager"
   },
   "overrides": {
-    "0x918778e825747a892b17C66fe7D24C618262867d": {
+    "LockingPool": {
+          "fields": {
+            "sequencers":{
+              "startIndex": 1,
+              "type": "array",
+              "length": "{{ totalSequencers }}"
+            }
+          },
+          "ignoreInWatchMode": ["rewardRecipient"] // this is an address on L2
+    },
+    "Lib_AddressManager": {
       "fields": {
         "BondManager": {
           "type": "call",
