@@ -14,7 +14,6 @@ import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
-import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
@@ -34,7 +33,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     livenessApiResponse,
     finalityApiResponse,
     l2CostsApiResponse,
-    diffHistory,
     implementationChange,
   } = pagesData
 
@@ -90,10 +88,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
-  }
-
-  if (config.features.diffHistory && diffHistory) {
-    pages.push(...getDiffHistoryPages(config, diffHistory))
   }
 
   if (config.features.governancePage) {

@@ -22,8 +22,8 @@ export function getProps(
     l2CostsApiResponse,
     verificationStatus,
     manuallyVerifiedContracts,
-    diffHistory,
     implementationChange,
+    tvlBreakdownApiResponse,
   } = pagesData
 
   const charts = getCharts(
@@ -42,7 +42,7 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
-        diffHistory,
+        tvlBreakdownApiResponse,
       ),
       projectDetails: getProjectDetails(
         project,

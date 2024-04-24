@@ -2,9 +2,69 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "TransferAgent",
+      "name": "Liquidity Network",
       "values": {
+        "addseq": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "epochLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimalMaxSlippage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nativeWrap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noticePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resetTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ssHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "triggerTime": {
           "description": null,
           "severity": null,
           "type": null
@@ -67,9 +127,24 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "MessageBusOwner",
       "values": {
-        "owner": {
+        "MAX_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THRESHOLD_DECIMAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVoters": {
           "description": null,
           "severity": null,
           "type": null
@@ -77,7 +152,7 @@
       }
     },
     {
-      "name": "PeggedTokenBridgeV2",
+      "name": "OriginalTokenVault",
       "values": {
         "delayPeriod": {
           "description": null,
@@ -85,6 +160,11 @@
           "type": null
         },
         "epochLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
           "description": null,
           "severity": null,
           "type": null
@@ -99,62 +179,12 @@
           "severity": null,
           "type": null
         },
+        "pausers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "sigsVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SimpleGovernance",
-      "values": {
-        "getVoters": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_ACTIVE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_ACTIVE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextProposalId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "THRESHOLD_DECIMAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "MessageBusOwner",
-      "values": {
-        "getVoters": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_ACTIVE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_ACTIVE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "THRESHOLD_DECIMAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -227,7 +257,7 @@
       }
     },
     {
-      "name": "OriginalTokenVault",
+      "name": "PeggedTokenBridgeV2",
       "values": {
         "delayPeriod": {
           "description": null,
@@ -253,83 +283,13 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pausers": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
     {
-      "name": "Liquidity Network",
+      "name": "ProxyAdmin",
       "values": {
-        "addseq": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delayPeriod": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "epochLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimalMaxSlippage": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nativeWrap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noticePeriod": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resetTime": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ssHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "triggerTime": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pausers": {
           "description": null,
           "severity": null,
           "type": null
@@ -339,6 +299,16 @@
     {
       "name": "Sentinel",
       "values": {
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "numGovernors": {
           "description": null,
           "severity": null,
@@ -364,26 +334,6 @@
           "severity": null,
           "type": null
         },
-        "relaxed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "relaxThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "guards": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "pausersFull": {
           "description": null,
           "severity": null,
@@ -393,11 +343,61 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "relaxThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relaxed": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
     {
       "name": "SentinelProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SimpleGovernance",
+      "values": {
+        "MAX_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THRESHOLD_DECIMAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVoters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextProposalId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TransferAgent",
       "values": {
         "owner": {
           "description": null,

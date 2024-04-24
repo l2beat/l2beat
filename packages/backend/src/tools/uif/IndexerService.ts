@@ -37,7 +37,7 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.indexerConfigurationRepository.addOrUpdateManyConfigurations(
+    await this.indexerConfigurationRepository.addOrUpdateMany(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }

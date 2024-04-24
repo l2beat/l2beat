@@ -141,6 +141,7 @@ function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
     source: 'canonical' as const,
     sinceTimestamp: new UnixTime(123),
     includeInTotal: true,
+    decimals: 18,
     ...base,
   }
 }

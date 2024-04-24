@@ -26,7 +26,7 @@ export function FloatingBanner() {
         </div>
         <a
           className="w-full rounded-md bg-pink-900 py-[8px] text-center text-base font-bold text-white transition-all hover:bg-pink-800 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90"
-          href="https://explorer.gitcoin.co/#/round/137/0xa1d52f9b5339792651861329a046dd912761e9a9/0xa1d52f9b5339792651861329a046dd912761e9a9-15"
+          href="https://explorer.gitcoin.co/#/round/42161/26/66"
           target="_blank"
         >
           Donate here

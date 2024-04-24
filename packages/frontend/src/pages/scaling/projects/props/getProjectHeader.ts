@@ -1,9 +1,8 @@
 import { Layer2, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
-  DiffHistoryApiResponse,
   ImplementationChangeReportApiResponse,
-  ProjectId,
+  ProjectAssetsBreakdownApiResponse,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -27,9 +26,11 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
-  diffHistory?: DiffHistoryApiResponse,
+  tvlBreakdownApiResponse?: ProjectAssetsBreakdownApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const tvlBreakdownProject =
+    tvlBreakdownApiResponse?.breakdowns[project.id.toString()]
   const implementationChangeForProject =
     implementationChange?.projects[project.id.toString()]
   const implementationHasChanged =
@@ -91,9 +92,10 @@ export function getProjectHeader(
     purposes: project.display.purposes,
     technology: project.display.category,
     tvlBreakdown: project.config.escrows.length > 0 ? tvlBreakdown : undefined,
-    showTvlBreakdown: config.features.tvlBreakdown,
+    showTvlBreakdown:
+      config.features.tvlBreakdown && !!apiProject && !!tvlBreakdownProject,
     tvlBreakdownHref: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
-    links: getLinks(project, project.display.links, diffHistory),
+    links: getLinks(project.display.links),
     stage: project.stage,
     // TODO: will need to be riskValues when rosette has hover
     risks: getRiskValues(project.riskView),
@@ -106,18 +108,8 @@ export function getProjectHeader(
   }
 }
 
-function getLinks(
-  project: Layer2,
-  links: ScalingProjectLinks,
-  diffHistory?: DiffHistoryApiResponse,
-): ProjectLink[] {
+function getLinks(links: ScalingProjectLinks): ProjectLink[] {
   const items = [
-    {
-      name: 'Changelog',
-      links: isProjectInDiffHistory(project, diffHistory)
-        ? [`/scaling/projects/${project.display.slug}/changelog`]
-        : [],
-    },
     {
       name: 'Website',
       links: links.websites,
@@ -149,15 +141,4 @@ function getLinks(
   ] as const
 
   return items.filter((link) => link.links.length > 0)
-}
-
-function isProjectInDiffHistory(
-  project: Layer2,
-  diffHistory?: DiffHistoryApiResponse,
-): boolean {
-  if (!diffHistory) return false
-  return (
-    diffHistory.find((diff) => ProjectId(diff.project) === project.id) !==
-    undefined
-  )
 }

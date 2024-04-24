@@ -12,6 +12,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const superchainUpgradeability = {
+  upgradableBy: ['SuperchainProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
 export const zora: Layer2 = opStackL2({
   discovery,
   display: {
@@ -68,8 +73,38 @@ export const zora: Layer2 = opStackL2({
   knowledgeNuggets: [],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
+      'ProxyAdminOwner',
+      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('SuperchainProxyAdmin'),
+      'Admin of the shared SuperchainConfig contract.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SuperchainProxyAdminOwner',
+      'Owner of the SuperchainProxyAdmin.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the ProxyAdminOwner.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      'Member of the ProxyAdminOwner.',
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'This address is designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
+    ),
+    ...discovery.getMultisigPermission(
       'ZoraMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'Owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
     ),
     ...discovery.getMultisigPermission(
       'ChallengerMultisig',
@@ -77,10 +112,10 @@ export const zora: Layer2 = opStackL2({
     ),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('L1ERC721Bridge', {
+    discovery.getContractDetails('SuperchainConfig', {
       description:
-        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
+        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+      ...superchainUpgradeability,
     }),
   ],
   usesBlobs: true,

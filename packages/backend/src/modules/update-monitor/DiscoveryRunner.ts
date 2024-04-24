@@ -61,7 +61,13 @@ export class DiscoveryRunner {
     )
 
     if (options.runSanityCheck) {
-      await this.sanityCheck(discovery, config, blockNumber, options)
+      const isSane = await this.isDiscoverySane(
+        discovery,
+        config,
+        blockNumber,
+        options,
+      )
+      if (!isSane) return
     }
 
     return discovery
@@ -130,7 +136,7 @@ export class DiscoveryRunner {
   // 3rd party APIs are unstable, so we do a sanity check before sending
   // notifications, which makes the same request again and compares the
   // results.
-  async sanityCheck(
+  async isDiscoverySane(
     discovery: DiscoveryOutput,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
@@ -150,11 +156,14 @@ export class DiscoveryRunner {
         secondDiscovery.contracts,
         projectConfig,
       )
-      throw new Error(
-        `[${projectConfig.name}] Sanity check failed | ${blockNumber}\n
-        potential-diff ${JSON.stringify(diff)}}`,
-      )
+      options.logger.warn(`[${
+        projectConfig.name
+      }] Sanity check failed | ${blockNumber}\n
+      potential-diff ${JSON.stringify(diff)}}`)
+      return false
     }
+
+    return true
   }
 
   // There was a case connected with Amarok (better described in L2B-1521)
