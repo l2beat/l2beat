@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 19718987,
+  "blockNumber": 19723257,
   "configHash": "0x885be556b0dfea540b8d6dd0ce7d55a167d7d5b04ebda73ddda764ff22e91a5a",
   "version": 3,
   "contracts": [
@@ -83,10 +83,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1144800,
-        "latestOutputIndex": 52,
-        "nextBlockNumber": 1166400,
-        "nextOutputIndex": 53,
+        "latestBlockNumber": 1166400,
+        "latestOutputIndex": 53,
+        "nextBlockNumber": 1188000,
+        "nextOutputIndex": 54,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
