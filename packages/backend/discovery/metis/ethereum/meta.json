@@ -423,11 +423,6 @@
           "severity": null,
           "type": null
         },
-        "curBatchState": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "currentBatch": {
           "description": null,
           "severity": null,

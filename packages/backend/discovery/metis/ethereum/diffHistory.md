@@ -1,14 +1,33 @@
-Generated with discovered.json: 0xde38746b2a8eb46a81cbd9adb7f4c3d8428bd5ca
+Generated with discovered.json: 0x24e95c048916b28e2fe7a336dae2e922df60fdde
 
-# Diff at Wed, 24 Apr 2024 13:07:54 GMT:
+# Diff at Wed, 24 Apr 2024 14:35:01 GMT:
 
 - author: sekuba (<sekuba@users.noreply.githum.com>)
-- comparing to: main@1202a7b400783429e5c223539f7469e1fc2e4c66 block: 19531985
-- current block number: 19725427
+- comparing to: main@c8ed50df909cddbb2e3d9ea318326016eb2de775 block: 19531985
+- current block number: 19725858
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery now includes the addresses related to the Metis sequencer decentralization efforts.
+The current discovered.json in ProtocolBeat shows a good overview.
+Batches still get posted to `0xFf00000000000000000000000000000000001088`.
+
+### LockingInfo
+
+Escrow for METIS locked by bonded Sequencers.
+
+### LockingPool
+
+Registry for Sequencers and the MPC address. Four sequencers are currently bonded of which 3 are funded by Metis and 1 is funded by Equilibria Finance. The batchState information and Sequencers show that there is no Sequencing happening yet.
+
+### rewardPayer Multisig
+
+2/2 Multisig that funds sequencing rewards.
+
+### StakingPool and StakingPoolManager
+
+Deployed by Equilibria Finance. StakingPool is registered as a Sequencer owner (manages a Sequencer).
+Currently not included in discovery as it seems to be external to Metis.
 
 ## Watched changes
 
@@ -18,9 +37,6 @@ Provide description of changes. This section will be preserved.
       values.rewardPayer:
 -        "0x0000000000000000000000000000000000000000"
 +        "0x62478E4eeb4070fE399866aB05e821AB97200947"
-      values.totalLocked:
--        0
-+        "118634578080235465000000"
     }
 ```
 
@@ -39,21 +55,6 @@ Provide description of changes. This section will be preserved.
       values.BLOCK_REWARD:
 -        761000000000000
 +        1504744000000000
-      values.curBatchState.3:
--        0
-+        193
-      values.curBatchState.2:
--        0
-+        1
-      values.curBatchState.1:
--        19424665
-+        19711893
-      values.curBatchState.0:
--        1
-+        2
-      values.currentBatch:
--        1
-+        2
       values.mpcAddress:
 -        "0x0000000000000000000000000000000000000000"
 +        "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b"
@@ -68,21 +69,12 @@ Provide description of changes. This section will be preserved.
 +        ["20000000000000000000000","386890878000000000000",1,1,0,0,0,1,"0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5","0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04","0x1674b9842e300ab236bf6cedfea92e80a04cc7f12bbff2ff35b01295380d9211a9861a40867a4a04c6a89ee0a022f7afccbb5dddb87d622e1ddff9bd2069c7e8","0x0000000000000000000000000000000000000000",2]
       values.sequencers.0:
 +        ["20000000000000000000000","431750306000000000000",1,1,0,0,0,1,"0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E","0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D","0x4d5e02936a222d68b5d423e566828d8c67ca2290cf428254c44c7be458b33decec1fe85d900756811366e2d19baeb2fe81b46ce10c1863e00d811e68a4e76c9f","0x0000000000000000000000000000000000000000",2]
-      values.totalSequencers:
--        0
-+        4
     }
 ```
 
 ```diff
 -   Status: DELETED
     contract BondManager (0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract StakingPoolManager (0x014e8248D3B681d4ed703dE60885052Ff4321F5d)
     +++ description: None
 ```
 
@@ -101,18 +93,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract GnosisSafe (0x62478E4eeb4070fE399866aB05e821AB97200947)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract StakingPool (0x735Aad08c5eF7620b6422E85613f8335Ec07b573)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0xc126455f93A03e7591324A1D0e217140C06e2Fa5)
     +++ description: None
 ```
 
@@ -150,101 +130,7 @@ Provide description of changes. This section will be preserved.
  .../.code/GnosisSafe/implementation/meta.txt       |   2 +
  .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     | 155 ++++++++
  .../metis/ethereum/.code/GnosisSafe/proxy/meta.txt |   2 +
- .../meta.txt                                       |   0
- .../solc_0.8/openzeppelin/access/Ownable.sol       |   0
- .../openzeppelin/interfaces/draft-IERC1822.sol     |   0
- .../openzeppelin/proxy/ERC1967/ERC1967Proxy.sol    |   0
- .../openzeppelin/proxy/ERC1967/ERC1967Upgrade.sol  |   0
- .../solc_0.8/openzeppelin/proxy/Proxy.sol          |   0
- .../solc_0.8/openzeppelin/proxy/beacon/IBeacon.sol |   0
- .../openzeppelin/proxy/transparent/ProxyAdmin.sol  |   0
- .../transparent/TransparentUpgradeableProxy.sol    |   0
- .../solc_0.8/openzeppelin/utils/Address.sol        |   0
- .../solc_0.8/openzeppelin/utils/Context.sol        |   0
- .../solc_0.8/openzeppelin/utils/StorageSlot.sol    |   0
- .../@openzeppelin/contracts/access/Ownable.sol     |  83 ++++
- .../contracts/interfaces/IERC1967.sol              |  26 ++
- .../contracts/interfaces/draft-IERC1822.sol        |  20 +
- .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |  32 ++
- .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     | 171 +++++++++
- .../@openzeppelin/contracts/proxy/Proxy.sol        |  86 +++++
- .../contracts/proxy/beacon/BeaconProxy.sol         |  61 +++
- .../contracts/proxy/beacon/IBeacon.sol             |  16 +
- .../contracts/proxy/beacon/UpgradeableBeacon.sol   |  65 ++++
- .../contracts/proxy/transparent/ProxyAdmin.sol     |  81 ++++
- .../transparent/TransparentUpgradeableProxy.sol    | 193 ++++++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++++++
- .../@openzeppelin/contracts/utils/Context.sol      |  24 ++
- .../@openzeppelin/contracts/utils/StorageSlot.sol  |  88 +++++
- .../meta.txt                                       |   2 +
- .../@openzeppelin/contracts/token/ERC20/IERC20.sol |  82 ++++
- .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++
- .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 ++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 222 +++++++++++
- .../access/AccessControlUpgradeable.sol            | 260 +++++++++++++
- .../access/IAccessControlUpgradeable.sol           |  88 +++++
- .../proxy/utils/Initializable.sol                  | 138 +++++++
- .../utils/AddressUpgradeable.sol                   | 195 ++++++++++
- .../utils/ContextUpgradeable.sol                   |  37 ++
- .../utils/StringsUpgradeable.sol                   |  75 ++++
- .../utils/introspection/ERC165Upgradeable.sol      |  42 ++
- .../utils/introspection/IERC165Upgradeable.sol     |  25 ++
- .../contracts/L1/Interfaces/IStakingPool.sol       |  23 ++
- .../contracts/L1/Interfaces/Metis/ILockingInfo.sol | 196 ++++++++++
- .../contracts/L1/Interfaces/Metis/ILockingPool.sol |  77 ++++
- .../L1/Interfaces/Metis/ISequencerInfo.sol         |  63 +++
- .../implementation/contracts/L1/StakingPool.sol    | 136 +++++++
- .../contracts/Utils/AMTConstants.sol               |  16 +
- .../.code/StakingPool/implementation/meta.txt      |   2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |  83 ++++
- .../contracts/interfaces/IERC1967.sol              |  26 ++
- .../contracts/interfaces/draft-IERC1822.sol        |  20 +
- .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |  32 ++
- .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     | 171 +++++++++
- .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |  86 +++++
- .../contracts/proxy/beacon/BeaconProxy.sol         |  61 +++
- .../contracts/proxy/beacon/IBeacon.sol             |  16 +
- .../contracts/proxy/beacon/UpgradeableBeacon.sol   |  65 ++++
- .../contracts/proxy/transparent/ProxyAdmin.sol     |  81 ++++
- .../transparent/TransparentUpgradeableProxy.sol    | 193 ++++++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++++++
- .../@openzeppelin/contracts/utils/Context.sol      |  24 ++
- .../@openzeppelin/contracts/utils/StorageSlot.sol  |  88 +++++
- .../ethereum/.code/StakingPool/proxy/meta.txt      |   2 +
- .../@openzeppelin/contracts/token/ERC20/IERC20.sol |  82 ++++
- .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 +++
- .../contracts/token/ERC20/utils/SafeERC20.sol      | 116 ++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 222 +++++++++++
- .../contracts/utils/structs/EnumerableSet.sol      | 367 ++++++++++++++++++
- .../access/AccessControlUpgradeable.sol            | 260 +++++++++++++
- .../access/IAccessControlUpgradeable.sol           |  88 +++++
- .../proxy/utils/Initializable.sol                  | 138 +++++++
- .../utils/AddressUpgradeable.sol                   | 195 ++++++++++
- .../utils/ContextUpgradeable.sol                   |  37 ++
- .../utils/StringsUpgradeable.sol                   |  75 ++++
- .../utils/introspection/ERC165Upgradeable.sol      |  42 ++
- .../utils/introspection/IERC165Upgradeable.sol     |  25 ++
- .../contracts/L1/Interfaces/IStakingPool.sol       |  23 ++
- .../L1/Interfaces/IStakingPoolManager.sol          |  19 +
- .../contracts/L1/StakingPoolManager.sol            |  94 +++++
- .../contracts/Utils/AMTConstants.sol               |  16 +
- .../StakingPoolManager/implementation/meta.txt     |   2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |  83 ++++
- .../contracts/interfaces/IERC1967.sol              |  26 ++
- .../contracts/interfaces/draft-IERC1822.sol        |  20 +
- .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |  32 ++
- .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     | 171 +++++++++
- .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |  86 +++++
- .../contracts/proxy/beacon/BeaconProxy.sol         |  61 +++
- .../contracts/proxy/beacon/IBeacon.sol             |  16 +
- .../contracts/proxy/beacon/UpgradeableBeacon.sol   |  65 ++++
- .../contracts/proxy/transparent/ProxyAdmin.sol     |  81 ++++
- .../transparent/TransparentUpgradeableProxy.sol    | 193 ++++++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++++++
- .../@openzeppelin/contracts/utils/Context.sol      |  24 ++
- .../@openzeppelin/contracts/utils/StorageSlot.sol  |  88 +++++
- .../.code/StakingPoolManager/proxy/meta.txt        |   2 +
- 125 files changed, 9576 insertions(+), 11 deletions(-)
+ 31 files changed, 2286 insertions(+), 11 deletions(-)
 ```
 
 ## Config/verification related changes
