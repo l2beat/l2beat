@@ -1,5 +1,6 @@
 import {
   AmountConfigEntry,
+  CoingeckoId,
   EthereumAddress,
   PriceConfigEntry,
   ProjectId,
@@ -10,6 +11,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Tvl2Config } from '../../../config/Config'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { createPriceId } from '../utils/createPriceId'
 import { Tvl2Controller } from './Tvl2Controller'
 
 describe(Tvl2Controller.name, () => {
@@ -28,6 +30,8 @@ describe(Tvl2Controller.name, () => {
       const priceConfig = mockObject<PriceConfigEntry>({
         chain: amountConfig.chain,
         address: amountConfig.address,
+        type: 'coingecko',
+        coingeckoId: CoingeckoId('id'),
       })
 
       const controller = new Tvl2Controller(
@@ -43,8 +47,7 @@ describe(Tvl2Controller.name, () => {
         mockObject<PriceRepository>({
           getByTimestamp: async (timestamp) => [
             {
-              address: amountConfig.address,
-              chain: amountConfig.chain,
+              configId: createPriceId(priceConfig),
               priceUsd: 2,
               timestamp,
             },
@@ -82,6 +85,8 @@ describe(Tvl2Controller.name, () => {
   const priceConfig = mockObject<PriceConfigEntry>({
     chain: amountConfig.chain,
     address: amountConfig.address,
+    type: 'coingecko',
+    coingeckoId: CoingeckoId('id'),
   })
 
   describe(Tvl2Controller.prototype.getTvlAt.name, () => {
