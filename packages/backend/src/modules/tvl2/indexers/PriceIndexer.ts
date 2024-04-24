@@ -61,9 +61,9 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       .map((p) => p.timestamp.toNumber())
       .reduce((a, b) => Math.max(a, b), 0)
 
-    this.logger.info('Fetched prices in range', {
+    this.logger.info('Fetched & optimized prices in range', {
       from,
-      maxTo,
+      to: maxTo,
       prices: prices.length,
       configurations: configurationsWithMissingData.length,
     })
