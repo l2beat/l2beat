@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from '../tooltip/Tooltip'
 import { DurationCell } from './DurationCell'
+import { GrayedOut } from './GrayedOut'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
@@ -57,10 +58,9 @@ export function LivenessDurationCell(props: {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <DurationCell
-          durationInSeconds={props.durationInSeconds}
-          grayedOut={!props.isSynced}
-        />
+        <GrayedOut grayOut={props.isSynced === false}>
+          <DurationCell durationInSeconds={props.durationInSeconds} />
+        </GrayedOut>
         {props.warning && (
           <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
