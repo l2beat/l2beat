@@ -10,10 +10,10 @@ interface NotSyncedBadgeProps {
 }
 
 export function NotSyncedBadge({
-  displaySyncedUntil: syncedUntil,
+  displaySyncedUntil,
   className,
 }: NotSyncedBadgeProps) {
-  if (!syncedUntil)
+  if (!displaySyncedUntil)
     return (
       <div className={cn('inline', className)}>
         <NotSynced />
@@ -26,7 +26,7 @@ export function NotSyncedBadge({
         <NotSynced />
       </TooltipTrigger>
       <TooltipContent>
-        The data for this item is not synced since {syncedUntil}.
+        The data for this item is not synced since {displaySyncedUntil}.
       </TooltipContent>
     </Tooltip>
   )

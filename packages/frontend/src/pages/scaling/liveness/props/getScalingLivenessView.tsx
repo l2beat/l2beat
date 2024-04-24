@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import {
   AnomalyIndicatorEntry,
@@ -72,11 +73,17 @@ function getLivenessData(
   if (!liveness) return undefined
 
   let isSynced = true
+  let lowestSyncedUntil: UnixTime = UnixTime.now()
 
   const syncTarget = UnixTime.now().add(-1, 'hours').toStartOf('hour')
+
   TrackedTxsConfigSubtypeValues.forEach((subtype) => {
-    if (liveness[subtype]?.syncedUntil.lt(syncTarget)) {
+    const syncedUntil = liveness[subtype]?.syncedUntil
+    if (syncedUntil?.lt(syncTarget)) {
       isSynced = false
+      if (syncedUntil.lt(lowestSyncedUntil)) {
+        lowestSyncedUntil = syncedUntil
+      }
     }
   })
 
@@ -98,6 +105,10 @@ function getLivenessData(
     },
     syncStatus: {
       isSynced,
+      displaySyncedUntil: formatTimestamp(lowestSyncedUntil.toNumber(), {
+        mode: 'datetime',
+        longMonthName: true,
+      }),
     },
   }
 }
