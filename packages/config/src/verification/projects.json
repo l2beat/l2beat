@@ -142,7 +142,7 @@
   "xai": true,
   "xchain": true,
   "xdai": true,
-  "xlayer": false,
+  "xlayer": true,
   "zentachain": true,
   "zircuit": true,
   "zkcandy": true,
