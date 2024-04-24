@@ -26,14 +26,14 @@ import {
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
 
-type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
+export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 
 interface LivenessTransactionsDetail {
   txHash: string
   timestamp: UnixTime
 }
 
-type LivenessTransactionsResult = Result<
+export type LivenessTransactionsResult = Result<
   {
     projects: Record<
       string,

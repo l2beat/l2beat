@@ -15,8 +15,13 @@ export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
 
   router.get('/api/activity', async (ctx) => {
-    const data = await activityController.getActivity()
-    ctx.body = data
+    const result = await activityController.getActivity()
+    if (result.type === 'error') {
+      handleActivityError(ctx, result)
+      return
+    }
+
+    ctx.body = result.data
   })
 
   router.get(
@@ -38,15 +43,15 @@ export function createActivityRouter(activityController: ActivityController) {
           return
         }
 
-        const data = await activityController.getAggregatedActivity(
+        const aggregatedResult = await activityController.getAggregatedActivity(
           projectIdsResult.data,
         )
-        if (data.type === 'error') {
-          handleActivityError(ctx, data)
+        if (aggregatedResult.type === 'error') {
+          handleActivityError(ctx, aggregatedResult)
           return
         }
 
-        ctx.body = data
+        ctx.body = aggregatedResult.data
       },
     ),
   )
