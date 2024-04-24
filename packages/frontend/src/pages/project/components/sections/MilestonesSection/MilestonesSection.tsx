@@ -4,7 +4,7 @@ import React from 'react'
 import { MilestoneIcon } from '../../../../../components/icons/symbols/MilestoneIcon'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
-import { Section } from '../common/Section'
+import { ProjectSection } from '../common/ProjectSection'
 import { ProjectSectionId } from '../common/sectionId'
 import { ExpandableContainer } from './ExpandableContainer'
 
@@ -17,7 +17,7 @@ export interface MilestonesSectionProps {
 
 export function MilestonesSection(props: MilestonesSectionProps) {
   return (
-    <Section
+    <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -58,7 +58,7 @@ export function MilestonesSection(props: MilestonesSectionProps) {
             ))}
         </div>
       </ExpandableContainer>
-    </Section>
+    </ProjectSection>
   )
 }
 

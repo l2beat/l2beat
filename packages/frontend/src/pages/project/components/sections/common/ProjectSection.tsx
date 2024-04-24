@@ -14,7 +14,7 @@ interface Props {
   includeChildrenIfUnderReview?: boolean
 }
 
-export function Section(props: Props) {
+export function ProjectSection(props: Props) {
   return (
     <section
       id={props.id}

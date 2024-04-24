@@ -3,8 +3,8 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Markdown } from '../../../../components/Markdown'
+import { ProjectSection } from './common/ProjectSection'
 import { RiskList } from './common/RiskList'
-import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface StateValidationSectionProps {
@@ -18,7 +18,7 @@ export interface StateValidationSectionProps {
 
 export function StateValidationSection(props: StateValidationSectionProps) {
   return (
-    <Section
+    <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -48,7 +48,7 @@ export function StateValidationSection(props: StateValidationSectionProps) {
           />
         ))}
       </div>
-    </Section>
+    </ProjectSection>
   )
 }
 

@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Markdown } from '../../../../components/Markdown'
 import { UnderReviewCallout } from '../UnderReviewCallout'
+import { ProjectSection } from './common/ProjectSection'
 import { ReferenceList, TechnologyReference } from './common/ReferenceList'
 import { RiskList, TechnologyRisk } from './common/RiskList'
-import { Section } from './common/Section'
 import { ProjectSectionId } from './common/sectionId'
 import { TechnologyIncompleteShort } from './common/TechnologyIncomplete'
 
@@ -34,7 +34,7 @@ export function TechnologySection({
   isUnderReview,
 }: TechnologySectionProps) {
   return (
-    <Section
+    <ProjectSection
       title={title}
       id={id}
       sectionOrder={sectionOrder}
@@ -59,6 +59,6 @@ export function TechnologySection({
           )}
         </div>
       ))}
-    </Section>
+    </ProjectSection>
   )
 }

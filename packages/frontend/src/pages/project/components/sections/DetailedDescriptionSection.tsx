@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Markdown } from '../../../../components/Markdown'
-import { Section } from './common/Section'
+import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface DetailedDescriptionSectionProps {
@@ -16,7 +16,7 @@ export function DetailedDescriptionSection(
   props: DetailedDescriptionSectionProps,
 ) {
   return (
-    <Section
+    <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -27,6 +27,6 @@ export function DetailedDescriptionSection(
           <Markdown className="mt-2">{props.detailedDescription}</Markdown>
         )}
       </div>
-    </Section>
+    </ProjectSection>
   )
 }

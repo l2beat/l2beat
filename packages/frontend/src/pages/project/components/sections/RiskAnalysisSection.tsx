@@ -8,7 +8,7 @@ import { BigRosette } from '../../../../components/rosette'
 import { SentimentText } from '../../../../components/table/SentimentText'
 import { WarningBar } from '../../../../components/WarningBar'
 import { RiskValue, RiskValues } from '../../../../utils/risks/types'
-import { Section } from './common/Section'
+import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface RiskAnalysisSectionProps {
@@ -38,7 +38,7 @@ export function RiskAnalysisSection({
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
-    <Section
+    <ProjectSection
       title={title}
       id={id}
       sectionOrder={sectionOrder}
@@ -87,7 +87,7 @@ export function RiskAnalysisSection({
         name="Proposer failure"
         riskValue={riskValues.proposerFailure}
       />
-    </Section>
+    </ProjectSection>
   )
 }
 

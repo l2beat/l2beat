@@ -6,7 +6,7 @@ import {
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './common/ContractEntry'
-import { Section } from './common/Section'
+import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface PermissionsSectionProps {
@@ -30,7 +30,7 @@ export function PermissionsSection({
   isUnderReview,
 }: PermissionsSectionProps) {
   return (
-    <Section
+    <ProjectSection
       title={title}
       id={id}
       isUnderReview={isUnderReview}
@@ -51,6 +51,6 @@ export function PermissionsSection({
           />
         ))}
       </div>
-    </Section>
+    </ProjectSection>
   )
 }

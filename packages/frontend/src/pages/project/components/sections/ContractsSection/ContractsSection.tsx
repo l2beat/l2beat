@@ -6,9 +6,9 @@ import partition from 'lodash/partition'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from '../common/ContractEntry'
+import { ProjectSection } from '../common/ProjectSection'
 import { ReferenceList, TechnologyReference } from '../common/ReferenceList'
 import { RiskList, TechnologyRisk } from '../common/RiskList'
-import { Section } from '../common/Section'
 import { ProjectSectionId } from '../common/sectionId'
 import { TechnologyIncompleteShort } from '../common/TechnologyIncomplete'
 import { ContractsUpdated } from './ContractsUpdated'
@@ -51,7 +51,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   )
 
   return (
-    <Section
+    <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -135,7 +135,7 @@ export function ContractsSection(props: ContractsSectionProps) {
         </>
       )}
       <ReferenceList references={props.references} />
-    </Section>
+    </ProjectSection>
   )
 }
 

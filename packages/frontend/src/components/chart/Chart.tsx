@@ -1,7 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
-import { ProjectDetailsSectionHeader } from '../../pages/project/components/sections/common/Section'
+import { ProjectDetailsSectionHeader } from '../../pages/project/components/sections/common/ProjectSection'
 import { ChartType } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
 import { ActivityHeader } from '../header/ActivityHeader'

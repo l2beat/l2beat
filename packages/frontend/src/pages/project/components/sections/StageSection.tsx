@@ -13,7 +13,7 @@ import { Markdown } from '../../../../components/Markdown'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageDisclaimer } from '../../../../components/stages/StageDisclaimer'
 import { WarningBar } from '../../../../components/WarningBar'
-import { Section } from './common/Section'
+import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface StageSectionProps {
@@ -30,7 +30,7 @@ export interface StageSectionProps {
 export function StageSection(props: StageSectionProps) {
   if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <Section
+      <ProjectSection
         title={props.title}
         id={props.id}
         sectionOrder={props.sectionOrder}
@@ -51,7 +51,7 @@ export function StageSection(props: StageSectionProps) {
           />
           for stage assignment.
         </div>
-      </Section>
+      </ProjectSection>
     )
   }
 
@@ -61,7 +61,7 @@ export function StageSection(props: StageSectionProps) {
       : UnderReviewIcon
 
   return (
-    <Section
+    <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -184,7 +184,7 @@ export function StageSection(props: StageSectionProps) {
         className="mt-6 leading-snug"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
       />
-    </Section>
+    </ProjectSection>
   )
 }
 

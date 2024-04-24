@@ -4,7 +4,7 @@ import React from 'react'
 import { ShieldIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { WarningBar } from '../../../../components/WarningBar'
-import { Section } from './common/Section'
+import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 
 export interface RiskSectionProps {
@@ -42,7 +42,7 @@ export function RiskSection({
     return null
   }
   return (
-    <Section title={title} id={id} sectionOrder={sectionOrder}>
+    <ProjectSection title={title} id={id} sectionOrder={sectionOrder}>
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
@@ -96,6 +96,6 @@ export function RiskSection({
           </ol>
         </div>
       ))}
-    </Section>
+    </ProjectSection>
   )
 }
