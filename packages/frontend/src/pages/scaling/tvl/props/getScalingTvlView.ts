@@ -5,11 +5,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getTokens } from '../../../../utils/project/getCharts'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
+import { getTokens } from '../../../project/common/getCharts'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 

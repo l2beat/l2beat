@@ -5,6 +5,7 @@ import {
   LivenessApiResponse,
   notUndefined,
   ProjectId,
+  Result,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigSubtypeValues,
   UnixTime,
@@ -25,39 +26,26 @@ import {
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
 
-type LivenessResult =
-  | {
-      type: 'success'
-      data: LivenessApiResponse
-    }
-  | {
-      type: 'error'
-      error: 'DATA_NOT_SYNCED'
-    }
+export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 
 interface LivenessTransactionsDetail {
   txHash: string
   timestamp: UnixTime
 }
 
-type LivenessTransactionsResult =
-  | {
-      type: 'success'
-      data: {
-        projects: Record<
-          string,
-          {
-            batchSubmissions: LivenessTransactionsDetail[]
-            stateUpdates: LivenessTransactionsDetail[]
-            proofSubmissions: LivenessTransactionsDetail[]
-          }
-        >
+export type LivenessTransactionsResult = Result<
+  {
+    projects: Record<
+      string,
+      {
+        batchSubmissions: LivenessTransactionsDetail[]
+        stateUpdates: LivenessTransactionsDetail[]
+        proofSubmissions: LivenessTransactionsDetail[]
       }
-    }
-  | {
-      type: 'error'
-      error: 'DATA_NOT_SYNCED'
-    }
+    >
+  },
+  'DATA_NOT_SYNCED'
+>
 
 type LivenessTrackedTxsConfig = {
   entries: LivenessTrackedTxsConfigEntry[]

@@ -2,7 +2,7 @@ import { Stage, StageConfig } from '@l2beat/config'
 import React from 'react'
 
 import { MissingIcon, RoundedWarningIcon, UnderReviewIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
+import { WarningBar } from '../WarningBar'
 import { StageBadge } from './StageBadge'
 import { StageDisclaimer } from './StageDisclaimer'
 

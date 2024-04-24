@@ -1,9 +1,9 @@
 import { AssetId } from '@l2beat/shared-pure'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
+import { ProjectSectionId } from '../../../pages/project/components/sections/common/sectionId'
 import { cn } from '../../../utils/cn'
 import { InfoIcon } from '../../icons'
-import { ProjectSectionId } from '../../project/sectionId'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface Props<
