@@ -11,6 +11,7 @@ import { Tvl2Config } from '../../../config/Config'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { createAmountId } from '../utils/createAmountId'
+import { createPriceId } from '../utils/createPriceId'
 
 export interface Tvl2Project {
   id: ProjectId
@@ -37,10 +38,13 @@ type AmountConfigMap = Map<
   (AmountConfigEntry & { configId: string })[]
 >
 
+type PriceConfigIdMap = Map<string, string>
+
 const USD_DECIMALS = 2
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
+  private readonly priceConfigIds: PriceConfigIdMap
   private readonly projects: {
     id: ProjectId
     minTimestamp: UnixTime
@@ -55,6 +59,7 @@ export class Tvl2Controller {
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
     this.amountConfig = getAmountConfigMap(config)
+    this.priceConfigIds = getPriceConfigIds(config)
     this.projects = projects.flatMap((id) => {
       const config = this.amountConfig.get(id)
       if (!config) {
@@ -128,11 +133,8 @@ export class Tvl2Controller {
       )
       assert(amountConfig, 'Config not found')
 
-      const assetId = createAssetId({
-        address: amountConfig.address,
-        chain: amountConfig.chain,
-      })
-      const price = prices.find((x) => createAssetId(x) === assetId)
+      const priceId = this.priceConfigIds.get(createAssetId(amountConfig))
+      const price = prices.find((x) => x.configId === priceId)
       assert(price, 'Price not found')
 
       const value =
@@ -162,4 +164,13 @@ function createAssetId(price: {
   chain: string
 }): string {
   return `${price.chain}-${price.address.toString()}`
+}
+
+function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
+  const result = new Map<string, string>()
+  for (const p of config.prices) {
+    result.set(createAssetId(p), createPriceId(p))
+  }
+
+  return result
 }
