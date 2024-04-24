@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -13,6 +13,10 @@ import {
 } from './BlockTimestampIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
   describe(BlockTimestampIndexer.prototype.update.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
@@ -26,29 +30,27 @@ describe(BlockTimestampIndexer.name, () => {
         add: async () => '',
       })
 
+      const timestampToSync = from.toEndOf('day')
+
       const syncOptimizer = mockObject<SyncOptimizer>({
-        shouldTimestampBeSynced: mockFn()
-          .returnsOnce(false) // 21:00
-          .returnsOnce(false) // 22:00
-          .returnsOnce(false) // 23:00
-          .returnsOnce(true), // 00:00
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
       })
 
       const chain = 'ethereum'
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        id: 'id',
         blockTimestampProvider,
-        mockObject<IndexerStateRepository>({}),
+        indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain,
-        UnixTime.ZERO,
+        minHeight: 0,
         syncOptimizer,
-      )
+      })
 
       const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
-
-      const timestampToSync = from.toEndOf('day')
 
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
@@ -64,80 +66,23 @@ describe(BlockTimestampIndexer.name, () => {
     })
   })
 
-  describe(BlockTimestampIndexer.prototype.initialize.name, () => {
-    it('initializes state when not initialized', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: mockFn().resolvesToOnce(undefined).resolvesToOnce({}),
-        add: async () => '',
-      })
-
-      const minTimestamp = UnixTime.ZERO
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<BlockTimestampProvider>({}),
-        stateRepository,
-        mockObject<BlockTimestampRepository>({}),
-        'ethereum',
-        minTimestamp,
-        mockObject<SyncOptimizer>({}),
-      )
-
-      await indexer.initialize()
-
-      expect(stateRepository.add).toHaveBeenCalledWith({
-        indexerId: indexer.indexerId,
-        safeHeight: minTimestamp.toNumber() - 1,
-        minTimestamp: minTimestamp,
-      })
-    })
-  })
-
-  describe(BlockTimestampIndexer.prototype.setSafeHeight.name, () => {
-    it('save minTimestamp if safeHeight is before minTimestamp', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        setSafeHeight: async () => 1,
-      })
-
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<BlockTimestampProvider>({}),
-        stateRepository,
-        mockObject<BlockTimestampRepository>({}),
-        'ethereum',
-        UnixTime.ZERO,
-        mockObject<SyncOptimizer>({}),
-      )
-
-      const safeHeight = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const trx = mockObject<Knex.Transaction>()
-      await indexer.setSafeHeight(safeHeight.toNumber(), trx)
-
-      expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
-        indexer.indexerId,
-        safeHeight.toNumber(),
-        trx,
-      )
-    })
-  })
-
   describe(BlockTimestampIndexer.prototype.invalidate.name, () => {
     it('deletes records before targetHeight and returns the new safe height', async () => {
       const blockTimestampRepository = mockObject<BlockTimestampRepository>({
         deleteAfterExclusive: async () => 1,
       })
 
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<BlockTimestampProvider>({}),
-        mockObject<IndexerStateRepository>({}),
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        id: 'id',
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+        indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
-        'ethereum',
-        UnixTime.ZERO,
-        mockObject<SyncOptimizer>({}),
-      )
+        chain: 'ethereum',
+        minHeight: 0,
+        syncOptimizer: mockObject<SyncOptimizer>({}),
+      })
 
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
