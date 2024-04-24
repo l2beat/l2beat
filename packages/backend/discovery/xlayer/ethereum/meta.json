@@ -2,7 +2,192 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "AstarValidiumDAC",
+      "name": "OKBImplementation",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lawEnforcementRole": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supplyController": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonRollupManager",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBatchFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalExitRootManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isEmergencyState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastDeactivatedEmergencyStateTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingStateTimeout": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupData": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupTypeCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trustedAggregatorTimeout": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifyBatchTimeTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonZkEVMTimelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "polygonZkEVM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SharedProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "XLayerValidiumDAC",
       "values": {
         "committeeHash": {
           "description": null,
@@ -37,7 +222,7 @@
       }
     },
     {
-      "name": "AstarValidiumEtrog",
+      "name": "XLayerValidiumEtrog",
       "values": {
         "GLOBAL_EXIT_ROOT_MANAGER_L2": {
           "description": null,
@@ -202,208 +387,8 @@
       }
     },
     {
-      "name": "AstarVerifier",
+      "name": "XLayerVerifier",
       "values": {}
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonRollupManager",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "bridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getBatchFee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "globalExitRootManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isEmergencyState": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastDeactivatedEmergencyStateTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingStateTimeout": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupData": {
-          "description": "Contains important info such as the etrog and verifier address, the rollup type and chain id",
-          "severity": "HIGH",
-          "type": "CODE_CHANGE"
-        },
-        "rollupTypeCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "trustedAggregatorTimeout": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifyBatchTimeTarget": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonZkEVMTimelock",
-      "values": {
-        "CANCELLER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXECUTOR_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TIMELOCK_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "polygonZkEVM": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdminOwner",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SharedProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
     }
   ]
 }
