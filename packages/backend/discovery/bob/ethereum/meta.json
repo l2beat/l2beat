@@ -1,0 +1,3169 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ACL",
+      "values": {
+        "ANY_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BURN_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CREATE_PERMISSIONS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMPTY_PARAM_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NO_PERMISSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AccountingOracle",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_FORMAT_EMPTY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_FORMAT_LIST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_TYPE_EXITED_VALIDATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_TYPE_STUCK_VALIDATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GENESIS_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LEGACY_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LOCATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_CONTRACT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_VERSION_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SECONDS_PER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMIT_DATA_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusReport": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastProcessingRefSlot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProcessingState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AddressManager",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Agent",
+      "values": {
+        "ADD_PRESIGNED_HASH_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ADD_PROTECTED_TOKEN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DESIGNATE_SIGNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_INTERFACE_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_RETURN_INVALID_SIGNATURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_RETURN_VALID_SIGNATURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROTECTED_TOKENS_CAP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REMOVE_PROTECTED_TOKEN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RUN_SCRIPT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SAFE_EXECUTE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "designatedSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProtectedTokensLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protectedTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Burner",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REQUEST_BURN_MY_STETH_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REQUEST_BURN_SHARES_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCoverSharesBurnt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExcessStETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNonCoverSharesBurnt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSharesRequestedToBurn": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositContract",
+      "values": {
+        "get_deposit_count": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "get_deposit_root": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositSecurityModule",
+      "values": {
+        "ATTEST_MESSAGE_PREFIX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_MESSAGE_PREFIX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_ROUTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGuardianQuorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGuardians": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaxDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDepositBlockDistance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPauseIntentValidityPeriodBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EIP712StETH",
+      "values": {}
+    },
+    {
+      "name": "EVMScriptRegistry",
+      "values": {
+        "REGISTRY_ADD_EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REGISTRY_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HashConsensus",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISABLE_CONSENSUS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_FAST_LANE_CONFIG_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_FRAME_CONFIG_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_MEMBERS_AND_QUORUM_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_REPORT_PROCESSOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentFrame": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFastLaneMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFrameConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitialRefSlot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getQuorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportProcessor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportVariants": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HashConsensus",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISABLE_CONSENSUS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_FAST_LANE_CONFIG_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_FRAME_CONFIG_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_MEMBERS_AND_QUORUM_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_REPORT_PROCESSOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentFrame": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFastLaneMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFrameConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitialRefSlot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getQuorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportProcessor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportVariants": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Kernel",
+      "values": {
+        "APP_ADDR_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_BASES_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CORE_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ACL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "KERNEL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "acl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryVaultAppId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC20TokenBridge",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSITS_DISABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSITS_ENABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWALS_DISABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWALS_ENABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isWithdrawalsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2OutputOracle",
+      "values": {
+        "CHALLENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_BLOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LegacyOracle",
+      "values": {
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAccountingOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBeaconSpec": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentFrame": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCompletedEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCompletedReportDelta": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lido",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_CONTROL_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBeaconStat": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBufferedEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentStakeLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDepositableEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEIP712StETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFeeDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLidoLocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakeLimitFullInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalELRewardsCollected": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPooledEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTreasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawalCredentials": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStakingPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStopped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LidoExecutionLayerRewardsVault",
+      "values": {
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LidoLocator",
+      "values": {
+        "accountingOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "burner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "coreComponents": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositSecurityModule": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "elRewardsVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "legacyOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleDaemonConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleReportComponentsForLido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleReportSanityChecker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "postTokenRebaseReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsExitBusOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalQueue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MiniMeToken",
+      "values": {
+        "controller": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "creationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "parentSnapShotBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "parentToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupplyAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transfersEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "NodeOperatorsRegistry",
+      "values": {
+        "MANAGE_NODE_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_SIGNING_KEYS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_NODE_OPERATORS_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_NODE_OPERATOR_NAME_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STUCK_PENALTY_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SET_NODE_OPERATOR_LIMIT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_ROUTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getActiveNodeOperatorsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getKeysOpIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeOperatorsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleSummary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStuckPenaltyDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "NodeOperatorsRegistry",
+      "values": {
+        "MANAGE_NODE_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_SIGNING_KEYS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_NODE_OPERATORS_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_NODE_OPERATOR_NAME_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STUCK_PENALTY_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SET_NODE_OPERATOR_LIMIT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_ROUTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getActiveNodeOperatorsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getKeysOpIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeOperatorIsActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeOperatorSummary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeOperatorsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRewardsDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleSummary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStuckPenaltyDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalSigningKeyCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUnusedSigningKeyCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOperatorPenalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOperatorPenaltyCleared": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OracleDaemonConfig",
+      "values": {
+        "CONFIG_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OracleReportSanityChecker",
+      "values": {
+        "ALL_LIMITS_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ANNUAL_BALANCE_INCREASE_LIMIT_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CHURN_VALIDATORS_PER_DAY_LIMIT_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_ACCOUNTING_EXTRA_DATA_LIST_ITEMS_COUNT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_NODE_OPERATORS_PER_EXTRA_DATA_ITEM_COUNT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_POSITIVE_TOKEN_REBASE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_VALIDATOR_EXIT_REQUESTS_PER_REPORT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_OFF_CL_BALANCE_DECREASE_LIMIT_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REQUEST_TIMESTAMP_MARGIN_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SHARE_RATE_DEVIATION_LIMIT_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLidoLocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaxPositiveTokenRebase": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOracleReportLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakingRouter",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_PRECISION_POINTS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_WITHDRAWAL_CREDENTIALS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STAKING_MODULES_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STAKING_MODULE_NAME_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REPORT_EXITED_VALIDATORS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REPORT_REWARDS_MINTED_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_MODULE_MANAGE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_MODULE_PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_MODULE_RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOTAL_BASIS_POINTS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_SET_EXITED_VALIDATORS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllNodeOperatorDigests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllStakingModuleDigests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDepositsAllocation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingFeeAggregateDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingFeeAggregateDistributionE4Precision": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModule": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleActiveValidatorsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleIds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleIsActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleIsDepositsPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleIsStopped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleLastDepositBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModuleSummary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingModulesCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakingRewardsDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalFeeE4Precision": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawalCredentials": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasStakingModule": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SystemConfig",
+      "values": {
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "overhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resourceConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unsafeBlockSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorsExitBusOracle",
+      "values": {
+        "DATA_FORMAT_LIST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GENESIS_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_CONTRACT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_VERSION_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_INFINITELY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SECONDS_PER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMIT_DATA_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusReport": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastProcessingRefSlot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProcessingState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getResumeSinceTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalRequestsProcessed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Voting",
+      "values": {
+        "CREATE_VOTES_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_QUORUM_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_SUPPORT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PCT_BASE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFELY_MODIFY_VOTE_TIME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canExecute": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVote": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVotePhase": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAcceptQuorumPct": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "objectionPhaseTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportRequiredPct": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "voteTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WithdrawalQueueERC721",
+      "values": {
+        "BUNKER_MODE_DISABLED_TIMESTAMP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FINALIZE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_TOKEN_URI_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_BATCHES_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STETH_WITHDRAWAL_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_STETH_WITHDRAWAL_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ORACLE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_INFINITELY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WSTETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bunkerModeSinceTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getApproved": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBaseURI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCheckpointIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastFinalizedRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLockedEtherAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNFTDescriptorAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getResumeSinceTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isBunkerModeActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ownerOf": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenURI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unfinalizedRequestNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unfinalizedStETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WithdrawalVault",
+      "values": {
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy_getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy_getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WstETH",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStETHByWstETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWstETHByStETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stEthPerToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokensPerStEth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

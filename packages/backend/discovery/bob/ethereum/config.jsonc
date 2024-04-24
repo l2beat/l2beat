@@ -1,0 +1,93 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "bob",
+  "initialAddresses": [
+    "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+    "0x091dF5E1284E49fA682407096aD34cfD42B95B72",
+    "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb"
+  ],
+  "names": {
+    "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7": "L1StandardBridge",
+    "0x091dF5E1284E49fA682407096aD34cfD42B95B72": "L1ERC20TokenBridge",
+    "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": "L1UsdcBridge",
+    "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": "ProxyAdmin",
+    "0xE3d981643b806FB8030CDB677D6E60892E547EdA": "L1CrossDomainMessenger",
+    "0xF2dc77c697e892542cC53336178a78Bb313DFDC7": "AddressManager",
+    "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "GnosisSafe",
+    "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E": "OptimismPortal",
+    "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393": "SystemConfig",
+    "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1": "L2OutputOracle",
+    "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH",
+    "0x853cc0D5917f49B57B8e9F89e491F5E18919093A": "EVMScriptRegistry",
+    "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": "Lido",
+    "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "WithdrawalQueueERC721",
+    "0xC77F8768774E1c9244BEed705C4354f2113CFc09": "DepositSecurityModule",
+    "0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": "NodeOperatorsRegistry",
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
+        }
+      }
+    },
+    "Lido": {
+      "ignoreMethods": [
+        "getSharesByPooledEth",
+        "getPooledEthByShares"
+      ]
+    },
+    "NodeOperatorsRegistry": { 
+      "ignoreMethods": [
+        "getRewardsDistribution",
+        "getTotalSigningKeyCount",
+        "getNodeOperatorSummary",
+        "isOperatorPenalized",
+        "isOperatorPenaltyCleared",
+        "getUnusedSigningKeyCount",
+        "getNodeOperatorIsActive"
+      ]
+    },
+    "DepositSecurityModule": {
+      "ignoreMethods": [ "canDeposit" ]
+    },
+    "EVMScriptRegistry": {
+      "ignoreMethods": [ "executors" ]
+    }
+  }
+}
