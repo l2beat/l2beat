@@ -373,7 +373,7 @@ export const starknet: Layer2 = {
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
-        upgradableBy: ['BridgeMultisig']
+        upgradableBy: ['BridgeMultisig'],
       }),
     ],
     transactionApi: {
