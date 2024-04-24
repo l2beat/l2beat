@@ -1,15 +1,13 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { underReviewL2 } from './templates/underReview'
 
-const discovery = new ProjectDiscovery('metal')
-
-export const metal: Layer2 = opStackL2({
-  discovery,
-  genesisTimestamp: new UnixTime(1711567115),
+export const metal: Layer2 = underReviewL2({
+  id: 'metal',
   display: {
+    category: 'Optimistic Rollup',
     name: 'Metal',
     slug: 'metal',
     description:
@@ -29,8 +27,16 @@ export const metal: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  // add superchain
-  rpcUrl: 'https://rpc.metall2.com',
-  isNodeAvailable: 'UnderReview',
-  usesBlobs: true,
+  escrows: [
+    {
+      address: EthereumAddress('0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3'),
+      sinceTimestamp: new UnixTime(1711057199),
+      tokens: '*',
+    },
+    {
+      address: EthereumAddress('0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956'),
+      sinceTimestamp: new UnixTime(1711057199),
+      tokens: ['ETH'],
+    },
+  ]
 })
