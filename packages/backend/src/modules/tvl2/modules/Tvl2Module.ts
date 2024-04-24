@@ -54,6 +54,7 @@ export function createTvl2Module(
       peripherals,
       hourlyIndexer,
       syncOptimizer,
+      indexerService,
     ),
     ...createChainModules(
       config.tvl2,

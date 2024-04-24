@@ -105,8 +105,7 @@ describe(L2CostsController.name, () => {
         0,
         200000,
       )
-      expect(result.type).toEqual('success')
-      expect(result.data.projects).toEqual({
+      expect(result.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),
           daily: mockObject<L2CostsApiChart>({
@@ -131,21 +130,19 @@ describe(L2CostsController.name, () => {
       const controller = getMockL2CostsController({})
 
       const result = await controller.getL2Costs()
-      if (result.type === 'success') {
-        expect(result.data).toEqual({
-          projects: {},
-          combined: {
-            hourly: {
-              types: CHART_TYPES,
-              data: [],
-            },
-            daily: {
-              types: CHART_TYPES,
-              data: [],
-            },
+      expect(result).toEqual({
+        projects: {},
+        combined: {
+          hourly: {
+            types: CHART_TYPES,
+            data: [],
           },
-        })
-      }
+          daily: {
+            types: CHART_TYPES,
+            data: [],
+          },
+        },
+      })
     })
   })
   describe(L2CostsController.prototype.makeTransactionCalculations.name, () => {
