@@ -46,28 +46,30 @@ export function createStatusModule(
       const name = parts[0].replaceAll('-', '_')
       const tag = parts[1]
 
-      const gauge = gauges.get(getGaugeId(name, tag))
+      const id = getGaugeId(name, tag)
+
+      const gauge = gauges.get(id)
 
       if (!gauge) {
         if (tag) {
           gauges.set(
-            name,
+            id,
             new Gauge({
-              name,
+              name: id,
               help: 'Value showing the safe height of the indexer',
               labelNames: ['tag'],
             }),
           )
-          gauges.get(name)?.set({ tag }, i.safeHeight)
+          gauges.get(id)?.set({ tag }, i.safeHeight)
         } else {
           gauges.set(
-            name,
+            id,
             new Gauge({
-              name,
+              name: id,
               help: 'Value showing the safe height of the indexer',
             }),
           )
-          gauges.get(name)?.set(i.safeHeight)
+          gauges.get(id)?.set(i.safeHeight)
         }
       } else {
         if (tag) {
@@ -97,5 +99,5 @@ function getGaugeId(name: string, tag?: string): string {
     return name
   }
 
-  return `${name}-with-tag`
+  return `${name}::tagged`
 }
