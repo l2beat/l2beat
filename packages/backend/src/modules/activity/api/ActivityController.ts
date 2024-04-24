@@ -1,17 +1,18 @@
 import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 import {
+  ActivityApiChart,
+  ActivityApiChartPoint,
   ActivityApiCharts,
   ActivityApiResponse,
-  assert,
   json,
   ProjectId,
   Result,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
 import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { alignActivityData } from './alignActivityData'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -58,9 +59,8 @@ export class ActivityController {
       }
       projectCounts.set(projectId, counts)
     }
-    assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
-    const combinedAlignmentResult = alignActivityData(
+    const combinedAlignmentResult = this.alignActivityData(
       toCombinedActivity(projectCounts),
       ethereumCounts,
     )
@@ -71,7 +71,10 @@ export class ActivityController {
 
     const projects: ActivityApiResponse['projects'] = {}
     for (const [projectId, counts] of projectCounts.entries()) {
-      const activityAlignmentResult = alignActivityData(counts, ethereumCounts)
+      const activityAlignmentResult = this.alignActivityData(
+        counts,
+        ethereumCounts,
+      )
 
       if (activityAlignmentResult.type === 'error') {
         return activityAlignmentResult
@@ -103,7 +106,7 @@ export class ActivityController {
     const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
     const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
 
-    const chartPoints = alignActivityData(
+    const chartPoints = this.alignActivityData(
       processedCounts,
       processedEthereumCounts,
     )
@@ -151,6 +154,48 @@ export class ActivityController {
     return {
       type: 'success',
       data: projects.map((p) => p.id),
+    }
+  }
+
+  alignActivityData(
+    apiChartData: DailyTransactionCount[],
+    ethereumChartData: DailyTransactionCount[] = [],
+  ): Result<
+    ActivityApiChartPoint[],
+    'DATA_NOT_SYNCED' | 'ETHEREUM_DATA_DELAYED'
+  > {
+    const lastProjectTimestamp = apiChartData.at(-1)?.timestamp
+    if (!lastProjectTimestamp) {
+      // No data in activity chart
+      return { type: 'error', error: 'DATA_NOT_SYNCED' }
+    }
+    const ethChartTimestampIndex = ethereumChartData.findIndex(
+      (x) => x.timestamp.toNumber() === lastProjectTimestamp.toNumber(),
+    )
+    if (ethChartTimestampIndex === -1) {
+      return { type: 'error', error: 'ETHEREUM_DATA_DELAYED' }
+    }
+    const alignedEthChartData = ethereumChartData.slice(
+      0,
+      ethChartTimestampIndex + 1,
+    )
+    const length = Math.min(apiChartData.length, alignedEthChartData.length)
+
+    const data: ActivityApiChart['data'] = new Array(length)
+      .fill(0)
+      .map((_, i) => {
+        const apiPoint = apiChartData.at(-length + i)
+        const ethPoint = alignedEthChartData.at(-length + i)
+        return [
+          apiPoint?.timestamp ?? new UnixTime(0),
+          apiPoint?.count ?? 0,
+          ethPoint?.count ?? 0,
+        ]
+      })
+
+    return {
+      type: 'success',
+      data,
     }
   }
 
