@@ -57,6 +57,9 @@ describe(FinalityController.name, () => {
         minimumTimeToInclusion: 1,
         averageTimeToInclusion: 2,
         maximumTimeToInclusion: 3,
+        minimumStateUpdate: null,
+        averageStateUpdate: null,
+        maximumStateUpdate: null,
       }
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
@@ -93,6 +96,7 @@ describe(FinalityController.name, () => {
           averageInSeconds: last30Days.averageInSeconds / 2 + 0,
           maximumInSeconds: last30Days.maximumInSeconds,
         },
+        stateUpdate: null,
         syncedUntil: records[0].timestamp,
       })
       expect(result.projects.project2).toEqual({
@@ -101,6 +105,7 @@ describe(FinalityController.name, () => {
           maximumInSeconds: project2Result.maximumTimeToInclusion,
           minimumInSeconds: project2Result.minimumTimeToInclusion,
         },
+        stateUpdate: null,
         syncedUntil: project2Result.timestamp,
       })
     })
@@ -170,6 +175,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: project1Last30Days.averageInSeconds / 2 + 0,
             maximumInSeconds: project1Last30Days.maximumInSeconds,
           },
+          stateUpdate: null,
           syncedUntil: START,
         },
       })
@@ -192,6 +198,9 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 1,
             averageTimeToInclusion: 2,
             maximumTimeToInclusion: 3,
+            minimumStateUpdate: null,
+            averageStateUpdate: null,
+            maximumStateUpdate: null,
           },
           {
             projectId: ProjectId('project3'),
@@ -199,6 +208,9 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 4,
             averageTimeToInclusion: 5,
             maximumTimeToInclusion: 6,
+            minimumStateUpdate: null,
+            averageStateUpdate: null,
+            maximumStateUpdate: null,
           },
         ]),
         mockObject<TrackedTxsConfigsRepository>(),
@@ -213,6 +225,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: 2,
             maximumInSeconds: 3,
           },
+          stateUpdate: null,
           syncedUntil: new UnixTime(1000),
         },
         project3: {
@@ -221,6 +234,8 @@ describe(FinalityController.name, () => {
             averageInSeconds: 5,
             maximumInSeconds: 6,
           },
+          stateUpdate: null,
+
           syncedUntil: new UnixTime(12000),
         },
       })

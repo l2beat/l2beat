@@ -58,6 +58,7 @@ async function main() {
     config.features = getCommonFeatures(config.features, backendFeatures)
     console.timeEnd('[FEATURES]')
 
+    config.backend.mock = true
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
     console.timeEnd('[TVL]')
@@ -90,12 +91,6 @@ async function main() {
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
-    let finalityApiResponse: FinalityApiResponse | undefined
-    if (config.features.finality) {
-      console.time('[FINALITY]')
-      finalityApiResponse = await fetchFinalityApi(config.backend, http)
-      console.timeEnd('[FINALITY]')
-    }
 
     let implementationChange: ImplementationChangeReportApiResponse | undefined
     if (config.features.implementationChange) {
@@ -119,6 +114,16 @@ async function main() {
       console.time('[L2 COSTS]')
       l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
       console.timeEnd('[L2 COSTS]')
+    }
+
+    let finalityApiResponse: FinalityApiResponse | undefined
+
+    config.backend.mock = false
+
+    if (config.features.finality) {
+      console.time('[FINALITY]')
+      finalityApiResponse = await fetchFinalityApi(config.backend, http)
+      console.timeEnd('[FINALITY]')
     }
 
     createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)

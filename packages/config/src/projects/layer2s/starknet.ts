@@ -385,6 +385,7 @@ export const starknet: Layer2 = {
       lag: 0,
       type: 'Starknet',
       minTimestamp: new UnixTime(1710252998),
+      stateUpdate: 'disabled',
     },
     trackedTxs: [
       {

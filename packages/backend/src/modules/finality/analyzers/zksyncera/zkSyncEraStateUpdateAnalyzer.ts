@@ -24,7 +24,7 @@ export class zkSyncEraStateUpdateAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {
+  async analyze(transaction: { txHash: string; timestamp: UnixTime }) {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 

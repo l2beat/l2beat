@@ -190,6 +190,7 @@ export const kroma: Layer2 = {
     finality: {
       type: 'OPStack',
       lag: 0,
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

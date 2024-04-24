@@ -20,7 +20,7 @@ export abstract class BaseAnalyzer {
     protected readonly projectId: ProjectId,
   ) {}
 
-  async getFinalityForInterval(
+  async analyzeInterval(
     from: UnixTime,
     to: UnixTime,
   ): Promise<number[] | undefined> {
@@ -40,7 +40,7 @@ export abstract class BaseAnalyzer {
     const batchedTransactions = chunk(transactions, 10)
 
     for (const batch of batchedTransactions) {
-      const delays = await Promise.all(batch.map((tx) => this.getFinality(tx)))
+      const delays = await Promise.all(batch.map((tx) => this.analyze(tx)))
       finalityDelays.push(delays.flat())
     }
 
@@ -54,5 +54,5 @@ export abstract class BaseAnalyzer {
    * @param transaction
    * @returns Finality delays in seconds for each transaction
    */
-  abstract getFinality(transaction: Transaction): Promise<number[]>
+  abstract analyze(transaction: Transaction): Promise<number[]>
 }

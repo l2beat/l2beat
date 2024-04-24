@@ -7,7 +7,7 @@ import { LivenessRepository } from '../../../tracked-txs/modules/liveness/reposi
 import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
 
 describe(zkSyncEraFinalityAnalyzer.name, () => {
-  describe(zkSyncEraFinalityAnalyzer.prototype.getFinality.name, () => {
+  describe(zkSyncEraFinalityAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data', async () => {
       const mockRepo = mockObject<LivenessRepository>()
       const provider = getMockRpcClient()
@@ -19,7 +19,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
         mockRepo,
         ProjectId('zksync2'),
       )
-      const results = await calculator.getFinality({
+      const results = await calculator.analyze({
         txHash: '0x121',
         timestamp: new UnixTime(l1Timestamp),
       })

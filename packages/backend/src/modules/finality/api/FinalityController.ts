@@ -42,16 +42,35 @@ export class FinalityController {
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
       (record) => {
-        const timeToInclusion = {
-          minimumInSeconds: record.minimumTimeToInclusion,
-          maximumInSeconds: record.maximumTimeToInclusion,
-          averageInSeconds: record.averageTimeToInclusion,
+        const base = {
+          timeToInclusion: {
+            minimumInSeconds: record.minimumTimeToInclusion,
+            maximumInSeconds: record.maximumTimeToInclusion,
+            averageInSeconds: record.averageTimeToInclusion,
+          },
+          syncedUntil: record.timestamp,
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const project = projects.find(
+          (project) => project.projectId === record.projectId,
+        )!
+
+        if (project.stateUpdate === 'zeroed') {
+          return {
+            ...base,
+            stateUpdate: {
+              minimumInSeconds: 0,
+              maximumInSeconds: 0,
+              averageInSeconds: 0,
+            },
+          }
         }
 
         const stateUpdate =
-          record.maximumStateUpdate &&
-          record.minimumStateUpdate &&
-          record.averageStateUpdate
+          record.maximumStateUpdate !== null &&
+          record.minimumStateUpdate !== null &&
+          record.averageStateUpdate !== null
             ? {
                 minimumInSeconds:
                   record.minimumStateUpdate - record.minimumTimeToInclusion,
@@ -63,9 +82,8 @@ export class FinalityController {
             : null
 
         return {
-          timeToInclusion,
+          ...base,
           stateUpdate,
-          syncedUntil: record.timestamp,
         }
       },
     )

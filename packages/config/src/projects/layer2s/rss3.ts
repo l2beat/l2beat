@@ -62,6 +62,7 @@ export const rss3: Layer2 = opStackL2({
   finality: {
     type: 'OPStack',
     lag: 0,
+    stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1709858519),
   nonTemplatePermissions: [

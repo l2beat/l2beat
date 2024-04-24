@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
@@ -97,35 +97,47 @@ export class FinalityIndexer extends ChildIndexer {
     configuration: FinalityConfig,
   ): Promise<FinalityRecord | undefined> {
     const { timeToInclusion, stateUpdate } = configuration.analyzers
+    const { stateUpdateMode } = configuration
 
     const from = to.add(-1, 'days')
 
-    const inclusionDelays = await timeToInclusion.getFinalityForInterval(
-      from,
-      to,
-    )
+    const inclusionDelays = await timeToInclusion.analyzeInterval(from, to)
 
     if (!inclusionDelays) {
       return
     }
 
-    // State update disabled - handle if copied from tti
-    const stateUpdateDelays = stateUpdate
-      ? await stateUpdate.getFinalityForInterval(from, to)
-      : undefined
-
-    if (!stateUpdateDelays) {
-      return
-    }
-
-    return {
+    const baseResult = {
       projectId: configuration.projectId,
       timestamp: to,
 
       minimumTimeToInclusion: Math.min(...inclusionDelays),
       maximumTimeToInclusion: Math.max(...inclusionDelays),
       averageTimeToInclusion: Math.round(mean(inclusionDelays)),
+    }
 
+    if (stateUpdateMode !== 'analyze') {
+      return {
+        ...baseResult,
+        minimumStateUpdate: null,
+        maximumStateUpdate: null,
+        averageStateUpdate: null,
+      }
+    }
+
+    assert(
+      stateUpdate,
+      `State update analyzer is not defined for ${configuration.projectId}, update module or set state update mode to 'disabled'`,
+    )
+
+    const stateUpdateDelays = await stateUpdate.analyzeInterval(from, to)
+
+    if (!stateUpdateDelays) {
+      return
+    }
+
+    return {
+      ...baseResult,
       minimumStateUpdate: Math.min(...stateUpdateDelays),
       maximumStateUpdate: Math.max(...stateUpdateDelays),
       averageStateUpdate: Math.round(mean(stateUpdateDelays)),

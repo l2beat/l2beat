@@ -22,7 +22,6 @@ import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZ
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zksyncera/zkSyncEraFinalityAnalyzer'
-import { zkSyncEraStateUpdateAnalyzer } from './analyzers/zksyncera/zkSyncEraStateUpdateAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
@@ -124,6 +123,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'zkSyncEra':
           return {
@@ -134,13 +134,9 @@ function initializeConfigurations(
                 livenessRepository,
                 configuration.projectId,
               ),
-              stateUpdate: new zkSyncEraStateUpdateAnalyzer(
-                ethereumRPC,
-                livenessRepository,
-                configuration.projectId,
-              ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'OPStack-blob':
           return {
@@ -159,6 +155,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Arbitrum':
           return {
@@ -173,6 +170,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Scroll':
           return {
@@ -185,6 +183,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'zkSyncLite':
           return {
@@ -197,6 +196,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Starknet':
           return {
@@ -210,6 +210,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'OPStack':
           return
@@ -225,6 +226,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Degate':
           return {
@@ -238,6 +240,7 @@ function initializeConfigurations(
               ),
             },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'PolygonZkEvm':
           return {

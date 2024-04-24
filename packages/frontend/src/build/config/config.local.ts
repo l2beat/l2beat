@@ -10,7 +10,7 @@ export function getLocalConfig(): Config {
       // The local backend doesn't support activity
       activity: useMock,
       liveness: useMock,
-      finality: useMock,
+      // finality: useMock,
       buildAllProjectPages: true,
     },
     backend: {

@@ -241,6 +241,7 @@ export const scroll: Layer2 = {
       type: 'Scroll',
       // Scroll L1 Chain Proxy deployment
       minTimestamp: new UnixTime(1696775129),
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

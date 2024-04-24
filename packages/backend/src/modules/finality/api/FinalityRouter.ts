@@ -6,7 +6,7 @@ export function createFinalityRouter(finalityController: FinalityController) {
   const router = new Router()
 
   router.get('/api/finality', async (ctx) => {
-    const result = await finalityController.getFinality()
+    const result = await finalityController.analyze()
 
     ctx.body = result
   })

@@ -145,6 +145,7 @@ export const degate3: Layer2 = {
       type: 'Degate',
       minTimestamp: new UnixTime(1699747007),
       lag: 0,
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

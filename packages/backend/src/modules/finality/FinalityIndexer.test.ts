@@ -126,6 +126,9 @@ describe(FinalityIndexer.name, () => {
         averageTimeToInclusion: 3,
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
+        averageStateUpdate: null,
+        minimumStateUpdate: null,
+        maximumStateUpdate: null,
       })
     })
   })
@@ -176,6 +179,9 @@ describe(FinalityIndexer.name, () => {
         averageTimeToInclusion: 2,
         minimumTimeToInclusion: 1,
         maximumTimeToInclusion: 3,
+        averageStateUpdate: null,
+        minimumStateUpdate: null,
+        maximumStateUpdate: null,
       }
 
       const runtimeConfiguration = getMockFinalityRuntimeConfiguration([
@@ -350,9 +356,12 @@ function getMockFinalityRuntimeConfiguration(
 ): FinalityConfig {
   return {
     projectId: ProjectId('project'),
-    analyzer: mockObject<BaseAnalyzer>({
-      getFinalityForInterval: mockFn().resolvesTo(results),
-    }),
+    analyzers: {
+      timeToInclusion: mockObject<BaseAnalyzer>({
+        analyzeInterval: mockFn().resolvesTo(results),
+      }),
+    },
     minTimestamp: MIN_TIMESTAMP,
+    stateUpdateMode: 'disabled',
   }
 }
