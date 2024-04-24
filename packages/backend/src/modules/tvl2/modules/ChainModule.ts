@@ -154,7 +154,7 @@ function createChainModule(
   return {
     start: async () => {
       await blockTimestampIndexer.start()
-      // await chainAmountIndexer.start()
+      await chainAmountIndexer.start()
     },
     indexers: [blockTimestampIndexer, chainAmountIndexer],
   }
