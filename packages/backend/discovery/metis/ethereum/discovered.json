@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19725858,
-  "configHash": "0x37111f9e8abda44b814faf5443acd0a58fb2558fbfa683455f4ec93f6c39b21d",
+  "blockNumber": 19726038,
+  "configHash": "0x573df1effc39f5d019ba06dd975ec4adb4fd8b69bdd36a1a521504369cb18d65",
   "version": 3,
   "contracts": [
     {
@@ -71,10 +71,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000662912db0000fff3f1",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000662912db0000fff3f1",
-        "length": 23501,
-        "lengthByChainId": 23501,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000662921030000fff5e5",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000662921030000fff5e5",
+        "length": 23503,
+        "lengthByChainId": 23503,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -324,12 +324,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1713967835,
-        "getLastSequencerTimestampByChainId": 1713967835,
-        "getTotalBatches": 23501,
-        "getTotalBatchesByChainId": 23501,
-        "getTotalElements": 16774129,
-        "getTotalElementsByChainId": 16774129,
+        "getLastSequencerTimestamp": 1713971459,
+        "getLastSequencerTimestampByChainId": 1713971459,
+        "getTotalBatches": 23503,
+        "getTotalBatchesByChainId": 23503,
+        "getTotalElements": 16774629,
+        "getTotalElementsByChainId": 16774629,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
