@@ -1725,6 +1725,13 @@
         "bridge": "Blast"
       },
       "coingeckoId": "usdb"
+    },
+    {
+      "symbol": "PAC",
+      "address": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "pacmoon"
     }
   ],
   "mode": [
