@@ -7,7 +7,7 @@ Generated with discovered.json: 0xf7a1cc6de98a35d884df3f95f5d35f645ab1b400
 
 ## Description
 
-New Validium.
+New Validium. There is no diff with Astar zkEVM.
 
 ## Initial discovery
 
