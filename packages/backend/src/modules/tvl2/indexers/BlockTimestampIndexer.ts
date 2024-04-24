@@ -18,12 +18,9 @@ export interface BlockTimestampIndexerDeps extends ManagedChildIndexerOptions {
 }
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
-  indexerId: string
-
   constructor(private readonly $: BlockTimestampIndexerDeps) {
     super($)
     this.$.logger = this.$.logger.for(this)
-    this.indexerId = $.id
   }
 
   override async update(from: number, to: number): Promise<number> {
