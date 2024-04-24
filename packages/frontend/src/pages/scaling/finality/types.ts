@@ -42,5 +42,11 @@ export interface ScalingFinalityViewEntryData {
     maximumInSeconds: number
     warning?: string
   }
+  stateUpdateDelay?: {
+    minimumInSeconds: number | undefined
+    averageInSeconds: number
+    maximumInSeconds: number
+    warning?: string
+  }
   syncStatus: SyncStatus
 }

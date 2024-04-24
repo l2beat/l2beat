@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './zksyncera/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './ZkSyncLiteFinalityAnalyzer'
 
 describe(ZkSyncLiteFinalityAnalyzer.name, () => {

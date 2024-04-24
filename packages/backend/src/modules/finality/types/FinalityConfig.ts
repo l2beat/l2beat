@@ -4,6 +4,9 @@ import { BaseAnalyzer } from '../analyzers/types/BaseAnalyzer'
 
 export interface FinalityConfig {
   projectId: ProjectId
-  analyzer: BaseAnalyzer
+  analyzers: {
+    timeToInclusion: BaseAnalyzer
+    stateUpdate?: BaseAnalyzer
+  }
   minTimestamp: UnixTime
 }

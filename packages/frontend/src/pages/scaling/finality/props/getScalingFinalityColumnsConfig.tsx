@@ -40,7 +40,11 @@ export function getScalingFinalityColumnsConfig() {
       name: 'Past day avg.\nTime to inclusion',
       getValue: (project) =>
         project.data ? (
-          <FinalityDurationCell data={project.data} />
+          <FinalityDurationCell
+            warning={project.data.timeToInclusion.warning}
+            timings={project.data.timeToInclusion}
+            syncStatus={project.data.syncStatus}
+          />
         ) : (
           <Badge type="gray">COMING SOON</Badge>
         ),
@@ -56,7 +60,17 @@ export function getScalingFinalityColumnsConfig() {
       name: 'State update\ndelay',
       tooltip:
         'Time interval between time to finality and state root submission.',
-      getValue: () => <Badge type="gray">COMING SOON</Badge>,
+      getValue: (project) => {
+        return project.data && project.data.stateUpdateDelay ? (
+          <FinalityDurationCell
+            warning={project.data.stateUpdateDelay.warning}
+            timings={project.data.stateUpdateDelay}
+            syncStatus={project.data.syncStatus}
+          />
+        ) : (
+          <Badge type="gray">COMING SOON</Badge>
+        )
+      },
     },
     {
       name: 'Execution\ndelay',

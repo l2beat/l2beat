@@ -21,7 +21,8 @@ import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnal
 import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
-import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './analyzers/zksyncera/zkSyncEraFinalityAnalyzer'
+import { zkSyncEraStateUpdateAnalyzer } from './analyzers/zksyncera/zkSyncEraStateUpdateAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
@@ -114,81 +115,100 @@ function initializeConfigurations(
         case 'Linea':
           return {
             projectId: configuration.projectId,
-            analyzer: new LineaFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, RpcClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LineaFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, RpcClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'zkSyncEra':
           return {
             projectId: configuration.projectId,
-            analyzer: new zkSyncEraFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new zkSyncEraFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+              stateUpdate: new zkSyncEraStateUpdateAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'OPStack-blob':
           return {
             projectId: configuration.projectId,
-            analyzer: new OpStackFinalityAnalyzer(
-              blobClient,
-              logger,
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              {
-                l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
-                genesisTimestamp: configuration.genesisTimestamp,
-              },
-            ),
+            analyzers: {
+              timeToInclusion: new OpStackFinalityAnalyzer(
+                blobClient,
+                logger,
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                {
+                  l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
+                  genesisTimestamp: configuration.genesisTimestamp,
+                },
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'Arbitrum':
           return {
             projectId: configuration.projectId,
-            analyzer: new ArbitrumFinalityAnalyzer(
-              blobClient,
-              logger,
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ArbitrumFinalityAnalyzer(
+                blobClient,
+                logger,
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'Scroll':
           return {
             projectId: configuration.projectId,
-            analyzer: new ScrollFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ScrollFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'zkSyncLite':
           return {
             projectId: configuration.projectId,
-            analyzer: new ZkSyncLiteFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ZkSyncLiteFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'Starknet':
           return {
             projectId: configuration.projectId,
-            analyzer: new StarknetFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, StarknetClient),
-            ),
+            analyzers: {
+              timeToInclusion: new StarknetFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, StarknetClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'OPStack':
@@ -196,23 +216,27 @@ function initializeConfigurations(
         case 'Loopring':
           return {
             projectId: configuration.projectId,
-            analyzer: new LoopringFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, LoopringClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LoopringFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, LoopringClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'Degate':
           return {
             projectId: configuration.projectId,
-            analyzer: new LoopringFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, DegateClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LoopringFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, DegateClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
           }
         case 'PolygonZkEvm':

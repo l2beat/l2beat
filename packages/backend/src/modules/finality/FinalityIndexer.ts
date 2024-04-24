@@ -96,19 +96,39 @@ export class FinalityIndexer extends ChildIndexer {
     to: UnixTime,
     configuration: FinalityConfig,
   ): Promise<FinalityRecord | undefined> {
+    const { timeToInclusion, stateUpdate } = configuration.analyzers
+
     const from = to.add(-1, 'days')
 
-    const projectFinalityTimestamps =
-      await configuration.analyzer.getFinalityForInterval(from, to)
+    const inclusionDelays = await timeToInclusion.getFinalityForInterval(
+      from,
+      to,
+    )
 
-    if (!projectFinalityTimestamps) return
+    if (!inclusionDelays) {
+      return
+    }
+
+    // State update disabled - handle if copied from tti
+    const stateUpdateDelays = stateUpdate
+      ? await stateUpdate.getFinalityForInterval(from, to)
+      : undefined
+
+    if (!stateUpdateDelays) {
+      return
+    }
 
     return {
       projectId: configuration.projectId,
       timestamp: to,
-      minimumTimeToInclusion: Math.min(...projectFinalityTimestamps),
-      maximumTimeToInclusion: Math.max(...projectFinalityTimestamps),
-      averageTimeToInclusion: Math.round(mean(projectFinalityTimestamps)),
+
+      minimumTimeToInclusion: Math.min(...inclusionDelays),
+      maximumTimeToInclusion: Math.max(...inclusionDelays),
+      averageTimeToInclusion: Math.round(mean(inclusionDelays)),
+
+      minimumStateUpdate: Math.min(...stateUpdateDelays),
+      maximumStateUpdate: Math.max(...stateUpdateDelays),
+      averageStateUpdate: Math.round(mean(stateUpdateDelays)),
     }
   }
 
