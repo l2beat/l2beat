@@ -16,7 +16,6 @@ import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import {
@@ -89,16 +88,19 @@ function createChainModule(
           chainId: chainConfig.config.chainId,
         })
 
-  const blockTimestampIndexer = new BlockTimestampIndexer(
+  const blockTimestampIndexer = new BlockTimestampIndexer({
+    id: `block_timestamp_indexer_${chainConfig.chain}`,
     logger,
-    hourlyIndexer,
-    provider,
-    peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(BlockTimestampRepository),
-    chainConfig.chain,
-    chainConfig.config.minBlockTimestamp,
+    parents: [hourlyIndexer],
     syncOptimizer,
-  )
+    blockTimestampProvider: provider,
+    blockTimestampRepository: peripherals.getRepository(
+      BlockTimestampRepository,
+    ),
+    chain: chainConfig.chain,
+    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
+    indexerService,
+  })
 
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
@@ -152,7 +154,7 @@ function createChainModule(
   return {
     start: async () => {
       await blockTimestampIndexer.start()
-      await chainAmountIndexer.start()
+      // await chainAmountIndexer.start()
     },
     indexers: [blockTimestampIndexer, chainAmountIndexer],
   }
