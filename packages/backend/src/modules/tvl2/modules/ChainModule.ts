@@ -88,7 +88,6 @@ function createChainModule(
         })
 
   const blockTimestampIndexer = new BlockTimestampIndexer({
-    id: `block_timestamp_indexer`,
     tag: chainConfig.chain,
     logger,
     parents: [hourlyIndexer],

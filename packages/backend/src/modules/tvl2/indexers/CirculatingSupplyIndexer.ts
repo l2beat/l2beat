@@ -14,7 +14,8 @@ import {
 import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface ChainAmountIndexerDeps extends ManagedChildIndexerOptions {
+export interface ChainAmountIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   coingeckoQueryService: CoingeckoQueryService
   amountRepository: AmountRepository
   syncOptimizer: SyncOptimizer
@@ -25,7 +26,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configId: string
 
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    super($)
+    super({ ...$, name: 'circulating_supply_indexer' })
     this.configId = createAmountId($.config)
   }
 

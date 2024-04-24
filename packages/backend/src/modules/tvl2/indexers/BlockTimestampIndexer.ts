@@ -10,7 +10,8 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export type BlockTimestampProvider = EtherscanClient | BlockscoutClient
 
-export interface BlockTimestampIndexerDeps extends ManagedChildIndexerOptions {
+export interface BlockTimestampIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   blockTimestampProvider: BlockTimestampProvider
   blockTimestampRepository: BlockTimestampRepository
   chain: string
@@ -19,7 +20,7 @@ export interface BlockTimestampIndexerDeps extends ManagedChildIndexerOptions {
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
-    super($)
+    super({ ...$, name: 'block_timestamp_indexer' })
     this.$.logger = this.$.logger.for(this)
   }
 

@@ -6,7 +6,7 @@ import { IndexerService } from './IndexerService'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]
-  id: string
+  name: string
   tag?: string
   minHeight: number
   indexerService: IndexerService
@@ -18,7 +18,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
 
   constructor(public readonly options: ManagedChildIndexerOptions) {
     super(options.logger, options.parents, options)
-    this.indexerId = options.id
+    this.indexerId = options.name
     if (options.tag) {
       this.indexerId += `::${options.tag}`
     }
