@@ -20,7 +20,7 @@ export interface ValueWithDisplayValue {
 
 export type SyncStatus = {
   isSynced: boolean
-  displaySyncedUntil: string
+  displaySyncedUntil?: string
 }
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
