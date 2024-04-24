@@ -142,13 +142,6 @@ export class LivenessController {
 
       const withAnomalies = calculateAnomalies(intervals)
 
-      if (project.livenessConfig) {
-        const { from, to } = project.livenessConfig.duplicateData
-        withAnomalies[to] = {
-          ...withAnomalies[from],
-        }
-      }
-
       const { anomalies, ...subtypeData } = withAnomalies
 
       const withSyncedUntil =
@@ -166,6 +159,17 @@ export class LivenessController {
           },
           {},
         )
+
+      if (project.livenessConfig) {
+        const { from, to } = project.livenessConfig.duplicateData
+
+        withSyncedUntil[to] = {
+          ...withSyncedUntil[from],
+        } as LivenessApiProject[
+          | 'batchSubmissions'
+          | 'proofSubmissions'
+          | 'stateUpdates']
+      }
 
       projects[project.projectId.toString()] = {
         ...withSyncedUntil,
