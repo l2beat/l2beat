@@ -1,14 +1,20 @@
 import Router from '@koa/router'
 import {
+  assertUnreachable,
   branded,
   ProjectId,
   TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
+import { Context } from 'koa'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../../../api/types'
 import { Config } from '../../../../../config'
-import { LivenessController } from './LivenessController'
+import {
+  LivenessController,
+  LivenessResult,
+  LivenessTransactionsResult,
+} from './LivenessController'
 
 export function createLivenessRouter(
   livenessController: LivenessController,
@@ -22,8 +28,7 @@ export function createLivenessRouter(
       : await livenessController.getLiveness()
 
     if (result.type === 'error') {
-      ctx.status = 404
-      ctx.body = result.error
+      handleLivenessError(ctx, result)
       return
     }
     ctx.body = result.data
@@ -33,10 +38,10 @@ export function createLivenessRouter(
     const result = await livenessController.getLivenessTransactions()
 
     if (result.type === 'error') {
-      ctx.status = 404
-      ctx.body = result.error
+      handleLivenessError(ctx, result)
       return
     }
+
     ctx.body = result.data
   })
 
@@ -61,4 +66,22 @@ export function createLivenessRouter(
   )
 
   return router
+}
+
+function handleLivenessError(
+  ctx: Context,
+  result: Extract<
+    LivenessResult | LivenessTransactionsResult,
+    { type: 'error' }
+  >,
+) {
+  switch (result.error) {
+    case 'DATA_NOT_SYNCED':
+      ctx.status = 404
+      break
+    default:
+      assertUnreachable(result.error)
+  }
+
+  ctx.body = result.error
 }
