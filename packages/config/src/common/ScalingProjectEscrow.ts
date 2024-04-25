@@ -40,3 +40,14 @@ interface NewProjectEscrow {
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
 }
+
+export interface ProjectEscrow {
+  chain: string
+  address: EthereumAddress
+  tokens: string[] | '*'
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal: boolean
+}
