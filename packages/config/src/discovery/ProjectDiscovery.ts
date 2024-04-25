@@ -129,7 +129,7 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     isLayer3?: boolean
   }): ScalingProjectEscrow {
-    const contractRaw = this.getContractByAddress(address.toString())
+    const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
@@ -294,9 +294,39 @@ export class ProjectDiscovery {
     try {
       identifier = utils.getAddress(identifier)
     } catch {
-      return this.getContractByName(identifier)
+      const contracts = this.getContractByName(identifier)
+
+      assert(
+        !(contracts.length > 1),
+        `Found more than one contracts of ${identifier} name (${this.projectName})`,
+      )
+      assert(
+        contracts.length === 1,
+        `Found no contract of ${identifier} name (${this.projectName})`,
+      )
+
+      return contracts[0]
     }
-    return this.getContractByAddress(identifier)
+
+    const contract = this.getContractByAddress(identifier)
+    assert(
+      contract,
+      `No contract of ${identifier} address found (${this.projectName})`,
+    )
+
+    return contract
+  }
+
+  hasContract(identifier: string): boolean {
+    try {
+      identifier = utils.getAddress(identifier)
+    } catch {
+      const contracts = this.getContractByName(identifier)
+      return contracts.length === 1
+    }
+
+    const contract = this.getContractByAddress(identifier)
+    return contract !== undefined
   }
 
   getContractValue<T extends ContractValue>(
@@ -517,24 +547,19 @@ export class ProjectDiscovery {
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
-  getContractByAddress(address: string): ContractParameters {
-    const contract = this.discovery.contracts.find(
+  getContractByAddress(address: string): ContractParameters | undefined {
+    return this.discovery.contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )
-
-    assert(
-      contract,
-      `No contract of ${address} address found (${this.projectName})`,
-    )
-
-    return contract
   }
 
   getOpStackContractDetails(
     upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
     overrides?: Partial<Record<OpStackContractName, string>>,
   ): ScalingProjectContractSingleAddress[] {
-    return OP_STACK_CONTRACT_DESCRIPTION.map((d) =>
+    return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
+      this.hasContract(overrides?.[d.name] ?? d.name),
+    ).map((d) =>
       this.getContractDetails(overrides?.[d.name] ?? d.name, {
         description: stringFormat(
           d.coreDescription,
@@ -558,20 +583,8 @@ export class ProjectDiscovery {
     )
   }
 
-  private getContractByName(name: string): ContractParameters {
-    const contracts = this.discovery.contracts.filter(
-      (contract) => contract.name === name,
-    )
-    assert(
-      !(contracts.length > 1),
-      `Found more than one contracts of ${name} name (${this.projectName})`,
-    )
-    assert(
-      contracts.length === 1,
-      `Found no contract of ${name} name (${this.projectName})`,
-    )
-
-    return contracts[0]
+  private getContractByName(name: string): ContractParameters[] {
+    return this.discovery.contracts.filter((contract) => contract.name === name)
   }
 }
 

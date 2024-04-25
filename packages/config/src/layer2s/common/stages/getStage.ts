@@ -44,7 +44,7 @@ const getBlueprint = (opts?: GetStageOptions) =>
         },
         rollupNodeSourceAvailable: {
           positive:
-            'A source-available node exists that can recreate the state from L1 data.' +
+            'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.' +
             (opts?.rollupNodeLink
               ? ` [View code](${opts.rollupNodeLink})`
               : ''),

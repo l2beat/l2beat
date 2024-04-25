@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xd8d108b7b19308cda326d243fc41e4d24ae821a2
+
+# Diff at Sat, 20 Apr 2024 19:31:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19432769
+- current block number: 19698726
+
+## Description
+
+Cbridge bridge contracts were paused for a few minutes and the guards are set to a 'relaxed' state before the bridges are unpaused again.
+
+The Sentinel ProxyAdmin owner was changes from 'Celer Network: Deployer 2' to the CelerBridge Governance contract 'SimpleGovernance' called 'Bridge Governance (2)' on our website. Since the SimpleGovernance contract has a higher threshold than the deployer EOA, and additional Governance logic, this is an increase in security.
+
+## Watched changes
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      values.owner:
+-        "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
++        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: None
+      values.numRelaxedGuards:
+-        0
++        2
+      values.relaxed:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x89e2c6f3a52098ecf1bd3a54070b9d191b7eeb26
 
 # Diff at Mon, 19 Feb 2024 15:53:32 GMT:

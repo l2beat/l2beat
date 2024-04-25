@@ -3,7 +3,7 @@
   "extends": ["//"],
   "pipeline": {
     "build": {
-      "env": ["DEPLOYMENT_ENV", "NODE_ENV", "GENERATE_METAIMAGES"],
+      "env": ["DEPLOYMENT_ENV", "NODE_ENV"],
       "cache": false
     }
   }

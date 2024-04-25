@@ -1,7 +1,7 @@
 {
   "name": "portal",
   "chain": "ethereum",
-  "blockNumber": 18483329,
+  "blockNumber": 19697841,
   "configHash": "0x430205c151921cb4dc9ad2ae954780d1d4aca57698afc65a023b731f07440b9f",
   "version": 3,
   "contracts": [
@@ -69,13 +69,13 @@
       "values": {
         "chainId": 2,
         "evmChainId": 1,
-        "getCurrentGuardianSetIndex": 3,
+        "getCurrentGuardianSetIndex": 4,
         "getGuardianSetExpiry": 0,
         "governanceChainId": 1,
         "governanceContract": "0x0000000000000000000000000000000000000000000000000000000000000004",
         "guardianSet": [
           [
-            "0x58CC3AE5C097b213cE3c81979e1B9f9570746AA5",
+            "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
             "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
             "0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
             "0x107A0086b32d7A0977926A205131d8731D39cbEB",
@@ -115,7 +115,7 @@
     "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20",
     "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
     "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd",
-    "0x58CC3AE5C097b213cE3c81979e1B9f9570746AA5",
+    "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
     "0x5E1487F35515d02A92753504a8D75471b9f49EdB",
     "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d",
     "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3",

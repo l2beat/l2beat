@@ -45,9 +45,6 @@ export const optimism: Layer2 = opStackL2({
   },
   associatedTokens: ['OP'],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-  ),
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://mainnet.optimism.io/',
@@ -63,8 +60,6 @@ export const optimism: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
   },
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
@@ -188,12 +183,6 @@ export const optimism: Layer2 = opStackL2({
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
@@ -222,11 +211,6 @@ export const optimism: Layer2 = opStackL2({
     discovery.getContractDetails('SuperchainConfig', {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('L1ERC721Bridge', {
-      description:
-        'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
       ...upgradeability,
     }),
   ],

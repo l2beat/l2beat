@@ -30,6 +30,7 @@ export function getActiveScalingSummaryColumnsConfig() {
         <RosetteCell
           riskValues={project.riskValues}
           isUpcoming={project.isUpcoming}
+          isUnderReview={project.showProjectUnderReview}
         />
       ),
     },

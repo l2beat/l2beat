@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
-import { LONG_HYPHEN } from '../../../../utils/constants'
+import { EM_DASH } from '../../../../utils/constants'
 import { CostsData, CostsDataBreakdown, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
 
@@ -176,7 +176,7 @@ function TotalValue({
             />
           </>
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         )}
       </div>
     </div>

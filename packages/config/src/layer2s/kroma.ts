@@ -83,7 +83,7 @@ export const kroma: Layer2 = {
       apps: ['https://kroma.network/bridge/'],
       documentation: [
         'https://docs.kroma.network/',
-        'https://github.com/kroma-network/kroma/tree/dev/specs',
+        'https://specs.kroma.network/',
       ],
       explorers: [
         'https://kromascan.com/',
@@ -322,7 +322,7 @@ export const kroma: Layer2 = {
       references: [
         {
           text: 'Derivation: Batch Submission - Kroma specs',
-          href: 'https://github.com/kroma-network/kroma/blob/dev/specs/derivation.md#batch-submission',
+          href: 'https://specs.kroma.network/glossary.html#batch-submission',
         },
         {
           text: 'BatchInbox - Etherscan address',
@@ -348,7 +348,7 @@ export const kroma: Layer2 = {
       references: [
         {
           text: 'Sequencing Window - Kroma specs',
-          href: 'https://github.com/kroma-network/kroma/blob/dev/specs/glossary.md#proposing-window',
+          href: 'https://specs.kroma.network/glossary.html#sequencing-window',
         },
         {
           text: 'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
@@ -389,7 +389,7 @@ export const kroma: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/dev/specs/differences-from-optimism.md).' +
+      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma-specs/blob/main/specs/protocol/differences-from-optimism.md).' +
       '\n' +
       'The instructions to run the proposer (called validator) and the ZK prover, are documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
     compressionScheme:
@@ -397,7 +397,7 @@ export const kroma: Layer2 = {
     genesisState:
       'The genesis file can be found [here](https://github.com/kroma-network/kroma-up/blob/main/config/mainnet/genesis.json).',
     dataFormat:
-      'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://github.com/kroma-network/kroma/blob/main/specs/derivation.md).',
+      'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://specs.kroma.network/protocol/rollup-node.html#derivation).',
   },
   permissions: [
     {

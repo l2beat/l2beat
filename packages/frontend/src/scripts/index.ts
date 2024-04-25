@@ -16,7 +16,6 @@ import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
-import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 import { configureSorting } from './table/configureSorting'
@@ -44,7 +43,6 @@ configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
 configureUpgradeDescriptions()
-configureTopBars()
 configureMultipleEscrowsButton()
 configureRichSelects()
 configureBridgesAndCombinedOnly()

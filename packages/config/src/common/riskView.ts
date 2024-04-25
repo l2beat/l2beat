@@ -417,6 +417,7 @@ export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
   upgradeDelay2?: number,
+  existsBlocklist: boolean = false,
 ): ScalingProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
   const windowText = window <= 0 ? 'None' : formatSeconds(window)
@@ -438,13 +439,17 @@ export function EXIT_WINDOW(
   const instantlyUpgradable =
     upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
-    windowText === 'None'
+    (windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
       : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
           upgradeDelay,
         )} delay before an upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
-        )} to be processed.`
+        )} to be processed.`) +
+    (existsBlocklist
+      ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
+      : '')
+
   return {
     value: windowText,
     description: description,

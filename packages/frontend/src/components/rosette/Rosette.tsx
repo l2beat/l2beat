@@ -17,14 +17,15 @@ export interface RosetteProps {
   isUnderReview?: boolean
 }
 
-export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
+export function SmallRosette({
+  risks,
+  className,
+  isUpcoming,
+  isUnderReview,
+}: RosetteProps) {
   if (isUpcoming) {
     return <UpcomingBadge className={className} isShort={true} />
   }
-
-  const isUnderReview = Object.values(risks).every(
-    (sentiment) => sentiment === 'UnderReview',
-  )
 
   return (
     <Icon

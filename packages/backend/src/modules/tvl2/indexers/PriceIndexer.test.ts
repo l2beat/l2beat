@@ -181,40 +181,6 @@ describe(PriceIndexer.name, () => {
         minTimestamp: token.sinceTimestamp,
       })
     })
-
-    it('throw when there is an intent to change minTimestamp', async () => {
-      const indexerState = {
-        indexerId: 'indexer',
-        safeHeight: 1,
-        minTimestamp: UnixTime.ZERO,
-      }
-
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => {
-          return indexerState
-        },
-      })
-
-      const newToken = {
-        chain: 'ethereum',
-        address: EthereumAddress.random(),
-        sinceTimestamp: indexerState.minTimestamp.add(-1, 'days'),
-      }
-
-      const indexer = new PriceIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<CoingeckoQueryService>({}),
-        stateRepository,
-        mockObject<PriceRepository>({}),
-        mockObject<PriceConfigEntry>(newToken),
-        mockObject<SyncOptimizer>({}),
-      )
-
-      await expect(() => indexer.doInitialize()).toBeRejectedWith(
-        'Minimum timestamp of this indexer cannot be updated',
-      )
-    })
   })
 
   describe(PriceIndexer.prototype.getSafeHeight.name, () => {

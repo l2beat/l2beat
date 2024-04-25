@@ -44,7 +44,7 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const MAX_DAYS = 180
-const MAX_RECORDS = 50000
+const MAX_RECORDS = 200000
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000

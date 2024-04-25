@@ -95,7 +95,7 @@ describe(L2CostsController.name, () => {
 
       expect(
         l2CostsRepository.getByProjectAndTimeRangePaginated,
-      ).toHaveBeenCalledTimes(4)
+      ).toHaveBeenCalledTimes(2)
       expect(
         l2CostsRepository.getByProjectAndTimeRangePaginated,
       ).toHaveBeenNthCalledWith(
@@ -103,16 +103,7 @@ describe(L2CostsController.name, () => {
         MOCK_PROJECTS[1].projectId,
         [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
         0,
-        50000,
-      )
-      expect(
-        l2CostsRepository.getByProjectAndTimeRangePaginated,
-      ).toHaveBeenNthCalledWith(
-        2,
-        MOCK_PROJECTS[1].projectId,
-        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
-        50000,
-        50000,
+        200000,
       )
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
