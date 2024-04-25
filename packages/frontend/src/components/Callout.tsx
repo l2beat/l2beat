@@ -39,7 +39,7 @@ export function Callout({
   return (
     <div
       className={cn(
-        'flex first:mt-0',
+        'flex',
         'rounded-lg',
         background,
         className,
