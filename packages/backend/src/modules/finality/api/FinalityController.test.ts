@@ -96,7 +96,7 @@ describe(FinalityController.name, () => {
           averageInSeconds: last30Days.averageInSeconds / 2 + 0,
           maximumInSeconds: last30Days.maximumInSeconds,
         },
-        stateUpdate: null,
+        stateUpdateDelays: null,
         syncedUntil: records[0].timestamp,
       })
       expect(result.projects.project2).toEqual({
@@ -105,7 +105,7 @@ describe(FinalityController.name, () => {
           maximumInSeconds: project2Result.maximumTimeToInclusion,
           minimumInSeconds: project2Result.minimumTimeToInclusion,
         },
-        stateUpdate: null,
+        stateUpdateDelays: null,
         syncedUntil: project2Result.timestamp,
       })
     })
@@ -175,7 +175,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: project1Last30Days.averageInSeconds / 2 + 0,
             maximumInSeconds: project1Last30Days.maximumInSeconds,
           },
-          stateUpdate: null,
+          stateUpdateDelays: null,
           syncedUntil: START,
         },
       })
@@ -225,7 +225,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: 2,
             maximumInSeconds: 3,
           },
-          stateUpdate: null,
+          stateUpdateDelays: null,
           syncedUntil: new UnixTime(1000),
         },
         project3: {
@@ -234,7 +234,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: 5,
             maximumInSeconds: 6,
           },
-          stateUpdate: null,
+          stateUpdateDelays: null,
 
           syncedUntil: new UnixTime(12000),
         },

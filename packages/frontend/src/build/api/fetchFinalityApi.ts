@@ -34,6 +34,7 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
   ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
     acc[cur] = {
       timeToInclusion: generateMockData(),
+      stateUpdateDelays: generateMockData(),
       syncedUntil: UnixTime.now(),
     }
     return acc

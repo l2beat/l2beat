@@ -79,11 +79,14 @@ function getFinalityData(
       maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
       warning: project.display.finality?.warning,
     },
-    stateUpdateDelay: finalityProjectData.stateUpdate
+    stateUpdateDelay: finalityProjectData.stateUpdateDelays
       ? {
-          minimumInSeconds: finalityProjectData.stateUpdate.minimumInSeconds,
-          averageInSeconds: finalityProjectData.stateUpdate.averageInSeconds,
-          maximumInSeconds: finalityProjectData.stateUpdate.maximumInSeconds,
+          minimumInSeconds:
+            finalityProjectData.stateUpdateDelays.minimumInSeconds,
+          averageInSeconds:
+            finalityProjectData.stateUpdateDelays.averageInSeconds,
+          maximumInSeconds:
+            finalityProjectData.stateUpdateDelays.maximumInSeconds,
         }
       : undefined,
     syncStatus: {
