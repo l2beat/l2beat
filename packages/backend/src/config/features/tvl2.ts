@@ -167,7 +167,7 @@ function getAmountsConfig(
             ),
             escrowAddress: escrow.address,
             project: project.projectId,
-            source: toSource(token.type),
+            source: 'canonical',
             includeInTotal: escrow.includeInTotal,
             decimals: token.decimals,
           })
