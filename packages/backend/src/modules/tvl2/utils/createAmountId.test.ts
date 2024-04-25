@@ -1,119 +1,198 @@
 import {
-  AmountConfigEntry,
+  CirculatingSupplyEntry,
   CoingeckoId,
+  EscrowEntry,
   EthereumAddress,
   ProjectId,
+  TotalSupplyEntry,
+  UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect } from 'earl'
 
 import { createAmountId } from './createAmountId'
 
 describe(createAmountId.name, () => {
-  it('works for totalSupply', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    ).toEqual('88f4c5c9a84c')
+  const baseFields = [
+    {
+      key: 'chain',
+      newValue: 'new-chain',
+      shouldUpdateHash: true,
+    },
+    {
+      key: 'project',
+      newValue: ProjectId('new-project'),
+      shouldUpdateHash: true,
+    },
+    {
+      key: 'source',
+      newValue: 'different-source',
+      shouldUpdateHash: true,
+    },
+    {
+      key: 'sinceTimestamp',
+      newValue: new UnixTime(1),
+      shouldUpdateHash: false,
+    },
+    {
+      key: 'untilTimestamp',
+      newValue: new UnixTime(2),
+      shouldUpdateHash: false,
+    },
+    {
+      key: 'includeInTotal',
+      newValue: false,
+      shouldUpdateHash: false,
+    },
+    {
+      key: 'decimals',
+      newValue: 666,
+      shouldUpdateHash: false,
+    },
+  ]
+
+  describe('Total supply', () => {
+    const address = EthereumAddress.random()
+
+    const fields = [
+      {
+        key: 'address',
+        newValue: EthereumAddress.random(),
+        shouldUpdateHash: true,
+      },
+    ]
+
+    // @ts-expect-error tests
+    for (const f of baseFields.concat(fields)) {
+      it(f.key, () => {
+        const pre = createAmountId(mockTotalSupply(address))
+
+        const post = createAmountId({
+          ...mockTotalSupply(address),
+          ...{ [f.key]: f.newValue },
+        })
+
+        if (f.shouldUpdateHash) {
+          expect(pre).not.toEqual(post)
+        } else {
+          expect(pre).toEqual(post)
+        }
+      })
+    }
   })
 
-  it('works for circulatingSupply', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'circulatingSupply',
-          address: EthereumAddress.unsafe('address'),
-          coingeckoId: CoingeckoId('coingeckoId'),
-        }),
-      ),
-    ).toEqual('bd311ede8f4c')
+  describe('Circulating supply', () => {
+    const address = EthereumAddress.random()
+    const coingeckoId = CoingeckoId('id')
+
+    const fields = [
+      {
+        key: 'address',
+        newValue: EthereumAddress.random(),
+        shouldUpdateHash: true,
+      },
+      {
+        key: 'coingeckoId',
+        newValue: CoingeckoId('new-id'),
+        shouldUpdateHash: true,
+      },
+    ]
+
+    // @ts-expect-error tests
+    for (const f of baseFields.concat(fields)) {
+      it(f.key, () => {
+        const pre = createAmountId(mockCirculatingSupply(address, coingeckoId))
+
+        const post = createAmountId({
+          ...mockCirculatingSupply(address, coingeckoId),
+          ...{ [f.key]: f.newValue },
+        })
+
+        if (f.shouldUpdateHash) {
+          expect(pre).not.toEqual(post)
+        } else {
+          expect(pre).toEqual(post)
+        }
+      })
+    }
   })
 
-  it('works for escrow', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'escrow',
-          address: EthereumAddress.unsafe('address'),
-          escrowAddress: EthereumAddress.unsafe('escrowAddress'),
-        }),
-      ),
-    ).toEqual('25188634c56f')
-  })
+  describe('Escrow', () => {
+    const address = EthereumAddress.random()
+    const escrowAddress = EthereumAddress.random()
 
-  it('changes with projectId', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId2'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    ).not.toEqual(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    )
-  })
+    const fields = [
+      {
+        key: 'address',
+        newValue: EthereumAddress.random(),
+        shouldUpdateHash: true,
+      },
+      {
+        key: 'escrowAddress',
+        newValue: EthereumAddress.random(),
+        shouldUpdateHash: true,
+      },
+    ]
 
-  it('changes with chain', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain2',
-          project: ProjectId('projectId'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    ).not.toEqual(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    )
-  })
+    // @ts-expect-error tests
+    for (const f of baseFields.concat(fields)) {
+      it(f.key, () => {
+        const pre = createAmountId(mockEscrow(address, escrowAddress))
 
-  it('changes with type', () => {
-    expect(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'totalSupply',
-          address: EthereumAddress.unsafe('address'),
-        }),
-      ),
-    ).not.toEqual(
-      createAmountId(
-        mockObject<AmountConfigEntry>({
-          chain: 'chain',
-          project: ProjectId('projectId'),
-          type: 'escrow',
-          address: EthereumAddress.unsafe('address'),
-          escrowAddress: EthereumAddress.unsafe('escrowAddress'),
-        }),
-      ),
-    )
+        const post = createAmountId({
+          ...mockEscrow(address, escrowAddress),
+          ...{ [f.key]: f.newValue },
+        })
+
+        if (f.shouldUpdateHash) {
+          expect(pre).not.toEqual(post)
+        } else {
+          expect(pre).toEqual(post)
+        }
+      })
+    }
   })
 })
+
+function mockTotalSupply(address: EthereumAddress): TotalSupplyEntry {
+  return {
+    ...mock(),
+    type: 'totalSupply',
+    address,
+  }
+}
+
+function mockCirculatingSupply(
+  address: EthereumAddress,
+  coingeckoId: CoingeckoId,
+): CirculatingSupplyEntry {
+  return {
+    ...mock(),
+    type: 'circulatingSupply',
+    coingeckoId,
+    address,
+  }
+}
+
+function mockEscrow(
+  address: EthereumAddress,
+  escrowAddress: EthereumAddress,
+): EscrowEntry {
+  return {
+    ...mock(),
+    type: 'escrow',
+    address,
+    escrowAddress,
+  }
+}
+
+function mock() {
+  return {
+    chain: 'chain',
+    project: ProjectId('project'),
+    source: 'canonical' as const,
+    sinceTimestamp: UnixTime.ZERO,
+    untilTimestamp: UnixTime.ZERO,
+    includeInTotal: true,
+    decimals: 18,
+  }
+}
