@@ -52,7 +52,7 @@ export abstract class BaseAnalyzer {
   /**
    *
    * @param transaction
-   * @returns Finality delays in seconds for each transaction
+   * @returns TTI/SUD delays in seconds for each transaction
    */
   abstract analyze(transaction: Transaction): Promise<number[]>
 }
