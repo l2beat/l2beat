@@ -101,7 +101,7 @@ describe(L2CostsController.name, () => {
       ).toHaveBeenNthCalledWith(
         1,
         MOCK_PROJECTS[1].projectId,
-        [START_OF_DAY.add(-180, 'days'), START_OF_DAY],
+        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
         0,
         200000,
       )
@@ -308,7 +308,6 @@ describe(L2CostsController.name, () => {
       ])
 
       expect(result.daily.data).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
 
@@ -321,7 +320,6 @@ describe(L2CostsController.name, () => {
         datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
       ])
       expect(Array.from(combinedDailyMap.values())).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
     })

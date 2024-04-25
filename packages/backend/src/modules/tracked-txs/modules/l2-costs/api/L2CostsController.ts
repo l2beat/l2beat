@@ -127,11 +127,11 @@ export class L2CostsController {
         continue
       }
 
-      const startOfToday = UnixTime.now().toStartOf('day')
+      const nowToFullHour = UnixTime.now().toStartOf('hour')
 
       const timeRanges: [UnixTime, UnixTime] = [
-        startOfToday.add(-MAX_DAYS, 'days'),
-        startOfToday,
+        nowToFullHour.add(-MAX_DAYS, 'days'),
+        nowToFullHour,
       ]
 
       const multipliersConfigs = this.findConfigsWithMultiplier(
@@ -165,7 +165,7 @@ export class L2CostsController {
           recordsWithDetails,
           combinedHourlyMap,
           combinedDailyMap,
-          startOfToday,
+          nowToFullHour,
         )
 
         const projectData = projects[project.projectId.toString()]
@@ -230,8 +230,10 @@ export class L2CostsController {
         addToMap(hourlyMap, 'hour', tx)
         addToMap(combinedHourlyMap, 'hour', tx)
       }
-      addToMap(dailyMap, 'day', tx)
-      addToMap(combinedDailyMap, 'day', tx)
+      if (tx.timestamp.lt(nowToFullHour.toStartOf('day'))) {
+        addToMap(dailyMap, 'day', tx)
+        addToMap(combinedDailyMap, 'day', tx)
+      }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {
       types: CHART_TYPES,
