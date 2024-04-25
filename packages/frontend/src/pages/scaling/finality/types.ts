@@ -37,16 +37,16 @@ export interface ScalingFinalityViewEntry {
 
 export interface ScalingFinalityViewEntryData {
   timeToInclusion: {
-    minimumInSeconds: number | undefined
-    averageInSeconds: number
-    maximumInSeconds: number
     warning?: string
-  }
+  } & FinalityDataTimings
   stateUpdateDelay?: {
-    minimumInSeconds: number | undefined
-    averageInSeconds: number
-    maximumInSeconds: number
     warning?: string
-  }
+  } & FinalityDataTimings
   syncStatus: SyncStatus
+}
+
+export type FinalityDataTimings = {
+  minimumInSeconds: number | undefined
+  averageInSeconds: number
+  maximumInSeconds: number
 }

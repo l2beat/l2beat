@@ -397,8 +397,10 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         daProvider !== undefined
           ? undefined
           : {
-              warning:
-                "It's assumed that transaction data batches are submitted sequentially.",
+              warnings: {
+                timeToInclusion:
+                  "It's assumed that transaction data batches are submitted sequentially.",
+              },
               finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
             },
     },

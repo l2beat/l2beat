@@ -41,6 +41,7 @@ export function getScalingFinalityColumnsConfig() {
       getValue: (project) =>
         project.data ? (
           <FinalityDurationCell
+            scope="timeToInclusion"
             warning={project.data.timeToInclusion.warning}
             timings={project.data.timeToInclusion}
             syncStatus={project.data.syncStatus}
@@ -63,6 +64,7 @@ export function getScalingFinalityColumnsConfig() {
       getValue: (project) => {
         return project.data && project.data.stateUpdateDelay ? (
           <FinalityDurationCell
+            scope="stateUpdateDelay"
             warning={project.data.stateUpdateDelay.warning}
             timings={project.data.stateUpdateDelay}
             syncStatus={project.data.syncStatus}
@@ -70,6 +72,11 @@ export function getScalingFinalityColumnsConfig() {
         ) : (
           <Badge type="gray">COMING SOON</Badge>
         )
+      },
+      sorting: {
+        rule: 'numeric',
+        getOrderValue: (project) =>
+          project.data?.stateUpdateDelay?.averageInSeconds,
       },
     },
     {

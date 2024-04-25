@@ -1,26 +1,33 @@
 import React from 'react'
 
-import { ScalingFinalityViewEntryData } from '../../pages/scaling/finality/types'
-import { cn } from '../../utils/cn'
+import { FinalityDataTimings } from '../../pages/scaling/finality/types'
+import { SyncStatus } from '../../pages/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
+import { GrayedOut } from './GrayedOut'
 
 interface Props {
+  scope: 'timeToInclusion' | 'stateUpdateDelay'
+  timings: FinalityDataTimings
+  syncStatus: SyncStatus
   warning?: string
-  timings: ScalingFinalityViewEntryData['timeToInclusion']
-  syncStatus: ScalingFinalityViewEntryData['syncStatus']
 }
 
 export function FinalityDurationCell(props: Props) {
+  const popUpText =
+    props.scope === 'timeToInclusion'
+      ? 'time to inclusion'
+      : 'state update delay'
+
   return (
     <Tooltip data-testid="finality-duration-cell">
       <TooltipTrigger className="flex items-center gap-1">
-        <div className={cn(!props.syncStatus.isSynced && '*:!text-gray-500')}>
+        <GrayedOut grayOut={!props.syncStatus.isSynced}>
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-        </div>
+        </GrayedOut>
         {props.warning && (
           <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
@@ -35,7 +42,7 @@ export function FinalityDurationCell(props: Props) {
               <HorizontalSeparator className="my-2 dark:border-slate-600" />
             </>
           )}
-          <span>Past day avg. time to inclusion</span>
+          <span>Past day avg. {popUpText}</span>
           <ul className="mt-1 list-inside list-disc">
             {props.timings.minimumInSeconds && (
               <li className="flex justify-between gap-4">
