@@ -21,7 +21,7 @@ import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnal
 import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
-import { zkSyncEraFinalityAnalyzer } from './analyzers/zksyncera/zkSyncEraFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'

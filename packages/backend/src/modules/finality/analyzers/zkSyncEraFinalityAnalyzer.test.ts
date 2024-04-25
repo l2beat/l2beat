@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
 
 describe(zkSyncEraFinalityAnalyzer.name, () => {

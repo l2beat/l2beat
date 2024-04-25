@@ -1,7 +1,7 @@
 import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { BaseAnalyzer } from '../types/BaseAnalyzer'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 type zkSyncEraDecoded = [
   [number, string, number, number, string, string, number, string],

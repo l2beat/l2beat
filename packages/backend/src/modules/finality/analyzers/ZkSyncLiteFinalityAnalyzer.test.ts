@@ -3,11 +3,10 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { zkSyncEraFinalityAnalyzer } from './zksyncera/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './ZkSyncLiteFinalityAnalyzer'
 
 describe(ZkSyncLiteFinalityAnalyzer.name, () => {
-  describe(zkSyncEraFinalityAnalyzer.prototype.analyze.name, () => {
+  describe(ZkSyncLiteFinalityAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH =
         '0x9bb45c938921cdbb5cdd46c5221c8964e1181728484b4113bacdfe22e71e46e1'
