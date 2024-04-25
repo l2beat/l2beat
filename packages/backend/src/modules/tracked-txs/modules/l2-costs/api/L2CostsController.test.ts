@@ -101,7 +101,7 @@ describe(L2CostsController.name, () => {
       ).toHaveBeenNthCalledWith(
         1,
         MOCK_PROJECTS[1].projectId,
-        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
+        [START_OF_DAY.add(-180, 'days'), START_OF_DAY],
         0,
         200000,
       )
