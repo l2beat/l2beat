@@ -247,7 +247,7 @@ describeDatabase(FinalityRepository.name, (database) => {
         expect(result).toEqualUnsorted([
           latestProjectAFinality,
           latestProjectBFinality,
-          ...latestProjectCFinality,
+          latestProjectCFinality[1],
         ])
       })
     },
