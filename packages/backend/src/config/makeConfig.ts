@@ -163,9 +163,9 @@ export function makeConfig(
     tvl2: flags.isEnabled('tvl2') && tvl2Config,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
-        clientEmail: '', //env.string('BIGQUERY_CLIENT_EMAIL'),
-        privateKey: '', //env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
-        projectId: '', //env.string('BIGQUERY_PROJECT_ID'),
+        clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
+        privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('BIGQUERY_PROJECT_ID'),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
@@ -198,10 +198,10 @@ export function makeConfig(
         ],
         600,
       ),
-      beaconApiUrl: '', // env.string([
-      //   'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
-      //   'ETHEREUM_BEACON_API_URL',
-      // ]),
+      beaconApiUrl: env.string([
+        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
+        'ETHEREUM_BEACON_API_URL',
+      ]),
       beaconApiCPM: env.integer(
         [
           'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',

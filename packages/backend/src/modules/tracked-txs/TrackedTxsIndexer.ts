@@ -14,7 +14,10 @@ import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRep
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { findConfigurationsToSync } from './utils'
+import {
+  adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
+  findConfigurationsToSync,
+} from './utils'
 import {
   diffTrackedTxConfigurations,
   ToChangeUntilTimestamp,
@@ -48,54 +51,51 @@ export class TrackedTxsIndexer extends ChildIndexer {
     await super.start()
     this.logger.info('Started')
   }
+
   override async update(from: number, to: number): Promise<number> {
-    return Promise.resolve(to)
+    from -= 1 // TODO: refactor logic after uif update
+    const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
+
+    const [configurations, syncTo] = await this.getConfigurationsToSync(
+      unixFrom,
+      unixTo,
+    )
+
+    if (configurations.length === 0) {
+      this.logger.info('Update skipped', { from: unixFrom, to: syncTo })
+      return syncTo.toNumber()
+    }
+
+    const txs = await this.trackedTxsClient.getData(
+      configurations,
+      unixFrom,
+      syncTo,
+    )
+
+    await this.configRepository.runInTransaction(async (trx) => {
+      for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
+        const filteredTxs = txs.filter((tx) => tx.use.type === type)
+        await updater?.update(filteredTxs, trx)
+      }
+
+      const configIds = configurations.flatMap((config) =>
+        config.uses.map((use) => use.id),
+      )
+      await this.configRepository.setManyLastSyncedTimestamp(
+        configIds,
+        syncTo,
+        trx,
+      )
+    })
+
+    this.logger.info('Updated', {
+      from: unixFrom,
+      to: syncTo,
+      usedConfigurations: configurations.length,
+      fetchedTxsCount: txs.length,
+    })
+    return syncTo.toNumber()
   }
-
-  // override async update(from: number, to: number): Promise<number> {
-  //   from -= 1 // TODO: refactor logic after uif update
-  //   const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
-
-  //   const [configurations, syncTo] = await this.getConfigurationsToSync(
-  //     unixFrom,
-  //     unixTo,
-  //   )
-
-  //   if (configurations.length === 0) {
-  //     this.logger.info('Update skipped', { from: unixFrom, to: syncTo })
-  //     return syncTo.toNumber()
-  //   }
-
-  //   const txs = await this.trackedTxsClient.getData(
-  //     configurations,
-  //     unixFrom,
-  //     syncTo,
-  //   )
-
-  //   await this.configRepository.runInTransaction(async (trx) => {
-  //     for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
-  //       const filteredTxs = txs.filter((tx) => tx.use.type === type)
-  //       await updater?.update(filteredTxs, trx)
-  //     }
-
-  //     const configIds = configurations.flatMap((config) =>
-  //       config.uses.map((use) => use.id),
-  //     )
-  //     await this.configRepository.setManyLastSyncedTimestamp(
-  //       configIds,
-  //       syncTo,
-  //       trx,
-  //     )
-  //   })
-
-  //   this.logger.info('Updated', {
-  //     from: unixFrom,
-  //     to: syncTo,
-  //     usedConfigurations: configurations.length,
-  //     fetchedTxsCount: txs.length,
-  //   })
-  //   return syncTo.toNumber()
-  // }
 
   async getConfigurationsToSync(
     from: UnixTime,
