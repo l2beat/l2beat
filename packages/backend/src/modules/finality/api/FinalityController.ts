@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { FinalityApiResponse } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
@@ -42,24 +43,38 @@ export class FinalityController {
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
       (record) => {
+        const {
+          minimumStateUpdate,
+          averageStateUpdate,
+          maximumStateUpdate,
+
+          minimumTimeToInclusion,
+          averageTimeToInclusion,
+          maximumTimeToInclusion,
+
+          projectId,
+          timestamp,
+        } = record
+
         const base = {
           timeToInclusion: {
-            minimumInSeconds: record.minimumTimeToInclusion,
-            maximumInSeconds: record.maximumTimeToInclusion,
-            averageInSeconds: record.averageTimeToInclusion,
+            minimumInSeconds: minimumTimeToInclusion,
+            maximumInSeconds: maximumTimeToInclusion,
+            averageInSeconds: averageTimeToInclusion,
           },
-          syncedUntil: record.timestamp,
+          syncedUntil: timestamp,
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const project = projects.find(
-          (project) => project.projectId === record.projectId,
-        )!
+          (project) => project.projectId === projectId,
+        )
+
+        assert(project, 'Project not found in config')
 
         if (project.stateUpdate === 'zeroed') {
           return {
             ...base,
-            stateUpdate: {
+            stateUpdateDelays: {
               minimumInSeconds: 0,
               maximumInSeconds: 0,
               averageInSeconds: 0,
@@ -70,27 +85,26 @@ export class FinalityController {
         if (project.stateUpdate === 'disabled') {
           return {
             ...base,
-            stateUpdate: null,
+            stateUpdateDelays: null,
           }
         }
 
-        const stateUpdate =
-          record.maximumStateUpdate !== null &&
-          record.minimumStateUpdate !== null &&
-          record.averageStateUpdate !== null
-            ? {
-                minimumInSeconds:
-                  record.minimumStateUpdate - record.minimumTimeToInclusion,
-                maximumInSeconds:
-                  record.maximumStateUpdate - record.maximumTimeToInclusion,
-                averageInSeconds:
-                  record.averageStateUpdate - record.averageTimeToInclusion,
-              }
-            : null
+        const hasStateUpdateDelay =
+          maximumStateUpdate !== null &&
+          minimumStateUpdate !== null &&
+          averageStateUpdate !== null
+
+        const stateUpdateDelays = hasStateUpdateDelay
+          ? {
+              minimumInSeconds: minimumStateUpdate - minimumTimeToInclusion,
+              maximumInSeconds: maximumStateUpdate - maximumTimeToInclusion,
+              averageInSeconds: averageStateUpdate - averageTimeToInclusion,
+            }
+          : null
 
         return {
           ...base,
-          stateUpdate,
+          stateUpdateDelays,
         }
       },
     )
@@ -124,7 +138,7 @@ export class FinalityController {
         if (projectResult) {
           result[project.projectId.toString()] = {
             timeToInclusion: projectResult,
-            stateUpdate: null,
+            stateUpdateDelays: null,
             syncedUntil,
           }
         }
