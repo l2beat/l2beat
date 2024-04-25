@@ -23,11 +23,15 @@ export async function down(knex: Knex) {
 
 async function clearTvl2(knex: Knex) {
   await knex('prices').delete()
+
   await knex('amounts').delete()
+
   await knex('indexer_state')
     .delete()
     .whereLike('indexer_id', 'price_indexer%')
     .orWhereLike('indexer_id', 'block_timestamp_indexer%')
     .orWhereLike('indexer_id', 'chain_amount_indexer%')
     .orWhereLike('indexer_id', 'circulating_supply_indexer%')
+
+  await knex('indexer_configurations').delete()
 }
