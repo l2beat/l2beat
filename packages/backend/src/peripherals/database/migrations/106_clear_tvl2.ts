@@ -27,7 +27,7 @@ async function clearTvl2(knex: Knex) {
   await knex('indexer_state')
     .delete()
     .whereLike('indexer_id', 'price_indexer%')
-    .andWhereLike('indexer_id', 'block_timestamp_indexer%')
-    .andWhereLike('indexer_id', 'chain_amount_indexer%')
-    .andWhereLike('indexer_id', 'circulating_supply_indexer%')
+    .orWhereLike('indexer_id', 'block_timestamp_indexer%')
+    .orWhereLike('indexer_id', 'chain_amount_indexer%')
+    .orWhereLike('indexer_id', 'circulating_supply_indexer%')
 }
