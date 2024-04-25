@@ -5,6 +5,8 @@ import {
   Layer2FinalityConfig,
   Layer2LivenessConfig,
   Layer2TxConfig,
+  Layer3,
+  ProjectEscrow as ProjectEscrowFromConfig,
   ScalingProjectTransactionApi,
   tokenList,
 } from '@l2beat/config'
@@ -27,10 +29,13 @@ export interface Project {
   projectId: ProjectId
   slug: string
   isArchived?: boolean
-  type: 'layer2' | 'bridge'
+  type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
   isLayer3?: boolean
   escrows: ProjectEscrow[]
+  tvl?: {
+    escrows: ProjectEscrowFromConfig[]
+  }
   transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
   livenessConfig?: Layer2LivenessConfig
@@ -114,6 +119,17 @@ function toBackendTrackedTxsConfig(
         costMultiplier: config._hackCostMultiplier,
       }
     }),
+  }
+}
+
+export function layer3ToProject(layer3: Layer3): Project {
+  return {
+    projectId: layer3.id,
+    slug: layer3.display.slug,
+    type: 'layer3',
+    isUpcoming: layer3.isUpcoming,
+    escrows: [],
+    tvl: layer3.config.tvl,
   }
 }
 

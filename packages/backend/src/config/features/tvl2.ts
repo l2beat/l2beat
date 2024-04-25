@@ -1,5 +1,12 @@
 import { assert, Env } from '@l2beat/backend-tools'
-import { bridges, chains, Layer2, layer2s, tokenList } from '@l2beat/config'
+import {
+  bridges,
+  chains,
+  Layer2,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import {
   AmountConfigEntry,
   ChainId,
@@ -9,7 +16,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
+import {
+  bridgeToProject,
+  layer2ToProject,
+  layer3ToProject,
+  Project,
+} from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
@@ -23,6 +35,7 @@ export function getTvl2Config(
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
+    .concat(layer3s.map(layer3ToProject))
 
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
@@ -117,6 +130,48 @@ function getAmountsConfig(
           includeInTotal: true,
           decimals: token.decimals,
         })
+      }
+    }
+
+    if (project.tvl) {
+      for (const escrow of project.tvl.escrows) {
+        const chain = escrow.chain
+        const tokensOnChain = tokenList.filter(
+          (t) => t.chainId === chainConverter.toChainId(chain),
+        )
+
+        const tokens =
+          escrow.tokens === '*'
+            ? tokensOnChain
+            : escrow.tokens.map((symbol) => {
+                const token = tokensOnChain.find((t) => t.symbol === symbol)
+                assert(
+                  token,
+                  `Token with symbol ${symbol} not found on ${chain}`,
+                )
+                return token
+              })
+
+        for (const token of tokens) {
+          entries.push({
+            type: 'escrow',
+            address: token.address ?? 'native',
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp: UnixTime.max(
+              token.sinceTimestamp,
+              escrow.sinceTimestamp,
+            ),
+            untilTimestamp: UnixTime.max(
+              token.untilTimestamp ?? UnixTime.zero,
+              escrow.untilTimestamp ?? UnixTime.ZERO,
+            ),
+            escrowAddress: escrow.address,
+            project: project.projectId,
+            source: toSource(token.type),
+            includeInTotal: escrow.includeInTotal,
+            decimals: token.decimals,
+          })
+        }
       }
     }
   }
