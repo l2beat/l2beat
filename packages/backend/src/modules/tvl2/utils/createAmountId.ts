@@ -6,7 +6,6 @@ export function createAmountId(amountConfig: AmountConfigEntry): string {
 
   input.push(amountConfig.chain)
   input.push(amountConfig.project.toString())
-  input.push(amountConfig.source)
   input.push(amountConfig.type)
   // sinceTimestamp is not used in the ID calculation.
   // untilTimestamp is not used in the ID calculation.

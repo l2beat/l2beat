@@ -26,7 +26,7 @@ describe(createAmountId.name, () => {
     {
       key: 'source',
       newValue: 'different-source',
-      shouldUpdateHash: true,
+      shouldUpdateHash: false,
     },
     {
       key: 'sinceTimestamp',
