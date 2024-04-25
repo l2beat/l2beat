@@ -127,11 +127,11 @@ export class L2CostsController {
         continue
       }
 
-      const nowToFullHour = UnixTime.now().toStartOf('hour')
+      const startOfToday = UnixTime.now().toStartOf('day')
 
       const timeRanges: [UnixTime, UnixTime] = [
-        nowToFullHour.add(-MAX_DAYS, 'days'),
-        nowToFullHour,
+        startOfToday.add(-MAX_DAYS, 'days'),
+        startOfToday,
       ]
 
       const multipliersConfigs = this.findConfigsWithMultiplier(
@@ -165,7 +165,7 @@ export class L2CostsController {
           recordsWithDetails,
           combinedHourlyMap,
           combinedDailyMap,
-          nowToFullHour,
+          startOfToday,
         )
 
         const projectData = projects[project.projectId.toString()]
