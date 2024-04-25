@@ -127,10 +127,8 @@ export const DATA_MIXED: ScalingProjectRiskViewEntry = {
 }
 
 export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
-  value: 'Optimistic (MEMO)',
-  description:
-    'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challenge mechanism is not yet fully implemented.',
+  value: 'External (MEMO)',
+  description: 'Transaction data is kept in MEMO decentralized storage.',
   sentiment: 'bad',
 }
 
