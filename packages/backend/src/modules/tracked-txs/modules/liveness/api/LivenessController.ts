@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  assert,
   cacheAsyncFunction,
   LivenessApiProject,
   LivenessApiResponse,
@@ -130,13 +131,6 @@ export class LivenessController {
 
       const withAnomalies = calculateAnomalies(intervals)
 
-      if (project.livenessConfig) {
-        const { from, to } = project.livenessConfig.duplicateData
-        withAnomalies[to] = {
-          ...withAnomalies[from],
-        }
-      }
-
       const { anomalies, ...subtypeData } = withAnomalies
 
       const withSyncedUntil =
@@ -154,6 +148,13 @@ export class LivenessController {
           },
           {},
         )
+
+      if (project.livenessConfig) {
+        const { from, to } = project.livenessConfig.duplicateData
+        const data = withSyncedUntil[from]
+        assert(data, 'From data must exist')
+        withSyncedUntil[to] = { ...data }
+      }
 
       projects[project.projectId.toString()] = {
         ...withSyncedUntil,
