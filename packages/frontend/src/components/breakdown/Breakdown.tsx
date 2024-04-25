@@ -26,8 +26,8 @@ export function Breakdown({ values, gap = 2, className }: BreakdownProps) {
             g.className,
           )}
           style={{
-            width: `calc(${g.weight}% - ${((groups.length - 1) * gap) / groups.length}px)`,
-            marginRight: i !== groups.length - 1 ? `${gap}px` : undefined,
+            width: `calc(${g.weight}% - ${gap}px)`,
+            margin: `0px ${gap / 2}px`,
           }}
         />
       ))}
