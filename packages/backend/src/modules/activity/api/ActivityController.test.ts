@@ -594,8 +594,9 @@ describe(ActivityController.name, () => {
         mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
-      expect(await controller.getActivity()).toEqual(
-        formatActivity({
+      expect(await controller.getActivity()).toEqual({
+        type: 'success',
+        data: formatActivity({
           combined: {
             data: [
               [TODAY.add(-2, 'days'), 2, 2137],
@@ -611,7 +612,7 @@ describe(ActivityController.name, () => {
             ],
           },
         }),
-      )
+      })
     })
 
     it('makes correct estimations for combined', async () => {
@@ -687,8 +688,9 @@ describe(ActivityController.name, () => {
         mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
-      expect(await controller.getActivity()).toEqual(
-        formatActivity({
+      expect(await controller.getActivity()).toEqual({
+        type: 'success',
+        data: formatActivity({
           combined: {
             data: [
               [TODAY.add(-4, 'days'), 15, txPerDay.eth],
@@ -723,7 +725,7 @@ describe(ActivityController.name, () => {
             'not-synced-2': [[TODAY.add(-4, 'days'), 1, txPerDay.eth]],
           },
         }),
-      )
+      })
     })
   })
 })
