@@ -20,8 +20,9 @@ export interface BlockTimestampIndexerDeps
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
-    super({ ...$, name: 'block_timestamp_indexer' })
-    this.$.logger = this.$.logger.for(this).tag(this.$.chain)
+    const logger = $.logger.tag($.chain)
+    const name = 'block_timestamp_indexer'
+    super({ ...$, name, logger })
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -36,7 +37,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     const blockNumber =
       await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
-    this.$.logger.info('Fetched block number for timestamp', {
+    this.logger.info('Fetched block number for timestamp', {
       timestamp: timestamp.toNumber(),
       blockNumber,
     })
@@ -47,7 +48,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       blockNumber,
     })
 
-    this.$.logger.info('Saved block number for timestamp into DB', {
+    this.logger.info('Saved block number for timestamp into DB', {
       timestamp: timestamp.toNumber(),
       blockNumber,
     })
@@ -62,7 +63,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
         new UnixTime(targetHeight),
       )
 
-    this.$.logger.info('Deleted block timestamps after height', {
+    this.logger.info('Deleted block timestamps after height', {
       targetHeight,
       deletedRecords,
     })
