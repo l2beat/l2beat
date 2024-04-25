@@ -7,6 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
+import { cn } from '../../../../utils/cn'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -39,7 +40,10 @@ export function ProjectPage(props: ProjectPageProps) {
           <MobileProjectNavigation sections={props.projectDetails.items} />
         </div>
       )}
-      <PageContent mobileFull className="mb-20">
+      <PageContent
+        mobileFull
+        className={cn(isNavigationEmpty ? 'mb-0' : 'mb-20')}
+      >
         <ScalingProjectHeader {...props.projectHeader} />
         {isNavigationEmpty ? (
           <ProjectDetails {...props.projectDetails} />
@@ -61,7 +65,11 @@ export function ProjectPage(props: ProjectPageProps) {
           </div>
         )}
       </PageContent>
-      <Footer className="mt-auto" narrow {...props.footer} />
+      <Footer
+        className={cn(isNavigationEmpty && 'mt-0 md:mt-20')}
+        narrow
+        {...props.footer}
+      />
     </>
   )
 }

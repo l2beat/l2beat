@@ -18,6 +18,7 @@ import {
   BridgeProjectHeader,
   BridgeProjectHeaderProps,
 } from './BridgeProjectHeader'
+import { cn } from '../../../../utils/cn'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
@@ -65,7 +66,11 @@ export function ProjectPage(props: ProjectPageProps) {
           </div>
         )}
       </PageContent>
-      <Footer narrow {...props.footer} />
+      <Footer
+        className={cn(isNavigationEmpty && 'mt-0 md:mt-20')}
+        narrow
+        {...props.footer}
+      />
     </>
   )
 }

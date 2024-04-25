@@ -7,7 +7,7 @@ import { Link } from '../../../../components/Link'
 export function UpcomingDisclaimer() {
   return (
     <Callout
-      className="mt-16 bg-blue-600/20 p-4"
+      className="-mx-4 rounded-none bg-blue-600/20 p-4 md:mx-0 md:mt-16 md:rounded-lg"
       icon={<InfoIcon className="mt-1 fill-blue-500" />}
       body={
         <>
