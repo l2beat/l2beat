@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { Callout } from '../Callout'
 import { InfoIcon } from '../icons'
-import { Callout } from '../project/Callout'
 
 export function StageDisclaimer({
   text,

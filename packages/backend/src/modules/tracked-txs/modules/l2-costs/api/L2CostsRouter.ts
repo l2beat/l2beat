@@ -13,7 +13,8 @@ export function createL2CostsRouter(
     const result = config.cache.l2costs
       ? await l2CostsController.getCachedL2CostsApiResponse()
       : await l2CostsController.getL2Costs()
-    ctx.body = result.data
+
+    ctx.body = result
   })
 
   return router

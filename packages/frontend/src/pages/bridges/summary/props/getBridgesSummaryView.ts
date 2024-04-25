@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { BridgesPagesData } from '../../types'
 import { BridgesSummaryViewEntry } from '../types'
 import { BridgesSummaryViewProps } from '../view/BridgesSummaryView'
