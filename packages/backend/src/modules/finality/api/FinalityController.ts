@@ -57,12 +57,12 @@ export class FinalityController {
         } = record
 
         const base = {
+          syncedUntil: timestamp,
           timeToInclusion: {
             minimumInSeconds: minimumTimeToInclusion,
             maximumInSeconds: maximumTimeToInclusion,
             averageInSeconds: averageTimeToInclusion,
           },
-          syncedUntil: timestamp,
         }
 
         const project = projects.find(
