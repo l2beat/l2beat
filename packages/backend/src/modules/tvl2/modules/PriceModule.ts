@@ -39,22 +39,22 @@ export function createPriceModule(
   const indexers = Object.entries(byCoingeckoId).map(
     ([coingeckoId, prices]) =>
       new PriceIndexer({
-        logger: logger.tag(coingeckoId),
-        parents: [hourlyIndexer],
-        coingeckoQueryService,
-        indexerService,
-        syncOptimizer,
-        priceRepository: peripherals.getRepository(PriceRepository),
-        coingeckoId: CoingeckoId(coingeckoId),
+        logger,
         tag: coingeckoId,
+        parents: [hourlyIndexer],
+        indexerService,
+        coingeckoId: CoingeckoId(coingeckoId),
         configurations: prices.map((price) => ({
           properties: price,
           minHeight: price.sinceTimestamp.toNumber(),
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
           id: createPriceId(price),
         })),
+        coingeckoQueryService,
+        priceRepository: peripherals.getRepository(PriceRepository),
         encode,
         decode,
+        syncOptimizer,
       }),
   )
 

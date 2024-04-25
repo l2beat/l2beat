@@ -21,7 +21,7 @@ export interface BlockTimestampIndexerDeps
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
     super({ ...$, name: 'block_timestamp_indexer' })
-    this.$.logger = this.$.logger.for(this)
+    this.$.logger = this.$.logger.for(this).tag(this.$.chain)
   }
 
   override async update(from: number, to: number): Promise<number> {

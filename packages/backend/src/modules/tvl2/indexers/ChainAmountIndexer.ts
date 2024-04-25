@@ -26,6 +26,7 @@ export interface ChainAmountIndexerDeps
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super({ ...$, name: 'chain_amount_indexer' })
+    this.$.logger = this.$.logger.for(this).tag(this.$.chain)
   }
 
   override async multiUpdate(

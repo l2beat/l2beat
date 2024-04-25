@@ -27,6 +27,9 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
 
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super({ ...$, name: 'circulating_supply_indexer' })
+    this.$.logger = this.$.logger
+      .for(this)
+      .tag(this.$.config.coingeckoId.toString())
     this.configId = createAmountId($.config)
   }
 

@@ -28,6 +28,7 @@ export interface PriceIndexerDeps
 export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry> {
   constructor(private readonly $: PriceIndexerDeps) {
     super({ ...$, name: 'price_indexer' })
+    this.$.logger = this.$.logger.for(this).tag(this.$.coingeckoId.toString())
   }
 
   override async multiUpdate(
