@@ -92,7 +92,7 @@ export class ActivityController {
       type: 'success',
       data: {
         combined: {
-          ...formatActivityChart(combinedChartPoints),
+          ...formatActivityChart(combinedChartPoints.data),
           ...estimationInfo,
         },
         projects,
