@@ -161,9 +161,9 @@ function getAmountsConfig(
               token.sinceTimestamp,
               escrow.sinceTimestamp,
             ),
-            untilTimestamp: UnixTime.max(
-              token.untilTimestamp ?? UnixTime.zero,
-              escrow.untilTimestamp ?? UnixTime.ZERO,
+            untilTimestamp: getUntilTimestamp(
+              token.untilTimestamp,
+              escrow.untilTimestamp,
             ),
             escrowAddress: escrow.address,
             project: project.projectId,
@@ -177,6 +177,25 @@ function getAmountsConfig(
   }
 
   return entries
+}
+
+function getUntilTimestamp(
+  tokenUntil: UnixTime | undefined,
+  escrowUntil: UnixTime | undefined,
+): UnixTime | undefined {
+  if (tokenUntil === undefined && escrowUntil === undefined) {
+    return undefined
+  }
+
+  if (tokenUntil === undefined) {
+    return escrowUntil
+  }
+
+  if (escrowUntil === undefined) {
+    return tokenUntil
+  }
+
+  return UnixTime.max(tokenUntil, escrowUntil)
 }
 
 function getPricesConfig(

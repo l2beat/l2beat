@@ -10,6 +10,7 @@ import {
   makeBridgeCompatible,
   Milestone,
   OPERATOR,
+  ProjectEscrow,
   RISK_VIEW,
   ScalingProjectContract,
   ScalingProjectEscrow,
@@ -50,6 +51,9 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   hostChain: ProjectId
   nativeToken?: string
+  tvl?: {
+    escrows: ProjectEscrow[]
+  }
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -358,6 +362,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               assessCount: subtractOne,
             }
           : undefined),
+      tvl: templateVars.tvl,
     },
     milestones: [],
     knowledgeNuggets: [],

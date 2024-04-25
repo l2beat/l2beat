@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -28,6 +28,17 @@ export const rari: Layer3 = orbitStackL3({
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
+  tvl: {
+    escrows: [
+      {
+        chain: 'arbitrum',
+        address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),
+        tokens: ['ARB'],
+        sinceTimestamp: new UnixTime(1705716148),
+        includeInTotal: false,
+      },
+    ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {
       description: 'Router managing token <--> gateway mapping.',

@@ -1,4 +1,9 @@
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -36,6 +41,17 @@ export const degen: Layer3 = orbitStackL3({
     defaultCallsPerMinute: 900,
     assessCount: subtractOne,
     startBlock: 1,
+  },
+  tvl: {
+    escrows: [
+      {
+        chain: 'base',
+        address: EthereumAddress('0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C'),
+        tokens: ['DEGEN'],
+        sinceTimestamp: new UnixTime(1710087441),
+        includeInTotal: false,
+      },
+    ],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

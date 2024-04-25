@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -35,6 +35,17 @@ export const xai: Layer3 = orbitStackL3({
   associatedTokens: ['XAI'],
   nativeToken: 'XAI',
   rpcUrl: 'https://xai-chain.net/rpc',
+  tvl: {
+    escrows: [
+      {
+        chain: 'arbitrum',
+        address: EthereumAddress('0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f'),
+        tokens: ['XAI'],
+        sinceTimestamp: new UnixTime(1704309371),
+        includeInTotal: false,
+      },
+    ],
+  },
   nonTemplateTechnology: {
     stateCorrectness: {
       name: 'Fraud proofs ensure state correctness',
