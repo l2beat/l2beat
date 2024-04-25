@@ -19,7 +19,7 @@ import {
 } from '../repositories/FinalityRepository'
 import { FinalityController } from './FinalityController'
 
-describe.only(FinalityController.name, () => {
+describe(FinalityController.name, () => {
   describe(FinalityController.prototype.getFinality.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController(
@@ -33,7 +33,7 @@ describe.only(FinalityController.name, () => {
       expect(result).toEqual({ projects: {} })
     })
 
-    it.only('correctly calculate avg, min and max', async () => {
+    it('correctly calculate avg, min and max', async () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
         ...range(5).map((_, i) => {
           return {
