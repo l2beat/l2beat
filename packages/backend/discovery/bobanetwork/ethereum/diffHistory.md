@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3b4dccc0214af8baa6d802005927d166266bb6da
 
 ## Description
 
-The *unsafeBlockSigner* is changed by the BobaMultisig.
+The _unsafeBlockSigner_ is changed by the BobaMultisig.
 
 ## Watched changes
 
