@@ -25,17 +25,8 @@ export const ActivityApiCharts = z.object({
 })
 export type ActivityApiCharts = z.infer<typeof ActivityApiCharts>
 
-export const ActivityApiChartsWithEstimation = z.object({
-  daily: ActivityApiChart,
-  estimatedSince: branded(z.number(), (n) => new UnixTime(n)),
-  estimatedImpact: z.number(),
-})
-export type ActivityApiChartsWithEstimation = z.infer<
-  typeof ActivityApiChartsWithEstimation
->
-
 export const ActivityApiResponse = z.object({
-  combined: ActivityApiChartsWithEstimation,
+  combined: ActivityApiCharts,
   projects: z.record(z.string(), z.optional(ActivityApiCharts)),
 })
 export type ActivityApiResponse = z.infer<typeof ActivityApiResponse>
