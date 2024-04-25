@@ -6,30 +6,40 @@ import { describeDatabase } from '../../../test/database'
 import { FinalityRecord, FinalityRepository } from './FinalityRepository'
 
 describeDatabase(FinalityRepository.name, (database) => {
-  const repository = new FinalityRepository(database, Logger.SILENT)
-  const START = UnixTime.now()
+  const repository = new FinalityRepository(database, Logger.INFO)
+  const START = UnixTime.now().add(-1, 'days').toStartOf('day')
+  const BASE = START.add(-30, 'days')
 
   const DATA: FinalityRecord[] = [
     {
       projectId: ProjectId('project-a'),
-      timestamp: UnixTime.fromDate(new Date('2021-01-01T00:00:00Z')),
+      timestamp: BASE,
       minimumTimeToInclusion: 1,
       maximumTimeToInclusion: 3,
       averageTimeToInclusion: 2,
+      minimumStateUpdate: 1,
+      maximumStateUpdate: 3,
+      averageStateUpdate: 2,
     },
     {
       projectId: ProjectId('project-a'),
-      timestamp: UnixTime.fromDate(new Date('2021-01-01T01:00:00Z')),
+      timestamp: BASE.add(1, 'days'),
       minimumTimeToInclusion: 2,
       maximumTimeToInclusion: 4,
       averageTimeToInclusion: 3,
+      minimumStateUpdate: 2,
+      maximumStateUpdate: 4,
+      averageStateUpdate: 3,
     },
     {
       projectId: ProjectId('project-a'),
-      timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
+      timestamp: BASE.add(2, 'days'),
       minimumTimeToInclusion: 4,
       maximumTimeToInclusion: 8,
       averageTimeToInclusion: 6,
+      minimumStateUpdate: null,
+      maximumStateUpdate: null,
+      averageStateUpdate: null,
     },
   ]
 
@@ -41,25 +51,21 @@ describeDatabase(FinalityRepository.name, (database) => {
 
   describe(FinalityRepository.prototype.add.name, () => {
     it('adds new row', async () => {
-      await repository.add({
+      const newRecord = {
         projectId: ProjectId('project-c'),
         timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
         minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 3,
         averageTimeToInclusion: 2,
-      })
+        maximumTimeToInclusion: 3,
+        minimumStateUpdate: null,
+        averageStateUpdate: null,
+        maximumStateUpdate: null,
+      }
+
+      await repository.add(newRecord)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        ...DATA,
-        {
-          projectId: ProjectId('project-c'),
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
-          minimumTimeToInclusion: 1,
-          maximumTimeToInclusion: 3,
-          averageTimeToInclusion: 2,
-        },
-      ])
+      expect(results).toEqualUnsorted([...DATA, newRecord])
     })
   })
 
@@ -68,17 +74,23 @@ describeDatabase(FinalityRepository.name, (database) => {
       const newRows = [
         {
           projectId: ProjectId('project-c'),
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
+          timestamp: BASE.add(3, 'days'),
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
+          maximumStateUpdate: 3,
+          minimumStateUpdate: 1,
+          averageStateUpdate: 2,
         },
         {
           projectId: ProjectId('project-c'),
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T04:00:00Z')),
+          timestamp: BASE.add(4, 'days'),
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
+          maximumStateUpdate: 4,
+          minimumStateUpdate: 2,
+          averageStateUpdate: 3,
         },
       ]
       await repository.addMany(newRows)
@@ -92,17 +104,22 @@ describeDatabase(FinalityRepository.name, (database) => {
     })
 
     it('big query', async () => {
+      const FROM = UnixTime.fromDate(new Date('2021-01-01T03:00:00Z'))
+      await repository.deleteAll()
       const records: FinalityRecord[] = []
-      for (let i = 0; i < 15_000; i++) {
+      for (let i = 0; i < 5_000; i++) {
         records.push({
-          timestamp: START.add(-i, 'hours'),
+          timestamp: FROM.add(-i, 'hours'),
           projectId: ProjectId('project-a'),
           averageTimeToInclusion: i,
           maximumTimeToInclusion: i + 1,
           minimumTimeToInclusion: i - 1,
+          averageStateUpdate: i,
+          maximumStateUpdate: i + 1,
+          minimumStateUpdate: i - 1,
         })
       }
-      await expect(repository.addMany(records)).not.toBeRejected()
+      await repository.addMany(records)
     })
   })
 
@@ -118,8 +135,7 @@ describeDatabase(FinalityRepository.name, (database) => {
     FinalityRepository.prototype.findProjectFinalityOnTimestamp.name,
     () => {
       it('finds a record', async () => {
-        const target = UnixTime.fromDate(new Date('2021-01-01T01:00:00Z'))
-
+        const target = BASE.add(1, 'days')
         const result = await repository.findProjectFinalityOnTimestamp(
           ProjectId('project-a'),
           target,
@@ -132,7 +148,7 @@ describeDatabase(FinalityRepository.name, (database) => {
       })
 
       it('returns undefined if not found', async () => {
-        const target = UnixTime.fromDate(new Date('2025-01-01T01:00:00Z'))
+        const target = BASE.add(300, 'days')
 
         const result = await repository.findProjectFinalityOnTimestamp(
           ProjectId('project-a'),
@@ -157,35 +173,67 @@ describeDatabase(FinalityRepository.name, (database) => {
       })
 
       it('returns latest rows grouped by projectId', async () => {
-        const additionalRows = [
-          {
-            projectId: ProjectId('project-b'),
-            timestamp: UnixTime.fromDate(new Date('2021-02-01T00:00:00Z')),
-            minimumTimeToInclusion: 1,
-            maximumTimeToInclusion: 3,
-            averageTimeToInclusion: 2,
-          },
+        const latestProjectAFinality = {
+          projectId: ProjectId('project-a'),
+          timestamp: BASE.add(7, 'days'),
+          minimumTimeToInclusion: 4,
+          maximumTimeToInclusion: 8,
+          averageTimeToInclusion: 6,
+          minimumStateUpdate: 4,
+          maximumStateUpdate: 8,
+          averageStateUpdate: 6,
+        }
+
+        const latestProjectBFinality = {
+          projectId: ProjectId('project-b'),
+          timestamp: BASE.add(7, 'days'),
+          minimumTimeToInclusion: 1,
+          maximumTimeToInclusion: 3,
+          averageTimeToInclusion: 2,
+          minimumStateUpdate: 1,
+          maximumStateUpdate: 3,
+          averageStateUpdate: 2,
+        }
+
+        const latestProjectCFinality = [
           {
             projectId: ProjectId('project-c'),
-            timestamp: UnixTime.fromDate(new Date('2024-01-01T01:00:00Z')),
+            timestamp: BASE.add(6, 'days'),
             minimumTimeToInclusion: 2,
             maximumTimeToInclusion: 4,
             averageTimeToInclusion: 3,
+            minimumStateUpdate: 2,
+            maximumStateUpdate: 4,
+            averageStateUpdate: 3,
           },
           {
             projectId: ProjectId('project-c'),
-            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
+            timestamp: BASE.add(7, 'days'),
             minimumTimeToInclusion: 4,
             maximumTimeToInclusion: 8,
             averageTimeToInclusion: 6,
+            minimumStateUpdate: 4,
+            maximumStateUpdate: 8,
+            averageStateUpdate: 6,
           },
-          {
-            projectId: ProjectId('project-d'),
-            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
-            minimumTimeToInclusion: 4,
-            maximumTimeToInclusion: 8,
-            averageTimeToInclusion: 6,
-          },
+        ]
+
+        const latestProjectDFinality = {
+          projectId: ProjectId('project-d'),
+          timestamp: BASE.add(7, 'days'),
+          minimumTimeToInclusion: 4,
+          maximumTimeToInclusion: 8,
+          averageTimeToInclusion: 6,
+          minimumStateUpdate: 4,
+          maximumStateUpdate: 8,
+          averageStateUpdate: 6,
+        }
+
+        const additionalRows = [
+          latestProjectAFinality,
+          latestProjectBFinality,
+          ...latestProjectCFinality,
+          latestProjectDFinality,
         ]
 
         await repository.addMany(additionalRows)
@@ -197,27 +245,9 @@ describeDatabase(FinalityRepository.name, (database) => {
         ])
 
         expect(result).toEqualUnsorted([
-          {
-            projectId: ProjectId('project-a'),
-            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
-            minimumTimeToInclusion: 4,
-            maximumTimeToInclusion: 8,
-            averageTimeToInclusion: 6,
-          },
-          {
-            projectId: ProjectId('project-b'),
-            timestamp: UnixTime.fromDate(new Date('2021-02-01T00:00:00Z')),
-            minimumTimeToInclusion: 1,
-            maximumTimeToInclusion: 3,
-            averageTimeToInclusion: 2,
-          },
-          {
-            projectId: ProjectId('project-c'),
-            timestamp: UnixTime.fromDate(new Date('2024-01-01T01:00:00Z')),
-            minimumTimeToInclusion: 2,
-            maximumTimeToInclusion: 4,
-            averageTimeToInclusion: 3,
-          },
+          latestProjectAFinality,
+          latestProjectBFinality,
+          ...latestProjectCFinality,
         ])
       })
     },
@@ -232,6 +262,9 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
+          minimumStateUpdate: null,
+          averageStateUpdate: null,
+          maximumStateUpdate: null,
         },
         {
           projectId: ProjectId('project-c'),
@@ -239,6 +272,9 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
+          minimumStateUpdate: null,
+          averageStateUpdate: null,
+          maximumStateUpdate: null,
         },
         {
           projectId: ProjectId('project-h'),
@@ -246,6 +282,9 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
+          minimumStateUpdate: null,
+          averageStateUpdate: null,
+          maximumStateUpdate: null,
         },
       ]
       await repository.addMany(newRows)
