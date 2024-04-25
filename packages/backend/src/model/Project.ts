@@ -1,16 +1,18 @@
+import { assert } from '@l2beat/backend-tools'
 import {
   Bridge,
+  chains,
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
   Layer2LivenessConfig,
   Layer2TxConfig,
   Layer3,
-  ProjectEscrow as ProjectEscrowFromConfig,
   ScalingProjectTransactionApi,
   tokenList,
 } from '@l2beat/config'
 import {
+  ChainId,
   EthereumAddress,
   ProjectId,
   Token,
@@ -24,6 +26,7 @@ import {
   TrackedTxsConfig,
   TrackedTxUseWithId,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
+import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {
   projectId: ProjectId
@@ -33,9 +36,6 @@ export interface Project {
   isUpcoming?: boolean
   isLayer3?: boolean
   escrows: ProjectEscrow[]
-  tvl?: {
-    escrows: ProjectEscrowFromConfig[]
-  }
   transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
   livenessConfig?: Layer2LivenessConfig
@@ -45,7 +45,10 @@ export interface Project {
 export interface ProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   tokens: Token[]
+  chain?: string
+  includeInTotal?: boolean
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
@@ -122,14 +125,42 @@ function toBackendTrackedTxsConfig(
   }
 }
 
+const chainConverter = new ChainConverter(
+  chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+)
+
 export function layer3ToProject(layer3: Layer3): Project {
   return {
     projectId: layer3.id,
     slug: layer3.display.slug,
     type: 'layer3',
     isUpcoming: layer3.isUpcoming,
-    escrows: [],
-    tvl: layer3.config.tvl,
+    escrows: layer3.config.escrows.map((escrow) => {
+      const chain = escrow.chain
+      assert(chain, 'Chain is required for Layer3 escrow')
+      const chainId = chainConverter.toChainId(chain)
+
+      const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+      return {
+        address: escrow.address,
+        sinceTimestamp: escrow.sinceTimestamp,
+        tokens:
+          escrow.tokens === '*'
+            ? tokensOnChain
+            : escrow.tokens.map((tokenSymbol) => {
+                const token = tokensOnChain.find(
+                  (t) => t.symbol === tokenSymbol,
+                )
+                assert(
+                  token,
+                  `Token with symbol ${tokenSymbol} not found on ${chain}`,
+                )
+                return token
+              }),
+        chain,
+      }
+    }),
   }
 }
 

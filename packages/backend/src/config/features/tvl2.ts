@@ -124,54 +124,16 @@ function getAmountsConfig(
             token.sinceTimestamp,
             escrow.sinceTimestamp,
           ),
+          untilTimestamp: getUntilTimestamp(
+            token.untilTimestamp,
+            escrow.untilTimestamp,
+          ),
           escrowAddress: escrow.address,
           project: project.projectId,
           source: toSource(token.type),
-          includeInTotal: true,
+          includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
         })
-      }
-    }
-
-    if (project.tvl) {
-      for (const escrow of project.tvl.escrows) {
-        const chain = escrow.chain
-        const tokensOnChain = tokenList.filter(
-          (t) => t.chainId === chainConverter.toChainId(chain),
-        )
-
-        const tokens =
-          escrow.tokens === '*'
-            ? tokensOnChain
-            : escrow.tokens.map((symbol) => {
-                const token = tokensOnChain.find((t) => t.symbol === symbol)
-                assert(
-                  token,
-                  `Token with symbol ${symbol} not found on ${chain}`,
-                )
-                return token
-              })
-
-        for (const token of tokens) {
-          entries.push({
-            type: 'escrow',
-            address: token.address ?? 'native',
-            chain: chainConverter.toName(token.chainId),
-            sinceTimestamp: UnixTime.max(
-              token.sinceTimestamp,
-              escrow.sinceTimestamp,
-            ),
-            untilTimestamp: getUntilTimestamp(
-              token.untilTimestamp,
-              escrow.untilTimestamp,
-            ),
-            escrowAddress: escrow.address,
-            project: project.projectId,
-            source: 'canonical',
-            includeInTotal: escrow.includeInTotal,
-            decimals: token.decimals,
-          })
-        }
       }
     }
   }

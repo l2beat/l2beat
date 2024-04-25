@@ -46,5 +46,5 @@ interface NewProjectEscrow {
   chain?: string
   /** Inclusive */
   untilTimestamp?: UnixTime
-  includeInTotal: boolean
+  includeInTotal?: boolean
 }
