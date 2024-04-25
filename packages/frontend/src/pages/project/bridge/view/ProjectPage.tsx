@@ -8,6 +8,7 @@ import {
 } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
+import { cn } from '../../../../utils/cn'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -18,7 +19,6 @@ import {
   BridgeProjectHeader,
   BridgeProjectHeaderProps,
 } from './BridgeProjectHeader'
-import { cn } from '../../../../utils/cn'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
