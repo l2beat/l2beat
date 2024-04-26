@@ -27,6 +27,10 @@
     "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool"
   },
   "overrides": {
+    "PoolFactory":{
+      "ignoreMethods": ["getPoolAddress", "stakingPools"],
+      "ignoreRelatives": ["esXaiAddress"]
+    },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
     },
@@ -76,7 +80,8 @@
         "delayedMessageCount",
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
-      ]
+      ],
+      "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
@@ -149,7 +154,8 @@
         "assignedKeyToPool",
         "getBoostFactorForKeyId"
       ],
-      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
+      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"],
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {
       "ignoreMethods": ["getPricingTier", "tokenByIndex"],
