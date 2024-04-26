@@ -552,6 +552,36 @@
       }
     },
     {
+      "name": "USDC Vault 2",
+      "values": {
+        "bridgeType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hook__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "USDCVaultOwner",
       "values": {
         "VERSION": {

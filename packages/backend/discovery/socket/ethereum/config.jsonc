@@ -9,7 +9,8 @@
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3"
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
   ],
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
@@ -24,7 +25,8 @@
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault 2",
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault"
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault",
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault 2"
   },
   "overrides": {
     "Socket": {
@@ -113,6 +115,9 @@
     },
     "WETH Vault 2": {
       "ignoreMethods": ["token__"]
+    },
+    "USDC Vault 2": {
+      "ignoreRelatives": ["token", "hook__"]
     }
   }
 }

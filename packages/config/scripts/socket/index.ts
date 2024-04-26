@@ -11,17 +11,23 @@ import { tokenList } from '../../src'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
 
-const plugAbi = ['function hub__() view returns (address)']
-const plugInt = new utils.Interface(plugAbi)
+const hubAbi = ['function hub__() view returns (address)']
+const hubInt = new utils.Interface(hubAbi)
 
-const vaultAbi = ['function token__() view returns (address)']
-const vaultInt = new utils.Interface(vaultAbi)
+const bridgeAbi = ['function bridge__() view returns (address)']
+const bridgeInt = new utils.Interface(bridgeAbi)
+
+const tokenAbi = [
+  'function token__() view returns (address)',
+  'function token() view returns (address)',
+]
+const tokenInt = new utils.Interface(tokenAbi)
 
 // this is not a plug, but appears in the discovery output
 const EXCLUDED_PLUGS = [
-  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
-  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444', //TODO: check what is this
-  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4', //TODO: check what is this
+  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D', // TODO: check what is this (Counter)
+  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444', // TODO: check what is this (Counter)
+  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4', // TODO: check what is this (SocketPlug)
 ]
 
 const SOCKET_DISCOVERY_CONFIG_PATH =
@@ -176,16 +182,45 @@ async function readSocketDiscoveryConfig() {
   return discoveryConfig
 }
 
+// sekuba and chatgpt take full responsibility for this. Some newer plugs do not have 'hub__' but 'bridge__' and their vaults do not have 'token__' but 'token'.
 async function getTokenAddress(
   vaultAddress: string,
   provider: RateLimitedProvider,
   blockNumber: number,
 ) {
-  const tx = {
-    to: vaultAddress,
-    data: vaultInt.encodeFunctionData('token__', []),
+  let tokenAddressBytes: string
+
+  try {
+    const tx = {
+      to: vaultAddress,
+      data: tokenInt.encodeFunctionData('token__', []),
+    }
+    tokenAddressBytes = await provider.call(tx, blockNumber)
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      e.message.includes('Transaction reverted without a reason string')
+    ) {
+      console.error(
+        `Vault ${vaultAddress} does not have token__(). Trying token()...`,
+      )
+      const tx = {
+        to: vaultAddress,
+        data: tokenInt.encodeFunctionData('token', []),
+      }
+      try {
+        tokenAddressBytes = await provider.call(tx, blockNumber)
+      } catch (e) {
+        console.error(
+          `Vault ${vaultAddress} does not have any token set. It probably needs to be excluded and checked manually.`,
+        )
+        process.exit(1)
+      }
+    } else {
+      throw e
+    }
   }
-  const tokenAddressBytes = await provider.call(tx, blockNumber)
+
   return getAddressFromBytes(tokenAddressBytes)
 }
 
@@ -194,26 +229,40 @@ async function getVaultAddress(
   provider: RateLimitedProvider,
   blockNumber: number,
 ): Promise<string> {
-  const tx = {
-    to: plugAddress,
-    data: plugInt.encodeFunctionData('hub__', []),
-  }
+  let addressBytes: string
 
   try {
-    const addressBytes = await provider.call(tx, blockNumber)
-    return getAddressFromBytes(addressBytes)
+    const tx = {
+      to: plugAddress,
+      data: hubInt.encodeFunctionData('hub__', []),
+    }
+    addressBytes = await provider.call(tx, blockNumber)
   } catch (e) {
     if (
       e instanceof Error &&
       e.message.includes('Transaction reverted without a reason string')
     ) {
       console.error(
-        `Plug ${plugAddress} is not a standard plug. It probably needs to be excluded and checked manually.`,
+        `Plug ${plugAddress} does not have hub__(). Trying bridge__()...`,
       )
-      process.exit(1)
+      const tx = {
+        to: plugAddress,
+        data: bridgeInt.encodeFunctionData('bridge__', []),
+      }
+      try {
+        addressBytes = await provider.call(tx, blockNumber)
+      } catch (e) {
+        console.error(
+          `Plug ${plugAddress} does not have hub__() nor bridge__() functions. It probably needs to be excluded and checked manually.`,
+        )
+        process.exit(1)
+      }
+    } else {
+      throw e
     }
-    throw e
   }
+
+  return getAddressFromBytes(addressBytes)
 }
 
 function getAddressFromBytes(bytes: string) {

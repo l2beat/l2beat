@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19738124,
-  "configHash": "0x49170c184e740ebd45fcd6fed1c40b09642ce97b472da492229675ac1ec5add9",
+  "blockNumber": 19738604,
+  "configHash": "0xf34f42caa6d624a6e0593000a7b59355de145e946237b27665f513ba1bc408ce",
   "version": 3,
   "contracts": [
     {
@@ -180,7 +180,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 1791,
+        "globalMessageCount": 1797,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -303,6 +303,22 @@
         "verificationOverheadFees": 6500000000000
       },
       "derivedName": "ArbitrumL1Switchboard"
+    },
+    {
+      "name": "USDC Vault 2",
+      "address": "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1712326631,
+      "values": {
+        "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
+        "hook__": "0x4fB274909ffeEf635270915a729dC40500c7260B",
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
+        "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "derivedName": "Vault"
     },
     {
       "name": "wstETH Vault",
@@ -1042,6 +1058,49 @@
       "function updateSibling(uint32 siblingChainSlug_, address remoteNativeSwitchboard_)",
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
+    ],
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": [
+      "constructor(address token_)",
+      "error CannotTransferOrExecuteOnBridgeContracts()",
+      "error InsufficientMsgValue()",
+      "error InvalidConnector()",
+      "error InvalidTokenAddress()",
+      "error InvalidTokenContract()",
+      "error MessageIdMisMatched()",
+      "error NoPendingData()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAddressReceiver()",
+      "event BridgingTokens(address connector, address sender, address receiver, uint256 amount, bytes32 messageId)",
+      "event ConnectorStatusUpdated(address connector, bool status)",
+      "event HookUpdated(address newHook)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "event TokensBridged(address connecter, address receiver, uint256 amount, bytes32 messageId)",
+      "function bridge(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_, bytes execPayload_, bytes options_) payable",
+      "function bridgeType() view returns (bytes32)",
+      "function claimOwner()",
+      "function connectorCache(address) view returns (bytes)",
+      "function getMinFees(address connector_, uint256 msgGasLimit_, uint256 payloadSize_) view returns (uint256 totalFees)",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function hook__() view returns (address)",
+      "function identifierCache(bytes32) view returns (bytes)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveInbound(uint32 siblingChainSlug_, bytes payload_) payable",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function retry(address connector_, bytes32 messageId_)",
+      "function revokeRole(bytes32 role_, address revokee_)",
+      "function token() view returns (address)",
+      "function updateConnectorStatus(address[] connectors, bool[] statuses)",
+      "function updateHook(address hook_, bool approve_)",
+      "function validConnectors(address) view returns (bool)"
     ],
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": [
       "constructor(address token_)",

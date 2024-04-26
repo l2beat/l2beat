@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xa6406467d6967066916b889525ede1024ab06e52
+Generated with discovered.json: 0x030c4c2bc2867d98d2a4302e6b97108b0330217f
 
-# Diff at Fri, 26 Apr 2024 07:43:46 GMT:
+# Diff at Fri, 26 Apr 2024 09:21:30 GMT:
 
 - author: sekuba (<sekuba@users.noreply.githum.com>)
 - comparing to: main@36667a8d3ad546527d0bbcb7f2e62ced244c06b9 block: 19609491
-- current block number: 19738124
+- current block number: 19738604
 
 ## Description
 
-4 Plugs are added to the socket main contract.
+4 Plugs are added to the socket main contract. The USDC vault 2 was discovered by the socket-update script and is added to the escrows.
 
 ## Watched changes
 
@@ -36,6 +36,18 @@ Generated with discovered.json: 0xa6406467d6967066916b889525ede1024ab06e52
       values.plugs.20:
 +        "0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF"
     }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19609491 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDC Vault 2 (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xfb0b61de4c8e0445a4631e0fabe790a63dede53e
