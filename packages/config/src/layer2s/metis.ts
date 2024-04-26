@@ -5,8 +5,8 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   FRONTRUNNING_RISK,
+  makeBridgeCompatible,
   RISK_VIEW,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
