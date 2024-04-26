@@ -44,27 +44,39 @@ export function getPermissionsSection(
 
 function toTechnologyContract(
   permission: ScalingProjectPermission,
+  _index: number,
+  permissions: ScalingProjectPermission[],
 ): TechnologyContract {
   const chain = permission.chain ?? 'ethereum'
   const etherscanUrl = getExplorerUrl(chain)
-  const links = permission.accounts.slice(1).map((account) => {
+  const links = permission.accounts.map((account) => {
     return {
-      name: `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
+      name:
+        permissions
+          .sort((a, b) => {
+            if (a.name.includes('Multisig') && !b.name.includes('Multisig'))
+              return -1
+            if (!a.name.includes('Multisig') && b.name.includes('Multisig'))
+              return 1
+            return 0
+          })
+          .find(
+            (p) =>
+              !permission.name.includes('Multisig') &&
+              p.name !== permission.name &&
+              p.accounts.length === 1 &&
+              p.accounts[0]?.address === account.address,
+          )?.name ??
+        `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
       address: account.address.toString(),
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
       isAdmin: false,
     }
   })
 
-  const addresses = []
-
-  if (permission.accounts.length > 0) {
-    addresses.push(permission.accounts[0].address.toString())
-  }
-
   return {
     name: permission.name,
-    addresses,
+    addresses: [],
     etherscanUrl,
     chain,
     description: permission.description,
