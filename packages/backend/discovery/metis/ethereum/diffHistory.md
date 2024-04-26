@@ -11,6 +11,8 @@ Generated with discovered.json: 0x94a766214a80c0a94393fcb2824015d182ebffe2
 Discovery now includes the addresses related to the Metis sequencer decentralization efforts.
 The current discovered.json in ProtocolBeat shows a good overview.
 Batches still get posted to `0xFf00000000000000000000000000000000001088`.
+The logic for the Sequencer Pool MPC that results in posted hash batches on Ethereum is off-chain and does not get verified on ethereum.
+LockinPool, LockingInfo (via ProxyAdmin) and SCC have an EOA as Admin.
 
 ### LockingInfo
 
@@ -18,7 +20,7 @@ Escrow for METIS locked by bonded Sequencers.
 
 ### LockingPool
 
-Registry for Sequencers and the MPC address. Four sequencers are currently bonded of which 3 are funded by Metis and 1 is funded by Equilibria Finance. The batchState information and Sequencers show that there is no Sequencing happening yet.
+Registry for Sequencers and the MPC address. Four sequencers are currently bonded of which 3 are funded by Metis and 1 is funded by Equilibria Finance.
 
 ### rewardPayer Multisig
 
