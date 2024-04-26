@@ -85,6 +85,15 @@ export const xai: Layer3 = orbitStackL3({
       description:
         'Multisig that can execute upgrades via the UpgradeExecutor.',
     },
+    {
+      name: 'Xai Deployer',
+      accounts: discovery.getPermissionedAccounts(
+        'StakingProxyAdmin',
+        'owner',
+      ),
+      description:
+        'The Xai Deployer EOA can upgrade all staking v2 related contracts (NodeLicenseRegistry, PoolFactory, SentryReferee, StakingPool) instantly and potentially steal all funds.',
+    },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {

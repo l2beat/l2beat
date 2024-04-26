@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 205030471,
-  "configHash": "0x355f33c682e7fc9839ab03e817a4de43aba61cc8d297b9931ba5bc538017da7e",
+  "blockNumber": 205037041,
+  "configHash": "0x114e64b8e0ef750148ddf4ceab93733022ad106f1e93077ccf3f0b8aced364c4",
   "version": 3,
   "contracts": [
     {
@@ -319,12 +319,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 17409,
+        "delayedMessageCount": 17412,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 10426,
-        "sequencerReportedSubMessageCount": 5283883
+        "sequencerMessageCount": 10428,
+        "sequencerReportedSubMessageCount": 5285167
       },
       "derivedName": "ERC20Bridge"
     },
@@ -371,7 +371,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 10426,
+        "batchCount": 10428,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -387,7 +387,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 17408
+        "totalDelayedMessagesRead": 17410
       },
       "derivedName": "SequencerInbox"
     },
@@ -547,7 +547,7 @@
       "derivedName": "RollupProxy"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "StakingProxyAdmin",
       "address": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
       "upgradeability": {
         "type": "immutable"
@@ -555,7 +555,8 @@
       "sinceTimestamp": 1701801208,
       "values": {
         "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "OneStepProverMemory",

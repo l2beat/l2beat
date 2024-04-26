@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd3d84bdfe8e9bdee3554e5593a1180e544c93ef9
+Generated with discovered.json: 0xa54b30cd938519ebc4c54ade5bb2fe7b20831145
 
-# Diff at Fri, 26 Apr 2024 13:51:31 GMT:
+# Diff at Fri, 26 Apr 2024 14:19:34 GMT:
 
 - author: sekuba (<sekuba@users.noreply.githum.com>)
 - comparing to: main@03ab04b156e445d49b5b266d48c3382aeac8d1ab block: 198866013
-- current block number: 205030471
+- current block number: 205037041
 
 ## Description
 
@@ -86,7 +86,7 @@ Imported by the StakingPools: Tracks the virtual balances of participants in a s
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723)
+    contract StakingProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723)
     +++ description: None
 ```
 
@@ -158,17 +158,17 @@ Imported by the StakingPools: Tracks the virtual balances of participants in a s
  .../.code/GasSubsidy/implementation/meta.txt       |    2 +
  .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
  .../contracts/interfaces/IERC1967.sol              |   26 +
- .../contracts/interfaces/draft-IERC1822.sol        |    0
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
  .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
  .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
  .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
  .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
- .../contracts/proxy/beacon/IBeacon.sol             |    0
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
  .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
  .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
  .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
  .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
- .../@openzeppelin/contracts/utils/Context.sol      |    0
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
  .../xai/arbitrum/.code/GasSubsidy/proxy/meta.txt   |    2 +
  .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
@@ -374,33 +374,6 @@ Imported by the StakingPools: Tracks the virtual balances of participants in a s
  .../@openzeppelin/contracts/utils/Context.sol      |   24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
  .../.code/PoolProxyDeployer/proxy/meta.txt         |    2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |    0
- .../contracts/interfaces/draft-IERC1822.sol        |   20 +
- .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |    0
- .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |    0
- .../@openzeppelin/contracts/proxy/Proxy.sol        |    0
- .../contracts/proxy/beacon/IBeacon.sol             |   16 +
- .../contracts/proxy/transparent/ProxyAdmin.sol     |    0
- .../transparent/TransparentUpgradeableProxy.sol    |    0
- .../@openzeppelin/contracts/utils/Address.sol      |    0
- .../@openzeppelin/contracts/utils/Context.sol      |   24 +
- .../@openzeppelin/contracts/utils/StorageSlot.sol  |    0
- .../meta.txt                                       |    0
- .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
- .../contracts/interfaces/IERC1967.sol              |   26 +
- .../contracts/interfaces/draft-IERC1822.sol        |   20 +
- .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
- .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
- .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
- .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
- .../contracts/proxy/beacon/IBeacon.sol             |   16 +
- .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
- .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
- .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
- .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
- .../@openzeppelin/contracts/utils/Context.sol      |   24 +
- .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
- .../meta.txt                                       |    2 +
  .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
  .../contracts/interfaces/IERC1967.sol              |   26 +
  .../contracts/interfaces/draft-IERC1822.sol        |   20 +
@@ -559,7 +532,22 @@ Imported by the StakingPools: Tracks the virtual balances of participants in a s
  .../contracts/staking-v2/StakingPool.sol           |  536 +++++++++++
  .../contracts/upgrades/referee/Referee5.sol        | 1003 ++++++++++++++++++++
  .../xai/arbitrum/.code/StakingPool/meta.txt        |    2 +
- 442 files changed, 50888 insertions(+)
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../xai/arbitrum/.code/StakingProxyAdmin/meta.txt  |    2 +
+ 430 files changed, 50888 insertions(+)
 ```
 
 ## Config/verification related changes
