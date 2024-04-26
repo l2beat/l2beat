@@ -21,7 +21,7 @@ async function main() {
     If the limit is reached (500 contributions), create a new one for yourself at https://tinypng.com/developers.
   */
   const apiKey =
-    process.env.TINIFY_API_KEY ?? 'JMFmbQlTJLrxSyvGjLrsNtHP5CGRyTGJ'
+    process.env.TINIFY_API_KEY ?? 'tQ01Mb5MpKfKlCzCNLLpPHqvy6gMlBhF'
 
   if (!apiKey) {
     throw new Error('Missing TINIFY_API_KEY')
