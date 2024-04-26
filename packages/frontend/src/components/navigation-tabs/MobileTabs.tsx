@@ -1,16 +1,12 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { NavigationPage } from '../../utils/getNavigationPages'
 import { NewItemBadge } from '../badge/NewItemBadge'
 import { OverflowWrapper } from '../OverflowWrapper'
 
 export interface MobileTabsProps {
-  pages: {
-    shortTitle: ReactNode
-    link: string
-    selected: boolean
-    new?: boolean
-  }[]
+  pages: NavigationPage[]
 }
 
 export function MobileTabs({ pages }: MobileTabsProps) {

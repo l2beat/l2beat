@@ -1,8 +1,8 @@
 import {
   ActivityApiResponse,
-  DiffHistoryApiResponse,
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
+  L2CostsApiResponse,
   LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
@@ -25,7 +25,7 @@ export interface WrapperProps {
   htmlClassName?: string
   bodyClassName?: string
   metadata: PageMetadata
-  preloadApi?: string
+  preloadApis?: string[]
   banner: boolean | undefined
 }
 export interface PageMetadata {
@@ -43,6 +43,6 @@ export interface PagesData {
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
   livenessApiResponse: LivenessApiResponse | undefined
   finalityApiResponse: FinalityApiResponse | undefined
-  diffHistory: DiffHistoryApiResponse | undefined
+  l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }

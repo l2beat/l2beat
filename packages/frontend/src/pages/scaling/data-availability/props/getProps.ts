@@ -1,9 +1,9 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
 import { DataAvailabilityPagesData } from '../types'
 import { ScalingDataAvailabilityPageProps } from '../view/ScalingDataAvailabilityPage'
-import { getPageMetadata } from './getPageMetadata'
 import { getScalingDataAvailabilityView } from './getScalingDataAvailabilityView'
 
 export function getProps(
@@ -13,17 +13,18 @@ export function getProps(
   return {
     props: {
       dataAvailabilityView: getScalingDataAvailabilityView(
-        config.layer2s,
+        [...config.layer2s, ...config.layer3s],
         pagesData,
       ),
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
-      showActivity: config.features.activity,
-      showLiveness: config.features.liveness,
-      showFinality: config.features.finality,
     },
     wrapper: {
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image:
+          'https://l2beat.com/meta-images/pages/og-scaling-data-availability.png',
+        url: 'https://l2beat.com/scaling/data-availability',
+      }),
       banner: config.features.banner,
     },
   }

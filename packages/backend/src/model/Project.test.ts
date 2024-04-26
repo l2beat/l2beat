@@ -53,7 +53,9 @@ describe('Backend project config', () => {
               e.formula === 'functionCall',
           )
           for (const config of functionCallConfigs ?? []) {
-            const key = `${config.address.toString()}-${config.selector}`
+            const key = `${config.address.toString()}-${
+              config.selector
+            }-${config.untilTimestampExclusive?.toString()}`
             assert(
               !functionCalls.has(key),
               `Duplicate function call config in ${project.projectId.toString()}`,

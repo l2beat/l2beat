@@ -1,7 +1,7 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 19531421,
+  "blockNumber": 19624842,
   "configHash": "0xec6f6508bb2633eef9f46a9c0ae8b68122f7f151d72c13df718ff6080e7049f0",
   "version": 3,
   "contracts": [
@@ -162,18 +162,14 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 7979,
+        "getLastBatchId": 8194,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
-        "getRegisteredAvailabilityVerifiers": [
-          "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4"
-        ],
-        "getRegisteredVerifiers": [
-          "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953"
-        ],
+        "getRegisteredAvailabilityVerifiers": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
+        "getRegisteredVerifiers": "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 7859,
+        "getSequenceNumber": 8074,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -277,18 +273,14 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 1466,
+        "getLastBatchId": 1590,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
-        "getRegisteredAvailabilityVerifiers": [
-          "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800"
-        ],
-        "getRegisteredVerifiers": [
-          "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22"
-        ],
+        "getRegisteredAvailabilityVerifiers": "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800",
+        "getRegisteredVerifiers": "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 1466,
+        "getSequenceNumber": 1590,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",

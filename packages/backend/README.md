@@ -169,14 +169,6 @@ The updateMonitor feature is configured via the following environment variables:
 
 - `updateMonitor` - enables the update monitor
 
-### `diffHistory` feature
-
-The diffHistory feature is configured per chain with the same variables as the `updateMonitor` feature.
-
-**Feature flags:**
-
-- `diffHistory` - enables the diff history
-
 ### `tvlCleaner` feature
 
 The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the sixHourly data 93 days to the past and hourly data 10 days to the past.

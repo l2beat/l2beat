@@ -1,3 +1,253 @@
+Generated with discovered.json: 0x8de80c35f4151ee8e79a678576f87bd7a74d4da4
+
+# Diff at Thu, 25 Apr 2024 10:15:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@b2d6f0f9ccd7e269685e4a3459e22efcedcc2628 block: 19695350
+- current block number: 19731710
+
+## Description
+
+### Blobs
+
+Kroma is posting blobs. ([First blob tx](https://etherscan.io/tx/0x1e504f673dcf1d1a9b1a332b02c62ab6f7b4cc73bd9cb8162b3c748e29c86b08))
+
+### Colosseum
+
+Only one change: `_validatePublicInput()` now computes the blockhash for either Cancun or Shanghai blocks with their respective functions (ternary operator). The Shanghai update on L2 changed the structure of the block header and the last implementation addressed this, but there was probably an oversight.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
++        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+      implementations.0:
+-        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
++        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+      values.version:
+-        "1.0.0"
++        "1.1.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/L1/Colosseum.sol      |  53 ++++---
+ .../contracts/libraries/Encoding.sol               | 166 ++++++++++++---------
+ .../implementation/contracts/libraries/Hashing.sol |  21 +++
+ .../implementation/contracts/libraries/Types.sol   |   6 +
+ .../Colosseum/implementation/meta.txt              |   2 +-
+ 5 files changed, 148 insertions(+), 100 deletions(-)
+```
+
+Generated with discovered.json: 0x9a3a63d115a94c4282aea8a94bf88911eac00254
+
+# Diff at Sat, 20 Apr 2024 08:12:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@262f9e3e98ac8a85b09235e0b440b48e826f1f9f block: 19616998
+- current block number: 19695350
+
+## Description
+
+A transaction is executed to send ~2.5 ETH from the ValidatorPool contract to the trusted validator and member of SC `0x3aa00bb915a8e78b0523e4c365e3e70a19d329e6`.
+This was enabled by the `withdrawTo()` function that was added in the previous upgrade. (see below) The source of funds is from the balance of the SecurityCouncil inside the ValidatorPool contract, leaving the SC with 0.12 ETH of balance in the ValidatorPool. The SC's balance inside the ValidatorPool comes from taxes in the `increaseBond()` function.
+Context: The previous reimbursement in this [tweet by Kroma](https://twitter.com/kroma_network/status/1775801214552375417).
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
++++ description: Increases with each Security Council action.
++++ type: L2
++++ severity: HIGH
+      values.transactionCount:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x68b9b451a1ae0f51c4cc2055cdd6530505b7c803
+
+# Diff at Tue, 09 Apr 2024 08:50:09 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bdb0620154d0bd06d04a6877172f01b9a2a0b8c9 block: 19567016
+- current block number: 19616998
+
+## Description
+
+This upgrade brings small changes with huge diffs in the non-flat sources because new (but unused!) .sol files were pushed to etherscan among the actually upgraded implementations. This happens because for example the SecurityCouncil.sol that is shown on the Collosseum implementation's address on etherscan is now a newer version than the actual SecurityCouncil.sol that sits at the SECURITY_COUNCIL address (currently `0x3de211088dF516da72efe68D386b561BEE256Ec4`) The newer version is used only as an interface while the old version at the defined address is imported and used.
+Our flat source files mostly ignore this.
+
+### Main changes
+
+1. Change from Semver to ISemver in the two upgraded implementations (ValidatorPool and Colosseum) with no functional changes
+2. Support of Post-Shanghai (on the L2) block headers on the L1 Colosseum
+3. Ability to withdraw to a specified address from the ValidatorPool
+
+original description from the onchain upgrade proposal in tx# `0x80b280058f4eab3d9b250be874a5e7e816beaf68553f3ba61ec5c76340cfec5d`:
+[Smart Contract upgrades for v1.3.4]
+
+### 1. Addition of withdrawTo in ValidatorPool
+
+Previously, validators could only withdraw funds to themselves. Now, with the withdrawTo function, they can withdraw directly to a specified address. Implementation contract address: `0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4`
+
+### 2. Change in block header hash function for Colosseum
+
+With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implemenatation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
+
+### Current Context
+
+Kroma also had two fork incidents on their mainnet L2:
+
+- March 12: https://twitter.com/kroma_network/status/1775801201197531144
+- Apr 1: https://twitter.com/kroma_network/status/1774683208753590506
+
+Right after the upgrade that is described above, an L2 output root was deleted after having been fault proven:
+
+- output root # 5017 from Apr 1 at L2 block number 9028800 in eth mainnet tx# 0x74e2739982fde96145d822151d93e093ab915e357cdd7167dd925ce4026e0841
+
+Earlier Challenges for the same output were not successfully proven and i assume that the difference in block header construction after the upgrade was a fix for that.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
++++ description: Increases with each Security Council action.
++++ type: L2
++++ severity: HIGH
+      values.transactionCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x7526F997ea040B3949415c3a44e708273863AA2b"
++        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
+      implementations.0:
+-        "0x7526F997ea040B3949415c3a44e708273863AA2b"
++        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"
++        "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
+      implementations.0:
+-        "0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"
++        "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
+    }
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/L1/Colosseum.sol      |   16 +-
+ .../implementation/contracts/L1/KromaPortal.sol    |   12 +-
+ .../implementation/contracts/L1/L2OutputOracle.sol |   12 +-
+ .../contracts/L1/SecurityCouncil.sol               |   40 +-
+ .../implementation/contracts/L1/SystemConfig.sol   |   12 +-
+ .../implementation/contracts/L1/ValidatorPool.sol  |   45 +-
+ .../implementation/contracts/L1/ZKVerifier.sol     |  138 +--
+ .../contracts/L2/L2StandardBridge.sol              |   17 +-
+ .../contracts/L2/ValidatorRewardVault.sol          |   56 +-
+ .../contracts/governance/UpgradeGovernor.sol       |  179 +++
+ .../implementation/contracts/libraries/Hashing.sol |   53 +-
+ .../contracts/libraries/Predeploys.sol             |    4 +-
+ .../implementation/contracts/libraries/Types.sol   |   21 +-
+ .../contracts/universal/FeeVault.sol               |   39 +-
+ .../universal/IMultiSigWallet.sol => /dev/null     |  193 ----
+ .../implementation/contracts/universal/ISemver.sol |   13 +
+ .../contracts/universal/ITokenMultiSigWallet.sol   |  120 +++
+ .../contracts/universal/KromaMintableERC20.sol     |   14 +-
+ .../universal/MultiSigWallet.sol => /dev/null      |  533 ---------
+ .../contracts/universal/Semver.sol => /dev/null    |   58 -
+ .../contracts/universal/TokenMultiSigWallet.sol    |  258 +++++
+ .../Colosseum/implementation/meta.txt              |    2 +-
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../governance/GovernorUpgradeable.sol             |  736 +++++++++++++
+ .../governance/IGovernorUpgradeable.sol            |  326 ++++++
+ .../governance/TimelockControllerUpgradeable.sol   |  434 ++++++++
+ .../GovernorCountingSimpleUpgradeable.sol          |  113 ++
+ .../extensions/GovernorSettingsUpgradeable.sol     |  122 +++
+ .../GovernorTimelockControlUpgradeable.sol         |  178 +++
+ .../GovernorVotesQuorumFractionUpgradeable.sol     |  133 +++
+ .../extensions/GovernorVotesUpgradeable.sol        |   69 ++
+ .../extensions/IGovernorTimelockUpgradeable.sol    |   39 +
+ .../governance/utils/IVotesUpgradeable.sol         |   56 +
+ .../interfaces/IERC165Upgradeable.sol              |    6 +
+ .../interfaces/IERC5267Upgradeable.sol             |   28 +
+ .../interfaces/IERC5805Upgradeable.sol             |    9 +
+ .../interfaces/IERC6372Upgradeable.sol             |   17 +
+ .../token/ERC1155/IERC1155ReceiverUpgradeable.sol  |   58 +
+ .../token/ERC721/IERC721ReceiverUpgradeable.sol    |   27 +
+ .../utils/CheckpointsUpgradeable.sol               |  560 ++++++++++
+ .../utils/StringsUpgradeable.sol}                  |   12 +-
+ .../utils/cryptography/ECDSAUpgradeable.sol        |  217 ++++
+ .../utils/cryptography/EIP712Upgradeable.sol       |  205 ++++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 ++++++
+ .../utils/math/SafeCastUpgradeable.sol             | 1136 ++++++++++++++++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/DoubleEndedQueueUpgradeable.sol  |  170 +++
+ .../implementation/contracts/L1/KromaPortal.sol    |   12 +-
+ .../implementation/contracts/L1/L2OutputOracle.sol |   12 +-
+ .../implementation/contracts/L1/SystemConfig.sol   |   12 +-
+ .../implementation/contracts/L1/ValidatorPool.sol  |   28 +-
+ .../contracts/L2/L2StandardBridge.sol              |   17 +-
+ .../contracts/L2/ValidatorRewardVault.sol          |   56 +-
+ .../implementation/contracts/libraries/Hashing.sol |   53 +-
+ .../contracts/libraries/Predeploys.sol             |    4 +-
+ .../contracts/universal/FeeVault.sol               |   39 +-
+ .../implementation/contracts/universal/ISemver.sol |   13 +
+ .../contracts/universal/KromaMintableERC20.sol     |   14 +-
+ .../contracts/universal/Semver.sol => /dev/null    |   58 -
+ .../ValidatorPool/implementation/meta.txt          |    2 +-
+ 63 files changed, 6485 insertions(+), 1119 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19567016 (main branch discovery), not current.
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
 Generated with discovered.json: 0x310dac62fc3a977695365cb5f63945bc621c6113
 
 # Diff at Tue, 02 Apr 2024 08:48:56 GMT:
@@ -9,7 +259,7 @@ Generated with discovered.json: 0x310dac62fc3a977695365cb5f63945bc621c6113
 ## Description
 
 A root is challenged.
-Context: Kroma had issues on Apr 1. Sequencer was stopped and is now operational again. Around this incident there were multiple challenges created, so far no challenge was succesful.
+Context: Kroma had issues on Apr 1. Sequencer was stopped and is now operational again. Around this incident there were multiple challenges created, so far no challenge was successful.
 
 ## Watched changes
 

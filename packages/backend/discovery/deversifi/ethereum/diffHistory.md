@@ -1,3 +1,128 @@
+Generated with discovered.json: 0x0d1e449278ed05d1d56565abc9e7ab02753d7344
+
+# Diff at Thu, 11 Apr 2024 15:36:59 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cc71817cfbb5ff597a4f1c538bce1e61b485c754 block: 19531530
+- current block number: 19633312
+
+## Description
+
+### Blocklist added
+
+- This implementation upgrade (Starkexchange.sol^4.5.2-bl and TokensAndRamping.sol^2024_3) adds support for a Blocklist that can be managed by the BlockAdmin. The BlockAdmin can block and unblock addresses from withdraw()ing funds on L1. The BlockAdmin is hardcoded to the deversifi Treasury Multisig `0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a` and cannot be changed.
+- Imports now get pulled from a folder structure but logic stays the same. (reason for the small diffs all over the place)
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583"
++        "0xc392DD8edAd534266cbf2817ee01dC68193DE23d"
+      upgradeability.facets.StarkWare_TokensAndRamping_2022_2:
+-        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb"
+      upgradeability.facets.StarkWare_TokensAndRamping_2024_3:
++        "0x654cEF88e1EDD4B5a6d10815439768c60ca109a1"
+      implementations.2:
+-        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb"
++        "0x654cEF88e1EDD4B5a6d10815439768c60ca109a1"
+      implementations.0:
+-        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583"
++        "0xc392DD8edAd534266cbf2817ee01dC68193DE23d"
+      values.implementation:
+-        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583"
++        "0xc392DD8edAd534266cbf2817ee01dC68193DE23d"
+      values.VERSION:
+-        "4.5.1"
++        "4.5.2-bl"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchange/implementation-1/meta.txt        |  2 +-
+ .../src/components}/GovernanceStorage.sol          |  4 +-
+ .../contracts/src/components}/MainStorage.sol      | 11 ++++--
+ .../contracts/src/interfaces}/BlockDirectCall.sol  |  2 +-
+ .../contracts/src/interfaces}/IDispatcherBase.sol  |  2 +-
+ .../contracts/src/interfaces}/Identity.sol         |  2 +-
+ .../contracts/src/interfaces}/MGovernance.sol      |  2 +-
+ .../contracts/src/interfaces}/MainDispatcher.sol   |  6 +--
+ .../src/interfaces}/MainDispatcherBase.sol         | 10 ++---
+ .../contracts/src/interfaces}/SubContractor.sol    |  4 +-
+ .../contracts/src/libraries}/Common.sol            |  2 +-
+ .../contracts/src/starkex}/StarkExchange.sol       | 18 ++++-----
+ .../contracts/src/upgrade}/ProxyStorage.sol        |  4 +-
+ .../StarkExchange/implementation-3/meta.txt        |  2 +-
+ .../contracts/src/components}/ActionHash.sol       |  6 +--
+ .../contracts/src/components}/ERC1155Receiver.sol  |  4 +-
+ .../contracts/src/components}/ERC721Receiver.sol   |  4 +-
+ .../contracts/src/components}/Freezable.sol        | 10 ++---
+ .../contracts/src/components}/Governance.sol       |  4 +-
+ .../src/components}/GovernanceStorage.sol          |  4 +-
+ .../contracts/src/components}/KeyGetters.sol       |  6 +--
+ .../contracts/src/components}/MainGovernance.sol   |  6 +--
+ .../contracts/src/components}/MainStorage.sol      | 11 ++++--
+ .../contracts/src/components}/TokenRegister.sol    | 12 +++---
+ .../contracts/src/components}/TokenTransfers.sol   | 14 +++----
+ .../src/interactions}/AcceptModifications.sol      | 10 ++---
+ .../contracts/src/interactions/Blocklist.sol       | 40 +++++++++++++++++++
+ .../contracts/src/interactions}/Deposits.sol       | 20 +++++-----
+ .../contracts/src/interactions}/TokenAssetData.sol | 10 ++---
+ .../src/interactions}/TokenQuantization.sol        |  6 +--
+ .../contracts/src/interactions}/Withdrawals.sol    | 26 +++++++------
+ .../contracts/src/interfaces}/Identity.sol         |  2 +-
+ .../src/interfaces}/MAcceptModifications.sol       |  2 +-
+ .../contracts/src/interfaces/MBlocklist.sol        | 45 ++++++++++++++++++++++
+ .../contracts/src/interfaces}/MDeposits.sol        |  2 +-
+ .../contracts/src/interfaces}/MFreezable.sol       |  2 +-
+ .../contracts/src/interfaces}/MGovernance.sol      |  2 +-
+ .../contracts/src/interfaces}/MKeyGetters.sol      |  2 +-
+ .../contracts/src/interfaces}/MTokenAssetData.sol  |  2 +-
+ .../src/interfaces}/MTokenQuantization.sol         |  2 +-
+ .../contracts/src/interfaces}/MTokenTransfers.sol  |  2 +-
+ .../contracts/src/interfaces}/SubContractor.sol    |  4 +-
+ .../contracts/src/libraries}/Common.sol            |  2 +-
+ .../contracts/src/libraries}/LibConstants.sol      |  2 +-
+ .../src/starkex/components}/StarkExStorage.sol     |  4 +-
+ .../interactions}/StarkExForcedActionState.sol     |  8 ++--
+ .../interfaces}/MStarkExForcedActionState.sol      |  2 +-
+ .../toplevel_subcontracts}/TokensAndRamping.sol    | 39 ++++++++++---------
+ .../contracts/src/tokens/ERC1155}/IERC1155.sol     |  2 +-
+ .../src/tokens/ERC1155}/IERC1155Receiver.sol       |  2 +-
+ .../contracts/src/tokens/ERC20}/IERC20.sol         |  2 +-
+ .../src/tokens/ERC721}/IERC721Receiver.sol         |  2 +-
+ .../contracts/src/upgrade}/ProxyStorage.sol        |  4 +-
+ 53 files changed, 248 insertions(+), 152 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531530 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      values.getRegisteredAvailabilityVerifiers:
+-        ["0x28780349A33eEE56bb92241bAAB8095449e24306"]
++        "0x28780349A33eEE56bb92241bAAB8095449e24306"
+      values.getRegisteredVerifiers:
+-        ["0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73"]
++        "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeversiFiTreasuryMultisig (0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4b6fe18ad8f293504a0a33f9c42978bb3a90f0b0
 
 # Diff at Thu, 28 Mar 2024 08:50:55 GMT:

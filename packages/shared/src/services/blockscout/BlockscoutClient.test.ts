@@ -154,7 +154,7 @@ describe(BlockscoutClient.name, () => {
       expect(blockNumber).toEqual(result)
     })
 
-    it('if there is no closes block number try 10 minutes earlier', async () => {
+    it('if there is no closes block number try 1 minute earlier', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const result = 1234
@@ -198,7 +198,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
+          .add(-1, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )
@@ -249,7 +249,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
+          .add(-1, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )
@@ -293,7 +293,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
+          .add(-1, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )
@@ -336,7 +336,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
+          .add(-1, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )
@@ -389,7 +389,7 @@ describe(BlockscoutClient.name, () => {
       const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        timestamp.add(-20, 'minutes'),
+        timestamp.add(-2, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -406,7 +406,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         2,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
+          .add(-1, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )
@@ -414,7 +414,7 @@ describe(BlockscoutClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         3,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-20, 'minutes')
+          .add(-2, 'minutes')
           .toNumber()}&closest=before`,
         expect.anything(),
       )

@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
@@ -10,7 +10,7 @@ import { getMaxTps } from '../../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import {
   ActivityPagesData,
   ActivityViewEntry,
@@ -19,7 +19,7 @@ import {
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
 
 export function getScalingActivityView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   pagesData: ActivityPagesData,
 ): ScalingActivityViewProps {
   const { activityApiResponse, verificationStatus, implementationChange } =
@@ -46,7 +46,7 @@ export function getScalingActivityView(
 }
 
 export function getScalingActivityViewEntry(
-  project: Layer2,
+  project: Layer2 | Layer3,
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,
   implementationChange?: ImplementationChangeReportApiResponse,
@@ -60,6 +60,7 @@ export function getScalingActivityViewEntry(
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
+    type: project.type,
     category: project.display.category,
     provider: project.display.provider,
     warning: project.display.warning,
@@ -69,7 +70,7 @@ export function getScalingActivityViewEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
-    stage: project.stage,
+    stage: project.type === 'layer2' ? project.stage : undefined,
     data: getActivityViewEntryDetails(data, 'project'),
   }
 }
@@ -82,6 +83,7 @@ function getEthereumActivityViewEntry(
     name: 'Ethereum',
     shortName: undefined,
     slug: 'ethereum',
+    type: undefined,
     dataSource: 'Blockchain RPC',
     category: undefined,
     provider: undefined,
@@ -106,11 +108,13 @@ function getActivityViewEntryDetails(
   return {
     tpsDaily: getTpsDaily(data, type),
     tpsWeeklyChange: getTpsWeeklyChange(data, type),
-    transactionsMonthlyCount: getTransactionCount(data, type, 'month'),
+    transactionsMonthlyCount: getTransactionCount(data, type, 30),
     ...getMaxTps(data, type),
   }
 }
 
-export function getIncludedProjects<T extends Layer2>(projects: T[]) {
-  return projects.filter((x) => !x.isArchived && !x.isUpcoming)
+export function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
+  return projects.filter(
+    (x) => (x.type === 'layer2' ? !x.isArchived : true) && !x.isUpcoming,
+  )
 }

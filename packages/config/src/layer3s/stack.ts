@@ -1,15 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('stack', 'base')
-
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const stack: Layer3 = opStackL3({
   discovery,
@@ -35,24 +30,9 @@ export const stack: Layer3 = opStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xbA256039AEdaD407692D8Deb366308BE6Bb2515C',
-  ),
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
-  milestones: [],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  nonTemplateEscrows: [],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'StackMultisig',

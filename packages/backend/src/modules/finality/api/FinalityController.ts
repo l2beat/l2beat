@@ -8,11 +8,6 @@ import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
-type FinalityResult = {
-  type: 'success'
-  data: FinalityApiResponse
-}
-
 export class FinalityController {
   constructor(
     private readonly livenessRepository: LivenessRepository,
@@ -21,7 +16,7 @@ export class FinalityController {
     private readonly projects: FinalityProjectConfig[],
   ) {}
 
-  async getFinality(): Promise<FinalityResult> {
+  async getFinality(): Promise<FinalityApiResponse> {
     const projects: FinalityApiResponse['projects'] = {}
 
     const [OPStackProjects, otherProjects] = partition(
@@ -34,7 +29,7 @@ export class FinalityController {
     const projectsFinality = await this.getProjectsFinality(otherProjects)
     Object.assign(projects, projectsFinality)
 
-    return { type: 'success', data: { projects } }
+    return { projects }
   }
 
   async getProjectsFinality(

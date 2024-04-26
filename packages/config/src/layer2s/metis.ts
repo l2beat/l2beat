@@ -5,8 +5,8 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
+  FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  OPERATOR,
   RISK_VIEW,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -17,17 +17,19 @@ const discovery = new ProjectDiscovery('metis')
 const upgradeDelay = 0
 
 export const metis: Layer2 = {
-  isUnderReview: true,
+  isUnderReview: false,
   type: 'layer2',
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',
     slug: 'metis',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result with the loss of all funds.',
     description:
-      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
+      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots. There is a privileged EOA address that can upgrade some critical components of the system.',
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
@@ -71,7 +73,7 @@ export const metis: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['MEMO'],
-    bridge: { type: 'Optimistic' },
+    bridge: { type: 'None' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
@@ -116,8 +118,7 @@ export const metis: Layer2 = {
       name: 'Data is recorded off-chain in MEMO',
       description:
         'Transaction data is not stored on-chain, rather it is recorded in off-chain decentralized storage \
-        MEMO from MemoLabs. If Validators find that data is unavailable, they can request that Sequencer \
-        posts data on-chain via L1 contract.',
+        MEMO from MemoLabs. Data hashes are posted to an EOA address.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -133,11 +134,14 @@ export const metis: Layer2 = {
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      name: 'The system has a decentralized sequencer set',
+      description:
+        'As of April 2024 Metis uses a permissioned sequencer pool running a Tendermint consensus. Once consensus is reached on a block, an MPC address is used to submit a block hash to Ethereum. The infrastracture to manage the MPC is offchain and not trustless because Ethereum does not verify the validity of MPC address.',
+      risks: [FRONTRUNNING_RISK],
       references: [
         {
-          text: 'CanonicalTransactionChain#L735 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x56a76bcc92361f6df8d75476fed8843edc70e1c9#code#F1#L735',
+          text: 'Decentralized Sequencer - Metis documentation',
+          href: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
         },
       ],
     },
@@ -167,7 +171,7 @@ export const metis: Layer2 = {
       {
         name: 'EVM compatible smart contracts are supported',
         description:
-          'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+          'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions.',
         risks: [
           {
             category: 'Funds can be lost if',
@@ -184,20 +188,22 @@ export const metis: Layer2 = {
     ],
   },
   permissions: [
+    {
+      name: 'Sequencer',
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x1A9da0aedA630dDf2748a453BF6d92560762D914',
+          ),
+          type: 'EOA',
+        },
+      ],
+      description: 'Central actor allowed to commit transactions to L1.',
+    },
     ...discovery.getMultisigPermission(
       'Metis Multisig',
       'This address is the owner of the following contracts: MVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'Lib_AddressManager',
-          '_1088_MVM_Sequencer_Wrapper',
-        ),
-      ],
-      description: 'Central actor allowed to commit transactions to L1.',
-    },
     {
       name: 'State Root Proposer',
       accounts: [
@@ -209,19 +215,19 @@ export const metis: Layer2 = {
       description: 'Central actor to post new state roots to L1.',
     },
     {
-      name: 'Data Availability Verifiers',
+      name: 'Metis SuperUser EOA',
       accounts: [
-        // TODO: Verify this. This is the same address as the multisig. If this is correct, we should remove it and change multisig description.
         {
           address: EthereumAddress(
-            '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+            '0x001088E383A00ff4ab36F37f7021Cb6d7B415751',
           ),
           type: 'EOA',
         },
       ],
       description:
-        'Those addresses can try to force the sequencer to post data on chain.',
+        'EOA that can upgrade StateCommitmentChain and - via ProxyAdmin - LockingInfo and LockingPool contracts. This upgrade ability allows it to take control over all funds in Metis, both in a bridge (via upgrading StateCommitmentChain) and in Sequencer pool escrow.',
     },
+    //
     {
       name: 'Execution Verifiers',
       accounts: [
@@ -239,17 +245,24 @@ export const metis: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails(
+      // note: these three contracts are not used anymore - transaction batch hashes are posted to EOA. Note that these contracts are still being discovered
+      /*discovery.getContractDetails(
         'MVM_CanonicalTransaction',
         'MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.',
       ),
+      */
+      discovery.getContractDetails(
+        'MVM_Verifier',
+        'This contract implements a voting scheme with which the majority of Verifiers can challenge malicious state roots proposed. There are no whitelisted verifiers, hence this contract is not used in practice.',
+      ),
+
       discovery.getContractDetails(
         'CanonicalTransactionChain',
-        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
       ),
       discovery.getContractDetails(
         'StateCommitmentChain',
-        'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
+        'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
       ),
       {
         name: 'ChainStorageContainer-CTC-batches',
@@ -279,10 +292,7 @@ export const metis: Layer2 = {
         'Lib_AddressManager',
         'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
       ),
-      discovery.getContractDetails(
-        'MVM_Verifier',
-        'This contract implements a voting scheme with which the majority of Verifiers can challenge malicious Sequencer.',
-      ),
+
       discovery.getContractDetails(
         'MVM_L2ChainManagerOnL1',
         'Contract that allows METIS_MANAGER to switch Sequencer.',
@@ -290,6 +300,14 @@ export const metis: Layer2 = {
       discovery.getContractDetails(
         'L1StandardBridge',
         'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+      ),
+      discovery.getContractDetails(
+        'LockingPool',
+        'Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.',
+      ),
+      discovery.getContractDetails(
+        'LockingInfo',
+        'Contract acting as an escrow for METIS tokens managed by LockingPool.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -307,6 +325,13 @@ export const metis: Layer2 = {
       link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
       date: '2022-04-12T00:00:00Z',
       description: 'Update moving data to an off-chain committee.',
+    },
+    {
+      name: 'Data hashes posted to EOA',
+      link: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      date: '2023-03-15T00:00:00Z',
+      description:
+        'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
     },
   ],
 }

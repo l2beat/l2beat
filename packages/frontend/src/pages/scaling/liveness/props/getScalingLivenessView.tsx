@@ -4,14 +4,18 @@ import {
   ImplementationChangeReportApiResponse,
   LivenessApiProject,
   LivenessApiResponse,
+  TrackedTxsConfigSubtypeValues,
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
+import { SyncStatus } from '../../../types'
 import {
   AnomalyIndicatorEntry,
   LivenessPagesData,
   ScalingLivenessViewEntry,
+  ScalingLivenessViewEntryData,
 } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
 
@@ -45,10 +49,6 @@ function getScalingLivenessViewEntry(
     )
   }
 
-  // TODO: remove this when liveness is fixed
-  // const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
-  const isSynced = true
-
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -62,20 +62,83 @@ function getScalingLivenessViewEntry(
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
-    stateUpdates: {
+    anomalyEntries: getAnomalyEntries(liveness.anomalies),
+    data: getLivenessData(liveness, project),
+  }
+}
+
+function getLivenessData(
+  liveness: LivenessApiResponse['projects'][string],
+  project: Layer2,
+): ScalingLivenessViewEntryData | undefined {
+  if (!liveness) return undefined
+
+  let isSynced = true
+  let lowestSyncedUntil: UnixTime = UnixTime.now()
+
+  const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
+
+  TrackedTxsConfigSubtypeValues.forEach((subtype) => {
+    const syncedUntil = liveness[subtype]?.syncedUntil
+    if (syncedUntil?.lt(syncTarget)) {
+      isSynced = false
+      if (syncedUntil.lt(lowestSyncedUntil)) {
+        lowestSyncedUntil = syncedUntil
+      }
+    }
+  })
+
+  return {
+    stateUpdates: liveness.stateUpdates && {
       ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
+      syncStatus: getSyncStatus(liveness.stateUpdates.syncedUntil, syncTarget),
     },
-    batchSubmissions: {
+    batchSubmissions: liveness.batchSubmissions && {
       ...liveness.batchSubmissions,
       warning: project.display.liveness?.warnings?.batchSubmissions,
+      syncStatus: getSyncStatus(
+        liveness.batchSubmissions.syncedUntil,
+        syncTarget,
+      ),
     },
-    proofSubmissions: {
+    proofSubmissions: liveness.proofSubmissions && {
       ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
+      syncStatus: getSyncStatus(
+        liveness.proofSubmissions.syncedUntil,
+        syncTarget,
+      ),
     },
-    anomalyEntries: getAnomalyEntries(liveness.anomalies),
+    syncStatus: {
+      isSynced,
+      displaySyncedUntil: formatTimestamp(lowestSyncedUntil.toNumber(), {
+        mode: 'datetime',
+        longMonthName: true,
+      }),
+    },
+  }
+}
+
+export function getSyncStatus(
+  syncedUntil: UnixTime,
+  syncTarget: UnixTime,
+): SyncStatus {
+  const isSynced = syncedUntil?.gte(syncTarget) ?? false
+  if (isSynced) {
+    return {
+      isSynced,
+    }
+  }
+  return {
     isSynced,
+    displaySyncedUntil: `Values have not been synced since\n${formatTimestamp(
+      syncedUntil.toNumber(),
+      {
+        mode: 'datetime',
+        longMonthName: true,
+      },
+    )}.`,
   }
 }
 

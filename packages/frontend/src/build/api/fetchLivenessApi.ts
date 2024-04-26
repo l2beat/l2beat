@@ -42,9 +42,35 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
   return {
     projects: {
       ...projects,
-      polygonzkevm: {
-        ...projects.polygonzkevm,
-        syncedUntil: UnixTime.now().add(-1, 'days'),
+      linea: {
+        ...projects.linea,
+        batchSubmissions: {
+          last30Days: generateDataPoint(),
+          last90Days: generateDataPoint(),
+          allTime: generateDataPoint(),
+          syncedUntil: UnixTime.now().add(-2, 'hours').toStartOf('hour'),
+        },
+        proofSubmissions: {
+          last30Days: generateDataPoint(),
+          last90Days: generateDataPoint(),
+          allTime: generateDataPoint(),
+          syncedUntil: UnixTime.now().toStartOf('hour'),
+        },
+      },
+      dydx: {
+        ...projects.dydx,
+        stateUpdates: {
+          last30Days: generateDataPoint(),
+          last90Days: generateDataPoint(),
+          allTime: generateDataPoint(),
+          syncedUntil: UnixTime.now().add(-2, 'hours').toStartOf('hour'),
+        },
+        proofSubmissions: {
+          last30Days: generateDataPoint(),
+          last90Days: generateDataPoint(),
+          allTime: generateDataPoint(),
+          syncedUntil: UnixTime.now().add(-4, 'hours').toStartOf('hour'),
+        },
       },
     },
   }
@@ -56,14 +82,15 @@ function generateMockData(): LivenessApiProject {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
+      syncedUntil: UnixTime.now().toStartOf('hour'),
     },
     stateUpdates: {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
+      syncedUntil: UnixTime.now().toStartOf('hour'),
     },
     anomalies: generateAnomalies(),
-    syncedUntil: UnixTime.now(),
   }
 }
 

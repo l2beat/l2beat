@@ -1,0 +1,160 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "TokenBridge",
+      "values": {
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "evmChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finality": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governanceChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governanceContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFork": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wormhole": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TokenImplementation",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nativeContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Wormhole",
+      "values": {
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "evmChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentGuardianSetIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGuardianSetExpiry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governanceChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governanceContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guardianSet": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFork": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

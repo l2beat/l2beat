@@ -30,9 +30,7 @@ describe(FinalityController.name, () => {
       )
 
       const result = await finalityController.getFinality()
-      if (result.type === 'success') {
-        expect(result.data).toEqual({ projects: {} })
-      }
+      expect(result).toEqual({ projects: {} })
     })
 
     it('correctly calculate avg, min and max', async () => {
@@ -87,24 +85,24 @@ describe(FinalityController.name, () => {
       const last30Days = calculateDetailsFor(records, '30d')
 
       assert(last30Days, 'last30Days is undefined')
+
       const result = await finalityController.getFinality()
-      if (result.type === 'success') {
-        expect(result.data.projects.project1).toEqual({
-          timeToInclusion: {
-            averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-            maximumInSeconds: last30Days.maximumInSeconds,
-          },
-          syncedUntil: records[0].timestamp,
-        })
-        expect(result.data.projects.project2).toEqual({
-          timeToInclusion: {
-            averageInSeconds: project2Result.averageTimeToInclusion,
-            maximumInSeconds: project2Result.maximumTimeToInclusion,
-            minimumInSeconds: project2Result.minimumTimeToInclusion,
-          },
-          syncedUntil: project2Result.timestamp,
-        })
-      }
+
+      expect(result.projects.project1).toEqual({
+        timeToInclusion: {
+          averageInSeconds: last30Days.averageInSeconds / 2 + 0,
+          maximumInSeconds: last30Days.maximumInSeconds,
+        },
+        syncedUntil: records[0].timestamp,
+      })
+      expect(result.projects.project2).toEqual({
+        timeToInclusion: {
+          averageInSeconds: project2Result.averageTimeToInclusion,
+          maximumInSeconds: project2Result.maximumTimeToInclusion,
+          minimumInSeconds: project2Result.minimumTimeToInclusion,
+        },
+        syncedUntil: project2Result.timestamp,
+      })
     })
   })
 

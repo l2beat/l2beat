@@ -1,7 +1,7 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 19532302,
+  "blockNumber": 19726116,
   "configHash": "0xd49e5be91a643e5b2f4a8647e167c445fbc4e130895ffc2d50ede4fdc44b8a7f",
   "version": 3,
   "contracts": [
@@ -170,23 +170,23 @@
         "getAmountOfMembers": 5,
         "members": [
           [
-            "http://ec2-18-166-77-46.ap-east-1.compute.amazonaws.com:8444",
+            "http://ec2-13-57-35-237.us-west-1.compute.amazonaws.com:8444",
             "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
           ],
           [
-            "http://ec2-18-163-181-171.ap-east-1.compute.amazonaws.com:8444",
+            "http://ec2-54-153-117-150.us-west-1.compute.amazonaws.com:8444",
             "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
           ],
           [
-            "http://ec2-43-198-25-156.ap-east-1.compute.amazonaws.com:8444",
+            "http://ec2-52-53-165-158.us-west-1.compute.amazonaws.com:8444",
             "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
           ],
           [
-            "http://ec2-18-167-116-200.ap-east-1.compute.amazonaws.com:8444",
+            "http://ec2-18-144-4-166.us-west-1.compute.amazonaws.com:8444",
             "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
           ],
           [
-            "http://ec2-18-163-127-148.ap-east-1.compute.amazonaws.com:8444",
+            "http://ec2-54-219-14-189.us-west-1.compute.amazonaws.com:8444",
             "0xFe1da7CAd939805d4A889822357c348177a5118d"
           ]
         ],

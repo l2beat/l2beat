@@ -13,7 +13,7 @@ export const orb3: Layer3 = underReviewL3({
     description:
       'ORB3 is a GameFi-focused Ethereum L3 leveraging Arbitrum AnyTrust.',
     purposes: ['Gaming', 'NFT', 'DeFi', 'Social'],
-    provider: 'Arbitrum Orbit',
+    provider: 'Arbitrum',
     links: {
       websites: ['https://orb3.tech/'],
       apps: [
@@ -30,5 +30,7 @@ export const orb3: Layer3 = underReviewL3({
         'https://mirror.xyz/0xCC98fAeE2309c7424cFE5995741b96BE61c9253f',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc.orb3.tech',
 })

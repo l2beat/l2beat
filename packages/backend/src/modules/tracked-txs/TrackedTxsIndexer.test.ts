@@ -8,7 +8,7 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
 import {

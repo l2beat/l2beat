@@ -1,7 +1,7 @@
 {
   "name": "canvasconnect",
   "chain": "ethereum",
-  "blockNumber": 19531509,
+  "blockNumber": 19624848,
   "configHash": "0xbe5934a4d340aa6345248ab2cda83d3c2c3fef1d362e72695172f20325e1dc26",
   "version": 3,
   "contracts": [
@@ -55,12 +55,8 @@
         "getLastBatchId": 30,
         "getOrderRoot": "2785555682601588958151334012706355468747525614143907331740694510857951597681",
         "getOrderTreeHeight": 251,
-        "getRegisteredAvailabilityVerifiers": [
-          "0x8B3A6662809195453645e37C2005d655f57ca818"
-        ],
-        "getRegisteredVerifiers": [
-          "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"
-        ],
+        "getRegisteredAvailabilityVerifiers": "0x8B3A6662809195453645e37C2005d655f57ca818",
+        "getRegisteredVerifiers": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
         "getSequenceNumber": 16,

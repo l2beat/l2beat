@@ -1,7 +1,7 @@
 {
   "name": "myria",
   "chain": "ethereum",
-  "blockNumber": 17039298,
+  "blockNumber": 19624868,
   "configHash": "0x077baa6b8fe50a71e1ea24dd724184a5efc8dcd5c5866970907b8fddd6bc243b",
   "version": 3,
   "contracts": [
@@ -62,21 +62,17 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 1277,
-        "getOrderRoot": "2360834696991465875715160504219404772262005493544316300561923148318167766705",
+        "getLastBatchId": 4178,
+        "getOrderRoot": "2276434953304540412518667198392363415986360219908890541301239685377900954884",
         "getOrderTreeHeight": 251,
-        "getRegisteredAvailabilityVerifiers": [
-          "0x1e601435E181423e7A8430813d7500012a6169cB"
-        ],
-        "getRegisteredVerifiers": [
-          "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"
-        ],
+        "getRegisteredAvailabilityVerifiers": "0x1e601435E181423e7A8430813d7500012a6169cB",
+        "getRegisteredVerifiers": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 1277,
+        "getSequenceNumber": 4178,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "443268220124739882795554319019649989258522669664401563242751405509506465469",
+        "getValidiumVaultRoot": "3199988330059004107056392900054342911726249042848011660165288963183734583344",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,

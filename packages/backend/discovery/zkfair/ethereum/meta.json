@@ -208,6 +208,7 @@
     },
     {
       "name": "DataAvailabilityCommittee",
+      "description": "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.",
       "values": {
         "committeeHash": {
           "description": null,
@@ -220,7 +221,7 @@
           "type": null
         },
         "members": {
-          "description": null,
+          "description": "URL and address of the DAC member",
           "severity": null,
           "type": null
         },

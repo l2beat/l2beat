@@ -1,0 +1,143 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "across-v3",
+  "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
+  "names": {
+    "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool",
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer",
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": "VotingToken",
+    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "EmergencyProposalExecutor",
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
+    "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "Ethereum_SpokePool",
+    "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
+    "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
+    "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
+    "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter",
+    "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F": "Optimism_Adapter",
+    "0x29528780E29abb8Af95a5e5a125b94766987543F": "Arbitrum_Adapter",
+    "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E": "Base_Adapter",
+    "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
+    "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A": "Polygon_Adapter"
+  },
+  "overrides": {
+    "HubPool": {
+      "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
+      "fields": {
+        "CrossChainContracts": {
+          "type": "stateFromEvent",
+          "event": "CrossChainContractsSet",
+          "returnParams": ["l2ChainId", "adapter", "spokePool"],
+          "groupBy": "l2ChainId"
+        }
+      },
+      "ignoreRelatives": ["weth"],
+      "ignoreInWatchMode": ["rootBundleProposal"]
+    },
+    "BondToken": {
+      "fields": {
+        "proposers": {
+          "type": "arrayFromOneEvent",
+          "event": "ProposerModified",
+          "valueKey": "proposer",
+          "flagKey": "enabled"
+        }
+      }
+    },
+    "0xB524735356985D2f267FA010D681f061DfF03715": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "EmergencyProposalExecutor": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "ProposerV2": {
+      "ignoreMethods": ["bondedProposals"],
+      "ignoreInWatchMode": ["bond", "getCurrentTime"]
+    },
+    "GovernorV2": {
+      "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
+      "ignoreMethods": ["getProposal", "proposals"]
+    },
+    "EmergencyProposer": {
+      "ignoreInWatchMode": ["getCurrentTime"]
+    },
+    "Ethereum_SpokePool": {
+      "ignoreMethods": ["rootBundles"],
+      "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
+      "fields": {
+        "proxiableUUID": {
+          "type": "call",
+          "method": "function proxiableUUID() view returns (bytes32)",
+          "args": [],
+          "expectRevert": true
+        }
+      },
+      "ignoreRelatives": ["wrappedNativeToken"]
+    },
+    "VotingToken": {
+      "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
+    },
+    "ZkSync_Adapter": {
+      "ignoreInWatchMode": ["getL1CallValue"], // required amount of ETH to send a message, changes depending on the gas price
+      "ignoreRelatives": [
+        "zkErc20Bridge",
+        "zkSyncEthBridge",
+        "zkSyncMessageBridge",
+        "l1Weth"
+      ]
+    },
+    "Linea_Adapter": {
+      "ignoreRelatives": [
+        "L1_MESSAGE_SERVICE",
+        "L1_TOKEN_BRIDGE",
+        "L1_USDC_BRIDGE",
+        "L1_WETH"
+      ]
+    },
+    "Optimism_Adapter": {
+      "ignoreRelatives": [
+        "dai",
+        "daiOptimismBridge",
+        "l1StandardBridge",
+        "l1Weth",
+        "messenger",
+        "snx",
+        "snxOptimismBridge"
+      ]
+    },
+    "Arbitrum_Adapter": {
+      "ignoreRelatives": [
+        "l1ERC20GatewayRouter",
+        "l1Inbox",
+        "l2RefundL2Address"
+      ]
+    },
+    "Base_Adapter": {
+      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
+    },
+    "Boba_Adapter": {
+      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
+    },
+    "Polygon_Adapter": {
+      "ignoreRelatives": [
+        "depositManager",
+        "erc20Predicate",
+        "fxStateSender",
+        "l1Matic",
+        "l1Weth",
+        "rootChainManager"
+      ]
+    },
+    "OptimisticOracleV3": {
+      "ignoreMethods": ["getCurrentTime"],
+      "ignoreRelatives": ["cachedOracle", "defaultCurrency"]
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"],
+      "ignoreRelatives": ["collateral"]
+    }
+  }
+}

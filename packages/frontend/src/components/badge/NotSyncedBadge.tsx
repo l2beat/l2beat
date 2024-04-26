@@ -5,24 +5,37 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { Badge } from './Badge'
 
 interface NotSyncedBadgeProps {
-  displaySyncedUntil: string
+  displaySyncedUntil?: string
   className?: string
 }
 
 export function NotSyncedBadge({
-  displaySyncedUntil: syncedUntil,
+  displaySyncedUntil,
   className,
 }: NotSyncedBadgeProps) {
+  if (!displaySyncedUntil)
+    return (
+      <div className={cn('inline', className)}>
+        <NotSynced />
+      </div>
+    )
+
   return (
     <Tooltip className={cn('inline', className)}>
       <TooltipTrigger className="inline">
-        <Badge size="extraSmall" padding="regular" type="gray">
-          NOT SYNCED
-        </Badge>
+        <NotSynced />
       </TooltipTrigger>
       <TooltipContent>
-        The data for this item is not synced since {syncedUntil}.
+        The data for this item is not synced since {displaySyncedUntil}.
       </TooltipContent>
     </Tooltip>
+  )
+}
+
+function NotSynced() {
+  return (
+    <Badge size="extraSmall" padding="regular" type="gray">
+      NOT SYNCED
+    </Badge>
   )
 }

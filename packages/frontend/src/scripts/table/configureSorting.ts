@@ -216,9 +216,10 @@ export function setSortingArrowsOrderKey(name: string, orderKey: string) {
   const tables = $$('[data-role="table"]')
   tables.forEach((table) => {
     const { $ } = makeQuery(table)
-    const sortingArrowsElement = $(
+    const sortingArrowsElement = $.maybe(
       '[data-role="sorting-arrows"][data-name="' + name + '"]',
     )
+    if (!sortingArrowsElement) return
     const sortingArrows = getSortingArrowsElement(sortingArrowsElement, table)
     sortingArrows.setOrderKey(orderKey)
 

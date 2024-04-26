@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xfb0b61de4c8e0445a4631e0fabe790a63dede53e
+
+# Diff at Mon, 08 Apr 2024 07:34:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ad88f63bb61619b31763ca9524dff8964cdc75f3 block: 19588327
+- current block number: 19609491
+
+## Description
+
+A new plug is added. Its source code is not verified on Etherscan.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Array of plug contract addresses
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.19:
++        "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19588327 (main branch discovery), not current.
+
+```diff
+    contract WETH Vault 2 (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa) {
+    +++ description: None
+      values.token__:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xce7bfd338e208ebb4e3ce8a443525d2c636ed6ce
 
 # Diff at Fri, 05 Apr 2024 08:24:08 GMT:

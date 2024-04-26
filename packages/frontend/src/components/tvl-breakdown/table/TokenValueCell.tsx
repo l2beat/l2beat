@@ -3,7 +3,7 @@ import { AssetId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
-import { formatLargeNumberWithCommas } from '../../../utils'
+import { formatNumberWithCommas } from '../../../utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface TokenValueCellProps {
@@ -26,7 +26,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
   return props.forCanonical && props.escrows ? (
     <Tooltip>
       <TooltipTrigger className="flex flex-col items-end gap-2 text-xs font-bold">
-        ${formatLargeNumberWithCommas(Number(props.usdValue))}
+        ${formatNumberWithCommas(Number(props.usdValue))}
         {props.escrows.length > 1 &&
           props.escrows.map((escrow) => (
             <div
@@ -35,7 +35,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
               data-role="multiple-escrows-hidden"
               data-token={props.assetId}
             >
-              ${formatLargeNumberWithCommas(Number(escrow.usdValue))}
+              ${formatNumberWithCommas(Number(escrow.usdValue))}
             </div>
           ))}
       </TooltipTrigger>
@@ -48,7 +48,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
   ) : (
     <Tooltip>
       <TooltipTrigger className="text-xs font-bold">
-        ${formatLargeNumberWithCommas(Number(props.usdValue))}
+        ${formatNumberWithCommas(Number(props.usdValue))}
       </TooltipTrigger>
       <TooltipContent>
         Calculation formula:

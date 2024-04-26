@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 197243619,
+  "blockNumber": 197829534,
   "configHash": "0x979ea00496c3ecb95abaf53116289a0d8ad681c58bbfc4be30adfe8f007d7400",
   "version": 3,
   "contracts": [
@@ -54,7 +54,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1710506484,
@@ -105,9 +106,9 @@
         "gateway": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
-        "latestBlock": 1146600,
+        "latestBlock": 1159200,
         "nextHeaderFunctionId": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
-        "state_proofNonce": 444,
+        "state_proofNonce": 486,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "VERSION": "0.1.0"
       },
@@ -119,7 +120,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 4 (75%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1678822125,

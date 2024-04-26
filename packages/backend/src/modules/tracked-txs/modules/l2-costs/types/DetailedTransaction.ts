@@ -4,7 +4,7 @@ export interface DetailedTransactionBase {
   timestamp: UnixTime
   calldataGasUsed: number
   computeGasUsed: number
-  overheadGasUsed: 21000
+  overheadGasUsed: number
   totalGas: number
   gasCost: number
   calldataGasCost: number

@@ -1,0 +1,827 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Arbitrum_Adapter",
+      "values": {
+        "RELAY_MESSAGE_L2_GAS_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_TOKENS_L2_GAS_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1ERC20GatewayRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2MaxSubmissionCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2RefundL2Address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Base_Adapter",
+      "values": {
+        "l1StandardBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Boba_Adapter",
+      "values": {
+        "l1StandardBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BondToken",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hubPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CoveredCallFinancialProductLibrary",
+      "values": {}
+    },
+    {
+      "name": "EmergencyProposalExecutor",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EmergencyProposer",
+      "values": {
+        "emergencyProposals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumWaitTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Ethereum_Adapter",
+      "values": {}
+    },
+    {
+      "name": "Ethereum_SpokePool",
+      "values": {
+        "EMPTY_RELAYER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMPTY_REPAYMENT_CHAIN_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INFINITE_FILL_DEADLINE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_TRANSFER_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPDATE_V3_DEPOSIT_DETAILS_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "crossDomainAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositQuoteTimeBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fillDeadlineBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hubPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausedDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausedFills": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxiableUUID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wrappedNativeToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Finder",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GovernorV2",
+      "values": {
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMember": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numProposals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HubPool",
+      "values": {
+        "CrossChainContracts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bondAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bondToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "liveness": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpFeeRatePerSecond": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpTokenFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeCaptureAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeCapturePct": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBundleProposal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HubPool Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Linea_Adapter",
+      "values": {
+        "L1_MESSAGE_SERVICE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_TOKEN_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_USDC_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_WETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LpTokenFactory",
+      "values": {}
+    },
+    {
+      "name": "Optimism_Adapter",
+      "values": {
+        "dai": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "daiOptimismBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1StandardBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "snx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "snxOptimismBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimisticGovernor",
+      "values": {
+        "EXPLANATION_KEY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSAL_HASH_KEY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RULES_KEY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "avatar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bondAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "collateral": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escalationManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGuard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProposalBond": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "liveness": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimisticOracleV3": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "target": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimisticOracleV3",
+      "values": {
+        "burnedBondPercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cachedOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultCurrency": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultIdentifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLiveness": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numericalTrue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Polygon_Adapter",
+      "values": {
+        "depositManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "erc20Predicate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fxStateSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Matic": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootChainManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProposerV2",
+      "values": {
+        "bond": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "VotingToken",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMember": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupplyAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkSync_Adapter",
+      "values": {
+        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_GAS_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL1CallValue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2RefundAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkErc20Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncEthBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncMessageBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

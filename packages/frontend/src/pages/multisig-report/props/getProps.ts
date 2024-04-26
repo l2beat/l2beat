@@ -1,8 +1,8 @@
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
+import { getDefaultPageMetadata } from '../../metadata'
 import { Wrapped } from '../../Page'
 import { MultisigReportPageProps } from '../view/MultisigReportPage'
-import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
   return {
@@ -13,7 +13,10 @@ export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
       multisigReportUrl: config.links.multisigReport,
     },
     wrapper: {
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/images/announcements/multisig-report-og.png',
+        url: 'https://l2beat.com/multisig-report',
+      }),
       banner: config.features.banner,
     },
   }

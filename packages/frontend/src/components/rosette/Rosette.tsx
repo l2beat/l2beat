@@ -7,8 +7,8 @@ import { getRiskSentiments } from '../../utils/risks/values'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { Icon } from '../icons/Icon'
-import { WarningBar } from '../project/WarningBar'
 import { SentimentText } from '../table/SentimentText'
+import { WarningBar } from '../WarningBar'
 
 export interface RosetteProps {
   risks: RiskSentiments
@@ -17,14 +17,15 @@ export interface RosetteProps {
   isUnderReview?: boolean
 }
 
-export function SmallRosette({ risks, className, isUpcoming }: RosetteProps) {
+export function SmallRosette({
+  risks,
+  className,
+  isUpcoming,
+  isUnderReview,
+}: RosetteProps) {
   if (isUpcoming) {
     return <UpcomingBadge className={className} isShort={true} />
   }
-
-  const isUnderReview = Object.values(risks).every(
-    (sentiment) => sentiment === 'UnderReview',
-  )
 
   return (
     <Icon

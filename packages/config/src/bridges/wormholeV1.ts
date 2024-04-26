@@ -24,7 +24,7 @@ export const wormholeV1: Bridge = {
         tokens: [
           //'FTT',
           'BUSD',
-          'HBTC',
+          // 'HBTC',
           'HUSD',
           'DAI',
           'SRM',

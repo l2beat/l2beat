@@ -1,7 +1,7 @@
 {
   "name": "layer2financezk",
   "chain": "ethereum",
-  "blockNumber": 19377139,
+  "blockNumber": 19624862,
   "configHash": "0x123b30c187d2be5c7ebf79b61237277f28ba4c4971eee119308728dd28c9c5a8",
   "version": 3,
   "contracts": [
@@ -69,12 +69,8 @@
         "getLastBatchId": 115,
         "getOrderRoot": "2449344249870982788470726390907865854777361400154633433874282805096307135974",
         "getOrderTreeHeight": 63,
-        "getRegisteredAvailabilityVerifiers": [
-          "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"
-        ],
-        "getRegisteredVerifiers": [
-          "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
-        ],
+        "getRegisteredAvailabilityVerifiers": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
+        "getRegisteredVerifiers": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
         "getSequenceNumber": 114,
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",

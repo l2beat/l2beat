@@ -5,11 +5,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getTokens } from '../../../../utils/project/getChart'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
+import { getTokens } from '../../../project/common/getCharts'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
@@ -18,7 +18,8 @@ export function getScalingTvlView(
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ScalingTvlViewProps {
-  const orderedProjects = orderByTvl(projects, tvlApiResponse)
+  const included = getIncludedProjects(projects, tvlApiResponse)
+  const orderedProjects = orderByTvl(included, tvlApiResponse)
 
   return {
     items: orderedProjects.map((project) => {
@@ -83,4 +84,16 @@ function getScalingTvlViewEntry(
     tokens: getTokens(project.id, tvlApiResponse, true),
     stage: project.stage,
   }
+}
+
+function getIncludedProjects(
+  projects: Layer2[],
+  tvlApiResponse: TvlApiResponse,
+) {
+  return projects.filter(
+    (p) =>
+      tvlApiResponse?.projects[p.id.toString()] &&
+      !p.isUpcoming &&
+      !p.isArchived,
+  )
 }

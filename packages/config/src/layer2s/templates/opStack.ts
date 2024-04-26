@@ -2,6 +2,7 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -26,19 +27,21 @@ import {
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { type Layer3, type Layer3Display } from '../../layer3s'
+import { type Layer3, type Layer3Display } from '../../layer3s/types'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
 import { getStage } from '../common/stages/getStage'
 import {
   type Layer2,
   type Layer2Display,
   Layer2FinalityConfig,
-  Layer2TransactionApi,
+  Layer2TxConfig,
 } from '../types'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -60,28 +63,30 @@ export interface OpStackConfigCommon {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
-  upgradeability: {
+  upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
   }
-  l1StandardBridgeEscrow: EthereumAddress
+  l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
-  l2OutputOracle: ContractParameters
-  portal: ContractParameters
+  l2OutputOracle?: ContractParameters
+  portal?: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
-  milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[]
-  roleOverrides: Record<string, string>
+  milestones?: Milestone[]
+  knowledgeNuggets?: KnowledgeNugget[]
+  roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateEscrows: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
+  nonTemplateTrackedTxs?: Layer2TxConfig[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
+  nodeSourceLink?: string
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
@@ -128,6 +133,16 @@ export function opStackCommon(
     )
   }
 
+  const portal =
+    templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
+  const l2OutputOracle =
+    templateVars.l2OutputOracle ??
+    templateVars.discovery.getContract('L2OutputOracle')
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     technology: {
@@ -147,7 +162,7 @@ export function opStackCommon(
           {
             text: 'L2OutputOracle.sol - Etherscan source code, deleteL2Outputs function',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.l2OutputOracle,
+              l2OutputOracle,
             )}#code`,
           },
         ],
@@ -168,7 +183,7 @@ export function opStackCommon(
           {
             text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.portal,
+              portal,
             )}#code`,
           },
         ],
@@ -179,13 +194,13 @@ export function opStackCommon(
           {
             text: 'L2OutputOracle.sol - Etherscan source code, CHALLENGER address',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.l2OutputOracle,
+              l2OutputOracle,
             )}#code`,
           },
           {
             text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER address',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.l2OutputOracle,
+              l2OutputOracle,
             )}#code`,
           },
           {
@@ -205,7 +220,7 @@ export function opStackCommon(
           {
             text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.portal,
+              portal,
             )}#code`,
           },
         ],
@@ -224,19 +239,19 @@ export function opStackCommon(
             {
               text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
               href: `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.portal,
+                portal,
               )}#code`,
             },
             {
               text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
               href: `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.portal,
+                portal,
               )}#code`,
             },
             {
               text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
               href: `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.l2OutputOracle,
+                l2OutputOracle,
               )}#code`,
             },
           ],
@@ -269,23 +284,25 @@ export function opStackCommon(
       ],
     },
     permissions: [
-      ...templateVars.discovery.getOpStackPermissions(
-        templateVars.roleOverrides,
-      ),
+      ...templateVars.discovery.getOpStackPermissions({
+        batcherHash: 'Sequencer',
+        PROPOSER: 'Proposer',
+        GUARDIAN: 'Guardian',
+        CHALLENGER: 'Challenger',
+        ...(templateVars.roleOverrides ?? {}),
+      }),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
     contracts: {
       addresses: [
-        ...templateVars.discovery.getOpStackContractDetails(
-          templateVars.upgradeability,
-        ),
+        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
         ...(templateVars.nonTemplateContracts ?? []),
       ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
-    milestones: templateVars.milestones,
+    milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
-      ...templateVars.knowledgeNuggets,
+      ...(templateVars.knowledgeNuggets ?? []),
       {
         title: 'How Optimism compresses data',
         url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
@@ -317,6 +334,19 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
 
+  const portal =
+    templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
+  const l2OutputOracle =
+    templateVars.l2OutputOracle ??
+    templateVars.discovery.getContract('L2OutputOracle')
+  const l1StandardBridgeEscrow =
+    templateVars.l1StandardBridgeEscrow ??
+    templateVars.discovery.getContract('L1StandardBridge').address
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
+
   const postsToCelestia = templateVars.discovery.getContractValue<{
     isSomeTxsLengthEqualToCelestiaDAExample: boolean
   }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
@@ -331,6 +361,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     )
   }
 
+  const FINALIZATION_PERIOD_SECONDS: number =
+    templateVars.discovery.getContractValue<number>(
+      'L2OutputOracle',
+      'FINALIZATION_PERIOD_SECONDS',
+    )
+
   return {
     type: 'layer2',
     ...opStackCommon(templateVars),
@@ -342,29 +378,45 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
-      finality: {
-        warning:
-          "It's assumed that transaction data batches are submitted sequentially.",
-        finalizationPeriod: templateVars.display.finality?.finalizationPeriod,
-      },
+      liveness:
+        daProvider !== undefined
+          ? undefined
+          : {
+              warnings: {
+                stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+              },
+              explanation: `${templateVars.display.name} is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+                HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+              )} or until it gets published. The state root gets finalized ${formatSeconds(
+                FINALIZATION_PERIOD_SECONDS,
+              )} after it has been posted.`,
+            },
+      finality:
+        daProvider !== undefined
+          ? undefined
+          : {
+              warning:
+                "It's assumed that transaction data batches are submitted sequentially.",
+              finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+            },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
-          address: templateVars.portal.address,
+          address: portal.address,
           tokens: optimismPortalTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(', ')}.`,
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
         templateVars.discovery.getEscrowDetails({
-          address: templateVars.l1StandardBridgeEscrow,
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
-        ...templateVars.nonTemplateEscrows,
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
       transactionApi:
         templateVars.transactionApi ??
@@ -380,7 +432,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       trackedTxs:
         daProvider !== undefined
           ? undefined
-          : [
+          : templateVars.nonTemplateTrackedTxs ?? [
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -400,12 +452,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                 ],
                 query: {
                   formula: 'functionCall',
-                  address: templateVars.l2OutputOracle.address,
+                  address: l2OutputOracle.address,
                   selector: '0x9aaab648',
                   functionSignature:
                     'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
                   sinceTimestampInclusive: new UnixTime(
-                    templateVars.l2OutputOracle.sinceTimestamp ??
+                    l2OutputOracle.sinceTimestamp ??
                       templateVars.genesisTimestamp.toNumber(),
                   ),
                 },
@@ -438,7 +490,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         ...riskViewDA(daProvider),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -453,7 +505,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         ),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -466,7 +518,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         ),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -475,7 +527,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
         sources: [
           {
-            contract: templateVars.l2OutputOracle.name,
+            contract: l2OutputOracle.name,
             references: [],
           },
         ],
@@ -513,7 +565,8 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             {
               rollupNodeLink:
                 templateVars.isNodeAvailable === true
-                  ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                  ? templateVars.nodeSourceLink ??
+                    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
                   : '',
             },
           ),
@@ -542,6 +595,19 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     )
   }
 
+  const portal =
+    templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
+  const l2OutputOracle =
+    templateVars.l2OutputOracle ??
+    templateVars.discovery.getContract('L2OutputOracle')
+  const l1StandardBridgeEscrow =
+    templateVars.l1StandardBridgeEscrow ??
+    templateVars.discovery.getContract('L1StandardBridge').address
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
+
   return {
     type: 'layer3',
     ...opStackCommon(templateVars),
@@ -561,7 +627,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         ...riskViewDA(daProvider),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -576,7 +642,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         ),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -589,7 +655,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         ),
         sources: [
           {
-            contract: templateVars.portal.name,
+            contract: portal.name,
             references: [],
           },
         ],
@@ -598,7 +664,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
         sources: [
           {
-            contract: templateVars.l2OutputOracle.name,
+            contract: l2OutputOracle.name,
             references: [],
           },
         ],
@@ -606,24 +672,53 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
+    dataAvailability:
+      daProvider !== undefined
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.name, daProvider.fallback]
+              : [daProvider.name],
+            bridge: daProvider.bridge,
+            mode: 'Transactions data (compressed)',
+          })
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? 'Ethereum (blobs or calldata)'
+                : 'Ethereum (calldata)',
+            ],
+            bridge: { type: 'Enshrined' },
+            mode: 'Transactions data (compressed)',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
-          address: templateVars.portal.address,
+          address: portal.address,
           tokens: optimismPortalTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(', ')}.`,
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
         templateVars.discovery.getEscrowDetails({
-          address: templateVars.l1StandardBridgeEscrow,
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
-        ...templateVars.nonTemplateEscrows,
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     stateDerivation: templateVars.stateDerivation,
   }

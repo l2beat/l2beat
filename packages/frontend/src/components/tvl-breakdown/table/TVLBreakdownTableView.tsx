@@ -1,9 +1,9 @@
 import { AssetId } from '@l2beat/shared-pure'
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 
+import { ProjectSectionId } from '../../../pages/project/components/sections/common/sectionId'
 import { cn } from '../../../utils/cn'
 import { InfoIcon } from '../../icons'
-import { ProjectSectionId } from '../../project/sectionId'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 
 interface Props<
@@ -122,13 +122,21 @@ export function TVLBreakdownTableView<
                     <td
                       key={j}
                       className={cn(
-                        'h-9 py-2 pr-2 align-top first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
+                        'h-9 py-2 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
                         column.align === 'right' && 'text-right',
                         column.align === 'center' && 'text-center',
                       )}
                     >
-                      {column.getValue(item, i)}
+                      <div
+                        className={cn(
+                          'flex items-center',
+                          column.align === 'right' && 'justify-end',
+                          column.align === 'center' && 'justify-center',
+                        )}
+                      >
+                        {column.getValue(item, i)}
+                      </div>
                     </td>
                   )
                 })}

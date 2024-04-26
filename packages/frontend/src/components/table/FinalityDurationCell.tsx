@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { ScalingFinalityViewEntryData } from '../../pages/scaling/finality/types'
-import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
+import { GrayedOut } from './GrayedOut'
 
 interface Props {
   data: ScalingFinalityViewEntryData
@@ -16,15 +16,13 @@ export function FinalityDurationCell(props: Props) {
   return (
     <Tooltip data-testid="finality-duration-cell">
       <TooltipTrigger className="flex items-center gap-1">
-        <div
-          className={cn(!props.data.syncStatus.isSynced && '*:!text-gray-500')}
-        >
+        <GrayedOut grayOut={!props.data.syncStatus.isSynced}>
           <DurationCell
             durationInSeconds={props.data.timeToInclusion.averageInSeconds}
           />
-        </div>
+        </GrayedOut>
         {props.data.timeToInclusion.warning && (
-          <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
+          <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
       </TooltipTrigger>
       <TooltipContent>

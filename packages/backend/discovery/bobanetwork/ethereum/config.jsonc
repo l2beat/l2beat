@@ -3,176 +3,69 @@
   "chain": "ethereum",
   "name": "bobanetwork",
   "initialAddresses": [
-    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00", //Boba Rollup
-    "0x1A26ef6575B7BBB864d984D9255C069F6c361a14", //L1LiquidityPool
-    "0xC891F466e53f40603250837282eAE4e22aD5b088" //L1 NFT Bridge
+    "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB" // SystemConfig
   ],
   "names": {
-    "0xD05b8fD53614e1569cAC01c6D8d41416d0a7257E": "L1CrossDomainMessengerFast",
-    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": "L1CrossDomainMessenger_1",
-    "0x12Acf6E3ca96A60fBa0BBFd14D2Fe0EB6ae47820": "L1CrossDomainMessenger_2",
-    "0x13992B9f327faCA11568BE18a8ad3E9747e87d93": "SCCStorageContainerBatches",
-    "0x17148284d2da2f38c96346f1776C1BF7D7691231": "CTCStorageContainerBatches",
-    "0x5f003030884B3a105809a0Eb0C0C28Ac40ECCD8d": "CTCQueue",
-    "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": "AddressManager",
-    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": "L1StandardBridge",
-    "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec": "StateCommitmentChain",
-    "0xfBd2541e316948B259264c02f370eD088E04c3Db": "CanonicalTransactionChain"
+    "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB": "SystemConfig",
+    "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e": "OptimismPortal",
+    "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741": "L2OutputOracle",
+    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": "L1CrossDomainMessenger",
+    "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "BobaMultisig"
   },
   "overrides": {
-    "L1CrossDomainMessengerFast": {
-      "fields": {
-        "xDomainMessageSender": {
-          "type": "call",
-          "method": "function xDomainMessageSender() view returns (address)",
-          "args": [],
-          "expectRevert": true
-        }
-      }
+    "0x4200000000000000000000000000000000000010": {
+      "ignoreDiscovery": true
     },
-    "L1StandardBridge": {
-      "ignoreInWatchMode": [
-        "currentDepositInfoHash",
-        "lastHashUpdateBlock",
-        "priorDepositInfoHash"
-      ]
+    "0x4200000000000000000000000000000000000007": {
+      "ignoreDiscovery": true
     },
-    "StateCommitmentChain": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
       "ignoreInWatchMode": [
-        "getLastSequencerTimestamp",
-        "getTotalBatches",
-        "getTotalElements"
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
       ],
       "fields": {
-        "deletedStateBatches": {
+        "deletedOutputs": {
           "type": "stateFromEvent",
-          "event": "StateBatchDeleted",
-          "returnParams": ["_batchIndex", "_batchRoot"]
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
         }
       }
     },
-    "CanonicalTransactionChain": {
-      "ignoreMethods": ["getQueueElement"],
-      "ignoreInWatchMode": [
-        "getLastBlockNumber",
-        "getLastTimestamp",
-        "getNextQueueIndex",
-        "getNumPendingQueueElements",
-        "getQueueLength",
-        "getTotalBatches",
-        "getTotalElements"
-      ]
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
     },
-    "CTCStorageContainerBatches": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "SCCStorageContainerBatches": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "CTCQueue": {
-      "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
-    },
-    "L1CrossDomainMessenger_1": {
+    "SystemConfig": {
       "fields": {
-        "xDomainMessageSender": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
           "type": "call",
-          "method": "function xDomainMessageSender() view returns (address)",
-          "args": [],
-          "expectRevert": true
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
-      }
-    },
-    "L1CrossDomainMessenger_2": {
-      "fields": {
-        "xDomainMessageSender": {
-          "type": "call",
-          "method": "function xDomainMessageSender() view returns (address)",
-          "args": [],
-          "expectRevert": true
-        }
-      }
-    },
-    "AddressManager": {
-      "fields": {
-        "OVM_Proposer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_Proposer"]
-        },
-        "OVM_Sequencer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_Sequencer"]
-        },
-        "L1NFTBridge": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1NFTBridge"]
-        },
-        "Boba_GasPriceOracle": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Boba_GasPriceOracle"]
-        },
-        "BobaBillingContract": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BobaBillingContract"]
-        },
-        "L1LiquidityPool": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1LiquidityPool"]
-        },
-        "L1MultiMessageRelayer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1MultiMessageRelayer"]
-        },
-        "L1MultiMessageRelayerFast": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1MultiMessageRelayerFast"]
-        },
-        "Timelock": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Timelock"]
-        },
-        "L1CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1CrossDomainMessenger"]
-        },
-        "BondManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BondManager"]
-        },
-        "StateCommitmentChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["StateCommitmentChain"]
-        },
-        "CanonicalTransactionChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["CanonicalTransactionChain"]
-        },
-        "ChainStorageContainerCTCbatches": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["ChainStorageContainer-CTC-batches"]
-        },
-        "ChainStorageContainerSCCbatches": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["ChainStorageContainer-SCC-batches"]
-        }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
     }
   }
 }

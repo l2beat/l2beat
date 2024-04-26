@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { formatLargeNumber } from './formatLargeNumber'
+import { formatNumber } from './formatNumber'
 
 export function getPercentageChange(now: number, then: number) {
   if (now === then || then === 0) {
@@ -18,7 +18,7 @@ export function formatPercent(value: number, addPlus = false) {
 }
 
 export function formatUSD(value: number) {
-  return `$${formatLargeNumber(value)}`
+  return `$${formatNumber(value)}`
 }
 
 export function isZeroUSD(value: string) {

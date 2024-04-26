@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
-import { formatLargeNumberWithCommas } from '../../../../utils'
+import { formatNumberWithCommas } from '../../../../utils'
 import { BridgedUsingCell } from '../BridgedUsingCell'
 import { EscrowsCell } from '../EscrowsCell'
 import { TokenAddressCell } from '../TokenAddressCell'
@@ -134,7 +134,7 @@ export function getCanonicallyBridgedColumns() {
       tooltip: 'Prices are fetched from CoinGecko',
       getValue: (token) => (
         <div className="pr-2 text-xs font-medium">
-          ${formatLargeNumberWithCommas(Number(token.usdPrice))}
+          ${formatNumberWithCommas(Number(token.usdPrice))}
         </div>
       ),
     },

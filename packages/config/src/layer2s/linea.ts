@@ -436,6 +436,12 @@ export const linea: Layer2 = {
   },
   milestones: [
     {
+      name: 'Linea starts using blobs',
+      link: 'https://twitter.com/LineaBuild/status/1772711269159567483',
+      date: '2024-03-26T00:00:00Z',
+      description: 'Linea starts publishing data to blobs.',
+    },
+    {
       name: 'Alpha v2 is released',
       date: '2024-02-13',
       description: 'This release reduces L1 costs and fees for users.',

@@ -230,7 +230,7 @@ export const cBridge: Bridge = {
     {
       name: 'Bridge Governance (2)',
       description:
-        'The owner of the Token Bridge, Liquidity Network and Transfer Agent is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
+        'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
       accounts: [
         discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
       ],
