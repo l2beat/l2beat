@@ -11,6 +11,7 @@ Generated with discovered.json: 0xd3d84bdfe8e9bdee3554e5593a1180e544c93ef9
 ### Staking Pools upgrade
 
 This implementation uprade adds support for esXAI staking pools and removes the support for adding to normal staking (Withdrawals and rewards from normal staking remain enabled). Since staking V2 is still disabled and some contracts are still managed by the deployer, a new assessment of admin roles is necessary as soon as staking V2 is enabled.
+edit: Staking pools are active now and the [Xai Deployer EOA](https://arbiscan.io/address/0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7) is admin (via owner or ProxyAdmin) of all the staking-related contracts.
 
 #### Referee5
 
@@ -27,7 +28,7 @@ The new staking pools get created here (`createPool()`). Pool creators need at l
 
 #### StakingPool
 
-Each staking pool is managed in such a contract. There are no pools created yet since V2 staking is still disabled.
+Each staking pool is managed in such a contract.
 
 #### BucketTracker
 
