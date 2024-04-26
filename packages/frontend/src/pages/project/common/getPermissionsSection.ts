@@ -50,23 +50,26 @@ function toTechnologyContract(
   const chain = permission.chain ?? 'ethereum'
   const etherscanUrl = getExplorerUrl(chain)
   const links = permission.accounts.map((account) => {
-    return {
-      name:
-        permissions
+    const vanityName = !permission.name.includes('Multisig')
+      ? permissions
+          .filter(
+            (p) =>
+              !p.name.endsWith(' participants') &&
+              p.name !== permission.name &&
+              p.accounts.length === 1 &&
+              p.accounts[0]?.address === account.address,
+          )
           .sort((a, b) => {
             if (a.name.includes('Multisig') && !b.name.includes('Multisig'))
               return -1
             if (!a.name.includes('Multisig') && b.name.includes('Multisig'))
               return 1
             return 0
-          })
-          .find(
-            (p) =>
-              !permission.name.includes('Multisig') &&
-              p.name !== permission.name &&
-              p.accounts.length === 1 &&
-              p.accounts[0]?.address === account.address,
-          )?.name ??
+          })[0]?.name
+      : undefined
+    return {
+      name:
+        vanityName ??
         `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`,
       address: account.address.toString(),
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
