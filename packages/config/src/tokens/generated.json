@@ -4535,6 +4535,36 @@
       "formula": "totalSupply"
     },
     {
+      "id": "zksync2:meow-zeek-coin",
+      "name": "Zeek Coin",
+      "coingeckoId": "zeek-coin",
+      "address": "0x79db8c67d0c33203da4Efb58F7D325E1e0d4d692",
+      "symbol": "MEOW",
+      "decimals": 18,
+      "deploymentTimestamp": 1702838354,
+      "coingeckoListingTimestamp": 1703894400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34101/large/rsz_logo2.png?1703959505",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "zksync2:zorro-zorro",
+      "name": "Zorro",
+      "coingeckoId": "zorro",
+      "address": "0x244C238325fC1Bdf6EdeD726EE1b47d55895D944",
+      "symbol": "ZORRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1704404249,
+      "coingeckoListingTimestamp": 1704758400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34381/large/ZORRO_TP.png?1704777748",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",

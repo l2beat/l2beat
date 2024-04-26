@@ -1,8 +1,8 @@
 {
   "name": "astarzkevm",
   "chain": "ethereum",
-  "blockNumber": 19624593,
-  "configHash": "0xbc1c60dc089be81baecf175ab0f4a380cb19e5fd8580c74de58fb6cda5ba7423",
+  "blockNumber": 19718007,
+  "configHash": "0x60944187b50cac1172125cbd826b05b86d82951b675e91f2b4e06350be8f39f3",
   "version": 3,
   "contracts": [
     {
@@ -15,7 +15,7 @@
       "derivedName": "FflonkVerifier"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "upgradeability": {
         "type": "immutable"
@@ -23,7 +23,8 @@
       "sinceTimestamp": 1679653103,
       "values": {
         "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "ProxyAdmin",
@@ -66,7 +67,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x2e83f28b1e354126a049e02b67efe141dae588727f1d8363bbbca09f99281981",
+        "lastAccInputHash": "0xe79db9ca4430e4dee89bcf14a8a7442436a3ccfaa1b4cae9f65ce88b7b37f1ad",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -101,7 +102,7 @@
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 3,
+        "rollupCount": 4,
         "rollupData": [
           "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           3776,
@@ -199,7 +200,7 @@
       }
     },
     {
-      "name": "AdminMultisig",
+      "name": "ProxyAdminOwner",
       "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
       "upgradeability": {
         "type": "gnosis safe",

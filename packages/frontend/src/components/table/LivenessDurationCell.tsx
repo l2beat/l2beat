@@ -7,13 +7,13 @@ import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import {
   Tooltip,
   TooltipContent,
   TooltipContentType,
   TooltipTrigger,
 } from '../tooltip/Tooltip'
+import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
 

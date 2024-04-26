@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 19704353,
+  "blockNumber": 19730704,
   "configHash": "0x51a0650f2b40dad89e5c3cec0de0ff7033274dc8c655b202321b5f4bef825114",
   "version": 3,
   "contracts": [
@@ -52,7 +52,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19670770,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0x077D266f9A3907837e716894517a12D1FD16Ac0a",
+        "unsafeBlockSigner": "0x4Ac69842680847e1135f514eE3d75172B685ECBf",
         "version": "1.12.0",
         "VERSION": 0
       },
@@ -95,7 +95,7 @@
           "0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
         ],
         "getThreshold": 3,
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -113,7 +113,7 @@
       "sinceTimestamp": 1628792652,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676787",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676792",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -160,7 +160,7 @@
         "L2_ORACLE": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741",
         "l2Oracle": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1609794, 19688500],
+        "params": [1000000000, 389211, 19726635],
         "paused": false,
         "superchainConfig": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
         "SYSTEM_CONFIG": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
@@ -236,10 +236,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1350619,
-        "latestOutputIndex": 111,
-        "nextBlockNumber": 1352419,
-        "nextOutputIndex": 112,
+        "latestBlockNumber": 1510819,
+        "latestOutputIndex": 200,
+        "nextBlockNumber": 1512619,
+        "nextOutputIndex": 201,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,
@@ -274,9 +274,9 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
-    "0x077D266f9A3907837e716894517a12D1FD16Ac0a",
     "0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1",
     "0x4200000000000000000000000000000000000014",
+    "0x4Ac69842680847e1135f514eE3d75172B685ECBf",
     "0x6976498e37E4941E167161fC3BC5191EEDc302ab",
     "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd",
     "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",

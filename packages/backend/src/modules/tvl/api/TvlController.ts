@@ -8,6 +8,7 @@ import {
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   ReportType,
+  Result,
   Token,
   TokenTvlApiChart,
   TokenTvlApiCharts,
@@ -34,7 +35,6 @@ import {
   getNonCanonicalAssetsBreakdown,
   groupAndMergeBreakdowns,
 } from './tvl'
-import { Result } from './types'
 
 interface TvlControllerOptions {
   errorOnUnsyncedTvl: boolean
@@ -45,14 +45,17 @@ type ProjectAssetBreakdownResult = Result<
   'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
 >
 
-type TvlResult = Result<TvlApiResponse, 'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'>
+export type TvlResult = Result<
+  TvlApiResponse,
+  'DATA_NOT_FULLY_SYNCED' | 'NO_DATA'
+>
 
-type TokenTvlResult = Result<
+export type TokenTvlResult = Result<
   TokenTvlApiCharts,
   'INVALID_PROJECT_OR_ASSET' | 'NO_DATA' | 'DATA_NOT_FULLY_SYNCED'
 >
 
-type AggregatedTvlResult = Result<
+export type AggregatedTvlResult = Result<
   TvlApiCharts,
   'DATA_NOT_FULLY_SYNCED' | 'NO_DATA' | 'EMPTY_SLUG'
 >
@@ -99,14 +102,14 @@ export class TvlController {
 
     if (!status.latestTimestamp) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'NO_DATA',
       }
     }
 
     if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
@@ -154,7 +157,7 @@ export class TvlController {
       status.latestTimestamp,
     )
 
-    return { result: 'success', data: tvlApiResponse }
+    return { type: 'success', data: tvlApiResponse }
   }
 
   async getAggregatedTvlApiResponse(
@@ -169,7 +172,7 @@ export class TvlController {
 
     if (projectIdsFilter.length === 0) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'EMPTY_SLUG',
       }
     }
@@ -178,14 +181,14 @@ export class TvlController {
 
     if (!status.latestTimestamp) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'NO_DATA',
       }
     }
 
     if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
@@ -216,7 +219,7 @@ export class TvlController {
     console.timeEnd('[Aggregate endpoint]: aggregation')
 
     return {
-      result: 'success',
+      type: 'success',
       data,
     }
   }
@@ -232,7 +235,7 @@ export class TvlController {
 
     if (!asset || !project) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'INVALID_PROJECT_OR_ASSET',
       }
     }
@@ -241,14 +244,14 @@ export class TvlController {
 
     if (!status.latestTimestamp) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'NO_DATA',
       }
     }
 
     if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
@@ -275,7 +278,7 @@ export class TvlController {
     const types: TokenTvlApiChart['types'] = ['timestamp', assetSymbol, 'usd']
 
     return {
-      result: 'success',
+      type: 'success',
       data: {
         hourly: {
           types,
@@ -298,14 +301,14 @@ export class TvlController {
 
     if (!status.latestTimestamp) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'NO_DATA',
       }
     }
 
     if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
-        result: 'error',
+        type: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
       }
     }
@@ -341,7 +344,7 @@ export class TvlController {
     })
 
     return {
-      result: 'success',
+      type: 'success',
       data: {
         dataTimestamp: status.latestTimestamp,
         breakdowns,

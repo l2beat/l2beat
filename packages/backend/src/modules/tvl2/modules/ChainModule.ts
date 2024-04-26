@@ -16,7 +16,6 @@ import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import {
@@ -31,7 +30,6 @@ import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface ChainModule {
-  indexers: [BlockTimestampIndexer, ChainAmountIndexer]
   start: () => Promise<void> | void
 }
 
@@ -89,16 +87,19 @@ function createChainModule(
           chainId: chainConfig.config.chainId,
         })
 
-  const blockTimestampIndexer = new BlockTimestampIndexer(
+  const blockTimestampIndexer = new BlockTimestampIndexer({
     logger,
-    hourlyIndexer,
-    provider,
-    peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(BlockTimestampRepository),
-    chainConfig.chain,
-    chainConfig.config.minBlockTimestamp,
+    tag: chainConfig.chain,
+    parents: [hourlyIndexer],
+    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
+    indexerService,
+    chain: chainConfig.chain,
+    blockTimestampProvider: provider,
+    blockTimestampRepository: peripherals.getRepository(
+      BlockTimestampRepository,
+    ),
     syncOptimizer,
-  )
+  })
 
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
@@ -133,20 +134,20 @@ function createChainModule(
     }))
 
   const chainAmountIndexer = new ChainAmountIndexer({
+    logger,
+    tag: chainConfig.chain,
+    parents: [blockTimestampIndexer],
+    indexerService,
+    configurations,
+    chain: chainConfig.chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
     blockTimestampsRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    parents: [blockTimestampIndexer],
-    id: `chain_amount_indexer_${chainConfig.chain}`,
-    configurations,
     encode,
     decode,
     syncOptimizer,
-    logger: logger.tag(chainConfig.chain),
-    indexerService,
-    chain: chainConfig.chain,
   })
 
   return {
@@ -154,7 +155,6 @@ function createChainModule(
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
     },
-    indexers: [blockTimestampIndexer, chainAmountIndexer],
   }
 }
 

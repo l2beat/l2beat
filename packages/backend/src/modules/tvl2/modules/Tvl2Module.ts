@@ -80,11 +80,7 @@ export function createTvl2Module(
     config.projects.map((p) => p.projectId),
     config.tvl2,
   )
-  const statusRouter = createTvl2StatusRouter(
-    config.tvl2,
-    modules.map((m) => m.indexers).flat(),
-    clock,
-  )
+  const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const tvlRouter = createTvl2Router(tvlController, clock)
 
   const start = async () => {

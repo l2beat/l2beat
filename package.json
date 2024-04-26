@@ -31,6 +31,7 @@
     "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
@@ -49,6 +50,7 @@
     "mocha": "^10.2.0",
     "prettier": "^3.2.5",
     "turbo": "^1.12.2",
+    "ts-node": "^10.9.1",
     "typescript": "^5.3.3",
     "wait-for-expect": "^3.0.2",
     "wsrun": "^5.2.4"

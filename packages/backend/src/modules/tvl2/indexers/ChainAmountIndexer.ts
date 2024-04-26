@@ -15,7 +15,7 @@ import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainAmountIndexerDeps
-  extends ManagedMultiIndexerOptions<ChainAmountConfig> {
+  extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
   blockTimestampsRepository: BlockTimestampRepository
@@ -24,10 +24,10 @@ export interface ChainAmountIndexerDeps
 }
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
-  indexerId: string
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    super($)
-    this.indexerId = $.id
+    const logger = $.logger.tag($.chain)
+    const name = 'chain_amount_indexer'
+    super({ ...$, name, logger })
   }
 
   override async multiUpdate(

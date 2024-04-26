@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 19617533,
+  "blockNumber": 19718686,
   "configHash": "0x8cb3a86b27be7e3a694da30e1fbd03b5382e6ebd1db238d8da305db5f629dc1b",
   "version": 3,
   "contracts": [
@@ -26,7 +26,7 @@
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
         ],
         "getThreshold": 2,
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -60,12 +60,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137600,
@@ -110,7 +107,7 @@
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -290,7 +287,7 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
         "proxyGovernance": [
           "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
@@ -342,7 +339,7 @@
         "depositorAddress": "0x0000000000000000000000000000000000000000",
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetEthBridge_2.0_4",
         "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "isFrozen": false,
@@ -364,12 +361,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": [
-          "0x8dB2469f3355d6769932B853F29e32df06122981",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137615,
@@ -414,7 +408,7 @@
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -434,9 +428,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1685452751,
@@ -481,7 +475,7 @@
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -524,7 +518,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1641912,
+        "l1ToL2MessageNonce": 1642964,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -533,9 +527,9 @@
         "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "1262849391388113238290934552110276426309269646010267853911827803978574377168",
-        "stateBlockNumber": 631031,
-        "stateRoot": "2497888901333892393938996651941460919892456068917729620795767449166782956954",
+        "stateBlockHash": "2013634158537064654187303954909055057079543082411739041179731941269615818706",
+        "stateBlockNumber": 635089,
+        "stateRoot": "3008637093964459826113196009097676695240485902397853991727912508907175780809",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -547,9 +541,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": ["0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1704905879,
@@ -561,7 +555,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": {
             "adminRole": "APP_ROLE_ADMIN",
@@ -581,11 +575,11 @@
           },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"]
+            "members": []
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
@@ -596,7 +590,7 @@
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getEnableWindowDuration": 1209600,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -616,9 +610,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1685880791,
@@ -663,7 +657,7 @@
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -890,12 +884,9 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
-        "upgradeDelay": 0,
+        "upgradeDelay": 259200,
         "isFinal": false,
-        "proxyGovernance": [
-          "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ]
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137639,
@@ -940,7 +931,7 @@
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
-        "getUpgradeActivationDelay": 0,
+        "getUpgradeActivationDelay": 259200,
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
@@ -1033,15 +1024,11 @@
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
     "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
-    "0x8dB2469f3355d6769932B853F29e32df06122981",
     "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-    "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245",
     "0xCe958D997F4a5824D4d503A128216322C6C223a0",
     "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
     "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-    "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
-    "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
     "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],

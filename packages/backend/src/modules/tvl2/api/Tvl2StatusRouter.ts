@@ -1,6 +1,5 @@
 import Router from '@koa/router'
 import { UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
@@ -9,7 +8,6 @@ import { getTargetDataPoints } from './getTargetDataPoints'
 
 export function createTvl2StatusRouter(
   { amounts, prices, chains }: Tvl2Config,
-  indexers: (ChildIndexer & { indexerId: string })[],
   clock: Clock,
 ) {
   const router = new Router()
@@ -74,9 +72,6 @@ export function createTvl2StatusRouter(
             ]),
         ),
       },
-      indexers: Object.fromEntries(
-        indexers.map((i) => [i.indexerId, i.safeHeight]),
-      ),
     }
   })
 
