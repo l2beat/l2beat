@@ -1,4 +1,4 @@
-import { assert,EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -17,21 +17,15 @@ const stakingUpgradeability = {
 }
 
 assert(
-  (
-    discovery.getContractUpgradeabilityParam('SentryReferee', 'admin')
-  ) ===
-    (
-      discovery.getContractUpgradeabilityParam('PoolFactory', 'admin')
-    ) &&
-    (
-      discovery.getContractUpgradeabilityParam('PoolFactory', 'admin')
-    ) ===
-      (
-        discovery.getContractUpgradeabilityParam('NodeLicenseRegistry', 'admin')
+  discovery.getContractUpgradeabilityParam('SentryReferee', 'admin') ===
+    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') &&
+    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') ===
+      discovery.getContractUpgradeabilityParam(
+        'NodeLicenseRegistry',
+        'admin',
       ) &&
-    (
-      discovery.getContractUpgradeabilityParam('NodeLicenseRegistry', 'admin')
-    ) === <EthereumAddress>discovery.getContract('StakingProxyAdmin').address,
+    discovery.getContractUpgradeabilityParam('NodeLicenseRegistry', 'admin') ===
+      <EthereumAddress>discovery.getContract('StakingProxyAdmin').address,
   'The upgradeability changed, please review it in the .ts descriptions.',
 )
 
