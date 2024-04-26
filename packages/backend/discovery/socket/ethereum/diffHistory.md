@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xa6406467d6967066916b889525ede1024ab06e52
+
+# Diff at Fri, 26 Apr 2024 07:43:46 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@36667a8d3ad546527d0bbcb7f2e62ced244c06b9 block: 19609491
+- current block number: 19738124
+
+## Description
+
+4 Plugs are added to the socket main contract.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.23:
++        "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.22:
++        "0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.21:
++        "0x998d7C2257591cC38383B4F91474c5346111f2E6"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.20:
++        "0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF"
+    }
+```
+
 Generated with discovered.json: 0xfb0b61de4c8e0445a4631e0fabe790a63dede53e
 
 # Diff at Mon, 08 Apr 2024 07:34:22 GMT:

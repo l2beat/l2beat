@@ -490,7 +490,7 @@
           "type": null
         },
         "plugs": {
-          "description": "Array of plug contract addresses",
+          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
           "severity": "LOW",
           "type": "CODE_CHANGE"
         },
