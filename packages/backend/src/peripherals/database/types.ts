@@ -187,6 +187,16 @@ declare module 'knex/types/tables' {
     data: TransactionData
   }
 
+  interface AggregatedL2CostsRow {
+    timestamp: Date
+    project_id: string
+    total_gas_used: number
+    calldata_gas_used: number
+    blobs_gas_used: number | null
+    compute_gas_used: number
+    overhead_gas_used: number
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
