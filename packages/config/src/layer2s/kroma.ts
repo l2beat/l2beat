@@ -193,7 +193,7 @@ export const kroma: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
