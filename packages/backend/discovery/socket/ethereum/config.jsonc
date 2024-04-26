@@ -110,6 +110,9 @@
     },
     "wstETH Vault": {
       "ignoreMethods": ["token__"]
+    },
+    "WETH Vault 2": {
+      "ignoreMethods": ["token__"]
     }
   }
 }

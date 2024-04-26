@@ -1,0 +1,780 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "AVSDirectory",
+      "values": {
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_AVS_REGISTRATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BLSApkRegistry",
+      "values": {
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DelayedWithdrawalRouter",
+      "values": {
+        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalDelayBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DelegationManager",
+      "values": {
+        "DELEGATION_APPROVAL_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STAKER_OPT_OUT_WINDOW_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKER_DELEGATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minWithdrawalDelayBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenLayerBeaconOracle",
+      "values": {
+        "GENESIS_BLOCK_TIMESTAMP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenPod",
+      "values": {
+        "GENESIS_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayedWithdrawalRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethPOS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRestaked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mostRecentWithdrawalTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonBeaconChainETHBalanceWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "podOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sumOfPartialWithdrawalsClaimedGwei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawableRestakedExecutionLayerGwei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenPodManager",
+      "values": {
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "beaconChainOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegationManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "denebForkTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethPOS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numPods": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "IndexRegistry",
+      "values": {
+        "OPERATOR_DOES_NOT_EXIST_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PauserRegistry",
+      "values": {
+        "unpauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RegistryCoordinator",
+      "values": {
+        "OPERATOR_CHURN_APPROVAL_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PUBKEY_REGISTRATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blsApkRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "churnApprover": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ejector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "indexRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numRegistries": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registries": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "serviceManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Slasher",
+      "values": {
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakeRegistry",
+      "values": {
+        "MAX_WEIGHING_FUNCTION_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WEIGHTING_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyManager",
+      "values": {
+        "DEPOSIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyWhitelister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "eigenDAProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "eigenDAServiceManager",
+      "values": {
+        "BLOCK_STALE_MEASURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STORE_DURATION_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THRESHOLD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "avsDirectory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blsApkRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRestakeableStrategies": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumAdversaryThresholdPercentages": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumConfirmationThresholdPercentages": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumNumbersRequired": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "staleStakesForbidden": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "taskNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

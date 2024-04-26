@@ -1,4 +1,8 @@
-import { bridges as allBridges, layer2s as allLayer2s } from '@l2beat/config'
+import {
+  bridges as allBridges,
+  layer2s as allLayer2s,
+  layer3s as allLayer3s,
+} from '@l2beat/config'
 import {
   ActivityApiCharts,
   ActivityApiResponse,
@@ -14,6 +18,7 @@ const bridges = allBridges
 const layer2s = allLayer2s
   .filter((x) => !x.isUpcoming)
   .filter((x) => !x.isArchived)
+const layer3s = allLayer3s.filter((x) => !x.isUpcoming)
 
 export type TvlProjectData = [string, TvlApiCharts]
 
@@ -95,23 +100,21 @@ export function checkIfDelayedTvl(
 export type ActivityProjectData = [string, ActivityApiCharts]
 
 export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
-  const projectsInApiActivity = Object.keys(activityApiResponse.projects).map(
+  const projectsInApiResponse = Object.keys(activityApiResponse.projects).map(
     ProjectId,
   )
   const layer2sInApiActivity = layer2s.filter((x) =>
-    projectsInApiActivity.includes(x.id),
+    projectsInApiResponse.includes(x.id),
   )
-  const layer2sWithActivityConfig = layer2s.filter(
-    (x) => x.config.transactionApi,
+  const layer3sInApiActivity = layer3s.filter((x) =>
+    projectsInApiResponse.includes(x.id),
   )
+  const projectsInApiActivity = [
+    ...layer2sInApiActivity,
+    ...layer3sInApiActivity,
+  ]
 
-  if (layer2sInApiActivity.length / layer2sWithActivityConfig.length < 0.8) {
-    throw new Error(
-      'The API has returned an insufficient number of layer2s activity',
-    )
-  }
-
-  const activityIds = layer2sInApiActivity.map((x) => x.id.toString())
+  const activityIds = projectsInApiActivity.map((x) => x.id.toString())
   const filteredProjectsCharts = Object.entries(
     activityApiResponse.projects,
   ).filter(([id]) => activityIds.includes(id))

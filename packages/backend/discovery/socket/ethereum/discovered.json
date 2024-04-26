@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19588327,
-  "configHash": "0x1aec9cadcb312ecf917cf685c9fc6a27476a221c485084adc6c153673c01824e",
+  "blockNumber": 19609491,
+  "configHash": "0x49170c184e740ebd45fcd6fed1c40b09642ce97b472da492229675ac1ec5add9",
   "version": 3,
   "contracts": [
     {
@@ -26,8 +26,8 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 2771099381232000,
-        "verificationOverheadFees": 2967500276000
+        "switchboardFees": 2100801341457000,
+        "verificationOverheadFees": 1060019740000
       },
       "derivedName": "PolygonL1Switchboard"
     },
@@ -50,8 +50,8 @@
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 2771099381232000,
-        "verificationOverheadFees": 1766873212000
+        "switchboardFees": 1719064166508000,
+        "verificationOverheadFees": 364154024000
       },
       "derivedName": "OptimismSwitchboard"
     },
@@ -88,7 +88,7 @@
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 2526296722209000,
+        "switchboardFees": 1719064166508000,
         "verificationOverheadFees": 52013156000
       },
       "derivedName": "OptimismSwitchboard"
@@ -180,7 +180,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 555,
+        "globalMessageCount": 577,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -217,7 +217,8 @@
           "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660",
           "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
           "0xdCcFb24f983586144c085426dbfa3414045E19a3",
-          "0x6A769e25081396a49a6702758d0830920ac1163A"
+          "0x6A769e25081396a49a6702758d0830920ac1163A",
+          "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -233,24 +234,9 @@
       "sinceTimestamp": 1709063015,
       "values": {
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
-        "token__": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF"
       },
       "derivedName": "Vault"
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1513077455,
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2997542922595290340510005"
-      }
     },
     {
       "name": "WETH Vault",
@@ -309,7 +295,7 @@
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 2559851731515000,
+        "switchboardFees": 2117787224475000,
         "verificationOverheadFees": 6500000000000
       },
       "derivedName": "ArbitrumL1Switchboard"
@@ -832,23 +818,6 @@
       "function token__() view returns (address)",
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": [
       "constructor(address token_)",

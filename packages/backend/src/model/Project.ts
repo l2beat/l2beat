@@ -4,8 +4,8 @@ import {
   Layer2,
   Layer2FinalityConfig,
   Layer2LivenessConfig,
-  Layer2TransactionApi,
   Layer2TxConfig,
+  ScalingProjectTransactionApi,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -31,7 +31,7 @@ export interface Project {
   isUpcoming?: boolean
   isLayer3?: boolean
   escrows: ProjectEscrow[]
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
@@ -102,6 +102,7 @@ function toBackendTrackedTxsConfig(
           address: SHARP_SUBMISSION_ADDRESS,
           selector: SHARP_SUBMISSION_SELECTOR,
           uses: getTrackedTxsConfigUses(config),
+          costMultiplier: config._hackCostMultiplier,
           ...query,
         }
       }
@@ -110,6 +111,7 @@ function toBackendTrackedTxsConfig(
         projectId,
         ...query,
         uses: getTrackedTxsConfigUses(config),
+        costMultiplier: config._hackCostMultiplier,
       }
     }),
   }

@@ -2,84 +2,35 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "AddressManager",
+      "name": "BobaMultisig",
+      "description": "The Boba Network Upgrade Multisig (owner of the ProxyAdmin)",
       "values": {
-        "BobaBillingContract": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "Boba_GasPriceOracle": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "BondManager": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "CanonicalTransactionChain": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "ChainStorageContainerCTCbatches": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "ChainStorageContainerSCCbatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1CrossDomainMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1LiquidityPool": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1MultiMessageRelayer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1MultiMessageRelayerFast": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1NFTBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OVM_Proposer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OVM_Sequencer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "StateCommitmentChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "Timelock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -87,159 +38,64 @@
       }
     },
     {
-      "name": "BondManager",
+      "name": "L1CrossDomainMessenger",
       "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CTCQueue",
-      "values": {
-        "getGlobalMetadata": {
+        "MESSAGE_VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "length": {
+        "MIN_GAS_CALLDATA_OVERHEAD": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libAddressManager": {
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CTCStorageContainerBatches",
-      "values": {
-        "getGlobalMetadata": {
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "length": {
+        "OTHER_MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libAddressManager": {
+        "PORTAL": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CanonicalTransactionChain",
-      "values": {
-        "MAX_ROLLUP_TX_SIZE": {
+        "RELAY_CALL_OVERHEAD": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_ROLLUP_TX_GAS": {
+        "RELAY_CONSTANT_OVERHEAD": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "batches": {
+        "RELAY_GAS_CHECK_BUFFER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "enqueueGasCost": {
+        "RELAY_RESERVED_GAS": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "enqueueL2GasPrepaid": {
+        "messageNonce": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getLastBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getNextQueueIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getNumPendingQueueElements": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getQueueLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElements": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2GasDiscountDivisor": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTransactionGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "queue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger_1",
-      "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
+        "otherMessenger": {
           "description": null,
           "severity": null,
           "type": null
@@ -249,7 +105,17 @@
           "severity": null,
           "type": null
         },
-        "xDomainMessageSender": {
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -257,139 +123,14 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger_2",
+      "name": "L1ERC721Bridge",
       "values": {
-        "libAddressManager": {
+        "MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "xDomainMessageSender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1LiquidityPool",
-      "values": {
-        "L1StandardBridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2LiquidityPoolAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SAFE_GAS_STIPEND": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SETTLEMENT_L2_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "currentDepositInfoHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1CrossDomainMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastHashUpdateBlock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ownerRewardFeeRate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "priorDepositInfoHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "relayerMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "senderMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "userRewardMaxFeeRate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "userRewardMinFeeRate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1MultiMessageRelayer",
-      "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1MultiMessageRelayerFast",
-      "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1NFTBridge",
-      "values": {
-        "depositL2Gas": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2NFTBridge": {
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -399,12 +140,22 @@
           "severity": null,
           "type": null
         },
-        "owner": {
+        "otherBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
         "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -414,7 +165,12 @@
     {
       "name": "L1StandardBridge",
       "values": {
-        "currentDepositInfoHash": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -424,17 +180,27 @@
           "severity": null,
           "type": null
         },
-        "lastHashUpdateBlock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "priorDepositInfoHash": {
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -442,27 +208,199 @@
       }
     },
     {
-      "name": "Lib_ResolvedDelegateProxy",
-      "values": {}
-    },
-    {
-      "name": "Proxy__L1LiquidityPoolArguments",
-      "values": {}
-    },
-    {
-      "name": "SCCStorageContainerBatches",
+      "name": "L2OutputOracle",
       "values": {
-        "getGlobalMetadata": {
+        "CHALLENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "length": {
+        "FINALIZATION_PERIOD_SECONDS": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libAddressManager": {
+        "L2_BLOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finalizationPeriodSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BlockTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionInterval": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lib_AddressManager",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
           "description": null,
           "severity": null,
           "type": null
@@ -475,44 +413,180 @@
       }
     },
     {
-      "name": "StateCommitmentChain",
+      "name": "SuperchainConfig",
       "values": {
-        "FRAUD_PROOF_WINDOW": {
+        "GUARDIAN_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "SEQUENCER_PUBLISH_WINDOW": {
+        "PAUSED_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "batches": {
+        "guardian": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "deletedStateBatches": {
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getLastSequencerTimestamp": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SystemConfig",
+      "description": "It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.",
+      "values": {
+        "BATCH_INBOX_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getTotalBatches": {
+        "L1_CROSS_DOMAIN_MESSENGER_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getTotalElements": {
+        "L1_ERC_721_BRIDGE_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libAddressManager": {
+        "L1_STANDARD_BRIDGE_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_OUTPUT_ORACLE_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPTIMISM_PORTAL_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "START_BLOCK_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1ERC721Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1StandardBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2OutputOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimismMintableERC20Factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimismPortal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "overhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resourceConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unsafeBlockSigner": {
+          "description": "Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner.",
+          "severity": "LOW",
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null

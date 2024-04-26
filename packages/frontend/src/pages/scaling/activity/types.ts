@@ -1,5 +1,6 @@
 import {
   Layer2Provider,
+  Layer3Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
@@ -20,8 +21,9 @@ export interface ActivityViewEntry {
   name: string
   shortName: string | undefined
   slug: string
+  type: 'layer2' | 'layer3' | undefined
   category: ScalingProjectCategory | undefined
-  provider: Layer2Provider | undefined
+  provider: Layer2Provider | Layer3Provider | undefined
   warning: string | undefined
   hasImplementationChanged?: boolean
   redWarning: string | undefined

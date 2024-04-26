@@ -27,7 +27,9 @@ export const edgeless: Layer2 = underReviewL2({
         'https://t.me/+f8yhoOg-4cNhYWEx',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc.edgeless.network/http',
   escrows: [
     // this is not the bridge escrow itself but the strategy contract that holds all funds backing the ewETH in the canonical bridge escrow. The normal escrow can be used as soon as we track the ewETH token
     {

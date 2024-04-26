@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 19525405,
-  "configHash": "0x006e7cbacf02864ea4b2adffbc2fa206bee00176148ea67adf6a44551528b23e",
+  "blockNumber": 19718134,
+  "configHash": "0x36d1d54ac3dd2c8384d7ef978cf90ab495f0514a7d6227d8939067b935236d9c",
   "version": 3,
   "contracts": [
     {
@@ -17,7 +17,15 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "FflonkVerifier",
+      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711291211
+    },
+    {
+      "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "upgradeability": {
         "type": "immutable"
@@ -34,7 +42,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678956815,
@@ -66,7 +75,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xe54366f5c01244de9a81ad5f6969113e7dff18a2754a7ba45a779d65f27b73dd",
+        "getRoot": "0x17d8994364ea9bfb69cb43895e86e68d4cb025f2615cae4169263020f18eb488",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -81,7 +90,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "6 of 8 (75%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678429487,
@@ -125,14 +135,14 @@
           []
         ],
         "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1710310247,
+        "lastMint": 1713198959,
         "mintPerSecondCap": "13370000000000000000",
         "name": "Polygon Ecosystem Token",
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
         "permit2Enabled": true,
         "symbol": "POL",
-        "totalSupply": "10113921492245423640000000000",
+        "totalSupply": "10141343050427983160000000000",
         "version": "1.1.0"
       },
       "derivedName": "PolygonEcosystemToken"
@@ -213,18 +223,54 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x89f166097c101bd9ae2df30bdeda9cd7fec6562cee06e3f8c20620be459e622c",
+        "getRollupExitRoot": "0x3c6eea7ae38d3c3c3bd255bdaefe45301ea78fa39680f06eb73a911ee57f5a58",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1711538903,
+        "lastAggregationTimestamp": 1713875567,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 2,
-        "rollupTypeCount": 3,
-        "totalSequencedBatches": 27124,
-        "totalVerifiedBatches": 26694,
+        "rollupCount": 4,
+        "rollupsData": [
+          [
+            "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ]
+        ],
+        "rollupTypeCount": 4,
+        "rollupTypes": [
+          [
+            "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ]
+        ],
+        "totalSequencedBatches": 66899,
+        "totalVerifiedBatches": 66523,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -242,8 +288,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 5750,
-        "getRoot": "0x39921c54e99b178ddff2703a2bb6ac7a8141bc2bd7f9baed48125aca5d1db938",
+        "depositCount": 15014,
+        "getRoot": "0xb8796ae625a71849e643074b578f9f81af7a19f6a01f722efb22b62f24176ad6",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -427,6 +473,9 @@
       "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
+    ],
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

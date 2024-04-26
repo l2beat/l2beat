@@ -31,6 +31,7 @@ describe(MulticallClient.name, () => {
       address: ADDRESS_V2,
       encodeBatch: encodeMulticallV2,
       decodeBatch: decodeMulticallV2,
+      isNativeBalanceSupported: true,
     },
     {
       sinceBlock: MULTICALL_V1_BLOCK,
@@ -38,6 +39,7 @@ describe(MulticallClient.name, () => {
       address: ADDRESS_V1,
       encodeBatch: encodeMulticallV1,
       decodeBatch: decodeMulticallV1,
+      isNativeBalanceSupported: true,
     },
   ]
 
@@ -210,39 +212,5 @@ describe(MulticallClient.name, () => {
     )
     expect(result.length).toEqual(BATCH_SIZE * 2 + 1)
     expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
-  })
-
-  it('offers a named interface', async () => {
-    const ethereumClient = mockObject<RpcClient>({
-      async call() {
-        return Bytes.fromHex(
-          multicallInterface.encodeFunctionResult('tryAggregate', [
-            [
-              [true, '0x1234'],
-              [false, '0xdead'],
-            ],
-          ]),
-        )
-      },
-    })
-
-    const multicallClient = new MulticallClient(
-      ethereumClient,
-      TEST_MULTICALL_CONFIG,
-    )
-    const blockTag = MULTICALL_V2_BLOCK + 1
-
-    const result = await multicallClient.multicallNamed(
-      {
-        foo: { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-        bar: { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-      },
-      blockTag,
-    )
-
-    expect(result).toEqual({
-      foo: { success: true, data: Bytes.fromHex('0x1234') },
-      bar: { success: false, data: Bytes.fromHex('0xdead') },
-    })
   })
 })

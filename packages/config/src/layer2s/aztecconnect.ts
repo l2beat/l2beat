@@ -143,16 +143,16 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'RollupProcessorV2',
           references: [
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L706',
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1041',
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1054',
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1135',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1041',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1054',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1135',
           ],
         },
         {
           contract: 'Verifier28x32',
           references: [
-            'https://etherscan.io/address/0x9BDc85491BD589e8390A6AAb6982b82255ae2297#code#F3#L150',
+            'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
           ],
         },
       ],
@@ -163,7 +163,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'RollupProcessorV2',
           references: [
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L686',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
           ],
         },
       ],
@@ -175,7 +175,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'RollupProcessorV2',
           references: [
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L697',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
           ],
         },
       ],
@@ -187,7 +187,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'RollupProcessorV2',
           references: [
-            'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L697',
+            'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
           ],
         },
       ],
@@ -227,7 +227,7 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'RollupProcessorV2.sol#L706 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L706',
+          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
         },
       ],
     },
@@ -245,7 +245,7 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L686',
+          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
         },
       ],
     },
@@ -255,7 +255,7 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L692',
+          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
         },
       ],
     },
@@ -267,11 +267,11 @@ export const aztecconnect: Layer2 = {
       references: [
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L697',
+          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
         },
         {
           text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1491',
+          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1491',
         },
       ],
       risks: [
@@ -291,11 +291,11 @@ export const aztecconnect: Layer2 = {
         references: [
           {
             text: 'RollupProcessorV2.sol#L1042 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1042',
+            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1042',
           },
           {
             text: 'RollupProcessorV2.sol#L1206 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L1206',
+            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1206',
           },
         ],
       },
@@ -327,7 +327,7 @@ export const aztecconnect: Layer2 = {
         upgradableBy: ['Aztec Multisig'],
       }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
-      // https://etherscan.io/address/0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09#code#F1#L704
+      // https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L704
       {
         address: EthereumAddress('0x4cf32670a53657596E641DFCC6d40f01e4d64927'),
         description:

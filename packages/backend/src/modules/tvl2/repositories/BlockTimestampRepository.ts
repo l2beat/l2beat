@@ -33,6 +33,19 @@ export class BlockTimestampRepository extends BaseRepository {
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
 
+  async findByChainAndTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<BlockTimestampRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('block_timestamps')
+      .where('chain', chain)
+      .where('timestamp', timestamp.toDate())
+      .first()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
     const knex = await this.knex()
 

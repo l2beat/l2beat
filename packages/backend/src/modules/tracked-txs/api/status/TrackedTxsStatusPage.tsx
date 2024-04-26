@@ -8,6 +8,7 @@ import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepo
 
 type TrackedTxsTableRow = TrackedTxsConfigRecord & {
   active: boolean
+  healthy: boolean
   unused: boolean
 }
 
@@ -103,7 +104,7 @@ function getStatusColor(
     ? configOrConfigs
     : [configOrConfigs]
 
-  if (configs.some((config) => !config.active)) {
+  if (configs.some((config) => !config.healthy)) {
     return DASHBOARD_COLORS.UNVERIFIED
   }
   return DASHBOARD_COLORS.WATCHED

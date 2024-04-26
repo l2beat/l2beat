@@ -4,13 +4,10 @@ import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Clock } from '../../../tools/Clock'
-import { BlockTimestampIndexer } from '../BlockTimestampIndexer'
-import { PriceIndexer } from '../PriceIndexer'
 import { getTargetDataPoints } from './getTargetDataPoints'
 
 export function createTvl2StatusRouter(
   { amounts, prices, chains }: Tvl2Config,
-  indexers: (PriceIndexer | BlockTimestampIndexer)[],
   clock: Clock,
 ) {
   const router = new Router()
@@ -75,9 +72,6 @@ export function createTvl2StatusRouter(
             ]),
         ),
       },
-      indexers: Object.fromEntries(
-        indexers.map((i) => [i.indexerId, i.safeHeight]),
-      ),
     }
   })
 

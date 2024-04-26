@@ -6,7 +6,6 @@ export type OrbitStackContractName =
   | 'SequencerInbox'
   | 'Inbox'
   | 'Outbox'
-  | 'L1GatewayRouter'
   | 'UpgradeExecutor'
   | 'ChallengeManager'
   | 'OneStepProofEntry'
@@ -45,10 +44,6 @@ export const ORBIT_STACK_CONTRACT_DESCRIPTION: OrbitStackContractTemplate[] = [
     name: 'Outbox',
     coreDescription:
       'Contract that allows L2->L1 calls, i.e. messages initiated on L2 which eventually resolve in execution on L1.',
-  },
-  {
-    name: 'L1GatewayRouter',
-    coreDescription: 'Router managing token <--> gateway mapping.',
   },
   {
     name: 'UpgradeExecutor',
@@ -132,7 +127,7 @@ export const ORBIT_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
     description: 'Central actors allowed to submit transaction batches to L1.',
   },
   // TODO(radomski): Permission part of the templates need a rewrite, because
-  // it's a mess and it's impossible to solve this situtation.
+  // it's a mess and it's impossible to solve this situation.
   //
   // - Two contracts are EXECUTOR_ROLE at UpgradeExecutor.
   // - One is an EOA and the other is a Multisig.

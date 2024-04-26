@@ -1,3 +1,418 @@
+Generated with discovered.json: 0xcffb6b02de5bb310768147ee3220a56f9af3bdb0
+
+# Diff at Tue, 23 Apr 2024 22:44:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f6f4ef80f0b2193da88313a911968b74fcfed02f block: 19531533
+- current block number: 19721151
+
+## Description
+
+Eigenlayer m2 mainnet release ([v0.2.3 release notes](https://hackmd.io/@-HV50kYcRqOjl_7du8m1AA/ryx1p-Bm1C))
+Stakers can now delegate stake to Operators, who can register with AVSs.
+Current Governance of Eigenlayer (excluding EigenDA): Community Multisig (9/13) OR Operations Multisig (3/6) (10d delay) can upgrade all Eigenlayer smart contracts.
+
+The linked release notes describe this update well, below is a shorter changelog from manually skimming over the contracts.
+
+### AVSDirectory
+
+AVSs register/deregister their Operators here. (only two functions)
+Payment of operators and slashing is not implemented yet.
+
+### DelegationManager
+
+Stakers use this contract for delegating/undelegating their stake.
+
+- (queue)Withdrawal functions are moved here now (from the StrategyManager)
+- Use EIP1271SignatureUtils to check signatures made by contracts (by stakers/eigenpods). This standard also allows human readable signatures on signing
+- Plenty events and comments added
+- onlyStrategyManagerOrEigenPodManager() modifier for the `delegateShares` functions
+
+### StrategyManager
+
+Does the accounting for deposits / withdrawals of LSTs into / from strategies by individual stakers. (shares)
+
+- The DelegationManager is the entry for initiating a withdrawal, while the StrategyManager is the entry for depositing
+- Slashing is not implemented
+
+### EigenPodManager
+
+Lets ethereum native restakers create EigenPods and tracks the EigenPod's shares. Shares can be increased/decreased by the DelegationManager.
+
+- Withdrawal processing now interacts via the DelegationManager, not the StrategyManager
+- Withdrawals are started here and proven in the Eigenpod SC
+
+### Eigenpod
+
+Escrow smart contract that is the withdrawal address / credentials for ETH native eigenlayer restakers.
+
+- Beacon chain state proofs are introduced (using EIP-4788: Beacon block root oracle)
+- Withdrawals are sent here from the beacon chain, can be withdrawn from the pod via DelegationManager-->EigenPodManager-->Eigenpod
+- User (owner of the EigenPod) can only withdraw non-restaked ETH and other tokens that are accidentally sent to the pod directly with user-facing functions (onlyEigenPodOwner)
+
+### DelayedWithdrawalRouter
+
+Now only needed for withdrawals that are unrelated to shares (which in turn are managed by the DelegationManager):
+
+- Consensus rewards
+- ETH or tokens sent to the EigenPod directly (/ accidently)
+
+Maximum delay is raised from 7d to 30d.
+
+### Slasher
+
+Skeleton contract that is not used. (The previously deployed version was paused) Eigenlayer currently has no slashing functionality.
+
+## Watched changes
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      values.avs.8:
++        "0xE5445838C475A2980e6a88054ff1514230b83aEb"
+      values.avs.7:
++        "0xed2f4d90b073128ae6769a9A8D51547B1Df766C8"
+      values.avs.6:
++        "0x23221c5bB90C7c57ecc1E75513e2E4257673F0ef"
+      values.avs.5:
++        "0x35F4f28A8d3Ff20EEd10e087e8F96Ea2641E6AA2"
+      values.avs.4:
++        "0x6026b61bDD2252160691CB3F6005B6B72E0Ec044"
+      values.avs.3:
++        "0x71a77037870169d47aad6c2C9360861A4C0df2bF"
+      values.avs.2:
++        "0x9FC952BdCbB7Daca7d420fA55b942405B073A89d"
+      values.avs.1:
++        "0xD25c2c5802198CB8541987b73A8db4c9BCaE5cC7"
+      values.avs.0:
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: Manages interactions between stakers and Eigenlayer operators, registers operators.
+      upgradeability.implementation:
+-        "0xf97E97649Da958d290e84E6D571c32F4b7F475e4"
++        "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
+      implementations.0:
+-        "0xf97E97649Da958d290e84E6D571c32F4b7F475e4"
++        "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
+      values.DELEGATION_TYPEHASH:
+-        "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c"
+      values.DOMAIN_SEPARATOR:
+-        "0x9bba7f98dd592dbd3fdbeef9fdebb4e19f8661950cb5dcc435fcad7824975fe1"
+      values.paused:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.beaconChainETHStrategy:
++        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.DELEGATION_APPROVAL_TYPEHASH:
++        "0x14bde674c9f64b2ad00eaaee4a8bed1fabef35c7507e3c5b9cfc9436909a2dad"
+      values.domainSeparator:
++        "0x9bba7f98dd592dbd3fdbeef9fdebb4e19f8661950cb5dcc435fcad7824975fe1"
+      values.eigenPodManager:
++        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      values.MAX_STAKER_OPT_OUT_WINDOW_BLOCKS:
++        1296000
+      values.MAX_WITHDRAWAL_DELAY_BLOCKS:
++        216000
+      values.minWithdrawalDelayBlocks:
++        50400
+      values.STAKER_DELEGATION_TYPEHASH:
++        "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      values.implementation:
+-        "0x5c86e9609fbBc1B754D0FD5a4963Fdf0F5b99dA7"
++        "0x8bA40dA60f0827d027F029aCEE62609F0527a255"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x5c86e9609fbBc1B754D0FD5a4963Fdf0F5b99dA7)
+    +++ description: None
+```
+
+```diff
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x44Bcb0E01CD0C5060D4Bb1A07b42580EF983E2AF"
++        "0x4bB6731B02314d40aBbfFBC4540f508874014226"
+      implementations.0:
+-        "0x44Bcb0E01CD0C5060D4Bb1A07b42580EF983E2AF"
++        "0x4bB6731B02314d40aBbfFBC4540f508874014226"
+      values.MAX_WITHDRAWAL_DELAY_BLOCKS:
+-        50400
++        216000
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The entry- and exit-point for funds into and out of EigenLayer, manages strategies.
+      upgradeability.implementation:
+-        "0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"
++        "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
+      implementations.0:
+-        "0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"
++        "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
+      values.beaconChainETHStrategy:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.DEPOSIT_TYPEHASH:
+-        "0x0a564d4cfe5cb0d4ee082aab2ca54b8c48e129485a8f7c77766ab5ef0c3566f1"
++        "0x4337f82d142e41f2a8c10547cd8c859bddb92262a61058e77842e24d9dea9224"
+      values.DOMAIN_SEPARATOR:
+-        "0xdaba058ab21f198a04ec80cf0d39f943660a92a99bda5de5016f923f7e4962ef"
+      values.MAX_WITHDRAWAL_DELAY_BLOCKS:
+-        50400
+      values.paused:
+-        1
++        0
+      values.withdrawalDelayBlocks:
+-        50400
+      values.domainSeparator:
++        "0xdaba058ab21f198a04ec80cf0d39f943660a92a99bda5de5016f923f7e4962ef"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"
++        "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"
+      implementations.0:
+-        "0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"
++        "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"
+      values.beaconChainOracle:
+-        "0x0000000000000000000000000000000000000000"
++        "0x343907185b71aDF0eBa9567538314396aa985442"
+      values.maxPods:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.paused:
+-        30
++        0
+      values.beaconChainETHStrategy:
++        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.delegationManager:
++        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.denebForkTimestamp:
++        1710338135
+    }
+```
+
+```diff
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd) {
+    +++ description: Registers contracts with slashing rights, tracks historic stake updates.
+      upgradeability.implementation:
+-        "0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"
++        "0xF3234220163a757edf1E11a8a085638D9B236614"
+      implementations.0:
+-        "0xef31c292801f24f16479DD83197F1E6AeBb8d6d8"
++        "0xF3234220163a757edf1E11a8a085638D9B236614"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "0x0000000000000000000000000000000000000000"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerBeaconOracle (0x343907185b71aDF0eBa9567538314396aa985442)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0x8bA40dA60f0827d027F029aCEE62609F0527a255)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../implementation/meta.txt                        |    2 +-
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   59 +-
+ .../interfaces/IDelayedWithdrawalRouter.sol        |   17 +-
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |   41 +
+ .../src/contracts/interfaces/IEigenPod.sol         |  214 ++--
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  144 ++-
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  456 +++++---
+ .../src/contracts/libraries/Endian.sol             |    6 +-
+ .../src/contracts/libraries/Merkle.sol             |   80 +-
+ .../src/contracts/permissions/Pausable.sol         |   23 +-
+ .../src/contracts/pods/DelayedWithdrawalRouter.sol |  114 +-
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../security/ReentrancyGuardUpgradeable.sol        |   75 ++
+ .../DelegationManager/implementation/meta.txt      |    2 +-
+ .../src/contracts/core/DelegationManager.sol       | 1148 +++++++++++++++-----
+ .../contracts/core/DelegationManagerStorage.sol    |   93 +-
+ .../src/contracts/core/Slasher.sol => /dev/null    |  563 ----------
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   12 +
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |   41 +
+ .../src/contracts/interfaces/IEigenPod.sol         |  223 ++++
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  159 +++
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  409 +++++++
+ .../contracts/libraries/EIP1271SignatureUtils.sol  |   41 +
+ .../src/contracts/libraries/Endian.sol             |   25 +
+ .../src/contracts/libraries/Merkle.sol             |  172 +++
+ .../StructuredLinkedList.sol => /dev/null          |  258 -----
+ .../src/contracts/permissions/Pausable.sol         |   23 +-
+ .../ethereum/.code/EigenLayerBeaconOracle/meta.txt |    2 +
+ .../src/EigenLayerBeaconOracle.sol                 |   91 ++
+ .../src/IBeaconChainOracle.sol                     |   12 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |   60 +
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  116 ++
+ .../contracts/utils/Address.sol                    |    0
+ .../contracts/utils/math/MathUpgradeable.sol       |  226 ++++
+ .../{.code@19531533 => .code}/EigenPod/meta.txt    |    2 +-
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   59 +-
+ .../interfaces/IDelayedWithdrawalRouter.sol        |   17 +-
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |    2 +-
+ .../src/contracts/interfaces/IEigenPod.sol         |  214 ++--
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  144 ++-
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../EigenPod/src/contracts/interfaces/ISlasher.sol |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  456 +++++---
+ .../EigenPod/src/contracts/libraries/BytesLib.sol  |   30 +-
+ .../EigenPod/src/contracts/libraries/Endian.sol    |    6 +-
+ .../EigenPod/src/contracts/libraries/Merkle.sol    |   80 +-
+ .../EigenPod/src/contracts/pods/EigenPod.sol       |  894 ++++++++++-----
+ .../contracts/pods/EigenPodPausingConstants.sol    |   15 +-
+ .../interfaces/draft-IERC1822.sol => /dev/null     |   20 -
+ .../proxy/ERC1967/ERC1967Upgrade.sol => /dev/null  |  185 ----
+ .../contracts/proxy/Proxy.sol => /dev/null         |   86 --
+ .../proxy/beacon/BeaconProxy.sol => /dev/null      |   61 --
+ .../contracts/utils/StorageSlot.sol => /dev/null   |   88 --
+ .../security/ReentrancyGuardUpgradeable.sol        |   75 ++
+ .../EigenPodManager/implementation/meta.txt        |    2 +-
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   59 +-
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |    2 +-
+ .../src/contracts/interfaces/IEigenPod.sol         |  214 ++--
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  144 ++-
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  456 +++++---
+ .../src/contracts/libraries/Endian.sol             |    6 +-
+ .../src/contracts/libraries/Merkle.sol             |   80 +-
+ .../src/contracts/permissions/Pausable.sol         |   23 +-
+ .../src/contracts/pods/EigenPodManager.sol         |  339 +++---
+ .../src/contracts/pods/EigenPodManagerStorage.sol  |   90 ++
+ .../contracts/pods/EigenPodPausingConstants.sol    |   15 +-
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../Slasher/implementation/meta.txt                |    2 +-
+ .../implementation/src/contracts/core/Slasher.sol  |  591 ++--------
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   12 +
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |   41 +
+ .../src/contracts/interfaces/IEigenPod.sol         |  223 ++++
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  159 +++
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  409 +++++++
+ .../src/contracts/libraries/Endian.sol             |   25 +
+ .../src/contracts/libraries/Merkle.sol             |  172 +++
+ .../contracts/libraries/StructuredLinkedList.sol   |    2 +-
+ .../src/contracts/permissions/Pausable.sol         |   23 +-
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../StrategyManager/implementation/meta.txt        |    2 +-
+ .../src/contracts/core/StrategyManager.sol         |  892 ++++-----------
+ .../src/contracts/core/StrategyManagerStorage.sol  |   64 +-
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   59 +-
+ .../contracts/interfaces/IDelegationManager.sol    |  471 +++++++-
+ .../interfaces/IDelegationTerms.sol => /dev/null   |   26 -
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |   41 +
+ .../src/contracts/interfaces/IEigenPod.sol         |  214 ++--
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  144 ++-
+ .../src/contracts/interfaces/IPausable.sol         |   13 +-
+ .../src/contracts/interfaces/IPauserRegistry.sol   |    6 +-
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |   84 +-
+ .../src/contracts/interfaces/IStrategy.sol         |   16 +-
+ .../src/contracts/interfaces/IStrategyManager.sol  |  262 ++---
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  456 +++++---
+ .../contracts/libraries/EIP1271SignatureUtils.sol  |   41 +
+ .../src/contracts/libraries/Endian.sol             |    6 +-
+ .../src/contracts/libraries/Merkle.sol             |   80 +-
+ .../src/contracts/permissions/Pausable.sol         |   23 +-
+ 139 files changed, 11631 insertions(+), 6331 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531533 (main branch discovery), not current.
+
+```diff
+    contract OperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "OperationsMultisig"
++        "EigenlayerOperationsMultisig"
+    }
+```
+
+```diff
+    contract EigenlayerMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      name:
+-        "EigenlayerMultisig"
++        "EigenlayerCommunityMultisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4160c726f419fb6cd7fa8ba5138b175ccbb7b131
 
 # Diff at Thu, 28 Mar 2024 08:51:57 GMT:

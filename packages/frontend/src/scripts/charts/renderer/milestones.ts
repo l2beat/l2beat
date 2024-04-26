@@ -14,8 +14,8 @@ export function renderMilestone(x: number, url: string) {
         view-box="0 0 ${MILESTONE_SIZE} ${MILESTONE_SIZE}"
         role="img"
         aria-label="Milestone icon"
-        class="fill-green-200 stroke-green-400 dark:fill-green-800 dark:stroke-green-500"
-      >      
+        class="fill-green-700 stroke-green-500"
+      >
         <rect
           x="9.89941"
           y="1.41421"

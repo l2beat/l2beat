@@ -1,5 +1,5 @@
 import { makeQuery } from '../query'
-import { ChartControls } from './ChartControls'
+import { ChartControls, ChartControlsCallbacks } from './ChartControls'
 import { ChartSettingsManager } from './ChartSettings'
 import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartRenderer } from './renderer/ChartRenderer'
@@ -7,6 +7,7 @@ import { ChartViewController } from './view-controller/ChartViewController'
 
 interface Options {
   disableLocalStorage?: boolean
+  callbacks?: ChartControlsCallbacks
 }
 
 export function configureCharts(opts?: Options) {
@@ -14,7 +15,7 @@ export function configureCharts(opts?: Options) {
   const charts = $$('[data-role="chart"]')
 
   for (const chart of charts) {
-    const chartSettingsManager = new ChartSettingsManager(opts)
+    const chartSettingsManager = new ChartSettingsManager(chart, opts)
 
     const chartRenderer = new ChartRenderer(chart)
     const chartViewController = new ChartViewController(chart, chartRenderer)
@@ -25,6 +26,7 @@ export function configureCharts(opts?: Options) {
       chartSettingsManager,
       chartViewController,
       chartDataController,
+      opts?.callbacks,
     )
     chartControls.init()
   }

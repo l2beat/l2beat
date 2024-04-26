@@ -134,7 +134,11 @@ export const loopring: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'Loopring',
+      minTimestamp: new UnixTime(1616396742),
+    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],

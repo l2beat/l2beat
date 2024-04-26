@@ -2,17 +2,20 @@ import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { SyncStatus } from '../../pages/types'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import {
   Tooltip,
   TooltipContent,
   TooltipContentType,
   TooltipTrigger,
 } from '../tooltip/Tooltip'
+import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
+import { GrayedOut } from './GrayedOut'
 
 export function LivenessDurationCell(props: {
   durationInSeconds: number | undefined
@@ -20,6 +23,7 @@ export function LivenessDurationCell(props: {
   project?: ScalingLivenessViewEntry
   tooltipContent?: TooltipContentType
   warning?: string
+  syncStatus?: SyncStatus
 }) {
   if (
     !props.durationInSeconds &&
@@ -54,12 +58,23 @@ export function LivenessDurationCell(props: {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <DurationCell durationInSeconds={props.durationInSeconds} />
+        <GrayedOut grayOut={props.syncStatus?.isSynced === false}>
+          <DurationCell durationInSeconds={props.durationInSeconds} />
+        </GrayedOut>
         {props.warning && (
-          <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
+          <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
       </TooltipTrigger>
       <TooltipContent>
+        {!props.syncStatus?.isSynced &&
+          props.syncStatus?.displaySyncedUntil && (
+            <>
+              <span className="whitespace-pre text-balance font-medium">
+                {props.syncStatus.displaySyncedUntil}
+              </span>
+              <HorizontalSeparator className="my-2 dark:border-slate-600" />
+            </>
+          )}
         {props.tooltipContent}
         {props.warning && (
           <WarningBar

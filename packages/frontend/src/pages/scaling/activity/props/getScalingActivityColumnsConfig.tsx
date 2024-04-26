@@ -4,14 +4,17 @@ import { Badge } from '../../../../components/badge/Badge'
 import { NumberCell } from '../../../../components/table/NumberCell'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
-import { formatLargeNumber } from '../../../../utils'
+import { formatNumber } from '../../../../utils'
 import { cn } from '../../../../utils/cn'
 import { formatTps } from '../../../../utils/formatTps'
 import { ActivityViewEntry } from '../types'
 
 export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
-    ...getProjectWithIndexColumns(),
+    ...getProjectWithIndexColumns({
+      indexAsDefaultSort: false,
+      showIsL3: true,
+    }),
     {
       name: 'Past day TPS',
       tooltip: 'Transactions per second averaged over the past day.',
@@ -79,7 +82,7 @@ export function getScalingActivityColumnsConfig() {
       getValue: (project) =>
         project.data && (
           <NumberCell>
-            {formatLargeNumber(project.data.transactionsMonthlyCount)}
+            {formatNumber(project.data.transactionsMonthlyCount)}
           </NumberCell>
         ),
       removeCellOnFalsyValue: true,

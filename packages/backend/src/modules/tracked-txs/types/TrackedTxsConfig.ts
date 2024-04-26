@@ -26,6 +26,7 @@ interface TrackedTxConfigBase {
   uses: TrackedTxUseWithId[]
   sinceTimestampInclusive: UnixTime
   untilTimestampExclusive?: UnixTime
+  costMultiplier?: number
 }
 
 export interface TrackedTxFunctionCallConfig extends TrackedTxConfigBase {

@@ -1,9 +1,9 @@
 import {
   Layer2Provider,
-  Layer2TVLWarning,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
+  WarningWithSentiment,
 } from '@l2beat/config'
 
 import { TokenControl } from '../../../components/chart/TokenControls'
@@ -19,7 +19,7 @@ export interface ScalingTvlViewEntry {
   provider?: Layer2Provider
   warning?: string
   redWarning: string | undefined
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
   purposes: ScalingProjectPurpose[]
   isArchived?: boolean
   isVerified?: boolean

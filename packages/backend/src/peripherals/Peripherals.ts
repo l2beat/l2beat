@@ -9,7 +9,7 @@ interface RepositoryClass<T extends BaseRepository> {
   new (database: Database, logger: Logger): T
 }
 
-interface ClientClass<T, O> {
+export interface ClientClass<T, O> {
   create(services: { httpClient: HttpClient; logger: Logger }, options: O): T
 }
 

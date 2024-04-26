@@ -23,7 +23,7 @@ export function getCoingeckoId(
 
   logger.assert(
     coin?.id !== undefined,
-    'Could not find coingeckoId for token. Please add it manually to source.jsonc',
+    'Could not find coingeckoId for token. Please add it manually to tokens.jsonc',
   )
 
   return coin.id

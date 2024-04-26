@@ -1,16 +1,10 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
-import { About } from '../../../../components/About'
+import { FooterProps, NavbarProps } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
-import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 
 export interface BridgesRiskPageProps {
@@ -21,18 +15,15 @@ export interface BridgesRiskPageProps {
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent>
-        <BridgesNavigationTabs selected="risk" />
-        <main>
-          <SimplePageHeader>Risk Analysis</SimplePageHeader>
-          <BridgesMvpWarning />
-          <BridgesRiskView {...props.riskView} />
-          <About />
-        </main>
-      </PageContent>
-      <Footer {...props.footer} />
-    </>
+    <DashboardLayout
+      navbar={props.navbar}
+      footer={props.footer}
+      hideOtherSites
+      tabs={<BridgesNavigationTabs selected="risk" />}
+    >
+      <SimplePageHeader>Risk Analysis</SimplePageHeader>
+      <BridgesMvpWarning />
+      <BridgesRiskView {...props.riskView} />
+    </DashboardLayout>
   )
 }

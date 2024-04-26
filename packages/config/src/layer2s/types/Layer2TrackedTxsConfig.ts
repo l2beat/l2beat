@@ -8,6 +8,7 @@ import {
 export type Layer2TxConfig = {
   uses: Layer2TrackedTxUse[]
   query: TrackedTxQuery
+  _hackCostMultiplier?: number
 }
 
 export type Layer2TrackedTxUse = {

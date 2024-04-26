@@ -41,7 +41,3 @@ Production build requires (for some unknown reason) rebuilding dependencies in w
 
 You should not import files that depend on node-related modules (e.g. fs) in stories. That will cause much pain searching for why the storybook is not working.
 For example you should not import layer2s from config as it imports all projects and some of them use ProjectDiscovery that uses fs.
-
-## Meta images
-
-We use dedicated subpages (with storybooks) like: `meta-images/overview-scaling-activity/` to render meta images for given pages. Later these pages are crawled and screenshoted during build process (`packages/frontend/src/build/buildMetaImages.ts`) to generate final meta images. Meta image paths should be used in `getPageMetadata` files.

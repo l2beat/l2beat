@@ -27,18 +27,14 @@ import {
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../common/stages/getStage'
-import {
-  Layer2,
-  Layer2Display,
-  Layer2TransactionApi,
-  Layer2TxConfig,
-} from '../types'
+import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -53,7 +49,7 @@ export interface PolygonCDKStackConfig {
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: ScalingProjectPermission[]
@@ -67,6 +63,7 @@ export interface PolygonCDKStackConfig {
   rollupManagerContract: ContractParameters
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
+  upgradesAndGovernance?: string
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -116,8 +113,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
   } as const
 
-  const upgradeability = {
-    upgradableBy: ['AdminMultisig'],
+  const sharedUpgradeability = {
+    upgradableBy: ['RollupManagerAdminMultisig'],
     upgradeDelay: exitWindowRisk.value,
     upgradeConsiderations: exitWindowRisk.description,
   }
@@ -144,6 +141,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       finality: templateVars.display.finality ?? {
         finalizationPeriod: 0,
+        warning: 'Uniform block distribution is assumed for calculations.',
       },
     },
     config: {
@@ -278,7 +276,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         },
       },
       finality:
-        templateVars.daProvider !== undefined ? undefined : 'coming soon',
+        templateVars.daProvider !== undefined
+          ? undefined
+          : {
+              type: 'PolygonZkEvm',
+              minTimestamp: new UnixTime(1679653163),
+              lag: 0,
+            },
     },
     chainConfig: templateVars.chainConfig,
     dataAvailability:
@@ -436,10 +440,15 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     stateDerivation: templateVars.stateDerivation,
     permissions: [
-      ...templateVars.discovery.getMultisigPermission(
-        'AdminMultisig',
-        `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
-      ),
+      {
+        name: 'ProxyAdminOwner',
+        accounts: [
+          templateVars.discovery.formatPermissionedAccount(
+            templateVars.discovery.getContractValue('ProxyAdmin', 'owner'), // could be EOA or multisig
+          ),
+        ],
+        description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.`,
+      },
       {
         name: 'Sequencer',
         accounts: [
@@ -476,7 +485,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       ...shared.getMultisigPermission(
         'RollupManagerAdminMultisig',
-        `Admin of the Polygon Rollup Manager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state.`,
+        `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
       ),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
@@ -487,7 +496,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           templateVars.rollupModuleContract.name,
           {
             description: `The main contract of the ${templateVars.display.name}. Contains sequenced transaction batch hashes and forced transaction logic.`,
-            ...upgradeability,
+            ...sharedUpgradeability,
           },
         ),
         templateVars.discovery.getContractDetails(
@@ -499,17 +508,17 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ),
         shared.getContractDetails(templateVars.rollupManagerContract.name, {
           description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails('Bridge', {
           description:
             'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails('GlobalExitRootV2', {
           description:
             'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
-          ...upgradeability,
+          ...sharedUpgradeability,
         }),
         shared.getContractDetails(
           'Timelock',
@@ -536,7 +545,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                 timelockExecutor === timelockCanceller,
               'Timelock roles have changed, update Timelock description.',
             )
-            return `Contract upgrades have to go through a ${upgradeDelayString} timelock unless the Emergency State is activated. It can also add rollup types that can be used to upgrade verifier contracts of existing systems. It is controlled by the AdminMultisig.`
+            return `Contract upgrades have to go through a ${upgradeDelayString} timelock unless the Emergency State is activated. It can also add rollup types that can be used to upgrade verifier contracts of existing systems. It is controlled by the ProxyAdminOwner.`
           })(),
         ),
       ],
@@ -548,13 +557,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
     },
-    upgradesAndGovernance: [
-      `All main contracts and the verifier are upgradable by the ${templateVars.discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`.${templateVars.nonTemplateEscrows.length > 0 ? ` Escrow contracts are upgradable by the \`EscrowsAdmin\` ${templateVars.discovery.getMultisigStats('EscrowsAdmin')} multisig.` : ''}`,
-      `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
-      `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`AdminMultisig\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`AdminMultisig\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
-      `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`AdminMultisig\` directly.`,
-      `The ${shared.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
-    ].join('\n\n'),
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
   }

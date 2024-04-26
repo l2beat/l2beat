@@ -1,14 +1,7 @@
-import {
-  assert,
-  EthereumAddress,
-  formatSeconds,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -18,11 +11,6 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 const optimismPortalImplementation =
   discovery.getContract('OptimismPortal').implementations?.[0]
@@ -52,19 +40,6 @@ export const blast: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/Blast_L2'],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Blast is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
     tvlWarning: {
       content: 'The TVL does account for rehypothecated tokens.',
       sentiment: 'bad',
@@ -108,9 +83,6 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x697402166Fbf2F22E970df8a6486Ef171dbfc524',
-  ),
   rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
@@ -135,8 +107,6 @@ export const blast: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'BlastMultisig',
@@ -145,7 +115,7 @@ export const blast: Layer2 = opStackL2({
     {
       name: 'SystemConfig Owner.',
       description:
-        'Account priviliged to change System Config parameters such as Sequencer Address and gas limit.',
+        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
     },
   ],
@@ -196,7 +166,18 @@ export const blast: Layer2 = opStackL2({
         'Escrow for DAI that is invested into a yield-bearing contracts such as MakerDAO DSR.',
     }),
   ],
-  isNodeAvailable: false,
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/blast-io/blast',
+  stateDerivation: {
+    nodeSoftware:
+      'Node software can be found [here](https://github.com/blast-io/blast).',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+    genesisState:
+      'The genesis file can be found [here](https://github.com/blast-io/deployment/blob/master/mainnet/genesis.json).',
+    dataFormat:
+      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+  },
   milestones: [
     {
       name: 'Blast Network Launch',
@@ -212,11 +193,4 @@ export const blast: Layer2 = opStackL2({
         'The Munchables exploiter is prohibited from forcing transactions.',
     },
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  knowledgeNuggets: [],
 })

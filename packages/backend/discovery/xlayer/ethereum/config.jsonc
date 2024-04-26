@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "xlayer",
+  "initialAddresses": ["0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"],
+  "names": {
+    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonRollupManager",
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
+    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "XLayerValidiumEtrog",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "XLayerVerifier",
+    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRootV2",
+    "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "POL",
+    "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": "XLayerValidiumDAC",
+    "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "SharedProxyAdmin"
+  },
+  "overrides": {
+    "PolygonRollupManager": {
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee",
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
+      "ignoreInWatchMode": ["rollupCount"],
+      "fields": {
+        "rollupData": {
+          "type": "call",
+          "method": "rollupIDToRollupData",
+          "args": [3], // X Layer ID
+          "pickFields": [
+            "rollupContract",
+            "chainID",
+            "verifier",
+            "forkID",
+            "rollupTypeID",
+            "rollupCompatibilityID"
+          ]
+        }
+      }
+    },
+    "Bridge": { "ignoreDiscovery": true },
+    "XLayerValidiumDAC": {
+      "fields": {
+        "members": {
+          "type": "array",
+          "method": "members",
+          "maxLength": 50
+        }
+      }
+    },
+    "XLayerValidiumEtrog": {
+      "ignoreInWatchMode": ["lastAccInputHash"]
+    },
+    "POL": {
+      "ignoreDiscovery": true // already fetched in shared-config
+    },
+    "GlobalExitRootV2": {
+      "ignoreDiscovery": true // already fetched in shared-config
+    }
+  }
+}

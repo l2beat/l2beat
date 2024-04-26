@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x0d4fc22e6cd991c8004938b46ae155be16c8ffd8
+Generated with discovered.json: 0x135cb4bcbc2343e093d2f2f3d0ab8138f4fa9f11
+
+# Diff at Thu, 25 Apr 2024 21:21:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2f1b03dc8e8dfe5c4e9bc475f6f9be6019a2af1c block: 198865244
+- current block number: 204795680
+
+## Description
+
+A new UpgradeExecutor member was added (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF).
+It's a "3 of 4" GnosisSafe.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutorMemberGnosisSafeL2 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++++++++
+ .../implementation/contracts/GnosisSafeL2.sol      |  86 +++++
+ .../implementation/contracts/base/Executor.sol     |  27 ++
+ .../contracts/base/FallbackManager.sol             |  53 +++
+ .../implementation/contracts/base/GuardManager.sol |  50 +++
+ .../contracts/base/ModuleManager.sol               | 133 +++++++
+ .../implementation/contracts/base/OwnerManager.sol | 149 ++++++++
+ .../implementation/contracts/common/Enum.sol       |   8 +
+ .../contracts/common/EtherPaymentFallback.sol      |  13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
+ .../contracts/common/SelfAuthorized.sol            |  16 +
+ .../contracts/common/SignatureDecoder.sol          |  36 ++
+ .../implementation/contracts/common/Singleton.sol  |  11 +
+ .../contracts/common/StorageAccessible.sol         |  47 +++
+ .../contracts/external/GnosisSafeMath.sol          |  54 +++
+ .../contracts/interfaces/ISignatureValidator.sol   |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 159 ++++++++
+ .../proxy/meta.txt                                 |   2 +
+ 19 files changed, 1323 insertions(+)
+```
+
+Generated with discovered.json: 0x58d524aecf6116a452095502141368395422d8e5
 
 # Diff at Fri, 08 Mar 2024 11:14:21 GMT:
 

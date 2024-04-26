@@ -121,6 +121,15 @@ export const zksyncera: Layer2 = {
           'Standard bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
+        sinceTimestamp: new UnixTime(1698058151),
+        tokens: ['wstETH'],
+        description:
+          'Bridge for depositing wrapped stETH (Lido) to zkSync Era.',
+        upgradableBy: ['Lido (Lido Agent)'],
+        upgradeDelay: 'No delay',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -262,6 +271,17 @@ export const zksyncera: Layer2 = {
       minTimestamp: new UnixTime(1708556400),
       lag: 0,
     },
+  },
+  chainConfig: {
+    name: 'zksync2',
+    chainId: 324,
+    explorerUrl: 'https://explorer.zksync.io/',
+    explorerApi: {
+      url: 'https://api-era.zksync.network/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1676384520),
+    coingeckoPlatform: 'zksync',
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
@@ -534,6 +554,12 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
     },
   ],
   milestones: [
+    {
+      name: 'zkSync Era starts using blobs',
+      link: 'https://twitter.com/zksync/status/1767983026443579448',
+      date: '2024-03-13T00:00:00Z',
+      description: 'zkSync Era starts publishing data to blobs.',
+    },
     {
       name: 'Introduction of Boojum prover',
       link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',

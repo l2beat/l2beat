@@ -30,6 +30,7 @@ export function getActiveScalingSummaryColumnsConfig() {
         <RosetteCell
           riskValues={project.riskValues}
           isUpcoming={project.isUpcoming}
+          isUnderReview={project.showProjectUnderReview}
         />
       ),
     },
@@ -202,7 +203,8 @@ export function getLayer3sScalingSummaryColumnsConfig() {
       name: 'Technology',
       tooltip: 'The technology stack used.',
       shortName: 'Tech',
-      getValue: (project) => project.provider,
+      getValue: (project) =>
+        project.provider === 'Arbitrum' ? 'Arbitrum Orbit' : project.provider,
     },
     {
       name: 'Host Chain',

@@ -97,7 +97,6 @@ function getElements(tabNavigation: HTMLElement) {
   )
 
   if (!underline || !tabsContainer || tabs.length === 0) {
-    console.log(underline, tabsContainer, tabs.length)
     return
   }
   const tabsWithContent: Record<string, TabWithContent> = {}

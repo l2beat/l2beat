@@ -1,14 +1,10 @@
 import React from 'react'
 
-import {
-  CanonicalIcon,
-  ExternalIcon,
-  NativeIcon,
-} from '../../../../components/icons'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { TotalValue } from '../../../../components/table/TotalValue'
 import { ColumnConfig } from '../../../../components/table/types'
 import { ValueWithPercentageCell } from '../../../../components/table/ValueWithPercentageCell'
+import { getColumnHeaderUnderline } from '../../../../utils/table/getColumnHeaderUnderline'
 import { ScalingTvlViewEntry } from '../types'
 
 export function getScalingTvlColumnsConfig() {
@@ -34,11 +30,11 @@ export function getScalingTvlColumnsConfig() {
     },
     {
       name: 'Canonical',
-      icon: <CanonicalIcon />,
       tooltip:
         'These tokens use L1 Ethereum as their main ledger and are bridged to L2 via a canonical bridge locking tokens in L1 escrow and minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       align: 'center',
       noPaddingRight: true,
+      headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.cbv?.displayValue}
@@ -54,11 +50,11 @@ export function getScalingTvlColumnsConfig() {
     },
     {
       name: 'External',
-      icon: <ExternalIcon />,
       tooltip:
         'These tokens use some external blockchain as their main ledger and are bridged to L2 via a non-canonical bridge. Tokens are locked on their native ledger and the bridge is minting on L2 an IOU representation of that token. The value is displayed together with a percentage change compared to 7D ago.',
       align: 'center',
       noPaddingRight: true,
+      headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.ebv?.displayValue}
@@ -74,11 +70,11 @@ export function getScalingTvlColumnsConfig() {
     },
     {
       name: 'Native',
-      icon: <NativeIcon />,
       tooltip:
         'These tokens are using L2 as their ledger and are minted directly on L2. Note that for some tokens (omnichain tokens) their ledger is distributed across many blockchains and they can be moved to L2 via a burn-mint bridge. The value is displayed together with a percentage change compared to 7D ago.',
       align: 'center',
       noPaddingRight: true,
+      headClassName: getColumnHeaderUnderline('before:bg-pink-100'),
       getValue: (project) => (
         <ValueWithPercentageCell
           value={project.nmv?.displayValue}

@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -48,6 +48,16 @@ export class FinalityIndexer extends ChildIndexer {
     const isSynced = await this.isConfigurationSynced(targetTimestamp)
     if (isSynced) {
       this.logger.debug('Update skipped: configuration already synced', {
+        from,
+        to,
+        targetTimestamp,
+      })
+      return to
+    }
+
+    const now = UnixTime.now().toStartOf('day')
+    if (targetTimestamp.toNumber() < now.add(-1, 'days').toNumber()) {
+      this.logger.debug('Update skipped: target in the past', {
         from,
         to,
         targetTimestamp,

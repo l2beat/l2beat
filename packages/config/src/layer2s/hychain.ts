@@ -25,7 +25,9 @@ export const hychain: Layer2 = underReviewL2({
         'https://hychain.substack.com/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc.hychain.com/http',
   escrows: [
     // bridge is only for TOPIA token
     {

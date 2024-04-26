@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x41c6e44818140d3abfbd12081543887091fe4c75
+
+# Diff at Wed, 10 Apr 2024 11:32:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@b05e9a9401061dc09d3987350e2d33de147386b8 block: 19531440
+- current block number: 19624947
+
+## Description
+
+### RollupProcessorV3:
+
+- Make processRollup() public by removing the `rollupProviders[msg.sender]` check from the function
+- Remove default asset caps from the initializer (caps are currently set to 0)
+
+This allows external participants to withdraw from the rollup and keeps deposits disabled, in line with their March 30 sunset.
+
+### Verifier28x32:
+
+Change of six constants.
+
+From chatgpt:
+
+- Two of the constants represent the elliptic curve point `Q2`
+- The other four describe the elliptic curve point `g2_x`
+
+These points among others are used to compute the verification key.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Verifier28x32 (0x9BDc85491BD589e8390A6AAb6982b82255ae2297)
+    +++ description: Verifier contract used by the RollupProcessorV2.
+```
+
+```diff
+    contract RollupProcessorV2 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"
++        "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
+      implementations.0:
+-        "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"
++        "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
+      values.getImplementationVersion:
+-        2
++        3
++++ description: Address of the ZK verifier.
++++ type: PERMISSION
++++ severity: LOW
+      values.verifier:
+-        "0x9BDc85491BD589e8390A6AAb6982b82255ae2297"
++        "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
+      derivedName:
+-        "RollupProcessorV2"
++        "RollupProcessorV3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB)
+    +++ description: Verifier contract used by the RollupProcessorV2.
+```
+
+## Source code changes
+
+```diff
+.../contracts/access/AccessControl.sol             |  2 +-
+ .../contracts/utils/Strings.sol                    |  2 +-
+ .../contracts/utils/math/Math.sol                  |  4 +-
+ .../RollupProcessorV2/implementation/meta.txt      |  4 +-
+ .../src/core/processors/RollupProcessorV3.sol}     | 98 ++++++++--------------
+ .../Verifier28x32/meta.txt                         |  2 +-
+ .../core/verifier/keys/VerificationKey28x32.sol    | 18 ++--
+ 7 files changed, 49 insertions(+), 81 deletions(-)
+```
+
 Generated with discovered.json: 0x9e7064e6e198b24fb116f87b988a7ce0fed986a3
 
 # Diff at Thu, 28 Mar 2024 08:32:53 GMT:

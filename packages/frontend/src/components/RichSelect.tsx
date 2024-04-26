@@ -46,7 +46,7 @@ export function RichSelect(props: RichSelectProps) {
         <hr className="h-1.5 border-t-0" />
         <div
           className={cn(
-            'select-none rounded-lg bg-gray-200 p-2 text-base font-semibold dark:bg-zinc-700',
+            'w-max select-none rounded-lg bg-gray-200 p-2 text-base font-semibold dark:bg-zinc-700',
             props.listClassName,
           )}
         >

@@ -33,11 +33,6 @@ export function createUpdateMonitorModule(
 
   const configReader = new ConfigReader()
 
-  const discoveryLogger =
-    config.name === 'Backend/Local'
-      ? DiscoveryLogger.CLI
-      : DiscoveryLogger.SERVER
-
   const discordClient = config.updateMonitor.discord
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
     : undefined
@@ -58,7 +53,7 @@ export function createUpdateMonitorModule(
       discoveryHttpClient,
       configReader,
       peripherals,
-      discoveryLogger,
+      DiscoveryLogger.SILENT,
       chainConfig,
     ),
   )

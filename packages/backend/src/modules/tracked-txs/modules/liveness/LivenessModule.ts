@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../../config'
-import { IndexerStateRepository } from '../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../../../peripherals/Peripherals'
 import { Clock } from '../../../../tools/Clock'
+import { IndexerStateRepository } from '../../../../tools/uif/IndexerStateRepository'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
 import { LivenessController } from './api/LivenessController'

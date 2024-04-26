@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "blockNumber": 19531440,
+  "blockNumber": 19624947,
   "configHash": "0x56a9a501a4be9157f0ec5870d09480d6fd32102b7cd1e9ec4719717f2420e886",
   "version": 3,
   "contracts": [
@@ -105,23 +105,23 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "Verifier28x32",
-      "address": "0x9BDc85491BD589e8390A6AAb6982b82255ae2297",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1708020335,
-      "values": {
-        "getVerificationKeyHash": "0xd8836e9c78022c0245cd010590822e42e3a94cbbd7594c1a2dde73feedd7da0a"
-      }
-    },
-    {
       "name": "DefiBridgeProxy",
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1654638146
+    },
+    {
+      "name": "Verifier28x32",
+      "address": "0xb7baA1420f88b7758E341c93463426A2b7651CFB",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1712567195,
+      "values": {
+        "getVerificationKeyHash": "0x58ef3faae858309785d95440f2ae3192ad9e3a640d7d078a48f5200acd68dabd"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -153,7 +153,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 278,
+        "nonce": 281,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -163,10 +163,10 @@
       "address": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09",
+        "implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
         "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
       },
-      "implementations": ["0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"],
+      "implementations": ["0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"],
       "sinceTimestamp": 1654638194,
       "values": {
         "accessControl": {
@@ -200,10 +200,10 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 27217920,
+        "getDataSize": 27318272,
         "getDefiInteractionHashesLength": 0,
-        "getEscapeHatchStatus": [false, 1920],
-        "getImplementationVersion": 2,
+        "getEscapeHatchStatus": [false, 2013],
+        "getImplementationVersion": 3,
         "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -244,7 +244,7 @@
           "0xA915B9C104F865105Caa29E122C8e558cC22bd41"
         ],
         "getSupportedBridgesLength": 18,
-        "lastRollupTimeStamp": 1711613447,
+        "lastRollupTimeStamp": 1712688155,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
@@ -254,10 +254,10 @@
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0x1fc52231c80969e1b23fdf35d72f95fed07b85796330d7d17ca05ab54508d78b",
-        "verifier": "0x9BDc85491BD589e8390A6AAb6982b82255ae2297"
+        "rollupStateHash": "0xa0b5fd7668d98634fb7cbd339e1bb36d27da4976af2a8ccb8e9d47cb72d2d5fc",
+        "verifier": "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
       },
-      "derivedName": "RollupProcessorV2"
+      "derivedName": "RollupProcessorV3"
     }
   ],
   "eoas": [
@@ -292,7 +292,7 @@
     "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e": [
       "constructor(address _singleton)"
     ],
-    "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09": [
+    "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728": [
       "constructor(uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound)",
       "error ARRAY_OVERFLOW()",
       "error BRIDGE_WITH_IDENTICAL_INPUT_ASSETS(uint256 inputAssetId)",
@@ -413,7 +413,14 @@
       "function userPendingDeposits(uint256, address) view returns (uint256)",
       "function verifier() view returns (address)"
     ],
-    "0x9BDc85491BD589e8390A6AAb6982b82255ae2297": [
+    "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487": [
+      "error ASYNC_NONZERO_OUTPUT_VALUES(uint256 outputValueA, uint256 outputValueB)",
+      "error INSUFFICIENT_ETH_PAYMENT()",
+      "error OUTPUT_A_EXCEEDS_252_BITS(uint256 outputValue)",
+      "error OUTPUT_B_EXCEEDS_252_BITS(uint256 outputValue)",
+      "function convert(address bridgeAddress, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetB, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetB, uint256 totalInputValue, uint256 interactionNonce, uint256 auxInputData, uint256 ethPaymentsSlot, address rollupBeneficiary) returns (uint256 outputValueA, uint256 outputValueB, bool isAsync)"
+    ],
+    "0xb7baA1420f88b7758E341c93463426A2b7651CFB": [
       "error EC_SCALAR_MUL_FAILURE()",
       "error MOD_EXP_FAILURE()",
       "error PROOF_FAILURE()",
@@ -422,13 +429,6 @@
       "error PUBLIC_INPUT_INVALID_BN128_G1_POINT()",
       "function getVerificationKeyHash() pure returns (bytes32)",
       "function verify(bytes, uint256 public_inputs_hash) view returns (bool)"
-    ],
-    "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487": [
-      "error ASYNC_NONZERO_OUTPUT_VALUES(uint256 outputValueA, uint256 outputValueB)",
-      "error INSUFFICIENT_ETH_PAYMENT()",
-      "error OUTPUT_A_EXCEEDS_252_BITS(uint256 outputValue)",
-      "error OUTPUT_B_EXCEEDS_252_BITS(uint256 outputValue)",
-      "function convert(address bridgeAddress, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetB, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetB, uint256 totalInputValue, uint256 interactionNonce, uint256 auxInputData, uint256 ethPaymentsSlot, address rollupBeneficiary) returns (uint256 outputValueA, uint256 outputValueB, bool isAsync)"
     ],
     "0xC5b735d05c26579B701Be9bED253Bb588503B26B": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

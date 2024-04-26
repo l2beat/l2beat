@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xd7223a19aedf6b671fb2d20d5b8e144c97f68deb
+
+# Diff at Wed, 10 Apr 2024 09:02:17 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6bb1fb9faf46a5960ef8903031fd713f6bd1234a block: 19532313
+- current block number: 19624206
+
+## Description
+
+Add wstETH escrow governed by Lido.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532313 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x07d9b55885b29033ec3731f18859237455278c7f
 
 # Diff at Thu, 28 Mar 2024 11:28:58 GMT:

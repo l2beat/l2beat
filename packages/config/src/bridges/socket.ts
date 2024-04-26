@@ -132,7 +132,7 @@ export const socket: Bridge = {
     {
       name: 'Socket Owner.',
       description:
-        'Account priviliged to set up different roles in the main Socket contract.',
+        'Account privileged to set up different roles in the main Socket contract.',
       accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
     },
   ],

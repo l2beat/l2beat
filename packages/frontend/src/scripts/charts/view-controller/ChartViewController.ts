@@ -3,6 +3,7 @@ import { getTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
 import { makeQuery } from '../../query'
 import { ChartRenderer, RenderParams } from '../renderer/ChartRenderer'
 import { getActivityRenderParams } from './charts/getActivityRenderParams'
+import { getCostsRenderParams } from './charts/getCostsRenderParams'
 import { getDetailedTvlRenderParams } from './charts/getDetailedTvlRenderParams'
 import { getTokenTvlRenderParams } from './charts/getTokenTvlRenderParams'
 import { getTvlRenderParams } from './charts/getTvlRenderParams'
@@ -108,12 +109,14 @@ export class ChartViewController {
       this.state?.data?.type === 'tvl' ||
       this.state?.data?.type === 'detailed-tvl'
     ) {
-      const currency = this.state.useAltCurrency ? 'eth' : 'usd'
+      const currency = getTvlCurrency(this.state)
       const { tvl, tvlWeeklyChange } = getTvlWithChange(
         this.state.data.values,
         currency,
       )
-      this.header.value.innerHTML = formatCurrency(tvl, currency)
+      this.header.value.innerHTML = formatCurrency(tvl, currency, {
+        showLessThanMinimum: false,
+      })
       if (this.header.valueChange) {
         this.header.valueChange.innerHTML = getChangeHtml(tvlWeeklyChange)
       }
@@ -135,6 +138,8 @@ export class ChartViewController {
         return getTvlRenderParams(this.state)
       case 'activity':
         return getActivityRenderParams(this.state)
+      case 'costs':
+        return getCostsRenderParams(this.state)
       case 'token-tvl':
         return getTokenTvlRenderParams(this.state)
       case 'detailed-tvl':
@@ -142,5 +147,16 @@ export class ChartViewController {
       default:
         throw new Error('Unknown data type')
     }
+  }
+}
+
+function getTvlCurrency(state: ChartControlsState) {
+  switch (state.unit) {
+    case 'ETH':
+      return 'eth'
+    case 'USD':
+      return 'usd'
+    default:
+      throw new Error('Invalid unit')
   }
 }

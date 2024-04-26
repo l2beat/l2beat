@@ -351,6 +351,131 @@
       }
     },
     {
+      "name": "LockingInfo",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxLock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minLock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardPayer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLocked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalRewardsLiquidated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LockingPool",
+      "values": {
+        "BLOCK_REWARD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWAL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentBatch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitDelayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mpcAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardPerBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signerUpdateThrottle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSequencers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "MToken",
       "values": {
         "decimals": {
@@ -600,6 +725,16 @@
           "type": "PERMISSION"
         },
         "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null

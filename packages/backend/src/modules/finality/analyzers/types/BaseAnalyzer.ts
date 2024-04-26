@@ -18,7 +18,6 @@ export abstract class BaseAnalyzer {
     protected readonly provider: RpcClient,
     protected readonly livenessRepository: LivenessRepository,
     protected readonly projectId: ProjectId,
-    protected readonly l2Provider?: RpcClient,
   ) {}
 
   async getFinalityForInterval(

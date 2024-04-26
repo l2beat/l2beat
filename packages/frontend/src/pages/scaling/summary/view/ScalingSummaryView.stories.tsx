@@ -1256,7 +1256,7 @@ const meta = {
         name: 'Xai',
         shortName: undefined,
         slug: 'xai',
-        provider: 'Arbitrum Orbit',
+        provider: 'Arbitrum',
         warning: undefined,
         isArchived: undefined,
         isUpcoming: true,

@@ -8,7 +8,7 @@ import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 import { pickBy } from 'lodash'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
