@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "AddressManager",
@@ -13,6 +13,116 @@
     },
     {
       "name": "ChallengerMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FoundationMultisig_1",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FoundationMultisig_2",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
       "values": {
         "VERSION": {
           "description": null,
@@ -104,6 +214,26 @@
           "severity": null,
           "type": null
         },
+        "otherMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "version": {
           "description": null,
           "severity": null,
@@ -134,6 +264,16 @@
           "severity": null,
           "type": null
         },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "version": {
           "description": null,
           "severity": null,
@@ -160,6 +300,21 @@
           "type": null
         },
         "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
           "description": null,
           "severity": null,
           "type": null
@@ -199,7 +354,22 @@
           "severity": null,
           "type": null
         },
+        "challenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finalizationPeriodSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BlockTime": {
           "description": null,
           "severity": null,
           "type": null
@@ -224,12 +394,22 @@
           "severity": null,
           "type": null
         },
+        "proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "startingBlockNumber": {
           "description": null,
           "severity": null,
           "type": null
         },
         "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionInterval": {
           "description": null,
           "severity": null,
           "type": null
@@ -242,9 +422,24 @@
       }
     },
     {
+      "name": "Lib_AddressManager",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "OptimismMintableERC20Factory",
       "values": {
         "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -274,6 +469,16 @@
           "severity": null,
           "type": null
         },
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "l2Sender": {
           "description": null,
           "severity": null,
@@ -285,6 +490,16 @@
           "type": null
         },
         "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
           "description": null,
           "severity": null,
           "type": null
@@ -317,14 +532,214 @@
       }
     },
     {
+      "name": "ProxyAdminOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SecurityCouncilMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuperchainConfig",
+      "values": {
+        "GUARDIAN_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSED_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuperchainProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuperchainProxyAdminOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "SystemConfig",
       "values": {
+        "BATCH_INBOX_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_CROSS_DOMAIN_MESSENGER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_ERC_721_BRIDGE_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_STANDARD_BRIDGE_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_OUTPUT_ORACLE_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPTIMISM_PORTAL_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "START_BLOCK_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "UNSAFE_BLOCK_SIGNER_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchInbox": {
           "description": null,
           "severity": null,
           "type": null
@@ -339,12 +754,42 @@
           "severity": "LOW",
           "type": null
         },
+        "l1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1ERC721Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1StandardBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2OutputOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "minimumGasLimit": {
           "description": null,
           "severity": null,
           "type": null
         },
         "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimismMintableERC20Factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimismPortal": {
           "description": null,
           "severity": null,
           "type": null
@@ -370,6 +815,11 @@
           "type": null
         },
         "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startBlock": {
           "description": null,
           "severity": null,
           "type": null
