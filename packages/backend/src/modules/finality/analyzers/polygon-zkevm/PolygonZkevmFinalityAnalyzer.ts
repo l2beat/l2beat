@@ -47,6 +47,7 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       return []
     }
 
+    //! Sequential assumption, also we assume an uniform block distribution
     const firstTransaction = hashes.at(0)
     const lastTransaction = hashes.at(-1)
 
