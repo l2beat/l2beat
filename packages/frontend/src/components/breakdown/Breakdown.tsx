@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { unifyPercentagesAsIntegers } from '../../utils'
 import { cn } from '../../utils/cn'
 
 interface BreakdownProps {
@@ -13,7 +14,7 @@ interface BreakdownValue {
   className: string
 }
 
-export function Breakdown({ values, gap = 2, className }: BreakdownProps) {
+export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
   const groups = getBreakdownGroups(values)
 
   return (
@@ -64,5 +65,15 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
     filteredGroup.weight += filteredOutSum / filteredGroups.length
   }
 
-  return filteredGroups
+  if (filteredGroups.length < 2) {
+    return filteredGroups
+  }
+
+  const weights = unifyPercentagesAsIntegers(
+    filteredGroups.map((g) => g.weight),
+  )
+  return filteredGroups.map((f, i) => ({
+    weight: weights[i],
+    className: f.className,
+  }))
 }
