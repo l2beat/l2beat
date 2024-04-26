@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 19718023,
+  "blockNumber": 19731428,
   "configHash": "0xac53bccd030e96720d132672fd1bf978f4d951f3e8bcc092fd40dbd2b16fb71d",
   "version": 3,
   "contracts": [
@@ -69,7 +69,6 @@
     {
       "name": "XLayerValidiumEtrog",
       "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
@@ -97,7 +96,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x6ebcc0deeae6d48f2512d5a806222b25951e02cc94b38703a2a6e9ef2be22d8d",
+        "lastAccInputHash": "0x8b00ca5accd2bdc13c420af3dd55bdf799295d54360a91b45bdc88ae542ae1ec",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -350,6 +349,16 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x3b82Da772c825283d85d5d6717A77C6Ff582053b": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
