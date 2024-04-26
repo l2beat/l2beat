@@ -2,7 +2,7 @@ name: Rebuild site every hour
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "30 * * * *"
 
 jobs:
   deploy:
