@@ -22,7 +22,9 @@ export function toCombinedActivity(
         .map(([_, counts]) => counts.map((c) => c.timestamp.toNumber()))
         .flat(),
     ),
-  ].map((t) => new UnixTime(t))
+  ]
+    .map((t) => new UnixTime(t))
+    .sort((a, b) => a.toNumber() - b.toNumber())
 
   // An object that stores the last present value of each project in case the one for the current day is missing
   const lastPresentValue: Record<ProjectId, number> = Object.fromEntries(
