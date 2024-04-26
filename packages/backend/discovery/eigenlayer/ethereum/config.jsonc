@@ -174,7 +174,8 @@
           "valueKey": "avs"
         }
       },
-      "ignoreRelatives": ["avs"]
+      "ignoreRelatives": ["avs"],
+      "ignoreInWatchMode": ["avs"]
     },
     // ignore discovery, should be ignoreRelative in a strategy but it does not work
     "0xae78736Cd615f374D3085123A210448E74Fc6393": { "ignoreDiscovery": true },

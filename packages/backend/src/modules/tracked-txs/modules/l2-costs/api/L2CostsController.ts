@@ -230,8 +230,10 @@ export class L2CostsController {
         addToMap(hourlyMap, 'hour', tx)
         addToMap(combinedHourlyMap, 'hour', tx)
       }
-      addToMap(dailyMap, 'day', tx)
-      addToMap(combinedDailyMap, 'day', tx)
+      if (tx.timestamp.lt(nowToFullHour.toStartOf('day'))) {
+        addToMap(dailyMap, 'day', tx)
+        addToMap(combinedDailyMap, 'day', tx)
+      }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {
       types: CHART_TYPES,

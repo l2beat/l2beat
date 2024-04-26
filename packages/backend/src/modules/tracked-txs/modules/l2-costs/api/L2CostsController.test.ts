@@ -308,7 +308,6 @@ describe(L2CostsController.name, () => {
       ])
 
       expect(result.daily.data).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
 
@@ -321,7 +320,6 @@ describe(L2CostsController.name, () => {
         datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
       ])
       expect(Array.from(combinedDailyMap.values())).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
     })

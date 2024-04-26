@@ -26,7 +26,10 @@ function getMockActivityApiResponse(): ActivityApiResponse {
     combined: getMockActivityApiChart(),
     projects: {},
   }
-  for (const project of [...allLayer2s, ...allLayer3s]) {
+  for (const project of [
+    ...allLayer2s.filter((l2) => !l2.isArchived && !l2.isUpcoming),
+    ...allLayer3s.filter((l3) => !l3.isUpcoming),
+  ]) {
     result.projects[project.id.toString()] = getMockActivityApiChart()
   }
   return result
