@@ -17,8 +17,10 @@ import { PriceRepository } from '../repositories/PriceRepository'
 import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
+type PriceId = string
 interface PriceModule {
   start: () => Promise<void> | void
+  indexers: Map<PriceId, PriceIndexer>
 }
 
 export function createPriceModule(
@@ -36,9 +38,12 @@ export function createPriceModule(
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
+  const indexersMap = new Map<string, PriceIndexer>()
+
   const indexers = Object.entries(byCoingeckoId).map(
-    ([coingeckoId, prices]) =>
-      new PriceIndexer({
+    ([coingeckoId, prices]) => {
+
+      const indexer = new PriceIndexer({
         logger,
         tag: coingeckoId,
         parents: [hourlyIndexer],
@@ -55,7 +60,15 @@ export function createPriceModule(
         encode,
         decode,
         syncOptimizer,
-      }),
+      })
+
+      for (const p of prices) {
+        indexersMap.set(createPriceId(p), indexer)
+      }
+
+      return indexer
+    }
+
   )
 
   return {
@@ -64,6 +77,7 @@ export function createPriceModule(
         await indexer.start()
       }
     },
+    indexers: indexersMap
   }
 }
 

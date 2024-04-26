@@ -8,10 +8,12 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
+import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
+  indexers: Map<string, CirculatingSupplyIndexer>
 }
 
 export function createCirculatingSupplyModule(
@@ -26,13 +28,13 @@ export function createCirculatingSupplyModule(
     apiKey: config.coingeckoApiKey,
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-
   const circulatingSupplies = config.amounts.filter(
     (a): a is CirculatingSupplyEntry => a.type === 'circulatingSupply',
   )
+  const indexersMap = new Map<string, CirculatingSupplyIndexer>()
 
   const indexers = circulatingSupplies.map((circulatingSupply) => {
-    return new CirculatingSupplyIndexer({
+    const indexer = new CirculatingSupplyIndexer({
       logger,
       tag: circulatingSupply.coingeckoId.toString(),
       parents: [hourlyIndexer],
@@ -43,6 +45,8 @@ export function createCirculatingSupplyModule(
       amountRepository: peripherals.getRepository(AmountRepository),
       syncOptimizer,
     })
+    indexersMap.set(createAmountId(circulatingSupply), indexer)
+    return indexer
   })
 
   return {
@@ -51,5 +55,6 @@ export function createCirculatingSupplyModule(
         await indexer.start()
       }
     },
+    indexers: indexersMap
   }
 }
