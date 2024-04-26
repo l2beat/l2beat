@@ -262,7 +262,7 @@ export const metis: Layer2 = {
       ),
       discovery.getContractDetails(
         'StateCommitmentChain',
-        'The State Commitment Chain (SCC) contract contains a list of proposed state roots which Proposers assert to be a result of each transaction in the Canonical Transaction Chain (CTC). Elements here have a 1:1 correspondence with transactions in the CTC, and should be the unique state root calculated off-chain by applying the canonical transactions one by one. Currently only OVM_Proposer can submit new state roots.',
+        'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
       ),
       {
         name: 'ChainStorageContainer-CTC-batches',
