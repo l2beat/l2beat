@@ -9,7 +9,7 @@ import {
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { Gauge, Histogram } from 'prom-client'
+import { Gauge } from 'prom-client'
 
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
@@ -145,7 +145,9 @@ export class UpdateMonitor {
         project: projectConfig.name,
       })
 
-      const projectFinished = projectGauge.startTimer({ project: `${runner.chain}:${projectConfig.name}` })
+      const projectFinished = projectGauge.startTimer({
+        project: `${runner.chain}:${projectConfig.name}`,
+      })
       try {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
