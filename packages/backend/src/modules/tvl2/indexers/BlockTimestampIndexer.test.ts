@@ -41,7 +41,6 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        id: 'id',
         blockTimestampProvider,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
@@ -75,7 +74,6 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        id: 'id',
         blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,

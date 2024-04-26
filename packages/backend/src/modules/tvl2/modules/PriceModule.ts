@@ -18,7 +18,6 @@ import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface PriceModule {
-  indexers: PriceIndexer[]
   start: () => Promise<void> | void
 }
 
@@ -40,27 +39,26 @@ export function createPriceModule(
   const indexers = Object.entries(byCoingeckoId).map(
     ([coingeckoId, prices]) =>
       new PriceIndexer({
-        logger: logger.tag(coingeckoId),
+        logger,
+        tag: coingeckoId,
         parents: [hourlyIndexer],
-        coingeckoQueryService,
         indexerService,
-        syncOptimizer,
-        priceRepository: peripherals.getRepository(PriceRepository),
         coingeckoId: CoingeckoId(coingeckoId),
-        id: `price_indexer_${coingeckoId}`,
         configurations: prices.map((price) => ({
           properties: price,
           minHeight: price.sinceTimestamp.toNumber(),
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
           id: createPriceId(price),
         })),
+        coingeckoQueryService,
+        priceRepository: peripherals.getRepository(PriceRepository),
         encode,
         decode,
+        syncOptimizer,
       }),
   )
 
   return {
-    indexers,
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
