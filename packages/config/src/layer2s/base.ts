@@ -117,6 +117,8 @@ export const base: Layer2 = opStackL2({
         batchSize: 150,
         sinceBlock: 5022,
         version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'base',

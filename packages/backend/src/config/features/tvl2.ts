@@ -76,6 +76,9 @@ function getAmountsConfig(
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
+      if (token.symbol === 'ETH') {
+        continue
+      }
       const project = chainToProject.get(chainConverter.toName(token.chainId))
       assert(project, 'Project is required for token')
 

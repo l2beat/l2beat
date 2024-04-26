@@ -92,9 +92,9 @@ export function chainTvlModule(
     config.minBlockTimestamp,
   )
 
-  const totalSupplyTokens = tokens.filter(
-    (t) => t.chainId === config.chainId && t.formula === 'totalSupply',
-  )
+  const totalSupplyTokens = tokens
+    .filter((t) => t.symbol !== 'ETH')
+    .filter((t) => t.chainId === config.chainId && t.formula === 'totalSupply')
 
   const { totalSupplyUpdater, totalSupplyFormulaUpdater } =
     initializeTotalSupply(
@@ -108,9 +108,11 @@ export function chainTvlModule(
       logger,
     )
 
-  const circulatingSupplyTokens = tokens.filter(
-    (t) => t.chainId === config.chainId && t.formula === 'circulatingSupply',
-  )
+  const circulatingSupplyTokens = tokens
+    .filter((t) => t.symbol !== 'ETH')
+    .filter(
+      (t) => t.chainId === config.chainId && t.formula === 'circulatingSupply',
+    )
 
   const { circulatingSupplyUpdater, circulatingSupplyFormulaUpdater } =
     initializeCirculatingSupply(
