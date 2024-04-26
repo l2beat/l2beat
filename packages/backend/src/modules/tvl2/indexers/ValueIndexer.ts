@@ -1,4 +1,11 @@
-import { AmountConfigEntry, assert, EthereumAddress, PriceConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  assert,
+  EthereumAddress,
+  PriceConfigEntry,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   ManagedChildIndexer,
@@ -10,7 +17,6 @@ import { ValueRepository } from '../repositories/ValueRepository'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-
 
 export interface ValueIndexerDeps extends ManagedChildIndexerOptions {
   priceRepo: PriceRepository
@@ -38,16 +44,24 @@ export class ValueIndexer extends ManagedChildIndexer {
 
   constructor(private readonly $: ValueIndexerDeps) {
     super($)
-    this.amountConfigs = $.amountConfigs.map((x) => ({ ...x, configId: createAmountId(x) }))
+    this.amountConfigs = $.amountConfigs.map((x) => ({
+      ...x,
+      configId: createAmountId(x),
+    }))
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
 
     // calculate configHash
   }
 
   override async update(from: number, to: number): Promise<number> {
+    // Potential future optimization
+    // check if db.configHash === this.configHash
+    // YES - skip update
+    // NO - continue update
 
-
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(new UnixTime(from))
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(
+      new UnixTime(from),
+    )
     if (timestamp.toNumber() > to) {
       return to
     }
@@ -56,17 +70,13 @@ export class ValueIndexer extends ManagedChildIndexer {
     await this.$.valueRepo.add({
       projectId: this.$.project,
       timestamp,
-      ...value
+      ...value,
     })
 
     return timestamp.toNumber()
   }
 
-  async getTvlAt(
-    timestamp: UnixTime,
-  ): Promise<Values> {
-
-
+  async getTvlAt(timestamp: UnixTime): Promise<Values> {
     const configIds = this.amountConfigs.map((x) => x.configId)
     const records = await this.$.amountRepo.getByConfigIdsAndTimestamp(
       configIds,
@@ -102,13 +112,7 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    // check current state
-    // - safeHeight
-    // - configHash
-
-    // check if db.configHash === this.configHash
-    // YES - do not invalidate
-    // NO - invalidate (do not delete data)
+    // Do not delete data
     return Promise.resolve(targetHeight)
   }
 }
