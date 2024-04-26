@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 // orbitStack template currently does not support upgradeability
 const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
+  upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
   upgradeDelay: 'No delay',
 }
 const stakingUpgradeability = {
