@@ -336,15 +336,19 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
-        templateVars.discovery.getEscrowDetails({
-          address: templateVars.bridge.address,
-          tokens: templateVars.nativeToken
-            ? [templateVars.nativeToken]
-            : ['ETH'],
-          description: templateVars.nativeToken
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-        }),
+        {
+          ...templateVars.discovery.getEscrowDetails({
+            address: templateVars.bridge.address,
+            tokens: templateVars.nativeToken
+              ? [templateVars.nativeToken]
+              : ['ETH'],
+            description: templateVars.nativeToken
+              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+          }),
+          chain: templateVars.hostChain.toString(),
+          includeInTotal: false,
+        },
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
       transactionApi:

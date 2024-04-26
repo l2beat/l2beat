@@ -137,7 +137,7 @@ export function layer3ToProject(layer3: Layer3): Project {
     isUpcoming: layer3.isUpcoming,
     escrows: layer3.config.escrows.map((escrow) => {
       const chain = escrow.chain
-      assert(chain, 'Chain is required for Layer3 escrow')
+      assert(chain, ` ${layer3.id}: chain is required for L3 escrow`)
       const chainId = chainConverter.toChainId(chain)
 
       const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
@@ -154,7 +154,7 @@ export function layer3ToProject(layer3: Layer3): Project {
                 )
                 assert(
                   token,
-                  `Token with symbol ${tokenSymbol} not found on ${chain}`,
+                  `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
                 )
                 return token
               }),
