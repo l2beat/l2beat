@@ -1532,6 +1532,10 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "ETH",
+      "category": "ether"
     }
   ],
   "lyra": [
