@@ -24,6 +24,8 @@ export const metis: Layer2 = {
     name: 'Metis Andromeda',
     shortName: 'Metis',
     slug: 'metis',
+    redWarning:
+      'Critcal contracts can be upgraded by an EOA which could result with the loss of all funds.',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     warning:
