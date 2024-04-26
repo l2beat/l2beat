@@ -119,7 +119,7 @@ You can find us to discuss all things Hop during our [Hop Office Hours](http://m
 
 **Discuss with L2BEAT**
 
-We were not aware of any significant governance-related news in Hop over the last week. If you think we have missed something important, please let us know!
+We were not aware of any significant governance-related news in Polygon over the last week. If you think we have missed something important, please let us know!
 
 **When/where to catch us:**
 
@@ -139,7 +139,7 @@ These subcategories are:
 
 1. Pooled stakers
 
-2. StarkEx users who were mislabeled as VeVe users:
+2. StarkEx users who were mislabeled as VeVe users
 
 3. VeVe users
 
