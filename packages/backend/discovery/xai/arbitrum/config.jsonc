@@ -15,8 +15,6 @@
     "0x1E400568AD4840dbE50FB32f306B842e9ddeF726": "Outbox",
     "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1": "SequencerInbox",
     "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F": "UpgradeExecutor",
-    "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66": "Xai",
-    "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c": "esXai",
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember",
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77": "L1ERC20Gateway",
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
@@ -27,7 +25,7 @@
     "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool"
   },
   "overrides": {
-    "PoolFactory":{
+    "PoolFactory": {
       "ignoreMethods": ["getPoolAddress", "stakingPools"],
       "ignoreRelatives": ["esXaiAddress"]
     },
@@ -130,12 +128,6 @@
           "type": "accessControl"
         }
       }
-    },
-    "Xai": {
-      "ignoreInWatchMode": ["totalSupply"]
-    },
-    "esXai": {
-      "ignoreInWatchMode": ["totalSupply"]
     },
     "GnosisSafeAdminMember": {
       "ignoreMethods": ["nonce"]
