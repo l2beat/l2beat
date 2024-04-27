@@ -17,7 +17,6 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { createAmountId } from '../utils/createAmountId'
-import { createPriceId } from '../utils/createPriceId'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceModule } from './PriceModule'
@@ -69,11 +68,6 @@ export function createCirculatingSupplyModule(
     const priceConfigs = amountConfigs.map((c) =>
       idConverter.getPriceConfigFromAmountConfig(c),
     )
-    const priceIndexers = priceConfigs.map((c) => {
-      const indexer = priceModule.indexers.get(createPriceId(c))
-      assert(indexer)
-      return indexer
-    })
 
     const csIndexers = amountConfigs.map((c) => {
       const indexer = indexersMap.get(createAmountId(c))
@@ -81,7 +75,7 @@ export function createCirculatingSupplyModule(
       return indexer
     })
 
-    const parents = [...csIndexers, ...priceIndexers]
+    const parents = [priceModule.indexer, ...csIndexers]
 
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),

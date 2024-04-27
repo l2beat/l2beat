@@ -12,15 +12,15 @@ import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-type PriceId = string
 export interface PriceModule {
   start: () => Promise<void> | void
-  indexers: Map<PriceId, PriceIndexer>
+  indexer: DescendantIndexer
 }
 
 export function createPriceModule(
@@ -38,11 +38,9 @@ export function createPriceModule(
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
-  const indexersMap = new Map<string, PriceIndexer>()
-
   const indexers = Object.entries(byCoingeckoId).map(
-    ([coingeckoId, prices]) => {
-      const indexer = new PriceIndexer({
+    ([coingeckoId, prices]) =>
+      new PriceIndexer({
         logger,
         tag: coingeckoId,
         parents: [hourlyIndexer],
@@ -59,23 +57,28 @@ export function createPriceModule(
         encode,
         decode,
         syncOptimizer,
-      })
-
-      for (const p of prices) {
-        indexersMap.set(createPriceId(p), indexer)
-      }
-
-      return indexer
-    },
+      }),
   )
+
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'price',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...config.prices.map((price) => price.sinceTimestamp.toNumber()),
+    ),
+  })
 
   return {
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      await descendant.start()
     },
-    indexers: indexersMap,
+    indexer: descendant,
   }
 }
 

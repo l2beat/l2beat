@@ -31,7 +31,6 @@ import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { createAmountId } from '../utils/createAmountId'
-import { createPriceId } from '../utils/createPriceId'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceModule } from './PriceModule'
@@ -173,13 +172,8 @@ function createChainModule(
     const priceConfigs = amountConfigs.map((c) =>
       idConverter.getPriceConfigFromAmountConfig(c),
     )
-    const priceIndexers = priceConfigs.map((c) => {
-      const indexer = priceModule.indexers.get(createPriceId(c))
-      assert(indexer)
-      return indexer
-    })
 
-    const parents = [...priceIndexers, chainAmountIndexer]
+    const parents = [priceModule.indexer, chainAmountIndexer]
 
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),
