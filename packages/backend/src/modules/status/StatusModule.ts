@@ -44,7 +44,7 @@ export function createStatusModule(
     for (const i of indexers) {
       const parts = i.indexerId.split('::')
       const name = parts[0].replaceAll('-', '_')
-      const tag = parts[1]
+      const tag = parts[1].replaceAll('-', '_')
 
       const id = getGaugeId(name, tag)
 
