@@ -61,7 +61,7 @@ export function createCirculatingSupplyModule(
     return indexer
   })
 
-  const perProject = groupBy(circulatingSupplies, 'projectId')
+  const perProject = groupBy(circulatingSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
 
@@ -94,7 +94,6 @@ export function createCirculatingSupplyModule(
       syncOptimizer,
       parents,
       tag: `${project}_coingecko`,
-      name: 'value_indexer',
       indexerService,
       logger,
       minHeight: amountConfigs

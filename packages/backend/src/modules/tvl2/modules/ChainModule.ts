@@ -163,7 +163,7 @@ function createChainModule(
     syncOptimizer,
   })
 
-  const perProject = groupBy(escrowsAndTotalSupplies, 'projectId')
+  const perProject = groupBy(escrowsAndTotalSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
 
@@ -190,7 +190,6 @@ function createChainModule(
       syncOptimizer,
       parents,
       tag: `${project}_${chainConfig.chain}`,
-      name: 'value_indexer',
       indexerService,
       logger,
       minHeight: amountConfigs

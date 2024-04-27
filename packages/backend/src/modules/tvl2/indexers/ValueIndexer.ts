@@ -18,7 +18,8 @@ import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface ValueIndexerDeps extends ManagedChildIndexerOptions {
+export interface ValueIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   priceRepo: PriceRepository
   amountRepo: AmountRepository
   valueRepo: ValueRepository
@@ -43,7 +44,10 @@ export class ValueIndexer extends ManagedChildIndexer {
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
   constructor(private readonly $: ValueIndexerDeps) {
-    super($)
+    const logger = $.logger.tag($.tag)
+    const name = 'value_indexer'
+    super({ ...$, name, logger })
+
     this.amountConfigs = $.amountConfigs.map((x) => ({
       ...x,
       configId: createAmountId(x),
