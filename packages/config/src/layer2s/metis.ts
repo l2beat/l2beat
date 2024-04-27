@@ -24,12 +24,10 @@ export const metis: Layer2 = {
     name: 'Metis Andromeda',
     shortName: 'Metis',
     slug: 'metis',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result with the loss of all funds.',
     description:
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. Since April 2024 hashes of data blobs are posted to EOA similarly to OPStack chains. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots. There is a privileged EOA address that can upgrade some critical components of the system.',
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
@@ -202,7 +200,7 @@ export const metis: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'Metis Multisig',
-      'This address is the owner of the following contracts: MVM_L1CrossDomainMessenger, L1StandardBridge, LibAddressManager. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'This address is the owner of all the upgradable contracts of the system. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
       name: 'State Root Proposer',
@@ -214,20 +212,6 @@ export const metis: Layer2 = {
       ],
       description: 'Central actor to post new state roots to L1.',
     },
-    {
-      name: 'Metis SuperUser EOA',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x001088E383A00ff4ab36F37f7021Cb6d7B415751',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'EOA that can upgrade StateCommitmentChain and - via ProxyAdmin - LockingInfo and LockingPool contracts. This upgrade ability allows it to take control over all funds in Metis, both in a bridge (via upgrading StateCommitmentChain) and in Sequencer pool escrow.',
-    },
-    //
     {
       name: 'Execution Verifiers',
       accounts: [
