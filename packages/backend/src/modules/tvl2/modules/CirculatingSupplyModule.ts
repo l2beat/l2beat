@@ -12,6 +12,7 @@ import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
@@ -101,6 +102,16 @@ export function createCirculatingSupplyModule(
     valueIndexers.push(indexer)
   }
 
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'circulating_supply',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...circulatingSupplies.map((cs) => cs.sinceTimestamp.toNumber()),
+    ),
+  })
+
   return {
     start: async () => {
       for (const indexer of indexers) {
@@ -110,6 +121,8 @@ export function createCirculatingSupplyModule(
       for (const indexer of valueIndexers) {
         await indexer.start()
       }
+
+      await descendant.start()
     },
   }
 }
