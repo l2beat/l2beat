@@ -1,19 +1,29 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import { CirculatingSupplyEntry } from '@l2beat/shared-pure'
+import {
+  CirculatingSupplyEntry,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
+import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { createAmountId } from '../utils/createAmountId'
+import { createPriceId } from '../utils/createPriceId'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
-  indexers: Map<string, CirculatingSupplyIndexer>
 }
 
 export function createCirculatingSupplyModule(
@@ -23,6 +33,8 @@ export function createCirculatingSupplyModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): CirculatingSupplyModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
@@ -49,12 +61,62 @@ export function createCirculatingSupplyModule(
     return indexer
   })
 
+  const perProject = groupBy(circulatingSupplies, 'projectId')
+
+  const valueIndexers: ValueIndexer[] = []
+
+  for (const [project, amountConfigs] of Object.entries(perProject)) {
+    const priceConfigs = amountConfigs.map((c) =>
+      idConverter.getPriceConfigFromAmountConfig(c),
+    )
+    const priceIndexers = priceConfigs.map((c) => {
+      const indexer = priceModule.indexers.get(createPriceId(c))
+      assert(indexer)
+      return indexer
+    })
+
+    const csIndexers = amountConfigs.map((c) => {
+      const indexer = indexersMap.get(createAmountId(c))
+      assert(indexer)
+      return indexer
+    })
+
+    const parents = [...csIndexers, ...priceIndexers]
+
+    const indexer = new ValueIndexer({
+      priceRepo: peripherals.getRepository(PriceRepository),
+      amountRepo: peripherals.getRepository(AmountRepository),
+      valueRepo: peripherals.getRepository(ValueRepository),
+      priceConfigs,
+      amountConfigs,
+      project: ProjectId(project),
+      dataSource: 'coingecko',
+      syncOptimizer,
+      parents,
+      tag: `${project}-coingecko`,
+      name: 'value_indexer',
+      indexerService,
+      logger,
+      minHeight: amountConfigs
+        .reduce(
+          (prev, curr) => UnixTime.min(prev, curr.sinceTimestamp),
+          amountConfigs[0].sinceTimestamp,
+        )
+        .toNumber(),
+    })
+
+    valueIndexers.push(indexer)
+  }
+
   return {
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      for (const indexer of valueIndexers) {
+        await indexer.start()
+      }
     },
-    indexers: indexersMap
   }
 }

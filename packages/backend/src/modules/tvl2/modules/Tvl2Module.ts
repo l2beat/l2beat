@@ -1,8 +1,6 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import { AmountConfigEntry, EthereumAddress, PriceConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { groupBy, partition } from 'lodash'
+import { Logger } from '@l2beat/backend-tools'
 
-import { Config, Tvl2Config } from '../../../config/Config'
+import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
@@ -13,12 +11,9 @@ import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
-import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
-import { createAmountId } from '../utils/createAmountId'
-import { createPriceId } from '../utils/createPriceId'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
@@ -51,6 +46,8 @@ export function createTvl2Module(
     removeSixHourlyAfterDays: 93,
   })
 
+  const idConverter = new IdConverter(config.tvl2.prices)
+
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceModule = createPriceModule(
@@ -78,60 +75,9 @@ export function createTvl2Module(
     hourlyIndexer,
     syncOptimizer,
     indexerService,
+    priceModule,
+    idConverter,
   )
-
-  const priceConfigIds = getPriceConfigIds(config.tvl2)
-
-  const perProject = groupBy(config.tvl2.amounts, 'projectId')
-
-  const valueIndexers: ValueIndexer[] = []
-
-  for (const [project, rawConfigs] of Object.entries(perProject)) {
-    const configs: AmountConfigEntry[][] = partition(rawConfigs, (c => c.type === 'circulatingSupply'))
-
-    for (const amountsConfig of configs) {
-      const priceConfigs = amountsConfig.map(c => {
-        const p = priceConfigIds.get(createAssetId(c))
-        assert(p)
-        return p
-      })
-
-      const csIndexers = amountsConfig.flatMap(c => {
-        const indexer = circulatingSuppliesModule.indexers.get(createAmountId(c))
-        return indexer ?? []
-      })
-
-      // todo: check chain modules
-
-      const priceIndexers = priceConfigs.map(c => {
-        const indexer = priceModule.indexers.get(createPriceId(c))
-        assert(indexer)
-        return indexer
-      })
-
-      const parents = [...csIndexers, ...priceIndexers]
-
-      const indexer = new ValueIndexer({
-        priceRepo: peripherals.getRepository(PriceRepository),
-        amountRepo: peripherals.getRepository(AmountRepository),
-        valueRepo: peripherals.getRepository(ValueRepository),
-        priceConfigs,
-        amountConfigs: amountsConfig,
-        project: ProjectId(project),
-        dataSource: 'coingecko',
-        syncOptimizer,
-        parents,
-        tag: `${project}-coingecko`,
-        name: 'value_indexer',
-        indexerService,
-        logger,
-        minHeight: amountsConfig.reduce((prev, curr) => UnixTime.min(prev, curr.sinceTimestamp), amountsConfig[0].sinceTimestamp).toNumber()
-      })
-
-      valueIndexers.push(indexer)
-    }
-
-  }
 
   const tvlController = new Tvl2Controller(
     peripherals.getRepository(AmountRepository),
@@ -146,37 +92,16 @@ export function createTvl2Module(
     await hourlyIndexer.start()
 
     await priceModule.start()
+
     for (const module of chainModules) {
       await module.start()
     }
 
     await circulatingSuppliesModule.start()
-
-    for (const valueIndexer of valueIndexers) {
-      await valueIndexer.start()
-    }
   }
 
   return {
     routers: [statusRouter, tvlRouter],
     start,
   }
-}
-
-type PriceConfigIdMap = Map<string, PriceConfigEntry>
-
-function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
-  const result = new Map<string, PriceConfigEntry>()
-  for (const p of config.prices) {
-    result.set(createAssetId(p), p)
-  }
-
-  return result
-}
-
-function createAssetId(price: {
-  address: EthereumAddress | 'native'
-  chain: string
-}): string {
-  return `${price.chain}-${price.address.toString()}`
 }

@@ -18,7 +18,7 @@ import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 type PriceId = string
-interface PriceModule {
+export interface PriceModule {
   start: () => Promise<void> | void
   indexers: Map<PriceId, PriceIndexer>
 }
@@ -42,7 +42,6 @@ export function createPriceModule(
 
   const indexers = Object.entries(byCoingeckoId).map(
     ([coingeckoId, prices]) => {
-
       const indexer = new PriceIndexer({
         logger,
         tag: coingeckoId,
@@ -67,8 +66,7 @@ export function createPriceModule(
       }
 
       return indexer
-    }
-
+    },
   )
 
   return {
@@ -77,7 +75,7 @@ export function createPriceModule(
         await indexer.start()
       }
     },
-    indexers: indexersMap
+    indexers: indexersMap,
   }
 }
 
