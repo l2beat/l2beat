@@ -10,6 +10,7 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -23,11 +24,17 @@ import {
   BlockTimestampProvider,
 } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
+import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { createAmountId } from '../utils/createAmountId'
+import { createPriceId } from '../utils/createPriceId'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { PriceModule } from './PriceModule'
 
 interface ChainModule {
   start: () => Promise<void> | void
@@ -40,6 +47,8 @@ export function createChainModules(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): ChainModule[] {
   return config.chains
     .map((chain) =>
@@ -51,6 +60,8 @@ export function createChainModules(
         hourlyIndexer,
         syncOptimizer,
         indexerService,
+        priceModule,
+        idConverter,
       ),
     )
     .filter(notUndefined)
@@ -65,6 +76,8 @@ function createChainModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): ChainModule | undefined {
   const name = `${capitalizeFirstLetter(chainConfig.chain)}TvlModule`
   if (!chainConfig.config) {
@@ -150,10 +163,55 @@ function createChainModule(
     syncOptimizer,
   })
 
+  const perProject = groupBy(escrowsAndTotalSupplies, 'projectId')
+
+  const valueIndexers: ValueIndexer[] = []
+
+  for (const [project, amountConfigs] of Object.entries(perProject)) {
+    const priceConfigs = amountConfigs.map((c) =>
+      idConverter.getPriceConfigFromAmountConfig(c),
+    )
+    const priceIndexers = priceConfigs.map((c) => {
+      const indexer = priceModule.indexers.get(createPriceId(c))
+      assert(indexer)
+      return indexer
+    })
+
+    const parents = [...priceIndexers, chainAmountIndexer]
+
+    const indexer = new ValueIndexer({
+      priceRepo: peripherals.getRepository(PriceRepository),
+      amountRepo: peripherals.getRepository(AmountRepository),
+      valueRepo: peripherals.getRepository(ValueRepository),
+      priceConfigs,
+      amountConfigs,
+      project: ProjectId(project),
+      dataSource: 'coingecko',
+      syncOptimizer,
+      parents,
+      tag: `${project}-coingecko`,
+      name: 'value_indexer',
+      indexerService,
+      logger,
+      minHeight: amountConfigs
+        .reduce(
+          (prev, curr) => UnixTime.min(prev, curr.sinceTimestamp),
+          amountConfigs[0].sinceTimestamp,
+        )
+        .toNumber(),
+    })
+
+    valueIndexers.push(indexer)
+  }
+
   return {
     start: async () => {
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
+
+      for (const indexer of valueIndexers) {
+        await indexer.start()
+      }
     },
   }
 }

@@ -66,6 +66,8 @@ export function createTvl2Module(
     hourlyIndexer,
     syncOptimizer,
     indexerService,
+    priceModule,
+    idConverter,
   )
 
   const circulatingSuppliesModule = createCirculatingSupplyModule(
