@@ -25,7 +25,7 @@ export interface ValueIndexerDeps extends ManagedChildIndexerOptions {
   priceConfigs: PriceConfigEntry[]
   amountConfigs: AmountConfigEntry[]
   project: ProjectId
-  dataSource: 'coingecko' | 'chain'
+  dataSource: string
   syncOptimizer: SyncOptimizer
 }
 

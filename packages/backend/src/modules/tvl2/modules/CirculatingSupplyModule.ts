@@ -93,7 +93,7 @@ export function createCirculatingSupplyModule(
       dataSource: 'coingecko',
       syncOptimizer,
       parents,
-      tag: `${project}-coingecko`,
+      tag: `${project}_coingecko`,
       name: 'value_indexer',
       indexerService,
       logger,
