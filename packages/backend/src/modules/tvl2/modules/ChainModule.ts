@@ -79,12 +79,14 @@ function createChainModule(
   priceModule: PriceModule,
   idConverter: IdConverter,
 ): ChainModule | undefined {
-  const name = `${capitalizeFirstLetter(chainConfig.chain)}TvlModule`
+  const chain = chainConfig.chain
+
+  const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!chainConfig.config) {
     logger.info(`${name} disabled`)
     return
   }
-  logger = logger.tag(chainConfig.chain)
+  logger = logger.tag(chain)
 
   const provider: BlockTimestampProvider =
     chainConfig.config.blockNumberProviderConfig.type === 'etherscan'
@@ -102,11 +104,11 @@ function createChainModule(
 
   const blockTimestampIndexer = new BlockTimestampIndexer({
     logger,
-    tag: chainConfig.chain,
+    tag: chain,
     parents: [hourlyIndexer],
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
-    chain: chainConfig.chain,
+    chain,
     blockTimestampProvider: provider,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
@@ -124,11 +126,11 @@ function createChainModule(
       rpcClient,
       chainConfig.config.multicallConfig,
     ),
-    logger: logger.tag(chainConfig.chain),
+    logger: logger.tag(chain),
   })
 
   const escrowsAndTotalSupplies = amounts
-    .filter((a) => a.chain === chainConfig.chain)
+    .filter((a) => a.chain === chain)
     .filter(
       (a): a is ChainAmountConfig =>
         a.type === 'escrow' || a.type === 'totalSupply',
@@ -148,11 +150,11 @@ function createChainModule(
 
   const chainAmountIndexer = new ChainAmountIndexer({
     logger,
-    tag: chainConfig.chain,
+    tag: chain,
     parents: [blockTimestampIndexer],
     indexerService,
     configurations,
-    chain: chainConfig.chain,
+    chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
     blockTimestampsRepository: peripherals.getRepository(
@@ -186,10 +188,10 @@ function createChainModule(
       priceConfigs,
       amountConfigs,
       project: ProjectId(project),
-      dataSource: chainConfig.chain,
+      dataSource: chain,
       syncOptimizer,
       parents,
-      tag: `${project}_${chainConfig.chain}`,
+      tag: `${project}_${chain}`,
       indexerService,
       logger,
       minHeight: amountConfigs
