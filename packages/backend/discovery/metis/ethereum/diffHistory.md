@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xfa8ffeacacc862937cb8b971d86a90f149d8d31b
+
+# Diff at Sat, 27 Apr 2024 06:12:10 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@137703a8d89fb4befd7908b97b5e85939d7d2e88 block: 19726038
+- current block number: 19744803
+
+## Description
+
+Owners of StateCommitment Chains and ProxyAdmin that upgrades LockingPool and LockingInfo contracts changed from EOA to Metis MultiSig
+
+## Watched changes
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      values.owner:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      values.owner:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.owner:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
 Generated with discovered.json: 0x94a766214a80c0a94393fcb2824015d182ebffe2
 
 # Diff at Wed, 24 Apr 2024 15:11:42 GMT:

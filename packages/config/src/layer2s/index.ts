@@ -11,6 +11,7 @@ import { base } from './base'
 import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
+import { camp } from './camp'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
@@ -117,6 +118,7 @@ export const layer2s: Layer2[] = [
   blast,
   bob,
   bobanetwork,
+  camp,
   canto,
   capx,
   cyberconnect,
