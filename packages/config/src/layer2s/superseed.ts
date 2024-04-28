@@ -7,7 +7,7 @@ export const superseed: Layer2 = upcomingL2({
     name: 'Superseed',
     slug: 'superseed',
     description:
-      'Superseed is a Layer 2 blockchain built on top of the OP Stack and posting transaction data to Ethereum directly.',
+      'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
