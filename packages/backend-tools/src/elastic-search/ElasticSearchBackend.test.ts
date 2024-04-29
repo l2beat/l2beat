@@ -6,10 +6,11 @@ import {
   UuidProvider,
 } from './ElasticSearchBackend'
 import { ElasticSearchClient } from './ElasticSearchClient'
+import { formatDate } from '../helpers/formatDate'
 
 const flushInterval = 10
 const id = 'some-id'
-const indexPrefix = 'logs-'
+const indexPrefix = 'logs'
 const indexName = createIndexName()
 const log = {
   '@timestamp': '2024-04-24T21:02:30.916Z',
@@ -82,8 +83,7 @@ function createBackendMock(clientMock: MockObject<ElasticSearchClient>) {
 }
 
 function createIndexName() {
-  const now = new Date()
-  return `${indexPrefix}-${now.getFullYear()}.${now.getMonth()}.${now.getDay()}`
+  return `${indexPrefix}-${formatDate(new Date())}`
 }
 
 async function delay(ms: number) {

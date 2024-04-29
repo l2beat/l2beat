@@ -5,6 +5,7 @@ import {
   ElasticSearchClient,
   ElasticSearchClientOptions,
 } from './ElasticSearchClient'
+import { formatDate } from '../helpers/formatDate'
 
 export interface ElasticSearchBackendOptions
   extends ElasticSearchClientOptions {
@@ -88,10 +89,9 @@ export class ElasticSearchBackend implements LoggerBackend {
   }
 
   private async createIndex(): Promise<string> {
-    const now = new Date()
     const indexName = `${
-      this.options.indexPrefix ?? 'logs-'
-    }-${now.getFullYear()}.${now.getMonth()}.${now.getDay()}`
+      this.options.indexPrefix ?? 'logs'
+    }-${formatDate(new Date())}`
 
     const exist = await this.client.indexExist(indexName)
     if (!exist) {
