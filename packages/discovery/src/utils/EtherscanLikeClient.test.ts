@@ -1,9 +1,10 @@
 import { expect, mockFn, mockObject } from 'earl'
+
+import { EthereumAddress } from './EthereumAddress'
 import { EtherscanLikeClient } from './EtherscanLikeClient'
+import { Hash256 } from './Hash256'
 import { HttpClient } from './HttpClient'
 import { UnixTime } from './UnixTime'
-import { EthereumAddress } from './EthereumAddress'
-import { Hash256 } from './Hash256'
 
 describe(EtherscanLikeClient.name, () => {
   const URL = 'http://example.com'
