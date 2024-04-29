@@ -207,7 +207,7 @@ export const scroll: Layer2 = {
           address: EthereumAddress(
             '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
           ),
-          selector: '0x00000000',
+          selector: '0x00b0f4d7',
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
           sinceTimestampInclusive: new UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
