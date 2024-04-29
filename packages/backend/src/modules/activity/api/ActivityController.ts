@@ -60,13 +60,16 @@ export class ActivityController {
       projectCounts.set(projectId, counts)
     }
 
-    const combinedAlignmentResult = this.alignActivityData(
-      toCombinedActivity(projectCounts),
+    const { daily: combinedDaily, ...estimationInfo } =
+      toCombinedActivity(projectCounts)
+
+    const combinedChartPoints = this.alignActivityData(
+      combinedDaily,
       ethereumCounts,
     )
 
-    if (combinedAlignmentResult.type === 'error') {
-      return combinedAlignmentResult
+    if (combinedChartPoints.type === 'error') {
+      return combinedChartPoints
     }
 
     const projects: ActivityApiResponse['projects'] = {}
@@ -88,7 +91,10 @@ export class ActivityController {
     return {
       type: 'success',
       data: {
-        combined: formatActivityChart(combinedAlignmentResult.data),
+        combined: {
+          ...formatActivityChart(combinedChartPoints.data),
+          ...estimationInfo,
+        },
         projects,
       },
     }
@@ -218,6 +224,9 @@ export class ActivityController {
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
     for (const processor of this.processors) {
+      // Exclude projects that have not been fully synced yet
+      if (!processor.getStatus().syncedOnce) continue
+
       const projectId = processor.projectId
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
