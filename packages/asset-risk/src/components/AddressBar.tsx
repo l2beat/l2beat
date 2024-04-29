@@ -65,7 +65,7 @@ export function AddressBar() {
                   <div className="absolute top-0 w-full flex flex-row gap-2 bg-neutral-900">
                     <Link
                       href={`/wallet/${address}`}
-                      className="flex items-center justify-center w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
+                      className="w-full leading-8 text-center bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
                     >
                       View report for {ensName ?? truncatedAddress}
                     </Link>
