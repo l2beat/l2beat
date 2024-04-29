@@ -28,6 +28,7 @@ describe(DiscoveryProvider.name, () => {
       })
       discoveryProviderMock = new DiscoveryProvider(
         providerMock,
+        providerMock,
         etherscanLikeClientMock,
         DiscoveryLogger.SILENT,
         GETLOGS_MAX_RANGE,
@@ -129,6 +130,7 @@ describe(DiscoveryProvider.name, () => {
         })
         discoveryProviderMock = new DiscoveryProvider(
           providerMock,
+          providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
           undefined, // PROVIDING UNDEFINED for getLogsMaxRange, so no batching
@@ -147,6 +149,7 @@ describe(DiscoveryProvider.name, () => {
           getLogs: mockFn().resolvesTo([]),
         })
         discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
@@ -195,6 +198,7 @@ describe(DiscoveryProvider.name, () => {
 
         const discoveryProviderMock = new DiscoveryProvider(
           providerMock,
+          providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
           GETLOGS_MAX_RANGE,
@@ -224,6 +228,7 @@ describe(DiscoveryProvider.name, () => {
         })
 
         const discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
@@ -280,6 +285,7 @@ describe(DiscoveryProvider.name, () => {
         })
 
         discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,

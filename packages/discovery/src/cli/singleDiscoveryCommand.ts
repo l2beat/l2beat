@@ -8,6 +8,7 @@ import { DiscoveryCliConfig } from '../config/types'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
+import { getBlockNumberTwoProviders } from '../discovery/provider/DiscoveryProvider'
 import { discover as discovery } from '../discovery/runDiscovery'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { HttpClient } from '../utils/HttpClient'
@@ -30,19 +31,24 @@ export async function singleDiscoveryCommand(
   const provider = new providers.StaticJsonRpcProvider(
     singleDiscovery.chain.rpcUrl,
   )
+  const eventProvider =
+    singleDiscovery.chain.eventRpcUrl === undefined
+      ? provider
+      : new providers.StaticJsonRpcProvider(singleDiscovery.chain.eventRpcUrl)
   const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
     singleDiscovery.chain.etherscanUrl,
     singleDiscovery.chain.etherscanApiKey,
     singleDiscovery.chain.etherscanUnsupported,
   )
-  const blockNumber = await provider.getBlockNumber()
+  const blockNumber = await getBlockNumberTwoProviders(provider, eventProvider)
 
   logger = logger.for('SingleDiscovery')
   logger.info('Starting')
 
   const results = await discovery(
     provider,
+    eventProvider,
     etherscanClient,
     singleDiscovery.chain.multicall,
     projectConfig,
