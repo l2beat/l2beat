@@ -520,7 +520,8 @@ export const scroll: Layer2 = {
       name: 'Bernoulli upgrade',
       link: 'https://scroll.io/blog/blobs-are-here-scrolls-bernoulli-upgrade',
       date: '2024-04-29T00:00:00.00Z',
-      description: 'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
+      description:
+        'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
     },
     {
       name: 'Scroll official launch',

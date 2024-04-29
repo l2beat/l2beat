@@ -158,7 +158,8 @@ export const parallel: Layer2 = orbitStackL2({
       name: 'ArbOS v20 upgrade',
       link: 'https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957',
       date: '2024-04-10T00:00:00.00Z',
-      description: 'Introduces EIP-4844 data blobs for L1 data availability and Dencun-related opcodes on L2.',
+      description:
+        'Introduces EIP-4844 data blobs for L1 data availability and Dencun-related opcodes on L2.',
     },
     {
       name: 'Parallel Mainnet closed launch',

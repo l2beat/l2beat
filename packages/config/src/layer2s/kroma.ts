@@ -512,7 +512,8 @@ export const kroma: Layer2 = {
       name: 'Ecotone upgrade',
       link: 'https://twitter.com/kroma_network/status/1783410075346063564',
       date: '2024-04-25T00:00:00.00Z',
-      description: 'Introduces EIP-4844 data blobs for L1 data availability and more L2 opcodes.',
+      description:
+        'Introduces EIP-4844 data blobs for L1 data availability and more L2 opcodes.',
     },
     {
       name: 'Kroma Mainnet Launch',
