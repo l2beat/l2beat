@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '../types'
 
-export function adjustRangeForBigQueryCall(
+export function clampRangeToDay(
   from: number,
   to: number,
 ): { from: UnixTime; to: UnixTime } {

@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  clampRangeToDay,
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigType,
@@ -11,10 +12,7 @@ import { Knex } from 'knex'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
-import {
-  adjustRangeForBigQueryCall,
-  findConfigurationsToSync,
-} from '../tracked-txs/utils'
+import { findConfigurationsToSync } from '../tracked-txs/utils'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
@@ -104,7 +102,7 @@ describe(TrackedTxsIndexer.name, () => {
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => [],
       })
-      const { from: _, to: unixTo } = adjustRangeForBigQueryCall(
+      const { from: _, to: unixTo } = clampRangeToDay(
         from.toNumber(),
         to.toNumber(),
       )

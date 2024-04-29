@@ -1,5 +1,6 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import {
+  clampRangeToDay,
   notUndefined,
   TrackedTxsConfigType,
   UnixTime,
@@ -14,10 +15,7 @@ import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRep
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import {
-  adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
-  findConfigurationsToSync,
-} from './utils'
+import { findConfigurationsToSync } from './utils'
 import {
   diffTrackedTxConfigurations,
   ToChangeUntilTimestamp,
@@ -54,7 +52,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     from -= 1 // TODO: refactor logic after uif update
-    const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
+    const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
     const [configurations, syncTo] = await this.getConfigurationsToSync(
       unixFrom,
