@@ -1,25 +1,16 @@
-Generated with discovered.json: 0x3aa8188c9cefd43362e87b6a52ef360c7876cd2f
+Generated with discovered.json: 0x6c1f315d53c94420733788742a072d1746dfbbcb
 
-# Diff at Tue, 23 Apr 2024 16:58:23 GMT:
+# Diff at Mon, 29 Apr 2024 10:19:33 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@f6f4ef80f0b2193da88313a911968b74fcfed02f block: 19632640
-- current block number: 19719431
+- comparing to: main@bb2ea25728d2348708c9bfebf5b1c50078db1c65 block: 19632640
+- current block number: 19760326
 
 ## Description
 
 EigenDA exposes the address of the RegistryCoordinator while for istance EOracle does not (it's immutable constructor param). Check RC is discovered when adding new AVSes.
 
 ## Watched changes
-
-```diff
-    contract GnosisSafe (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
-    +++ description: None
-      values.nonce:
--        5
-+        6
-    }
-```
 
 ```diff
     contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
@@ -45,11 +36,29 @@ discovery. Values are for block 19632640 (main branch discovery), not current.
 ```
 
 ```diff
+    contract GnosisSafe (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "EigenLayerExecutorMultisig"
+    }
+```
+
+```diff
     contract GnosisSafe (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
     +++ description: None
       name:
 -        "GnosisSafe"
 +        "EigenLayerOperationsMultisig"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "EigenLayerCommunityMultisig"
     }
 ```
 
