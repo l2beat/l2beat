@@ -3,9 +3,9 @@ import { providers, utils } from 'ethers'
 
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
+import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from './DiscoveryProvider'
-import { Hash256 } from '../../utils/Hash256'
 
 const rangesFromCalls = (provider: MockObject<providers.JsonRpcProvider>) =>
   provider.getLogs.calls.map((call) => {
