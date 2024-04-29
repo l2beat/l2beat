@@ -574,7 +574,17 @@
     {
       "name": "MultipleVersionRollupVerifier",
       "values": {
+        "getVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "latestVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "legacyVerifiers": {
           "description": null,
           "severity": null,
           "type": null
@@ -623,10 +633,6 @@
     },
     {
       "name": "PlonkVerifierV0",
-      "values": {}
-    },
-    {
-      "name": "PlonkVerifierV1",
       "values": {}
     },
     {
@@ -881,16 +887,6 @@
     },
     {
       "name": "ZkEvmVerifierV0",
-      "values": {
-        "plonkVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ZkEvmVerifierV1",
       "values": {
         "plonkVerifier": {
           "description": null,

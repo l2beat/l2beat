@@ -255,7 +255,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -266,7 +266,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -305,7 +305,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -321,8 +321,8 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() call',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyAggregateProof4844() calls',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },
@@ -331,7 +331,7 @@ export const scroll: Layer2 = {
       references: [
         {
           text: 'ScrollChain.sol - Etherscan source, code commitBatch() function',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },
@@ -340,7 +340,7 @@ export const scroll: Layer2 = {
       references: [
         {
           text: 'ScrollChain.sol - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5c5b8dec96959564f6dfaf59c8b7cd41fc4207f0
+Generated with discovered.json: 0xba5ae72660ac70c6e19a5ec8b75ec88e85c613f7
 
-# Diff at Mon, 29 Apr 2024 06:16:53 GMT:
+# Diff at Mon, 29 Apr 2024 10:01:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@37e0de831cd2543b1a40aefc42a1ba0947644d82 block: 19532167
-- current block number: 19759119
+- current block number: 19760239
 
 ## Description
 
@@ -57,7 +57,7 @@ It has been updated to support multiple versions. Before, it just contained a si
 
 ```diff
 +   Status: CREATED
-    contract  (0x2293cd12e8564e8219d314b075867c2f66ac6941)
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941)
     +++ description: None
 ```
 
@@ -75,6 +75,7 @@ It has been updated to support multiple versions. Before, it just contained a si
  .../L1/rollup/MultipleVersionRollupVerifier.sol    | 116 +++-
  .../src/libraries/verifier/IRollupVerifier.sol     |  16 +-
  .../src/libraries/verifier/IZkEvmVerifier.sol      |   2 +-
+ .../scroll/ethereum/.code/PlonkVerifierV1/meta.txt |   2 +
  .../ScrollChain/implementation/meta.txt            |   2 +-
  .../src/L1/rollup/IL1MessageQueue.sol              |   2 +-
  .../implementation/src/L1/rollup/IScrollChain.sol  |  54 +-
@@ -84,14 +85,44 @@ It has been updated to support multiple versions. Before, it just contained a si
  .../src/libraries/codec/ChunkCodecV0.sol}          |  27 +-
  .../src/libraries/codec/ChunkCodecV1.sol           |  86 +++
  .../src/libraries/verifier/IRollupVerifier.sol     |  16 +-
- .../meta.txt                                       |   2 +
+ .../scroll/ethereum/.code/ZkEvmVerifierV1/meta.txt |   2 +
  .../src/libraries/verifier/IZkEvmVerifier.sol      |  10 +
  .../src/libraries/verifier/ZkEvmVerifierV1.sol     |  65 ++
- .../meta.txt                                       |   0
- .../src/libraries/verifier/IZkEvmVerifier.sol      |   0
- .../src/libraries/verifier/ZkEvmVerifierV1.sol     |   0
- .../scroll/ethereum/.code/meta.txt                 |   2 +
- 21 files changed, 1202 insertions(+), 251 deletions(-)
+ 18 files changed, 1202 insertions(+), 251 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532167 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifier (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      name:
+-        "PlonkVerifier"
++        "PlonkVerifierV0"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      name:
+-        "ZkEvmVerifierV1"
++        "ZkEvmVerifierV0"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0) {
+    +++ description: None
+      values.getVerifier:
++        ["0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"]
+      errors:
++        {"getVerifier":"Too many values. Update configuration to explore fully"}
+    }
 ```
 
 Generated with discovered.json: 0xab2564ccd95153417c52dae00a8e78fb02f47de6
