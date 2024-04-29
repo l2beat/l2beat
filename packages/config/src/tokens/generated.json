@@ -5554,6 +5554,21 @@
       }
     },
     {
+      "id": "linea:linda-linda",
+      "name": "Linda",
+      "coingeckoId": "linda-2",
+      "address": "0x82cC61354d78b846016b559e3cCD766fa7E793D5",
+      "symbol": "LINDA",
+      "decimals": 18,
+      "deploymentTimestamp": 1702004773,
+      "coingeckoListingTimestamp": 1702771200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33699/large/linda-logo-200.png?1705166731",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "linea:lube-lube",
       "name": "LUBE",
       "coingeckoId": "lube",

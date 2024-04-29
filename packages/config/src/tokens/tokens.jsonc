@@ -1630,6 +1630,12 @@
       }
     },
     {
+      "symbol": "LINDA", // LayerZero bridged but Linea native with OFT adapter (locking escrow)
+      "address": "0x82cC61354d78b846016b559e3cCD766fa7E793D5",
+      "type": "NMV",
+      "formula": "totalSupply" // no circulating on coingecko and almost totalsupply is close to circ
+    },
+    {
       "symbol": "LUBE",
       "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
       "type": "NMV",
