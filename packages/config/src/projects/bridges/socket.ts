@@ -121,11 +121,11 @@ export const socket: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592'),
         name: 'SNX Vault',
-        tokens: ['WETH'],
+        tokens: ['SNX'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
-        name: 'WETH Vault',
+        name: 'wstETH Vault',
         tokens: ['wstETH'],
       }),
     ],
