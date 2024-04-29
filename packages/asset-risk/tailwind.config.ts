@@ -163,7 +163,7 @@ const config: Config = {
     extend: {
       animation: {
         'quick-fade-in': 'fade-in 0.1s ease-in-out',
-        'l2beat-pulse': 'pulse 5s ease-in-out infinite forwards',
+        'l2beat-pulse': 'l2beat-pulse 5s ease-in-out infinite forwards',
       },
       keyframes: {
         'fade-in': {
