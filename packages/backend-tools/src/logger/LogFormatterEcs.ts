@@ -1,5 +1,5 @@
 import { LogEntry, LogFormatter } from './interfaces'
-import { toJSON } from './toJSON'
+import { toJSON } from '../helpers/toJSON'
 
 // https://www.elastic.co/guide/en/ecs/8.11/ecs-reference.html
 export class LogFormatterEcs implements LogFormatter {

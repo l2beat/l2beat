@@ -3,7 +3,7 @@ import { inspect } from 'util'
 
 import { LogEntry, LogFormatter } from './interfaces'
 import { LogLevel } from './LogLevel'
-import { toJSON } from './toJSON'
+import { toJSON } from '../helpers/toJSON'
 
 const STYLES = {
   bigint: 'white',

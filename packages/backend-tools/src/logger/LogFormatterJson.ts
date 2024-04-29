@@ -1,5 +1,5 @@
 import { LogEntry, LogFormatter } from './interfaces'
-import { toJSON } from './toJSON'
+import { toJSON } from '../helpers/toJSON'
 
 export class LogFormatterJson implements LogFormatter {
   public format(entry: LogEntry): string {
