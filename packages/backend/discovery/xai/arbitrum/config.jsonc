@@ -4,7 +4,8 @@
   "name": "xai",
   "initialAddresses": [
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
-    "0xb591cE747CF19cF30e11d656EB94134F523A9e77"
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"
   ],
   "names": {
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9": "Inbox",
@@ -14,16 +15,21 @@
     "0x1E400568AD4840dbE50FB32f306B842e9ddeF726": "Outbox",
     "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1": "SequencerInbox",
     "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F": "UpgradeExecutor",
-    "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66": "Xai",
-    "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c": "esXai",
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember",
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77": "L1ERC20Gateway",
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
     "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig",
     "0xfD41041180571C5D371BEA3D9550E55653671198": "SentryReferee",
-    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry"
+    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
+    "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool",
+    "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723": "StakingProxyAdmin"
   },
   "overrides": {
+    "PoolFactory": {
+      "ignoreMethods": ["getPoolAddress", "stakingPools"],
+      "ignoreRelatives": ["esXaiAddress"]
+    },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
     },
@@ -73,7 +79,8 @@
         "delayedMessageCount",
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
-      ]
+      ],
+      "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
@@ -123,12 +130,6 @@
         }
       }
     },
-    "Xai": {
-      "ignoreInWatchMode": ["totalSupply"]
-    },
-    "esXai": {
-      "ignoreInWatchMode": ["totalSupply"]
-    },
     "GnosisSafeAdminMember": {
       "ignoreMethods": ["nonce"]
     },
@@ -142,13 +143,24 @@
         "getChallenge",
         "getMaxStakeAmount",
         "getKycWalletAtIndex",
-        "getCombinedTotalSupply"
+        "getCombinedTotalSupply",
+        "assignedKeyToPool",
+        "getBoostFactorForKeyId"
       ],
-      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
+      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"],
+      "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {
       "ignoreMethods": ["getPricingTier", "tokenByIndex"],
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "StakingPool": {
+      "ignoreMethods": [
+        "getPoolInfo",
+        "getStakedKeysCount",
+        "keyIdIndex",
+        "stakedKeysIndices"
+      ]
     }
   }
 }
