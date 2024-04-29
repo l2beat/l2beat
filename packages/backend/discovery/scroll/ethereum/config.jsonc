@@ -17,7 +17,7 @@
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
     "0x987e300fDfb06093859358522a79098848C33852": "OLD_L2GasPriceOracle",
     "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
-    "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier",
+    "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6": "MultipleVersionRollupVerifier",
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
     "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockMid",
@@ -43,7 +43,10 @@
     "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": "L2CustomERC20GatewayFallback",
     "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": "L2ERC721GatewayFallback",
     "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": "L2USDCGatewayFallback",
-    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifier"
+    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifierV0",
+    "0x2293cd12e8564e8219d314b075867c2f66ac6941": "PlonkVerifierV1",
+    "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV0",
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -96,7 +99,17 @@
       }
     },
     "MultipleVersionRollupVerifier": {
-      "ignoreMethods": ["getVerifier"]
+      "ignoreMethods": ["getVerifier"],
+      "fields": {
+        "latestVerifier": {
+          "type": "array",
+          "length": 5
+        },
+        "legacyVerifiersLength": {
+          "type": "array",
+          "length": 5
+        }
+      }
     },
     "ScrollOwner": {
       "fields": {

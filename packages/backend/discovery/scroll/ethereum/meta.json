@@ -579,11 +579,6 @@
           "severity": null,
           "type": null
         },
-        "legacyVerifiers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "legacyVerifiersLength": {
           "description": null,
           "severity": null,
@@ -627,7 +622,11 @@
       }
     },
     {
-      "name": "PlonkVerifier",
+      "name": "PlonkVerifierV0",
+      "values": {}
+    },
+    {
+      "name": "PlonkVerifierV1",
       "values": {}
     },
     {
@@ -874,6 +873,16 @@
           "type": null
         },
         "whitelisted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkEvmVerifierV0",
+      "values": {
+        "plonkVerifier": {
           "description": null,
           "severity": null,
           "type": null
