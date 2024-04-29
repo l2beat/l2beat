@@ -1,11 +1,22 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
-import { LogEntry, Logger } from './Logger'
+import { LogEntry } from './interfaces'
+import { LogFormatterJson } from './LogFormatterJson'
+import { LogFormatterPretty } from './LogFormatterPretty'
+import { Logger } from './Logger'
 
 describe(Logger.name, () => {
   it('calls correct backend', () => {
     const backend = createTestBackend()
-    const logger = new Logger({ backend, logLevel: 'TRACE' })
+    const logger = new Logger({
+      backends: [
+        {
+          backend,
+          formatter: new LogFormatterJson(),
+        },
+      ],
+      logLevel: 'TRACE',
+    })
 
     logger.trace('foo')
     logger.debug('foo')
@@ -25,9 +36,13 @@ describe(Logger.name, () => {
   it('supports bigint values in json output', () => {
     const backend = createTestBackend()
     const logger = new Logger({
-      backend,
+      backends: [
+        {
+          backend,
+          formatter: new LogFormatterJson(),
+        },
+      ],
       logLevel: 'TRACE',
-      format: 'json',
       getTime: () => new Date(0),
       utc: true,
     })
@@ -48,9 +63,13 @@ describe(Logger.name, () => {
   it('supports bigint values in pretty output', () => {
     const backend = createTestBackend()
     const logger = new Logger({
-      backend,
+      backends: [
+        {
+          backend,
+          formatter: new LogFormatterPretty(false, true),
+        },
+      ],
       logLevel: 'TRACE',
-      format: 'pretty',
       getTime: () => new Date(0),
       utc: true,
     })
@@ -68,9 +87,13 @@ describe(Logger.name, () => {
     function setup() {
       const backend = createTestBackend()
       const baseLogger = new Logger({
-        backend,
+        backends: [
+          {
+            backend,
+            formatter: new LogFormatterPretty(false, true),
+          },
+        ],
         logLevel: 'TRACE',
-        format: 'pretty',
         getTime: () => new Date(0),
         utc: true,
       })

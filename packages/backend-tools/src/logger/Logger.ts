@@ -2,45 +2,14 @@
 import { join } from 'path'
 
 import { assertUnreachable } from '../utils/assertUnreachable'
-import { formatLevelPretty } from './formatLevelPretty'
-import { formatParametersPretty } from './formatParametersPretty'
-import { formatServicePretty } from './formatServicePretty'
-import { formatTimePretty } from './formatTimePretty'
+import { LogEntry, LoggerOptions } from './interfaces'
+import { LogFormatterJson } from './LogFormatterJson'
+import { LogFormatterPretty } from './LogFormatterPretty'
 import { LEVEL, LogLevel } from './LogLevel'
 import { LogThrottle, LogThrottleOptions } from './LogThrottle'
 import { parseLogArguments } from './parseLogArguments'
-import { ResolvedError, resolveError } from './resolveError'
+import { resolveError } from './resolveError'
 import { tagService } from './tagService'
-
-export interface LoggerBackend {
-  debug(message: string): void
-  log(message: string): void
-  warn(message: string): void
-  error(message: string): void
-}
-
-export interface LoggerOptions {
-  logLevel: LogLevel
-  service?: string
-  tag?: string
-  format: 'pretty' | 'json'
-  utc: boolean
-  colors: boolean
-  cwd: string
-  getTime: () => Date
-  reportError: (entry: LogEntry) => void
-  backend: LoggerBackend
-}
-
-export interface LogEntry {
-  level: LogLevel
-  time: Date
-  service?: string
-  message?: string
-  error?: Error
-  resolvedError?: ResolvedError
-  parameters?: object
-}
 
 /**
  * [Read full documentation](https://github.com/l2beat/tools/blob/master/packages/backend-tools/src/logger/docs.md)
@@ -56,40 +25,81 @@ export class Logger {
       logLevel: options.logLevel ?? 'INFO',
       service: options.service,
       tag: options.tag,
-      format: options.format ?? 'json',
       utc: options.utc ?? false,
-      colors: options.colors ?? false,
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
       reportError: options.reportError ?? (() => {}),
-      backend: options.backend ?? console,
+      backends: options.backends ?? [
+        {
+          backend: console,
+          formatter: new LogFormatterJson(),
+        },
+      ],
     }
     this.cwd = join(this.options.cwd, '/')
     this.logLevel = LEVEL[this.options.logLevel]
   }
 
-  static SILENT = new Logger({ logLevel: 'NONE', format: 'pretty' })
+  static SILENT = new Logger({ logLevel: 'NONE' })
+
   static CRITICAL = new Logger({
     logLevel: 'CRITICAL',
-    format: 'pretty',
-    colors: true,
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
   })
+
   static ERROR = new Logger({
     logLevel: 'ERROR',
-    format: 'pretty',
-    colors: true,
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
   })
-  static WARN = new Logger({ logLevel: 'WARN', format: 'pretty', colors: true })
-  static INFO = new Logger({ logLevel: 'INFO', format: 'pretty', colors: true })
+
+  static WARN = new Logger({
+    logLevel: 'WARN',
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
+  })
+
+  static INFO = new Logger({
+    logLevel: 'INFO',
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
+  })
+
   static DEBUG = new Logger({
     logLevel: 'DEBUG',
-    format: 'pretty',
-    colors: true,
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
   })
+
   static TRACE = new Logger({
     logLevel: 'TRACE',
-    format: 'pretty',
-    colors: true,
+    backends: [
+      {
+        backend: console,
+        formatter: new LogFormatterPretty(true, false),
+      },
+    ],
   })
 
   configure(options: Partial<LoggerOptions>): Logger {
@@ -189,78 +199,28 @@ export class Logger {
   }
 
   private printExactly(entry: LogEntry): void {
-    const output =
-      this.options.format === 'json'
-        ? this.formatJson(entry)
-        : this.formatPretty(entry)
-
-    switch (entry.level) {
-      case 'CRITICAL':
-      case 'ERROR':
-        this.options.backend.error(output)
-        break
-      case 'WARN':
-        this.options.backend.warn(output)
-        break
-      case 'INFO':
-        this.options.backend.log(output)
-        break
-      case 'DEBUG':
-      case 'TRACE':
-        this.options.backend.debug(output)
-        break
-      case 'NONE':
-        break
-      default:
-        assertUnreachable(entry.level)
-    }
+    this.options.backends.forEach((backendOptions) => {
+      const output = backendOptions.formatter.format(entry)
+      switch (entry.level) {
+        case 'CRITICAL':
+        case 'ERROR':
+          backendOptions.backend.error(output)
+          break
+        case 'WARN':
+          backendOptions.backend.warn(output)
+          break
+        case 'INFO':
+          backendOptions.backend.log(output)
+          break
+        case 'DEBUG':
+        case 'TRACE':
+          backendOptions.backend.debug(output)
+          break
+        case 'NONE':
+          break
+        default:
+          assertUnreachable(entry.level)
+      }
+    })
   }
-
-  private formatJson(entry: LogEntry): string {
-    const core = {
-      time: entry.time.toISOString(),
-      level: entry.level,
-      service: entry.service,
-      message: entry.message,
-      error: entry.resolvedError,
-    }
-    try {
-      return toJSON({ ...core, parameters: entry.parameters })
-    } catch (e) {
-      this.error('Unable to log', e)
-      return JSON.stringify(core)
-    }
-  }
-
-  private formatPretty(entry: LogEntry): string {
-    const timeOut = formatTimePretty(
-      entry.time,
-      this.options.utc,
-      this.options.colors,
-    )
-    const levelOut = formatLevelPretty(entry.level, this.options.colors)
-    const serviceOut = formatServicePretty(entry.service, this.options.colors)
-    const messageOut = entry.message ? ` ${entry.message}` : ''
-    const paramsOut = formatParametersPretty(
-      sanitize(
-        entry.resolvedError
-          ? { ...entry.resolvedError, ...entry.parameters }
-          : entry.parameters ?? {},
-      ),
-      this.options.colors,
-    )
-
-    return `${timeOut} ${levelOut}${serviceOut}${messageOut}${paramsOut}`
-  }
-}
-
-function toJSON(parameters: {}): string {
-  return JSON.stringify(parameters, (k, v: unknown) =>
-    typeof v === 'bigint' ? v.toString() : v,
-  )
-}
-
-function sanitize(parameters: {}): {} {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return JSON.parse(toJSON(parameters))
 }
