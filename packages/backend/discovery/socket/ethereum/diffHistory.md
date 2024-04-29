@@ -8,7 +8,7 @@ Generated with discovered.json: 0x030c4c2bc2867d98d2a4302e6b97108b0330217f
 
 ## Description
 
-4 Plugs are added to the socket main contract. The USDC vault 2 was discovered by the socket-update script and is added to the escrows.
+4 Plugs are added to the socket main contract. New vaults are discovered by the socket-update script and  added to the escrows in socket.ts.
 
 ## Watched changes
 
