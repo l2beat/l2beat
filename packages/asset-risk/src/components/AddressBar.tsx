@@ -39,7 +39,7 @@ export function AddressBar() {
       <h1 className="text-center font-bold text-5xl">
         Get your Asset Risk Report
       </h1>
-      <div className="h-20">
+      <div>
         <div>
           <div className="max-w-[488px] relative">
             <Skeleton className="w-full h-12 rounded-md" />
