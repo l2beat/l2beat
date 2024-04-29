@@ -31,8 +31,6 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
-    "@types/elasticsearch": "^5.0.43",
-    "@types/uuid": "^9.0.8",
     "chalk": "^4.1.2",
     "dotenv": "^16.3.1",
     "error-stack-parser": "^2.1.4",
@@ -40,6 +38,8 @@
   },
   "devDependencies": {
     "@sinonjs/fake-timers": "^11.1.0",
-    "@types/sinonjs__fake-timers": "^8.1.2"
+    "@types/sinonjs__fake-timers": "^8.1.2",
+    "@types/elasticsearch": "^5.0.43",
+    "@types/uuid": "^9.0.8"
   }
 }
