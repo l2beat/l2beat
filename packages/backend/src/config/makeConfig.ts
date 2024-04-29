@@ -49,7 +49,9 @@ export function makeConfig(
   const loggerBackends: LoggerBackendOptions[] = [
     {
       backend: console,
-      formatter: isLocal ? new LogFormatterPretty(true, false) : new LogFormatterJson(),
+      formatter: isLocal
+        ? new LogFormatterPretty(true, false)
+        : new LogFormatterJson(),
     },
   ]
 
