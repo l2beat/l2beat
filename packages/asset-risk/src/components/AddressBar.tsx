@@ -20,6 +20,7 @@ export function AddressBar() {
     transport: http(),
   })
   const { disconnect } = useDisconnect()
+
   useModal({
     onConnect: ({ address }) => {
       router.push(`/wallet/${address}`)
@@ -56,6 +57,7 @@ export function AddressBar() {
                 show,
                 hide,
                 truncatedAddress,
+                address,
                 ensName,
                 chain,
               }) => {
@@ -63,7 +65,7 @@ export function AddressBar() {
                   <div className="absolute top-0 w-full flex flex-row gap-2 bg-neutral-900">
                     <Link
                       href={`/wallet/${address}`}
-                      className="w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
+                      className="flex items-center justify-center w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
                     >
                       View report for {ensName ?? truncatedAddress}
                     </Link>
