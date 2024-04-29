@@ -8,7 +8,7 @@ Generated with discovered.json: 0xba5ae72660ac70c6e19a5ec8b75ec88e85c613f7
 
 ## Description
 
-Added blob support. 
+Added blob support.
 
 ### ScrollChain
 
