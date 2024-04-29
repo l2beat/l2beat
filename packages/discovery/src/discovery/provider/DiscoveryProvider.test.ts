@@ -5,6 +5,7 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from './DiscoveryProvider'
+import { Hash256 } from '../../utils/Hash256'
 
 const rangesFromCalls = (provider: MockObject<providers.JsonRpcProvider>) =>
   provider.getLogs.calls.map((call) => {
@@ -348,5 +349,33 @@ describe(DiscoveryProvider.name, () => {
         expect(providerMock.getLogs).toHaveBeenCalledTimes(2)
       })
     })
+  })
+
+  it('getLogs respects second provider', async () => {
+    const regularProviderMock = mockObject<providers.JsonRpcProvider>({
+      getLogs: mockFn().resolvesTo([]),
+      getTransaction: mockFn().resolvesTo({
+        blockNumber: 1,
+      }),
+      getBlock: mockFn().resolvesTo({
+        timestamp: 1,
+      }),
+    })
+    const eventProviderMock = mockObject<providers.JsonRpcProvider>({
+      getLogs: mockFn().resolvesTo([]),
+    })
+    const etherscanClient = mockObject<EtherscanLikeClient>({
+      getContractDeploymentTx: mockFn().resolvesTo(Hash256.random()),
+    })
+
+    const provider = new DiscoveryProvider(
+      regularProviderMock,
+      eventProviderMock,
+      etherscanClient,
+      DiscoveryLogger.SILENT,
+    )
+    await provider.getLogs(EthereumAddress.random(), [], 0, 100)
+    expect(regularProviderMock.getLogs).toHaveBeenCalledTimes(0)
+    expect(eventProviderMock.getLogs).toHaveBeenCalledTimes(1)
   })
 })
