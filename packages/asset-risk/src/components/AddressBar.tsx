@@ -1,6 +1,7 @@
 'use client'
 
 import { ConnectKitButton } from 'connectkit'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createPublicClient, http, isAddress } from 'viem'
@@ -55,9 +56,12 @@ export function AddressBar() {
               }) => {
                 return isConnected ? (
                   <div className="absolute top-0 w-full flex flex-row gap-2 bg-neutral-900">
-                    <button className="w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden">
+                    <Link
+                      href={`/wallet/${address}`}
+                      className="w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
+                    >
                       View report for {ensName ?? truncatedAddress}
-                    </button>
+                    </Link>
                     <button
                       onClick={() => disconnect()}
                       className="bg-brand-red-dark/50 text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors"
