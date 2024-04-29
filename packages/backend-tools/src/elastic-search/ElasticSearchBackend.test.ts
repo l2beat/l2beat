@@ -1,12 +1,12 @@
 import { expect, mockFn, MockObject, mockObject } from 'earl'
 
+import { formatDate } from '../helpers/formatDate'
 import {
   ElasticSearchBackend,
   ElasticSearchBackendOptions,
   UuidProvider,
 } from './ElasticSearchBackend'
 import { ElasticSearchClient } from './ElasticSearchClient'
-import { formatDate } from '../helpers/formatDate'
 
 const flushInterval = 10
 const id = 'some-id'

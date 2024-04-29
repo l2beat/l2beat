@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 
+import { formatDate } from '../helpers/formatDate'
 import { LoggerBackend } from '../logger/interfaces'
 import {
   ElasticSearchClient,
   ElasticSearchClientOptions,
 } from './ElasticSearchClient'
-import { formatDate } from '../helpers/formatDate'
 
 export interface ElasticSearchBackendOptions
   extends ElasticSearchClientOptions {
