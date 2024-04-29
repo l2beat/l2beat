@@ -1,6 +1,6 @@
 'use client'
 
-import { ConnectKitButton } from 'connectkit'
+import { ConnectKitButton, useModal } from 'connectkit'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -20,6 +20,11 @@ export function AddressBar() {
     transport: http(),
   })
   const { disconnect } = useDisconnect()
+  useModal({
+    onConnect: ({ address }) => {
+      router.push(`/wallet/${address}`)
+    },
+  })
 
   const handleWallet = async () => {
     const ensAddress = await publicClient.getEnsAddress({
