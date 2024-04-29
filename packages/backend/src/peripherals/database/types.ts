@@ -244,6 +244,7 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    aggregated_l2_costs: AggregatedL2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
