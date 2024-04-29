@@ -368,7 +368,7 @@ export const scroll: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The ability to check consistency with L1 data is [in the works](https://github.com/scroll-tech/go-ethereum/pull/515).',
+      'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
     compressionScheme: 'The rollup does not use compression.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
