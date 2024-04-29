@@ -15,7 +15,9 @@
     "@l2beat/config": "*",
     "@l2beat/shared-pure": "*",
     "@t3-oss/env-nextjs": "^0.10.0",
+    "@tanstack/react-query": "^5.32.0",
     "clsx": "^2.1.0",
+    "connectkit": "^1.7.3",
     "earl": "^1.1.0",
     "lodash": "^4.17.21",
     "mocha": "^10.2.0",
@@ -24,7 +26,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.3.0",
-    "viem": "^2.9.25",
+    "viem": "^2.9.28",
+    "wagmi": "^2.7.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {

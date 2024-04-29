@@ -19,3 +19,7 @@ build
 *.tsbuildinfo
 
 dist
+
+# .env files
+.env
+.env.local
