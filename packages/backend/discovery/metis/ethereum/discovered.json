@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19726038,
-  "configHash": "0x573df1effc39f5d019ba06dd975ec4adb4fd8b69bdd36a1a521504369cb18d65",
+  "blockNumber": 19761802,
+  "configHash": "0x19bf0002aad0a7b0ff5cb49b94a15703b05823783ce49490b96fcc8ffcbc5a65",
   "version": 3,
   "contracts": [
     {
@@ -55,10 +55,10 @@
         "manager": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
         "maxLock": "100000000000000000000000",
         "minLock": "20000000000000000000000",
-        "owner": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
         "totalLocked": "118634578080235465000000",
-        "totalRewardsLiquidated": 0
+        "totalRewardsLiquidated": "82748882048000000000"
       },
       "derivedName": "LockingInfo"
     },
@@ -71,10 +71,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000662921030000fff5e5",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000662921030000fff5e5",
-        "length": 23503,
-        "lengthByChainId": 23503,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000662f9f7b0001011b41",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000662f9f7b0001011b41",
+        "length": 23568,
+        "lengthByChainId": 23568,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -156,8 +156,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 1102,
-        "getQueueLength": 37386,
+        "getNumPendingQueueElements": 1243,
+        "getQueueLength": 37527,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -263,7 +263,7 @@
       },
       "sinceTimestamp": 1710314795,
       "values": {
-        "owner": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       }
     },
     {
@@ -316,7 +316,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
-        "admin": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+        "admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
       "implementations": ["0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48"],
       "sinceTimestamp": 1710487823,
@@ -324,12 +324,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1713971459,
-        "getLastSequencerTimestampByChainId": 1713971459,
-        "getTotalBatches": 23503,
-        "getTotalBatchesByChainId": 23503,
-        "getTotalElements": 16774629,
-        "getTotalElementsByChainId": 16774629,
+        "getLastSequencerTimestamp": 1714397051,
+        "getLastSequencerTimestampByChainId": 1714397051,
+        "getTotalBatches": 23568,
+        "getTotalBatchesByChainId": 23568,
+        "getTotalElements": 16849729,
+        "getTotalElementsByChainId": 16849729,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -365,17 +365,17 @@
       "sinceTimestamp": 1710314939,
       "values": {
         "BLOCK_REWARD": 1504744000000000,
-        "currentBatch": 2,
+        "currentBatch": 3,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
-        "owner": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
         "rewardPerBlock": 1504744000000000,
         "sequencers": [
           [
             "20000000000000000000000",
-            "431750306000000000000",
+            "463349930000000000000",
             1,
             1,
             0,
@@ -390,7 +390,7 @@
           ],
           [
             "20000000000000000000000",
-            "386890878000000000000",
+            "417148270352000000000",
             1,
             1,
             0,
@@ -405,7 +405,7 @@
           ],
           [
             "20000000000000000000000",
-            "341195111000000000000",
+            "359252039000000000000",
             1,
             1,
             0,

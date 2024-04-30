@@ -6,6 +6,8 @@ import { ThemeProvider } from 'next-themes'
 
 import { Footer } from '~/components/footer/Footer'
 import { Navbar } from '~/components/navbar/Navbar'
+import { ReactQueryProvider } from '~/components/ReactQueryProvider'
+import { Web3Provider } from '~/components/Web3Provider'
 import { cn } from '~/utils/cn'
 
 const roboto = Roboto({
@@ -45,13 +47,17 @@ export default function RootLayout({
       <body
         className={cn(roboto.variable, robotoSerif.variable, 'flex flex-col')}
       >
-        <ThemeProvider attribute="class">
-          <div className="flex flex-col min-h-screen flex-1">
-            <Navbar />
-            {children}
-          </div>
-          <Footer />
-        </ThemeProvider>
+        <ReactQueryProvider>
+          <Web3Provider>
+            <ThemeProvider attribute="class">
+              <div className="flex flex-col min-h-screen flex-1">
+                <Navbar />
+                {children}
+              </div>
+              <Footer />
+            </ThemeProvider>
+          </Web3Provider>
+        </ReactQueryProvider>
       </body>
     </html>
   )

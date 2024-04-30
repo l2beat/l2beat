@@ -131,21 +131,6 @@
       }
     },
     {
-      "name": "GasSubsidy",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TRANSFER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "GnosisSafeAdminMember",
       "values": {
         "VERSION": {
@@ -169,76 +154,6 @@
           "type": null
         },
         "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafeL2",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafeL2",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -351,86 +266,6 @@
       }
     },
     {
-      "name": "NodeLicenseRegistry",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimable": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "fundsReceiver": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getApproved": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getAverageCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMintTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getPricingTiersLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ownerOf": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "referralDiscountPercentage": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "referralRewardPercentage": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tokenURI": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OneStepProofEntry",
       "values": {
         "prover0": {
@@ -520,16 +355,6 @@
           "type": null
         },
         "rollup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -727,101 +552,6 @@
       }
     },
     {
-      "name": "SentryReferee",
-      "values": {
-        "CHALLENGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "KYC_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "calculateChallengeEmissionAndTier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challengeCounter": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challengerPublicKey": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasSubsidyRecipient": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getBoostFactorForKeyId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getKycWalletCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isCheckingAssertions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxStakeAmountPerLicense": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nodeLicenseAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeAmountBoostFactors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeAmountTierThresholds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingEnabled": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "xaiAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "SequencerInbox",
       "values": {
         "DATA_AUTHENTICATED_FLAG": {
@@ -934,111 +664,6 @@
           "type": null
         },
         "template": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Xai",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_SUPPLY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "esXai",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiBurnFoundationBasePoints": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiBurnFoundationRecipient": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getWhitelistCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getWhitelistedAddressAtIndex": {
-          "description": "Address allowed to initiate esXAI token transfers. Currently assigned to Referee smart contract, in case this changes, the referee contract description should be updated (and the reason investigated).",
-          "severity": "MEDIUM",
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "xai": {
           "description": null,
           "severity": null,
           "type": null

@@ -73,6 +73,8 @@ export const xlayer: Layer2 = polygonCDKStack({
     slug: 'xlayer',
     description:
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
+    headerWarning:
+      'X Layer is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains.',
     purposes: ['Universal'],
     links: {
       websites: ['https://okx.com/x1'],

@@ -30,7 +30,6 @@ import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface ChainModule {
-  indexers: [BlockTimestampIndexer, ChainAmountIndexer]
   start: () => Promise<void> | void
 }
 
@@ -89,17 +88,17 @@ function createChainModule(
         })
 
   const blockTimestampIndexer = new BlockTimestampIndexer({
-    id: `block_timestamp_indexer_${chainConfig.chain}`,
     logger,
+    tag: chainConfig.chain,
     parents: [hourlyIndexer],
-    syncOptimizer,
+    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
+    indexerService,
+    chain: chainConfig.chain,
     blockTimestampProvider: provider,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    chain: chainConfig.chain,
-    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
-    indexerService,
+    syncOptimizer,
   })
 
   const rpcClient = peripherals.getClient(RpcClient, {
@@ -135,20 +134,20 @@ function createChainModule(
     }))
 
   const chainAmountIndexer = new ChainAmountIndexer({
+    logger,
+    tag: chainConfig.chain,
+    parents: [blockTimestampIndexer],
+    indexerService,
+    configurations,
+    chain: chainConfig.chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
     blockTimestampsRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    parents: [blockTimestampIndexer],
-    id: `chain_amount_indexer_${chainConfig.chain}`,
-    configurations,
     encode,
     decode,
     syncOptimizer,
-    logger: logger.tag(chainConfig.chain),
-    indexerService,
-    chain: chainConfig.chain,
   })
 
   return {
@@ -156,7 +155,6 @@ function createChainModule(
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
     },
-    indexers: [blockTimestampIndexer, chainAmountIndexer],
   }
 }
 

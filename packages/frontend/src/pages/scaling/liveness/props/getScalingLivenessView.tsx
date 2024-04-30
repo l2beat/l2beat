@@ -76,7 +76,7 @@ function getLivenessData(
   let isSynced = true
   let lowestSyncedUntil: UnixTime = UnixTime.now()
 
-  const syncTarget = UnixTime.now().add(-1, 'hours').toStartOf('hour')
+  const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
 
   TrackedTxsConfigSubtypeValues.forEach((subtype) => {
     const syncedUntil = liveness[subtype]?.syncedUntil

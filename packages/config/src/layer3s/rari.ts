@@ -59,6 +59,10 @@ export const rari: Layer3 = orbitStackL3({
       ),
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
+    ...discovery.getMultisigPermission(
+      'UpgradeExecutorMemberGnosisSafeL2',
+      'Can execute upgrades via the UpgradeExecutor.',
+    ),
   ],
   milestones: [
     {

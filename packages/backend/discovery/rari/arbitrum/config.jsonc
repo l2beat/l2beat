@@ -16,7 +16,8 @@
     "0xA436f1867adD490BF1530c636f2FB090758bB6B3": "SequencerInbox",
     "0x139C5A235632EDdad741ff380112B3161d31a21C": "UpgradeExecutor",
     "0x8bE956aB42274056ef4471BEb211b33e258b7324": "L1CustomGateway",
-    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6": "L1ERC20Gateway"
+    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6": "L1ERC20Gateway",
+    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "UpgradeExecutorMemberGnosisSafeL2"
   },
   "overrides": {
     "ChallengeManager": {
@@ -110,6 +111,9 @@
           "type": "accessControl"
         }
       }
+    },
+    "UpgradeExecutorMemberGnosisSafeL2": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

@@ -21,8 +21,6 @@ export function DesktopProjectNavigation({
   project,
   sections,
 }: ProjectNavigationProps) {
-  if (sections.length === 0) return null
-
   const translateClassName = project.showProjectUnderReview
     ? '-translate-y-[202px]'
     : '-translate-y-16'

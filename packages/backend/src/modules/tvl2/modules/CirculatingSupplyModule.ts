@@ -11,7 +11,6 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface CirculatingSupplyModule {
-  indexers: CirculatingSupplyIndexer[]
   start: () => Promise<void> | void
 }
 
@@ -34,20 +33,19 @@ export function createCirculatingSupplyModule(
 
   const indexers = circulatingSupplies.map((circulatingSupply) => {
     return new CirculatingSupplyIndexer({
-      logger: logger.tag(circulatingSupply.coingeckoId.toString()),
+      logger,
+      tag: circulatingSupply.coingeckoId.toString(),
       parents: [hourlyIndexer],
-      coingeckoQueryService,
+      minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       indexerService,
       config: circulatingSupply,
-      syncOptimizer,
-      minHeight: circulatingSupply.sinceTimestamp.toNumber(),
+      coingeckoQueryService,
       amountRepository: peripherals.getRepository(AmountRepository),
-      id: `circulating_supply_indexer_${circulatingSupply.coingeckoId.toString()}_${circulatingSupply.address.toString()}`,
+      syncOptimizer,
     })
   })
 
   return {
-    indexers,
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()

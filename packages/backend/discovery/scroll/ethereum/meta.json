@@ -574,6 +574,11 @@
     {
       "name": "MultipleVersionRollupVerifier",
       "values": {
+        "getVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "latestVerifier": {
           "description": null,
           "severity": null,
@@ -627,7 +632,7 @@
       }
     },
     {
-      "name": "PlonkVerifier",
+      "name": "PlonkVerifierV0",
       "values": {}
     },
     {
@@ -881,7 +886,7 @@
       }
     },
     {
-      "name": "ZkEvmVerifierV1",
+      "name": "ZkEvmVerifierV0",
       "values": {
         "plonkVerifier": {
           "description": null,

@@ -6,12 +6,12 @@ export function createPriceId(priceConfig: PriceConfigEntry): string {
 
   input.push(priceConfig.address.toString())
   input.push(priceConfig.chain)
+  input.push(priceConfig.type)
   // sinceTimestamp is not used in the ID calculation.
   // untilTimestamp is not used in the ID calculation.
 
   switch (priceConfig.type) {
     case 'coingecko':
-      input.push(priceConfig.type)
       input.push(priceConfig.coingeckoId.toString())
       break
 

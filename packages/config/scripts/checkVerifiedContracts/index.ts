@@ -1,9 +1,17 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
+import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
 
 import { check } from './check'
 
 export async function main() {
-  const logger = new Logger({ logLevel: 'INFO', format: 'pretty' })
+  const logger = new Logger({
+    logLevel: 'INFO',
+    transports: [
+      {
+        transport: console,
+        formatter: new LogFormatterPretty(),
+      },
+    ],
+  })
   const envWorkersVar = 'ETHERSCAN_WORKERS'
   const workersCount = getEnv().integer(envWorkersVar, 4)
 

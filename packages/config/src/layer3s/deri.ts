@@ -27,11 +27,9 @@ export const deri = orbitStackL3({
       ],
     },
   },
-
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {
       description: 'Router managing token <--> gateway mapping.',
@@ -47,4 +45,5 @@ export const deri = orbitStackL3({
       description: 'EOA that can execute upgrade via the UpgradeExecutor.',
     },
   ],
+  usesBlobs: true,
 })

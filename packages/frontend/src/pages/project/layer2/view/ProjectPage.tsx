@@ -7,6 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
+import { cn } from '../../../../utils/cn'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -26,31 +27,46 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage(props: ProjectPageProps) {
+  const navigationSections = props.projectDetails.items.filter(
+    (section) => !section.excludeFromNavigation,
+  )
+  const isNavigationEmpty = navigationSections.length === 0
+
   return (
     <>
       <Navbar {...props.navbar} />
-      <div className="sticky top-0 z-100 md:hidden">
-        <MobileProjectNavigation sections={props.projectDetails.items} />
-      </div>
+      {!isNavigationEmpty && (
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={navigationSections} />
+        </div>
+      )}
       <PageContent mobileFull>
         <ScalingProjectHeader {...props.projectHeader} />
-        <div className="gap-x-12 md:flex">
-          <div className="mt-16 hidden w-[242px] shrink-0 md:block">
-            <DesktopProjectNavigation
-              project={{
-                title: props.projectHeader.title,
-                icon: props.projectHeader.icon,
-                showProjectUnderReview: props.projectHeader.isUnderReview,
-              }}
-              sections={props.projectDetails.items}
-            />
+        {isNavigationEmpty ? (
+          <ProjectDetails {...props.projectDetails} />
+        ) : (
+          <div className="gap-x-12 md:flex">
+            <div className="mt-16 hidden w-[242px] shrink-0 md:block">
+              <DesktopProjectNavigation
+                project={{
+                  title: props.projectHeader.title,
+                  icon: props.projectHeader.icon,
+                  showProjectUnderReview: props.projectHeader.isUnderReview,
+                }}
+                sections={navigationSections}
+              />
+            </div>
+            <div className="w-full">
+              <ProjectDetails {...props.projectDetails} />
+            </div>
           </div>
-          <div className="w-full">
-            <ProjectDetails {...props.projectDetails} />
-          </div>
-        </div>
+        )}
       </PageContent>
-      <Footer narrow {...props.footer} />
+      <Footer
+        className={cn(isNavigationEmpty && 'mt-0 md:mt-20')}
+        narrow
+        {...props.footer}
+      />
     </>
   )
 }

@@ -39,11 +39,11 @@ export function Callout({
   return (
     <div
       className={cn(
-        'flex first:mt-0',
+        'flex',
         'rounded-lg',
         background,
         className,
-        small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3',
+        small ? 'gap-2 rounded text-sm' : 'gap-3',
       )}
     >
       <span>{icon}</span>
