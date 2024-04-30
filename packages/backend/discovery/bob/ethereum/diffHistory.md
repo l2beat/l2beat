@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbb4c6ccf151605f8be375c57bc2d25b057a4d599
+Generated with discovered.json: 0x5563a9739b0f2c8a0ac9fe72b2556fb0a24101c0
 
-# Diff at Thu, 25 Apr 2024 06:26:26 GMT:
+# Diff at Tue, 30 Apr 2024 21:13:22 GMT:
 
 - author: Brendon Votteler (<bvotteler@users.noreply.github.com>)
-- current block number: 19730574
+- current block number: 19770724
 
 ## Description
 
@@ -25,12 +25,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x0a6a0b60fFeF196113b3530781df6e747DdC565e)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract ProxyAdmin (0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0)
     +++ description: None
 ```
@@ -43,25 +37,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x237DeE529A47750bEcdFa8A59a1D766e3e7B5F91)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Voting (0x2e59A20f205bB85a89C53f1936454680651E618e)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract LidoExecutionLayerRewardsVault (0x388C818CA8B9251b393131C08a736A67ccB19297)
+    contract  (0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x3bF3A9260fE18A1239767aC6F0F0bc7c1E5d1cBC)
+    contract  (0x31978e50D27f154006757f9614A51C2EC4a3af8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LidoExecutionLayerRewardsVault (0x388C818CA8B9251b393131C08a736A67ccB19297)
     +++ description: None
 ```
 
@@ -85,13 +79,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract NodeOperatorsRegistry (0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5)
+    contract L1UsdcBridge (0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561)
+    contract  (0x54e6492c36ac3e1d852F6859186353F086361352)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NodeOperatorsRegistry (0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5)
     +++ description: None
 ```
 
@@ -103,25 +103,31 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5Bc5ec5130f66f13d5C21ac6811A7e624ED3C7c6)
+    contract CallsScript (0x5cEb19e1890f677c3676d5ecDF7c501eBA01A054)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x765c6a8f20c842E8C826B0D9425015784F982aFc)
+    contract GnosisSafe (0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x77d2CF58aa4da90b3AFCd283646568e4383193BF)
+    contract  (0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract GnosisSafe (0x78CEE97C23560279909c0215e084dB293F036774)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7A475eF84BB0ef069928f9f1438110925523395B)
     +++ description: None
 ```
 
@@ -157,6 +163,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OptimismPortal (0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E)
     +++ description: None
 ```
@@ -181,6 +193,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract FiatTokenV2_2 (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xa8F4c4718E3bE56c77a5065a593025F950234745)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SystemConfig (0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393)
     +++ description: None
 ```
@@ -199,7 +223,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Kernel (0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xb91c5A314dD03924c4126FEC5B567BD71c3A6249)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d)
     +++ description: None
 ```
 
@@ -223,6 +265,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract DepositSecurityModule (0xC77F8768774E1c9244BEed705C4354f2113CFc09)
     +++ description: None
 ```
@@ -241,13 +295,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xcd51df5142156BD92E7A9494Dd2b9362f5078D64)
+    contract Burner (0xD15a672319Cf0352560eE76d9e89eAB0889046D3)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Burner (0xD15a672319Cf0352560eE76d9e89eAB0889046D3)
+    contract  (0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b)
     +++ description: None
 ```
 
@@ -271,7 +325,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xE556Da28015c04F35A52B3111B9F4120E908056e)
+    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
     +++ description: None
 ```
 

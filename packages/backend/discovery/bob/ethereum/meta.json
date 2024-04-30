@@ -2,6 +2,54 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
       "name": "ACL",
       "values": {
         "ANY_ENTITY": {
@@ -392,6 +440,31 @@
       }
     },
     {
+      "name": "CallsScript",
+      "values": {
+        "executorType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "DepositContract",
       "values": {
         "get_deposit_count": {
@@ -488,6 +561,11 @@
           "severity": null,
           "type": null
         },
+        "executors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getEVMScriptRegistry": {
           "description": null,
           "severity": null,
@@ -536,244 +614,89 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FiatTokenV2_2",
       "values": {
-        "VERSION": {
+        "CANCEL_AUTHORIZATION_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "DOMAIN_SEPARATOR": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "PERMIT_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
+        "blacklister": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "currency": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "decimals": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "masterMinter": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "name": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "pauser": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "rescuer": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "symbol": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
+        "totalSupply": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -1381,6 +1304,66 @@
       }
     },
     {
+      "name": "L1UsdcBridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "burner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Usdc": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Usdc": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L2OutputOracle",
       "values": {
         "CHALLENGER": {
@@ -1658,7 +1641,17 @@
           "severity": null,
           "type": null
         },
+        "getPooledEthByShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSharesByPooledEth": {
           "description": null,
           "severity": null,
           "type": null
@@ -1866,6 +1859,21 @@
       }
     },
     {
+      "name": "MasterMinter",
+      "values": {
+        "getMinterManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "MiniMeToken",
       "values": {
         "controller": {
@@ -2003,6 +2011,16 @@
           "severity": null,
           "type": null
         },
+        "getNodeOperatorIsActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeOperatorSummary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getNodeOperatorsCount": {
           "description": null,
           "severity": null,
@@ -2018,6 +2036,11 @@
           "severity": null,
           "type": null
         },
+        "getRewardsDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getStakingModuleSummary": {
           "description": null,
           "severity": null,
@@ -2028,7 +2051,17 @@
           "severity": null,
           "type": null
         },
+        "getTotalSigningKeyCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUnusedSigningKeyCount": {
           "description": null,
           "severity": null,
           "type": null
@@ -2044,6 +2077,16 @@
           "type": null
         },
         "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOperatorPenalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOperatorPenaltyCleared": {
           "description": null,
           "severity": null,
           "type": null
