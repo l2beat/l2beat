@@ -15,16 +15,12 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('finality', function (table) {
-    table.integer('minimum_state_update')
-    table.integer('maximum_state_update')
     table.integer('average_state_update')
   })
 }
 
 export async function down(knex: Knex) {
   await knex.schema.alterTable('finality', function (table) {
-    table.dropColumn('minimum_state_update')
-    table.dropColumn('maximum_state_update')
     table.dropColumn('average_state_update')
   })
 }

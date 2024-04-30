@@ -44,9 +44,7 @@ export class FinalityController {
       keyBy(records, 'projectId'),
       (record) => {
         const {
-          minimumStateUpdate,
           averageStateUpdate,
-          maximumStateUpdate,
 
           minimumTimeToInclusion,
           averageTimeToInclusion,
@@ -75,8 +73,6 @@ export class FinalityController {
           return {
             ...base,
             stateUpdateDelays: {
-              minimumInSeconds: 0,
-              maximumInSeconds: 0,
               averageInSeconds: 0,
             },
           }
@@ -89,15 +85,10 @@ export class FinalityController {
           }
         }
 
-        const hasStateUpdateDelay =
-          maximumStateUpdate !== null &&
-          minimumStateUpdate !== null &&
-          averageStateUpdate !== null
+        const hasStateUpdateDelay = averageStateUpdate !== null
 
         const stateUpdateDelays = hasStateUpdateDelay
           ? {
-              minimumInSeconds: minimumStateUpdate - minimumTimeToInclusion,
-              maximumInSeconds: maximumStateUpdate - maximumTimeToInclusion,
               averageInSeconds: averageStateUpdate - averageTimeToInclusion,
             }
           : null

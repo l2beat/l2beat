@@ -11,7 +11,8 @@ import { GrayedOut } from './GrayedOut'
 
 interface Props {
   scope: 'timeToInclusion' | 'stateUpdateDelay'
-  timings: FinalityDataTimings
+  timings: Partial<FinalityDataTimings> &
+    Required<Pick<FinalityDataTimings, 'averageInSeconds'>>
   syncStatus: SyncStatus
   warning?: string
 }
@@ -62,14 +63,16 @@ export function FinalityDurationCell(props: Props) {
                 />
               </div>
             </li>
-            <li className="flex justify-between gap-4">
-              Maximum:
-              <div>
-                <DurationCell
-                  durationInSeconds={props.timings.maximumInSeconds}
-                />
-              </div>
-            </li>
+            {props.timings.maximumInSeconds && (
+              <li className="flex justify-between gap-4">
+                Maximum:
+                <div>
+                  <DurationCell
+                    durationInSeconds={props.timings.maximumInSeconds}
+                  />
+                </div>
+              </li>
+            )}
           </ul>
         </div>
         {props.warning && (

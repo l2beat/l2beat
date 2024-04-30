@@ -81,12 +81,8 @@ function getFinalityData(
     },
     stateUpdateDelay: finalityProjectData.stateUpdateDelays
       ? {
-          minimumInSeconds:
-            finalityProjectData.stateUpdateDelays.minimumInSeconds,
           averageInSeconds:
             finalityProjectData.stateUpdateDelays.averageInSeconds,
-          maximumInSeconds:
-            finalityProjectData.stateUpdateDelays.maximumInSeconds,
           warning: project.display.finality?.warnings?.stateUpdateDelay,
         }
       : undefined,

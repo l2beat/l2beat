@@ -119,8 +119,6 @@ export class FinalityIndexer extends ChildIndexer {
     if (stateUpdateMode !== 'analyze') {
       return {
         ...baseResult,
-        minimumStateUpdate: null,
-        maximumStateUpdate: null,
         averageStateUpdate: null,
       }
     }
@@ -138,8 +136,6 @@ export class FinalityIndexer extends ChildIndexer {
 
     return {
       ...baseResult,
-      minimumStateUpdate: Math.min(...stateUpdateDelays),
-      maximumStateUpdate: Math.max(...stateUpdateDelays),
       averageStateUpdate: Math.round(mean(stateUpdateDelays)),
     }
   }

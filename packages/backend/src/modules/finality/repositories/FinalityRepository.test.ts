@@ -17,8 +17,6 @@ describeDatabase(FinalityRepository.name, (database) => {
       minimumTimeToInclusion: 1,
       maximumTimeToInclusion: 3,
       averageTimeToInclusion: 2,
-      minimumStateUpdate: 1,
-      maximumStateUpdate: 3,
       averageStateUpdate: 2,
     },
     {
@@ -27,8 +25,6 @@ describeDatabase(FinalityRepository.name, (database) => {
       minimumTimeToInclusion: 2,
       maximumTimeToInclusion: 4,
       averageTimeToInclusion: 3,
-      minimumStateUpdate: 2,
-      maximumStateUpdate: 4,
       averageStateUpdate: 3,
     },
     {
@@ -37,8 +33,6 @@ describeDatabase(FinalityRepository.name, (database) => {
       minimumTimeToInclusion: 4,
       maximumTimeToInclusion: 8,
       averageTimeToInclusion: 6,
-      minimumStateUpdate: null,
-      maximumStateUpdate: null,
       averageStateUpdate: null,
     },
   ]
@@ -57,9 +51,7 @@ describeDatabase(FinalityRepository.name, (database) => {
         minimumTimeToInclusion: 1,
         averageTimeToInclusion: 2,
         maximumTimeToInclusion: 3,
-        minimumStateUpdate: null,
         averageStateUpdate: null,
-        maximumStateUpdate: null,
       }
 
       await repository.add(newRecord)
@@ -78,8 +70,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
-          maximumStateUpdate: 3,
-          minimumStateUpdate: 1,
           averageStateUpdate: 2,
         },
         {
@@ -88,8 +78,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
-          maximumStateUpdate: 4,
-          minimumStateUpdate: 2,
           averageStateUpdate: 3,
         },
       ]
@@ -115,8 +103,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           maximumTimeToInclusion: i + 1,
           minimumTimeToInclusion: i - 1,
           averageStateUpdate: i,
-          maximumStateUpdate: i + 1,
-          minimumStateUpdate: i - 1,
         })
       }
       await repository.addMany(records)
@@ -179,8 +165,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 4,
           maximumTimeToInclusion: 8,
           averageTimeToInclusion: 6,
-          minimumStateUpdate: 4,
-          maximumStateUpdate: 8,
           averageStateUpdate: 6,
         }
 
@@ -190,8 +174,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
-          minimumStateUpdate: 1,
-          maximumStateUpdate: 3,
           averageStateUpdate: 2,
         }
 
@@ -202,8 +184,6 @@ describeDatabase(FinalityRepository.name, (database) => {
             minimumTimeToInclusion: 2,
             maximumTimeToInclusion: 4,
             averageTimeToInclusion: 3,
-            minimumStateUpdate: 2,
-            maximumStateUpdate: 4,
             averageStateUpdate: 3,
           },
           {
@@ -212,8 +192,6 @@ describeDatabase(FinalityRepository.name, (database) => {
             minimumTimeToInclusion: 4,
             maximumTimeToInclusion: 8,
             averageTimeToInclusion: 6,
-            minimumStateUpdate: 4,
-            maximumStateUpdate: 8,
             averageStateUpdate: 6,
           },
         ]
@@ -224,8 +202,6 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 4,
           maximumTimeToInclusion: 8,
           averageTimeToInclusion: 6,
-          minimumStateUpdate: 4,
-          maximumStateUpdate: 8,
           averageStateUpdate: 6,
         }
 
@@ -262,9 +238,7 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 1,
           maximumTimeToInclusion: 3,
           averageTimeToInclusion: 2,
-          minimumStateUpdate: null,
           averageStateUpdate: null,
-          maximumStateUpdate: null,
         },
         {
           projectId: ProjectId('project-c'),
@@ -272,9 +246,7 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
-          minimumStateUpdate: null,
           averageStateUpdate: null,
-          maximumStateUpdate: null,
         },
         {
           projectId: ProjectId('project-h'),
@@ -282,9 +254,7 @@ describeDatabase(FinalityRepository.name, (database) => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageTimeToInclusion: 3,
-          minimumStateUpdate: null,
           averageStateUpdate: null,
-          maximumStateUpdate: null,
         },
       ]
       await repository.addMany(newRows)

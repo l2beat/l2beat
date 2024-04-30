@@ -41,7 +41,8 @@ export interface ScalingFinalityViewEntryData {
   } & FinalityDataTimings
   stateUpdateDelay?: {
     warning?: string
-  } & FinalityDataTimings
+    averageInSeconds: number
+  }
   syncStatus: SyncStatus
 }
 

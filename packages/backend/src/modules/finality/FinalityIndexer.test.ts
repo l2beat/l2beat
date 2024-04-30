@@ -132,8 +132,6 @@ describe(FinalityIndexer.name, () => {
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
         averageStateUpdate: 3,
-        minimumStateUpdate: 2,
-        maximumStateUpdate: 4,
       })
     })
   })
@@ -185,8 +183,6 @@ describe(FinalityIndexer.name, () => {
         minimumTimeToInclusion: 1,
         maximumTimeToInclusion: 3,
         averageStateUpdate: 2,
-        minimumStateUpdate: 1,
-        maximumStateUpdate: 3,
       }
 
       const runtimeConfiguration = getMockFinalityRuntimeConfiguration([
@@ -246,8 +242,6 @@ describe(FinalityIndexer.name, () => {
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
         averageStateUpdate: 3,
-        minimumStateUpdate: 2,
-        maximumStateUpdate: 4,
       })
 
       expect(
@@ -286,8 +280,6 @@ describe(FinalityIndexer.name, () => {
           minimumTimeToInclusion: 2,
           maximumTimeToInclusion: 4,
           averageStateUpdate: null,
-          minimumStateUpdate: null,
-          maximumStateUpdate: null,
         })
 
         expect(

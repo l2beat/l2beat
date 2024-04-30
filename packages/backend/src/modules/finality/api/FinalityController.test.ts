@@ -110,8 +110,6 @@ describe(FinalityController.name, () => {
         stateUpdateDelays: {
           // Respective 1 sec diff
           averageInSeconds: 1,
-          maximumInSeconds: 1,
-          minimumInSeconds: 1,
         },
         syncedUntil: project2Result.timestamp,
       })
@@ -231,9 +229,7 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 1,
             averageTimeToInclusion: 2,
             maximumTimeToInclusion: 3,
-            minimumStateUpdate: 2,
             averageStateUpdate: 3,
-            maximumStateUpdate: 4,
           },
           {
             projectId: ProjectId('project2'),
@@ -241,9 +237,7 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 4,
             averageTimeToInclusion: 5,
             maximumTimeToInclusion: 6,
-            minimumStateUpdate: null,
             averageStateUpdate: null,
-            maximumStateUpdate: null,
           },
           {
             projectId: ProjectId('project3'),
@@ -251,9 +245,7 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 7,
             averageTimeToInclusion: 8,
             maximumTimeToInclusion: 9,
-            minimumStateUpdate: null,
             averageStateUpdate: null,
-            maximumStateUpdate: null,
           },
         ]),
         mockObject<TrackedTxsConfigsRepository>(),
@@ -261,6 +253,7 @@ describe(FinalityController.name, () => {
       )
 
       const result = await finalityController.getProjectsFinality(projects)
+
       expect(result).toEqual({
         project1: {
           timeToInclusion: {
@@ -270,9 +263,7 @@ describe(FinalityController.name, () => {
           },
           // Respective 1 sec diff
           stateUpdateDelays: {
-            minimumInSeconds: 1,
             averageInSeconds: 1,
-            maximumInSeconds: 1,
           },
           syncedUntil: new UnixTime(1000),
         },
@@ -283,9 +274,7 @@ describe(FinalityController.name, () => {
             maximumInSeconds: 6,
           },
           stateUpdateDelays: {
-            minimumInSeconds: 0,
             averageInSeconds: 0,
-            maximumInSeconds: 0,
           },
           syncedUntil: new UnixTime(1000),
         },
