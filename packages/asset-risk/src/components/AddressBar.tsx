@@ -1,19 +1,17 @@
 'use client'
 
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectKitButton, useModal } from 'connectkit'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPublicClient, http, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
-import { useAccountEffect, useDisconnect } from 'wagmi'
+import { useDisconnect } from 'wagmi'
 
 import { Skeleton } from './Skeleton'
 
 export function AddressBar() {
-  const [shouldNavigateAfterConnect, setShouldNavigateAfterConnect] =
-    useState(false)
   const [address, setAddress] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
@@ -23,9 +21,8 @@ export function AddressBar() {
   })
   const { disconnect } = useDisconnect()
 
-  useAccountEffect({
+  useModal({
     onConnect: ({ address }) => {
-      if (!shouldNavigateAfterConnect) return
       router.push(`/wallet/${address}`)
     },
   })
@@ -53,15 +50,24 @@ export function AddressBar() {
         <div>
           <div className="max-w-[488px] relative">
             <Skeleton className="w-full h-12 rounded-md" />
-            <ConnectButton.Custom>
-              {({ openConnectModal, account }) => {
-                return account ? (
+            <ConnectKitButton.Custom>
+              {({
+                isConnected,
+                isConnecting,
+                show,
+                hide,
+                truncatedAddress,
+                address,
+                ensName,
+                chain,
+              }) => {
+                return isConnected ? (
                   <div className="absolute top-0 w-full flex flex-row gap-2 bg-neutral-900">
                     <Link
-                      href={`/wallet/${account.address}`}
+                      href={`/wallet/${address}`}
                       className="w-full leading-8 text-center bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors text-ellipsis whitespace-nowrap overflow-hidden"
                     >
-                      View report for {account.displayName}
+                      View report for {ensName ?? truncatedAddress}
                     </Link>
                     <button
                       onClick={() => disconnect()}
@@ -72,17 +78,14 @@ export function AddressBar() {
                   </div>
                 ) : (
                   <button
-                    onClick={() => {
-                      setShouldNavigateAfterConnect(true)
-                      openConnectModal()
-                    }}
+                    onClick={isConnected ? () => disconnect() : show}
                     className="absolute top-0 w-full bg-brand-red-dark text-white h-12 px-4 py-2 rounded-md hover:bg-brand-red transition-colors"
                   >
-                    Connect a wallet
+                    {isConnected ? address : 'Connect a wallet'}
                   </button>
                 )
               }}
-            </ConnectButton.Custom>
+            </ConnectKitButton.Custom>
           </div>
         </div>
         <div className="flex flex-row w-full items-center py-4">
