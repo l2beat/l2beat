@@ -261,4 +261,36 @@ describe(UnixTime.name, () => {
       })
     }
   })
+
+  describe(UnixTime.prototype.toDays.name, () => {
+    it('returns the amount of hours', () => {
+      const secondsInDay = 86_400
+      const days = 4
+      const unixTime = new UnixTime(days * secondsInDay)
+
+      const result = unixTime.toDays()
+
+      expect(result).toEqual(days)
+    })
+
+    it('throws when timestamp is not full hour', () => {
+      expect(() => new UnixTime(1).toDays()).toThrow()
+    })
+  })
+
+  describe(UnixTime.prototype.toHours.name, () => {
+    it('returns the amount of hours', () => {
+      const secondsInHour = 3_600
+      const hours = 4
+      const unixTime = new UnixTime(hours * secondsInHour)
+
+      const result = unixTime.toHours()
+
+      expect(result).toEqual(hours)
+    })
+
+    it('throws when timestamp is not full hour', () => {
+      expect(() => new UnixTime(1).toHours()).toThrow()
+    })
+  })
 })

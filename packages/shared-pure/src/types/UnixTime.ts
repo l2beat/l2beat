@@ -153,6 +153,14 @@ export class UnixTime {
     return this.timestamp / UnixTime.DAY
   }
 
+  toHours() {
+    if (this.timestamp % UnixTime.HOUR !== 0) {
+      throw new Error('Timestamp must be a full hour')
+    }
+
+    return this.timestamp / UnixTime.HOUR
+  }
+
   static isSafeToCast(timestamp: number): boolean {
     try {
       new UnixTime(timestamp)
