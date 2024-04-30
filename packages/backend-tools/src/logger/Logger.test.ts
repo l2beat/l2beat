@@ -66,7 +66,7 @@ describe(Logger.name, () => {
       backends: [
         {
           backend,
-          formatter: new LogFormatterPretty(false, true),
+          formatter: new LogFormatterPretty(),
         },
       ],
       logLevel: 'TRACE',
@@ -90,7 +90,7 @@ describe(Logger.name, () => {
         backends: [
           {
             backend,
-            formatter: new LogFormatterPretty(false, true),
+            formatter: new LogFormatterPretty(),
           },
         ],
         logLevel: 'TRACE',

@@ -47,7 +47,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })
@@ -57,7 +57,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })
@@ -67,7 +67,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })
@@ -77,7 +77,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })
@@ -87,7 +87,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })
@@ -97,7 +97,7 @@ export class Logger {
     backends: [
       {
         backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        formatter: new LogFormatterPretty(),
       },
     ],
   })

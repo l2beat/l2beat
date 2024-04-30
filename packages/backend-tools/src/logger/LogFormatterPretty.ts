@@ -23,16 +23,32 @@ const STYLES = {
 const INDENT_SIZE = 4
 const INDENT = ' '.repeat(INDENT_SIZE)
 
+interface Options {
+  colors: boolean
+  utc: boolean
+}
+
 export class LogFormatterPretty implements LogFormatter {
-  constructor(
-    private readonly colors: boolean,
-    private readonly utc: boolean,
-  ) {}
+  private readonly options: Options
+
+  constructor(options?: Partial<Options>) {
+    this.options = {
+      colors: options?.colors ?? true,
+      utc: options?.utc ?? false,
+    }
+  }
 
   public format(entry: LogEntry): string {
-    const timeOut = this.formatTimePretty(entry.time, this.utc, this.colors)
-    const levelOut = this.formatLevelPretty(entry.level, this.colors)
-    const serviceOut = this.formatServicePretty(entry.service, this.colors)
+    const timeOut = this.formatTimePretty(
+      entry.time,
+      this.options.utc,
+      this.options.colors,
+    )
+    const levelOut = this.formatLevelPretty(entry.level, this.options.colors)
+    const serviceOut = this.formatServicePretty(
+      entry.service,
+      this.options.colors,
+    )
     const messageOut = entry.message ? ` ${entry.message}` : ''
     const paramsOut = this.formatParametersPretty(
       this.sanitize(
@@ -40,7 +56,7 @@ export class LogFormatterPretty implements LogFormatter {
           ? { ...entry.resolvedError, ...entry.parameters }
           : entry.parameters ?? {},
       ),
-      this.colors,
+      this.options.colors,
     )
 
     return `${timeOut} ${levelOut}${serviceOut}${messageOut}${paramsOut}`
