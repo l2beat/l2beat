@@ -35,11 +35,5 @@
       "quoteStyle": "single",
       "attributePosition": "auto"
     }
-  },
-  "overrides": [
-    {
-      "include": ["**/*.jsonc"],
-      "javascript": { "formatter": { "trailingComma": "none" } }
-    }
-  ]
+  }
 }
