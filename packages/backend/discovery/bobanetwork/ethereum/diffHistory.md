@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x3b4dccc0214af8baa6d802005927d166266bb6da
+
+# Diff at Thu, 25 Apr 2024 06:50:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@9664a341efb1b7714c496f7505edd4cd97d0b7b0 block: 19704353
+- current block number: 19730704
+
+## Description
+
+The _unsafeBlockSigner_ is changed by the BobaMultisig.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.
++++ description: Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner.
++++ severity: LOW
+      values.unsafeBlockSigner:
+-        "0x077D266f9A3907837e716894517a12D1FD16Ac0a"
++        "0x4Ac69842680847e1135f514eE3d75172B685ECBf"
+    }
+```
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: The Boba Network Upgrade Multisig (owner of the ProxyAdmin)
+      values.nonce:
+-        5
++        6
+    }
+```
+
 Generated with discovered.json: 0x7f162218174b3f92e9abc658d954d551e7cb002c
 
 # Diff at Sun, 21 Apr 2024 14:24:12 GMT:

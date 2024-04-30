@@ -1,3 +1,8 @@
+/*
+                ====== IMPORTANT NOTICE ======
+DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
+*/
+
 import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'

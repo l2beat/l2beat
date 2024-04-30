@@ -7,8 +7,8 @@ import { getRiskSentiments } from '../../utils/risks/values'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { Icon } from '../icons/Icon'
-import { WarningBar } from '../project/WarningBar'
 import { SentimentText } from '../table/SentimentText'
+import { WarningBar } from '../WarningBar'
 
 export interface RosetteProps {
   risks: RiskSentiments

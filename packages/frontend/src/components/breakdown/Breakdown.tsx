@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { unifyPercentagesAsIntegers } from '../../utils'
 import { cn } from '../../utils/cn'
 
 interface BreakdownProps {
@@ -13,11 +14,11 @@ interface BreakdownValue {
   className: string
 }
 
-export function Breakdown({ values, gap = 2, className }: BreakdownProps) {
+export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
   const groups = getBreakdownGroups(values)
 
   return (
-    <div className={cn('flex h-[21px] w-[100px] flex-wrap md:my-0', className)}>
+    <div className={cn('flex h-[21px] w-[100px] md:my-0', className)}>
       {groups.map((g, i) => (
         <div
           key={`breakdown-group-${i}`}
@@ -26,8 +27,8 @@ export function Breakdown({ values, gap = 2, className }: BreakdownProps) {
             g.className,
           )}
           style={{
-            width: `calc(${g.weight}% - ${((groups.length - 1) * gap) / groups.length}px)`,
-            marginRight: i !== groups.length - 1 ? `${gap}px` : undefined,
+            width: `calc(${g.weight}%)`,
+            margin: `0px ${gap / 2}px`,
           }}
         />
       ))}
@@ -64,5 +65,15 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
     filteredGroup.weight += filteredOutSum / filteredGroups.length
   }
 
-  return filteredGroups
+  if (filteredGroups.length < 2) {
+    return filteredGroups
+  }
+
+  const weights = unifyPercentagesAsIntegers(
+    filteredGroups.map((g) => g.weight),
+  )
+  return filteredGroups.map((f, i) => ({
+    weight: weights[i],
+    className: f.className,
+  }))
 }

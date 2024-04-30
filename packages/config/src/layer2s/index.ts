@@ -11,6 +11,7 @@ import { base } from './base'
 import { blast } from './blast'
 import { bob } from './bob'
 import { bobanetwork } from './bobanetwork'
+import { camp } from './camp'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
@@ -79,6 +80,7 @@ import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
+import { superseed } from './superseed'
 import { swell } from './swell'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
@@ -87,8 +89,8 @@ import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { world } from './world'
-import { x1 } from './x1'
 import { xchain } from './xchain'
+import { xlayer } from './xlayer'
 import { zentachain } from './zentachain'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
@@ -116,6 +118,7 @@ export const layer2s: Layer2[] = [
   blast,
   bob,
   bobanetwork,
+  camp,
   canto,
   capx,
   cyberconnect,
@@ -184,6 +187,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  superseed,
   swell,
   taiko,
   tanx,
@@ -191,7 +195,7 @@ export const layer2s: Layer2[] = [
   termstructure,
   tradable,
   world,
-  x1,
+  xlayer,
   xchain,
   zentachain,
   zircuit,

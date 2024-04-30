@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19709585,
-  "configHash": "0x962258a2cde6545c111f7fe566d44e917ddc61b05c04c8e49780416740074288",
+  "blockNumber": 19711603,
+  "configHash": "0xf11bf6d003d8906acebd0e6bad7e47d65136d4462fa703a0d4eb7b8599de58ab",
   "version": 3,
   "contracts": [
     {
@@ -21,7 +21,7 @@
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Oracle": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19709582],
+        "params": [1000000000, 100000, 19711599],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
@@ -76,7 +76,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ProxyAdminOwner",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -99,10 +99,11 @@
         "getThreshold": 3,
         "nonce": 28,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "upgradeability": {
         "type": "immutable"
@@ -112,10 +113,11 @@
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "upgradeability": {
         "type": "gnosis safe",
@@ -135,7 +137,8 @@
         "getThreshold": 2,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1ERC721Bridge",
@@ -158,7 +161,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "upgradeability": {
         "type": "gnosis safe",
@@ -183,7 +186,8 @@
         "getThreshold": 5,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SuperchainConfig",
@@ -204,7 +208,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "upgradeability": {
         "type": "gnosis safe",
@@ -230,7 +234,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 92,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2OutputOracle",
@@ -250,10 +255,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13537980,
-        "latestOutputIndex": 7745,
-        "nextBlockNumber": 13539780,
-        "nextOutputIndex": 7746,
+        "latestBlockNumber": 13550580,
+        "latestOutputIndex": 7752,
+        "nextBlockNumber": 13552380,
+        "nextOutputIndex": 7753,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -318,7 +323,7 @@
       "derivedName": "SystemConfig"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "upgradeability": {
         "type": "gnosis safe",
@@ -349,7 +354,8 @@
         "getThreshold": 4,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -451,7 +457,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621473",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621475",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

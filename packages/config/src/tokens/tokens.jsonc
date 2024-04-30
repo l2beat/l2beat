@@ -1434,6 +1434,17 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "category": "stablecoin",
@@ -1471,6 +1482,17 @@
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "SDEX",
@@ -1587,6 +1609,17 @@
       }
     },
     {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
       "type": "NMV",
@@ -1673,6 +1706,17 @@
       }
     },
     {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDB",
       "address": "0x4300000000000000000000000000000000000003",
       "type": "EBV",
@@ -1681,6 +1725,13 @@
         "bridge": "Blast"
       },
       "coingeckoId": "usdb"
+    },
+    {
+      "symbol": "PAC",
+      "address": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "pacmoon"
     }
   ],
   "mode": [
@@ -1693,6 +1744,17 @@
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
+      }
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {
@@ -1714,6 +1776,30 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Free"
+      }
+    }
+  ],
+  "scroll": [
+    {
+      "symbol": "rsETH",
+      "address": "0x65421ba909200b81640d98B979d07487C9781B66",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "stakestone-ether",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     }
   ],
@@ -1790,6 +1876,19 @@
         "slug": "fraxferry"
       },
       "coingeckoId": "staked-frax-ether"
+    },
+    {
+      "symbol": "MEOW",
+      "address": "0x79db8c67d0c33203da4efb58f7d325e1e0d4d692",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "zeek-coin"
+    },
+    {
+      "symbol": "ZORRO",
+      "address": "0x244c238325fc1bdf6eded726ee1b47d55895d944",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "bobanetwork": [

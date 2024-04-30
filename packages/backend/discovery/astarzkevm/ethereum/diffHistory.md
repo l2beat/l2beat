@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xece6bd5a1914a6ac6520518454fca5c833191d00
+
+# Diff at Tue, 23 Apr 2024 12:11:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@490974f5b59ffaa2fc80e604d18674505076a157 block: 19624593
+- current block number: 19718007
+
+## Description
+
+Unified naming across CDK chains. Before, there were two ProxyAdmin with the same name, now the shared one is called SharedProxyAdmin. Also, the owner of the project specific one is not necessarily a multisig, hence the name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19624593 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        "SharedProxyAdmin"
+    }
+```
+
+```diff
+    contract AdminMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "ProxyAdminOwner"
+    }
+```
+
 Generated with discovered.json: 0x865fbe50de0f059c5957fa7a2f254f1f5adbaf16
 
 # Diff at Wed, 10 Apr 2024 10:20:14 GMT:

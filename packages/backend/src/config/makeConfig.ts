@@ -216,9 +216,6 @@ export function makeConfig(
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
     },
-    diffHistory: flags.isEnabled('diffHistory') && {
-      chains: [getChainDiscoveryConfig(env, 'ethereum')],
-    },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),

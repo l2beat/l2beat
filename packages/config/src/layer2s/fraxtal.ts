@@ -116,7 +116,6 @@ export const fraxtal: Layer2 = opStackL2({
   ],
   chainConfig: {
     name: 'fraxtal',
-
     chainId: 252,
     explorerUrl: 'https://fraxscan.com/',
     explorerApi: {
@@ -124,7 +123,7 @@ export const fraxtal: Layer2 = opStackL2({
       type: 'etherscan',
     },
     // ~ Timestamp of block number 1
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-02-01T06:05:11Z')),
+    minTimestampForTvl: new UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
   },
   nonTemplateEscrows: [],

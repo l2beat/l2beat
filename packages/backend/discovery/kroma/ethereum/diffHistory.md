@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8de80c35f4151ee8e79a678576f87bd7a74d4da4
+
+# Diff at Thu, 25 Apr 2024 10:15:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@b2d6f0f9ccd7e269685e4a3459e22efcedcc2628 block: 19695350
+- current block number: 19731710
+
+## Description
+
+### Blobs
+
+Kroma is posting blobs. ([First blob tx](https://etherscan.io/tx/0x1e504f673dcf1d1a9b1a332b02c62ab6f7b4cc73bd9cb8162b3c748e29c86b08))
+
+### Colosseum
+
+Only one change: `_validatePublicInput()` now computes the blockhash for either Cancun or Shanghai blocks with their respective functions (ternary operator). The Shanghai update on L2 changed the structure of the block header and the last implementation addressed this, but there was probably an oversight.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
++        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+      implementations.0:
+-        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
++        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+      values.version:
+-        "1.0.0"
++        "1.1.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/L1/Colosseum.sol      |  53 ++++---
+ .../contracts/libraries/Encoding.sol               | 166 ++++++++++++---------
+ .../implementation/contracts/libraries/Hashing.sol |  21 +++
+ .../implementation/contracts/libraries/Types.sol   |   6 +
+ .../Colosseum/implementation/meta.txt              |   2 +-
+ 5 files changed, 148 insertions(+), 100 deletions(-)
+```
+
 Generated with discovered.json: 0x9a3a63d115a94c4282aea8a94bf88911eac00254
 
 # Diff at Sat, 20 Apr 2024 08:12:38 GMT:

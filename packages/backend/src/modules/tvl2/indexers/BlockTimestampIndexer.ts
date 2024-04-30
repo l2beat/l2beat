@@ -1,109 +1,72 @@
-import { Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
-import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import {
+  ManagedChildIndexer,
+  ManagedChildIndexerOptions,
+} from '../../../tools/uif/ManagedChildIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export type BlockTimestampProvider = EtherscanClient | BlockscoutClient
 
-export class BlockTimestampIndexer extends ChildIndexer {
-  indexerId: string
+export interface BlockTimestampIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  blockTimestampProvider: BlockTimestampProvider
+  blockTimestampRepository: BlockTimestampRepository
+  chain: string
+  syncOptimizer: SyncOptimizer
+}
 
-  constructor(
-    logger: Logger,
-    parentIndexer: HourlyIndexer,
-    private readonly blockTimestampProvider: BlockTimestampProvider,
-    private readonly stateRepository: IndexerStateRepository,
-    private readonly blockTimestampRepository: BlockTimestampRepository,
-    private readonly chain: string,
-    private readonly minTimestamp: UnixTime,
-    private readonly syncOptimizer: SyncOptimizer,
-  ) {
-    super(logger, [parentIndexer])
-    this.indexerId = `block_timestamp_indexer_${chain}`
-  }
-
-  override async start(): Promise<void> {
-    this.logger.debug('Starting...')
-    await super.start()
-    this.logger.debug('Started')
+export class BlockTimestampIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: BlockTimestampIndexerDeps) {
+    const logger = $.logger.tag($.chain)
+    const name = 'block_timestamp_indexer'
+    super({ ...$, name, logger })
   }
 
   override async update(from: number, to: number): Promise<number> {
-    this.logger.debug('Updating...')
-
-    const timestamp = this.getTimestampToSync(from)
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(
+      new UnixTime(from),
+    )
 
     if (timestamp.gt(new UnixTime(to))) {
       return to
     }
 
     const blockNumber =
-      await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
+      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
-    await this.blockTimestampRepository.add({
-      chain: this.chain,
+    this.logger.info('Fetched block number for timestamp', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+    })
+
+    await this.$.blockTimestampRepository.add({
+      chain: this.$.chain,
       timestamp,
       blockNumber,
     })
 
-    this.logger.debug('Updated')
+    this.logger.info('Saved block number for timestamp into DB', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+    })
+
     return timestamp.toNumber()
   }
 
-  private getTimestampToSync(_from: number): UnixTime {
-    const timestamp = new UnixTime(_from).toEndOf('hour')
-
-    if (this.syncOptimizer.shouldTimestampBeSynced(timestamp)) {
-      return timestamp
-    } else {
-      return this.getTimestampToSync(timestamp.add(1, 'hours').toNumber())
-    }
-  }
-
-  override async initialize(): Promise<number> {
-    this.logger.debug('Initializing...')
-
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-
-    if (indexerState === undefined) {
-      const safeHeight = this.minTimestamp.toNumber() - 1
-      await this.stateRepository.add({
-        indexerId: this.indexerId,
-        safeHeight,
-        minTimestamp: this.minTimestamp,
-      })
-      return safeHeight
-    }
-
-    this.logger.debug('Initialized')
-
-    return indexerState.safeHeight
-  }
-
-  override async setSafeHeight(
-    safeHeight: number,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
-  }
-
   override async invalidate(targetHeight: number): Promise<number> {
-    this.logger.debug('Invalidating...')
+    const deletedRecords =
+      await this.$.blockTimestampRepository.deleteAfterExclusive(
+        this.$.chain,
+        new UnixTime(targetHeight),
+      )
 
-    await this.blockTimestampRepository.deleteAfterExclusive(
-      this.chain,
-      new UnixTime(targetHeight),
-    )
-
-    this.logger.debug('Invalidated')
+    this.logger.info('Deleted block timestamps after height', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return Promise.resolve(targetHeight)
   }

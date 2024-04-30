@@ -14,7 +14,8 @@ import {
 import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface ChainAmountIndexerDeps extends ManagedChildIndexerOptions {
+export interface ChainAmountIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
   coingeckoQueryService: CoingeckoQueryService
   amountRepository: AmountRepository
   syncOptimizer: SyncOptimizer
@@ -22,12 +23,12 @@ export interface ChainAmountIndexerDeps extends ManagedChildIndexerOptions {
 }
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
-  readonly indexerId: string
   private readonly configId: string
 
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    super($)
-    this.indexerId = $.id
+    const logger = $.logger.tag($.config.coingeckoId.toString())
+    const name = 'circulating_supply_indexer'
+    super({ ...$, name, logger })
     this.configId = createAmountId($.config)
   }
 
@@ -41,9 +42,20 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       adjustedFrom,
       adjustedTo,
     )
+
+    this.logger.info('Fetched amounts in range', {
+      from: adjustedFrom.toNumber(),
+      to: adjustedTo.toNumber(),
+      amounts: amounts.length,
+    })
+
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0n)
 
     await this.$.amountRepository.addMany(nonZeroAmounts)
+
+    this.logger.info('Saved amounts into DB', {
+      amounts: nonZeroAmounts.length,
+    })
 
     return adjustedTo.toNumber()
   }
@@ -82,10 +94,15 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.$.amountRepository.deleteByConfigAfter(
+    const deletedRecords = await this.$.amountRepository.deleteByConfigAfter(
       this.configId,
       new UnixTime(targetHeight),
     )
+
+    this.logger.info('Deleted records', {
+      targetHeight,
+      deletedRecords,
+    })
 
     return targetHeight
   }

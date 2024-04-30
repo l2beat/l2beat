@@ -15,7 +15,7 @@ import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainAmountIndexerDeps
-  extends ManagedMultiIndexerOptions<ChainAmountConfig> {
+  extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
   blockTimestampsRepository: BlockTimestampRepository
@@ -24,10 +24,10 @@ export interface ChainAmountIndexerDeps
 }
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
-  indexerId: string
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    super($)
-    this.indexerId = $.id
+    const logger = $.logger.tag($.chain)
+    const name = 'chain_amount_indexer'
+    super({ ...$, name, logger })
   }
 
   override async multiUpdate(
@@ -60,12 +60,20 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       timestamp,
     )
 
+    this.logger.info('Fetched amounts for timestamp', {
+      timestamp: timestamp.toNumber(),
+      blockNumber,
+      amounts: amounts.length,
+      configurations: configurationsWithMissingData.length,
+    })
+
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    try {
-      await this.$.amountRepository.addMany(nonZeroAmounts)
-    } catch (error) {
-      this.$.logger.error('Error while adding amounts', error)
-    }
+    await this.$.amountRepository.addMany(nonZeroAmounts)
+
+    this.logger.info('Saved amounts for timestamp into DB', {
+      amounts: nonZeroAmounts.length,
+      configurations: configurationsWithMissingData.length,
+    })
 
     return timestamp.toNumber()
   }
@@ -74,11 +82,19 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     configurations: RemovalConfiguration<ChainAmountConfig>[],
   ): Promise<void> {
     for (const configuration of configurations) {
-      await this.$.amountRepository.deleteByConfigInTimeRange(
-        configuration.id,
-        new UnixTime(configuration.from),
-        new UnixTime(configuration.to),
-      )
+      const deletedRecords =
+        await this.$.amountRepository.deleteByConfigInTimeRange(
+          configuration.id,
+          new UnixTime(configuration.from),
+          new UnixTime(configuration.to),
+        )
+
+      this.logger.info('Deleted amounts for configuration', {
+        id: configuration.id,
+        from: configuration.from,
+        to: configuration.to,
+        deletedRecords,
+      })
     }
   }
 }

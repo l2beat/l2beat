@@ -1,16 +1,23 @@
 import Router from '@koa/router'
 import {
+  assertUnreachable,
   AssetId,
   AssetType,
   branded,
   ChainId,
   ProjectId,
 } from '@l2beat/shared-pure'
+import { Context } from 'koa'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { ApiConfig } from '../../../config/Config'
-import { TvlController } from './TvlController'
+import {
+  AggregatedTvlResult,
+  TokenTvlResult,
+  TvlController,
+  TvlResult,
+} from './TvlController'
 
 export function createTvlRouter(
   tvlController: TvlController,
@@ -23,17 +30,8 @@ export function createTvlRouter(
       ? await tvlController.getCachedTvlApiResponse()
       : await tvlController.getTvlApiResponse()
 
-    if (tvlResult.result === 'error') {
-      if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 404
-        ctx.body = tvlResult.error
-      }
-
-      if (tvlResult.error === 'NO_DATA') {
-        ctx.status = 404
-        ctx.body = tvlResult.error
-      }
-
+    if (tvlResult.type === 'error') {
+      handleTvlError(ctx, tvlResult)
       return
     }
 
@@ -57,17 +55,8 @@ export function createTvlRouter(
             projectSlugs.split(',').map((slug) => slug.trim()),
           )
 
-        if (tvlProjectsResponse.result === 'error') {
-          if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
-            ctx.status = 404
-            ctx.body = tvlProjectsResponse.error
-          }
-
-          if (tvlProjectsResponse.error === 'NO_DATA') {
-            ctx.status = 404
-            ctx.body = tvlProjectsResponse.error
-          }
-
+        if (tvlProjectsResponse.type === 'error') {
+          handleTvlError(ctx, tvlProjectsResponse)
           return
         }
 
@@ -100,17 +89,8 @@ export function createTvlRouter(
           assetType,
         )
 
-        if (assetData.result === 'error') {
-          if (assetData.error === 'NO_DATA') {
-            ctx.status = 404
-            ctx.body = assetData.error
-          }
-
-          if (assetData.error === 'INVALID_PROJECT_OR_ASSET') {
-            ctx.status = 400
-            ctx.body = assetData.error
-          }
-
+        if (assetData.type === 'error') {
+          handleTvlError(ctx, assetData)
           return
         }
 
@@ -123,17 +103,8 @@ export function createTvlRouter(
     const projectAssetsBreakdown =
       await tvlController.getProjectTokenBreakdownApiResponse()
 
-    if (projectAssetsBreakdown.result === 'error') {
-      if (projectAssetsBreakdown.error === 'NO_DATA') {
-        ctx.status = 404
-        ctx.body = projectAssetsBreakdown.error
-      }
-
-      if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 404
-        ctx.body = projectAssetsBreakdown.error
-      }
-
+    if (projectAssetsBreakdown.type === 'error') {
+      handleTvlError(ctx, projectAssetsBreakdown)
       return
     }
 
@@ -141,4 +112,27 @@ export function createTvlRouter(
   })
 
   return router
+}
+
+function handleTvlError(
+  ctx: Context,
+  result: Extract<
+    TvlResult | TokenTvlResult | AggregatedTvlResult,
+    { type: 'error' }
+  >,
+) {
+  switch (result.error) {
+    case 'DATA_NOT_FULLY_SYNCED':
+    case 'NO_DATA':
+      ctx.status = 404
+      break
+    case 'EMPTY_SLUG':
+    case 'INVALID_PROJECT_OR_ASSET':
+      ctx.status = 400
+      break
+    default:
+      assertUnreachable(result)
+  }
+
+  ctx.body = result.error
 }

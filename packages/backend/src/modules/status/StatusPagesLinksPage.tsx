@@ -20,6 +20,14 @@ const LINKS = [
     name: 'TVL',
     url: '/status/tvl',
   },
+  {
+    name: 'Indexers',
+    url: '/status/indexers',
+  },
+  {
+    name: 'Configurations',
+    url: '/status/configurations',
+  },
 ]
 
 export function StatusPagesLinksPage() {

@@ -19,6 +19,7 @@ const stickyColumnBackgroundClasses = cn(
 export function getProjectWithIndexColumns(opts?: {
   isSynced?: boolean
   indexAsDefaultSort: boolean
+  showIsL3?: boolean
 }): ColumnConfig<ScalingEntry | BridgesEntry>[] {
   const columns: ColumnConfig<ScalingEntry | BridgesEntry>[] = [
     {
@@ -65,7 +66,9 @@ export function getProjectWithIndexColumns(opts?: {
     {
       name: 'Name',
       headClassName: 'pl-3',
-      getValue: (project) => <ProjectNameCell project={project} />,
+      getValue: (project) => (
+        <ProjectNameCell project={project} showIsL3={opts?.showIsL3} />
+      ),
       sorting: {
         getOrderValue: (project) => project.name,
         rule: 'alphabetical',

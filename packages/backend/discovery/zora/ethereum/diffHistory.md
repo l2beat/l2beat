@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x9a3942dce3e5c592617a9d9c153a595d94f2a7d2
+Generated with discovered.json: 0x2e9670845d9ba903b0fd596d923b6b295fb9b15e
 
-# Diff at Mon, 22 Apr 2024 07:56:47 GMT:
+# Diff at Mon, 22 Apr 2024 14:42:15 GMT:
 
-- author: sekuba (<sekuba@users.noreply.githum.com>)
-- comparing to: main@63b47a502f8d021ea3abb6413cd0ce2eda9e031f block: 19532317
-- current block number: 19709585
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d4b694a74243557c5ded556721185672f6639b7c block: 19532317
+- current block number: 19711603
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The project now uses shared implementations with other projects in the Superchain and a shared Guardian (OP Foundation).
 
 ## Watched changes
 
@@ -207,25 +207,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    contract ProxyAdminOwner (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
     +++ description: None
 ```
 
@@ -237,13 +237,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
     +++ description: None
 ```
 
@@ -271,67 +271,13 @@ Provide description of changes. This section will be preserved.
  .../contracts/common/StorageAccessible.sol         |   47 +
  .../contracts/external/GnosisSafeMath.sol          |   54 +
  .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
- .../proxy/GnosisSafeProxy.sol                      |  155 +++
- .../proxy/meta.txt                                 |    2 +
- .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
- .../implementation/contracts/base/Executor.sol     |   27 +
- .../contracts/base/FallbackManager.sol             |   53 +
- .../implementation/contracts/base/GuardManager.sol |   50 +
- .../contracts/base/ModuleManager.sol               |  133 +++
- .../implementation/contracts/base/OwnerManager.sol |  149 +++
- .../implementation/contracts/common/Enum.sol       |    8 +
- .../contracts/common/EtherPaymentFallback.sol      |   13 +
- .../contracts/common/SecuredTokenTransfer.sol      |   35 +
- .../contracts/common/SelfAuthorized.sol            |   16 +
- .../contracts/common/SignatureDecoder.sol          |   36 +
- .../implementation/contracts/common/Singleton.sol  |   11 +
- .../contracts/common/StorageAccessible.sol         |   47 +
- .../contracts/external/GnosisSafeMath.sol          |   54 +
- .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
- .../proxy/GnosisSafeProxy.sol                      |  155 +++
- .../proxy/meta.txt                                 |    2 +
- .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
- .../implementation/contracts/base/Executor.sol     |   27 +
- .../contracts/base/FallbackManager.sol             |   53 +
- .../implementation/contracts/base/GuardManager.sol |   50 +
- .../contracts/base/ModuleManager.sol               |  133 +++
- .../implementation/contracts/base/OwnerManager.sol |  149 +++
- .../implementation/contracts/common/Enum.sol       |    8 +
- .../contracts/common/EtherPaymentFallback.sol      |   13 +
- .../contracts/common/SecuredTokenTransfer.sol      |   35 +
- .../contracts/common/SelfAuthorized.sol            |   16 +
- .../contracts/common/SignatureDecoder.sol          |   36 +
- .../implementation/contracts/common/Singleton.sol  |   11 +
- .../contracts/common/StorageAccessible.sol         |   47 +
- .../contracts/external/GnosisSafeMath.sol          |   54 +
- .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
- .../proxy/GnosisSafeProxy.sol                      |  155 +++
- .../proxy/meta.txt                                 |    2 +
- .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
- .../implementation/contracts/base/Executor.sol     |   27 +
- .../contracts/base/FallbackManager.sol             |   53 +
- .../implementation/contracts/base/GuardManager.sol |   50 +
- .../contracts/base/ModuleManager.sol               |  133 +++
- .../implementation/contracts/base/OwnerManager.sol |  149 +++
- .../implementation/contracts/common/Enum.sol       |    8 +
- .../contracts/common/EtherPaymentFallback.sol      |   13 +
- .../contracts/common/SecuredTokenTransfer.sol      |   35 +
- .../contracts/common/SelfAuthorized.sol            |   16 +
- .../contracts/common/SignatureDecoder.sol          |   36 +
- .../implementation/contracts/common/Singleton.sol  |   11 +
- .../contracts/common/StorageAccessible.sol         |   47 +
- .../contracts/external/GnosisSafeMath.sol          |   54 +
- .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
- .../proxy/GnosisSafeProxy.sol                      |  155 +++
- .../proxy/meta.txt                                 |    2 +
+ .../FoundationMultisig_1/implementation/meta.txt   |    2 +
+ .../FoundationMultisig_1/proxy/GnosisSafeProxy.sol |  155 +++
+ .../.code/FoundationMultisig_1/proxy/meta.txt      |    2 +
  .../implementation/GnosisSafe.sol                  | 1076 ++++++++++++++++++++
- .../implementation/meta.txt                        |    2 +
- .../proxy/Proxy.sol                                |   41 +
- .../proxy/meta.txt                                 |    2 +
+ .../FoundationMultisig_2/implementation/meta.txt   |    2 +
+ .../.code/FoundationMultisig_2/proxy/Proxy.sol     |   41 +
+ .../.code/FoundationMultisig_2/proxy/meta.txt      |    2 +
  .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
  .../implementation/contracts/base/Executor.sol     |   27 +
  .../contracts/base/FallbackManager.sol             |   53 +
@@ -347,9 +293,9 @@ Provide description of changes. This section will be preserved.
  .../contracts/common/StorageAccessible.sol         |   47 +
  .../contracts/external/GnosisSafeMath.sol          |   54 +
  .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
- .../proxy/GnosisSafeProxy.sol                      |  155 +++
- .../proxy/meta.txt                                 |    2 +
+ .../.code/GnosisSafe/implementation/meta.txt       |    2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 +++
+ .../zora/ethereum/.code/GnosisSafe/proxy/meta.txt  |    2 +
  .../L1/L1CrossDomainMessenger.sol => /dev/null     |   67 --
  .../contracts/L1/L2OutputOracle.sol => /dev/null   |  350 -------
  .../contracts/L1/OptimismPortal.sol => /dev/null   |  507 ---------
@@ -533,7 +479,7 @@ Provide description of changes. This section will be preserved.
  .../contracts/token/ERC20/IERC20.sol               |   82 ++
  .../token/ERC20/extensions/IERC20Metadata.sol      |   28 +
  .../contracts/utils/Address.sol                    |    0
- .../contracts/utils/Context.sol                    |    0
+ .../contracts/utils/Context.sol                    |   24 +
  .../contracts/utils/introspection/IERC165.sol      |    0
  .../implementation/meta.txt                        |    2 +-
  .../contracts/utils/Strings.sol => /dev/null       |   75 --
@@ -586,20 +532,42 @@ Provide description of changes. This section will be preserved.
  .../src/libraries/trie/SecureMerkleTrie.sol        |   49 +
  .../implementation/src/universal/ISemver.sol       |   13 +
  .../src}/vendor/AddressAliasHelper.sol             |    0
- .../contracts/legacy/AddressManager.sol            |    0
- .../contracts/legacy/L1ChugSplashProxy.sol         |    0
- .../contracts/universal/Proxy.sol                  |    0
- .../contracts/universal/ProxyAdmin.sol             |    0
- .../meta.txt                                       |    2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |    0
- .../@openzeppelin/contracts/utils/Context.sol      |   24 +
- .../contracts/legacy/AddressManager.sol            |   64 ++
- .../contracts/legacy/L1ChugSplashProxy.sol         |  289 ++++++
- .../contracts/universal/Proxy.sol                  |  217 ++++
- .../contracts/universal/ProxyAdmin.sol             |  254 +++++
- .../meta.txt                                       |    0
- .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
- .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 +++
+ .../implementation/contracts/base/OwnerManager.sol |  149 +++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/ProxyAdminOwner/implementation/meta.txt  |    2 +
+ .../ProxyAdminOwner/proxy/GnosisSafeProxy.sol      |  155 +++
+ .../ethereum/.code/ProxyAdminOwner/proxy/meta.txt  |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 +++
+ .../implementation/contracts/base/OwnerManager.sol |  149 +++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../implementation/meta.txt                        |    2 +
+ .../proxy/GnosisSafeProxy.sol                      |  155 +++
+ .../.code/SecurityCouncilMultisig/proxy/meta.txt   |    2 +
  .../contracts/proxy/utils/Initializable.sol        |  138 +++
  .../contracts/utils/Address.sol                    |  222 ++++
  .../.code/SuperchainConfig/implementation/meta.txt |    2 +
@@ -617,6 +585,31 @@ Provide description of changes. This section will be preserved.
  .../SuperchainConfig/proxy/src/libraries/Burn.sol  |   32 +
  .../proxy/src/libraries/Constants.sol              |   46 +
  .../SuperchainConfig/proxy/src/universal/Proxy.sol |  168 +++
+ .../contracts/legacy/AddressManager.sol            |   64 ++
+ .../contracts/legacy/L1ChugSplashProxy.sol         |  289 ++++++
+ .../contracts/universal/Proxy.sol                  |  217 ++++
+ .../contracts/universal/ProxyAdmin.sol             |  254 +++++
+ .../ethereum/.code/SuperchainProxyAdmin/meta.txt   |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 +++
+ .../implementation/contracts/base/OwnerManager.sol |  149 +++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../implementation/meta.txt                        |    2 +
+ .../proxy/GnosisSafeProxy.sol                      |  155 +++
+ .../.code/SuperchainProxyAdminOwner/proxy/meta.txt |    2 +
  .../contracts/L1/ResourceMetering.sol => /dev/null |  186 ----
  .../contracts/L1/SystemConfig.sol => /dev/null     |  297 ------
  .../libraries/Arithmetic.sol => /dev/null          |   48 -
@@ -640,7 +633,7 @@ Provide description of changes. This section will be preserved.
  .../implementation/src/libraries/Constants.sol     |   46 +
  .../implementation/src/libraries/Storage.sol       |   88 ++
  .../implementation/src/universal/ISemver.sol       |   13 +
- 384 files changed, 24544 insertions(+), 12878 deletions(-)
+ 377 files changed, 24544 insertions(+), 12878 deletions(-)
 ```
 
 Generated with discovered.json: 0x8e8b7c912999391cfb5eb4ae8f11c842508f419d

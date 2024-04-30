@@ -166,7 +166,18 @@ export const blast: Layer2 = opStackL2({
         'Escrow for DAI that is invested into a yield-bearing contracts such as MakerDAO DSR.',
     }),
   ],
-  isNodeAvailable: false,
+  isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/blast-io/blast',
+  stateDerivation: {
+    nodeSoftware:
+      'Node software can be found [here](https://github.com/blast-io/blast).',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+    genesisState:
+      'The genesis file can be found [here](https://github.com/blast-io/deployment/blob/master/mainnet/genesis.json).',
+    dataFormat:
+      "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/).",
+  },
   milestones: [
     {
       name: 'Blast Network Launch',

@@ -1,4 +1,4 @@
-import { type ChainContract, type Hex } from 'viem'
+import { type Hex } from 'viem'
 import {
   arbitrum, // 42161
   base, // 8453
@@ -14,6 +14,7 @@ import {
   mode, // 34443
   optimism, // 10
   polygonZkEvm, // 1101
+  scroll, // 534352
   zkFair, // 42766
   zkSync, // 324
 } from 'viem/chains'
@@ -66,6 +67,7 @@ const supportedChains = [
   mode,
   optimism,
   polygonZkEvm,
+  scroll,
   zkFair,
   zkSync,
   createCustomChain({

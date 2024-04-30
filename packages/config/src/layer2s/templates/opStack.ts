@@ -672,6 +672,24 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
+    dataAvailability:
+      daProvider !== undefined
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.name, daProvider.fallback]
+              : [daProvider.name],
+            bridge: daProvider.bridge,
+            mode: 'Transactions data (compressed)',
+          })
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? 'Ethereum (blobs or calldata)'
+                : 'Ethereum (calldata)',
+            ],
+            bridge: { type: 'Enshrined' },
+            mode: 'Transactions data (compressed)',
+          }),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
