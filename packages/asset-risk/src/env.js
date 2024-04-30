@@ -17,7 +17,12 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string(),
+    // TODO(imxeno): Remove the default once we decide how to handle this,
+    // since now lack of envs throws an error when running `yarn build`
+    // in the main directory.
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z
+      .string()
+      .default('00000000000000000000000000000000'),
   },
 
   /**
