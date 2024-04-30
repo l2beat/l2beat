@@ -9,7 +9,7 @@ import {
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { Gauge, Histogram } from 'prom-client'
+import { Gauge } from 'prom-client'
 
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
@@ -116,10 +116,12 @@ export class UpdateMonitor {
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
+    // #region metrics
+    errorCount.set(0)
+    // #endregion
+
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
-
-    const metricsDone = this.initMetrics(blockNumber)
 
     const projectConfigs = await this.configReader.readAllConfigsForChain(
       runner.chain,
@@ -143,6 +145,9 @@ export class UpdateMonitor {
         project: projectConfig.name,
       })
 
+      const projectFinished = projectGauge.startTimer({
+        project: `${runner.chain}:${projectConfig.name}`,
+      })
       try {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
@@ -150,8 +155,9 @@ export class UpdateMonitor {
           `[chain: ${runner.chain}] Failed to update project [${projectConfig.name}]`,
           error,
         )
-        errorsCount.inc()
+        errorCount.inc()
       }
+      projectFinished()
 
       this.logger.info('Project update finished', {
         chain: runner.chain,
@@ -159,7 +165,6 @@ export class UpdateMonitor {
       })
     }
 
-    metricsDone()
     this.logger.info('Update finished', {
       chain: runner.chain,
       blockNumber,
@@ -300,18 +305,6 @@ export class UpdateMonitor {
         dependents,
         unknownContracts,
       )
-      changesDetected.inc()
-    }
-  }
-
-  initMetrics(blockNumber: number): () => void {
-    const histogramDone = syncHistogram.startTimer()
-    changesDetected.set(0)
-    errorsCount.set(0)
-
-    return () => {
-      histogramDone()
-      latestBlock.set(blockNumber)
     }
   }
 
@@ -320,24 +313,15 @@ export class UpdateMonitor {
   }
 }
 
-const latestBlock = new Gauge({
-  name: 'discovery_watcher_last_synced',
-  help: 'Value showing latest block number with which UpdateMonitor was run',
+type ProjectGauge = Gauge<'project'>
+const projectGauge: ProjectGauge = new Gauge({
+  name: 'update_monitor_project_discovery_duration_seconds',
+  help: 'Duration gauge of discovering a project',
+  labelNames: ['project'],
 })
 
-const changesDetected = new Gauge({
-  name: 'discovery_watcher_changes_detected',
-  help: 'Value showing the amount of changes detected by UpdateMonitor',
-})
-
-const syncHistogram = new Histogram({
-  name: 'discovery_watcher_sync_duration_histogram',
-  help: 'Histogram showing UpdateMonitor sync duration',
-  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
-})
-
-const errorsCount = new Gauge({
-  name: 'discovery_watcher_errors',
+const errorCount = new Gauge({
+  name: 'update_monitor_error_count',
   help: 'Value showing amount of errors in the update cycle',
 })
 
