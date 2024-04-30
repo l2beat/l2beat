@@ -1,7 +1,7 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
-// TODO(imxeno): Remove the default once we decide how to handle this,
+// TODO(imxeno): Remove the defaults once we decide how to handle this,
 // since now lack of envs throws an error when running `yarn build`
 // in the main directory.
 
