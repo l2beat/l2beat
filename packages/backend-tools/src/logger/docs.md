@@ -26,13 +26,11 @@ The logger can be configured using the following options, all of them optional:
 - `logLevel` - minimum level of messages that will be logged, defaults to `INFO`. See more in the [Levels](#levels) section.
 - `service` - name of the service (class) that is using the logger. See more in the [Services](#services) section.
 - `tag` - tag that is used to identify the logger. See more in the [Tags](#tags) section.
-- `format` - either `pretty` or `json`. It is recommended to use the `pretty` format during development and the `json` format in production. Defaults to `json`.
 - `utc` - when set to true time is logged in UTC, otherwise in local time. Defaults to `false`.
-- `colors` - when set to true colors are used in the `pretty` format, otherwise they are not. Defaults to `false`.
 - `cwd` - current working directory, used to shorten error stack traces. Defaults to `process.cwd()`.
 - `getTime` - callback that returns the current time. Defaults to `() => new Date()`.
 - `reportError` - callback called when a message is logged at the `ERROR` or `CRITICAL` level. See more in the [Error reporting](#error-reporting) section.
-- `backend` - object that is used to log messages. Defaults to `console`.
+- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputed. Defaults to `console` and `pretty` formatter
 
 ### Services
 
@@ -119,9 +117,27 @@ This is done using the following rules:
 - non-object arguments are stored as `parameters.value` or `parameters.values` depending on the number of such arguments
 - object arguments are merged into a single `parameters` object
 
+## Transports
+
+Currently we support two transports
+
+- `console` - standard output to console
+- `ElasticSearchTransport` - pushes logs ElasticSearch node (should be used together with [ECS formatter](#ecs))
+
+## Formatters
+
+Along with each transport it is required to provide a formatter which will produce an output string for each log entry
+
 ### Pretty
 
-In this format every message is logged on one or more lines with another newline in between the messages. The first line contains the timestamp, log level, service, tag and the message. The following lines contain a representation of the parameters.
+Type: `LogFormarretPretty`
+
+In this format every message is logged on one or more lines with another newline in between the messages. The first line contains the timestamp, log level, service, tag and the message. The following lines contain a representation of the parameters. This form is best suited for local development purposes.
+
+This formatter accepts two params:
+
+- `utc` - when set to true time is logged in UTC, otherwise in local time. Defaults to `false`.
+- `colors` - when set to true colors are used in the `pretty` format, otherwise they are not. Defaults to `false`.
 
 Below is an example log output:
 
@@ -142,13 +158,29 @@ Below is an example log output:
 
 ### JSON
 
-In this format every message is logged on a single line as a single JSON object. The object contains the timestamp, log level, service, tag, message, error and parameters.
+Type: `LogFormarretJson`
+
+In this format every message is logged on a single line as a single JSON object. The object contains the timestamp, log level, service, tag, message, error and parameters. This format is best suited for deploment environments.
 
 Below is an example log output:
 
 ```
 {"time":"2023-01-02T12:34:56.001Z","level":"INFO","service":"PriceService:USD","message":"Fetched prices","parameters":{"entries":42,"upToDate":true}}
 {"time":"2023-01-02T12:34:56.002Z","level":"ERROR","service":"PriceService:USD","message":"Error fetching prices","error":{"name":"Error","error":"429: You have been rate limited!","stack":["PriceService.fetchPrices (src/PriceService.ts:12:34)","TaxService.computeTaxes (src/TaxService.ts:56:78)"]}}
+```
+
+### ECS
+
+Type: `LogFormarretEcs`
+
+In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deploment environments with ElastiSearch enabled
+
+Below is an example log output:
+
+```
+{"@timestamp":"2024-04-25T15:47:52.731Z","log":{"level":"INFO"},"service":{"name":"Application"},"message":"Log level","parameters":{"value":"INFO"}}
+{"@timestamp":"2024-04-25T15:47:52.733Z","log":{"level":"INFO"},"service":{"name":"ApiServer"},"message":"Listening","parameters":{"port":3000}}
+{"@timestamp":"2024-04-25T15:47:52.864Z","log":{"level":"INFO"},"service":{"name":"Database"},"message":"Migrations completed","parameters":{"version":"105"}}
 ```
 
 ## Error reporting

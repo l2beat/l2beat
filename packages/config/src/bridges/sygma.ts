@@ -37,8 +37,8 @@ export const sygma: Bridge = {
       ],
       apps: [
         `https://subbridge.io`,
-        'https://transfer-ui.test.buildwithsygma.com/transfer',
-        'https://faucet-ui-stage.buildwithsygma.com/',
+        'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens',
+        'https://sygma-react-widget.pages.dev/',
         'https://validator.faucet.chainsafe.dev/upload',
       ],
     },

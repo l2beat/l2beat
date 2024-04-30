@@ -1,4 +1,13 @@
-import { Env, LoggerOptions } from '@l2beat/backend-tools'
+import {
+  ElasticSearchTransport,
+  ElasticSearchTransportOptions,
+  Env,
+  LogFormatterEcs,
+  LogFormatterJson,
+  LogFormatterPretty,
+  LoggerOptions,
+  LoggerTransportOptions,
+} from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
@@ -36,6 +45,31 @@ export function makeConfig(
     // if we connect locally to production db, we want to be readonly!
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
+
+  const loggerBackends: LoggerTransportOptions[] = [
+    {
+      transport: console,
+      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
+    },
+  ]
+
+  // Elastic Search logging
+  const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
+
+  if (esEnabled) {
+    const options: ElasticSearchTransportOptions = {
+      node: env.string('ES_NODE'),
+      apiKey: env.string('ES_API_KEY'),
+      indexPrefix: env.string('ES_INDEX_PREFIX'),
+      flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
+    }
+
+    loggerBackends.push({
+      transport: new ElasticSearchTransport(options),
+      formatter: new LogFormatterEcs(),
+    })
+  }
+
   return {
     name,
     isReadonly,
@@ -43,9 +77,8 @@ export function makeConfig(
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      format: isLocal ? 'pretty' : 'json',
       utc: isLocal ? false : true,
-      colors: isLocal ? true : false,
+      transports: loggerBackends,
     },
     logThrottler: isLocal
       ? false

@@ -43,7 +43,7 @@ export interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
-  postsBlobs?: boolean
+  usesBlobs?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -138,7 +138,7 @@ export function orbitStackCommon(
               })
             })()
           : {
-              ...(templateVars.postsBlobs
+              ...(templateVars.usesBlobs
                 ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
                 : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
@@ -304,7 +304,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         })()
       : addSentimentToDataAvailability({
           layers: [
-            templateVars.postsBlobs
+            templateVars.usesBlobs
               ? 'Ethereum (blobs or calldata)'
               : 'Ethereum (calldata)',
           ],
@@ -449,7 +449,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         })()
       : addSentimentToDataAvailability({
           layers: [
-            templateVars.postsBlobs
+            templateVars.usesBlobs
               ? 'Ethereum (blobs or calldata)'
               : 'Ethereum (calldata)',
           ],
