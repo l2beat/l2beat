@@ -20,6 +20,10 @@ export async function discoverCommand(
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const eventProvider =
+    chainConfig.eventRpcUrl === undefined
+      ? provider
+      : new providers.StaticJsonRpcProvider(chainConfig.eventRpcUrl)
   const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
     chainConfig.etherscanUrl,
@@ -34,6 +38,7 @@ export async function discoverCommand(
 
     await dryRunDiscovery(
       provider,
+      eventProvider,
       etherscanClient,
       chainConfig.multicall,
       configReader,
@@ -48,6 +53,7 @@ export async function discoverCommand(
   logger.info(`Chain: ${discoverConfig.chain.name}\n`)
   await runDiscovery(
     provider,
+    eventProvider,
     etherscanClient,
     chainConfig.multicall,
     configReader,

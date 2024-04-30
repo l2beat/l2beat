@@ -23,6 +23,7 @@ function setupProviderWithMockCache(values: {
   })
   const providerWithCache = new ProviderWithCache(
     mockProvider,
+    mockProvider,
     mockObject<EtherscanLikeClient>({}),
     DiscoveryLogger.SILENT,
     'ethereum',

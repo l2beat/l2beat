@@ -11,36 +11,6 @@ const config: Config = {
   },
   darkMode: 'class',
   theme: {
-    keyframes: {
-      'fade-in': {
-        '0%': { opacity: '0' },
-        '100%': { opacity: '1' },
-      },
-      pulse: {
-        '0%': {
-          transform: 'scale(1,1)',
-        },
-        '80%': {
-          transform: 'scale(1, 1)',
-        },
-        '85%': {
-          transform: 'scale(1.05, 1.05)',
-        },
-        '90%': {
-          transform: 'scale(1, 1)',
-        },
-        '95%': {
-          transform: 'scale(1.05, 1.05)',
-        },
-        '100%': {
-          transform: 'scale(1, 1)',
-        },
-      },
-    },
-    animation: {
-      'quick-fade-in': 'fade-in 0.1s ease-in-out',
-      pulse: 'pulse 5s ease-in-out infinite forwards',
-    },
     fontSize: {
       '3xs': ['10px', '15px'],
       '2xs': ['12px', '16px'],
@@ -191,6 +161,36 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      animation: {
+        'quick-fade-in': 'fade-in 0.1s ease-in-out',
+        'l2beat-pulse': 'l2beat-pulse 5s ease-in-out infinite forwards',
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'l2beat-pulse': {
+          '0%': {
+            transform: 'scale(1,1)',
+          },
+          '80%': {
+            transform: 'scale(1, 1)',
+          },
+          '85%': {
+            transform: 'scale(1.05, 1.05)',
+          },
+          '90%': {
+            transform: 'scale(1, 1)',
+          },
+          '95%': {
+            transform: 'scale(1.05, 1.05)',
+          },
+          '100%': {
+            transform: 'scale(1, 1)',
+          },
+        },
+      },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
         'roboto-serif': [
@@ -213,5 +213,6 @@ const config: Config = {
       },
     },
   },
+  plugins: [require('tailwindcss-animate')],
 }
 export default config

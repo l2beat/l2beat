@@ -34,6 +34,9 @@ type Topics = (string | string[] | null)[]
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.JsonRpcProvider | RateLimitedProvider,
+    private readonly eventProvider:
+      | providers.JsonRpcProvider
+      | RateLimitedProvider,
     private readonly etherscanLikeClient: EtherscanLikeClient,
     private readonly logger: DiscoveryLogger,
     private readonly getLogsMaxRange?: number,
@@ -127,7 +130,7 @@ export class DiscoveryProvider {
     toBlock: number,
   ): Promise<providers.Log[]> {
     this.logger.logFetchingEvents(fromBlock, toBlock)
-    return await this.provider.getLogs({
+    return await this.eventProvider.getLogs({
       address: address.toString(),
       fromBlock,
       toBlock,
@@ -233,7 +236,7 @@ export class DiscoveryProvider {
   }
 
   async getBlockNumber(): Promise<number> {
-    return this.provider.getBlockNumber()
+    return getBlockNumberTwoProviders(this.provider, this.eventProvider)
   }
 
   async getBlockNumberAt(timestampNumber: UnixTime): Promise<number> {
@@ -246,4 +249,16 @@ export class DiscoveryProvider {
   ): ReturnType<EtherscanLikeClient['getLast10OutgoingTxs']> {
     return await this.etherscanLikeClient.getLast10OutgoingTxs(address, toBlock)
   }
+}
+
+export async function getBlockNumberTwoProviders(
+  p1: providers.JsonRpcProvider | RateLimitedProvider,
+  p2: providers.JsonRpcProvider | RateLimitedProvider,
+): Promise<number> {
+  if (p1 === p2) {
+    return p1.getBlockNumber()
+  }
+  return Math.min(
+    ...(await Promise.all([p1.getBlockNumber(), p2.getBlockNumber()])),
+  )
 }

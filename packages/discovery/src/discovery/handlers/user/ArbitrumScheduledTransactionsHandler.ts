@@ -238,6 +238,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     if (curProvider instanceof ProviderWithCache) {
       return new ProviderWithCache(
         provider,
+        provider,
         etherscanClient,
         logger,
         chainConfig.name,
@@ -247,6 +248,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
       )
     } else {
       return new DiscoveryProvider(
+        provider,
         provider,
         etherscanClient,
         logger,

@@ -45,4 +45,5 @@ export const syndicateframe: Layer3 = opStackL3({
       ],
     },
   ],
+  usesBlobs: true,
 })

@@ -37,6 +37,7 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   constructor(
     provider: providers.JsonRpcProvider | RateLimitedProvider,
+    eventProvider: providers.JsonRpcProvider | RateLimitedProvider,
     etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
     private readonly chain: string,
@@ -44,7 +45,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     getLogsMaxRange?: number,
     readonly reorgSafeDepth?: number,
   ) {
-    super(provider, etherscanLikeClient, logger, getLogsMaxRange)
+    super(provider, eventProvider, etherscanLikeClient, logger, getLogsMaxRange)
   }
 
   public async cacheOrFetch<R>(
