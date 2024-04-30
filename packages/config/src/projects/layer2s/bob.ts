@@ -22,9 +22,9 @@ export const bob: Layer2 = opStackL2({
     purposes: ['Bitcoin DApps'],
     links: {
       websites: ['https://gobob.xyz'],
-      apps: ['https://bridge.gobob.xyz'],
+      apps: ['https://app.gobob.xyz'],
       documentation: ['https://docs.gobob.xyz'],
-      explorers: ['https://explorer.gobob.xyz'],
+      explorers: ['https://explorer.gobob.xyz?'],
       repositories: ['https://github.com/bob-collective'],
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
@@ -48,7 +48,7 @@ export const bob: Layer2 = opStackL2({
     explorerUrl: 'https://explorer.gobob.xyz',
     explorerApi: {
       url: 'https://explorer.gobob.xyz/api',
-      type: 'etherscan',
+      type: 'blockscout',
     },
     // ~ Timestamp of block number 0 on BOB
     // https://explorer.gobob.xyz/block/0
