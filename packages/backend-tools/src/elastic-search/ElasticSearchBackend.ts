@@ -70,13 +70,11 @@ export class ElasticSearchBackend implements LoggerBackend {
       //clear buffer
       this.buffer.splice(0)
 
-      const documents = batch.map(
-        (log) =>
-          ({
-            id: this.uuidProvider(),
-            ...JSON.parse(log),
-          }) as object,
-      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      const documents = batch.map((log) => ({
+        id: this.uuidProvider(),
+        ...JSON.parse(log),
+      }))
 
       const success = await this.client.bulk(documents, index)
 

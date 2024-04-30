@@ -18,8 +18,10 @@ export class ElasticSearchClient {
     })
   }
 
-  public async bulk(documents: object[], index: string): Promise<boolean> {
-    const operations = documents.flatMap((doc: object) => [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async bulk(documents: any[], index: string): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const operations = documents.flatMap((doc) => [
       { index: { _index: index } },
       doc,
     ])
