@@ -145,9 +145,8 @@ describe(FinalityIndexer.name, () => {
         finalityRepository,
       })
 
-      const result = await finalityIndexer.isConfigurationSynced(
-        syncedTimestamp,
-      )
+      const result =
+        await finalityIndexer.isConfigurationSynced(syncedTimestamp)
       expect(result).toEqual(true)
     })
 
@@ -165,9 +164,8 @@ describe(FinalityIndexer.name, () => {
         finalityRepository,
       })
 
-      const result = await finalityIndexer.isConfigurationSynced(
-        syncedTimestamp,
-      )
+      const result =
+        await finalityIndexer.isConfigurationSynced(syncedTimestamp)
       expect(result).toEqual(false)
     })
   })

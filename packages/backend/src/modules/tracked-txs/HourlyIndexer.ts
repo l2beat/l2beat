@@ -4,7 +4,10 @@ import { RootIndexer } from '@l2beat/uif'
 import { Clock } from '../../tools/Clock'
 
 export class HourlyIndexer extends RootIndexer {
-  constructor(logger: Logger, private readonly clock: Clock) {
+  constructor(
+    logger: Logger,
+    private readonly clock: Clock,
+  ) {
     super(logger)
   }
 

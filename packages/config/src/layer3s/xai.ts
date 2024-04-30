@@ -133,7 +133,9 @@ export const xai: Layer3 = orbitStackL3({
         const stakingEnabled = <boolean>(
           discovery.getContractValue('PoolFactory', 'stakingEnabled')
         )
-        const description = `The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently ${stakingEnabled ? 'enabled' : 'disabled'}.`
+        const description = `The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently ${
+          stakingEnabled ? 'enabled' : 'disabled'
+        }.`
         return description
       })(),
       ...stakingUpgradeability,

@@ -7,9 +7,9 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start -p 8080",
-    "lint": "cross-env SKIP_ENV_VALIDATION=1 next lint",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "lint": "next lint",
+    "format": "biome check .",
+    "format:fix": "biome format --write ."
   },
   "dependencies": {
     "@l2beat/config": "*",
@@ -46,8 +46,6 @@
     "eslint-config-next": "^14.2.2",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.5"
   }

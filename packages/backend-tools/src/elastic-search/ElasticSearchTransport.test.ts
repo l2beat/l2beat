@@ -22,7 +22,7 @@ const log = {
 
 describe(ElasticSearchTransport.name, () => {
   it("creates index if doesn't exist", async () => {
-    const clientMock = createClienMock(false)
+    const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
 
     transportMock.log(JSON.stringify(log))
@@ -35,9 +35,7 @@ describe(ElasticSearchTransport.name, () => {
   })
 
   it('does nothing if buffer is empty', async () => {
-    const clientMock = createClienMock(false)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const transportMock = createTransportMock(clientMock)
+    const clientMock = createClientMock(false)
 
     // wait for log flush
     await delay(flushInterval + 10)
@@ -46,7 +44,7 @@ describe(ElasticSearchTransport.name, () => {
   })
 
   it('pushes logs to ES if there is something in the buffer', async () => {
-    const clientMock = createClienMock(false)
+    const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
 
     transportMock.log(JSON.stringify(log))
@@ -61,11 +59,15 @@ describe(ElasticSearchTransport.name, () => {
   })
 })
 
-function createClienMock(indextExist = true) {
+function createClientMock(indextExist = true) {
   return mockObject<ElasticSearchClient>({
     indexExist: mockFn(async (_: string): Promise<boolean> => indextExist),
     indexCreate: mockFn(async (_: string): Promise<void> => {}),
-    bulk: mockFn(async (_: object[]): Promise<boolean> => true),
+    bulk: mockFn().resolvesTo(
+      mockObject({
+        isSuccess: true,
+      }),
+    ),
   })
 }
 

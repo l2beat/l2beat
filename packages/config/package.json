@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",
-    "format:fix": "prettier --write .",
-    "format": "prettier --check .",
+    "format:fix": "biome format --write .",
+    "format": "biome check .",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts --max-warnings 0 src scripts",
     "test": "mocha",

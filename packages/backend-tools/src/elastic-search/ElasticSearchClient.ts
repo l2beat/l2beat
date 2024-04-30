@@ -1,9 +1,28 @@
 import { Client } from '@elastic/elasticsearch'
+import {
+  BulkOperationType,
+  BulkResponseItem,
+  ErrorCause,
+} from '@elastic/elasticsearch/lib/api/types'
 
 export interface ElasticSearchClientOptions {
   node: string
   apiKey: string
 }
+
+type DocumentError = {
+  status: number
+  error: ErrorCause
+}
+
+type BulkResponse =
+  | {
+      isSuccess: true
+    }
+  | {
+      isSuccess: false
+      errors: DocumentError[]
+    }
 
 // hides complexity of ElastiSearch client API
 export class ElasticSearchClient {
@@ -18,16 +37,24 @@ export class ElasticSearchClient {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async bulk(documents: any[], index: string): Promise<boolean> {
+  public async bulk(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    documents: any[],
+    index: string,
+  ): Promise<BulkResponse> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const operations = documents.flatMap((doc) => [
       { index: { _index: index } },
       doc,
     ])
 
-    const bulkResponse = await this.client.bulk({ refresh: true, operations })
-    return bulkResponse.errors
+    const response = await this.client.bulk({ refresh: true, operations })
+
+    if (response.errors) {
+      return { isSuccess: false, errors: this.bundleErrors(response) }
+    }
+
+    return { isSuccess: true }
   }
 
   public async indexExist(index: string): Promise<boolean> {
@@ -38,5 +65,28 @@ export class ElasticSearchClient {
     await this.client.indices.create({
       index,
     })
+  }
+
+  private bundleErrors<
+    T extends {
+      errors: boolean
+      items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
+    },
+  >(response: T): DocumentError[] {
+    const erroredDocuments: DocumentError[] = []
+    if (response.errors) {
+      response.items.forEach((action) => {
+        const operation = Object.keys(action)[0] as BulkOperationType
+        if (!operation) return
+        const item = action[operation]
+        if (item?.error) {
+          erroredDocuments.push({
+            status: item.status,
+            error: item.error,
+          })
+        }
+      })
+    }
+    return erroredDocuments
   }
 }
