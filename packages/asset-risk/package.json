@@ -14,10 +14,10 @@
   "dependencies": {
     "@l2beat/config": "*",
     "@l2beat/shared-pure": "*",
+    "@rainbow-me/rainbowkit": "^2.0.6",
     "@t3-oss/env-nextjs": "^0.10.0",
     "@tanstack/react-query": "^5.32.0",
     "clsx": "^2.1.0",
-    "connectkit": "^1.7.3",
     "earl": "^1.1.0",
     "lodash": "^4.17.21",
     "mocha": "^10.2.0",
