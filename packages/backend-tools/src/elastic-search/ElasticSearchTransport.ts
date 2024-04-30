@@ -76,10 +76,14 @@ export class ElasticSearchTransport implements LoggerTransport {
         ...JSON.parse(log),
       }))
 
-      const success = await this.client.bulk(documents, index)
+      const response = await this.client.bulk(documents, index)
 
-      if (!success) {
-        throw new Error('Failed to push liogs to Elastic Search node')
+      if (!response.isSuccess) {
+        throw new Error('Failed to push logs to Elastic Search node', {
+          cause: {
+            documentErrors: response.errors,
+          },
+        })
       }
     } catch (error) {
       console.log(error)
