@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "arbitrum",
   "name": "blobstream",
   "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
