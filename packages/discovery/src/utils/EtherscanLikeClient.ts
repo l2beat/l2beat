@@ -266,8 +266,17 @@ export type ContractCreatorAndCreationTxHash = z.infer<
 >
 export const ContractCreatorAndCreationTxHash = z.object({
   contractAddress: stringAs(EthereumAddress),
-  contractCreator: stringAs(EthereumAddress),
-  txHash: stringAs(Hash256),
+  contractCreator: z.union([
+    stringAs(EthereumAddress),
+    z.literal('GENESIS').transform(() => EthereumAddress.ZERO),
+  ]),
+  txHash: z.union([
+    stringAs(Hash256),
+    z
+      .string()
+      .startsWith('GENESIS_')
+      .transform(() => Hash256.ZERO),
+  ]),
 })
 
 export const ContractCreatorAndCreationTxHashResult = z

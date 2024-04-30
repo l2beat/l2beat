@@ -1,10 +1,33 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
+
+// orbitStack template currently does not support upgradeability
+const upgradeability = {
+  upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
+  upgradeDelay: 'No delay',
+}
+const stakingUpgradeability = {
+  upgradableBy: ['StakingProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+assert(
+  discovery.getContractUpgradeabilityParam('SentryReferee', 'admin') ===
+    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') &&
+    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') ===
+      discovery.getContractUpgradeabilityParam(
+        'NodeLicenseRegistry',
+        'admin',
+      ) &&
+    discovery.getContractUpgradeabilityParam('NodeLicenseRegistry', 'admin') ===
+      <EthereumAddress>discovery.getContract('StakingProxyAdmin').address,
+  'The upgradeability changed, please review it in the .ts descriptions.',
+)
 
 export const xai: Layer3 = orbitStackL3({
   discovery,
@@ -85,19 +108,40 @@ export const xai: Layer3 = orbitStackL3({
       description:
         'Multisig that can execute upgrades via the UpgradeExecutor.',
     },
+    {
+      name: 'Xai Deployer (StakingProxyAdmin owner)',
+      accounts: [
+        discovery.getPermissionedAccount('StakingProxyAdmin', 'owner'),
+      ],
+      description:
+        'The Xai Deployer EOA can upgrade all staking v2 related contracts (NodeLicenseRegistry, PoolFactory, SentryReferee, StakingPool) instantly and potentially steal all funds.',
+    },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {
       description: 'Router managing token <--> gateway mapping.',
+      ...upgradeability,
     }),
     discovery.getContractDetails('SentryReferee', {
       description:
         'The referree contract allows to create new challenges (state root reports) from the permissioned challenger, collects assertions from sentry nodes, and distributes esXAI rewards for operating a sentry node. \
-        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers.',
+        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. Additional staking through this contract is disabled. Stakers can continue to get staking rewards here or withdraw their assets.',
+      ...stakingUpgradeability,
+    }),
+    discovery.getContractDetails('PoolFactory', {
+      description: (() => {
+        const stakingEnabled = <boolean>(
+          discovery.getContractValue('PoolFactory', 'stakingEnabled')
+        )
+        const description = `The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently ${stakingEnabled ? 'enabled' : 'disabled'}.`
+        return description
+      })(),
+      ...stakingUpgradeability,
     }),
     discovery.getContractDetails('NodeLicenseRegistry', {
       description:
         'This is the contract where Xai Sentry Keys to run a node are minted.',
+      ...stakingUpgradeability,
     }),
   ],
   milestones: [

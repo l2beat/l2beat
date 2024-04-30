@@ -3,6 +3,8 @@ export interface Hash256 extends String {
   _Hash256Brand: string
 }
 
+Hash256.ZERO = Hash256('0x' + '0'.repeat(64))
+
 export function Hash256(value: string): Hash256 {
   if (!/^0x[\da-f]{64}$/.test(value)) {
     throw new TypeError('Invalid Hash256')

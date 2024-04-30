@@ -1,3 +1,609 @@
+Generated with discovered.json: 0xa54b30cd938519ebc4c54ade5bb2fe7b20831145
+
+# Diff at Fri, 26 Apr 2024 14:19:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@03ab04b156e445d49b5b266d48c3382aeac8d1ab block: 198866013
+- current block number: 205037041
+
+## Description
+
+### Staking Pools upgrade
+
+This implementation uprade adds support for esXAI staking pools and removes the support for adding to normal staking (Withdrawals and rewards from normal staking remain enabled). Since staking V2 is still disabled and some contracts are still managed by the deployer, a new assessment of admin roles is necessary as soon as staking V2 is enabled.
+edit: Staking pools are active now and the [Xai Deployer EOA](https://arbiscan.io/address/0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7) is admin (via owner or ProxyAdmin) of all the staking-related contracts.
+
+#### Referee5
+
+The SentryReferee has a new implementation: Referee5.
+This contract has no external `stake()` function so non-pooled (V1) staking is not possible anymore. The new staking entry contract is now `PoolFactory`, which calls the new `onlyPoolFactory`-modified functions inside Referee5. Unstaking of V1 non-pool staked esXAI is still possible with the external `unstake()` function in Referee5.
+
+Referee5 now supports batching of assertions `submitMultipleAssertions()` and rewards `claimMultipleRewards()`.
+
+New mappings are added to assist the assigning of (staking/kyc)-keys to pools, as the number of keys associated with a pool determines the maximum of esXAI that can be staked inside.
+
+#### PoolFactory
+
+The new staking pools get created here (`createPool()`). Pool creators need at least one staking key to create a pool and are able to define a delegate owner address that can post assertions (node duties) on their behalf. The PoolFactory has plenty of pool managing functions (staking/unstaking keys, updating metadata, managing shares), available to the pool creator. 'Shares' of a pool can be allocated by the pool creator within defined bounds to 3 different recipients: 1) The pool creator / owner, 2) Owners of keys staked in the pool, 3) Stakers of esXAI in the pool. This will direct the esXAI rewards to the different recipients. Claiming of rewards is delegated to the pools themselves.
+
+#### StakingPool
+
+Each staking pool is managed in such a contract.
+
+#### BucketTracker
+
+Imported by the StakingPools: Tracks the virtual balances of participants in a staking pool. (Needed for calculation and distribution of dividends)
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract BucketTracker (0x1582e73D95F33E39B421F9224D9e7daF4508408E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingPool (0x599C8489256Fb17b66d499d907F30b8022a29443)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoolBeacon (0x5f9D168d3435747335b1B3dC7e4d42e3510087C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoolProxyDeployer (0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoolBeacon (0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BucketTracker (0xa83825Dc4D94513d1C907b319EE8224FA63A29B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoolBeacon (0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../contracts/staking-v2/BucketTracker.sol         |  321 +++++++
+ .../meta.txt                                       |    2 +
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../contracts/staking-v2/BucketTracker.sol         |  321 +++++++
+ .../meta.txt                                       |    2 +
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 ++
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../implementation/contracts/GasSubsidy.sol        |   38 +
+ .../.code/GasSubsidy/implementation/meta.txt       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../xai/arbitrum/.code/GasSubsidy/proxy/meta.txt   |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
+ .../implementation/contracts/GnosisSafeL2.sol      |   86 ++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 ++
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 +++
+ .../implementation/contracts/base/OwnerManager.sol |  149 +++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 ++
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/GnosisSafeL2/implementation/meta.txt     |    2 +
+ .../.code/GnosisSafeL2/proxy/GnosisSafeProxy.sol   |  159 ++++
+ .../xai/arbitrum/.code/GnosisSafeL2/proxy/meta.txt |    2 +
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../token/ERC721/ERC721Upgradeable.sol             |  478 ++++++++++
+ .../token/ERC721/IERC721ReceiverUpgradeable.sol    |   27 +
+ .../token/ERC721/IERC721Upgradeable.sol            |  132 +++
+ .../extensions/ERC721EnumerableUpgradeable.sol     |  172 ++++
+ .../extensions/IERC721EnumerableUpgradeable.sol    |   29 +
+ .../extensions/IERC721MetadataUpgradeable.sol      |   27 +
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/Base64Upgradeable.sol                    |   92 ++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../upgrades/node-license/NodeLicense5.sol         |  465 +++++++++
+ .../NodeLicenseRegistry/implementation/meta.txt    |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../.code/NodeLicenseRegistry/proxy/meta.txt       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../meta.txt                                       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../meta.txt                                       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../meta.txt                                       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |  138 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  339 +++++++
+ .../access/AccessControlEnumerableUpgradeable.sol  |   77 ++
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlEnumerableUpgradeable.sol |   31 +
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../token/ERC20/ERC20Upgradeable.sol               |  377 ++++++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 ++
+ .../ERC20/extensions/ERC20BurnableUpgradeable.sol  |   52 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../token/ERC721/ERC721Upgradeable.sol             |  478 ++++++++++
+ .../token/ERC721/IERC721ReceiverUpgradeable.sol    |   27 +
+ .../token/ERC721/IERC721Upgradeable.sol            |  132 +++
+ .../extensions/ERC721EnumerableUpgradeable.sol     |  172 ++++
+ .../extensions/IERC721EnumerableUpgradeable.sol    |   29 +
+ .../extensions/IERC721MetadataUpgradeable.sol      |   27 +
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/Base64Upgradeable.sol                    |   92 ++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../implementation/contracts/NodeLicense.sol       |  418 ++++++++
+ .../PoolFactory/implementation/contracts/Xai.sol   |   69 ++
+ .../PoolFactory/implementation/contracts/esXai.sol |  238 +++++
+ .../contracts/nitro-contracts/bridge/IBridge.sol   |  115 +++
+ .../bridge/IDelayedMessageProvider.sol             |   15 +
+ .../contracts/nitro-contracts/bridge/IInbox.sol    |  193 ++++
+ .../contracts/nitro-contracts/bridge/IOutbox.sol   |  120 +++
+ .../contracts/nitro-contracts/bridge/IOwnable.sol  |   10 +
+ .../nitro-contracts/bridge/ISequencerInbox.sol     |  178 ++++
+ .../nitro-contracts/challenge/ChallengeLib.sol     |  133 +++
+ .../challenge/IChallengeManager.sol                |   73 ++
+ .../challenge/IChallengeResultReceiver.sol         |   13 +
+ .../nitro-contracts/libraries/IGasRefunder.sol     |   39 +
+ .../nitro-contracts/osp/IOneStepProofEntry.sol     |   20 +
+ .../nitro-contracts/osp/IOneStepProver.sol         |   27 +
+ .../nitro-contracts/rollup/IRollupCore.sol         |  191 ++++
+ .../nitro-contracts/rollup/IRollupEventInbox.sol   |   17 +
+ .../contracts/nitro-contracts/rollup/Node.sol      |  113 +++
+ .../nitro-contracts/state/GlobalState.sol          |   51 +
+ .../nitro-contracts/state/Instructions.sol         |  153 +++
+ .../contracts/nitro-contracts/state/Machine.sol    |   61 ++
+ .../contracts/nitro-contracts/state/Module.sol     |   33 +
+ .../nitro-contracts/state/ModuleMemoryCompact.sol  |   17 +
+ .../contracts/nitro-contracts/state/StackFrame.sol |   63 ++
+ .../contracts/nitro-contracts/state/Value.sol      |   64 ++
+ .../contracts/nitro-contracts/state/ValueArray.sol |   47 +
+ .../contracts/nitro-contracts/state/ValueStack.sol |   39 +
+ .../contracts/staking-v2/BucketTracker.sol         |  321 +++++++
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../contracts/staking-v2/PoolFactory.sol           |  593 ++++++++++++
+ .../contracts/staking-v2/PoolProxyDeployer.sol     |   46 +
+ .../contracts/staking-v2/StakingPool.sol           |  536 +++++++++++
+ .../contracts/upgrades/referee/Referee5.sol        | 1003 ++++++++++++++++++++
+ .../.code/PoolFactory/implementation/meta.txt      |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../xai/arbitrum/.code/PoolFactory/proxy/meta.txt  |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |  138 +++
+ .../access/AccessControlEnumerableUpgradeable.sol  |   77 ++
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlEnumerableUpgradeable.sol |   31 +
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../contracts/staking-v2/PoolProxyDeployer.sol     |   46 +
+ .../PoolProxyDeployer/implementation/meta.txt      |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../.code/PoolProxyDeployer/proxy/meta.txt         |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |  138 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  339 +++++++
+ .../access/AccessControlEnumerableUpgradeable.sol  |   77 ++
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlEnumerableUpgradeable.sol |   31 +
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../token/ERC20/ERC20Upgradeable.sol               |  377 ++++++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 ++
+ .../ERC20/extensions/ERC20BurnableUpgradeable.sol  |   52 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../token/ERC721/ERC721Upgradeable.sol             |  478 ++++++++++
+ .../token/ERC721/IERC721ReceiverUpgradeable.sol    |   27 +
+ .../token/ERC721/IERC721Upgradeable.sol            |  132 +++
+ .../extensions/ERC721EnumerableUpgradeable.sol     |  172 ++++
+ .../extensions/IERC721EnumerableUpgradeable.sol    |   29 +
+ .../extensions/IERC721MetadataUpgradeable.sol      |   27 +
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/Base64Upgradeable.sol                    |   92 ++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../implementation/contracts/NodeLicense.sol       |  418 ++++++++
+ .../SentryReferee/implementation/contracts/Xai.sol |   69 ++
+ .../implementation/contracts/esXai.sol             |  238 +++++
+ .../contracts/nitro-contracts/bridge/IBridge.sol   |  115 +++
+ .../bridge/IDelayedMessageProvider.sol             |   15 +
+ .../contracts/nitro-contracts/bridge/IInbox.sol    |  193 ++++
+ .../contracts/nitro-contracts/bridge/IOutbox.sol   |  120 +++
+ .../contracts/nitro-contracts/bridge/IOwnable.sol  |   10 +
+ .../nitro-contracts/bridge/ISequencerInbox.sol     |  178 ++++
+ .../nitro-contracts/challenge/ChallengeLib.sol     |  133 +++
+ .../challenge/IChallengeManager.sol                |   73 ++
+ .../challenge/IChallengeResultReceiver.sol         |   13 +
+ .../nitro-contracts/libraries/IGasRefunder.sol     |   39 +
+ .../nitro-contracts/osp/IOneStepProofEntry.sol     |   20 +
+ .../nitro-contracts/osp/IOneStepProver.sol         |   27 +
+ .../nitro-contracts/rollup/IRollupCore.sol         |  191 ++++
+ .../nitro-contracts/rollup/IRollupEventInbox.sol   |   17 +
+ .../contracts/nitro-contracts/rollup/Node.sol      |  113 +++
+ .../nitro-contracts/state/GlobalState.sol          |   51 +
+ .../nitro-contracts/state/Instructions.sol         |  153 +++
+ .../contracts/nitro-contracts/state/Machine.sol    |   61 ++
+ .../contracts/nitro-contracts/state/Module.sol     |   33 +
+ .../nitro-contracts/state/ModuleMemoryCompact.sol  |   17 +
+ .../contracts/nitro-contracts/state/StackFrame.sol |   63 ++
+ .../contracts/nitro-contracts/state/Value.sol      |   64 ++
+ .../contracts/nitro-contracts/state/ValueArray.sol |   47 +
+ .../contracts/nitro-contracts/state/ValueStack.sol |   39 +
+ .../contracts/staking-v2/BucketTracker.sol         |  321 +++++++
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../contracts/staking-v2/PoolFactory.sol           |  593 ++++++++++++
+ .../contracts/staking-v2/PoolProxyDeployer.sol     |   46 +
+ .../contracts/staking-v2/StakingPool.sol           |  536 +++++++++++
+ .../contracts/upgrades/referee/Referee5.sol        | 1003 ++++++++++++++++++++
+ .../contracts/upgrades/referee/Referee6.sol        | 1003 ++++++++++++++++++++
+ .../.code/SentryReferee/implementation/meta.txt    |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../arbitrum/.code/SentryReferee/proxy/meta.txt    |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |  138 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  339 +++++++
+ .../access/AccessControlEnumerableUpgradeable.sol  |   77 ++
+ .../access/AccessControlUpgradeable.sol            |  261 +++++
+ .../access/IAccessControlEnumerableUpgradeable.sol |   31 +
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 ++++
+ .../token/ERC20/ERC20Upgradeable.sol               |  377 ++++++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 ++
+ .../ERC20/extensions/ERC20BurnableUpgradeable.sol  |   52 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../token/ERC721/ERC721Upgradeable.sol             |  478 ++++++++++
+ .../token/ERC721/IERC721ReceiverUpgradeable.sol    |   27 +
+ .../token/ERC721/IERC721Upgradeable.sol            |  132 +++
+ .../extensions/ERC721EnumerableUpgradeable.sol     |  172 ++++
+ .../extensions/IERC721EnumerableUpgradeable.sol    |   29 +
+ .../extensions/IERC721MetadataUpgradeable.sol      |   27 +
+ .../utils/AddressUpgradeable.sol                   |  244 +++++
+ .../utils/Base64Upgradeable.sol                    |   92 ++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../utils/structs/EnumerableSetUpgradeable.sol     |  378 ++++++++
+ .../.code/StakingPool/contracts/NodeLicense.sol    |  418 ++++++++
+ .../arbitrum/.code/StakingPool/contracts/Xai.sol   |   69 ++
+ .../arbitrum/.code/StakingPool/contracts/esXai.sol |  238 +++++
+ .../contracts/nitro-contracts/bridge/IBridge.sol   |  115 +++
+ .../bridge/IDelayedMessageProvider.sol             |   15 +
+ .../contracts/nitro-contracts/bridge/IInbox.sol    |  193 ++++
+ .../contracts/nitro-contracts/bridge/IOutbox.sol   |  120 +++
+ .../contracts/nitro-contracts/bridge/IOwnable.sol  |   10 +
+ .../nitro-contracts/bridge/ISequencerInbox.sol     |  178 ++++
+ .../nitro-contracts/challenge/ChallengeLib.sol     |  133 +++
+ .../challenge/IChallengeManager.sol                |   73 ++
+ .../challenge/IChallengeResultReceiver.sol         |   13 +
+ .../nitro-contracts/libraries/IGasRefunder.sol     |   39 +
+ .../nitro-contracts/osp/IOneStepProofEntry.sol     |   20 +
+ .../nitro-contracts/osp/IOneStepProver.sol         |   27 +
+ .../nitro-contracts/rollup/IRollupCore.sol         |  191 ++++
+ .../nitro-contracts/rollup/IRollupEventInbox.sol   |   17 +
+ .../contracts/nitro-contracts/rollup/Node.sol      |  113 +++
+ .../nitro-contracts/state/GlobalState.sol          |   51 +
+ .../nitro-contracts/state/Instructions.sol         |  153 +++
+ .../contracts/nitro-contracts/state/Machine.sol    |   61 ++
+ .../contracts/nitro-contracts/state/Module.sol     |   33 +
+ .../nitro-contracts/state/ModuleMemoryCompact.sol  |   17 +
+ .../contracts/nitro-contracts/state/StackFrame.sol |   63 ++
+ .../contracts/nitro-contracts/state/Value.sol      |   64 ++
+ .../contracts/nitro-contracts/state/ValueArray.sol |   47 +
+ .../contracts/nitro-contracts/state/ValueStack.sol |   39 +
+ .../contracts/staking-v2/BucketTracker.sol         |  321 +++++++
+ .../contracts/staking-v2/PoolBeacon.sol            |   22 +
+ .../contracts/staking-v2/PoolFactory.sol           |  593 ++++++++++++
+ .../contracts/staking-v2/PoolProxyDeployer.sol     |   46 +
+ .../contracts/staking-v2/StakingPool.sol           |  536 +++++++++++
+ .../contracts/upgrades/referee/Referee5.sol        | 1003 ++++++++++++++++++++
+ .../xai/arbitrum/.code/StakingPool/meta.txt        |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 ++
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../xai/arbitrum/.code/StakingProxyAdmin/meta.txt  |    2 +
+ 430 files changed, 50888 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 198866013 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x1F941F7Fb552215af81e6bE87F59578C18783483)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract esXai (0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Xai (0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GasSubsidy (0x94F4aBC83eae00b693286B6eDCa09e1D76183C97)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1bcf28a5e142cbf6032c6876ac9ccbb3fb9baa4e
 
 # Diff at Thu, 28 Mar 2024 11:33:35 GMT:
