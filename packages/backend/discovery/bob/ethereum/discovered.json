@@ -1,8 +1,8 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 19730574,
-  "configHash": "0x68887f06326191b9cea355d6e03d976b7dfcaa24c1b2ff4959ead25c53f17516",
+  "blockNumber": 19770724,
+  "configHash": "0xb1406aa1d019f806007ef7ac730416b1f94a88489c21fdddb1a3bca33457d711",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x0732160000000000",
-        "get_deposit_root": "0x7f0b22842af25d13003c106f536a49841247ba54c387394138b7b4e85e122850"
+        "get_deposit_count": "0xfe4b160000000000",
+        "get_deposit_root": "0xab97fec869933d5f23d72e1e0e49cea16522902b67faf9d014feb931417d744f"
       }
     },
     {
@@ -47,26 +47,6 @@
       "derivedName": "L1ERC20TokenBridge"
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x0a6a0b60fFeF196113b3530781df6e747DdC565e",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 1 (100%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1695853451,
-      "values": {
-        "domainSeparator": "0x2df7c492d29422a4e9c1103ff86f592759e62f909122bf57e038d49b49d5a9a5",
-        "getChainId": 1,
-        "getOwners": "0x4413E96F6b46e59326a7695eF871FA902Ff7935d",
-        "getThreshold": 1,
-        "nonce": 96,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0",
       "upgradeability": {
@@ -96,25 +76,25 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
         "getConsensusReport": [
-          "0x34acb48eb80a5f0839e37bc5fe79b7eaceebcc7f28f4b4eec4cd8277fdbba06e",
-          8932799,
-          1714046411,
+          "0xb776f281e51810890c71fed751b20d58533a231697d9de7f6cd45a6ced5c4443",
+          8973599,
+          1714536011,
           true
         ],
         "getConsensusVersion": 1,
         "getContractVersion": 1,
-        "getLastProcessingRefSlot": 8932799,
+        "getLastProcessingRefSlot": 8973599,
         "getProcessingState": [
-          8932799,
-          1714046411,
-          "0x34acb48eb80a5f0839e37bc5fe79b7eaceebcc7f28f4b4eec4cd8277fdbba06e",
+          8973599,
+          1714536011,
+          "0xb776f281e51810890c71fed751b20d58533a231697d9de7f6cd45a6ced5c4443",
           true,
           1,
           0,
           0
         ],
         "getResumeSinceTimestamp": 1684163759,
-        "getTotalRequestsProcessed": 36497,
+        "getTotalRequestsProcessed": 36550,
         "isPaused": false,
         "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
         "MANAGE_CONSENSUS_VERSION_ROLE": "0xc31b1e4b732c5173dc51d519dfa432bad95550ecc4b0f9a61c2a558a2a8e4341",
@@ -126,31 +106,6 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SECONDS_PER_SLOT": 12,
         "SUBMIT_DATA_ROLE": "0x65fa0c17458517c727737e4153dd477fa3e328cf706640b0f68b1a285c5990da"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x237DeE529A47750bEcdFa8A59a1D766e3e7B5F91",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 4 (50%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1620417050,
-      "values": {
-        "domainSeparator": "0x61751217ce17d59c091f29b3396c8110c0d67154ad0ca6dfb9aa307998d2dc98",
-        "getChainId": 1,
-        "getOwners": [
-          "0xb900dFd95143556a5Ce1b3dbe53C51b979558eb0",
-          "0x771A428b865a3984085eD49A0ca550Dd222bb60b",
-          "0x663ec2BfB273447DC236A646d6dAAA333aAB08f7",
-          "0xBc11295936Aa79d594139de1B2e12629414F3BDB"
-        ],
-        "getThreshold": 2,
-        "nonce": 2131,
-        "VERSION": "1.3.0"
       }
     },
     {
@@ -263,6 +218,24 @@
       }
     },
     {
+      "name": "",
+      "address": "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131563
+    },
+    {
+      "name": "",
+      "address": "0x31978e50D27f154006757f9614A51C2EC4a3af8A",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131671
+    },
+    {
       "name": "LidoExecutionLayerRewardsVault",
       "address": "0x388C818CA8B9251b393131C08a736A67ccB19297",
       "upgradeability": {
@@ -272,34 +245,6 @@
       "values": {
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "TREASURY": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
-      },
-      "derivedName": "LidoExecutionLayerRewardsVault"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x3bF3A9260fE18A1239767aC6F0F0bc7c1E5d1cBC",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 6 (67%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1655490158,
-      "values": {
-        "domainSeparator": "0xc65874755a90997dfb2cb7fd2c4bf089b5eb8d684c3a8503ff736793a52d5147",
-        "getChainId": 1,
-        "getOwners": [
-          "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b",
-          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
-          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
-          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
-          "0x9b0De5E12eB0aBB4b4187962F033ac10A133ce57",
-          "0x945cB44B615812d0061d6621Ff0eE5d467F387C6"
-        ],
-        "getThreshold": 4,
-        "nonce": 279,
-        "VERSION": "1.3.0"
       }
     },
     {
@@ -339,8 +284,7 @@
         "RUN_SCRIPT_ROLE": "0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f",
         "SAFE_EXECUTE_ROLE": "0x0a1ad7b87f5846153c6d5a1f761d71c7d0cfd122384f56066cd33239b7933694",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
-      },
-      "derivedName": "Agent"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -376,14 +320,14 @@
         "getAccountingOracle": "0x852deD011285fe67063a08005c71a85690503Cee",
         "getBeaconSpec": [225, 32, 12, 1606824023],
         "getContractVersion": 4,
-        "getCurrentEpochId": 279172,
-        "getCurrentFrame": [279000, 1713960023, 1714046422],
+        "getCurrentEpochId": 280436,
+        "getCurrentFrame": [280350, 1714478423, 1714564822],
         "getEVMScriptRegistry": "0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
         "getInitializationBlock": 11473216,
-        "getLastCompletedEpochId": 279000,
+        "getLastCompletedEpochId": 280350,
         "getLastCompletedReportDelta": [
-          "9331379463072774375799908",
-          "9348719867685096903641635",
+          "9336298847094476823217328",
+          "9351023501944673981864348",
           86400
         ],
         "getLido": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -395,8 +339,41 @@
         "isPetrified": false,
         "kernel": "0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
         "proxyType": 2
+      }
+    },
+    {
+      "name": "L1UsdcBridge",
+      "address": "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
+        "admin": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194"
       },
-      "derivedName": "LegacyOracle"
+      "implementations": ["0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9"],
+      "sinceTimestamp": 1714403615,
+      "values": {
+        "burner": "0x0000000000000000000000000000000000000000",
+        "l1Usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "l2TokenBridge": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
+        "l2Usdc": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
+        "messenger": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
+        "MESSENGER": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
+        "OTHER_BRIDGE": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
+        "otherBridge": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
+        "owner": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
+        "paused": false,
+        "version": "2.1.0"
+      },
+      "derivedName": "L1UsdcBridge"
+    },
+    {
+      "name": "",
+      "address": "0x54e6492c36ac3e1d852F6859186353F086361352",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131515
     },
     {
       "name": "NodeOperatorsRegistry",
@@ -414,18 +391,18 @@
         "getContractVersion": 2,
         "getEVMScriptRegistry": "0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
         "getInitializationBlock": 11473216,
-        "getKeysOpIndex": 13704,
+        "getKeysOpIndex": 13715,
         "getLocator": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getNodeOperatorIsActive": [true, false, true, true, true],
         "getNodeOperatorsCount": 39,
         "getNodeOperatorSummary": [
           [false, 0, 0, 0, 0, 0, 8400, 0],
           [true, 0, 0, 0, 0, 1000, 1000, 0],
-          [false, 0, 0, 0, 0, 1798, 10531, 2469],
-          [false, 0, 0, 0, 0, 1406, 10139, 1861],
+          [false, 0, 0, 0, 0, 1800, 10531, 2469],
+          [false, 0, 0, 0, 0, 1408, 10139, 1861],
           [false, 0, 0, 0, 0, 510, 9000, 0]
         ],
-        "getNonce": 13704,
+        "getNonce": 13715,
         "getRecoveryVault": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getRewardsDistribution": [
           [
@@ -849,7 +826,7 @@
             ]
           ]
         ],
-        "getStakingModuleSummary": [46654, 337850, 30634],
+        "getStakingModuleSummary": [46707, 338193, 30391],
         "getStuckPenaltyDelay": 432000,
         "getTotalSigningKeyCount": [8400, 1000, 13000, 12000, 9000],
         "getType": "0x637572617465642d6f6e636861696e2d76310000000000000000000000000000",
@@ -881,30 +858,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 3 (67%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1691401871,
-      "values": {
-        "domainSeparator": "0xa251da2f1f95a4fd3f380dc32dbaa612dd050e254f41fff06ae3b19ae6e56c26",
-        "getChainId": 1,
-        "getOwners": [
-          "0x12ddE92E641F1FD82Bd2B0707b7ddee4cb4f671a",
-          "0xfA5fd80203050BeAe073389D68c326e01F5109E0",
-          "0xaFBe28A3E5A057120737EAE5a204680fc0CE60F5"
-        ],
-        "getThreshold": 2,
-        "nonce": 104,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "MiniMeToken",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
       "upgradeability": {
@@ -930,80 +883,47 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x5Bc5ec5130f66f13d5C21ac6811A7e624ED3C7c6",
+      "name": "CallsScript",
+      "address": "0x5cEb19e1890f677c3676d5ecDF7c501eBA01A054",
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "type": "immutable"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1637099330,
+      "sinceTimestamp": 1567696172,
       "values": {
-        "domainSeparator": "0x1923542cb80a63d3d7a0341bcc651c783fceb4838ae1fb9664af014fa90ee069",
-        "getChainId": 1,
-        "getOwners": [
-          "0x235CE905973fD289ccdCf1F492aB01a4e45daD3b",
-          "0x24fcb9eD2bFa9264526Bd675aaf392526ABE19C1",
-          "0xF8c1C8b85ecb964650F127755a7394f1520183B1",
-          "0xCAd56Fae244546D0A53E8aFe285ACD37a49e2760",
-          "0x61DbCEEF9A7242c801B9D3583bec18f43Ed88054"
-        ],
-        "getThreshold": 3,
-        "nonce": 129,
-        "VERSION": "1.3.0"
+        "executorType": "0x2dc858a00f3e417be1394b87c07158e989ec681ce8cc68a9093680ac1a870302",
+        "getInitializationBlock": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "hasInitialized": false,
+        "isPetrified": true
       }
     },
     {
       "name": "GnosisSafe",
-      "address": "0x765c6a8f20c842E8C826B0D9425015784F982aFc",
+      "address": "0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "1 of 1 (100%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1686645791,
+      "sinceTimestamp": 1714474115,
       "values": {
-        "domainSeparator": "0x7ccf67a735bcd2952d914ab5e6b9c2fc85ae294a924f92fb6219dc8a6529abca",
+        "domainSeparator": "0xb76cab5c2b8dca84c9980d870f76aed8dcce8911ff6f09cd26561a996e89b7e2",
         "getChainId": 1,
-        "getOwners": [
-          "0xb66413d6117e961BfcF5a6a78E6d585e1336bB31",
-          "0x0F5842f9894c5f4205B87dA93B48C21ea9FbE30d",
-          "0x49Df3CCa2670eB0D591146B16359fe336e476F29",
-          "0xEC1e924ca5b291f5f2fb11e082C24BC52551C7B7",
-          "0x851E2FbDd5d28ee74828ab21de446eb30848EF6B"
-        ],
-        "getThreshold": 3,
-        "nonce": 108,
+        "getOwners": "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
+        "getThreshold": 1,
+        "nonce": 0,
         "VERSION": "1.3.0"
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0x77d2CF58aa4da90b3AFCd283646568e4383193BF",
+      "name": "",
+      "address": "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+      "unverified": true,
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 3 (67%)"
+        "type": "immutable"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1640596727,
-      "values": {
-        "domainSeparator": "0x2cbd8171580081bd9825c2ce980b8805cadbe11209e885203be725460c227e72",
-        "getChainId": 1,
-        "getOwners": [
-          "0x2B1D879B5e102e60166202de79537B48E2F18a42",
-          "0xA3056792B6048895ce7DF0e3888fA1Cf430cC82C",
-          "0xFd660518dC1b52d9F67FAcd42bbBA962B06b8E54"
-        ],
-        "getThreshold": 2,
-        "nonce": 319,
-        "VERSION": "1.3.0"
-      }
+      "sinceTimestamp": 1711131647
     },
     {
       "name": "GnosisSafe",
@@ -1026,9 +946,18 @@
           "0xe8bcdA6F28893ab93a93Af309c8F2E407af96f9d"
         ],
         "getThreshold": 2,
-        "nonce": 47,
+        "nonce": 48,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "",
+      "address": "0x7A475eF84BB0ef069928f9f1438110925523395B",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711725491
     },
     {
       "name": "WstETH",
@@ -1044,16 +973,15 @@
         "getWstETHByStETH": [0, 0, 1, 2, 3],
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1164672383765545712",
+        "stEthPerToken": "1165258483159166905",
         "symbol": "wstETH",
-        "tokensPerStEth": "858610553438953117",
-        "totalSupply": "2984037698761387258859160"
+        "tokensPerStEth": "858178691210958001",
+        "totalSupply": "2970916115020853073708092"
       },
       "errors": {
         "getStETHByWstETH": "Too many values. Update configuration to explore fully",
         "getWstETHByStETH": "Too many values. Update configuration to explore fully"
-      },
-      "derivedName": "WstETH"
+      }
     },
     {
       "name": "HashConsensus",
@@ -1067,20 +995,20 @@
         "DISABLE_CONSENSUS_ROLE": "0x10b016346186602d93fc7a27ace09ba944baf9453611b186d36acd3d3d667dc0",
         "getChainConfig": [32, 12, 1606824023],
         "getConsensusState": [
-          8932799,
-          "0x34acb48eb80a5f0839e37bc5fe79b7eaceebcc7f28f4b4eec4cd8277fdbba06e",
+          8973599,
+          "0xb776f281e51810890c71fed751b20d58533a231697d9de7f6cd45a6ced5c4443",
           true
         ],
-        "getCurrentFrame": [8932799, 8935199],
+        "getCurrentFrame": [8973599, 8975999],
         "getFastLaneMembers": [
           [
+            "0x1Ca0fEC59b86F549e1F1184d97cb47794C8Af58d",
             "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E",
             "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
-            "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78"
+            "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2"
           ],
-          [8932799, 8932799, 8932799, 8932799, 8932799]
+          [8973599, 8973599, 8973599, 8973599, 8973599]
         ],
         "getFrameConfig": [201600, 75, 100],
         "getInitialRefSlot": 6451199,
@@ -1097,17 +1025,17 @@
             "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
           ],
           [
-            8932799, 8932799, 8932799, 8932799, 8932799, 8932799, 8932799,
-            8932799, 8932799
+            8973599, 8973599, 8973599, 8963999, 8966399, 8968799, 8971199,
+            8973599, 8973599
           ]
         ],
         "getQuorum": 5,
         "getReportProcessor": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "getReportVariants": [
           [
-            "0x34acb48eb80a5f0839e37bc5fe79b7eaceebcc7f28f4b4eec4cd8277fdbba06e"
+            "0xb776f281e51810890c71fed751b20d58533a231697d9de7f6cd45a6ced5c4443"
           ],
-          [9]
+          [5]
         ],
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -1134,24 +1062,24 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
         "getConsensusReport": [
-          "0xeb67177f41d2735e3e126b46684723fa73d47a35085620075cbd494a10be5359",
-          8927999,
-          1714046411,
+          "0xdfa2d583c59e86a1f653bcaeec1564afaedd7e53e0032938253c1e87d511e5a6",
+          8971199,
+          1714564811,
           true
         ],
         "getConsensusVersion": 1,
         "getContractVersion": 1,
-        "getLastProcessingRefSlot": 8927999,
+        "getLastProcessingRefSlot": 8971199,
         "getProcessingState": [
-          8927999,
-          1714046411,
-          "0xeb67177f41d2735e3e126b46684723fa73d47a35085620075cbd494a10be5359",
+          8971199,
+          1714564811,
+          "0xdfa2d583c59e86a1f653bcaeec1564afaedd7e53e0032938253c1e87d511e5a6",
           true,
-          "0x4e81b3ad4aa2f6f0387c017bf623719afe8da1c727c422a215b05d394d38a4c4",
-          1,
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          0,
           true,
-          1,
-          1
+          0,
+          0
         ],
         "LEGACY_ORACLE": "0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -1163,8 +1091,7 @@
         "proxy__getIsOssified": false,
         "SECONDS_PER_SLOT": 12,
         "SUBMIT_DATA_ROLE": "0x65fa0c17458517c727737e4153dd477fa3e328cf706640b0f68b1a285c5990da"
-      },
-      "derivedName": "AccountingOracle"
+      }
     },
     {
       "name": "EVMScriptRegistry",
@@ -1178,6 +1105,13 @@
       "sinceTimestamp": 1608242396,
       "values": {
         "appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+        "executors": [
+          ["0x0000000000000000000000000000000000000000", false],
+          ["0x5cEb19e1890f677c3676d5ecDF7c501eBA01A054", true],
+          ["0x0000000000000000000000000000000000000000", false],
+          ["0x0000000000000000000000000000000000000000", false],
+          ["0x0000000000000000000000000000000000000000", false]
+        ],
         "getEVMScriptRegistry": "0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
         "getInitializationBlock": 11473216,
         "getRecoveryVault": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -1190,7 +1124,9 @@
         "REGISTRY_ADD_EXECUTOR_ROLE": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
         "REGISTRY_MANAGER_ROLE": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
       },
-      "derivedName": "EVMScriptRegistry"
+      "errors": {
+        "executors": "Too many values. Update configuration to explore fully"
+      }
     },
     {
       "name": "WithdrawalQueueERC721",
@@ -1210,10 +1146,10 @@
         "getApproved": [],
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastCheckpointIndex": 345,
-        "getLastFinalizedRequestId": 36033,
-        "getLastRequestId": 36149,
-        "getLockedEtherAmount": "21817509922901325706220",
+        "getLastCheckpointIndex": 351,
+        "getLastFinalizedRequestId": 36731,
+        "getLastRequestId": 36799,
+        "getLockedEtherAmount": "15561628863120719889789",
         "getNFTDescriptorAddress": "0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1234,11 +1170,19 @@
         "STETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
         "tokenURI": [],
-        "unfinalizedRequestNumber": 116,
-        "unfinalizedStETH": "18498936014293173453385",
+        "unfinalizedRequestNumber": 68,
+        "unfinalizedStETH": "10993590418156225967328",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      }
+    },
+    {
+      "name": "",
+      "address": "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
       },
-      "derivedName": "WithdrawalQueueERC721"
+      "sinceTimestamp": 1711131407
     },
     {
       "name": "OptimismPortal",
@@ -1254,7 +1198,7 @@
         "GUARDIAN": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "L2_ORACLE": "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19729964],
+        "params": [1000000000, 491822, 19770326],
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
         "version": "1.7.2"
@@ -1267,8 +1211,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1683023915,
-      "derivedName": "EIP712StETH"
+      "sinceTimestamp": 1683023915
     },
     {
       "name": "OracleReportSanityChecker",
@@ -1322,8 +1265,50 @@
         "kernel": "0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
         "NO_PERMISSION": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "proxyType": 2
+      }
+    },
+    {
+      "name": "FiatTokenV2_2",
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "upgradeability": {
+        "type": "ZeppelinOS proxy",
+        "implementation": "0x43506849D7C04F9138D1A2050bbF3A0c054402dd",
+        "admin": "0x807a96288A1A408dBC13DE2b1d087d10356395d2"
       },
-      "derivedName": "ACL"
+      "implementations": ["0x43506849D7C04F9138D1A2050bbF3A0c054402dd"],
+      "sinceTimestamp": 1533324504,
+      "values": {
+        "blacklister": "0x10DF6B6fe66dd319B1f82BaB2d054cbb61cdAD2e",
+        "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
+        "currency": "USD",
+        "decimals": 6,
+        "DOMAIN_SEPARATOR": "0x06c37168a7db5138defc7866392bb87a741f9b3d104deb5094588ce041cae335",
+        "masterMinter": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
+        "name": "USD Coin",
+        "owner": "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
+        "paused": false,
+        "pauser": "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
+        "rescuer": "0x0000000000000000000000000000000000000000",
+        "symbol": "USDC",
+        "totalSupply": "25711404750392098",
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
+        "version": "2"
+      },
+      "errors": {
+        "admin": "Multicall failed",
+        "implementation": "Multicall failed"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131431
     },
     {
       "name": "SystemConfig",
@@ -1383,8 +1368,8 @@
           1,
           "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
         ],
-        "getBeaconStat": [337910, 337675, "9322720025846814000000000"],
-        "getBufferedEther": "13024458969438326165093",
+        "getBeaconStat": [338253, 338253, "9335136893774924000000000"],
+        "getBufferedEther": "2568560079315675554969",
         "getContractVersion": 2,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
@@ -1395,19 +1380,21 @@
         "getInitializationBlock": 11473216,
         "getLidoLocator": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getOracle": "0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
+        "getPooledEthByShares": [0, 1, 2, 3, 4],
         "getRecoveryVault": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "getSharesByPooledEth": [0, 0, 1, 2, 3],
         "getStakeLimitFullInfo": [
           false,
           true,
           "150000000000000000000000",
           "150000000000000000000000",
           6400,
-          "149999990000000000000000",
-          19730558
+          "149999540000000000000000",
+          19770722
         ],
-        "getTotalELRewardsCollected": "156364805944262813045866",
-        "getTotalPooledEther": "9343264484816252326165093",
-        "getTotalShares": "8022225490234597583302191",
+        "getTotalELRewardsCollected": "157193459988323155990162",
+        "getTotalPooledEther": "9337705453854239675554969",
+        "getTotalShares": "8013419845302055988663284",
         "getTreasury": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -1424,10 +1411,13 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9343264484816252326165093",
+        "totalSupply": "9337705453854239675554969",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
-      "derivedName": "Lido"
+      "errors": {
+        "getPooledEthByShares": "Too many values. Update configuration to explore fully",
+        "getSharesByPooledEth": "Too many values. Update configuration to explore fully"
+      }
     },
     {
       "name": "NodeOperatorsRegistry",
@@ -1447,15 +1437,184 @@
         "getInitializationBlock": 19291056,
         "getKeysOpIndex": 49,
         "getLocator": "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
+        "getNodeOperatorIsActive": [true, true, true, true, true],
         "getNodeOperatorsCount": 12,
+        "getNodeOperatorSummary": [
+          [false, 0, 0, 0, 0, 0, 5, 0],
+          [false, 0, 0, 0, 0, 0, 5, 0],
+          [false, 0, 0, 0, 0, 0, 5, 0],
+          [false, 0, 0, 0, 0, 0, 5, 0],
+          [false, 0, 0, 0, 0, 0, 5, 0]
+        ],
         "getNonce": 49,
         "getRecoveryVault": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "getRewardsDistribution": [
+          [
+            [
+              "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+              "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+              "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+              "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+              "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+              "0x54e6492c36ac3e1d852F6859186353F086361352",
+              "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+              "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+              "0x7A475eF84BB0ef069928f9f1438110925523395B",
+              "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+              "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+              "0x31978e50D27f154006757f9614A51C2EC4a3af8A"
+            ],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          [
+            [
+              "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+              "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+              "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+              "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+              "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+              "0x54e6492c36ac3e1d852F6859186353F086361352",
+              "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+              "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+              "0x7A475eF84BB0ef069928f9f1438110925523395B",
+              "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+              "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+              "0x31978e50D27f154006757f9614A51C2EC4a3af8A"
+            ],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          [
+            [
+              "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+              "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+              "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+              "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+              "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+              "0x54e6492c36ac3e1d852F6859186353F086361352",
+              "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+              "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+              "0x7A475eF84BB0ef069928f9f1438110925523395B",
+              "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+              "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+              "0x31978e50D27f154006757f9614A51C2EC4a3af8A"
+            ],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          [
+            [
+              "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+              "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+              "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+              "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+              "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+              "0x54e6492c36ac3e1d852F6859186353F086361352",
+              "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+              "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+              "0x7A475eF84BB0ef069928f9f1438110925523395B",
+              "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+              "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+              "0x31978e50D27f154006757f9614A51C2EC4a3af8A"
+            ],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          [
+            [
+              "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+              "0x892c439a4c59fDfa19Ac330c6ec108066BB58aF1",
+              "0xa8F4c4718E3bE56c77a5065a593025F950234745",
+              "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+              "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+              "0x54e6492c36ac3e1d852F6859186353F086361352",
+              "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+              "0x2e76E593e81Dd14E9D3E9D774e09336E88d1eB3d",
+              "0x7A475eF84BB0ef069928f9f1438110925523395B",
+              "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+              "0x786457A4cA8B7a9cD72f644b7b04d23f2e2148D2",
+              "0x31978e50D27f154006757f9614A51C2EC4a3af8A"
+            ],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ]
+          ]
+        ],
         "getStakingModuleSummary": [0, 60, 0],
         "getStuckPenaltyDelay": 432000,
+        "getTotalSigningKeyCount": [150, 150, 150, 150, 150],
         "getType": "0x637572617465642d6f6e636861696e2d76310000000000000000000000000000",
+        "getUnusedSigningKeyCount": [145, 145, 145, 145, 145],
         "hasInitialized": true,
         "implementation": "0x8538930c385C0438A357d2c25CB3eAD95Ab6D8ed",
         "isDepositable": false,
+        "isOperatorPenalized": [false, false, false, false, false],
+        "isOperatorPenaltyCleared": [true, true, true, true, true],
         "isPetrified": false,
         "kernel": "0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
         "MANAGE_NODE_OPERATOR_ROLE": "0x78523850fdd761612f46e844cf5a16bda6b3151d6ae961fd7e8e7b92bfbca7f8",
@@ -1467,7 +1626,24 @@
         "SET_NODE_OPERATOR_LIMIT_ROLE": "0x07b39e0faf2521001ae4e58cb9ffd3840a63e205d288dc9c93c3774f0d794754",
         "STAKING_ROUTER_ROLE": "0xbb75b874360e0bfd87f964eadd8276d8efb7c942134fc329b513032d0803e0c6"
       },
-      "derivedName": "NodeOperatorsRegistry"
+      "errors": {
+        "getNodeOperatorIsActive": "Too many values. Update configuration to explore fully",
+        "getNodeOperatorSummary": "Too many values. Update configuration to explore fully",
+        "getRewardsDistribution": "Too many values. Update configuration to explore fully",
+        "getTotalSigningKeyCount": "Too many values. Update configuration to explore fully",
+        "getUnusedSigningKeyCount": "Too many values. Update configuration to explore fully",
+        "isOperatorPenalized": "Too many values. Update configuration to explore fully",
+        "isOperatorPenaltyCleared": "Too many values. Update configuration to explore fully"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xb808bFb2F819BBc2DA65a039dBd75AfC71E88467",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131491
     },
     {
       "name": "Kernel",
@@ -1495,8 +1671,25 @@
         "KERNEL_APP_ID": "0x3b4bf6bf3ad5000ecf0f989d5befde585c6860fea3e574a4fab4c49d1c177d9c",
         "proxyType": 2,
         "recoveryVaultAppId": "0x701a4fd1f5174d12a0f1d9ad2c88d0ad11ab6aad0ac72b7d9ce621815f8016a9"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xb91c5A314dD03924c4126FEC5B567BD71c3A6249",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
       },
-      "derivedName": "Kernel"
+      "sinceTimestamp": 1711131467
+    },
+    {
+      "name": "",
+      "address": "0xb94FF0e1d941191494Ff86f9c61bE903694Aa47d",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711131611
     },
     {
       "name": "WithdrawalVault",
@@ -1527,8 +1720,7 @@
       "values": {
         "CONFIG_MANAGER_ROLE": "0xbbfb55d933c2bfa638763473275b1d84c4418e58d26cf9d2cd5758237756d9f0",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      },
-      "derivedName": "OracleDaemonConfig"
+      }
     },
     {
       "name": "LidoLocator",
@@ -1575,8 +1767,43 @@
         "validatorsExitBusOracle": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "withdrawalQueue": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "withdrawalVault": "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xc37b195a1d061dC61e7726F8fe97d5e76C3dCEef",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
       },
-      "derivedName": "LidoLocator"
+      "sinceTimestamp": 1711131539
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": [],
+        "threshold": "3 of 6 (50%)"
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1713770711,
+      "values": {
+        "domainSeparator": "0x6a6f2d16d9d51330c9986dfc10b608ddfb077dbe96293eb4056d0c94f94d325f",
+        "getChainId": 1,
+        "getOwners": [
+          "0xfB7Cf35d123BcE8bc91DC7bEccDC8ab81853007c",
+          "0x45894CeBad0a1298D44aF2B528490693E58B322E",
+          "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "0xCa1B0866CCcfcFf6dbb7B8a0eD57EA663070c50c",
+          "0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff",
+          "0xa23366C4bDD05d6Ac5ae66503fb5AC2827eD5051"
+        ],
+        "getThreshold": 3,
+        "nonce": 7,
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "DepositSecurityModule",
@@ -1632,8 +1859,7 @@
         "getThreshold": 4,
         "nonce": 2,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -1662,32 +1888,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0xcd51df5142156BD92E7A9494Dd2b9362f5078D64",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 5 (60%)"
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1655406980,
-      "values": {
-        "domainSeparator": "0xc85cd5ab4137576d2d73f06da9bada9f8d942b8f5f78b327c3bba5835d289875",
-        "getChainId": 1,
-        "getOwners": [
-          "0xae3EC52D7Bad9D06AecE0267Ba51Dfefb3a64F15",
-          "0xD5629F5f78eF3E2B161BF15cc86f84537C0b6B47",
-          "0xC77c49B07e65789b1c62a58D1E2b004591D0d3bd",
-          "0xb2ee4291f21daD172A761FDf87b95325dBE8B970",
-          "0x29dDb10D53415495d972931CccaF219b9B194c3B"
-        ],
-        "getThreshold": 3,
-        "nonce": 376,
-        "VERSION": "1.3.0"
-      }
-    },
-    {
       "name": "Burner",
       "address": "0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
       "upgradeability": {
@@ -1698,14 +1898,22 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getCoverSharesBurnt": "14684898881648297203",
         "getExcessStETH": 0,
-        "getNonCoverSharesBurnt": "4576205815183677887489989",
+        "getNonCoverSharesBurnt": "4660075002037198715194111",
         "getSharesRequestedToBurn": [0, 0],
         "REQUEST_BURN_MY_STETH_ROLE": "0x28186f938b759084eea36948ef1cd8b40ec8790a98d5f1a09b70879fe054e5cc",
         "REQUEST_BURN_SHARES_ROLE": "0x4be29e0e4eb91f98f709d98803cba271592782e293b84a625e025cbb40197ba8",
         "STETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "TREASURY": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      }
+    },
+    {
+      "name": "",
+      "address": "0xD3759421a025CAcee7f6a9b1c2D44b5952B9389b",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
       },
-      "derivedName": "Burner"
+      "sinceTimestamp": 1711725467
     },
     {
       "name": "HashConsensus",
@@ -1719,20 +1927,20 @@
         "DISABLE_CONSENSUS_ROLE": "0x10b016346186602d93fc7a27ace09ba944baf9453611b186d36acd3d3d667dc0",
         "getChainConfig": [32, 12, 1606824023],
         "getConsensusState": [
-          8927999,
-          "0xeb67177f41d2735e3e126b46684723fa73d47a35085620075cbd494a10be5359",
+          8971199,
+          "0xdfa2d583c59e86a1f653bcaeec1564afaedd7e53e0032938253c1e87d511e5a6",
           true
         ],
-        "getCurrentFrame": [8927999, 8935199],
+        "getCurrentFrame": [8971199, 8978399],
         "getFastLaneMembers": [
           [
+            "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E",
+            "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
             "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
-            "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
-            "0xEC4BfbAF681eb505B94E4a7849877DC6c600Ca3A",
-            "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
+            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78"
           ],
-          [8927999, 8927999, 8927999, 8927999, 8891999]
+          [8971199, 8971199, 8971199, 8971199, 8971199]
         ],
         "getFrameConfig": [201600, 225, 100],
         "getInitialRefSlot": 6451199,
@@ -1749,17 +1957,17 @@
             "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
           ],
           [
-            8913599, 8927999, 8927999, 8927999, 8927999, 8927999, 8891999,
-            8891999, 8927999
+            8971199, 8971199, 8971199, 8971199, 8971199, 8971199, 8956799,
+            8949599, 8971199
           ]
         ],
         "getQuorum": 5,
         "getReportProcessor": "0x852deD011285fe67063a08005c71a85690503Cee",
         "getReportVariants": [
           [
-            "0xeb67177f41d2735e3e126b46684723fa73d47a35085620075cbd494a10be5359"
+            "0xdfa2d583c59e86a1f653bcaeec1564afaedd7e53e0032938253c1e87d511e5a6"
           ],
-          [6]
+          [7]
         ],
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -1781,10 +1989,10 @@
         "CHALLENGER": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 561600,
-        "latestOutputIndex": 25,
-        "nextBlockNumber": 583200,
-        "nextOutputIndex": 26,
+        "latestBlockNumber": 820800,
+        "latestOutputIndex": 37,
+        "nextBlockNumber": 842400,
+        "nextOutputIndex": 38,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -1806,7 +2014,7 @@
       "sinceTimestamp": 1712862119,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620074",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620110",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1821,29 +2029,15 @@
       "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "GnosisSafe",
-      "address": "0xE556Da28015c04F35A52B3111B9F4120E908056e",
+      "name": "MasterMinter",
+      "address": "0xE982615d461DD5cD06575BbeA87624fda4e3de17",
       "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "type": "immutable"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1691166767,
+      "sinceTimestamp": 1553538530,
       "values": {
-        "domainSeparator": "0x0e186926dc7ed0723b75f18966dfda3783e5513177c231d99518ce811a9a5f1e",
-        "getChainId": 1,
-        "getOwners": [
-          "0xcc0AA6cB65bBa3E2BfeC1034163D8E15647019DC",
-          "0x0c4C63e902094b562D19e2f1D61C61944F5139D1",
-          "0x09811c1F369Ba06674c3178E79c83DA2Ac17E6A9",
-          "0xD778A8B79b4144B7376DDf18019747E1142EF13d",
-          "0x6E365bE3e5485d1de2e0FBAe27B97209784A0112"
-        ],
-        "getThreshold": 3,
-        "nonce": 207,
-        "VERSION": "1.3.0"
+        "getMinterManager": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "owner": "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704"
       }
     },
     {
@@ -1885,11 +2079,11 @@
               10000,
               0,
               "curated-onchain-v1",
-              1713989267,
-              19727510,
-              46654
+              1714111835,
+              19737664,
+              46707
             ],
-            [46654, 337850, 30634]
+            [46707, 338193, 30391]
           ],
           [
             12,
@@ -1911,16 +2105,16 @@
         ],
         "getContractVersion": 1,
         "getDepositsAllocation": [
-          [0, [291196, 60]],
-          [1, [291197, 60]],
-          [2, [291198, 60]],
-          [3, [291199, 60]],
-          [4, [291200, 60]]
+          [0, [291486, 60]],
+          [1, [291487, 60]],
+          [2, [291488, 60]],
+          [3, [291489, 60]],
+          [4, [291490, 60]]
         ],
         "getLido": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "getStakingFeeAggregateDistribution": [
-          "5000618013019474276",
-          "4999381986980525722",
+          "5000617398283632771",
+          "4999382601716367228",
           "100000000000000000000"
         ],
         "getStakingFeeAggregateDistributionE4Precision": [500, 499],
@@ -1941,9 +2135,9 @@
             10000,
             0,
             "curated-onchain-v1",
-            1713989267,
-            19727510,
-            46654
+            1714111835,
+            19737664,
+            46707
           ],
           [
             2,
@@ -1967,8 +2161,8 @@
             "0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433"
           ],
           [1, 2],
-          ["4998969978300876205", 1648034718598071],
-          "9999999999999999998",
+          ["4998971002860612047", 1646395423020724],
+          "9999999999999999999",
           "100000000000000000000"
         ],
         "getTotalFeeE4Precision": 999,
@@ -1999,56 +2193,47 @@
     "0x000000000000000000000000000000000000dEaD",
     "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
     "0x0209a89b6d9F707c14eB6cD4C3Fb519280a7E1AC",
-    "0x065dAAb531e7Cd50f900D644E8caE8A208eEa4E9",
-    "0x07FE5F404778C27f4d3A0AB56dC59f8eFDd32d96",
     "0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11",
+    "0x10DF6B6fe66dd319B1f82BaB2d054cbb61cdAD2e",
     "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E",
     "0x14D5d5B71E048d2D75a39FfC5B407e3a3AB6F314",
     "0x1Ca0fEC59b86F549e1F1184d97cb47794C8Af58d",
-    "0x258cB32B1875168858E57Bb31482054e008d344e",
-    "0x2A2245d1f47430b9f60adCFC63D158021E80A728",
-    "0x2A64944eBFaFF8b6A0d07B222D3d83ac29c241a7",
+    "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
     "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
-    "0x3D5A107F7a5bcEC8734c49ed54d41bc6F93eB97F",
     "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-    "0x40C20da8d0214A7eF33a84e287992858dB744e6d",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
-    "0x4f42A816dC2DBa82fF927b6996c14a741DCbD902",
+    "0x45894CeBad0a1298D44aF2B528490693E58B322E",
+    "0x4914f61d25e5C567143774B76EdbF4D5109a8566",
     "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436",
-    "0x59eCf48345A221E0731E785ED79eD40d0A94E2A5",
     "0x5Ee590eFfdf9456d5666002fBa05fbA8C3752CB7",
-    "0x5F74a2db08D717c94457c550af54548C4241Ace9",
     "0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
-    "0x60bC65e1ccA448F98578F8d9f9AB64c3BA70a4c3",
     "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
     "0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
     "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
+    "0x807a96288A1A408dBC13DE2b1d087d10356395d2",
     "0x85008aE6198BC91aC0735CB5497CF125ddAAc528",
-    "0x8845D7F2Bbfe82249c3B95e378A6eD039Dd953F5",
     "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
-    "0x987Cc5111389a1f58BC7f678C95f485631205Ec3",
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+    "0xa23366C4bDD05d6Ac5ae66503fb5AC2827eD5051",
     "0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
     "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
     "0xB18AD28cB78fD2eAfAc6941c24c5135515B796f0",
-    "0xC0B581e041C17716Ea1FcEdE4Ec40e2E27a48abA",
+    "0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
     "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
     "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad",
+    "0xCa1B0866CCcfcFf6dbb7B8a0eD57EA663070c50c",
     "0xd1559523374D93972E0F7fE1AA98642754f5c4d1",
     "0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
-    "0xd5aC23b1adE91A054C4974264C9dbdDD0E52BB05",
-    "0xD6B7d52E15678B9195F12F3a6D6cb79dcDcCb690",
-    "0xd8d93E91EA5F24D0E2a328BC242055D40f00bE1A",
+    "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
+    "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
     "0xEC4BfbAF681eb505B94E4a7849877DC6c600Ca3A",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xf6b0a1B771633DB40A3e21Cc49fD2FE35669eF46",
-    "0xf82B1FdCD493B2dEFAB52c740399fF150bAA7a2A",
     "0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
     "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
-    "0xfE78617EC612ac67bCc9CC145d376400f15a82cb",
-    "0xFEf3C7aa6956D03dbad8959c59155c4A465DCacd",
+    "0xfB7Cf35d123BcE8bc91DC7bEccDC8ab81853007c",
+    "0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
     "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
   ],
   "abis": {
@@ -2075,9 +2260,6 @@
       "function proxy__ossify()",
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
-    ],
-    "0x0a6a0b60fFeF196113b3530781df6e747DdC565e": [
-      "constructor(address _singleton)"
     ],
     "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0": [
       "constructor(address _owner)",
@@ -2257,9 +2439,6 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x237DeE529A47750bEcdFa8A59a1D766e3e7B5F91": [
-      "constructor(address _masterCopy)"
-    ],
     "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": [
       "function hasInitialized() view returns (bool)",
       "function KERNEL_APP_ID() pure returns (bytes32)",
@@ -2372,8 +2551,43 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0x3bF3A9260fE18A1239767aC6F0F0bc7c1E5d1cBC": [
-      "constructor(address _singleton)"
+    "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9": [
+      "constructor()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function burnLockedUSDC()",
+      "function burner() view returns (address)",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function initialize(address _messenger, address _otherBridge, address _l1Usdc, address _l2Usdc, address _owner)",
+      "function l1Usdc() view returns (address)",
+      "function l2TokenBridge() view returns (address)",
+      "function l2Usdc() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function version() view returns (string)",
+      "function whitelistBurner(address _burner)"
     ],
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -2392,6 +2606,80 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
+    "0x43506849D7C04F9138D1A2050bbF3A0c054402dd": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
+      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
+      "event Blacklisted(address indexed _account)",
+      "event BlacklisterChanged(address indexed newBlacklister)",
+      "event Burn(address indexed burner, uint256 amount)",
+      "event MasterMinterChanged(address indexed newMasterMinter)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
+      "event MinterRemoved(address indexed oldMinter)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event Pause()",
+      "event PauserChanged(address indexed newAddress)",
+      "event RescuerChanged(address indexed newRescuer)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event UnBlacklisted(address indexed _account)",
+      "event Unpause()",
+      "function CANCEL_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function RECEIVE_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function authorizationState(address authorizer, bytes32 nonce) view returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blacklist(address _account)",
+      "function blacklister() view returns (address)",
+      "function burn(uint256 _amount)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function cancelAuthorization(address authorizer, bytes32 nonce, bytes signature)",
+      "function configureMinter(address minter, uint256 minterAllowedAmount) returns (bool)",
+      "function currency() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
+      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
+      "function initialize(string tokenName, string tokenSymbol, string tokenCurrency, uint8 tokenDecimals, address newMasterMinter, address newPauser, address newBlacklister, address newOwner)",
+      "function initializeV2(string newName)",
+      "function initializeV2_1(address lostAndFound)",
+      "function initializeV2_2(address[] accountsToBlacklist, string newSymbol)",
+      "function isBlacklisted(address _account) view returns (bool)",
+      "function isMinter(address account) view returns (bool)",
+      "function masterMinter() view returns (address)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function minterAllowance(address minter) view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function receiveWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function removeMinter(address minter) returns (bool)",
+      "function rescueERC20(address tokenContract, address to, uint256 amount)",
+      "function rescuer() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, bytes signature)",
+      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)",
+      "function unBlacklist(address _account)",
+      "function unpause()",
+      "function updateBlacklister(address _newBlacklister)",
+      "function updateMasterMinter(address _newMasterMinter)",
+      "function updatePauser(address _newPauser)",
+      "function updateRescuer(address newRescuer)",
+      "function version() pure returns (string)"
+    ],
     "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
@@ -2400,6 +2688,14 @@
       "function kernel() view returns (address)",
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
+    ],
+    "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -2435,9 +2731,6 @@
       "function startingTimestamp() view returns (uint256)",
       "function version() view returns (string)"
     ],
-    "0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561": [
-      "constructor(address _singleton)"
-    ],
     "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": [
       "function name() view returns (string)",
       "function approve(address _spender, uint256 _amount) returns (bool success)",
@@ -2470,8 +2763,13 @@
       "event NewCloneToken(address indexed _cloneToken, uint256 _snapshotBlock)",
       "event Approval(address indexed _owner, address indexed _spender, uint256 _amount)"
     ],
-    "0x5Bc5ec5130f66f13d5C21ac6811A7e624ED3C7c6": [
-      "constructor(address _singleton)"
+    "0x5cEb19e1890f677c3676d5ecDF7c501eBA01A054": [
+      "function hasInitialized() view returns (bool)",
+      "function execScript(bytes _script, bytes, address[] _blacklist) returns (bytes)",
+      "function executorType() pure returns (bytes32)",
+      "function getInitializationBlock() view returns (uint256)",
+      "function isPetrified() view returns (bool)",
+      "event LogScriptCall(address indexed sender, address indexed src, address indexed dst)"
     ],
     "0x72fb5253AD16307B9E773d2A78CaC58E309d5Ba4": [
       "function hasInitialized() view returns (bool)",
@@ -2524,10 +2822,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0x765c6a8f20c842E8C826B0D9425015784F982aFc": [
-      "constructor(address _singleton)"
-    ],
-    "0x77d2CF58aa4da90b3AFCd283646568e4383193BF": [
+    "0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff": [
       "constructor(address _singleton)"
     ],
     "0x78CEE97C23560279909c0215e084dB293F036774": [
@@ -2924,6 +3219,16 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": [
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function implementation() view returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function admin() view returns (address)",
+      "constructor(address _implementation)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address implementation)"
+    ],
     "0xa29b819654cE6224A222bb5f586920105E2D7E0E": [
       "function hasInitialized() view returns (bool)",
       "function getVersion() view returns (uint256)",
@@ -3234,6 +3539,9 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
+    "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": [
+      "constructor(address _singleton)"
+    ],
     "0xC77F8768774E1c9244BEed705C4354f2113CFc09": [
       "constructor(address _lido, address _depositContract, address _stakingRouter, uint256 _maxDepositsPerBlock, uint256 _minDepositBlockDistance, uint256 _pauseIntentValidityPeriodBlocks)",
       "error DepositInactiveModule()",
@@ -3311,9 +3619,6 @@
       "function recoverERC20(address _token, uint256 _amount)",
       "function recoverERC721(address _token, uint256 _tokenId)",
       "function withdrawWithdrawals(uint256 _amount)"
-    ],
-    "0xcd51df5142156BD92E7A9494Dd2b9362f5078D64": [
-      "constructor(address _singleton)"
     ],
     "0xD15a672319Cf0352560eE76d9e89eAB0889046D3": [
       "constructor(address _admin, address _treasury, address _stETH, uint256 _totalCoverSharesBurnt, uint256 _totalNonCoverSharesBurnt)",
@@ -3729,8 +4034,27 @@
       "function unfinalizedRequestNumber() view returns (uint256)",
       "function unfinalizedStETH() view returns (uint256)"
     ],
-    "0xE556Da28015c04F35A52B3111B9F4120E908056e": [
-      "constructor(address _singleton)"
+    "0xE982615d461DD5cD06575BbeA87624fda4e3de17": [
+      "function incrementMinterAllowance(uint256 _allowanceIncrement) returns (bool)",
+      "function setMinterManager(address _newMinterManager)",
+      "function decrementMinterAllowance(uint256 _allowanceDecrement) returns (bool)",
+      "function owner() view returns (address)",
+      "function getMinterManager() view returns (address)",
+      "function getWorker(address _controller) view returns (address)",
+      "function configureController(address _controller, address _worker)",
+      "function configureMinter(uint256 _newAllowance) returns (bool)",
+      "function removeMinter() returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function removeController(address _controller)",
+      "constructor(address _minterManager)",
+      "event MinterManagerSet(address indexed _oldMinterManager, address indexed _newMinterManager)",
+      "event MinterConfigured(address indexed _msgSender, address indexed _minter, uint256 _allowance)",
+      "event MinterRemoved(address indexed _msgSender, address indexed _minter)",
+      "event MinterAllowanceIncremented(address indexed _msgSender, address indexed _minter, uint256 _increment, uint256 _newAllowance)",
+      "event MinterAllowanceDecremented(address indexed msgSender, address indexed minter, uint256 decrement, uint256 newAllowance)",
+      "event ControllerConfigured(address indexed _controller, address indexed _worker)",
+      "event ControllerRemoved(address indexed _controller)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
     "0xEEAfA156A5dd3811Ee0D9F91db57A77eA53A8d31": [
       "constructor(address _messenger)",
