@@ -1,4 +1,4 @@
-export * from './elastic-search/ElasticSearchBackend'
+export * from './elastic-search/ElasticSearchTransport'
 export * from './env'
 export * from './logger/interfaces'
 export * from './logger/LogFormatterEcs'

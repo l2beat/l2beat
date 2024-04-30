@@ -5,10 +5,10 @@ import { check } from './check'
 export async function main() {
   const logger = new Logger({
     logLevel: 'INFO',
-    backends: [
+    transports: [
       {
-        backend: console,
-        formatter: new LogFormatterPretty(true, false),
+        transport: console,
+        formatter: new LogFormatterPretty(),
       },
     ],
   })

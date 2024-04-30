@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import { formatDate } from '../helpers/formatDate'
-import { LoggerBackend } from '../logger/interfaces'
+import { LoggerTransport } from '../logger/interfaces'
 import {
   ElasticSearchClient,
   ElasticSearchClientOptions,
 } from './ElasticSearchClient'
 
-export interface ElasticSearchBackendOptions
+export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
   flushInterval?: number
   indexPrefix?: string
@@ -15,11 +15,11 @@ export interface ElasticSearchBackendOptions
 
 export type UuidProvider = () => string
 
-export class ElasticSearchBackend implements LoggerBackend {
+export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
 
   constructor(
-    private readonly options: ElasticSearchBackendOptions,
+    private readonly options: ElasticSearchTransportOptions,
     private readonly client: ElasticSearchClient = new ElasticSearchClient(
       options,
     ),

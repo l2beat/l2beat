@@ -29,9 +29,9 @@ export class Logger {
       cwd: options.cwd ?? process.cwd(),
       getTime: options.getTime ?? (() => new Date()),
       reportError: options.reportError ?? (() => {}),
-      backends: options.backends ?? [
+      transports: options.transports ?? [
         {
-          backend: console,
+          transport: console,
           formatter: new LogFormatterJson(),
         },
       ],
@@ -44,9 +44,9 @@ export class Logger {
 
   static CRITICAL = new Logger({
     logLevel: 'CRITICAL',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -54,9 +54,9 @@ export class Logger {
 
   static ERROR = new Logger({
     logLevel: 'ERROR',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -64,9 +64,9 @@ export class Logger {
 
   static WARN = new Logger({
     logLevel: 'WARN',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -74,9 +74,9 @@ export class Logger {
 
   static INFO = new Logger({
     logLevel: 'INFO',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -84,9 +84,9 @@ export class Logger {
 
   static DEBUG = new Logger({
     logLevel: 'DEBUG',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -94,9 +94,9 @@ export class Logger {
 
   static TRACE = new Logger({
     logLevel: 'TRACE',
-    backends: [
+    transports: [
       {
-        backend: console,
+        transport: console,
         formatter: new LogFormatterPretty(),
       },
     ],
@@ -199,22 +199,22 @@ export class Logger {
   }
 
   private printExactly(entry: LogEntry): void {
-    this.options.backends.forEach((backendOptions) => {
-      const output = backendOptions.formatter.format(entry)
+    this.options.transports.forEach((transportOptions) => {
+      const output = transportOptions.formatter.format(entry)
       switch (entry.level) {
         case 'CRITICAL':
         case 'ERROR':
-          backendOptions.backend.error(output)
+          transportOptions.transport.error(output)
           break
         case 'WARN':
-          backendOptions.backend.warn(output)
+          transportOptions.transport.warn(output)
           break
         case 'INFO':
-          backendOptions.backend.log(output)
+          transportOptions.transport.log(output)
           break
         case 'DEBUG':
         case 'TRACE':
-          backendOptions.backend.debug(output)
+          transportOptions.transport.debug(output)
           break
         case 'NONE':
           break

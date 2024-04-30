@@ -1,12 +1,12 @@
 import { expect, mockFn, MockObject, mockObject } from 'earl'
 
 import { formatDate } from '../helpers/formatDate'
-import {
-  ElasticSearchBackend,
-  ElasticSearchBackendOptions,
-  UuidProvider,
-} from './ElasticSearchBackend'
 import { ElasticSearchClient } from './ElasticSearchClient'
+import {
+  ElasticSearchTransport,
+  ElasticSearchTransportOptions,
+  UuidProvider,
+} from './ElasticSearchTransport'
 
 const flushInterval = 10
 const id = 'some-id'
@@ -20,12 +20,12 @@ const log = {
   message: 'Update started',
 }
 
-describe(ElasticSearchBackend.name, () => {
+describe(ElasticSearchTransport.name, () => {
   it("creates index if doesn't exist", async () => {
     const clientMock = createClienMock(false)
-    const backendMock = createBackendMock(clientMock)
+    const transportMock = createTransportMock(clientMock)
 
-    backendMock.log(JSON.stringify(log))
+    transportMock.log(JSON.stringify(log))
 
     // wait for log flus
     await delay(flushInterval + 10)
@@ -37,7 +37,7 @@ describe(ElasticSearchBackend.name, () => {
   it('does nothing if buffer is empty', async () => {
     const clientMock = createClienMock(false)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const backendMock = createBackendMock(clientMock)
+    const transportMock = createTransportMock(clientMock)
 
     // wait for log flush
     await delay(flushInterval + 10)
@@ -47,9 +47,9 @@ describe(ElasticSearchBackend.name, () => {
 
   it('pushes logs to ES if there is something in the buffer', async () => {
     const clientMock = createClienMock(false)
-    const backendMock = createBackendMock(clientMock)
+    const transportMock = createTransportMock(clientMock)
 
-    backendMock.log(JSON.stringify(log))
+    transportMock.log(JSON.stringify(log))
 
     // wait for log flush
     await delay(flushInterval + 10)
@@ -69,17 +69,17 @@ function createClienMock(indextExist = true) {
   })
 }
 
-function createBackendMock(clientMock: MockObject<ElasticSearchClient>) {
+function createTransportMock(clientMock: MockObject<ElasticSearchClient>) {
   const uuidProviderMock: UuidProvider = () => id
 
-  const options: ElasticSearchBackendOptions = {
+  const options: ElasticSearchTransportOptions = {
     node: 'node',
     apiKey: 'apiKey',
     indexPrefix,
     flushInterval,
   }
 
-  return new ElasticSearchBackend(options, clientMock, uuidProviderMock)
+  return new ElasticSearchTransport(options, clientMock, uuidProviderMock)
 }
 
 function createIndexName() {

@@ -1,7 +1,7 @@
 import { LogLevel } from './LogLevel'
 import { ResolvedError } from './resolveError'
 
-export interface LoggerBackend {
+export interface LoggerTransport {
   debug(message: string): void
   log(message: string): void
   warn(message: string): void
@@ -12,8 +12,8 @@ export interface LogFormatter {
   format(entry: LogEntry): string
 }
 
-export interface LoggerBackendOptions {
-  backend: LoggerBackend
+export interface LoggerTransportOptions {
+  transport: LoggerTransport
   formatter: LogFormatter
 }
 
@@ -25,7 +25,7 @@ export interface LoggerOptions {
   cwd: string
   getTime: () => Date
   reportError: (entry: LogEntry) => void
-  backends: LoggerBackendOptions[]
+  transports: LoggerTransportOptions[]
 }
 
 export interface LogEntry {

@@ -30,7 +30,7 @@ The logger can be configured using the following options, all of them optional:
 - `cwd` - current working directory, used to shorten error stack traces. Defaults to `process.cwd()`.
 - `getTime` - callback that returns the current time. Defaults to `() => new Date()`.
 - `reportError` - callback called when a message is logged at the `ERROR` or `CRITICAL` level. See more in the [Error reporting](#error-reporting) section.
-- `backends` - a set of pairs ([backend](#backends) + [formatter](#formatters)) which define where and in what form logs are being outputed. Defaults to `console` and `pretty` formatter
+- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputed. Defaults to `console` and `pretty` formatter
 
 ### Services
 
@@ -117,16 +117,16 @@ This is done using the following rules:
 - non-object arguments are stored as `parameters.value` or `parameters.values` depending on the number of such arguments
 - object arguments are merged into a single `parameters` object
 
-## Backends
+## Transports
 
-Currently we support two backends
+Currently we support two transports
 
 - `console` - standard output to console
-- `ElasticSearchBackend` - pushes logs ElasticSearch node (should be used together with [ECS formatter](#ecs))
+- `ElasticSearchTransport` - pushes logs ElasticSearch node (should be used together with [ECS formatter](#ecs))
 
 ## Formatters
 
-Along with each backend it is required to provide a formatter which will produce an output string for each log entry
+Along with each transport it is required to provide a formatter which will produce an output string for each log entry
 
 ### Pretty
 

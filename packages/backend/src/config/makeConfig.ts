@@ -1,12 +1,12 @@
 import {
-  ElasticSearchBackend,
-  ElasticSearchBackendOptions,
+  ElasticSearchTransport,
+  ElasticSearchTransportOptions,
   Env,
   LogFormatterEcs,
   LogFormatterJson,
   LogFormatterPretty,
-  LoggerBackendOptions,
   LoggerOptions,
+  LoggerTransportOptions,
 } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
@@ -46,12 +46,10 @@ export function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const loggerBackends: LoggerBackendOptions[] = [
+  const loggerBackends: LoggerTransportOptions[] = [
     {
-      backend: console,
-      formatter: isLocal
-        ? new LogFormatterPretty(true, false)
-        : new LogFormatterJson(),
+      transport: console,
+      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
     },
   ]
 
@@ -59,7 +57,7 @@ export function makeConfig(
   const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
 
   if (esEnabled) {
-    const options: ElasticSearchBackendOptions = {
+    const options: ElasticSearchTransportOptions = {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),
       indexPrefix: env.string('ES_INDEX_PREFIX'),
@@ -67,7 +65,7 @@ export function makeConfig(
     }
 
     loggerBackends.push({
-      backend: new ElasticSearchBackend(options),
+      transport: new ElasticSearchTransport(options),
       formatter: new LogFormatterEcs(),
     })
   }
@@ -80,7 +78,7 @@ export function makeConfig(
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       utc: isLocal ? false : true,
-      backends: loggerBackends,
+      transports: loggerBackends,
     },
     logThrottler: isLocal
       ? false
