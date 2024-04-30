@@ -20,8 +20,8 @@ CONFIG_ALCHEMY_API_KEY=
 ## Scripts
 
 - `yarn build` - build the project
-- `yarn format:fix` - run prettier automatic formatter
-- `yarn format` - check if formatting is correct with prettier
+- `yarn format:fix` - run biome automatic formatter
+- `yarn format` - check if formatting is correct with biome
 - `yarn lint:fix` - run eslint automatic fixer
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn test` - run tests
