@@ -23,7 +23,9 @@ const config = getDefaultConfig({
 export function Web3Provider({ children }: { children: ReactNode }) {
   return (
     <WagmiProvider config={config}>
-      <RainbowKitProvider theme={darkTheme()}>{children}</RainbowKitProvider>
+      <RainbowKitProvider theme={darkTheme()} modalSize="compact">
+        {children}
+      </RainbowKitProvider>
     </WagmiProvider>
   )
 }
