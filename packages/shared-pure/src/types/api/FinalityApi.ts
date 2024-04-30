@@ -4,9 +4,9 @@ import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
 
 export const FinalityDataPoint = z.object({
-  minimumInSeconds: z.number().nonnegative().int().optional(),
-  averageInSeconds: z.number().nonnegative().int(),
-  maximumInSeconds: z.number().nonnegative().int(),
+  minimumInSeconds: z.number().positive().int().optional(),
+  averageInSeconds: z.number().positive().int(),
+  maximumInSeconds: z.number().positive().int(),
 })
 export type FinalityDataPoint = z.infer<typeof FinalityDataPoint>
 
