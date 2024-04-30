@@ -1647,6 +1647,13 @@
       "type": "NMV",
       "formula": "circulatingSupply",
       "coingeckoId": "lynex"
+    },
+    {
+      "symbol": "FOXY",
+      "address": "0x5fbdf89403270a1846f5ae7d113a989f850d1566",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "foxy"
     }
   ],
   "zkfair": [
@@ -1786,6 +1793,17 @@
       "type": "NMV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "stakestone-ether",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"

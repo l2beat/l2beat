@@ -1,39 +1,54 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
-import { LogEntry, Logger } from './Logger'
+import { LogFormatterJson } from './LogFormatterJson'
+import { LogFormatterPretty } from './LogFormatterPretty'
+import { Logger } from './Logger'
+import { LogEntry } from './types'
 
 describe(Logger.name, () => {
-  it('calls correct backend', () => {
-    const backend = createTestBackend()
-    const logger = new Logger({ backend, logLevel: 'TRACE' })
+  it('calls correct transport', () => {
+    const transport = createTestTransport()
+    const logger = new Logger({
+      transports: [
+        {
+          transport: transport,
+          formatter: new LogFormatterJson(),
+        },
+      ],
+      logLevel: 'TRACE',
+    })
 
     logger.trace('foo')
     logger.debug('foo')
-    expect(backend.debug).toHaveBeenCalledTimes(2)
+    expect(transport.debug).toHaveBeenCalledTimes(2)
 
     logger.info('foo')
-    expect(backend.log).toHaveBeenCalledTimes(1)
+    expect(transport.log).toHaveBeenCalledTimes(1)
 
     logger.warn('foo')
-    expect(backend.warn).toHaveBeenCalledTimes(1)
+    expect(transport.warn).toHaveBeenCalledTimes(1)
 
     logger.error('foo')
     logger.critical('foo')
-    expect(backend.error).toHaveBeenCalledTimes(2)
+    expect(transport.error).toHaveBeenCalledTimes(2)
   })
 
   it('supports bigint values in json output', () => {
-    const backend = createTestBackend()
+    const transport = createTestTransport()
     const logger = new Logger({
-      backend,
+      transports: [
+        {
+          transport: transport,
+          formatter: new LogFormatterJson(),
+        },
+      ],
       logLevel: 'TRACE',
-      format: 'json',
       getTime: () => new Date(0),
       utc: true,
     })
 
     logger.info({ foo: 123n, bar: [4n, 56n] })
-    expect(backend.log).toHaveBeenOnlyCalledWith(
+    expect(transport.log).toHaveBeenOnlyCalledWith(
       JSON.stringify({
         time: '1970-01-01T00:00:00.000Z',
         level: 'INFO',
@@ -46,11 +61,15 @@ describe(Logger.name, () => {
   })
 
   it('supports bigint values in pretty output', () => {
-    const backend = createTestBackend()
+    const transport = createTestTransport()
     const logger = new Logger({
-      backend,
+      transports: [
+        {
+          transport: transport,
+          formatter: new LogFormatterPretty({ colors: false, utc: true }),
+        },
+      ],
       logLevel: 'TRACE',
-      format: 'pretty',
       getTime: () => new Date(0),
       utc: true,
     })
@@ -61,35 +80,39 @@ describe(Logger.name, () => {
       "    { foo: '123', bar: [ '4', '56' ] }",
       '',
     ]
-    expect(backend.log).toHaveBeenOnlyCalledWith(lines.join(''))
+    expect(transport.log).toHaveBeenOnlyCalledWith(lines.join(''))
   })
 
   describe('for', () => {
     function setup() {
-      const backend = createTestBackend()
+      const transport = createTestTransport()
       const baseLogger = new Logger({
-        backend,
+        transports: [
+          {
+            transport: transport,
+            formatter: new LogFormatterPretty({ colors: false, utc: true }),
+          },
+        ],
         logLevel: 'TRACE',
-        format: 'pretty',
         getTime: () => new Date(0),
         utc: true,
       })
-      return { backend, baseLogger }
+      return { transport, baseLogger }
     }
 
     it('single service (string)', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       const logger = baseLogger.for('FooService')
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ FooService ] hello',
       )
     })
 
     it('single service (object)', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       // eslint-disable-next-line @typescript-eslint/no-extraneous-class
       class FooService {}
@@ -97,51 +120,51 @@ describe(Logger.name, () => {
       const logger = baseLogger.for(instance)
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ FooService ] hello',
       )
     })
 
     it('service with member', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       const logger = baseLogger.for('FooService').for('queue')
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ FooService.queue ] hello',
       )
     })
 
     it('service with tag', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       const logger = baseLogger.tag('Red').for('FooService')
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ FooService:Red ] hello',
       )
     })
 
     it('service with tag and member', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       const logger = baseLogger.tag('Red').for('FooService').for('queue')
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ FooService.queue:Red ] hello',
       )
     })
 
     it('lone tag', () => {
-      const { backend, baseLogger } = setup()
+      const { transport, baseLogger } = setup()
 
       const logger = baseLogger.tag('Red')
       logger.info('hello')
 
-      expect(backend.log).toHaveBeenOnlyCalledWith(
+      expect(transport.log).toHaveBeenOnlyCalledWith(
         '00:00:00.000Z INFO [ :Red ] hello',
       )
     })
@@ -310,7 +333,7 @@ describe(Logger.name, () => {
   })
 })
 
-function createTestBackend() {
+function createTestTransport() {
   return {
     debug: mockFn((_: string): void => {}),
     log: mockFn((_: string): void => {}),
