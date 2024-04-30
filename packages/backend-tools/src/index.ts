@@ -1,6 +1,6 @@
 export * from './elastic-search/ElasticSearchTransport'
 export * from './env'
-export * from './logger/interfaces'
+export * from './logger/types'
 export * from './logger/LogFormatterEcs'
 export * from './logger/LogFormatterJson'
 export * from './logger/LogFormatterPretty'

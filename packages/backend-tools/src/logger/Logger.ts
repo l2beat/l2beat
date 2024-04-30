@@ -2,7 +2,7 @@
 import { join } from 'path'
 
 import { assertUnreachable } from '../utils/assertUnreachable'
-import { LogEntry, LoggerOptions } from './interfaces'
+import { LogEntry, LoggerOptions } from './types'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { LEVEL, LogLevel } from './LogLevel'

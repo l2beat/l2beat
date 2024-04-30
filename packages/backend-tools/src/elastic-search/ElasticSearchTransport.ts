@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { formatDate } from '../helpers/formatDate'
-import { LoggerTransport } from '../logger/interfaces'
+import { LoggerTransport } from '../logger/types'
+import { formatDate } from '../logger/utils'
 import {
   ElasticSearchClient,
   ElasticSearchClientOptions,

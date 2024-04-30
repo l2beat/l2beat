@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import { inspect } from 'util'
 
-import { toJSON } from '../helpers/toJSON'
-import { LogEntry, LogFormatter } from './interfaces'
 import { LogLevel } from './LogLevel'
+import { LogEntry, LogFormatter } from './types'
+import { toJSON } from './utils'
 
 const STYLES = {
   bigint: 'white',

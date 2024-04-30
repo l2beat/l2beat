@@ -1,6 +1,6 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
-import { LogEntry } from './interfaces'
+import { LogEntry } from './types'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { Logger } from './Logger'
