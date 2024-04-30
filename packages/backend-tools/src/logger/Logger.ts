@@ -2,7 +2,6 @@
 import { join } from 'path'
 
 import { assertUnreachable } from '../utils/assertUnreachable'
-import { LogEntry, LoggerOptions } from './types'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { LEVEL, LogLevel } from './LogLevel'
@@ -10,6 +9,7 @@ import { LogThrottle, LogThrottleOptions } from './LogThrottle'
 import { parseLogArguments } from './parseLogArguments'
 import { resolveError } from './resolveError'
 import { tagService } from './tagService'
+import { LogEntry, LoggerOptions } from './types'
 
 /**
  * [Read full documentation](https://github.com/l2beat/tools/blob/master/packages/backend-tools/src/logger/docs.md)

@@ -1,9 +1,9 @@
 import { expect, formatCompact, mockFn } from 'earl'
 
-import { LogEntry } from './types'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { Logger } from './Logger'
+import { LogEntry } from './types'
 
 describe(Logger.name, () => {
   it('calls correct transport', () => {
@@ -66,7 +66,7 @@ describe(Logger.name, () => {
       transports: [
         {
           transport: transport,
-          formatter: new LogFormatterPretty(),
+          formatter: new LogFormatterPretty({ colors: false, utc: true }),
         },
       ],
       logLevel: 'TRACE',
@@ -90,7 +90,7 @@ describe(Logger.name, () => {
         transports: [
           {
             transport: transport,
-            formatter: new LogFormatterPretty(),
+            formatter: new LogFormatterPretty({ colors: false, utc: true }),
           },
         ],
         logLevel: 'TRACE',
