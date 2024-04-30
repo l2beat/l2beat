@@ -87,9 +87,9 @@ export class ElasticSearchTransport implements LoggerTransport {
   }
 
   private async createIndex(): Promise<string> {
-    const indexName = `${
-      this.options.indexPrefix ?? 'logs'
-    }-${formatDate(new Date())}`
+    const indexName = `${this.options.indexPrefix ?? 'logs'}-${formatDate(
+      new Date(),
+    )}`
 
     const exist = await this.client.indexExist(indexName)
     if (!exist) {

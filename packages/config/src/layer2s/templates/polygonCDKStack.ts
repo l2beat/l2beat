@@ -306,7 +306,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           {
             contract: templateVars.rollupManagerContract.name,
             references: [
-              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
+              `https://etherscan.io/address/${safeGetImplementation(
+                templateVars.rollupManagerContract,
+              )}`,
             ],
           },
         ],
@@ -340,8 +342,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           {
             contract: templateVars.rollupManagerContract.name,
             references: [
-              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
-              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
+              `https://etherscan.io/address/${safeGetImplementation(
+                templateVars.rollupManagerContract,
+              )}`,
+              `https://etherscan.io/address/${safeGetImplementation(
+                templateVars.rollupManagerContract,
+              )}`,
             ],
           },
         ],
@@ -388,7 +394,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         references: [
           {
             text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
-            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              templateVars.rollupManagerContract,
+            )}`,
           },
         ],
       },
@@ -410,7 +418,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         references: [
           {
             text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, onlyTrustedSequencer modifier`,
-            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}`,
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              templateVars.rollupModuleContract,
+            )}`,
           },
         ],
       },
@@ -422,7 +432,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         references: [
           {
             text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, forceBatchAddress address`,
-            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}`,
+            href: `https://etherscan.io/address/${safeGetImplementation(
+              templateVars.rollupModuleContract,
+            )}`,
           },
         ],
       },
@@ -432,7 +444,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           references: [
             {
               text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
-              href: `https://etherscan.io/address/${safeGetImplementation(bridge)}`,
+              href: `https://etherscan.io/address/${safeGetImplementation(
+                bridge,
+              )}`,
             },
           ],
         },
@@ -485,7 +499,11 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       ...shared.getMultisigPermission(
         'RollupManagerAdminMultisig',
-        `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${templateVars.rollupModuleContract.name} contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
+        `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${
+          templateVars.rollupModuleContract.name
+        } contracts, but are restricted by a ${formatSeconds(
+          upgradeDelay,
+        )} delay unless rollup is put in the Emergency State.`,
       ),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
@@ -552,7 +570,9 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       references: [
         {
           text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-          href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
+          href: `https://etherscan.io/address/${safeGetImplementation(
+            templateVars.rollupManagerContract,
+          )}`,
         },
       ],
       risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],

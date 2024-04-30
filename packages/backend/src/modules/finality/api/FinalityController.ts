@@ -36,9 +36,8 @@ export class FinalityController {
     projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
-    const records = await this.finalityRepository.getLatestGroupedByProjectId(
-      projectIds,
-    )
+    const records =
+      await this.finalityRepository.getLatestGroupedByProjectId(projectIds)
 
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),

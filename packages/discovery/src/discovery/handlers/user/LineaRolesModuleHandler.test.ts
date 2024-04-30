@@ -367,15 +367,15 @@ describe(LineaRolesModuleHandler.name, () => {
           ScopeTarget(2, TARGET_A),
           ScopeTarget(2, TARGET_B),
 
-          ScopeAllowFunction(2, TARGET_A, FunctionSigA, 2, packScopeConfig({options: 'Both',         wildcarded: true,  parameters: []})), // prettier-ignore
-          ScopeAllowFunction(5, TARGET_A, FunctionSigB, 1, packScopeConfig({options: 'None',         wildcarded: false, parameters: []})), // prettier-ignore
-          ScopeAllowFunction(3, TARGET_C, FunctionSigA, 0, packScopeConfig({options: 'DelegateCall', wildcarded: false, parameters: []})), // prettier-ignore
-          ScopeAllowFunction(4, TARGET_B, FunctionSigB, 3, packScopeConfig({options: 'Send',         wildcarded: true,  parameters: []})), // prettier-ignore
-          ScopeAllowFunction(6, TARGET_B, FunctionSigB, 3, packScopeConfig({options: 'Both',         wildcarded: true,  parameters: []})), // prettier-ignore
+          ScopeAllowFunction(2, TARGET_A, FunctionSigA, 2, packScopeConfig({options: 'Both',         wildcarded: true,  parameters: []})), // biome-ignore format: readability
+          ScopeAllowFunction(5, TARGET_A, FunctionSigB, 1, packScopeConfig({options: 'None',         wildcarded: false, parameters: []})), // biome-ignore format: readability
+          ScopeAllowFunction(3, TARGET_C, FunctionSigA, 0, packScopeConfig({options: 'DelegateCall', wildcarded: false, parameters: []})), // biome-ignore format: readability
+          ScopeAllowFunction(4, TARGET_B, FunctionSigB, 3, packScopeConfig({options: 'Send',         wildcarded: true,  parameters: []})), // biome-ignore format: readability
+          ScopeAllowFunction(6, TARGET_B, FunctionSigB, 3, packScopeConfig({options: 'Both',         wildcarded: true,  parameters: []})), // biome-ignore format: readability
           ScopeRevokeFunction(5, TARGET_A, FunctionSigA, '0'),
           ScopeRevokeFunction(6, TARGET_B, FunctionSigB, '0'),
 
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeFunction(2, TARGET_C, FunctionSigB, [false, true, true, false], [0, 0, 2, 1], [0,1,2,3],
                         [abiCoder.encode(['uint8'], [15]),
                          abiCoder.encode(['uint256'], [420]),
@@ -387,7 +387,7 @@ describe(LineaRolesModuleHandler.name, () => {
                             {type: 'Dynamic32', comparisonType: 'LessThan',    isScoped: true },
                             {type: 'Dynamic',   comparisonType: 'OneOf',       isScoped: false },
                         ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeFunction(3, TARGET_B, FunctionSigB, [true, true], [0, 0], [2,1],
                         [abiCoder.encode(['uint256'], [42069]),
                          abiCoder.encode(['uint256'], [1415926535])],
@@ -395,13 +395,13 @@ describe(LineaRolesModuleHandler.name, () => {
                             {type: 'Static', comparisonType: 'LessThan',    isScoped: true },
                             {type: 'Static', comparisonType: 'GreaterThan', isScoped: true },
                         ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeFunctionExecutionOptions(3, TARGET_B, FunctionSigB, 0,
                                         packScopeConfig({options: 'DelegateCall', wildcarded: false, parameters: [
                                             {type: 'Static', comparisonType: 'LessThan',    isScoped: true },
                                             {type: 'Static', comparisonType: 'GreaterThan', isScoped: true },
                                         ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeParameter(2, TARGET_C, FunctionSigB, 1, 2, 0, abiCoder.encode(['string'], ['this is another string']),
                          packScopeConfig({options: 'Both', wildcarded: false, parameters: [
                              {type: 'Static',    comparisonType: 'EqualTo',  isScoped: false },
@@ -409,12 +409,12 @@ describe(LineaRolesModuleHandler.name, () => {
                              {type: 'Dynamic32', comparisonType: 'LessThan', isScoped: true },
                              {type: 'Dynamic',   comparisonType: 'OneOf',    isScoped: false },
                          ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeParameter(4, TARGET_A, FunctionSigA, 0, 0, 0, abiCoder.encode(['uint256'], ['1410']),
                          packScopeConfig({options: 'Both', wildcarded: false, parameters: [
                              {type: 'Static', comparisonType: 'EqualTo', isScoped: true },
                          ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeParameterAsOneOf(4, TARGET_A, FunctionSigA, 0, 2, [
                                     abiCoder.encode(['string'], ['first string in one of compare']),
                                     abiCoder.encode(['string'], ['second string in one of compare']),
@@ -422,7 +422,7 @@ describe(LineaRolesModuleHandler.name, () => {
                                 packScopeConfig({options: 'Both', wildcarded: false, parameters: [
                                     {type: 'Dynamic', comparisonType: 'OneOf',  isScoped: true },
                                 ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeParameterAsOneOf(4, TARGET_C, FunctionSigA, 0, 2, [
                                     abiCoder.encode(['string'], ['this is going to be overwritten']),
                                     abiCoder.encode(['string'], ['this is going to be overwritten aswell']),
@@ -430,12 +430,12 @@ describe(LineaRolesModuleHandler.name, () => {
                                 packScopeConfig({options: 'Both', wildcarded: false, parameters: [
                                     {type: 'Dynamic', comparisonType: 'OneOf',  isScoped: true },
                                 ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           ScopeParameter(4, TARGET_C, FunctionSigA, 0, 0, 0, abiCoder.encode(['uint256'], ['2023']),
                          packScopeConfig({options: 'Both', wildcarded: false, parameters: [
                              {type: 'Static', comparisonType: 'EqualTo', isScoped: true },
                          ]})),
-          // prettier-ignore
+          // biome-ignore format: readability
           UnscopeParameter(3, TARGET_B, FunctionSigB, 0,
                            packScopeConfig({options: 'DelegateCall', wildcarded: false, parameters: [
                                {type: 'Static', comparisonType: 'LessThan',    isScoped: false },

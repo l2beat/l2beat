@@ -52,7 +52,7 @@ export function transformFunctionCallsQueryResult(
               gasPrice: r.gas_price,
               dataLength: r.data_length,
               calldataGasUsed: r.calldata_gas_used,
-            } as const),
+            }) as const,
         ),
     )
 

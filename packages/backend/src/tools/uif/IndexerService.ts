@@ -48,9 +48,10 @@ export class IndexerService {
   ): Promise<SavedConfiguration<T>[]> {
     const configurations: (SavedConfiguration<string> & {
       indexerId?: string
-    })[] = await this.indexerConfigurationRepository.getSavedConfigurations(
-      indexerId,
-    )
+    })[] =
+      await this.indexerConfigurationRepository.getSavedConfigurations(
+        indexerId,
+      )
 
     for (const config of configurations) {
       delete config.indexerId

@@ -65,8 +65,8 @@ export function transformBalances(
         'totalSupply' in s
           ? s.totalSupply
           : 'circulatingSupply' in s
-          ? BigInt(s.circulatingSupply) * 10n ** BigInt(decimals)
-          : 0n,
+            ? BigInt(s.circulatingSupply) * 10n ** BigInt(decimals)
+            : 0n,
       )
       .reduce((acc, totalSupply) => acc + totalSupply, 0n)
 

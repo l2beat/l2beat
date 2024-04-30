@@ -20,8 +20,8 @@ export function getStatus(
       status: knownSet.has(timestamp.toNumber())
         ? 'synced'
         : minTimestamp && timestamp.lt(minTimestamp)
-        ? 'notApplicable'
-        : 'notSynced',
+          ? 'notApplicable'
+          : 'notSynced',
     }),
   )
 
