@@ -1846,6 +1846,21 @@
       "formula": "locked"
     },
     {
+      "id": "koi-koi",
+      "name": "Koi",
+      "coingeckoId": "koi-3",
+      "address": "0x9D14BcE1dADdf408d77295BB1be9b343814f44DE",
+      "symbol": "KOI",
+      "decimals": 18,
+      "deploymentTimestamp": 1708794431,
+      "coingeckoListingTimestamp": 1709769600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35766/large/Koi_logo.png?1709782399",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "kcs-ku-coin-token",
       "name": "KuCoin Token",
       "coingeckoId": "kucoin-shares",
@@ -4499,6 +4514,21 @@
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
       }
+    },
+    {
+      "id": "zksync2:hold-holdstation",
+      "name": "Holdstation",
+      "coingeckoId": "holdstation",
+      "address": "0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2",
+      "symbol": "HOLD",
+      "decimals": 18,
+      "deploymentTimestamp": 1700119226,
+      "coingeckoListingTimestamp": 1701043200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32726/large/HOLD.png?1699018663",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "zksync2:sfrxeth-staked-frax-ether",
