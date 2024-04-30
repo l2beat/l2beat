@@ -66,6 +66,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       //support for legacy local configs
       `DISCOVERY_${ENV_NAME}_RPC_URL`,
     ]),
+    eventRpcUrl: env.optionalString(`${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`),
     rpcGetLogsMaxRange: env.optionalInteger([
       `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
       `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
