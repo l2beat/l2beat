@@ -250,7 +250,7 @@ export const starknet: Layer2 = {
     costsWarning: {
       sentiment: 'warning',
       content:
-        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs are currently overestimated.',
+        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs represent a rough estimate, and we are working to provide more accurate values.',
     },
   },
   config: {
@@ -280,14 +280,14 @@ export const starknet: Layer2 = {
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
-        upgradableBy: ['StarkGate WBTC owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-        upgradableBy: ['StarkGate USDC owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -297,7 +297,7 @@ export const starknet: Layer2 = {
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
-        upgradableBy: ['StarkGate USDT owner', 'BridgeMultisig'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -308,7 +308,7 @@ export const starknet: Layer2 = {
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate wstETH owner'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -317,7 +317,7 @@ export const starknet: Layer2 = {
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate rETH owner'],
+        upgradableBy: ['BridgeMultisig'],
         upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
@@ -373,6 +373,7 @@ export const starknet: Layer2 = {
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
+        upgradableBy: ['BridgeMultisig'],
       }),
     ],
     transactionApi: {
@@ -399,7 +400,7 @@ export const starknet: Layer2 = {
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.7,
       },
       {
         uses: [
@@ -414,7 +415,7 @@ export const starknet: Layer2 = {
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.7,
       },
       {
         uses: [
@@ -429,7 +430,7 @@ export const starknet: Layer2 = {
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.7,
       },
       {
         uses: [
@@ -444,7 +445,7 @@ export const starknet: Layer2 = {
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.65,
       },
       {
         uses: [
@@ -458,7 +459,7 @@ export const starknet: Layer2 = {
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.65,
       },
       {
         uses: [
@@ -505,7 +506,7 @@ export const starknet: Layer2 = {
           sinceTimestampInclusive: new UnixTime(1678095635),
           untilTimestampExclusive: new UnixTime(1706789063),
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.9,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -518,8 +519,23 @@ export const starknet: Layer2 = {
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
           sinceTimestampInclusive: new UnixTime(1706789063),
+          untilTimestampExclusive: new UnixTime(1710342000),
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.9,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x40864568f679c10aC9e72211500096a5130770fA',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1710342000),
+        },
+        _hackCostMultiplier: 0.5,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -532,8 +548,23 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706772791),
+          untilTimestampExclusive: new UnixTime(1710342000),
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.7,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1710342000),
+        },
+        _hackCostMultiplier: 0.65,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -546,8 +577,23 @@ export const starknet: Layer2 = {
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706767355),
+          untilTimestampExclusive: new UnixTime(1710342000),
         },
-        _hackCostMultiplier: 0.85,
+        _hackCostMultiplier: 0.7,
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x634DCf4f1421Fc4D95A968A559a450ad0245804c',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1710342000),
+        },
+        _hackCostMultiplier: 0.65,
       },
     ],
   },
@@ -842,6 +888,12 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
     },
   ],
   milestones: [
+    {
+      name: 'Starknet starts using blobs',
+      link: 'https://twitter.com/Starknet/status/1767915153700290839',
+      date: '2024-03-13T00:00:00Z',
+      description: 'Starknet starts publishing data to blobs.',
+    },
     {
       name: 'Starknet Provisions',
       link: 'https://www.starknet.io/en/content/starknet-provisions-program',

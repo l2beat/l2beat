@@ -11,7 +11,10 @@ import { ActivityViewEntry } from '../types'
 
 export function getScalingActivityColumnsConfig() {
   const columns: ColumnConfig<ActivityViewEntry>[] = [
-    ...getProjectWithIndexColumns(),
+    ...getProjectWithIndexColumns({
+      indexAsDefaultSort: false,
+      showIsL3: true,
+    }),
     {
       name: 'Past day TPS',
       tooltip: 'Transactions per second averaged over the past day.',

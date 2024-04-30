@@ -1,0 +1,18 @@
+{
+  "name": "uif-example",
+  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "format:fix": "prettier --write .",
+    "format": "prettier --check .",
+    "lint:fix": "yarn lint --fix",
+    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
+    "typecheck": "tsc --noEmit",
+    "start": "node -r esbuild-register src/index.ts"
+  },
+  "dependencies": {
+    "@l2beat/backend-tools": "*",
+    "@l2beat/uif": "*"
+  }
+}

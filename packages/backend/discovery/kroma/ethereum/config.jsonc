@@ -73,6 +73,9 @@
           "event": "ChallengeCreated",
           "valueKey": "outputIndex",
           "ignoreRelative": true
+        },
+        "accessControl": {
+          "type": "accessControl"
         }
       }
     },

@@ -12,6 +12,8 @@ export type Layer2FinalityConfig =
         | 'Arbitrum'
         | 'Loopring'
         | 'Degate'
+        | 'PolygonZkEvm'
+
       minTimestamp: UnixTime
       lag: number
     }

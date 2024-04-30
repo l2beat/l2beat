@@ -14,11 +14,14 @@
     "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
     "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
     "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "LineaRollup",
-    "0x504A330327A089d8364C4ab3811Ee26976d388ce": "LineaUSDCBridge"
+    "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter",
+    "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F": "Optimism_Adapter",
+    "0x29528780E29abb8Af95a5e5a125b94766987543F": "Arbitrum_Adapter",
+    "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E": "Base_Adapter",
+    "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
+    "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A": "Polygon_Adapter"
   },
   "overrides": {
     "HubPool": {
@@ -31,6 +34,7 @@
           "groupBy": "l2ChainId"
         }
       },
+      "ignoreRelatives": ["weth"],
       "ignoreInWatchMode": ["rootBundleProposal"]
     },
     "BondToken": {
@@ -70,116 +74,70 @@
           "args": [],
           "expectRevert": true
         }
-      }
+      },
+      "ignoreRelatives": ["wrappedNativeToken"]
     },
     "VotingToken": {
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
     "ZkSync_Adapter": {
-      "ignoreInWatchMode": ["getL1CallValue"] // required amount of ETH to send a message, changes depending on the gas price
+      "ignoreInWatchMode": ["getL1CallValue"], // required amount of ETH to send a message, changes depending on the gas price
+      "ignoreRelatives": [
+        "zkErc20Bridge",
+        "zkSyncEthBridge",
+        "zkSyncMessageBridge",
+        "l1Weth"
+      ]
     },
-    "LineaRollup": {
-      "ignoreDiscovery": true
+    "Linea_Adapter": {
+      "ignoreRelatives": [
+        "L1_MESSAGE_SERVICE",
+        "L1_TOKEN_BRIDGE",
+        "L1_USDC_BRIDGE",
+        "L1_WETH"
+      ]
     },
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
-      // Maker: Dai Stablecoin
-      "ignoreDiscovery": true
+    "Optimism_Adapter": {
+      "ignoreRelatives": [
+        "dai",
+        "daiOptimismBridge",
+        "l1StandardBridge",
+        "l1Weth",
+        "messenger",
+        "snx",
+        "snxOptimismBridge"
+      ]
     },
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
-      // WETH9
-      "ignoreDiscovery": true
+    "Arbitrum_Adapter": {
+      "ignoreRelatives": [
+        "l1ERC20GatewayRouter",
+        "l1Inbox",
+        "l2RefundL2Address"
+      ]
     },
-    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
-      // Arbitrum: Delayed Inbox
-      "ignoreDiscovery": true
+    "Base_Adapter": {
+      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
     },
-    "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
-      // Arbitrum One: L1 Gateway Router
-      "ignoreDiscovery": true
+    "Boba_Adapter": {
+      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
     },
-    "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": {
-      // OMG Network: Boba Gateway
-      "ignoreDiscovery": true
-    },
-    "0x6D4528d192dB72E282265D6092F4B872f9Dff69e": {
-      // Boba Network: Proxy OVM L1 Cross Domain Messenger
-      "ignoreDiscovery": true
-    },
-    "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
-      // Optimism: DAI Bridge
-      "ignoreDiscovery": true
-    },
-    "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": {
-      // Optimism: Gateway
-      "ignoreDiscovery": true
-    },
-    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": {
-      // Optimism: Proxy OVM L1 Cross Domain Messenger
-      "ignoreDiscovery": true
-    },
-    "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068": {
-      // Synthetix: L2 Deposit
-      "ignoreDiscovery": true
-    },
-    "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F": {
-      // Synthetix: Proxy SNX Token
-      "ignoreDiscovery": true
-    },
-    "0x401F6c983eA34274ec46f84D70b31C151321188b": {
-      // Polygon (Matic): Plasma Bridge
-      "ignoreDiscovery": true
-    },
-    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": {
-      //  Polygon (Matic): ERC20 Bridge
-      "ignoreDiscovery": true
-    },
-    "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2": {
-      // Polygon (Matic): Fx Root
-      "ignoreDiscovery": true
-    },
-    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": {
-      // Polygon (Matic): Matic Token
-      "ignoreDiscovery": true
-    },
-    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
-      // Polygon (Matic): Bridge
-      "ignoreDiscovery": true
-    },
-    "0x32400084C286CF3E17e7B677ea9583e60a000324": {
-      // ZKSync: Eth Bridge
-      "ignoreDiscovery": true
-    },
-    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": {
-      // ZKSync: ERC20 Bridge
-      "ignoreDiscovery": true
-    },
-    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": {
-      // Base: L1StandardBridge
-      "ignoreDiscovery": true
-    },
-    "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa": {
-      // Base: L1CrossDomainMessenger
-      "ignoreDiscovery": true
-    },
-    "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F": {
-      // Optimism: SNX Bridge
-      "ignoreDiscovery": true
-    },
-    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
-      // OptimisticOracleV3 cachedOracle
-      "ignoreDiscovery": true
-    },
-    "USDC": {
-      "ignoreDiscovery": true
-    },
-    "LineaUSDCBridge": {
-      "ignoreDiscovery": true
-    },
-    "OptimisticGovernor": {
-      "ignoreMethods": ["getCurrentTime"]
+    "Polygon_Adapter": {
+      "ignoreRelatives": [
+        "depositManager",
+        "erc20Predicate",
+        "fxStateSender",
+        "l1Matic",
+        "l1Weth",
+        "rootChainManager"
+      ]
     },
     "OptimisticOracleV3": {
-      "ignoreMethods": ["getCurrentTime"]
+      "ignoreMethods": ["getCurrentTime"],
+      "ignoreRelatives": ["cachedOracle", "defaultCurrency"]
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"],
+      "ignoreRelatives": ["collateral"]
     }
   }
 }

@@ -2,41 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "AdminMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "AstarValidiumDAC",
       "values": {
         "committeeHash": {
@@ -130,6 +95,11 @@
           "type": null
         },
         "SIGNATURE_INITIALIZE_TX_V": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMESTAMP_RANGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -391,7 +361,42 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ProxyAdminOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SharedProxyAdmin",
       "values": {
         "owner": {
           "description": null,

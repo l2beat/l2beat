@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9488573bfe9b2c4fb7cce4020a4e875f65d8c509
+
+# Diff at Tue, 23 Apr 2024 15:56:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@f6f4ef80f0b2193da88313a911968b74fcfed02f block: 19532187
+- current block number: 19719123
+
+## Description
+
+A `version` variable of MessageProxyForMainnet has been bumped up
+from 1.5.0 to 2.1.0 with no changes to implementation.
+
+This `version` variable can be arbitrarily changed by the owner
+(emitting `VersionUpdated` event), but it doesn't seem to
+have any impact on contracts in the project.
+
+## Watched changes
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      values.version:
+-        "1.5.0"
++        "2.1.0"
+    }
+```
+
 Generated with discovered.json: 0x3c215b105b69e1d5c6f495d65e708a2faf8bbc3d
 
 # Diff at Thu, 28 Mar 2024 11:03:55 GMT:

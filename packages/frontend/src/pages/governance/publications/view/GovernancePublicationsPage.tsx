@@ -51,7 +51,8 @@ function PublicationCard({
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
-          {publication.readTimeInMinutes} min read
+          {publication.readTimeInMinutes} min read • Published on{' '}
+          {publication.publishedOn}
         </p>
       }
       description={publication.description ?? publication.excerpt}

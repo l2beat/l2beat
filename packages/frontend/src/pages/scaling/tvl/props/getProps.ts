@@ -21,7 +21,8 @@ export function getProps(
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-detailed-scaling.png',
+        image:
+          'https://l2beat.com/meta-images/pages/og-scaling-value-locked.png',
         url: 'https://l2beat.com/scaling/tvl',
       }),
       banner: config.features.banner,

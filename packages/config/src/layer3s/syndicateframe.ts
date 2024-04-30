@@ -1,19 +1,20 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
-export const syndicateframe: Layer3 = underReviewL3({
-  id: 'syndicateframe',
+const discovery = new ProjectDiscovery('syndicateframe', 'base')
+
+export const syndicateframe: Layer3 = opStackL3({
+  discovery,
   hostChain: ProjectId('base'),
   display: {
     name: 'Syndicate Frame Chain',
     slug: 'syndicateframe',
-    category: 'Optimium',
     description:
-      'Syndicate Frame Chain is an OP Stack L3 on Base with Celestia underneath unlocking high throughput and extremely low gas costs for Frame developers.',
+      'Syndicate Frame Chain is an OP Stack L3 on Base for Farcaster Frame developers.',
     purposes: ['Social', 'NFT'],
-    provider: 'OP Stack',
     links: {
       websites: ['https://syndicate.io/blog/syndicate-frame-chain'],
       apps: [
@@ -29,5 +30,19 @@ export const syndicateframe: Layer3 = underReviewL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  // rpcUrl: 'https://rpc-frame.syndicate.io'
+  rpcUrl: 'https://rpc-frame.syndicate.io',
+  genesisTimestamp: new UnixTime(1707371473),
+  isNodeAvailable: 'UnderReview',
+  nonTemplatePermissions: [
+    {
+      name: 'ProxyAdmin owner',
+      description:
+        'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('ProxyAdmin', 'owner'),
+        ),
+      ],
+    },
+  ],
 })

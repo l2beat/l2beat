@@ -18,6 +18,7 @@ import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityA
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
+import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
@@ -211,6 +212,17 @@ function initializeConfigurations(
               livenessRepository,
               configuration.projectId,
               getL2Rpc(configuration, peripherals, DegateClient),
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'PolygonZkEvm':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new PolygonZkEvmFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              getL2Rpc(configuration, peripherals, RpcClient),
             ),
             minTimestamp: configuration.minTimestamp,
           }

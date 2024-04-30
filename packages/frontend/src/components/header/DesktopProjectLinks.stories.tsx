@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { onlyDesktopModes } from '../../../.storybook/modes'
-import { ProjectLink } from '../icons'
+import { ProjectLink } from '../../pages/project/types'
 import { DesktopProjectLinks as DesktopProjectLinksComponent } from './DesktopProjectLinks'
 
 const meta: Meta<typeof DesktopProjectLinksComponent> = {

@@ -3,51 +3,27 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import {
-  IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from '../../../tools/uif/IndexerConfigurationRepository'
-import { AmountRecord, AmountRepository } from './AmountRepository'
+import { AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
-  const configurationsRepository = new IndexerConfigurationRepository(
-    database,
-    Logger.SILENT,
-  )
   const amountRepository = new AmountRepository(database, Logger.SILENT)
 
-  const CONFIGS = [
-    mock({ id: '1'.repeat(12) }),
-    mock({ id: '2'.repeat(12) }),
-    mock({ id: '3'.repeat(12) }),
-  ]
-
-  beforeEach(async () => {
-    await configurationsRepository.addOrUpdateManyConfigurations(CONFIGS)
-  })
-
   afterEach(async () => {
-    await configurationsRepository.deleteAll()
+    await amountRepository.deleteAll()
   })
 
   describe(AmountRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
-      const newRows = [
-        {
-          configId: CONFIGS[0].id,
-          timestamp: UnixTime.ZERO,
-          amount: 111n,
-        },
-        {
-          configId: CONFIGS[1].id,
-          timestamp: UnixTime.ZERO,
-          amount: 111n,
-        },
-      ]
-      await amountRepository.addMany(newRows)
+      await amountRepository.addMany([
+        amount('a', UnixTime.ZERO, 111n),
+        amount('b', UnixTime.ZERO, 222n),
+      ])
 
       const results = await amountRepository.getAll()
-      expect(results).toEqualUnsorted(newRows)
+      expect(results).toEqualUnsorted([
+        amount('a', UnixTime.ZERO, 111n),
+        amount('b', UnixTime.ZERO, 222n),
+      ])
     })
 
     it('empty array', async () => {
@@ -55,47 +31,87 @@ describeDatabase(AmountRepository.name, (database) => {
     })
 
     it('performs batch insert when more than 10k records', async () => {
-      const records: AmountRecord[] = []
+      const records = []
       for (let i = 5; i < 15_000; i++) {
-        records.push({
-          configId: CONFIGS[0].id,
-          timestamp: new UnixTime(i),
-          amount: 111n,
-        })
+        records.push(amount('a', new UnixTime(i), 111n))
       }
+
       await expect(amountRepository.addMany(records)).not.toBeRejected()
+    })
+  })
+
+  describe(AmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
+    it('deletes data in range for matching config', async () => {
+      await amountRepository.addMany([
+        amount('b', new UnixTime(1), 0n),
+        amount('b', new UnixTime(2), 0n),
+        amount('b', new UnixTime(3), 0n),
+      ])
+
+      await amountRepository.deleteByConfigInTimeRange(
+        'b'.repeat(12),
+        new UnixTime(1),
+        new UnixTime(2),
+      )
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(3), 0n)])
+    })
+    it('does not delete data if matching config not found', async () => {
+      await amountRepository.addMany([amount('b', new UnixTime(1), 0n)])
+
+      await amountRepository.deleteByConfigInTimeRange(
+        'c',
+        new UnixTime(1),
+        new UnixTime(2),
+      )
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(1), 0n)])
+    })
+  })
+
+  describe(AmountRepository.prototype.deleteByConfigAfter.name, () => {
+    it('deletes data in range for matching config', async () => {
+      await amountRepository.addMany([
+        amount('b', new UnixTime(1), 0n),
+        amount('b', new UnixTime(2), 0n),
+        amount('b', new UnixTime(3), 0n),
+      ])
+
+      await amountRepository.deleteByConfigAfter(
+        'b'.repeat(12),
+        new UnixTime(1),
+      )
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(1), 0n)])
+    })
+
+    it('does not delete data if matching config not found', async () => {
+      await amountRepository.addMany([amount('b', new UnixTime(2), 0n)])
+
+      await amountRepository.deleteByConfigAfter('c', new UnixTime(1))
+
+      const results = await amountRepository.getAll()
+      expect(results).toEqualUnsorted([amount('b', new UnixTime(2), 0n)])
     })
   })
 
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {
-    await amountRepository.addMany([
-      {
-        configId: CONFIGS[0].id,
-        timestamp: UnixTime.ZERO,
-        amount: 111n,
-      },
-    ])
-
+    await amountRepository.addMany([amount('a', UnixTime.ZERO, 111n)])
     await amountRepository.deleteAll()
-
     const results = await amountRepository.getAll()
-
     expect(results).toEqual([])
   })
   // #endregion
 })
 
-function mock(
-  record?: Partial<IndexerConfigurationRecord>,
-): IndexerConfigurationRecord {
+function amount(configId: string, timestamp: UnixTime, amount: bigint) {
   return {
-    id: 'a',
-    indexerId: 'indexer',
-    currentHeight: null,
-    minHeight: 0,
-    maxHeight: null,
-    properties: '',
-    ...record,
+    configId: configId.repeat(12),
+    timestamp,
+    amount,
   }
 }

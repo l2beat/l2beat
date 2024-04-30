@@ -1,9 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  RemovalConfiguration,
-  SavedConfiguration,
-  UpdateConfiguration,
-} from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
@@ -16,7 +11,12 @@ import {
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration } from './types'
+import {
+  Configuration,
+  RemovalConfiguration,
+  SavedConfiguration,
+  UpdateConfiguration,
+} from './types'
 
 describe(ManagedMultiIndexer.name, () => {
   afterEach(() => {
@@ -33,9 +33,9 @@ describe(ManagedMultiIndexer.name, () => {
         encode: (v: string) => v,
         decode: (blob: string) => blob,
       }
-      new TestIndexer({ ...common, id: 'a' })
+      new TestIndexer({ ...common, name: 'a' })
       expect(() => {
-        new TestIndexer({ ...common, id: 'a' })
+        new TestIndexer({ ...common, name: 'a' })
       }).toThrow('Indexer id a is duplicated!')
     })
 
@@ -49,13 +49,13 @@ describe(ManagedMultiIndexer.name, () => {
       }
       new TestIndexer({
         ...common,
-        id: 'a',
+        name: 'a',
         configurations: [actual('a', 100, 300), actual('b', 100, 300)],
       })
       expect(() => {
         new TestIndexer({
           ...common,
-          id: 'b',
+          name: 'b',
           configurations: [actual('a', 100, 300)],
         })
       }).toThrow('Configuration id aaaaaaaaaaaa is duplicated!')
@@ -283,7 +283,7 @@ async function initializeMockIndexer(
   }
   const indexer = new TestIndexer({
     parents: [],
-    id: 'indexer',
+    name: 'indexer',
     indexerService,
     configurations,
     logger: Logger.SILENT,

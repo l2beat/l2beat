@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import {
   BaseRepository,
@@ -8,15 +8,13 @@ import {
 import { Database } from '../../../peripherals/database/Database'
 
 export interface PriceRow {
-  chain: string
-  address: string
+  configuration_id: string
   timestamp: Date
   price_usd: number
 }
 
 export interface PriceRecord {
-  chain: string
-  address: EthereumAddress | 'native'
+  configId: string
   timestamp: UnixTime
   priceUsd: number
 }
@@ -27,6 +25,12 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
+  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices').where('timestamp', timestamp.toDate())
+    return rows.map(toRecord)
+  }
+
   async addMany(records: PriceRecord[]) {
     const rows: PriceRow[] = records.map(toRow)
     const knex = await this.knex()
@@ -34,16 +38,16 @@ export class PriceRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteAfterExclusive(
-    chain: string,
-    address: EthereumAddress | 'native',
-    timestamp: UnixTime,
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
   ) {
     const knex = await this.knex()
     return knex('prices')
-      .where('chain', chain)
-      .where('address', address === 'native' ? 'native' : address.toString())
-      .where('timestamp', '>', timestamp.toDate())
+      .where('configuration_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .delete()
   }
 
@@ -65,8 +69,7 @@ export class PriceRepository extends BaseRepository {
 
 function toRecord(row: PriceRow): PriceRecord {
   return {
-    chain: row.chain,
-    address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
+    configId: row.configuration_id,
     timestamp: UnixTime.fromDate(row.timestamp),
     priceUsd: +row.price_usd,
   }
@@ -74,8 +77,7 @@ function toRecord(row: PriceRow): PriceRecord {
 
 function toRow(record: PriceRecord): PriceRow {
   return {
-    chain: record.chain,
-    address: record.address === 'native' ? 'native' : record.address.toString(),
+    configuration_id: record.configId,
     timestamp: record.timestamp.toDate(),
     price_usd: record.priceUsd,
   }

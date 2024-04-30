@@ -1,3 +1,108 @@
+Generated with discovered.json: 0x134e46247e744e00b1b0a3f309124e847a5fa4f8
+
+# Diff at Tue, 23 Apr 2024 12:36:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@490974f5b59ffaa2fc80e604d18674505076a157 block: 19631886
+- current block number: 19718134
+
+## Description
+
+A new unverified contract is added. Will take care of it once verified.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        3
++        4
++++ description: Maps rollup contracts and their verifier. Any change either should be picked up also by the specific rollup config, unless it's a new rollup.
++++ severity: MEDIUM
+      values.rollupsData.3:
++        ["0x88AaB361f108C3c959F2928Da3cD8e47298016B5","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19631886 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: None
+```
+
+```diff
+    contract ProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        "SharedProxyAdmin"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonValidiumStorageMigration (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xca1dcfc893f3259ddea0aa19ddc937f9e0d76fa1
+
+# Diff at Wed, 10 Apr 2024 09:31:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6bb1fb9faf46a5960ef8903031fd713f6bd1234a block: 19610745
+- current block number: 19624352
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupsData.1.1:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    }
+```
+
+## Source code changes
+
+```diff
+.../contracts/verifiers/FflonkVerifier.sol         |    0
+ .../FflonkVerifier}/meta.txt                       |    0
+ .../verifiers/FflonkVerifier.sol => /dev/null      | 1244 --------------------
+ .../meta.txt => /dev/null                          |    2 -
+ 4 files changed, 1246 deletions(-)
+```
+
 Generated with discovered.json: 0x84208cfb3134802fcfbb77b6a1e6a6a4aa4c8419
 
 # Diff at Mon, 08 Apr 2024 11:47:10 GMT:

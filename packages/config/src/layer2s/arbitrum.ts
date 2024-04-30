@@ -619,6 +619,12 @@ export const arbitrum: Layer2 = {
   },
   milestones: [
     {
+      name: 'Arbitrum starts using blobs',
+      link: 'https://twitter.com/arbitrum/status/1768306107318178061',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Arbitrum starts publishing data to blobs.',
+    },
+    {
       name: 'ARB token airdrop',
       link: 'https://twitter.com/arbitrum/status/1638888588443111425',
       date: '2023-03-23T00:00:00Z',

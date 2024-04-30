@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SyncStatus } from '../../pages/types'
 import { NotSyncedBadge } from '../badge/NotSyncedBadge'
-import { ShieldIcon, UnderReviewIcon } from '../icons'
+import { Layer3sIcon, ShieldIcon, UnderReviewIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
@@ -15,19 +15,28 @@ export interface ProjectCellProps {
     isUpcoming?: boolean
     isArchived?: boolean
     redWarning?: string
+    type?: 'layer2' | 'layer3' | 'bridge' | undefined
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
     warning?: string
     data?: { syncStatus?: SyncStatus }
   }
+  showIsL3?: boolean
 }
 
-export function ProjectNameCell({ project }: ProjectCellProps) {
+export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
   return (
     <div className="pl-3">
       <span className="text-base font-bold group-hover:underline md:text-lg">
         {project.shortName ?? project.name}
       </span>
+      {showIsL3 && project.type === 'layer3' && (
+        <span className="pl-1.5">
+          <div className="inline-block">
+            <Layer3sIcon className="relative top-px size-4" />
+          </div>
+        </span>
+      )}
       {project.isVerified === false && (
         <span className="pl-1.5">
           <Tooltip className="inline-block">

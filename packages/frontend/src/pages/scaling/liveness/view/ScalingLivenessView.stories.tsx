@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
@@ -6,7 +7,10 @@ import { onlyDesktopModes } from '../../../../../.storybook/modes'
 import { TooltipProvider } from '../../../../components/tooltip/TooltipProvider'
 import { configureLivenessTimeRangeControls } from '../../../../scripts/configureLivenessTimeRangeControls'
 import { configureTooltips } from '../../../../scripts/configureTooltips'
+import { getSyncStatus } from '../props/getScalingLivenessView'
 import { ScalingLivenessView } from './ScalingLivenessView'
+
+const syncTarget = UnixTime.now().toStartOf('hour')
 
 const meta: Meta<typeof ScalingLivenessView> = {
   title: 'Pages/Scaling/LivenessView',
@@ -54,7 +58,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/OffchainLabs/nitro/)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/OffchainLabs/nitro/)',
                 },
               ],
             },
@@ -112,44 +116,60 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'Arbitrum One is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to 1d. The state root gets finalized 6d 8h after it has been posted.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 3238,
-            minimumInSeconds: 32029,
-            maximumInSeconds: 66971,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 3238,
+              minimumInSeconds: 32029,
+              maximumInSeconds: 66971,
+            },
+            last90Days: {
+              averageInSeconds: 37,
+              minimumInSeconds: 45233,
+              maximumInSeconds: 1741,
+            },
+            allTime: {
+              averageInSeconds: 36444,
+              minimumInSeconds: 2379,
+              maximumInSeconds: 306,
+            },
+            syncedUntil: UnixTime.now(),
+            warning:
+              'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          last90Days: {
-            averageInSeconds: 37,
-            minimumInSeconds: 45233,
-            maximumInSeconds: 1741,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 54568,
+              minimumInSeconds: 441405,
+              maximumInSeconds: 441876,
+            },
+            last90Days: {
+              averageInSeconds: 20271,
+              minimumInSeconds: 3536,
+              maximumInSeconds: 778,
+            },
+            allTime: {
+              averageInSeconds: 34887,
+              minimumInSeconds: 145,
+              maximumInSeconds: 2705,
+            },
+            syncedUntil: UnixTime.now().add(-2, 'hours'),
+            warning: undefined,
+            syncStatus: getSyncStatus(
+              UnixTime.now().add(-2, 'hours'),
+              syncTarget,
+            ),
           },
-          allTime: {
-            averageInSeconds: 36444,
-            minimumInSeconds: 2379,
-            maximumInSeconds: 306,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          warning:
-            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+          syncStatus: {
+            isSynced: false,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 54568,
-            minimumInSeconds: 441405,
-            maximumInSeconds: 441876,
-          },
-          last90Days: {
-            averageInSeconds: 20271,
-            minimumInSeconds: 3536,
-            maximumInSeconds: 778,
-          },
-          allTime: {
-            averageInSeconds: 34887,
-            minimumInSeconds: 145,
-            maximumInSeconds: 2705,
-          },
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           {
@@ -223,7 +243,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           { isAnomaly: false },
           { isAnomaly: false },
         ],
-        isSynced: true,
       },
       {
         name: 'Base',
@@ -266,7 +285,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
                 },
               ],
             },
@@ -304,44 +323,57 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'Base is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to 12h or until it gets published. The state root gets finalized 7d after it has been posted.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 2787,
-            minimumInSeconds: 73663,
-            maximumInSeconds: 2957,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 2787,
+              minimumInSeconds: 73663,
+              maximumInSeconds: 2957,
+            },
+            last90Days: {
+              averageInSeconds: 69234,
+              minimumInSeconds: 9282,
+              maximumInSeconds: 2109,
+            },
+            allTime: {
+              averageInSeconds: 2737,
+              minimumInSeconds: 2429,
+              maximumInSeconds: 1338,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning:
+              'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
-          last90Days: {
-            averageInSeconds: 69234,
-            minimumInSeconds: 9282,
-            maximumInSeconds: 2109,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 240575,
+              minimumInSeconds: 2114,
+              maximumInSeconds: 10240,
+            },
+            last90Days: {
+              averageInSeconds: 2275,
+              minimumInSeconds: 1786,
+              maximumInSeconds: 892,
+            },
+            allTime: {
+              averageInSeconds: 25583,
+              minimumInSeconds: 44991,
+              maximumInSeconds: 27634,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          allTime: {
-            averageInSeconds: 2737,
-            minimumInSeconds: 2429,
-            maximumInSeconds: 1338,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          warning:
-            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+          syncStatus: {
+            isSynced: true,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 240575,
-            minimumInSeconds: 2114,
-            maximumInSeconds: 10240,
-          },
-          last90Days: {
-            averageInSeconds: 2275,
-            minimumInSeconds: 1786,
-            maximumInSeconds: 892,
-          },
-          allTime: {
-            averageInSeconds: 25583,
-            minimumInSeconds: 44991,
-            maximumInSeconds: 27634,
-          },
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -492,7 +524,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           { isAnomaly: false },
           { isAnomaly: false },
         ],
-        isSynced: true,
       },
       {
         name: 'dYdX v3',
@@ -533,7 +564,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/l2beat/starkex-explorer)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/l2beat/starkex-explorer)',
                 },
               ],
             },
@@ -572,39 +603,52 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 1560,
-            minimumInSeconds: 62160,
-            maximumInSeconds: 2943,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 1560,
+              minimumInSeconds: 62160,
+              maximumInSeconds: 2943,
+            },
+            last90Days: {
+              averageInSeconds: 363376,
+              minimumInSeconds: 1711,
+              maximumInSeconds: 64300,
+            },
+            allTime: {
+              averageInSeconds: 1235,
+              minimumInSeconds: 932,
+              maximumInSeconds: 2401,
+            },
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          last90Days: {
-            averageInSeconds: 363376,
-            minimumInSeconds: 1711,
-            maximumInSeconds: 64300,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 7416,
+              minimumInSeconds: 59109,
+              maximumInSeconds: 889,
+            },
+            last90Days: undefined,
+            allTime: {
+              averageInSeconds: 56689,
+              minimumInSeconds: 14489,
+              maximumInSeconds: 57670,
+            },
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          allTime: {
-            averageInSeconds: 1235,
-            minimumInSeconds: 932,
-            maximumInSeconds: 2401,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          warning: undefined,
+          syncStatus: {
+            isSynced: true,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 7416,
-            minimumInSeconds: 59109,
-            maximumInSeconds: 889,
-          },
-          last90Days: undefined,
-          allTime: {
-            averageInSeconds: 56689,
-            minimumInSeconds: 14489,
-            maximumInSeconds: 57670,
-          },
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -646,7 +690,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           { isAnomaly: false },
           { isAnomaly: false },
         ],
-        isSynced: true,
       },
       {
         name: 'Linea',
@@ -740,43 +783,59 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'Linea is a ZK rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 338,
-            minimumInSeconds: 3344,
-            maximumInSeconds: 1375,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 338,
+              minimumInSeconds: 3344,
+              maximumInSeconds: 1375,
+            },
+            last90Days: {
+              averageInSeconds: 30704,
+              minimumInSeconds: 82397,
+              maximumInSeconds: 2626,
+            },
+            allTime: {
+              averageInSeconds: 172948,
+              minimumInSeconds: 7208,
+              maximumInSeconds: 52341,
+            },
+            syncedUntil: UnixTime.now().add(-2, 'hours'),
+            warning: undefined,
+            syncStatus: getSyncStatus(
+              UnixTime.now().add(-2, 'hours'),
+              syncTarget,
+            ),
           },
-          last90Days: {
-            averageInSeconds: 30704,
-            minimumInSeconds: 82397,
-            maximumInSeconds: 2626,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 2624,
+              minimumInSeconds: 3202,
+              maximumInSeconds: 2830,
+            },
+            last90Days: {
+              averageInSeconds: 40154,
+              minimumInSeconds: 2869,
+              maximumInSeconds: 3034,
+            },
+            allTime: {
+              averageInSeconds: 76919,
+              minimumInSeconds: 54908,
+              maximumInSeconds: 88067,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          allTime: {
-            averageInSeconds: 172948,
-            minimumInSeconds: 7208,
-            maximumInSeconds: 52341,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            warning: undefined,
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
           },
-          warning: undefined,
+          syncStatus: {
+            isSynced: false,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 2624,
-            minimumInSeconds: 3202,
-            maximumInSeconds: 2830,
-          },
-          last90Days: {
-            averageInSeconds: 40154,
-            minimumInSeconds: 2869,
-            maximumInSeconds: 3034,
-          },
-          allTime: {
-            averageInSeconds: 76919,
-            minimumInSeconds: 54908,
-            maximumInSeconds: 88067,
-          },
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -809,7 +868,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           { isAnomaly: false },
           { isAnomaly: false },
         ],
-        isSynced: true,
       },
       {
         name: 'OP Mainnet',
@@ -853,7 +911,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
                 },
               ],
             },
@@ -895,40 +953,53 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'Optimism is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to 12h or until it gets published. The state root gets finalized 7d after it has been posted.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 2203,
-            minimumInSeconds: 756,
-            maximumInSeconds: 8639,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 2203,
+              minimumInSeconds: 756,
+              maximumInSeconds: 8639,
+            },
+            last90Days: {
+              averageInSeconds: 1992,
+              minimumInSeconds: 82608,
+              maximumInSeconds: 1113,
+            },
+            allTime: {
+              averageInSeconds: 997,
+              minimumInSeconds: 1164,
+              maximumInSeconds: 80046,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning:
+              'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
           },
-          last90Days: {
-            averageInSeconds: 1992,
-            minimumInSeconds: 82608,
-            maximumInSeconds: 1113,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 2184,
+              minimumInSeconds: 16268,
+              maximumInSeconds: 957,
+            },
+            last90Days: {
+              averageInSeconds: 15933,
+              minimumInSeconds: 662,
+              maximumInSeconds: 2129,
+            },
+            allTime: undefined,
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          allTime: {
-            averageInSeconds: 997,
-            minimumInSeconds: 1164,
-            maximumInSeconds: 80046,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          warning:
-            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+          syncStatus: {
+            isSynced: true,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 2184,
-            minimumInSeconds: 16268,
-            maximumInSeconds: 957,
-          },
-          last90Days: {
-            averageInSeconds: 15933,
-            minimumInSeconds: 662,
-            maximumInSeconds: 2129,
-          },
-          allTime: undefined,
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -970,7 +1041,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           { isAnomaly: false },
           { isAnomaly: false },
         ],
-        isSynced: true,
       },
       {
         name: 'Polygon zkEVM',
@@ -1012,7 +1082,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
                 {
                   satisfied: true,
                   description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/0xPolygonHermez/zkevm-node)',
+                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code. [View code](https://github.com/0xPolygonHermez/zkevm-node)',
                 },
               ],
             },
@@ -1061,43 +1131,56 @@ const meta: Meta<typeof ScalingLivenessView> = {
         },
         explanation:
           'Polygon zkEVM is a ZK rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 762,
-            minimumInSeconds: 55038,
-            maximumInSeconds: 79201,
+        data: {
+          stateUpdates: {
+            last30Days: {
+              averageInSeconds: 762,
+              minimumInSeconds: 55038,
+              maximumInSeconds: 79201,
+            },
+            last90Days: {
+              averageInSeconds: 16470,
+              minimumInSeconds: 75434,
+              maximumInSeconds: 60249,
+            },
+            allTime: {
+              averageInSeconds: 2424,
+              minimumInSeconds: 3054,
+              maximumInSeconds: 180,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          last90Days: {
-            averageInSeconds: 16470,
-            minimumInSeconds: 75434,
-            maximumInSeconds: 60249,
+          batchSubmissions: {
+            last30Days: {
+              averageInSeconds: 1146,
+              minimumInSeconds: 2664,
+              maximumInSeconds: 74131,
+            },
+            last90Days: {
+              averageInSeconds: 1512,
+              minimumInSeconds: 2642,
+              maximumInSeconds: 641,
+            },
+            allTime: {
+              averageInSeconds: 75077,
+              minimumInSeconds: 23144,
+              maximumInSeconds: 2380,
+            },
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          allTime: {
-            averageInSeconds: 2424,
-            minimumInSeconds: 3054,
-            maximumInSeconds: 180,
+          proofSubmissions: {
+            syncedUntil: UnixTime.now(),
+            syncStatus: getSyncStatus(UnixTime.now(), syncTarget),
+            warning: undefined,
           },
-          warning: undefined,
+          syncStatus: {
+            isSynced: true,
+          },
         },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 1146,
-            minimumInSeconds: 2664,
-            maximumInSeconds: 74131,
-          },
-          last90Days: {
-            averageInSeconds: 1512,
-            minimumInSeconds: 2642,
-            maximumInSeconds: 641,
-          },
-          allTime: {
-            averageInSeconds: 75077,
-            minimumInSeconds: 23144,
-            maximumInSeconds: 2380,
-          },
-          warning: undefined,
-        },
-        proofSubmissions: { warning: undefined },
         anomalyEntries: [
           { isAnomaly: false },
           {
@@ -1252,7 +1335,6 @@ const meta: Meta<typeof ScalingLivenessView> = {
           },
           { isAnomaly: false },
         ],
-        isSynced: false,
       },
     ],
   },

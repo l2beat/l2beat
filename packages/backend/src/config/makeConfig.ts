@@ -1,4 +1,13 @@
-import { Env, LoggerOptions } from '@l2beat/backend-tools'
+import {
+  ElasticSearchTransport,
+  ElasticSearchTransportOptions,
+  Env,
+  LogFormatterEcs,
+  LogFormatterJson,
+  LogFormatterPretty,
+  LoggerOptions,
+  LoggerTransportOptions,
+} from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
@@ -29,23 +38,47 @@ export function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvlModules = getChainsWithTokens(tokenList, chains).map((x) =>
-    getChainTvlConfig(flags, env, x, {
-      minTimestamp: minTimestampOverride,
-    }),
+  const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
+
+  const isReadonly = env.boolean(
+    'READONLY',
+    // if we connect locally to production db, we want to be readonly!
+    isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
-  const tvl2Config = getTvl2Config(tvlModules, env)
+
+  const loggerBackends: LoggerTransportOptions[] = [
+    {
+      transport: console,
+      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
+    },
+  ]
+
+  // Elastic Search logging
+  const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
+
+  if (esEnabled) {
+    const options: ElasticSearchTransportOptions = {
+      node: env.string('ES_NODE'),
+      apiKey: env.string('ES_API_KEY'),
+      indexPrefix: env.string('ES_INDEX_PREFIX'),
+      flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
+    }
+
+    loggerBackends.push({
+      transport: new ElasticSearchTransport(options),
+      formatter: new LogFormatterEcs(),
+    })
+  }
 
   return {
     name,
+    isReadonly,
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      format: isLocal ? 'pretty' : 'json',
       utc: isLocal ? false : true,
-      colors: isLocal ? true : false,
+      transports: loggerBackends,
     },
     logThrottler: isLocal
       ? false
@@ -55,12 +88,17 @@ export function makeConfig(
           throttleTimeMs: 20000,
         },
     clock: {
-      minBlockTimestamp,
+      minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: isLocal
       ? {
-          connection: env.string('LOCAL_DB_URL'),
+          connection: env.string('LOCAL_DB_URL').includes('localhost')
+            ? env.string('LOCAL_DB_URL')
+            : {
+                connectionString: env.string('LOCAL_DB_URL'),
+                ssl: { rejectUnauthorized: false },
+              },
           freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
@@ -68,6 +106,7 @@ export function makeConfig(
             min: 2,
             max: 10,
           },
+          isReadonly,
         }
       : {
           freshStart: false,
@@ -81,6 +120,7 @@ export function makeConfig(
             min: 20,
             max: 200,
           },
+          isReadonly,
         },
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
@@ -108,10 +148,17 @@ export function makeConfig(
         'COINGECKO_API_KEY_FOR_TVL',
         'COINGECKO_API_KEY',
       ]),
-      ethereum: getChainTvlConfig(flags, env, 'ethereum', {
-        minTimestamp: minBlockTimestamp,
-      }),
-      modules: tvlModules,
+      ethereum: getChainTvlConfig(
+        flags.isEnabled('tvl', 'ethereum'),
+        env,
+        'ethereum',
+        { minTimestamp: minTimestampOverride },
+      ),
+      modules: getChainsWithTokens(tokenList, chains).map((chain) =>
+        getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
+          minTimestamp: minTimestampOverride,
+        }),
+      ),
     },
     tvl2: flags.isEnabled('tvl2') && tvl2Config,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
@@ -201,9 +248,6 @@ export function makeConfig(
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
-    },
-    diffHistory: flags.isEnabled('diffHistory') && {
-      chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',

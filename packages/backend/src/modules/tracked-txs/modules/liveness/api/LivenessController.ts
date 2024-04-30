@@ -1,10 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  assert,
   cacheAsyncFunction,
+  LivenessApiProject,
   LivenessApiResponse,
   notUndefined,
   ProjectId,
+  Result,
   TrackedTxsConfigSubtype,
+  TrackedTxsConfigSubtypeValues,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -23,39 +27,26 @@ import {
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
 
-type LivenessResult =
-  | {
-      type: 'success'
-      data: LivenessApiResponse
-    }
-  | {
-      type: 'error'
-      error: 'DATA_NOT_SYNCED'
-    }
+export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 
 interface LivenessTransactionsDetail {
   txHash: string
   timestamp: UnixTime
 }
 
-type LivenessTransactionsResult =
-  | {
-      type: 'success'
-      data: {
-        projects: Record<
-          string,
-          {
-            batchSubmissions: LivenessTransactionsDetail[]
-            stateUpdates: LivenessTransactionsDetail[]
-            proofSubmissions: LivenessTransactionsDetail[]
-          }
-        >
+export type LivenessTransactionsResult = Result<
+  {
+    projects: Record<
+      string,
+      {
+        batchSubmissions: LivenessTransactionsDetail[]
+        stateUpdates: LivenessTransactionsDetail[]
+        proofSubmissions: LivenessTransactionsDetail[]
       }
-    }
-  | {
-      type: 'error'
-      error: 'DATA_NOT_SYNCED'
-    }
+    >
+  },
+  'DATA_NOT_SYNCED'
+>
 
 type LivenessTrackedTxsConfig = {
   entries: LivenessTrackedTxsConfigEntry[]
@@ -124,6 +115,7 @@ export class LivenessController {
         )
 
       const syncedUntil = getSyncedUntil(configurations)
+
       if (!syncedUntil) {
         continue
       }
@@ -139,16 +131,34 @@ export class LivenessController {
 
       const withAnomalies = calculateAnomalies(intervals)
 
+      const { anomalies, ...subtypeData } = withAnomalies
+
+      const withSyncedUntil =
+        TrackedTxsConfigSubtypeValues.reduce<LivenessApiProject>(
+          (obj, subtype) => {
+            const syncedUntil = getSyncedUntil(
+              configurations.filter((c) => c.subtype === subtype),
+            )
+            if (!syncedUntil) return obj
+            obj[subtype] = {
+              ...subtypeData[subtype],
+              syncedUntil,
+            }
+            return obj
+          },
+          {},
+        )
+
       if (project.livenessConfig) {
         const { from, to } = project.livenessConfig.duplicateData
-        withAnomalies[to] = {
-          ...withAnomalies[from],
-        }
+        const data = withSyncedUntil[from]
+        assert(data, 'From data must exist')
+        withSyncedUntil[to] = { ...data }
       }
 
       projects[project.projectId.toString()] = {
-        ...withAnomalies,
-        syncedUntil,
+        ...withSyncedUntil,
+        anomalies,
       }
     }
 
@@ -192,11 +202,7 @@ export class LivenessController {
 
     const projects: Record<
       string,
-      {
-        batchSubmissions: LivenessTransactionsDetail[]
-        stateUpdates: LivenessTransactionsDetail[]
-        proofSubmissions: LivenessTransactionsDetail[]
-      }
+      Record<TrackedTxsConfigSubtype, LivenessTransactionsDetail[]>
     > = {}
     const last30Days = UnixTime.now().add(-30, 'days')
 

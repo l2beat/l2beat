@@ -6,11 +6,11 @@
   "futureEventsCount": 3,
   "dayOfWeek": 5,
   "startDate": {
-    "hour": 15,
+    "hour": 14,
     "minute": 0
   },
   "endDate": {
-    "hour": 16,
+    "hour": 15,
     "minute": 0
   },
   "location": "Online",

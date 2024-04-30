@@ -67,7 +67,7 @@ export class BlockscoutClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-10, 'minutes')
+        current = current.add(-1, 'minutes')
       }
     }
 

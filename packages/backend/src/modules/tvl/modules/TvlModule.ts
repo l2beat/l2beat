@@ -8,8 +8,6 @@ import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRe
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { ApplicationModule } from '../../ApplicationModule'
-import { DydxController } from '../api/DydxController'
-import { createDydxRouter } from '../api/DydxRouter'
 import { TvlController } from '../api/TvlController'
 import { createTvlRouter } from '../api/TvlRouter'
 import { createTvlStatusRouter } from '../api/TvlStatusRouter'
@@ -118,12 +116,7 @@ export function createTvlModule(
     { errorOnUnsyncedTvl: config.tvl.errorOnUnsyncedTvl },
   )
 
-  const dydxController = new DydxController(
-    peripherals.getRepository(AggregatedReportRepository),
-  )
-
   const tvlRouter = createTvlRouter(tvlController, config.api)
-  const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,
     priceUpdater,
@@ -158,7 +151,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [tvlRouter, dydxRouter, tvlStatusRouter],
+    routers: [tvlRouter, tvlStatusRouter],
     start,
   }
 }

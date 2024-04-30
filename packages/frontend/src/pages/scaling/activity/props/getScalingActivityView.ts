@@ -10,7 +10,7 @@ import { getMaxTps } from '../../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import {
   ActivityPagesData,
   ActivityViewEntry,
@@ -60,6 +60,7 @@ export function getScalingActivityViewEntry(
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
+    type: project.type,
     category: project.display.category,
     provider: project.display.provider,
     warning: project.display.warning,
@@ -82,6 +83,7 @@ function getEthereumActivityViewEntry(
     name: 'Ethereum',
     shortName: undefined,
     slug: 'ethereum',
+    type: undefined,
     dataSource: 'Blockchain RPC',
     category: undefined,
     provider: undefined,
