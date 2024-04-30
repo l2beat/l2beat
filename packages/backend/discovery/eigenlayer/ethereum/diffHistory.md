@@ -1,3 +1,277 @@
+Generated with discovered.json: 0x83ce37700b307099fcfd7f15fe5d2ec6257d83f9
+
+# Diff at Tue, 30 Apr 2024 08:41:32 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@cc661a15d5c5c1361b3f5a3995e633888dd4f901 block: 19732379
+- current block number: 19766998
+
+## Description
+
+This update registers the `bEIGEN-Strategy` in the `StrategyManager` and connects it to the the bEIGEN and EIGEN tokens.
+[EIGEN-Paper](https://github.com/Layr-Labs/whitepaper/blob/master/EIGEN_Token_Whitepaper.pdf)
+
+### EIGEN and bEIGEN tokens
+
+Eigenlayer chose a two-token design for its native token. While bEIGEN can be forked through a form of social consensus (called intersubjective forking in the paper), EIGEN is fork-unaware and will be convertible to the fork of bEIGEN that is supported by the governance of the EIGEN contract. Holding EIGEN delegates your fork-choice to the governance of this wrapper token. (EIGEN smart-contract)
+Forking bEIGEN will comprise deploying a new bEIGEN that other contracts including the EIGEN wrapper token will have to be re-pointed to. The process will also include a challenge process and a ForkDistributor contract which is not discovered here but described in the paper.
+
+### EIGEN governance
+
+Each of bEIGEN and EIGEN contracts has a ProxyAdmin with a `TimelockController` as governance. In the `TimelockController`s, admins (=`EigenLayerProxiedMultisig`), proposers, cancellers and executors (=`EigenlayerTokenMultisig`) are defined. (see discovery)
+
+### bEIGEN-Strategy
+
+This is an extended `BaseStrategy` smart contract that will be used for staking bEIGEN. (It also allows EIGEN but will unwrap it for you on deposit)
+
+## Watched changes
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The entry- and exit-point for funds into and out of EigenLayer, manages strategies.
+      values.strategies.12:
++        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN Timelock (0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenlayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN Timelock (0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../contracts/access/AccessControl.sol             |  248 +++++
+ .../contracts/access/IAccessControl.sol            |   88 ++
+ .../contracts/governance/TimelockController.sol    |  422 ++++++++
+ .../contracts/token/ERC1155/IERC1155Receiver.sol   |   58 +
+ .../contracts/token/ERC721/IERC721Receiver.sol     |   27 +
+ .../contracts/utils/Context.sol                    |    0
+ .../contracts/utils/Strings.sol                    |   85 ++
+ .../contracts/utils/introspection/ERC165.sol       |   29 +
+ .../contracts/utils/introspection/IERC165.sol      |   25 +
+ .../contracts/utils/math/Math.sol                  |  339 ++++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../ethereum/.code/EIGEN Timelock/meta.txt         |    2 +
+ .../contracts/token/ERC20/IERC20.sol               |   78 ++
+ .../contracts/access/OwnableUpgradeable.sol        |   95 ++
+ .../governance/utils/IVotesUpgradeable.sol         |   56 +
+ .../contracts/interfaces/IERC5267Upgradeable.sol   |   28 +
+ .../contracts/interfaces/IERC5805Upgradeable.sol   |    9 +
+ .../contracts/interfaces/IERC6372Upgradeable.sol   |   17 +
+ .../contracts/proxy/utils/Initializable.sol        |  166 +++
+ .../contracts/token/ERC20/ERC20Upgradeable.sol     |  377 +++++++
+ .../contracts/token/ERC20/IERC20Upgradeable.sol    |   78 ++
+ .../ERC20/extensions/ERC20PermitUpgradeable.sol    |  109 ++
+ .../ERC20/extensions/ERC20VotesUpgradeable.sol     |  303 ++++++
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../ERC20/extensions/IERC20PermitUpgradeable.sol   |   60 ++
+ .../contracts/utils/AddressUpgradeable.sol         |  244 +++++
+ .../contracts/utils/ContextUpgradeable.sol         |   37 +
+ .../contracts/utils/CountersUpgradeable.sol        |   43 +
+ .../contracts/utils/StringsUpgradeable.sol         |   85 ++
+ .../utils/cryptography/ECDSAUpgradeable.sol        |  217 ++++
+ .../utils/cryptography/EIP712Upgradeable.sol       |  205 ++++
+ .../contracts/utils/math/MathUpgradeable.sol       |  339 ++++++
+ .../contracts/utils/math/SafeCastUpgradeable.sol   | 1136 ++++++++++++++++++++
+ .../contracts/utils/math/SignedMathUpgradeable.sol |   43 +
+ .../.code/EIGEN token/implementation/meta.txt      |    2 +
+ .../.code/EIGEN token/implementation/src/Eigen.sol |  171 +++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |    0
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |    0
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../contracts/proxy/Proxy.sol                      |    0
+ .../contracts/proxy/beacon/IBeacon.sol             |    0
+ .../transparent/TransparentUpgradeableProxy.sol    |  191 ++++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/utils/StorageSlot.sol                |  138 +++
+ .../ethereum/.code/EIGEN token/proxy/meta.txt      |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 +++
+ .../implementation/contracts/base/OwnerManager.sol |  149 +++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../implementation/meta.txt                        |    2 +
+ .../proxy/GnosisSafeProxy.sol                      |  155 +++
+ .../.code/EigenlayerTokenMultisig/proxy/meta.txt   |    2 +
+ .../contracts/access/Ownable.sol                   |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../contracts/proxy/Proxy.sol                      |   86 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  191 ++++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/utils/Context.sol                    |   24 +
+ .../contracts/utils/StorageSlot.sol                |  138 +++
+ .../meta.txt                                       |    2 +
+ .../contracts/access/Ownable.sol                   |    0
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |    0
+ .../contracts/proxy/Proxy.sol                      |   86 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |    0
+ .../transparent/TransparentUpgradeableProxy.sol    |    0
+ .../contracts/utils/Address.sol                    |    0
+ .../contracts/utils/Context.sol                    |   24 +
+ .../contracts/utils/StorageSlot.sol                |    0
+ .../meta.txt                                       |    0
+ .../contracts/access/Ownable.sol                   |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../contracts/proxy/Proxy.sol                      |   86 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  191 ++++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/utils/Context.sol                    |   24 +
+ .../contracts/utils/StorageSlot.sol                |  138 +++
+ .../meta.txt                                       |    2 +
+ .../contracts/access/AccessControl.sol             |  248 +++++
+ .../contracts/access/IAccessControl.sol            |   88 ++
+ .../contracts/governance/TimelockController.sol    |  422 ++++++++
+ .../contracts/token/ERC1155/IERC1155Receiver.sol   |   58 +
+ .../contracts/token/ERC721/IERC721Receiver.sol     |   27 +
+ .../contracts/utils/Context.sol                    |   24 +
+ .../contracts/utils/Strings.sol                    |   85 ++
+ .../contracts/utils/introspection/ERC165.sol       |   29 +
+ .../contracts/utils/introspection/IERC165.sol      |   25 +
+ .../contracts/utils/math/Math.sol                  |  339 ++++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../ethereum/.code/bEIGEN Timelock/meta.txt        |    2 +
+ .../contracts/token/ERC20/IERC20.sol               |   78 ++
+ .../contracts/access/OwnableUpgradeable.sol        |   95 ++
+ .../governance/utils/IVotesUpgradeable.sol         |   56 +
+ .../contracts/interfaces/IERC5267Upgradeable.sol   |   28 +
+ .../contracts/interfaces/IERC5805Upgradeable.sol   |    9 +
+ .../contracts/interfaces/IERC6372Upgradeable.sol   |   17 +
+ .../contracts/proxy/utils/Initializable.sol        |  166 +++
+ .../contracts/token/ERC20/ERC20Upgradeable.sol     |  377 +++++++
+ .../contracts/token/ERC20/IERC20Upgradeable.sol    |   78 ++
+ .../ERC20/extensions/ERC20PermitUpgradeable.sol    |  109 ++
+ .../ERC20/extensions/ERC20VotesUpgradeable.sol     |  303 ++++++
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../ERC20/extensions/IERC20PermitUpgradeable.sol   |   60 ++
+ .../contracts/utils/AddressUpgradeable.sol         |  244 +++++
+ .../contracts/utils/ContextUpgradeable.sol         |   37 +
+ .../contracts/utils/CountersUpgradeable.sol        |   43 +
+ .../contracts/utils/StringsUpgradeable.sol         |   85 ++
+ .../utils/cryptography/ECDSAUpgradeable.sol        |  217 ++++
+ .../utils/cryptography/EIP712Upgradeable.sol       |  205 ++++
+ .../contracts/utils/math/MathUpgradeable.sol       |  339 ++++++
+ .../contracts/utils/math/SafeCastUpgradeable.sol   | 1136 ++++++++++++++++++++
+ .../contracts/utils/math/SignedMathUpgradeable.sol |   43 +
+ .../.code/bEIGEN token/implementation/meta.txt     |    2 +
+ .../implementation/src/BackingEigen.sol            |  132 +++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../contracts/proxy/Proxy.sol                      |   86 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  191 ++++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/utils/StorageSlot.sol                |  138 +++
+ .../ethereum/.code/bEIGEN token/proxy/meta.txt     |    2 +
+ .../contracts/interfaces/IBeaconChainOracle.sol    |   12 +
+ .../contracts/interfaces/IDelegationManager.sol    |  466 ++++++++
+ .../src/contracts/interfaces/IETHPOSDeposit.sol    |   41 +
+ .../src/contracts/interfaces/IEigenPod.sol         |  223 ++++
+ .../src/contracts/interfaces/IEigenPodManager.sol  |  165 +++
+ .../src/contracts/interfaces/IPausable.sol         |   65 ++
+ .../src/contracts/interfaces/IPauserRegistry.sol   |   19 +
+ .../src/contracts/interfaces/ISignatureUtils.sol   |   27 +
+ .../src/contracts/interfaces/ISlasher.sol          |  195 ++++
+ .../src/contracts/interfaces/IStrategy.sol         |   95 ++
+ .../src/contracts/interfaces/IStrategyManager.sol  |  161 +++
+ .../src/contracts/libraries/BeaconChainProofs.sol  |  442 ++++++++
+ .../src/contracts/libraries/Endian.sol             |   25 +
+ .../src/contracts/libraries/Merkle.sol             |  172 +++
+ .../src/contracts/permissions/Pausable.sol         |  136 +++
+ .../src/contracts/strategies/StrategyBase.sol      |  292 +++++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/token/ERC20/IERC20.sol               |   78 ++
+ .../token/ERC20/extensions/IERC20Permit.sol        |   60 ++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  143 +++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/proxy/utils/Initializable.sol        |  166 +++
+ .../contracts/utils/AddressUpgradeable.sol         |  244 +++++
+ .../.code/bEIGEN-Strategy/implementation/meta.txt  |    2 +
+ .../implementation/src/EigenStrategy.sol           |  107 ++
+ .../implementation/src/interfaces/IEigen.sol       |   54 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 +++
+ .../contracts/proxy/Proxy.sol                      |   86 ++
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  191 ++++
+ .../contracts/utils/Address.sol                    |  244 +++++
+ .../contracts/utils/StorageSlot.sol                |  138 +++
+ .../ethereum/.code/bEIGEN-Strategy/proxy/meta.txt  |    2 +
+ 184 files changed, 20412 insertions(+)
+```
+
 Generated with discovered.json: 0xcffb6b02de5bb310768147ee3220a56f9af3bdb0
 
 # Diff at Tue, 23 Apr 2024 22:44:53 GMT:
