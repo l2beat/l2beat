@@ -19,14 +19,17 @@ export function TrackedTxsStatusPage({
 }) {
   // Group and sort by project id
   const data = Object.entries(
-    [...rawData].reduce((acc, curr) => {
-      if (acc[curr.projectId]) {
-        acc[curr.projectId].push(curr)
-      } else {
-        acc[curr.projectId] = [curr]
-      }
-      return acc
-    }, {} as Record<string, TrackedTxsTableRow[]>),
+    [...rawData].reduce(
+      (acc, curr) => {
+        if (acc[curr.projectId]) {
+          acc[curr.projectId].push(curr)
+        } else {
+          acc[curr.projectId] = [curr]
+        }
+        return acc
+      },
+      {} as Record<string, TrackedTxsTableRow[]>,
+    ),
   ).sort(([a], [b]) => a.localeCompare(b))
 
   return (

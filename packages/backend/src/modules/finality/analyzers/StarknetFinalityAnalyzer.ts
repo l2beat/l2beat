@@ -44,9 +44,8 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
 
     const l2BlockNumber = extractBlockNumber(decodedTransactionData)
 
-    const { timestamp: l2Timestamp } = await this.l2Provider.getBlock(
-      l2BlockNumber,
-    )
+    const { timestamp: l2Timestamp } =
+      await this.l2Provider.getBlock(l2BlockNumber)
 
     return [l1Timestamp.toNumber() - l2Timestamp]
   }

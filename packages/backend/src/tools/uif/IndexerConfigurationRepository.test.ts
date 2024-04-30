@@ -81,7 +81,9 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
       await repository.addOrUpdateMany(records)
       await repository.updateSavedConfigurations(
         'indexer-1',
-        records.slice(0, 3).map((r) => r.id), // test .whereIn clause
+        records
+          .slice(0, 3)
+          .map((r) => r.id), // test .whereIn clause
         123,
       )
 

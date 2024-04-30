@@ -32,7 +32,9 @@ async function getAddressDisplayName(address: Hex) {
 export async function generateMetadata({ params: { address } }: Props) {
   if (!isAddress(address)) return {}
   return {
-    title: `${await getAddressDisplayName(address)}'s Asset Risk Report – L2BEAT`,
+    title: `${await getAddressDisplayName(
+      address,
+    )}'s Asset Risk Report – L2BEAT`,
     description: 'Detailed risk assessment for your L2 assets.',
   }
 }

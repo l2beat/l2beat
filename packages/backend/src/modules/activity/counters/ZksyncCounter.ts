@@ -37,9 +37,8 @@ export class ZksyncCounter extends SequenceProcessor {
     trx: Knex.Transaction,
   ) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
-      const transactions = await this.zksyncClient.getTransactionsInBlock(
-        blockNumber,
-      )
+      const transactions =
+        await this.zksyncClient.getTransactionsInBlock(blockNumber)
 
       return transactions.map((t, i) => {
         // Block 427 has a duplicated blockIndex
