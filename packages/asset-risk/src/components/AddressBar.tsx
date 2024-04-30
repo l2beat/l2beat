@@ -51,16 +51,7 @@ export function AddressBar() {
           <div className="max-w-[488px] relative">
             <Skeleton className="w-full h-12 rounded-md" />
             <ConnectKitButton.Custom>
-              {({
-                isConnected,
-                isConnecting,
-                show,
-                hide,
-                truncatedAddress,
-                address,
-                ensName,
-                chain,
-              }) => {
+              {({ isConnected, show, truncatedAddress, address, ensName }) => {
                 return isConnected ? (
                   <div className="absolute top-0 w-full flex flex-row gap-2 bg-neutral-900">
                     <Link
