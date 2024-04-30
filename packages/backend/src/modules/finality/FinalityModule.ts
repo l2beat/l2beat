@@ -245,13 +245,16 @@ function initializeConfigurations(
         case 'PolygonZkEvm':
           return {
             projectId: configuration.projectId,
-            analyzer: new PolygonZkEvmFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, RpcClient),
-            ),
+            analyzers: {
+              timeToInclusion: new PolygonZkEvmFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, RpcClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         default:
           assertUnreachable(configuration)
