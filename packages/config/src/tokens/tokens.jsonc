@@ -1647,6 +1647,13 @@
       "type": "NMV",
       "formula": "circulatingSupply",
       "coingeckoId": "lynex"
+    },
+    {
+      "symbol": "FOXY",
+      "address": "0x5fbdf89403270a1846f5ae7d113a989f850d1566",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "foxy"
     }
   ],
   "zkfair": [
