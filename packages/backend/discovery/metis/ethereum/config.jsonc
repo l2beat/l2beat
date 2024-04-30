@@ -22,7 +22,7 @@
       "ignoreDiscovery": true
     },
     "LockingInfo": {
-      "ignoreInWatchMode": ["totalLocked"]
+      "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"] // 'liquidated' here = withdrawn
     },
     "LockingPool": {
       "fields": {
@@ -34,7 +34,7 @@
         }
       },
       "ignoreMethods": ["curBatchState"], // interesting for finality?
-      "ignoreInWatchMode": ["currentBatch", "totalSequencers"],
+      "ignoreInWatchMode": ["currentBatch", "totalSequencers", "sequencers"],
       "ignoreRelatives": ["rewardRecipient"]
     },
     "Lib_AddressManager": {
