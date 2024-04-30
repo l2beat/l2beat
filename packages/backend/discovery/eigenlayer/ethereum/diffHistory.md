@@ -9,10 +9,12 @@ Generated with discovered.json: 0x83ce37700b307099fcfd7f15fe5d2ec6257d83f9
 ## Description
 
 This update registers the `bEIGEN-Strategy` in the `StrategyManager` and connects it to the the bEIGEN and EIGEN tokens.
+[EIGEN-Paper](https://github.com/Layr-Labs/whitepaper/blob/master/EIGEN_Token_Whitepaper.pdf)
 
 ### EIGEN and bEIGEN tokens
 
-Eigenlayer chose a two-token design for its native token. While bEIGEN can be forked through a form of social consensus (called intersubjective forking in the paper), EIGEN is fork-unaware and will be convertible to the fork of bEIGEN that is supported by the governance of the EIGEN contract. Holding EIGEN delegates you for-choice to the governance of this wrapper token.
+Eigenlayer chose a two-token design for its native token. While bEIGEN can be forked through a form of social consensus (called intersubjective forking in the paper), EIGEN is fork-unaware and will be convertible to the fork of bEIGEN that is supported by the governance of the EIGEN contract. Holding EIGEN delegates your fork-choice to the governance of this wrapper token. (EIGEN smart-contract)
+Forking bEIGEN will comprise deploying a new bEIGEN that other contracts including the EIGEN wrapper token will have to be re-pointed to. The process will also include a challenge process and a ForkDistributor contract which is not discovered here but described in the paper.
 
 ### EIGEN governance
 
