@@ -34,48 +34,51 @@ assert(escapeHatchDelaySeconds === 4294967295) // otherwise change descriptions!
 const escapeHatchDelayApprox = 4_291_745_472
 const escapeHatchDelayString = '~136 years'
 
-function getAccessControl() {
-  const accessControl = discovery.getContractValue<
-    Record<string, { adminRole: string; members: string[] } | undefined>
-  >('RollupProcessorV2', 'accessControl')
+// This function is deprecated because all roles have been irrevocably renounced: https://ethtx.info/mainnet/0x9041384e41e67ba3b66a1f2294f1f3476dd7d846876258ee299702f01c142502/
 
-  const check = (contract: string, role: string) => {
-    assert(Object.hasOwn(accessControl, role))
-    assert(
-      accessControl[role]?.members.length === 1,
-      `${role} has more than one member. Add this member to the permissions section.`,
-    )
-    assert(
-      accessControl[role]?.members[0] ===
-        discovery.getContract(contract).address.toString(),
-      `${contract} may not have role:${role} anymore. Update the permissions section.`,
-    )
-  }
+// function getAccessControl() {
+//   const accessControl = discovery.getContractValue<
+//     Record<string, { adminRole: string; members: string[] } | undefined>
+//   >('RollupProcessorV2', 'accessControl')
 
-  check('Aztec Multisig', 'DEFAULT_ADMIN_ROLE')
-  check('Emergency Multisig', 'EMERGENCY_ROLE')
-  check('Resume Multisig', 'RESUME_ROLE')
-  check('Lister Multisig', 'LISTER_ROLE')
+//   const check = (contract: string, role: string) => {
+//     assert(Object.hasOwn(accessControl, role))
+//     assert(
+//       accessControl[role]?.members.length === 1,
+//       `${role} has more than one member. Add this member to the permissions section.`,
+//     )
+//     assert(
+//       accessControl[role]?.members[0] ===
+//         discovery.getContract(contract).address.toString(),
+//       `${contract} may not have role:${role} anymore. Update the permissions section.`,
+//     )
+//   }
 
-  return [
-    ...discovery.getMultisigPermission(
-      'Aztec Multisig',
-      'Owner of ProxyAdmin contract, which is used to upgrade RollupProcessorV2. OWNER_ROLE on RollupProcessorV2: can enable capped deposit/withdrawals, can add rollupProviders (sequencers), can change delay before escape hatch, can change the verifier contract with no delay, can change defiBridgeProxy',
-    ),
-    ...discovery.getMultisigPermission(
-      'Emergency Multisig',
-      'EMERGENCY_ROLE on RollupProcessorV2: Can pause the rollup.',
-    ),
-    ...discovery.getMultisigPermission(
-      'Resume Multisig',
-      'RESUME_ROLE on RollupProcessorV2: Can resume the rollup.',
-    ),
-    ...discovery.getMultisigPermission(
-      'Lister Multisig',
-      "LISTER_ROLE on RollupProcessorV2: Can add new tokens and bridges to the rollup. Can't remove tokens or bridges.",
-    ),
-  ]
-}
+//   check('Aztec Multisig', 'DEFAULT_ADMIN_ROLE')
+//   check('Emergency Multisig', 'EMERGENCY_ROLE')
+//   check('Resume Multisig', 'RESUME_ROLE')
+//   check('Lister Multisig', 'LISTER_ROLE')
+
+//   return [
+
+//     ...discovery.getMultisigPermission(
+//       'Aztec Multisig',
+//       'Owner of ProxyAdmin contract, which is used to upgrade RollupProcessorV2. OWNER_ROLE on RollupProcessorV2: can enable capped deposit/withdrawals, can add rollupProviders (sequencers), can change delay before escape hatch, can change the verifier contract with no delay, can change defiBridgeProxy',
+//     ),
+//     ...discovery.getMultisigPermission(
+//       'Emergency Multisig',
+//       'EMERGENCY_ROLE on RollupProcessorV2: Can pause the rollup.',
+//     ),
+//     ...discovery.getMultisigPermission(
+//       'Resume Multisig',
+//       'RESUME_ROLE on RollupProcessorV2: Can resume the rollup.',
+//     ),
+//     ...discovery.getMultisigPermission(
+//       'Lister Multisig',
+//       "LISTER_ROLE on RollupProcessorV2: Can add new tokens and bridges to the rollup. Can't remove tokens or bridges.",
+//     ),
+//   ]
+// }
 
 export const aztecconnect: Layer2 = {
   isArchived: true,
@@ -84,7 +87,7 @@ export const aztecconnect: Layer2 = {
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
-    warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 21st, 2024. The escape hatch delay has been recently increased to ${escapeHatchDelayString}, meaning that users will not be able to exit when the operator will be shut down.`,
+    warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 31st, 2024. Deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['DeFi'],
@@ -126,6 +129,7 @@ export const aztecconnect: Layer2 = {
           selector: '0xf81cccbe',
           functionSignature: 'function processRollup(bytes ,bytes _signatures)',
           sinceTimestampInclusive: new UnixTime(1654638194),
+          untilTimestampExclusive: new UnixTime(1712696939),
         },
       },
     ],
@@ -284,7 +288,18 @@ export const aztecconnect: Layer2 = {
     },
     exitMechanisms: [
       {
-        name: 'Regular withdraw',
+        name: 'EOL: Manual withdrawal using Aztec Connect Ejector',
+        description: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 31st, 2024. Deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
+        risks: [],
+        references: [
+          {
+            text: 'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
+            href: 'https://github.com/AztecProtocol/aztec-connect-ejector',
+          },
+        ],
+      },
+      {
+        name: 'Regular withdraw (disabled)',
         description:
           'The user initiates the withdrawal by submitting a transaction on L2. When the block containing that transaction is proven on L1 the assets are automatically withdrawn to the user.',
         risks: [],
@@ -318,13 +333,13 @@ export const aztecconnect: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('RollupProcessorV2', {
-        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof. The escape hatch delay is currently set to ${escapeHatchDelayString})}`,
-        pausable: {
-          paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
-          pausableBy: ['Emergency Multisig'],
-        },
-        upgradeDelay: 'No delay',
-        upgradableBy: ['Aztec Multisig'],
+        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof. The escape hatch delay is currently set to ${escapeHatchDelayString})}.`,
+        // pausable: {
+        //   paused: discovery.getContractValue('RollupProcessorV2', 'paused'),
+        //   pausableBy: ['Emergency Multisig'],
+        // },
+        // upgradeDelay: 'No delay',
+        // upgradableBy: ['Aztec Multisig'],
       }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
       // https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L704
@@ -341,10 +356,10 @@ export const aztecconnect: Layer2 = {
       discovery.getContractDetails('Verifier28x32', {
         description:
           'Standard Plonk zkSNARK Verifier. It can be upgraded by the owner with no delay.',
-        upgradeDelay: 'No delay',
-        upgradableBy: ['Aztec Multisig'],
-        upgradeConsiderations:
-          'The verifier can be changed in the RollupProcessor contract with no delay.',
+        // upgradeDelay: 'No delay',
+        // upgradableBy: ['Aztec Multisig'],
+        // upgradeConsiderations:
+        //   'The verifier can be changed in the RollupProcessor contract with no delay.',
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -358,15 +373,15 @@ export const aztecconnect: Layer2 = {
       'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
   },
   permissions: [
-    ...getAccessControl(),
-    {
-      name: 'Rollup Providers',
-      description:
-        'Actors allowed to call the processRollup function on the RollupProcessorvV2 contract.',
-      accounts: discovery
-        .getContractValue<string[]>('RollupProcessorV2', 'rollupProviders')
-        .map((account) => discovery.formatPermissionedAccount(account)),
-    },
+    // ...getAccessControl(),
+    // {
+    //   name: 'Rollup Providers',
+    //   description:
+    //     'Actors allowed to call the processRollup function on the RollupProcessorvV2 contract.',
+    //   accounts: discovery
+    //     .getContractValue<string[]>('RollupProcessorV2', 'rollupProviders')
+    //     .map((account) => discovery.formatPermissionedAccount(account)),
+    // },
   ],
   milestones: [
     {

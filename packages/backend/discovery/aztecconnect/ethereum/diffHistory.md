@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf46958ee221587dc1034f8f711e175b457978bef
+Generated with discovered.json: 0x0cdec08688e0bf04ae55526247b3daa31458700c
 
-# Diff at Wed, 01 May 2024 06:54:03 GMT:
+# Diff at Wed, 01 May 2024 07:44:40 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@acc36455c1f5f929e0ed99a6e280e868e5ad4c09 block: 19624947
-- current block number: 19773615
+- current block number: 19773867
 
 ## Description
 
-Aztec connect [was sunset on March 31st, 2024](https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae) and deposits are disabled (pendingCap = 0, dailyCap = 0). Furthermore, the ownership- and governance roles of the rollup are renounced in this update.
+Aztec connect [was sunset on March 31st, 2024](https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae) and deposits are disabled (pendingCap = 0, dailyCap = 0). Furthermore, the ownership- and governance roles of the rollup are irrevocably renounced in this update.
 
 Assets can still be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).
 

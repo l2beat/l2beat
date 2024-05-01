@@ -1,8 +1,8 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "blockNumber": 19773615,
-  "configHash": "0x56a9a501a4be9157f0ec5870d09480d6fd32102b7cd1e9ec4719717f2420e886",
+  "blockNumber": 19773867,
+  "configHash": "0xca0ab95962ebbf883c68662c04823ffde6a423e1e4ae7cbe66a9c43aaed53e5b",
   "version": 3,
   "contracts": [
     {
@@ -79,7 +79,7 @@
         "getCapped": true,
         "getDataSize": 27318272,
         "getDefiInteractionHashesLength": 0,
-        "getEscapeHatchStatus": [false, 2145],
+        "getEscapeHatchStatus": [false, 1893],
         "getImplementationVersion": 3,
         "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAsset": [
