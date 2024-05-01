@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x7a1b394dc3b63660e37fba29bfa6432ce4768fed
+
+# Diff at Wed, 01 May 2024 11:45:46 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@acc36455c1f5f929e0ed99a6e280e868e5ad4c09 block: 19760326
+- current block number: 19775064
+
+## Description
+
+- getRestakeableStrategies: From EL: Added bEIGEN-Strategy. This is an extended `BaseStrategy` smart contract that will be used for staking bEIGEN. (It also allows EIGEN but will unwrap it for you on deposit)
+
+- Second quorum - Added tracking of new quorum parameters. The second quorum uses EIGEN strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) for stake calculation in the stake registry.
+
+## Watched changes
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum2.2:
+-        0
++        50
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum2.1:
+-        0
++        11000
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum2.0:
+-        0
++        200
++++ description: if quorum count changes, makes sure the new quorum parameters are tracked in the config
++++ type: RISK_PARAMETER
++++ severity: HIGH
+      values.quorumCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract eigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      values.getRestakeableStrategies.13:
++        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19760326 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      values.operatorSetParams:
+-        [200,11000,50]
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum1:
++        [200,11000,50]
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
+      values.operatorSetParamsQuorum2:
++        [0,0,0]
+    }
+```
+
 Generated with discovered.json: 0x6c1f315d53c94420733788742a072d1746dfbbcb
 
 # Diff at Mon, 29 Apr 2024 10:19:33 GMT:

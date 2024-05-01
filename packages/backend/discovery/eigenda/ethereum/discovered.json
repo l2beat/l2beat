@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 19760326,
-  "configHash": "0x1ab4fea054377b32d87b57df6493effe7cecd779142a31e6869b915ae8d561ea",
+  "blockNumber": 19775064,
+  "configHash": "0x5d3386cbb5d0e536c121b362ec76a997ee894f0d4bd08fd620f0b74e77a4bdd7",
   "version": 3,
   "contracts": [
     {
@@ -53,12 +53,13 @@
         "indexRegistry": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
         "numRegistries": 3,
         "OPERATOR_CHURN_APPROVAL_TYPEHASH": "0x4d404e3276e7ac2163d8ee476afa6a41d1f68fb71f2d8b6546b24e55ce01b72a",
-        "operatorSetParams": [200, 11000, 50],
+        "operatorSetParamsQuorum1": [200, 11000, 50],
+        "operatorSetParamsQuorum2": [200, 11000, 50],
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "PUBKEY_REGISTRATION_TYPEHASH": "0x2bd82124057f0913bc3b772ce7b83e8057c1ad1f3510fc83778be20f10ec5de6",
-        "quorumCount": 1,
+        "quorumCount": 2,
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
@@ -241,7 +242,7 @@
       "sinceTimestamp": 1712353787,
       "values": {
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-        "batchId": 2807,
+        "batchId": 3104,
         "BLOCK_STALE_MEASURE": 150,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -258,7 +259,8 @@
           "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
           "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
           "0xAe60d8180437b5C34bB956822ac2710972584473",
-          "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
+          "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
         ],
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
@@ -270,7 +272,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 2807,
+        "taskNumber": 3104,
         "THRESHOLD_DENOMINATOR": 100
       },
       "derivedName": "EigenDAServiceManager"
@@ -324,7 +326,7 @@
         "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 30673,
+        "numPods": 30731,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -387,7 +389,7 @@
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
         "getThreshold": 3,
-        "nonce": 28,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
