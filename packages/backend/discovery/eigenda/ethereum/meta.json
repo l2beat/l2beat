@@ -438,6 +438,7 @@
     },
     {
       "name": "RegistryCoordinator",
+      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
       "values": {
         "OPERATOR_CHURN_APPROVAL_TYPEHASH": {
           "description": null,
@@ -474,8 +475,13 @@
           "severity": null,
           "type": null
         },
-        "operatorSetParams": {
-          "description": null,
+        "operatorSetParamsQuorum1": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
+          "severity": null,
+          "type": null
+        },
+        "operatorSetParamsQuorum2": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
           "severity": null,
           "type": null
         },

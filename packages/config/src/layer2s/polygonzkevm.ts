@@ -185,11 +185,17 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
   upgradesAndGovernance: [
-    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats('ProxyAdminOwner')} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats('EscrowsAdmin')} multisig.`,
+    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
+      'ProxyAdminOwner',
+    )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
+      'EscrowsAdmin',
+    )} multisig.`,
     `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
     `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`ProxyAdminOwner\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`ProxyAdminOwner\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
     `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`ProxyAdminOwner\` directly.`,
-    `The ${shared.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
+    `The ${shared.getMultisigStats(
+      'SecurityCouncil',
+    )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   ].join('\n\n'),
   milestones: [
     {

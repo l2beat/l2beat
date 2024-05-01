@@ -1,6 +1,10 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+// TODO(imxeno): Remove the defaults once we decide how to handle this,
+// since now lack of envs throws an error when running `yarn build`
+// in the main directory.
+
 export const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
@@ -8,7 +12,7 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']),
-    ETHEREUM_RPC_URL: z.string().url(),
+    ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   },
 
   /**
@@ -17,7 +21,9 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string(),
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z
+      .string()
+      .default('00000000000000000000000000000000'),
   },
 
   /**

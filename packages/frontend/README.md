@@ -16,8 +16,8 @@ yarn build:frontend
 
 - `yarn start` - run the development server
 - `yarn build` - compile the production static site
-- `yarn format` - check if formatting is correct with prettier
-- `yarn format:fix` - run prettier automatic formatter
+- `yarn format` - check if formatting is correct with biome
+- `yarn format:fix` - run biome automatic formatter
 - `yarn lint` - check if the code satisfies the eslint configuration
 - `yarn lint:fix` - run eslint automatic fixer
 - `yarn tinify-logos` - resizes and optimizes logos
