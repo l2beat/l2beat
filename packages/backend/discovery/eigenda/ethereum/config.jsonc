@@ -37,6 +37,11 @@
     "EigenLayerCommunityMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
+    // for reference:
+    // "operatorSetParams":
+    //     "0_maxOperatorCount" : 30,
+    //     "1_kickBIPsOfOperatorStake" : 11000,
+    //     "2_kickBIPsOfTotalStake" : 50
     "RegistryCoordinator": {
       "fields": {
         "operatorSetParamsQuorum1": {

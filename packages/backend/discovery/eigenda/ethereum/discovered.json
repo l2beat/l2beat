@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 19774210,
+  "blockNumber": 19775064,
   "configHash": "0x5d3386cbb5d0e536c121b362ec76a997ee894f0d4bd08fd620f0b74e77a4bdd7",
   "version": 3,
   "contracts": [
@@ -242,7 +242,7 @@
       "sinceTimestamp": 1712353787,
       "values": {
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-        "batchId": 3086,
+        "batchId": 3104,
         "BLOCK_STALE_MEASURE": 150,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -272,7 +272,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 3086,
+        "taskNumber": 3104,
         "THRESHOLD_DENOMINATOR": 100
       },
       "derivedName": "EigenDAServiceManager"

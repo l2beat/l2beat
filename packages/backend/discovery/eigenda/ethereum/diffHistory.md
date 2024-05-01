@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9f9ef79d05b3c7765a54991f2f4a05db4f058c77
+Generated with discovered.json: 0x7a1b394dc3b63660e37fba29bfa6432ce4768fed
 
-# Diff at Wed, 01 May 2024 08:54:19 GMT:
+# Diff at Wed, 01 May 2024 11:45:46 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@acc36455c1f5f929e0ed99a6e280e868e5ad4c09 block: 19760326
-- current block number: 19774210
+- current block number: 19775064
 
 ## Description
 
@@ -16,13 +16,16 @@ Generated with discovered.json: 0x9f9ef79d05b3c7765a54991f2f4a05db4f058c77
 
 ```diff
     contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
-    +++ description: None
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
       values.operatorSetParamsQuorum2.2:
 -        0
 +        50
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
       values.operatorSetParamsQuorum2.1:
 -        0
 +        11000
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
       values.operatorSetParamsQuorum2.0:
 -        0
 +        200
@@ -51,11 +54,13 @@ discovery. Values are for block 19760326 (main branch discovery), not current.
 
 ```diff
     contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
-    +++ description: None
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
       values.operatorSetParams:
 -        [200,11000,50]
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
       values.operatorSetParamsQuorum1:
 +        [200,11000,50]
++++ description: 0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake
       values.operatorSetParamsQuorum2:
 +        [0,0,0]
     }
