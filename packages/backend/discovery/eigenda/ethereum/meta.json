@@ -474,7 +474,12 @@
           "severity": null,
           "type": null
         },
-        "operatorSetParams": {
+        "operatorSetParamsQuorum1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "operatorSetParamsQuorum2": {
           "description": null,
           "severity": null,
           "type": null

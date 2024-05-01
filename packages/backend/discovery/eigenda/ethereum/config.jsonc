@@ -39,11 +39,16 @@
     },
     "RegistryCoordinator": {
       "fields": {
-        "operatorSetParams": {
+        "operatorSetParamsQuorum1": {
           "type": "call",
           "method": "getOperatorSetParams",
           "args": [0]
-        }
+        },
+        "operatorSetParamsQuorum2": {
+          "type": "call",
+          "method": "getOperatorSetParams",
+          "args": [1]
+        },
       }
     }
   }
