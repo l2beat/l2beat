@@ -5,6 +5,7 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { getDestination } from '../../../../utils/getDestination'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
@@ -68,6 +69,10 @@ export function getBridgesSummaryViewEntry(
     isArchived: project.isArchived,
     isVerified,
     hasImplementationChanged,
+    destination:
+      project.type === 'bridge'
+        ? getDestination(project.technology.destination)
+        : undefined,
     showProjectUnderReview: isAnySectionUnderReview(project),
     tvl: stats
       ? {
