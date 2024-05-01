@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xf4c21e9fe458b5bb2bf4f299a9fca40a39626b0b
+
+# Diff at Wed, 01 May 2024 08:18:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@acc36455c1f5f929e0ed99a6e280e868e5ad4c09 block: 19531429
+- current block number: 19774035
+
+## Description
+
+Ownership of the rollup contract is renounced.
+
+## Watched changes
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      values.owner:
+-        "0xE298a76986336686CC3566469e3520d23D1a8aaD"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x6d7fb9afb3a03a83c9f41e0d5e4b3789b8843695
 
 # Diff at Thu, 28 Mar 2024 08:30:41 GMT:
