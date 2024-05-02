@@ -31,7 +31,7 @@ export const symbiosis: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Third party',
+      value: 'Third Party',
       description:
         '2/3 of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
       sentiment: 'bad',
