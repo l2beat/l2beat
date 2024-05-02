@@ -5068,7 +5068,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 34443,
       "type": "NMV",
-      "formula": "circulatingSupply",
+      "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"

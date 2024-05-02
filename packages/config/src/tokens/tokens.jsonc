@@ -1799,7 +1799,7 @@
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "type": "NMV",
-      "formula": "circulatingSupply",
+      "formula": "totalSupply",
       "coingeckoId": "wrapped-eeth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
