@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4c11e99e03b2ae08fd367a9e6d1d673f2cfe3fff
+
+# Diff at Wed, 01 May 2024 17:27:29 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7dc564dd4cc2215657e1e7bd8648e6b99a23a992 block: 19624549
+- current block number: 19776768
+
+## Description
+
+One signer of the BridgerOwnerMultisig is replaced.
+
+## Watched changes
+
+```diff
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.getOwners.2:
+-        "0xA20684BE1d0f5Ef96F8771A747fe5861D3F0FA07"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    }
+```
+
 Generated with discovered.json: 0x68af6aeb80b2dc820bf7190868730a2f8750fb79
 
 # Diff at Wed, 03 Apr 2024 14:05:05 GMT:
