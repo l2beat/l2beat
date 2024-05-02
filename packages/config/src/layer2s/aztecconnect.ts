@@ -1,8 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   addSentimentToDataAvailability,
@@ -101,17 +97,20 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      description: 'The system is EOL and the user must self-propose to withdraw.',
+      description:
+        'The system is EOL and the user must self-propose to withdraw.',
       sentiment: 'neutral',
-      value: 'No rollup proposer'
+      value: 'No rollup proposer',
     },
     sourceUpgradeability: {
-      description: 'The ownership of the rollup contract (ProxyAdmin) has been irrevocably renounced, which makes it immutable.',
+      description:
+        'The ownership of the rollup contract (ProxyAdmin) has been irrevocably renounced, which makes it immutable.',
       sentiment: 'good',
-      value: 'Immutable'
+      value: 'Immutable',
     },
     dataAvailability: {
-      description: 'Since EOL the data is not automatically published and the users must self-publish to L1.',
+      description:
+        'Since EOL the data is not automatically published and the users must self-publish to L1.',
       sentiment: 'bad',
       value: 'No automatic data publishing',
       sources: [
@@ -185,7 +184,8 @@ export const aztecconnect: Layer2 = {
     },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
-      description: 'Since EOL this is only true if the user themself runs the rollup locally and publishes the data.',
+      description:
+        'Since EOL this is only true if the user themself runs the rollup locally and publishes the data.',
       references: [
         {
           text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
@@ -285,8 +285,7 @@ export const aztecconnect: Layer2 = {
         'Bridge Connector to various DeFi Bridges.',
       ),
       discovery.getContractDetails('Verifier28x32', {
-        description:
-          'Standard Plonk zkSNARK Verifier.',
+        description: 'Standard Plonk zkSNARK Verifier.',
       }),
     ],
     risks: [],
