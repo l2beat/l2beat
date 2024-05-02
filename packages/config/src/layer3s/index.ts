@@ -9,6 +9,7 @@ import { rari } from './rari'
 import { stack } from './stack'
 import { syndicateframe } from './syndicateframe'
 import { Layer3 } from './types'
+import { teva } from './teva'
 import { xai } from './xai'
 import { zklinknova } from './zkLinkNova'
 
@@ -21,6 +22,7 @@ export const layer3s: Layer3[] = [
   deri,
   rari,
   zklinknova,
+  teva,
   xai,
   orb3,
   popapex,
