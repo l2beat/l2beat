@@ -1,6 +1,4 @@
-import { Hash256 } from '@l2beat/shared-pure'
-
-import { json } from './json'
+import { Hash256, json } from '@l2beat/shared-pure'
 
 export function hashJson(value: json): Hash256 {
   // FIXME: In order for storybook to work we cannot use a top level import
