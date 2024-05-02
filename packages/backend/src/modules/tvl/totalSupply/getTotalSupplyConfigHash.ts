@@ -1,4 +1,5 @@
-import { hashJson, Token } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
+import { Token } from '@l2beat/shared-pure'
 import { sortBy } from 'lodash'
 
 // Increment this value to change the hash which in turn causes the system to
