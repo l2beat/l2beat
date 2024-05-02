@@ -140,7 +140,10 @@ function getData(
         date,
         total: formatCurrency(totalUsd, 'usd'),
         calldata: formatCurrency(calldataUsd, 'usd'),
-        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd') : undefined,
+        blobs:
+          isPostDencun && blobsUsd > 0
+            ? formatCurrency(blobsUsd, 'usd')
+            : undefined,
         compute: formatCurrency(computeUsd, 'usd'),
         overhead: formatCurrency(overheadUsd, 'usd'),
       }
@@ -149,7 +152,10 @@ function getData(
         date,
         total: formatCurrency(totalEth, 'eth'),
         calldata: formatCurrency(calldataEth, 'eth'),
-        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth') : undefined,
+        blobs:
+          isPostDencun && blobsEth > 0
+            ? formatCurrency(blobsEth, 'eth')
+            : undefined,
         compute: formatCurrency(computeEth, 'eth'),
         overhead: formatCurrency(overheadEth, 'eth'),
       }
@@ -158,7 +164,8 @@ function getData(
         date,
         total: formatNumber(totalGas),
         calldata: formatNumber(calldataGas),
-        blobs: isPostDencun ? formatNumber(blobsGas) : undefined,
+        blobs:
+          isPostDencun && blobsGas > 0 ? formatNumber(blobsGas) : undefined,
         compute: formatNumber(computeGas),
         overhead: formatNumber(overheadGas),
       }
