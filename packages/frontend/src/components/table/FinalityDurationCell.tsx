@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { FinalityDataTimings } from '../../pages/scaling/finality/types'
 import { SyncStatus } from '../../pages/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
@@ -8,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
+import { FinalityDataPoint } from '@l2beat/shared-pure'
 
 type BaseProps = {
   syncStatus: SyncStatus
@@ -17,11 +17,11 @@ type BaseProps = {
 type Props =
   | {
       scope: 'timeToInclusion'
-      timings: FinalityDataTimings
+      timings: FinalityDataPoint
     }
   | {
       scope: 'stateUpdateDelay'
-      timings: Pick<FinalityDataTimings, 'averageInSeconds'>
+      timings: Pick<FinalityDataPoint, 'averageInSeconds'>
     }
 
 export function FinalityDurationCell(props: Props & BaseProps) {

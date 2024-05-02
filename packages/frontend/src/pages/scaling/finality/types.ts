@@ -7,6 +7,7 @@ import {
 } from '@l2beat/config'
 import {
   FinalityApiResponse,
+  FinalityDataPoint,
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -38,16 +39,10 @@ export interface ScalingFinalityViewEntry {
 export interface ScalingFinalityViewEntryData {
   timeToInclusion: {
     warning?: string
-  } & FinalityDataTimings
+  } & FinalityDataPoint
   stateUpdateDelay?: {
     warning?: string
     averageInSeconds: number
   }
   syncStatus: SyncStatus
-}
-
-export type FinalityDataTimings = {
-  minimumInSeconds: number | undefined
-  averageInSeconds: number
-  maximumInSeconds: number
 }
