@@ -12,6 +12,7 @@ import { type Layer2, type Layer2Display } from '../types'
 
 export interface UnderReviewConfigCommon {
   id: string
+  rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
 }
 
@@ -39,7 +40,16 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     },
     config: {
       escrows: templateVars.escrows,
-      transactionApi: templateVars.transactionApi,
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+            }
+          : undefined),
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
@@ -59,7 +69,16 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     },
     config: {
       escrows: [],
-      transactionApi: templateVars.transactionApi,
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+            }
+          : undefined),
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
