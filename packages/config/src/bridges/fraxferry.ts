@@ -369,7 +369,7 @@ export const fraxferry: Bridge = {
   },
   riskView: {
     validatedBy: {
-      value: 'Optimistic',
+      value: 'Optimistically',
       description: `Transfers out of the bridge are considered valid if no challenge is submitted within the challenge period of ${challengePeriod}.`,
       sentiment: 'warning',
     },
