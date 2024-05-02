@@ -1,3 +1,4 @@
+import { FinalityDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { SyncStatus } from '../../pages/types'
@@ -7,7 +8,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
-import { FinalityDataPoint } from '@l2beat/shared-pure'
 
 type BaseProps = {
   syncStatus: SyncStatus
