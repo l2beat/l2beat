@@ -9,15 +9,22 @@ import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
 
-interface Props {
-  scope: 'timeToInclusion' | 'stateUpdateDelay'
-  timings: Partial<FinalityDataTimings> &
-    Required<Pick<FinalityDataTimings, 'averageInSeconds'>>
+type BaseProps = {
   syncStatus: SyncStatus
   warning?: string
 }
 
-export function FinalityDurationCell(props: Props) {
+type Props =
+  | {
+      scope: 'timeToInclusion'
+      timings: FinalityDataTimings
+    }
+  | {
+      scope: 'stateUpdateDelay'
+      timings: Pick<FinalityDataTimings, 'averageInSeconds'>
+    }
+
+export function FinalityDurationCell(props: Props & BaseProps) {
   const popUpText =
     props.scope === 'timeToInclusion'
       ? 'time to inclusion'
@@ -45,16 +52,17 @@ export function FinalityDurationCell(props: Props) {
           )}
           <span>Past day avg. {popUpText}</span>
           <ul className="mt-1 list-inside list-disc">
-            {props.timings.minimumInSeconds && (
-              <li className="flex justify-between gap-4">
-                Minimum:
-                <div>
-                  <DurationCell
-                    durationInSeconds={props.timings.minimumInSeconds}
-                  />
-                </div>
-              </li>
-            )}
+            {props.scope === 'timeToInclusion' &&
+              props.timings.minimumInSeconds && (
+                <li className="flex justify-between gap-4">
+                  Minimum:
+                  <div>
+                    <DurationCell
+                      durationInSeconds={props.timings.minimumInSeconds}
+                    />
+                  </div>
+                </li>
+              )}
             <li className="flex justify-between gap-4">
               Average:
               <div>
@@ -63,16 +71,17 @@ export function FinalityDurationCell(props: Props) {
                 />
               </div>
             </li>
-            {props.timings.maximumInSeconds && (
-              <li className="flex justify-between gap-4">
-                Maximum:
-                <div>
-                  <DurationCell
-                    durationInSeconds={props.timings.maximumInSeconds}
-                  />
-                </div>
-              </li>
-            )}
+            {props.scope === 'timeToInclusion' &&
+              props.timings.maximumInSeconds && (
+                <li className="flex justify-between gap-4">
+                  Maximum:
+                  <div>
+                    <DurationCell
+                      durationInSeconds={props.timings.maximumInSeconds}
+                    />
+                  </div>
+                </li>
+              )}
           </ul>
         </div>
         {props.warning && (
