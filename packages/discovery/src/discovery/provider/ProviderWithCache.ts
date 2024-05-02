@@ -1,9 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
-import { Hash256 } from '@l2beat/shared-pure'
+import { Bytes,Hash256  } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { providers } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'

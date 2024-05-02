@@ -1,8 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Bytes,UnixTime  } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'

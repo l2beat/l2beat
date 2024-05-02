@@ -1,6 +1,6 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { Bytes } from '@l2beat/shared-pure'
 
-import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 
 export function bytes32ToContractValue(

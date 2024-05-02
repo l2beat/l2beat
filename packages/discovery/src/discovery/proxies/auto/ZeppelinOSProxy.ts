@@ -1,6 +1,6 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
+import { Bytes } from '@l2beat/shared-pure'
 
-import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'

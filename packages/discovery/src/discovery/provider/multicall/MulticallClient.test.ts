@@ -1,6 +1,6 @@
+import { Bytes } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../DiscoveryProvider'
 import { MulticallClient } from './MulticallClient'

@@ -1,4 +1,5 @@
-import { Bytes } from '../../utils/Bytes'
+import { Bytes } from '@l2beat/shared-pure'
+
 import { EthereumAddress } from '../../utils/EthereumAddress'
 
 export function bytes32ToAddress(bytes32: Bytes): EthereumAddress {
