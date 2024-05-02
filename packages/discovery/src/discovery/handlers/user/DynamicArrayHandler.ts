@@ -3,7 +3,7 @@ import { Bytes } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

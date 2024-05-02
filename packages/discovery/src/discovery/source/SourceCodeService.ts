@@ -1,6 +1,6 @@
 import { zip } from 'lodash'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'

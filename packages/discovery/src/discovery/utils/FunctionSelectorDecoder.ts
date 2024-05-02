@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
   ContractMetadata,

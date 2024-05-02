@@ -2,7 +2,7 @@ import { Bytes, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'

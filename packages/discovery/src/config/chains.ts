@@ -1,6 +1,7 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { getMulticall3Config } from '../discovery/provider/multicall/MulticallConfig'
 import { MulticallConfig } from '../discovery/provider/multicall/types'
-import { EthereumAddress } from '../utils/EthereumAddress'
 
 export interface ChainConfig {
   name: string

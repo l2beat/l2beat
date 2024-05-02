@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { ContractMeta, DiscoveryMeta, ValueMeta } from '../config/DiscoveryMeta'
 import { DiscoveryDiff } from './diffDiscovery'
 import {

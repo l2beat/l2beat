@@ -1,6 +1,6 @@
 import { Bytes } from '@l2beat/shared-pure'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 export interface MulticallConfig {
   sinceBlock: number

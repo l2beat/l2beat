@@ -1,7 +1,7 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'

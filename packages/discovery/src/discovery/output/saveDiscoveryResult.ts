@@ -9,7 +9,7 @@ import {
   FileContent,
   ParsedFilesManager,
 } from '../../flatten/ParsedFilesManager'
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'

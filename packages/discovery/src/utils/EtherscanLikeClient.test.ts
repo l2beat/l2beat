@@ -1,7 +1,7 @@
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { EthereumAddress } from './EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { EtherscanLikeClient } from './EtherscanLikeClient'
 import { HttpClient } from './HttpClient'
 

@@ -3,7 +3,7 @@ import { ethers, providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { getChainConfig } from '../../../config/config.discovery'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { EtherscanLikeClient } from '../../../utils/EtherscanLikeClient'
 import { HttpClient } from '../../../utils/HttpClient'
 import { DiscoveryLogger } from '../../DiscoveryLogger'

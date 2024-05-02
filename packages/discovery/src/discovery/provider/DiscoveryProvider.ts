@@ -2,7 +2,7 @@ import { assert } from '@l2beat/backend-tools'
 import { Bytes, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'

@@ -3,7 +3,7 @@ import { Bytes } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { addressToBytes32 } from './address'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'

@@ -1,7 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { diffDiscovery } from './diffDiscovery'
 
