@@ -1,4 +1,5 @@
-import { Hash256 } from './Hash256'
+import { Hash256 } from '@l2beat/shared-pure'
+
 import { json } from './json'
 
 export function hashJson(value: json): Hash256 {
