@@ -15,7 +15,7 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('finality', function (table) {
-    table.integer('average_state_update')
+    table.integer('average_state_update').nullable()
   })
 }
 
