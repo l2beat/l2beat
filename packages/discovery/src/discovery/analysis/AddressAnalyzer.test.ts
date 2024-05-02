@@ -1,9 +1,9 @@
 import { ContractParameters } from '@l2beat/discovery-types'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
-import { UnixTime } from '../../utils/UnixTime'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
