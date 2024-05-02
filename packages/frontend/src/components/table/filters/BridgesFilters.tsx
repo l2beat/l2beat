@@ -2,6 +2,7 @@ import uniq from 'lodash/uniq'
 import React from 'react'
 
 import { BridgesEntry } from '../../../pages/bridges/types'
+import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
 import { IncludeLayer2sCheckbox } from './checkboxes/IncludeLayer2sCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
@@ -31,41 +32,43 @@ export function BridgesFilters({ items }: Props) {
     }))
 
   return (
-    <FiltersWrapper>
-      <IncludeLayer2sCheckbox items={items} />
-      <RichSelect label="Validated By" id="validatedBy-select">
-        {validatedBy.map((vb) => (
-          <RichSelect.Item
-            selectedLabel={vb.label}
-            key={vb.label}
-            value={vb.value}
-          >
-            {vb.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-      <RichSelect label="Type" id="type-select">
-        {types.map((type) => (
-          <RichSelect.Item
-            selectedLabel={type.label}
-            key={type.label}
-            value={type.value}
-          >
-            {type.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-      <RichSelect label="Destination" id="destination-select">
-        {destinations.map((destination) => (
-          <RichSelect.Item
-            selectedLabel={destination.label}
-            key={destination.label}
-            value={destination.value}
-          >
-            {destination.label}
-          </RichSelect.Item>
-        ))}
-      </RichSelect>
-    </FiltersWrapper>
+    <OverflowWrapper>
+      <FiltersWrapper>
+        <IncludeLayer2sCheckbox items={items} />
+        <RichSelect label="Validated By" id="validatedBy-select">
+          {validatedBy.map((vb) => (
+            <RichSelect.Item
+              selectedLabel={vb.label}
+              key={vb.label}
+              value={vb.value}
+            >
+              {vb.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+        <RichSelect label="Type" id="type-select">
+          {types.map((type) => (
+            <RichSelect.Item
+              selectedLabel={type.label}
+              key={type.label}
+              value={type.value}
+            >
+              {type.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+        <RichSelect label="Destination" id="destination-select">
+          {destinations.map((destination) => (
+            <RichSelect.Item
+              selectedLabel={destination.label}
+              key={destination.label}
+              value={destination.value}
+            >
+              {destination.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+      </FiltersWrapper>
+    </OverflowWrapper>
   )
 }
