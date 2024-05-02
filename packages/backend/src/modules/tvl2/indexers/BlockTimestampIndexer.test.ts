@@ -2,15 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import {
-  BlockTimestampIndexer,
-  BlockTimestampProvider,
-} from './BlockTimestampIndexer'
+import { BlockTimestampIndexer } from './BlockTimestampIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
   beforeEach(() => {
@@ -19,29 +17,25 @@ describe(BlockTimestampIndexer.name, () => {
 
   describe(BlockTimestampIndexer.prototype.update.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
-      const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
-      const to = from.add(1, 'days')
-
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: async () => 666,
+      const from = 100
+      const to = 300
+      const timestampToSync = new UnixTime(200)
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
 
+      const blockTimestampService = mockObject<BlockTimestampService>({
+        getBlockNumberAtOrBefore: async () => 666,
+      })
       const blockTimestampRepository = mockObject<BlockTimestampRepository>({
         add: async () => '',
       })
 
-      const timestampToSync = from.toEndOf('day')
-
-      const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
-      })
-
       const chain = 'ethereum'
-
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        blockTimestampProvider,
+        blockTimestampService,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain,
@@ -49,10 +43,12 @@ describe(BlockTimestampIndexer.name, () => {
         syncOptimizer,
       })
 
-      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+      const newSafeHeight = await indexer.update(from, to)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(
-        blockTimestampProvider.getBlockNumberAtOrBefore,
+        blockTimestampService.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync)
 
       expect(blockTimestampRepository.add).toHaveBeenOnlyCalledWith({
@@ -62,6 +58,32 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       expect(newSafeHeight).toEqual(timestampToSync.toNumber())
+    })
+
+    it('returns if optimized timestamp is later than to', async () => {
+      const from = 100
+      const to = 300
+      const timestampToSync = new UnixTime(to + 100)
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
+      })
+
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        blockTimestampService: mockObject<BlockTimestampService>({}),
+        indexerService: mockObject<IndexerService>({}),
+        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        chain: 'chain',
+        minHeight: 0,
+        syncOptimizer,
+      })
+
+      const newSafeHeight = await indexer.update(from, to)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+
+      expect(newSafeHeight).toEqual(to)
     })
   })
 
@@ -74,7 +96,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+        blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain: 'ethereum',

@@ -3,6 +3,8 @@ import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
 import { formatUSD } from '../../utils/utils'
+import { Link } from '../Link'
+import { PercentChange } from '../PercentChange'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { ValueLockedBreakdown } from '../breakdown/ValueLockedBreakdown'
 import {
@@ -11,8 +13,6 @@ import {
   NativeIcon,
   RoundedWarningIcon,
 } from '../icons'
-import { Link } from '../Link'
-import { PercentChange } from '../PercentChange'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface TvlStats {

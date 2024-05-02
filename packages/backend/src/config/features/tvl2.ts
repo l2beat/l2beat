@@ -1,5 +1,12 @@
 import { assert, Env } from '@l2beat/backend-tools'
-import { bridges, chains, Layer2, layer2s, tokenList } from '@l2beat/config'
+import {
+  Layer2,
+  bridges,
+  chains,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import {
   AmountConfigEntry,
   ChainId,
@@ -9,11 +16,16 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
+import {
+  Project,
+  bridgeToProject,
+  layer2ToProject,
+  layer3ToProject,
+} from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
-import { getChainsWithTokens, getChainTvlConfig } from './tvl'
+import { getChainTvlConfig, getChainsWithTokens } from './tvl'
 
 export function getTvl2Config(
   flags: FeatureFlags,
@@ -23,6 +35,7 @@ export function getTvl2Config(
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
+    .concat(layer3s.map(layer3ToProject))
 
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
@@ -35,19 +48,27 @@ export function getTvl2Config(
     }),
   )
 
-  const tvl2Config = {
+  const tvl2Config: Tvl2Config = {
     amounts: getAmountsConfig(
       projects,
       tokenList,
       chainConverter,
       chainToProject,
     ),
-    prices: getPricesConfig(tokenList, chainConverter),
+    prices: getPricesConfig(tokenList),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString([
       'COINGECKO_API_KEY_FOR_TVL2',
       'COINGECKO_API_KEY',
     ]),
+    chainConverter,
+    maxTimestampsToAggregateAtOnce: env.integer(
+      'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
+      100,
+    ),
+    projects,
+    projectsExcludedFromApi:
+      env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
   }
 
   return tvl2Config
@@ -63,6 +84,9 @@ function getAmountsConfig(
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
+      if (token.symbol === 'ETH') {
+        continue
+      }
       const project = chainToProject.get(chainConverter.toName(token.chainId))
       assert(project, 'Project is required for token')
 
@@ -79,6 +103,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'circulatingSupply':
@@ -92,6 +117,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'locked':
@@ -111,11 +137,16 @@ function getAmountsConfig(
             token.sinceTimestamp,
             escrow.sinceTimestamp,
           ),
+          untilTimestamp: getUntilTimestamp(
+            token.untilTimestamp,
+            escrow.untilTimestamp,
+          ),
           escrowAddress: escrow.address,
           project: project.projectId,
-          source: toSource(token.type),
-          includeInTotal: true,
+          source: 'canonical',
+          includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
+          symbol: token.symbol,
         })
       }
     }
@@ -124,39 +155,53 @@ function getAmountsConfig(
   return entries
 }
 
-function getPricesConfig(
-  tokenList: Token[],
-  chainConverter: ChainConverter,
-): PriceConfigEntry[] {
-  const uniqueEntries = new Map<string, PriceConfigEntry>()
-
-  for (const token of tokenList) {
-    const chain = chainConverter.toName(token.chainId)
-    const key = `${chain}-${(token.address ?? 'native').toString()}`
-    const curr = uniqueEntries.get(key)
-
-    if (curr === undefined) {
-      uniqueEntries.set(key, {
-        type: 'coingecko',
-        address: token.address ?? 'native',
-        chain: chain,
-        sinceTimestamp: token.sinceTimestamp,
-        coingeckoId: token.coingeckoId,
-      })
-    } else {
-      if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
-        uniqueEntries.set(key, {
-          type: 'coingecko',
-          address: token.address ?? 'native',
-          chain: chain,
-          sinceTimestamp: token.sinceTimestamp,
-          coingeckoId: token.coingeckoId,
-        })
-      }
-    }
+function getUntilTimestamp(
+  tokenUntil: UnixTime | undefined,
+  escrowUntil: UnixTime | undefined,
+): UnixTime | undefined {
+  if (tokenUntil === undefined && escrowUntil === undefined) {
+    return undefined
   }
 
-  return Array.from(uniqueEntries.values())
+  if (tokenUntil === undefined) {
+    return escrowUntil
+  }
+
+  if (escrowUntil === undefined) {
+    return tokenUntil
+  }
+
+  return UnixTime.max(tokenUntil, escrowUntil)
+}
+
+function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
+  const prices = new Map<string, PriceConfigEntry>()
+
+  for (const token of tokenList) {
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.id}`)
+
+    const key = `${chain.name}-${(token.address ?? 'native').toString()}`
+
+    assert(prices.get(key) === undefined, 'Every price should be unique')
+
+    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+    const sinceTimestamp = UnixTime.max(
+      chain.minTimestampForTvl,
+      token.sinceTimestamp,
+    )
+
+    prices.set(key, {
+      type: 'coingecko',
+      assetId: token.id,
+      address: token.address ?? 'native',
+      chain: chain.name,
+      sinceTimestamp,
+      coingeckoId: token.coingeckoId,
+    })
+  }
+
+  return Array.from(prices.values())
 }
 
 function getChainToProjectMapping(
@@ -166,6 +211,13 @@ function getChainToProjectMapping(
   const chainToProject = new Map<string, ProjectId>()
 
   for (const project of layer2s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
+  for (const project of layer3s) {
     if (project.chainConfig) {
       const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
       chainToProject.set(chain, project.id)

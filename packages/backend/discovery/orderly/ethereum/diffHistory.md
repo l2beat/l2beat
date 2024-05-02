@@ -1,4 +1,122 @@
-Generated with discovered.json: 0x718bd993f443ed4d7b1cd04886c877d1f527aefa
+Generated with discovered.json: 0xb6ffb46f2934ae27cf74afbbd30bf499b1c6920a
+
+# Diff at Wed, 22 May 2024 20:10:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bac4efad06804152ae97853892e122a801bbc509 block: 19918763
+- current block number: 19927716
+
+## Description
+
+ConduitMultisig update.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+      values.getOwners.6:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners.5:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.getOwners.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.getOwners.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getOwners.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.getOwners.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x540ca88f8981b161a151986f136629dc3e13d7c5
+
+# Diff at Tue, 21 May 2024 14:05:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19859812
+- current block number: 19918763
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19859812 (main branch discovery), not current.
+
+```diff
+    contract OrderlyMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "OrderlyMultisig"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0x5edacefb20bc8a6791e626d8341b2641515ce115
+
+# Diff at Mon, 13 May 2024 08:10:33 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@142cacbaef1c026127ab0d88f45c576741b3a345 block: 19830984
+- current block number: 19859812
+
+## Description
+
+After doubling the gasLimit, it is now decreased to 40M, still a 1/3 increase from the original 30M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        60000000
++        40000000
+    }
+```
+
+Generated with discovered.json: 0x5d1123ab6324ea7e55ea01032dfc89c12ca212e2
+
+# Diff at Thu, 09 May 2024 07:27:13 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3bba0812727b9105a3f44fe55a68572c804b992 block: 19776802
+- current block number: 19830984
+
+## Description
+
+The gasLimit for L2 is doubled. Current block time is 2s, elasticity is 10x. This config is now identical to Base L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
+Generated with discovered.json: 0x3edeab069898df087a548f652052250c2f97a55a
 
 # Diff at Thu, 28 Mar 2024 10:33:33 GMT:
 

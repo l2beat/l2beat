@@ -27,7 +27,7 @@ export interface SingleColumnConfig<T> {
   idHref?: ProjectSectionId
   getValue: (value: T, index: number) => ReactNode
   colSpan?: (value: T) => number | undefined
-  removeCellOnFalsyValue?: boolean
+  removeCellOnFalsyValue?: (value: T) => boolean
   tooltip?: ReactNode
   sorting?: SortingConfig<T>
 }

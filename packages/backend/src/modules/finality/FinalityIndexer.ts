@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
@@ -96,43 +96,69 @@ export class FinalityIndexer extends ChildIndexer {
     to: UnixTime,
     configuration: FinalityConfig,
   ): Promise<FinalityRecord | undefined> {
+    const { timeToInclusion, stateUpdate } = configuration.analyzers
+    const { stateUpdateMode } = configuration
+
     const from = to.add(-1, 'days')
 
-    const projectFinalityTimestamps =
-      await configuration.analyzer.getFinalityForInterval(from, to)
+    const inclusionDelays = await timeToInclusion.analyzeInterval(from, to)
 
-    if (!projectFinalityTimestamps) return
+    if (!inclusionDelays) {
+      return
+    }
 
-    return {
+    const baseResult = {
       projectId: configuration.projectId,
       timestamp: to,
-      minimumTimeToInclusion: Math.min(...projectFinalityTimestamps),
-      maximumTimeToInclusion: Math.max(...projectFinalityTimestamps),
-      averageTimeToInclusion: Math.round(mean(projectFinalityTimestamps)),
+
+      minimumTimeToInclusion: Math.min(...inclusionDelays),
+      maximumTimeToInclusion: Math.max(...inclusionDelays),
+      averageTimeToInclusion: Math.round(mean(inclusionDelays)),
+    }
+
+    if (stateUpdateMode !== 'analyze') {
+      return {
+        ...baseResult,
+        averageStateUpdate: null,
+      }
+    }
+
+    assert(
+      stateUpdate,
+      `State update analyzer is not defined for ${configuration.projectId}, update module or set state update mode to 'disabled'`,
+    )
+
+    const stateUpdateDelays = await stateUpdate.analyzeInterval(from, to)
+
+    if (!stateUpdateDelays) {
+      return
+    }
+
+    return {
+      ...baseResult,
+      averageStateUpdate: Math.round(mean(stateUpdateDelays)),
     }
   }
 
-  override async initialize(): Promise<number> {
-    await this.initializeIndexerState()
-    return await this.getSafeHeight()
-  }
-
-  async initializeIndexerState() {
-    const safeHeight = this.configuration.minTimestamp.toNumber()
+  override async initialize() {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
 
-    if (indexerState === undefined) {
-      await this.stateRepository.add({
-        indexerId: this.indexerId,
-        safeHeight,
-        minTimestamp: this.configuration.minTimestamp,
-      })
-      return
-    }
+    const safeHeight =
+      indexerState?.safeHeight ?? this.configuration.minTimestamp.toNumber()
 
-    await this.setSafeHeight(safeHeight)
+    return { safeHeight }
+  }
+
+  override async setInitialState(
+    safeHeight: number,
+    _configHash?: string | undefined,
+  ): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      safeHeight,
+    })
   }
 
   async getSafeHeight(): Promise<number> {
@@ -160,6 +186,6 @@ export class FinalityIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

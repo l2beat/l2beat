@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xc30d97b2c62e49cb891cf19047ba38cb3a0d7615
+
+# Diff at Mon, 27 May 2024 17:47:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 14543033
+- current block number: 15021326
+
+## Description
+
+Updated the SequencerInbox template, no onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14543033 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+    }
+```
+
+Generated with discovered.json: 0xaf54a96131f4555110c26941ac4b68c40625933a
+
+# Diff at Tue, 14 May 2024 07:08:06 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 12908240
+- current block number: 14440563
+
+## Description
+
+This update extends the sequencer-only window for degen chain by 1000x to 1000d. (MaxTimeVariation.delayBlocks, maxTimeVariation.delaySeconds)
+Context: Big chain reorg on the L2, no batches posted for the last ~30h.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: None
+      values.maxTimeVariation.2:
+-        86400
++        86400000
+      values.maxTimeVariation.0:
+-        5760
++        3456000
+    }
+```
+
 Generated with discovered.json: 0xb10226147642416599acfd9706b5734973b04a80
 
 # Diff at Mon, 08 Apr 2024 19:50:43 GMT:

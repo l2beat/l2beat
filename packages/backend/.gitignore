@@ -4,3 +4,4 @@ cache
 broadcast
 .env
 *.env
+config.hints.jsonc

@@ -1,11 +1,12 @@
-import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
 import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 
 export {}
 
 import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
+import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerStateRow } from '../../tools/uif/IndexerStateRepository'
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
@@ -167,6 +168,8 @@ declare module 'knex/types/tables' {
     minimum_time_to_inclusion: number
     maximum_time_to_inclusion: number
     average_time_to_inclusion: number
+
+    average_state_update: number | null
   }
 
   interface TrackedTxsConfigRow {
@@ -184,7 +187,37 @@ declare module 'knex/types/tables' {
     tracked_tx_id: string
     tx_hash: string
     timestamp: Date
-    data: TransactionData
+    gas_used: number
+    gas_price: string
+    calldata_length: number
+    calldata_gas_used: number
+    blob_gas_used: number | null
+    blob_gas_price: string | null
+  }
+
+  interface AggregatedL2CostsRow {
+    timestamp: Date
+    project_id: string
+    total_gas: number
+    total_gas_eth: number
+    total_gas_usd: number
+    blobs_gas: number | null
+    blobs_gas_eth: number | null
+    blobs_gas_usd: number | null
+    calldata_gas: number
+    calldata_gas_eth: number
+    calldata_gas_usd: number
+    compute_gas: number
+    compute_gas_eth: number
+    compute_gas_usd: number
+    overhead_gas: number
+    overhead_gas_eth: number
+    overhead_gas_usd: number
+  }
+
+  interface L2CostsPricesRow {
+    timestamp: Date
+    price_usd: number
   }
 
   interface DiscoveryCacheRow {
@@ -194,16 +227,17 @@ declare module 'knex/types/tables' {
     block_number: number
   }
 
-  interface IndexerStateRow {
-    indexer_id: string
-    safe_height: number
-    min_timestamp: Date | undefined
-  }
-
   interface TvlCleanerRow {
     repository_name: string
     hourly_cleaned_until: Date
     six_hourly_cleaned_until: Date
+  }
+
+  interface VerifierStatusRow {
+    address: string
+    chain_id: number
+    last_used: Date
+    last_updated: Date
   }
 
   interface Tables {
@@ -234,13 +268,17 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    l2_costs_prices: L2CostsPricesRow
+    aggregated_l2_costs: AggregatedL2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
+    values: ValueRow
+    verifier_state: VerifierStatusRow
   }
 }
 
 // Some aggregations return not empty row with null values. Use this type to explicitly type them.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 export type NullableDict<T = any> = Record<string, T | null>

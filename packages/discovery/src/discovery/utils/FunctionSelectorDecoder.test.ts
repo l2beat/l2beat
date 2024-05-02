@@ -1,12 +1,11 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { addressToBytes32 } from './address'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
+import { addressToBytes32 } from './address'
 
 describe(FunctionSelectorDecoder.name, () => {
   const EIP2535_CALLDATA = Bytes.fromHex('0x52ef6b2c')
@@ -228,9 +227,9 @@ describe(FunctionSelectorDecoder.name, () => {
       expect(provider.getMetadata).toHaveBeenCalledTimes(5)
       expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
       expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation3)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation2)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation3)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation1)
     })
   })
 

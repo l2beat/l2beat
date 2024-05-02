@@ -1,4 +1,4 @@
-/* 
+/*
 Custom proxy introduced originally by Optimism team
 It stores (immutable) libAddressManager and implementation name
 in addressManager[address(this)] and implementationName[address(this)]
@@ -10,10 +10,9 @@ It does not have an owner
 */
 import { assert } from '@l2beat/backend-tools'
 import { ProxyDetails } from '@l2beat/discovery-types'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getCallResult } from '../../utils/getCallResult'

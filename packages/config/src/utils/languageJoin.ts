@@ -7,7 +7,7 @@ export function languageJoin(items: string[]) {
     return items[0]
   }
   items = [...items]
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/style/noNonNullAssertion: we know it's there
   const last = items.pop()!
   return `${items.join(', ')} and ${last}`
 }

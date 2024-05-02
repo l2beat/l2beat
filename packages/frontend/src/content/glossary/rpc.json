@@ -1,0 +1,5 @@
+{
+  "term": "RPC (Remote Procedure Call)",
+  "definition": "A protocol that a program uses to request a service from a program located on another computer in a network without having to understand the network details.",
+  "isSpicy": false
+}

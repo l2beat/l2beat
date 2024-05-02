@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "base",
   "name": "degen",
   "initialAddresses": [
@@ -16,52 +16,19 @@
     "0x67812161Bbb6aCF891aA6028BC614a660961ceD8": "ChallengeManager",
     "0xaA3A7A2ec2477A61082E1C41a2c6710587917028": "UpgradeExecutor",
     "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "RollupOwnerMultisig",
-
     "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBDecent", // Decent omnichain service (LayerZero)
     "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge" // EOA Bridge / Liquidity network https://relay.link/transactions/
   },
   "overrides": {
     "RollupProxy": {
-      "ignoreMethods": [
-        // Execution reverted
-        "proxiableUUID"
-      ],
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
-      "fields": {
-        // when this changes, it means the validators have changed
-        "setValidatorCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000006"
-          ]
-        },
-        "challenges": {
-          "type": "stateFromEvent",
-          "event": "RollupChallengeStarted",
-          "returnParams": [
-            "challengeIndex",
-            "asserter",
-            "challenger",
-            "challengedNode"
-          ]
-        },
-        "validators": {
-          "type": "arbitrumActors",
-          "actorType": "validator"
-        }
-      }
+      "extends": "orbitstack/RollupProxy"
     },
     "UpgradeExecutor": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -78,45 +45,7 @@
       "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "type": "call",
-          "method": "function isBatchPoster(address) external view returns (bool)",
-          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
-        },
-        "sequencerVersion": {
-          "type": "arbitrumSequencerVersion"
-        },
-        "dacKeyset": {
-          "type": "arbitrumDACKeyset"
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000001"
-          ]
-        },
-        "batchPosters": {
-          "type": "arbitrumActors",
-          "actorType": "batchPoster"
-        },
-        "keySetUpdates": {
-          "type": "eventCount",
-          "topics": [
-            // SetValidKeyset(bytes32,bytes)
-            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-          ]
-        }
-      }
+      "extends": "orbitstack/SequencerInbox"
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
@@ -124,7 +53,9 @@
     "UTBDecent": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },

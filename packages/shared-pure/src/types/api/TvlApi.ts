@@ -2,10 +2,10 @@ import z from 'zod'
 
 import { AssetId } from '../AssetId'
 import { AssetType } from '../AssetType'
-import { branded } from '../branded'
 import { ChainId } from '../ChainId'
 import { EthereumAddress } from '../EthereumAddress'
 import { UnixTime } from '../UnixTime'
+import { branded } from '../branded'
 
 const TvlApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
@@ -46,6 +46,9 @@ export type TvlApiCharts = z.infer<typeof TvlApiCharts>
 export const TvlApiToken = z.object({
   assetId: branded(z.string(), AssetId),
   chainId: branded(z.number(), ChainId),
+  // TODO(L2B-5614): Make both required
+  address: z.string().optional(),
+  chain: z.string().optional(),
   assetType: branded(z.string(), AssetType),
   usdValue: z.number(),
 })
@@ -77,8 +80,6 @@ const BaseAssetBreakdownData = z.object({
   usdValue: z.string(),
   usdPrice: z.string(),
 })
-
-type BaseAssetBreakdownData = z.infer<typeof BaseAssetBreakdownData>
 
 export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.extend({
   escrows: z.array(

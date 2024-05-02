@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "mantapacific",
   "initialAddresses": ["0x3B95bC951EE0f553ba487327278cAc44f29715E5"],
@@ -31,9 +31,11 @@
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
         }
       }
     },
@@ -45,17 +47,31 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "overhead": {
+          "description": "Fixed L2 gas overhead. Used as part of the L2 fee calculation.",
+          "severity": "LOW"
+        },
+        "scalar": {
+          "description": "Dynamic L2 gas overhead. Used as part of the L2 fee calculation.",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["scalar"]

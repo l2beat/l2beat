@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { Semver } from '../../../utils/semver'
 import { fetchAccessControl } from '../../handlers/user/AccessControlHandler'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -14,9 +14,9 @@ export async function getProxyGovernance(
   proxyVersion: Semver,
 ): Promise<EthereumAddress[]> {
   if (proxyVersion.major === 5) {
-    return getProxyGovernanceV5(provider, address, blockNumber)
+    return await getProxyGovernanceV5(provider, address, blockNumber)
   } else if (proxyVersion.major <= 4) {
-    return getProxyGovernanceV4Down(provider, address, blockNumber)
+    return await getProxyGovernanceV4Down(provider, address, blockNumber)
   } else {
     throw new Error('Unsupported proxy version')
   }

@@ -1,4 +1,4 @@
-import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
@@ -15,11 +15,11 @@ import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
+import { LivenessController } from './LivenessController'
 import {
   calculateDetailsFor,
   calculateIntervals,
 } from './calculateIntervalWithAverages'
-import { LivenessController } from './LivenessController'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
@@ -36,7 +36,7 @@ describe(LivenessController.name, () => {
               projectId: ProjectId('project1'),
               timestamp: START.add(-i, 'hours'),
               subtype: 'batchSubmissions',
-            } as const),
+            }) as const,
         ),
       )
       RECORDS.push({
@@ -84,7 +84,7 @@ describe(LivenessController.name, () => {
               projectId: ProjectId('project1'),
               timestamp: START.add(-i, 'hours'),
               subtype: 'batchSubmissions',
-            } as const),
+            }) as const,
         ),
       )
       const livenessController = new LivenessController(
@@ -228,7 +228,6 @@ function getMockIndexerStateRepository(data: UnixTime) {
     findIndexerState: async () => {
       return {
         id: 1,
-        configHash: Hash256.random(),
         indexerId: 'liveness_indexer',
         safeHeight: data.toNumber(),
       }

@@ -1,7 +1,7 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
@@ -44,8 +44,6 @@ export class LimitedArrayHandler implements ClassicHandler {
     for (const result of results) {
       if (result.error !== undefined) {
         if (result.error !== 'Execution reverted') {
-          // FIXME: Had no eslint ignore here
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           error = result.error
         }
         break

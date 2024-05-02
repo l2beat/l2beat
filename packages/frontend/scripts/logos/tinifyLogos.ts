@@ -1,7 +1,7 @@
 import crypto from 'crypto'
-import dotenv from 'dotenv'
-import { readdirSync, readFileSync, writeFileSync } from 'fs'
+import { readFileSync, readdirSync, writeFileSync } from 'fs'
 import path from 'path'
+import dotenv from 'dotenv'
 import tinify from 'tinify'
 import { z } from 'zod'
 

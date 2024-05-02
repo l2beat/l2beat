@@ -1,4 +1,4 @@
-import { Layer2, layer2s, Layer3 } from '@l2beat/config'
+import { Layer2, Layer3, layer2s } from '@l2beat/config'
 import {
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
@@ -7,8 +7,8 @@ import {
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWarnings } from '../../../../utils/tvl/getTVLWarnings'
+import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { getProjectTvlTooltipText } from '../../../project/common/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
@@ -21,6 +21,7 @@ export function getScalingSummaryView(
   tvl: number,
   verificationStatus: VerificationStatus,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
+  { layer3sTvl }: { layer3sTvl: boolean },
 ): ScalingSummaryViewProps {
   const ordered = orderByTvl(projects, tvlApiResponse)
 
@@ -44,10 +45,13 @@ export function getScalingSummaryView(
         !!implementationChange?.projects[project.id.toString()]
       return getScalingL3SummaryEntry(
         project,
+        tvlApiResponse,
         verificationStatus.projects[project.id.toString()],
         hasImplementationChanged,
+        { layer3sTvl },
       )
     }),
+    layer3sTvl,
   }
 }
 
@@ -116,9 +120,25 @@ function getScalingL2SummaryEntry(
 
 function getScalingL3SummaryEntry(
   project: Layer3,
-  isVerified?: boolean,
-  hasImplementationChanged?: boolean,
+  tvlApiResponse: TvlApiResponse,
+  isVerified: boolean | undefined,
+  hasImplementationChanged: boolean | undefined,
+  { layer3sTvl }: { layer3sTvl: boolean },
 ): ScalingL3SummaryViewEntry {
+  const apiProject = tvlApiResponse.projects[project.id.toString()]
+
+  let stats: TvlStats | undefined
+
+  if (apiProject) {
+    stats = getTvlStats(
+      apiProject,
+      project.display.name,
+      project.config.associatedTokens ?? [],
+    )
+  }
+  const associatedTokens = project.config.associatedTokens ?? []
+  const tvlWarnings = getTvlWarnings(apiProject, associatedTokens, project)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -126,18 +146,37 @@ function getScalingL3SummaryEntry(
     provider: project.display.provider,
     category: project.display.category,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     purposes: project.display.purposes,
+    tvlWarnings,
     hostChainName:
       project.hostChain === 'Multiple'
         ? 'Multiple'
         : layer2s.find((l) => l.id === project.hostChain)?.display.name,
+    tvl:
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? {
+            value: stats.latestTvl,
+            displayValue: formatUSD(stats.latestTvl),
+          }
+        : undefined,
+    tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlBreakdown: layer3sTvl ? stats?.tvlBreakdown : undefined,
+    sevenDayChange:
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.sevenDayChange
+        : undefined,
+    oneDayChange:
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.oneDayChange
+        : undefined,
   }
 }
 
-export function escrowsConfigured(project: Layer2) {
+export function escrowsConfigured(project: Layer2 | Layer3) {
   return project.config.escrows.length > 0
 }

@@ -2,11 +2,11 @@ import React from 'react'
 
 import { AnomalyIndicator } from '../../../../components/AnomalyIndicator'
 import { InfoIcon } from '../../../../components/icons'
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
 import {
   Tooltip,
@@ -64,7 +64,7 @@ export function getScalingLivenessColumnsConfig() {
               dataType="proofSubmissions"
             />
           ),
-          removeCellOnFalsyValue: true,
+          removeCellOnFalsyValue: () => true,
           sorting: {
             getOrderValue: (project) => {
               return {
@@ -89,7 +89,7 @@ export function getScalingLivenessColumnsConfig() {
               dataType="stateUpdates"
             />
           ),
-          removeCellOnFalsyValue: true,
+          removeCellOnFalsyValue: () => true,
           sorting: {
             getOrderValue: (project) => {
               return {
@@ -131,7 +131,8 @@ export function getScalingLivenessColumnsConfig() {
           showComingSoon={
             !project.data?.syncStatus.isSynced ||
             project.slug === 'linea' ||
-            project.slug === 'starknet'
+            project.slug === 'starknet' ||
+            project.slug === 'scroll'
           }
         />
       ),

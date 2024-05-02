@@ -1,56 +1,19 @@
-import { json } from '@l2beat/shared-pure'
+import { UnixTime, json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
-import { IndexerStateRepository } from './IndexerStateRepository'
+import {
+  IndexerStateRecord,
+  IndexerStateRepository,
+} from './IndexerStateRepository'
+import { mockDbMiddleware } from './multi/MultiIndexer.test'
 
 describe(IndexerService.name, () => {
-  describe(IndexerService.prototype.setSafeHeight.name, () => {
-    it('sets safe height', async () => {
-      const indexerStateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => ({
-          indexerId: 'indexer',
-          safeHeight: 1,
-        }),
-        setSafeHeight: async () => -1,
-      })
-
-      const indexerService = new IndexerService(
-        indexerStateRepository,
-        mockObject<IndexerConfigurationRepository>({}),
-      )
-
-      await indexerService.setSafeHeight('indexer', 123)
-
-      expect(indexerStateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        'indexer',
-        123,
-      )
-    })
-    it('adds record if there is no entry in the DB', async () => {
-      const indexerStateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => undefined,
-        add: async () => '',
-      })
-
-      const indexerService = new IndexerService(
-        indexerStateRepository,
-        mockObject<IndexerConfigurationRepository>({}),
-      )
-
-      await indexerService.setSafeHeight('indexer', 123)
-
-      expect(indexerStateRepository.add).toHaveBeenOnlyCalledWith({
-        indexerId: 'indexer',
-        safeHeight: 123,
-      })
-    })
-  })
-
   it(IndexerService.prototype.getSafeHeight.name, async () => {
+    const safeHeight = 123
     const indexerStateRepository = mockObject<IndexerStateRepository>({
-      findIndexerState: async () => undefined,
+      findIndexerState: async () => mock({ safeHeight }),
     })
 
     const indexerService = new IndexerService(
@@ -58,11 +21,66 @@ describe(IndexerService.name, () => {
       mockObject<IndexerConfigurationRepository>({}),
     )
 
-    await indexerService.getSafeHeight('indexer')
+    const result = await indexerService.getSafeHeight('indexer')
 
+    expect(result).toEqual(safeHeight)
     expect(indexerStateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
       'indexer',
     )
+  })
+
+  it(IndexerService.prototype.getIndexerState.name, async () => {
+    const configHash = '0x123456'
+    const indexerStateRepository = mockObject<IndexerStateRepository>({
+      findIndexerState: async () => mock({ configHash }),
+    })
+
+    const indexerService = new IndexerService(
+      indexerStateRepository,
+      mockObject<IndexerConfigurationRepository>({}),
+    )
+
+    const result = await indexerService.getIndexerState('indexer')
+
+    expect(result).toEqual(mock({ configHash }))
+    expect(indexerStateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
+      'indexer',
+    )
+  })
+
+  it(IndexerService.prototype.setSafeHeight.name, async () => {
+    const indexerStateRepository = mockObject<IndexerStateRepository>({
+      setSafeHeight: async () => 1,
+    })
+
+    const indexerService = new IndexerService(
+      indexerStateRepository,
+      mockObject<IndexerConfigurationRepository>({}),
+    )
+
+    await indexerService.setSafeHeight('indexer', 123)
+    expect(indexerStateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
+      'indexer',
+      123,
+    )
+  })
+
+  it(IndexerService.prototype.setInitialState.name, async () => {
+    const indexerStateRepository = mockObject<IndexerStateRepository>({
+      addOrUpdate: async () => '',
+    })
+
+    const indexerService = new IndexerService(
+      indexerStateRepository,
+      mockObject<IndexerConfigurationRepository>({}),
+    )
+
+    await indexerService.setInitialState('indexer', 123, 'hash')
+    expect(indexerStateRepository.addOrUpdate).toHaveBeenOnlyCalledWith({
+      indexerId: 'indexer',
+      safeHeight: 123,
+      configHash: 'hash',
+    })
   })
 
   it(IndexerService.prototype.upsertConfigurations.name, async () => {
@@ -181,11 +199,16 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.updateSavedConfigurations('indexer', ['a', 'b'], 123)
+    await indexerService.updateSavedConfigurations(
+      'indexer',
+      ['a', 'b'],
+      123,
+      mockDbMiddleware,
+    )
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123, undefined)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
@@ -206,3 +229,13 @@ describe(IndexerService.name, () => {
     ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
   })
 })
+
+function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
+  return {
+    indexerId: 'indexer',
+    safeHeight: 1,
+    configHash: '0x123456',
+    minTimestamp: UnixTime.ZERO,
+    ...v,
+  }
+}

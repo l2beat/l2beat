@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 
 import {
-  BigQueryFunctionCallResult,
-  TrackedTxFunctionCallResult,
-} from '../types/model'
-import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
+import {
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
@@ -47,12 +47,13 @@ export function transformFunctionCallsQueryResult(
               blockTimestamp: r.block_timestamp,
               toAddress: r.to_address,
               input: r.input,
-              transactionType: r.transaction_type,
               receiptGasUsed: r.receipt_gas_used,
               gasPrice: r.gas_price,
               dataLength: r.data_length,
               calldataGasUsed: r.calldata_gas_used,
-            } as const),
+              receiptBlobGasUsed: r.receipt_blob_gas_used,
+              receiptBlobGasPrice: r.receipt_blob_gas_price,
+            }) as const,
         ),
     )
 

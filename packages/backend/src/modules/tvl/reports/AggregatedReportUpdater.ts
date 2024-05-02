@@ -7,10 +7,10 @@ import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { ReportUpdater } from '../assets'
 import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'
+import { ReportProject } from './ReportProject'
 import { aggregateReports } from './aggregateReports'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'
 import { getStatus } from './getStatus'
-import { ReportProject } from './ReportProject'
 
 export class AggregatedReportUpdater {
   private readonly configHash: Hash256

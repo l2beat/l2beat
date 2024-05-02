@@ -1,9 +1,9 @@
 import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 import { isEmpty, zip } from 'lodash'
 import * as z from 'zod'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
@@ -126,7 +126,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
       if (event.type === 'AssignRoles') {
         zip(event.roles, event.memberOf).forEach(([roleId, memberOf]) => {
           assert(roleId !== undefined && memberOf !== undefined)
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           roles[roleId] ??= {
             members: {},
             targets: {},
@@ -138,7 +137,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           assert(role !== undefined)
           role.members[event.module.toString()] = memberOf
           if (!memberOf) {
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete role.members[event.module.toString()]
             deleteRoleIfEmpty(roles, roleId)
           }
@@ -151,7 +149,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
         continue
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       roles[event.role] ??= {
         members: {},
         targets: {},
@@ -172,7 +169,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           break
         }
         case 'RevokeTarget': {
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.targets[event.targetAddress.toString()]
           deleteRoleIfEmpty(roles, event.role)
           break
@@ -202,9 +198,7 @@ export class LineaRolesModuleHandler implements ClassicHandler {
             ),
             event.index,
           )
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValues[compKey]
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValuesOneOf[compKey]
           func[
             await decoder.decodeSelector(event.targetAddress, event.functionSig)
@@ -212,7 +206,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           break
         }
         case 'ScopeRevokeFunction': {
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.functions[event.targetAddress.toString()]
           deleteRoleIfEmpty(roles, event.role)
           break
@@ -228,7 +221,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           event.compValue.forEach((compValue, i) => {
             const compKey = compValueKey(event, selector, i)
 
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete role.compValuesOneOf[compKey]
             role.compValues[compKey] = compValue
           })
@@ -242,7 +234,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           )
           const compKey = compValueKey(event, selector, event.index)
           func[selector] = decodeScopeConfig(event.resultingScopeConfig)
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValuesOneOf[compKey]
           role.compValues[compKey] = event.compValue
           break
@@ -255,7 +246,6 @@ export class LineaRolesModuleHandler implements ClassicHandler {
           )
           const compKey = compValueKey(event, selector, event.index)
           func[selector] = decodeScopeConfig(event.resultingScopeConfig)
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete role.compValues[compKey]
           role.compValuesOneOf[compKey] = event.compValues
           break
@@ -310,7 +300,6 @@ function deleteRoleIfEmpty(roles: Record<number, Role>, roleId: number): void {
   }
 
   if (Object.keys(role).every((k) => isEmpty(role[k as keyof Role]))) {
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete roles[roleId]
   }
 }
@@ -357,7 +346,6 @@ function getFunction(
   role: Role,
   arg: Pick<ScopeAllowFunctionLog, 'targetAddress'>,
 ): Record<string, ScopeConfig> {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   role.functions[arg.targetAddress.toString()] ??= {}
   const func = role.functions[arg.targetAddress.toString()]
   assert(func !== undefined)

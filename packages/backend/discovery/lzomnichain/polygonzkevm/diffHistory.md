@@ -1,4 +1,33 @@
-Generated with discovered.json: 0x6a4d1fe370b7475bbdb83cd03787f46b169711d4
+Generated with discovered.json: 0xbd5ca106dc7cbb706210414d92cfe935f662e80c
+
+# Diff at Mon, 27 May 2024 13:20:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bd6b9ab7ea90501ef9c16ad40295a3c38f7dd0cb block: 11870389
+- current block number: 12848751
+
+## Description
+
+Hide the nonce of the L2 Multisig from the discovery updates as it is too noisy.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 11870389 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "LayerZeroMultisig_pzkevm"
+      values.nonce:
+-        26
+    }
+```
+
+Generated with discovered.json: 0xae1093daefd3ed5c33eb23de15d5e6e6410db6dd
 
 # Diff at Tue, 23 Apr 2024 13:25:12 GMT:
 

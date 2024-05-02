@@ -28,7 +28,6 @@ describe('discovery config.jsonc', () => {
     const notCorresponding =
       chainConfigs
         ?.flat()
-        ?.filter((c) => !c.name.startsWith('l2beat-'))
         ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
@@ -37,7 +36,7 @@ describe('discovery config.jsonc', () => {
       notCorresponding.length === 0,
       'Following projects do not have the same name as ProjectIds: ' +
         notCorresponding.join(', ') +
-        '. Add them to config/src/[layer2s|bridges|layer3s|onChainProjects]',
+        '. Add them to config/src/projects/[layer2s|bridges|layer3s|onChainProjects]',
     )
   })
 
@@ -71,13 +70,13 @@ describe('discovery config.jsonc', () => {
             continue
           }
 
-          if (override.ignoreInWatchMode === undefined) {
-            continue
-          }
-
           const contract = discovery.contracts.find(
             (c) => c.address === override.address,
           )
+
+          if (contract?.ignoreInWatchMode === undefined) {
+            continue
+          }
 
           const errorPrefix = `${c.name} (chain: ${
             c.chain
@@ -93,7 +92,7 @@ describe('discovery config.jsonc', () => {
             `${errorPrefix} - values does not exist for this contract in discovery.json`,
           )
 
-          const ignore = override.ignoreInWatchMode
+          const ignore = contract.ignoreInWatchMode
           const values = Object.keys(contract.values)
 
           assert(
@@ -204,7 +203,7 @@ describe('discovery config.jsonc', () => {
             }
 
             for (const [key, value] of Object.entries(override.fields)) {
-              if (value.type === 'accessControl') {
+              if (value.handler?.type === 'accessControl') {
                 assert(
                   key === 'accessControl',
                   `${
@@ -253,16 +252,6 @@ describe('discovery config.jsonc', () => {
             } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
           )
         }
-      }
-    }
-  })
-
-  it('meta.json is of correct schema', async () => {
-    for (const configs of chainConfigs ?? []) {
-      for (const c of configs) {
-        await expect(
-          async () => await configReader.readMeta(c.name, c.chain),
-        ).not.toBeRejected()
       }
     }
   })

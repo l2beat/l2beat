@@ -1,8 +1,9 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import {
-  notUndefined,
   TrackedTxsConfigType,
   UnixTime,
+  clampRangeToDay,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
@@ -10,17 +11,14 @@ import { pickBy } from 'lodash'
 
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { findConfigurationsToSync } from './utils'
 import {
-  adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
-  findConfigurationsToSync,
-} from './utils'
-import {
-  diffTrackedTxConfigurations,
   ToChangeUntilTimestamp,
+  diffTrackedTxConfigurations,
 } from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
 
@@ -54,7 +52,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     from -= 1 // TODO: refactor logic after uif update
-    const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
+    const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
     const [configurations, syncTo] = await this.getConfigurationsToSync(
       unixFrom,
@@ -115,12 +113,13 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return [configurationsToSync, syncTo]
   }
 
-  override async initialize(): Promise<number> {
-    await this.doInitialize()
-    return await this.getSafeHeight()
+  override async initialize() {
+    await this.initializeConfigurations()
+    const safeHeight = await this.getInitialSafeHeight()
+    return { safeHeight: safeHeight }
   }
 
-  private async doInitialize(): Promise<void> {
+  private async initializeConfigurations(): Promise<void> {
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toChangeUntilTimestamp } =
       diffTrackedTxConfigurations(this.configs, databaseEntries)
@@ -137,7 +136,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
       await this.configRepository.addMany(toAdd, trx)
       await this.configRepository.deleteMany(toRemove, trx)
       await this.changeConfigurationsUntilTimestamp(toChangeUntilTimestamp, trx)
-      await this.initializeIndexerState(trx)
     })
     this.logger.info('Initialized')
   }
@@ -166,7 +164,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
         )
 
         for (const updater of Object.values(this.enabledUpdaters)) {
-          await updater?.deleteFrom(c.id, c.untilTimestampExclusive, trx)
+          await updater?.deleteFromById(c.id, c.untilTimestampExclusive, trx)
         }
         await this.configRepository.setLastSyncedTimestamp(
           c.id,
@@ -177,7 +175,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
   }
 
-  async initializeIndexerState(trx?: Knex.Transaction) {
+  async getInitialSafeHeight(trx?: Knex.Transaction) {
     const databaseEntriesAfterChanges = await this.configRepository.getAll(trx)
     const safeHeight = getSafeHeight(
       databaseEntriesAfterChanges,
@@ -188,27 +186,28 @@ export class TrackedTxsIndexer extends ChildIndexer {
       this.indexerId,
     )
 
-    if (indexerState === undefined) {
-      await this.stateRepository.add(
-        {
-          indexerId: this.indexerId,
-          safeHeight,
-          minTimestamp: this.minTimestamp,
-        },
-        trx,
+    if (indexerState !== undefined) {
+      // We prevent updating the minimum timestamp of the indexer.
+      // This functionality can be added in the future if needed.
+      assert(
+        indexerState.minTimestamp &&
+          this.minTimestamp.equals(indexerState.minTimestamp),
+        'Minimum timestamp of this indexer cannot be updated',
       )
-      return
     }
 
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
+    return safeHeight
+  }
 
-    await this.setSafeHeight(safeHeight, trx)
+  override async setInitialState(
+    safeHeight: number,
+    _configHash?: string | undefined,
+  ): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      safeHeight,
+      minTimestamp: this.minTimestamp,
+    })
   }
 
   async getSafeHeight(): Promise<number> {
@@ -243,6 +242,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

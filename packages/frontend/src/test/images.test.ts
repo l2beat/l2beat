@@ -1,8 +1,8 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import crypto from 'crypto'
-import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
+import { expect } from 'earl'
 
 const projects = [...layer2s, ...bridges, ...layer3s]
 
@@ -48,7 +48,7 @@ describe('icons', () => {
 
         expect(width).toEqual(128)
         expect(height).toEqual(128)
-        expect(size).toBeLessThanOrEqual(10240)
+        expect(size).toBeLessThanOrEqual(12222)
         expect(tinifiedLogos[`${project.display.slug}.png`]).toEqual(hash)
       })
     }

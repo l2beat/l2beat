@@ -1,4 +1,120 @@
-Generated with discovered.json: 0x134e46247e744e00b1b0a3f309124e847a5fa4f8
+Generated with discovered.json: 0x009aac230626d935b43c4889be012dfa90acffc9
+
+# Diff at Tue, 28 May 2024 09:05:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@26fb47d2fe07f8328027e4981771b4477e23fd15 block: 19882094
+- current block number: 19967357
+
+## Description
+
+`createNewRollup()` is called by the AdminMultisig, adding a new rollup with a new chainID and the same rollupTypeID 4 as currently all other registered zkEVM rollups in the manager except PolygonZkEVM (3). This one is related to [gptprotocol](gptprotocol.org). (not launched / not producing blocks yet)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        4
++        5
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.4:
++        ["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19882094 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.3.3:
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.3.2:
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.3.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        4913
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.3:
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.2:
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.2.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        196
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.1.3:
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.1.2:
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.1.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        3776
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.3:
++        3
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.2:
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        1101
+    }
+```
+
+Generated with discovered.json: 0x6124ec4be2edb290f32c6def8e55cfc071ddc45e
+
+# Diff at Thu, 16 May 2024 10:59:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@59d36171ee3aaf27d6db0c75fdfba523d2dad686 block: 19718134
+- current block number: 19882094
+
+## Description
+
+Changes related to improving the shared-polygon-cdk module.
+Verifier is no longer part of this shared module - each rollup discoveres it for themselfs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718134 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x675abae30b8f0674b5c4e121e5e94f1373994217
 
 # Diff at Tue, 23 Apr 2024 12:36:37 GMT:
 

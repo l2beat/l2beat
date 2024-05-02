@@ -1,6 +1,11 @@
-import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../../peripherals/database/DatabaseMiddleware'
+import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -18,7 +23,7 @@ export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
-  blockTimestampsRepository: BlockTimestampRepository
+  blockTimestampRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
   chain: string
 }
@@ -27,55 +32,85 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     const logger = $.logger.tag($.chain)
     const name = 'chain_amount_indexer'
-    super({ ...$, name, logger })
+    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
   override async multiUpdate(
     from: number,
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number> {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
+    const configurationsToSync = configurations.filter((c) => !c.hasData)
 
-    if (timestamp.gt(new UnixTime(to))) {
-      return Promise.resolve(to)
+    if (configurationsToSync.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with data', {
+        from,
+        to,
+        skippedConfigurations:
+          configurations.length - configurationsToSync.length,
+        configurationsToSync: configurationsToSync.length,
+      })
     }
 
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
 
-    const blockNumber =
-      await this.$.blockTimestampsRepository.findByChainAndTimestamp(
-        this.$.chain,
-        timestamp,
-      )
-    assert(blockNumber, 'Block number not found')
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+    if (timestamp.toNumber() > to) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+        optimizedTimestamp: timestamp.toNumber(),
+      })
+      return to
+    }
+
+    const blockNumber = await this.getBlockNumber(timestamp)
 
     const amounts = await this.$.amountService.fetchAmounts(
-      configurationsWithMissingData,
-      blockNumber?.blockNumber,
       timestamp,
+      blockNumber,
+      configurationsToSync,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
       blockNumber,
-      amounts: amounts.length,
-      configurations: configurationsWithMissingData.length,
+      escrows: amounts.filter((a) => a.type === 'escrow').length,
+      totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    await this.$.amountRepository.addMany(nonZeroAmounts)
-
-    this.logger.info('Saved amounts for timestamp into DB', {
-      amounts: nonZeroAmounts.length,
-      configurations: configurationsWithMissingData.length,
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      this.logger.info('Saving amounts for timestamp into DB', {
+        timestamp: timestamp.toNumber(),
+        escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+        totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+          .length,
+      })
+      await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
     return timestamp.toNumber()
+  }
+
+  private async getBlockNumber(timestamp: UnixTime) {
+    const blockNumber =
+      await this.$.blockTimestampRepository.findByChainAndTimestamp(
+        this.$.chain,
+        timestamp,
+      )
+    assert(
+      blockNumber,
+      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+    )
+    return blockNumber
   }
 
   override async removeData(
@@ -89,12 +124,14 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
           new UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted amounts for configuration', {
-        id: configuration.id,
-        from: configuration.from,
-        to: configuration.to,
-        deletedRecords,
-      })
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted amounts for configuration', {
+          id: configuration.id,
+          from: configuration.from,
+          to: configuration.to,
+          deletedRecords,
+        })
+      }
     }
   }
 }

@@ -17,9 +17,14 @@ const markdown = MarkdownIt({
 
 export function Markdown(props: MarkdownProps) {
   const Comp = props.inline ? 'span' : 'div'
+
+  // This is a hack to remove leading spaces, to prevent the appearance of
+  // unwanted code blocks. Use backticks instead.
+  const children = props.children.replace(/(^|\n)(?:\t|\s{4})(.+)/g, '$1$2')
+
   const rendered = props.inline
-    ? markdown.renderInline(props.children)
-    : markdown.render(props.children)
+    ? markdown.renderInline(children)
+    : markdown.render(children)
 
   return (
     <Comp

@@ -54,7 +54,7 @@ export function createTvl2StatusRouter(
         chains: chainsConfig.length,
         datapoints: getDatapoints(
           chainsConfig.map((c) => ({
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            // biome-ignore lint/style/noNonNullAssertion: we know it's there
             sinceTimestamp: c.config!.minBlockTimestamp,
           })),
           clock,
@@ -65,7 +65,7 @@ export function createTvl2StatusRouter(
             .map((c) => [
               c.chain,
               getDatapoints(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                // biome-ignore lint/style/noNonNullAssertion: we know it's there
                 [{ sinceTimestamp: c.config!.minBlockTimestamp }],
                 clock,
               ),

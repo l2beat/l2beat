@@ -8,6 +8,8 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
+import { Link } from '../../../../components/Link'
+import { PageContent } from '../../../../components/PageContent'
 import { GovernanceHeaderIllustration } from '../../../../components/governance/GovernanceHeaderIllustration'
 import { GovernanceEventsSection } from '../../../../components/governance/sections/GovernanceEventsSection'
 import { OfficeHoursSection } from '../../../../components/governance/sections/OfficeHoursSection'
@@ -15,8 +17,6 @@ import { OurApproachSection } from '../../../../components/governance/sections/O
 import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
 import { RecentPublicationsSection } from '../../../../components/governance/sections/RecentPublicationsSection'
 import { OutLinkIcon } from '../../../../components/icons'
-import { Link } from '../../../../components/Link'
-import { PageContent } from '../../../../components/PageContent'
 import { GovernanceDelegatedProjectEntry } from '../props/getGovernanceDelegatedProjectEntry'
 import { GovernanceEventEntry } from '../props/getGovernanceEventEntries'
 import { GovernancePublicationEntry } from '../props/getGovernancePublicationEntry'
@@ -88,7 +88,7 @@ function Header(props: {
                   {projects.map((delegatedProject) => (
                     <Link
                       key={delegatedProject.id}
-                      className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
+                      className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
                       textClassName="text-sm font-medium"
                       href={delegatedProject.link}
                       underline={false}

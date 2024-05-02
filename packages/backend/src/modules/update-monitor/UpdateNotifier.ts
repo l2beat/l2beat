@@ -1,6 +1,11 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
 import {
@@ -9,7 +14,6 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { diffToMessage } from './utils/diffToMessage'
@@ -42,7 +46,7 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    meta: DiscoveryMeta | undefined,
+    config: DiscoveryConfig | undefined,
     blockNumber: number,
     chainId: ChainId,
     dependents: string[],
@@ -77,7 +81,7 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      meta,
+      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -97,7 +101,7 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      meta,
+      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -213,7 +217,7 @@ function formatRemindersAsTable(
     ]
   })
 
-  return printAsciiTable(headers, rows)
+  return formatAsAsciiTable(headers, rows)
 }
 
 function flattenReminders(

@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { layer2s, layer3s, ScalingProjectTransactionApi } from '@l2beat/config'
+import { ScalingProjectTransactionApi, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'

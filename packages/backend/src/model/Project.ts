@@ -1,14 +1,18 @@
+import { assert } from '@l2beat/backend-tools'
 import {
   Bridge,
-  getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
   Layer2LivenessConfig,
   Layer2TxConfig,
+  Layer3,
   ScalingProjectTransactionApi,
+  chains,
+  getCanonicalTokenBySymbol,
   tokenList,
 } from '@l2beat/config'
 import {
+  ChainId,
   EthereumAddress,
   ProjectId,
   Token,
@@ -19,15 +23,16 @@ import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  TrackedTxsConfig,
   TrackedTxUseWithId,
+  TrackedTxsConfig,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
+import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {
   projectId: ProjectId
   slug: string
   isArchived?: boolean
-  type: 'layer2' | 'bridge'
+  type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
   isLayer3?: boolean
   escrows: ProjectEscrow[]
@@ -40,7 +45,10 @@ export interface Project {
 export interface ProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   tokens: Token[]
+  chain?: string
+  includeInTotal?: boolean
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
@@ -55,8 +63,11 @@ export function layer2ToProject(layer2: Layer2): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === 'CBV')
+          ? tokenList.filter(
+              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+            )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
+      includeInTotal: escrow.includeInTotal,
     })),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
@@ -81,8 +92,11 @@ export function bridgeToProject(bridge: Bridge): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === 'CBV')
+          ? tokenList.filter(
+              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+            )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
+      includeInTotal: escrow.includeInTotal,
     })),
   }
 }
@@ -115,6 +129,53 @@ function toBackendTrackedTxsConfig(
       }
     }),
   }
+}
+
+const chainConverter = new ChainConverter(
+  chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+)
+
+export function layer3ToProject(layer3: Layer3): Project {
+  return {
+    projectId: layer3.id,
+    slug: layer3.display.slug,
+    type: 'layer3',
+    isUpcoming: layer3.isUpcoming,
+    escrows: layer3.config.escrows.map((escrow) => {
+      const chain = escrow.chain
+      assert(chain, ` ${layer3.id}: chain is required for L3 escrow`)
+      const chainId = chainConverter.toChainId(chain)
+
+      const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+      return {
+        address: escrow.address,
+        sinceTimestamp: escrow.sinceTimestamp,
+        tokens:
+          escrow.tokens === '*'
+            ? tokensOnChain
+            : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
+        chain,
+        includeInTotal: escrow.includeInTotal,
+      }
+    }),
+  }
+}
+
+function mapL3Tokens(
+  tokens: string[],
+  tokensOnChain: Token[],
+  layer3: Layer3,
+  chain: string,
+): Token[] {
+  return tokens.map((tokenSymbol) => {
+    const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
+    assert(
+      token,
+      `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
+    )
+    return token
+  })
 }
 
 function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {

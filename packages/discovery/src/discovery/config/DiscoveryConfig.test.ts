@@ -1,10 +1,10 @@
+import { hashJson } from '@l2beat/shared'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { hashJson } from '../../utils/HashJson'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()

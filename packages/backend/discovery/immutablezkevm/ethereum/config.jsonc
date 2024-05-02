@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "immutablezkevm",
   "initialAddresses": ["0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"],
@@ -10,7 +10,19 @@
   "overrides": {
     "Bridge": {
       "ignoreRelatives": ["rootWETHToken", "rootIMXToken"],
-      "ignoreInWatchMode": ["withdrawalQueueActivated"]
+      "ignoreInWatchMode": ["withdrawalQueueActivated"],
+      "fields": {
+        "withdrawalDelay": {
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "withdrawalQueueActivated": {
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "OwnerMultisig": {
       "ignoreInWatchMode": ["nonce"]

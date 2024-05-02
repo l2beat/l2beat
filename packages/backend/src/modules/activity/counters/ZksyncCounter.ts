@@ -5,9 +5,9 @@ import { range } from 'lodash'
 
 import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { ZksyncTransactionRepository } from '../repositories/ZksyncTransactionRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class ZksyncCounter extends SequenceProcessor {
   constructor(
@@ -28,7 +28,7 @@ export class ZksyncCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(): Promise<number> {
-    return this.zksyncClient.getLatestBlock()
+    return await this.zksyncClient.getLatestBlock()
   }
 
   protected override async processRange(
@@ -37,9 +37,8 @@ export class ZksyncCounter extends SequenceProcessor {
     trx: Knex.Transaction,
   ) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
-      const transactions = await this.zksyncClient.getTransactionsInBlock(
-        blockNumber,
-      )
+      const transactions =
+        await this.zksyncClient.getTransactionsInBlock(blockNumber)
 
       return transactions.map((t, i) => {
         // Block 427 has a duplicated blockIndex

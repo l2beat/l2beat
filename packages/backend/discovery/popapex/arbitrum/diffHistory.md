@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xf80bfbaf3a649ffd7309eb20265b40f764614b4a
+
+# Diff at Mon, 27 May 2024 17:45:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 211899531
+- current block number: 215638376
+
+## Description
+
+Updated the SequencerInbox template, no onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 211899531 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: State batches / commitments get posted here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+    }
+```
+
+Generated with discovered.json: 0x9fe3796691c10ec5795e696f3f364bf5faed7778
+
+# Diff at Tue, 14 May 2024 07:19:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 203714971
+- current block number: 211101547
+
+## Description
+
+
+This update extends the sequencer-only window for Proof of Play Apex chain by 1000x to 1000d. (MaxTimeVariation.delayBlocks, maxTimeVariation.delaySeconds)
+Context: [Reorg on popapex](https://twitter.com/conduitxyz/status/1790065376975552549). No batches posted for the last ~35h, similar problem to Degen chain.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: None
+      values.maxTimeVariation.2:
+-        86400
++        86400000
+      values.maxTimeVariation.0:
+-        5760
++        3456000
+    }
+```
+
 Generated with discovered.json: 0xf50c4fdab7cd8deba39e9b78f4634254f949bf52
 
 # Diff at Thu, 11 Apr 2024 14:11:27 GMT:

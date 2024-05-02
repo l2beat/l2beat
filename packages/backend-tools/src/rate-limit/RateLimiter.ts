@@ -11,7 +11,7 @@ export interface RateLimiterOptions {
 const MS_PER_MINUTE = 60 * 1000
 
 export class RateLimiter {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
   private readonly minTimeElapsed: number
@@ -35,7 +35,7 @@ export class RateLimiter {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   wrap<A extends any[], R>(fn: (...args: A) => R | Promise<R>) {
     return (...args: A) => this.call(() => fn(...args))
   }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "xai",
   "initialAddresses": [
@@ -28,47 +28,14 @@
   "overrides": {
     "PoolFactory": {
       "ignoreMethods": ["getPoolAddress", "stakingPools"],
-      "ignoreRelatives": ["esXaiAddress"]
+      "ignoreRelatives": ["esXaiAddress"],
+      "ignoreInWatchMode": ["getPoolsCount"]
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
     },
     "RollupProxy": {
-      "ignoreMethods": [
-        // Execution reverted
-        "proxiableUUID"
-      ],
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
-      "fields": {
-        // when this changes, it means the validators have changed
-        "setValidatorCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000006"
-          ]
-        },
-        "challenges": {
-          "type": "stateFromEvent",
-          "event": "RollupChallengeStarted",
-          "returnParams": [
-            "challengeIndex",
-            "asserter",
-            "challenger",
-            "challengedNode"
-          ]
-        },
-        "validators": {
-          "type": "arbitrumActors",
-          "actorType": "validator"
-        }
-      }
+      "extends": "orbitstack/RollupProxy"
     },
     "Outbox": {
       "ignoreMethods": ["spent", "isSpent"]
@@ -83,50 +50,14 @@
       "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "type": "call",
-          "method": "function isBatchPoster(address) external view returns (bool)",
-          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
-        },
-        "sequencerVersion": {
-          "type": "arbitrumSequencerVersion"
-        },
-        "dacKeyset": {
-          "type": "arbitrumDACKeyset"
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000001"
-          ]
-        },
-        "batchPosters": {
-          "type": "arbitrumActors",
-          "actorType": "batchPoster"
-        },
-        "keySetUpdates": {
-          "type": "eventCount",
-          "topics": [
-            // SetValidKeyset(bytes32,bytes)
-            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-          ]
-        }
-      }
+      "extends": "orbitstack/SequencerInbox"
     },
     "UpgradeExecutor": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -147,7 +78,11 @@
         "assignedKeyToPool",
         "getBoostFactorForKeyId"
       ],
-      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"],
+      "ignoreInWatchMode": [
+        "challengeCounter",
+        "getKycWalletCount",
+        "calculateChallengeEmissionAndTier"
+      ],
       "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {

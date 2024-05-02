@@ -57,8 +57,8 @@ export function getProjectDetails(
       type: 'ChartSection',
       props: {
         ...charts.costs,
-        id: 'costs',
-        title: 'Costs',
+        id: 'onchain-costs',
+        title: 'Onchain costs',
       },
     })
   }
@@ -115,7 +115,7 @@ export function getProjectDetails(
     })
   }
 
-  if (bridge.contracts)
+  if (bridge.contracts?.addresses && bridge.contracts.addresses.length > 0)
     items.push({
       type: 'ContractsSection',
       props: getContractSection(

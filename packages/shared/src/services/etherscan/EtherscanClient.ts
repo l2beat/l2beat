@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   ChainId,
   EthereumAddress,
-  getErrorMessage,
   Hash256,
   RateLimiter,
-  stringAsInt,
   UnixTime,
+  getErrorMessage,
+  stringAsInt,
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'

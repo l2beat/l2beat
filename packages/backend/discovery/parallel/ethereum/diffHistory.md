@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x4a9b32cf15d1322020e11d829d9dab02ea8dcb85
+
+# Diff at Wed, 22 May 2024 20:11:52 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bac4efad06804152ae97853892e122a801bbc509 block: 19918791
+- current block number: 19927721
+
+## Description
+
+ConduitMultisig update.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+      values.getOwners.6:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners.5:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.getOwners.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.getOwners.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getOwners.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.getOwners.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x3b4a0f59eae8e09d6bb2504085ccc013ca253e95
+
+# Diff at Tue, 21 May 2024 14:11:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19883602
+- current block number: 19918791
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19883602 (main branch discovery), not current.
+
+```diff
+    contract OwnerMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "OwnerMultisig"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0x9499a161dab92924ef2ab20a6556f1aa1fc54d83
+
+# Diff at Thu, 02 May 2024 08:17:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@306760396dc5133ea2ec932bf81b9f36e88dbdd3 block: 19630573
+- current block number: 19781186
+
+## Description
+
+The implementation of SequencerInbox was upgraded to a differenct contract with identical code.
+This was done to change the immutable boolean `isUsingFeeToken` to false. This immutable should indeed be false on ethereum mainnet as it signifies the base L1 using a custom fee token. (Used as a check for `submitBatchSpendingReport()` function that is needed for fee sequencer fee reimbursement)
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
+      implementations.0:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
+      values.isUsingFeeToken:
+-        true
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.code@19630573 => .code}/SequencerInbox/implementation/meta.txt    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 
 # Diff at Thu, 11 Apr 2024 06:24:39 GMT:

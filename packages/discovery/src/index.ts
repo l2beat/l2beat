@@ -8,14 +8,12 @@ export type {
   SingleDiscoveryModuleConfig,
 } from './config/types'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
+export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-export type {
-  ContractMeta,
-  DiscoveryMeta,
-  ValueMeta,
-} from './discovery/config/DiscoveryMeta'
+export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
+export { getContractField } from './discovery/utils/metaGetters'
 export {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,
@@ -41,9 +39,14 @@ export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
-export { getContractMeta, getValueMeta } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
+export type { HashedChunks, HashedFileContent } from './flatten/utils'
+export {
+  buildSimilarityHashmap,
+  estimateSimilarity,
+  removeComments,
+} from './flatten/utils'
 export {
   calculateInversion,
   type InvertedAddressDetails,
@@ -56,4 +59,3 @@ export {
 } from './utils/EtherscanLikeClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
-export { UnixTime } from './utils/UnixTime'

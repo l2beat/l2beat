@@ -4,20 +4,19 @@
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
-import {
-  ConfigReader,
-  diffDiscovery,
-  discover,
-  DiscoveryDiff,
-  discoveryDiffToMarkdown,
-  DiscoveryMeta,
-  getChainConfig,
-} from '@l2beat/discovery'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryDiff,
+  diffDiscovery,
+  discover,
+  discoveryDiffToMarkdown,
+  getChainConfig,
+} from '@l2beat/discovery'
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
@@ -48,7 +47,6 @@ async function updateDiffHistoryFile() {
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chain)
   const config = await configReader.readConfig(projectName, chain)
-  const meta = await configReader.readMeta(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -66,13 +64,11 @@ async function updateDiffHistoryFile() {
   const diff = diffDiscovery(
     prevDiscovery?.contracts ?? [],
     curDiscovery.contracts,
-    config,
   )
 
   let configRelatedDiff = diffDiscovery(
     discoveryFromMainBranch?.contracts ?? [],
     prevDiscovery?.contracts ?? [],
-    config,
   )
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
@@ -92,7 +88,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
-      meta,
+      config,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -166,6 +162,7 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+    skipHints: true,
   })
 
   const prevDiscoveryFile = readFileSync(
@@ -178,12 +175,12 @@ async function performDiscoveryOnPreviousBlock(
   await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
 
   // get code diff with main branch
-  const codeDiff = compareFolders(
-    `${root}/.code@${blockNumberFromMainBranch}`,
-    `${root}/.code`,
+  const flatDiff = compareFolders(
+    `${root}/.flat@${blockNumberFromMainBranch}`,
+    `${root}/.flat`,
   )
 
-  return { prevDiscovery, codeDiff: codeDiff === '' ? undefined : codeDiff }
+  return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
 }
 
 function getMainBranchName(): 'main' | 'master' {
@@ -192,7 +189,7 @@ function getMainBranchName(): 'main' | 'master' {
       stdio: 'ignore',
     })
     return 'master'
-  } catch (error) {
+  } catch {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
     return 'main'
   }
@@ -237,7 +234,7 @@ function getFileVersionOnMainBranch(filePath: string): {
       content,
       mainBranchHash,
     }
-  } catch (e) {
+  } catch {
     console.log(`No previous version of ${filePath} found`)
     return {
       content: '',
@@ -251,7 +248,7 @@ function getGitUser(): { name: string; email: string } {
     const name = execSync('git config user.name').toString().trim()
     const email = execSync('git config user.email').toString().trim()
     return { name, email }
-  } catch (e) {
+  } catch {
     console.log('No git user found')
     return { name: 'unknown', email: 'unknown' }
   }
@@ -261,7 +258,7 @@ function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
-  meta: DiscoveryMeta | undefined,
+  discoveryConfig: DiscoveryConfig | undefined,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -300,7 +297,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs, meta))
+    result.push(discoveryDiffToMarkdown(diffs, discoveryConfig))
     result.push('')
   }
 
@@ -323,7 +320,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff, meta))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff, discoveryConfig))
     result.push('')
   }
 

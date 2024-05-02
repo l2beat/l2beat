@@ -1,9 +1,9 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 19531398,
-  "configHash": "0x3de8bed5e5444eb5e03d2add993154b6fc5428e77bc45962e5f6e9013dc5f852",
-  "version": 3,
+  "blockNumber": 19927688,
+  "configHash": "0x0876316962c6441bc5e24151d6475ac4c9a4b8ec32007e06d20482c92948e77e",
+  "version": 4,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635107",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637845",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -66,13 +66,13 @@
       "derivedName": "L1StandardBridge"
     },
     {
-      "name": "AevoMultiSig",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -80,14 +80,16 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 3,
-        "nonce": 20,
+        "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -106,7 +108,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 19531377],
+        "params": [1000000000, 796584, 19927552],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -140,10 +142,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 3241800,
-        "latestOutputIndex": 5402,
-        "nextBlockNumber": 3242400,
-        "nextOutputIndex": 5403,
+        "latestBlockNumber": 3720600,
+        "latestOutputIndex": 6200,
+        "nextBlockNumber": 3721200,
+        "nextOutputIndex": 6201,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -202,7 +204,9 @@
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xE3e57f917E788F3921528CAABf76EEaF781d3326",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
     "0x098927F692C86fA1722115652b9d2d7BE8cBa6D3": [

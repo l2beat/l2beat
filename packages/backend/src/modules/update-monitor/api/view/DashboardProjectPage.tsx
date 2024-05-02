@@ -1,8 +1,7 @@
 import {
+  DiscoveryConfig,
   DiscoveryDiff,
-  DiscoveryMeta,
-  getContractMeta,
-  getValueMeta,
+  getContractField,
   sortBySeverity,
 } from '@l2beat/discovery'
 import { default as React } from 'react'
@@ -19,7 +18,7 @@ interface ConfigPageProps {
   projectName: string
   contracts: DashboardContract[]
   diff?: DiscoveryDiff[]
-  meta: DiscoveryMeta | undefined
+  config: DiscoveryConfig | undefined
 }
 
 export function DashboardProjectPage(props: ConfigPageProps) {
@@ -36,7 +35,7 @@ export function DashboardProjectPage(props: ConfigPageProps) {
           </summary>
           <p>
             {props.diff.map((d, index) => {
-              const contractMeta = getContractMeta(props.meta, d.name)
+              const contract = props.config?.getContract(d.name)
               return (
                 <p style={{ marginTop: '8px' }} key={index}>
                   <span style={{ fontWeight: 'bold' }}>
@@ -44,14 +43,14 @@ export function DashboardProjectPage(props: ConfigPageProps) {
                   </span>
                   <br />
                   <span>
-                    {`+++ description: ${contractMeta?.description ?? 'None'}`}
+                    {`+++ description: ${contract?.description ?? 'None'}`}
                   </span>
                   <ul>
-                    {sortBySeverity(d.diff, contractMeta).map((x, index2) => {
-                      const valueMeta = getValueMeta(contractMeta, x.key)
+                    {sortBySeverity(d.diff, contract).map((x, index2) => {
+                      const field = getContractField(contract, x.key)
                       return (
                         <li key={index2} style={{ marginLeft: '12px' }}>
-                          <Diff diff={x} valueMeta={valueMeta} />
+                          <Diff diff={x} field={field} />
                         </li>
                       )
                     })}

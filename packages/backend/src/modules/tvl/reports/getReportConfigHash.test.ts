@@ -10,8 +10,8 @@ import { expect } from 'earl'
 
 import { ProjectEscrow } from '../../../model/Project'
 import { getMockToken } from '../../../test/token'
-import { getReportConfigHash } from './getReportConfigHash'
 import { ReportProject } from './ReportProject'
+import { getReportConfigHash } from './getReportConfigHash'
 
 describe(getReportConfigHash.name, () => {
   it('hash changes if project added', () => {

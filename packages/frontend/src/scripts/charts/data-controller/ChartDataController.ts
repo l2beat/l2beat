@@ -122,13 +122,14 @@ export class ChartDataController {
     }
   }
 }
-
 export function getChartUrl<T extends ChartType>(chartType: T) {
   switch (chartType.type) {
     case 'scaling-tvl':
     case 'scaling-detailed-tvl':
       return chartType.filteredSlugs
-        ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
+        ? `/api/tvl2/aggregate?projectSlugs=${chartType.filteredSlugs.join(
+            ',',
+          )}`
         : '/api/tvl/scaling.json'
     case 'scaling-activity':
       return chartType.filteredSlugs
@@ -164,9 +165,12 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
 }
 
 export function getTokenTvlUrl(info: TokenInfo) {
-  const chainId = 'chainId' in info ? info.chainId : 1
-  const type = info.type === 'regular' ? 'CBV' : info.type
-  return `/api/projects/${info.projectId}/tvl/chains/${chainId}/assets/${info.assetId}/types/${type}`
+  const query = new URLSearchParams({
+    project: info.projectId,
+    chain: info.chain,
+    address: info.address,
+  })
+  return `/api/tvl2/token?${query}`
 }
 
 function assertUnreachable(_: never): never {

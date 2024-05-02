@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "fraxferry",
   "initialAddresses": [
@@ -31,10 +31,12 @@
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "fields": {
         "crewmembers": {
-          "type": "arrayFromOneEvent",
-          "event": "event SetCrewmember(address indexed crewmember,bool set)",
-          "valueKey": "crewmember",
-          "flagKey": "set"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event SetCrewmember(address indexed crewmember,bool set)",
+            "valueKey": "crewmember",
+            "flagKey": "set"
+          }
         }
       },
       "ignoreRelatives": ["token", "targetToken"]

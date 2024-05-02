@@ -1,50 +1,81 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "eigenda",
   "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
   "names": {
     "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "eigenDAServiceManager",
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
+    "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "RegistryCoordinator",
     "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
-    "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "RegistryCoordinator",
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
-    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig"
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager"
+  },
+  "sharedModules": {
+    "EigenLayerOperationsMultisig": "shared-eigenlayer",
+    "EigenLayerExecutorMultisig": "shared-eigenlayer",
+    "EigenLayerCommunityMultisig": "shared-eigenlayer",
+    "EigenPodManager": "shared-eigenlayer",
+    "DepositContract": "shared-eigenlayer",
+    "EigenLayerBeaconOracle": "shared-eigenlayer"
   },
   "overrides": {
     "eigenDAServiceManager": {
       "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
-      "ignoreInWatchMode": ["batchId", "taskNumber"]
+      "ignoreInWatchMode": ["batchId", "taskNumber"],
+      "fields": {
+        "BLOCK_STALE_MEASURE": {
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "quorumAdversaryThresholdPercentages": {
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "quorumConfirmationThresholdPercentages": {
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["timestampToBlockRoot"]
     },
-    "DepositContract": {
-      "ignoreDiscovery": true
-    },
-    "EigenPodManager": {
-      "ignoreInWatchMode": ["numPods"]
-    },
-    "EigenLayerOperationsMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EigenLayerExecutorMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EigenLayerCommunityMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "RegistryCoordinator": {
+      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
       "fields": {
-        "operatorSetParams": {
-          "type": "call",
-          "method": "getOperatorSetParams",
-          "args": [0]
+        "operatorSetParamsQuorum1": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
+          "handler": {
+            "type": "call",
+            "method": "getOperatorSetParams",
+            "args": [0]
+          }
+        },
+        "operatorSetParamsQuorum2": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
+          "handler": {
+            "type": "call",
+            "method": "getOperatorSetParams",
+            "args": [1]
+          }
+        },
+        "quorumCount": {
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
         }
       }
+    },
+    "EjectionManager": {
+      "extends": "eigenlayer/EjectionManager"
     }
   }
 }

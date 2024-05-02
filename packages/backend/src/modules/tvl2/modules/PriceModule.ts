@@ -1,24 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import {
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { createPriceId } from '../utils/createPriceId'
+import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createPriceId } from '../utils/createPriceId'
 
-interface PriceModule {
+export interface PriceModule {
   start: () => Promise<void> | void
+  descendant: DescendantIndexer
 }
 
 export function createPriceModule(
@@ -33,6 +32,10 @@ export function createPriceModule(
     apiKey: config.coingeckoApiKey,
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+  const priceService = new PriceService({
+    coingeckoQueryService,
+  })
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
@@ -50,24 +53,39 @@ export function createPriceModule(
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
           id: createPriceId(price),
         })),
-        coingeckoQueryService,
+        priceService,
         priceRepository: peripherals.getRepository(PriceRepository),
-        encode,
-        decode,
+        serializeConfiguration,
+        deserializeConfiguration,
         syncOptimizer,
+        createDatabaseMiddleware: async () =>
+          new KnexMiddleware(peripherals.getRepository(PriceRepository)),
       }),
   )
+
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'price',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...config.prices.map((price) => price.sinceTimestamp.toNumber()),
+    ),
+  })
 
   return {
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      await descendant.start()
     },
+    descendant,
   }
 }
 
-function encode(value: CoingeckoPriceConfigEntry): string {
+function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
   return JSON.stringify({
     address: value.address.toString(),
     chain: value.chain,
@@ -75,28 +93,10 @@ function encode(value: CoingeckoPriceConfigEntry): string {
     ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
     type: value.type,
     coingeckoId: value.coingeckoId.toString(),
+    assetId: value.assetId.toString(),
   })
 }
 
-// TODO: validate the config with zod
-function decode(value: string): CoingeckoPriceConfigEntry {
-  const obj = JSON.parse(value) as {
-    address: string
-    chain: string
-    sinceTimestamp: number
-    untilTimestamp?: number
-    type: string
-    coingeckoId: string
-  }
-
-  return {
-    address: obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-    chain: obj.chain,
-    sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-    ...({
-      untilTimestamp: obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-    } ?? {}),
-    type: obj.type,
-    coingeckoId: CoingeckoId(obj.coingeckoId),
-  } as CoingeckoPriceConfigEntry
+function deserializeConfiguration(value: string): CoingeckoPriceConfigEntry {
+  return CoingeckoPriceConfigEntry.parse(JSON.parse(value))
 }

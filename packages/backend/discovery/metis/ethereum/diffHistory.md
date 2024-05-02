@@ -1,3 +1,189 @@
+Generated with discovered.json: 0xb72bf22b68e9abc639c06a6aa3a966735a461fe3
+
+# Diff at Wed, 22 May 2024 16:35:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eae7b47a410c2b8cc7e6a7d7a0bc841a31c6e83 block: 19866806
+- current block number: 19926649
+
+## Description
+
+One new signer (`0x1577D2b835f561BD021E3219Cd786181D0e17ff5`) is added to Metis Multisig and RewardEscrowerMultisig, which also gains another signer from Metis Multisig.
+
+## Watched changes
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      upgradeability.threshold:
+-        "4 of 8 (50%)"
++        "4 of 9 (44%)"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.8:
++        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.7:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "0xB961047013F974C5b6B6F8dA4402379525316550"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.6:
+-        "0xB961047013F974C5b6B6F8dA4402379525316550"
++        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.5:
+-        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.4:
+-        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.3:
+-        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.2:
+-        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.1:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.0:
+-        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: Escrows staking rewards for Sequencers.
+      upgradeability.threshold:
+-        "2 of 2 (100%)"
++        "2 of 4 (50%)"
+      values.getOwners.3:
++        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
+      values.getOwners.2:
++        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
+      values.getOwners.1:
+-        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
++        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+      values.getOwners.0:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19866806 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "RewardEscrowerMultisig"
+    }
+```
+
+Generated with discovered.json: 0xe1b1004c8e1e55d7df21acfdc86aae2a9e021b38
+
+# Diff at Tue, 14 May 2024 07:37:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 19810457
+- current block number: 19866806
+
+## Description
+
+Sequencer relatives and sequencing rewards are now ignored in watch mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19810457 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EqbToken (0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BeaconProxy (0x66c7674732357b01B3E9a8F94A05C411BeA1767A)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x759b0a0e3864e323491cdd0f35fd5e8153894b95
+
+# Diff at Mon, 06 May 2024 10:30:49 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@db9818837028c52979d74016bb4f011aa0545e1f block: 19761802
+- current block number: 19810457
+
+## Description
+
+### Enki liquid Metis staking
+
+A sequencer is added to the LockingPool at index 4. It seems to belong to [Enki](https://enkixyz.com/), a new liquid staking protocol on Metis L2.
+Enki deployed multiple contracts on L1 (Dealer, SequencerAgent) and L2 (eMetisMinter) to support their liquid staking protocol.
+The METIS gets bridged natively from L2 (eMetisMinter) to the Dealer contract on L1 and then deposited by SequencerAgent contracts through the Dealer to the standard LockingInfo contract. Rewards accrue to eMetisMinter on L2.
+
+### Rewards change
+
+METIS rewards for sequencers have been increased by ~50% to 0.001504744 METIS (~10 cents, or 25% APY for 20k METIS per sequencer) per L1 block (L1 block because L2 block times are dynamic).
+
+## Watched changes
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.BLOCK_REWARD:
+-        1504744000000000
++        2245402873000000
+      values.rewardPerBlock:
+-        1504744000000000
++        2245402873000000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxy (0x66c7674732357b01B3E9a8F94A05C411BeA1767A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../contracts/interfaces/IERC1967.sol              |  26 +++
+ .../contracts/interfaces/draft-IERC1822.sol        |  20 ++
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     | 157 +++++++++++++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |  86 ++++++++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |  61 ++++++
+ .../contracts/proxy/beacon/IBeacon.sol             |  16 ++
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++++++++++++
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  | 138 ++++++++++++
+ .../metis/ethereum/.code/BeaconProxy/meta.txt      |   2 +
+ 9 files changed, 750 insertions(+)
+```
+
 Generated with discovered.json: 0x32cd4835f42450c41cf18b3710f155a0ea983391
 
 # Diff at Sat, 27 Apr 2024 06:12:10 GMT:

@@ -1,6 +1,6 @@
-import { expect } from 'earl'
-
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+import { ConfigReader } from '../config/ConfigReader'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { shouldSkip } from './shouldSkip'
 
@@ -17,24 +17,46 @@ describe(shouldSkip.name, () => {
         },
       },
     })
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
   it('skips addresses from a shared module', () => {
     const address = EthereumAddress.random()
-    const config = new DiscoveryConfig({
-      name: 'Test',
-      chain: 'ethereum',
-      initialAddresses: [],
-      names: {
-        [address.toString()]: 'Foo',
-      },
-      sharedModules: {
-        Foo: 'SharedFoo',
-      },
+    const configReader = mockObject<ConfigReader>({
+      readDiscovery: () => ({
+        name: 'SharedFoo',
+        chain: 'ethereum',
+        blockNumber: 1234,
+        contracts: [
+          {
+            name: 'Foo',
+            address,
+            upgradeability: { type: 'immutable' },
+          },
+        ],
+        eoas: [],
+        abis: {},
+        configHash: Hash256.random(),
+        version: 123,
+      }),
     })
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+
+    const config = new DiscoveryConfig(
+      {
+        name: 'Test',
+        chain: 'ethereum',
+        initialAddresses: [],
+        names: {
+          [address.toString()]: 'Foo',
+        },
+        sharedModules: {
+          Foo: 'SharedFoo',
+        },
+      },
+      configReader,
+    )
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -46,7 +68,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxDepth: 1,
     })
-    const result = shouldSkip({ address, depth: 2, counter: 1 }, config)
+    const result = shouldSkip(address, config, 2, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -58,7 +80,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxAddresses: 1,
     })
-    const result = shouldSkip({ address, depth: 0, counter: 2 }, config)
+    const result = shouldSkip(address, config, 0, 2)
     expect(result).not.toEqual(undefined)
   })
 
@@ -69,7 +91,7 @@ describe(shouldSkip.name, () => {
       chain: 'ethereum',
       initialAddresses: [],
     })
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).toEqual(undefined)
   })
 })

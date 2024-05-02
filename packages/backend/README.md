@@ -201,10 +201,10 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 ## Scripts
 
 - `yarn build` - build
-- `yarn format:fix` - run prettier automatic formatter
-- `yarn format` - check if formatting is correct with prettier
-- `yarn lint:fix` - run eslint automatic fixer
-- `yarn lint` - check if the code satisfies the eslint configuration
+- `yarn format:fix` - run biome automatic formatter
+- `yarn format` - check if formatting is correct with biome
+- `yarn lint:fix` - run biome automatic fixer
+- `yarn lint` - check if the code satisfies the biome configuration
 - `yarn start:dev` - run the backend server from source ts
 - `yarn start` - run the backend server from built js
 - `yarn test` - run tests

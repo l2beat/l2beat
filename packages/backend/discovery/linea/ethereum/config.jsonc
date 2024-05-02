@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "linea",
   "initialAddresses": [
@@ -38,58 +38,75 @@
       ],
       "fields": {
         "verifiers": {
-          "type": "array",
-          "length": 10
+          "description": "Mapping of proof type to ZK Plonk Verifier contract",
+          "handler": {
+            "type": "array",
+            "length": 10
+          }
         },
         "accessControl": {
-          "type": "accessControl",
-          "roleNames": {
-            "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR",
-            "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER",
-            "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82": "RATE_LIMIT_SETTER"
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR",
+              "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER",
+              "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82": "RATE_LIMIT_SETTER"
+            }
           }
         },
         "generalPause": {
-          "type": "call",
-          "method": "pauseTypeStatuses",
-          "args": [
-            "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0"
-          ] // GENERAL_PAUSE_TYPE
+          "handler": {
+            "type": "call",
+            "method": "pauseTypeStatuses",
+            "args": [
+              "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0"
+            ] // GENERAL_PAUSE_TYPE
+          }
         },
         "l1l2Pause": {
-          "type": "call",
-          "method": "pauseTypeStatuses",
-          "args": [
-            "0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df"
-          ] // L1_L2_PAUSE_TYPE
+          "handler": {
+            "type": "call",
+            "method": "pauseTypeStatuses",
+            "args": [
+              "0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df"
+            ] // L1_L2_PAUSE_TYPE
+          }
         },
         "l2l1Pause": {
-          "type": "call",
-          "method": "pauseTypeStatuses",
-          "args": [
-            "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8"
-          ] // L2_L1_PAUSE_TYPE
+          "handler": {
+            "type": "call",
+            "method": "pauseTypeStatuses",
+            "args": [
+              "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8"
+            ] // L2_L1_PAUSE_TYPE
+          }
         },
         "provenNonCompressedBlocksWithoutProof": {
-          "type": "arrayFromOneEvent",
-          "event": "BlockFinalized",
-          "valueKey": "blockNumber",
-          "flagKey": "finalizedWithProof",
-          "invert": true
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "BlockFinalized",
+            "valueKey": "blockNumber",
+            "flagKey": "finalizedWithProof",
+            "invert": true
+          }
         },
         "provenCompressedBlocksWithoutProof": {
-          "type": "arrayFromOneEvent",
-          "event": "DataFinalized",
-          "valueKey": "lastBlockFinalized",
-          "flagKey": "withProof",
-          "invert": true
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "DataFinalized",
+            "valueKey": "lastBlockFinalized",
+            "flagKey": "withProof",
+            "invert": true
+          }
         }
       }
     },
     "Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -103,7 +120,9 @@
     "Roles": {
       "fields": {
         "roles": {
-          "type": "lineaRolesModule"
+          "handler": {
+            "type": "lineaRolesModule"
+          }
         }
       }
     }

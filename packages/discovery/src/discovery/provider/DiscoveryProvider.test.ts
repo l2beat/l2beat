@@ -1,7 +1,7 @@
-import { expect, mockFn, MockObject, mockObject } from 'earl'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { MockObject, expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from './DiscoveryProvider'
@@ -27,6 +27,7 @@ describe(DiscoveryProvider.name, () => {
         getLogs: mockFn().resolvesTo([]),
       })
       discoveryProviderMock = new DiscoveryProvider(
+        providerMock,
         providerMock,
         etherscanLikeClientMock,
         DiscoveryLogger.SILENT,
@@ -129,6 +130,7 @@ describe(DiscoveryProvider.name, () => {
         })
         discoveryProviderMock = new DiscoveryProvider(
           providerMock,
+          providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
           undefined, // PROVIDING UNDEFINED for getLogsMaxRange, so no batching
@@ -147,6 +149,7 @@ describe(DiscoveryProvider.name, () => {
           getLogs: mockFn().resolvesTo([]),
         })
         discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
@@ -195,6 +198,7 @@ describe(DiscoveryProvider.name, () => {
 
         const discoveryProviderMock = new DiscoveryProvider(
           providerMock,
+          providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
           GETLOGS_MAX_RANGE,
@@ -224,6 +228,7 @@ describe(DiscoveryProvider.name, () => {
         })
 
         const discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
@@ -280,6 +285,7 @@ describe(DiscoveryProvider.name, () => {
         })
 
         discoveryProviderMock = new DiscoveryProvider(
+          providerMock,
           providerMock,
           etherscanLikeClientMock,
           DiscoveryLogger.SILENT,
@@ -342,5 +348,33 @@ describe(DiscoveryProvider.name, () => {
         expect(providerMock.getLogs).toHaveBeenCalledTimes(2)
       })
     })
+  })
+
+  it('getLogs respects second provider', async () => {
+    const regularProviderMock = mockObject<providers.JsonRpcProvider>({
+      getLogs: mockFn().resolvesTo([]),
+      getTransaction: mockFn().resolvesTo({
+        blockNumber: 1,
+      }),
+      getBlock: mockFn().resolvesTo({
+        timestamp: 1,
+      }),
+    })
+    const eventProviderMock = mockObject<providers.JsonRpcProvider>({
+      getLogs: mockFn().resolvesTo([]),
+    })
+    const etherscanClient = mockObject<EtherscanLikeClient>({
+      getContractDeploymentTx: mockFn().resolvesTo(Hash256.random()),
+    })
+
+    const provider = new DiscoveryProvider(
+      regularProviderMock,
+      eventProviderMock,
+      etherscanClient,
+      DiscoveryLogger.SILENT,
+    )
+    await provider.getLogs(EthereumAddress.random(), [], 0, 100)
+    expect(regularProviderMock.getLogs).toHaveBeenCalledTimes(0)
+    expect(eventProviderMock.getLogs).toHaveBeenCalledTimes(1)
   })
 })

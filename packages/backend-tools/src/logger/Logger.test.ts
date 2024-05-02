@@ -114,7 +114,6 @@ describe(Logger.name, () => {
     it('single service (object)', () => {
       const { transport, baseLogger } = setup()
 
-      // eslint-disable-next-line @typescript-eslint/no-extraneous-class
       class FooService {}
       const instance = new FooService()
       const logger = baseLogger.for(instance)

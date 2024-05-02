@@ -1,0 +1,198 @@
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
+
+import {
+  CONTRACTS,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  NUGGETS,
+  OPERATOR,
+  RISK_VIEW,
+  STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
+} from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
+} from '../../discovery/starkware'
+import { delayDescriptionFromString } from '../../utils/delayDescription'
+import { Layer2 } from './types'
+
+const discovery = new ProjectDiscovery('immutablex')
+
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkExchange',
+  'upgradeDelay',
+)
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
+)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
+const verifierAddress = discovery.getAddressFromValue(
+  'GpsFactRegistryAdapter',
+  'gpsContract',
+)
+
+const freezeGracePeriod = discovery.getContractValue<number>(
+  'StarkExchange',
+  'FREEZE_GRACE_PERIOD',
+)
+
+const committee = getCommittee(discovery)
+
+export const immutablex: Layer2 = {
+  type: 'layer2',
+  id: ProjectId('immutablex'),
+  display: {
+    name: 'Immutable X',
+    slug: 'immutablex',
+    description:
+      'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
+    purposes: ['NFT', 'Exchange'],
+    provider: 'StarkEx',
+    category: 'Validium',
+    links: {
+      websites: ['https://immutable.com/'],
+      apps: ['https://market.immutable.com/'],
+      documentation: [
+        'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
+      ],
+      explorers: ['https://immutascan.io/'],
+      repositories: ['https://github.com/starkware-libs/starkex-contracts'],
+      socialMedia: [
+        'https://medium.com/@immutablex',
+        'https://twitter.com/Immutable',
+      ],
+    },
+    activityDataSource: 'Closed API',
+  },
+  stage: {
+    stage: 'NotApplicable',
+  },
+  config: {
+    associatedTokens: ['IMX'],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
+        sinceTimestamp: new UnixTime(1615389188),
+        tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
+        description: 'Main StarkEx contract, used also as an escrow.',
+      }),
+    ],
+    transactionApi: {
+      type: 'starkex',
+      product: ['immutable'],
+      sinceTimestamp: new UnixTime(1615389188),
+      resyncLastDays: 7,
+    },
+  },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: {
+      type: 'DAC Members',
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    },
+    mode: 'State diffs',
+  }),
+  riskView: makeBridgeCompatible({
+    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    dataAvailability: {
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
+      sources: [
+        {
+          contract: 'StarkExchange',
+          references: [
+            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L123',
+          ],
+        },
+        {
+          contract: 'Committee',
+          references: [
+            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
+          ],
+        },
+      ],
+    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      freezeGracePeriod,
+    ),
+    sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
+    proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
+    destinationToken: RISK_VIEW.CANONICAL,
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  }),
+  technology: {
+    stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    operator: OPERATOR.STARKEX_OPERATOR,
+    forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
+    exitMechanisms: EXITS.STARKEX_SPOT,
+  },
+  contracts: {
+    addresses: [
+      discovery.getContractDetails('StarkExchange'),
+      discovery.getContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
+      ...getSHARPVerifierContracts(discovery, verifierAddress),
+    ],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
+  },
+  permissions: [
+    {
+      name: 'Governor',
+      accounts: getProxyGovernance(discovery, 'StarkExchange'),
+      description:
+        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromString(upgradeDelay),
+    },
+    committee,
+    ...getSHARPVerifierGovernors(discovery, verifierAddress),
+    {
+      name: 'Operators',
+      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+      description:
+        'Allowed to update the state. When the Operator is down the state cannot be updated.',
+    },
+  ],
+  milestones: [
+    {
+      name: 'Trading is live on Immutable X Marketplace',
+      link: 'https://twitter.com/immutable/status/1380269810525872131?s=21&t=kyMdE6ORI9f76e8aqizlpg',
+      date: '2021-04-08T00:00:00Z',
+      description:
+        'Immutable has launched the first phase of its Layer 2 scaling protocol.',
+    },
+    {
+      name: 'IMX Token introduced',
+      link: 'https://www.immutable.com/blog/introducing-imx-to-power-ethereums-first-layer-2-for-nfts',
+      date: '2022-06-29T00:00:00Z',
+      description:
+        'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
+    },
+  ],
+  knowledgeNuggets: [...NUGGETS.STARKWARE],
+}

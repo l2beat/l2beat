@@ -3,15 +3,16 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { AztecClient } from '../../peripherals/aztec/AztecClient'
 import { DegateClient } from '../../peripherals/degate/DegateClient'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
-import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ZksyncClient } from '../../peripherals/zksync/ZksyncClient'
 import { Clock } from '../../tools/Clock'
+import { SequenceProcessor } from './SequenceProcessor'
 import { AztecCounter } from './counters/AztecCounter'
 import { DegateCounter } from './counters/DegateCounter'
 import { LoopringCounter } from './counters/LoopringCounter'
@@ -24,7 +25,6 @@ import { BlockTransactionCountRepository } from './repositories/BlockTransaction
 import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 import { StarkexTransactionCountRepository } from './repositories/StarkexCountRepository'
 import { ZksyncTransactionRepository } from './repositories/ZksyncTransactionRepository'
-import { SequenceProcessor } from './SequenceProcessor'
 
 export function createSequenceProcessors(
   config: Config,

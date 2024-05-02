@@ -1,29 +1,30 @@
 import {
   Bridge,
   CONTRACTS,
-  isSingleAddress,
   Layer2,
   Layer3,
   ScalingProjectContract,
   ScalingProjectEscrow,
+  isSingleAddress,
 } from '@l2beat/config'
 import {
   assert,
-  assertUnreachable,
   EthereumAddress,
   ImplementationChangeReportApiResponse,
   ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
 import { languageJoin } from '../../../utils/utils'
+import { getUsedInProjects } from '../common/getUsedInProjects'
+import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
   TechnologyContract,
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'
-import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(
@@ -309,6 +310,9 @@ function makeTechnologyContract(
       }
     }
   }
+  const implementationAddresses = links
+    .filter((c) => !c.isAdmin)
+    .map((c) => c.address)
 
   let description = item.description
 
@@ -378,11 +382,18 @@ function makeTechnologyContract(
     addresses.includes(ca.containingContract.toString()),
   )
 
+  const usedInProjects = getUsedInProjects(
+    project,
+    addresses,
+    implementationAddresses,
+  )
+
   const result: TechnologyContract = {
     name: item.name,
     addresses,
     description,
     links,
+    usedInProjects,
     etherscanUrl,
     chain,
     implementationHasChanged,

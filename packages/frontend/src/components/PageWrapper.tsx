@@ -7,6 +7,8 @@ import { Head } from './head'
 import { TooltipProvider } from './tooltip/TooltipProvider'
 
 export interface PageWrapperProps extends WrapperProps {
+  htmlClassName?: string
+  bodyClassName?: string
   children: ReactNode
 }
 

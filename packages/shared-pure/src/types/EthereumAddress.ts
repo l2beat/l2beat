@@ -1,11 +1,10 @@
 import { constants, utils } from 'ethers'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export interface EthereumAddress extends String {
   _EthereumAddressBrand: string
 }
 
-export function EthereumAddress(value: string) {
+export function EthereumAddress(value: string): EthereumAddress {
   try {
     return utils.getAddress(value) as unknown as EthereumAddress
   } catch {
@@ -38,10 +37,15 @@ EthereumAddress.inOrder = function inOrder(
 }
 
 EthereumAddress.random = function random() {
-  const digit = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
+  const digit = (): string | undefined =>
+    '0123456789abcdef'[Math.floor(Math.random() * 16)]
   return EthereumAddress('0x' + Array.from({ length: 40 }).map(digit).join(''))
 }
 
 EthereumAddress.unsafe = function unsafe(address: string) {
   return address as unknown as EthereumAddress
+}
+
+EthereumAddress.from = function from(value: string) {
+  return EthereumAddress(utils.hexZeroPad(value, 20))
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "publicgoodsnetwork",
   "initialAddresses": ["0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"],
@@ -10,7 +10,7 @@
     "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e": "L1CrossDomainMessenger",
     "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager",
     "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "GuardianMultisig",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "PGNMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
     "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "SystemConfig"
   },
   "overrides": {
@@ -33,13 +33,15 @@
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
         }
       }
     },
-    "PGNMultisig": {
+    "ConduitMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "GuardianMultisig": {
@@ -53,17 +55,23 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         }
       }
     }

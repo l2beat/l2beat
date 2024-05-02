@@ -9,6 +9,17 @@ on:
   merge_group:
 
 jobs:
+  build-backend:
+    name: Build backend container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          file: Dockerfile.backend
   build-frontend:
     name: Build frontend
     runs-on: ubuntu-latest
@@ -90,45 +101,15 @@ jobs:
       - name: Test
         run: yarn test --reporter min
 
-  lint:
-    name: Lint
+  biome:
+    name: Lint & Format
     runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Lint
-        run: yarn lint
-  format:
-    name: Format
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Format
-        run: yarn format
+      - name: Run Biome
+        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'

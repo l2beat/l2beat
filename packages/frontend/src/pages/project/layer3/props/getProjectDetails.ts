@@ -34,6 +34,7 @@ export function getProjectDetails(
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   charts: ProjectDetailsCharts,
+  { layer3sTvl }: { layer3sTvl: boolean },
 ) {
   const isUpcoming = project.isUpcoming
 
@@ -47,7 +48,7 @@ export function getProjectDetails(
 
   const items: ScalingDetailsItem[] = []
 
-  if (charts.tvl) {
+  if (charts.tvl && layer3sTvl) {
     items.push({
       type: 'ChartSection',
       props: {
@@ -74,8 +75,8 @@ export function getProjectDetails(
       type: 'ChartSection',
       props: {
         ...charts.costs,
-        id: 'costs',
-        title: 'Costs',
+        id: 'onchain-costs',
+        title: 'Onchain costsys',
       },
     })
   }

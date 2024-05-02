@@ -1,16 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { describeDatabase } from '../../../test/database'
-import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
+import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
+import { mockDbMiddleware } from './MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -30,8 +32,10 @@ describe(ManagedMultiIndexer.name, () => {
         configurations: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        encode: (v: string) => v,
-        decode: (blob: string) => blob,
+        serializeConfiguration: (v: string) => v,
+        deserializeConfiguration: (blob: string) => blob,
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -44,8 +48,10 @@ describe(ManagedMultiIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        encode: (v: string) => v,
-        decode: (blob: string) => blob,
+        serializeConfiguration: (v: string) => v,
+        deserializeConfiguration: (blob: string) => blob,
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       }
       new TestIndexer({
         ...common,
@@ -138,13 +144,14 @@ describe(ManagedMultiIndexer.name, () => {
 
     const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1)
+    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1, mockDbMiddleware)
 
     expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
       1,
       'indexer',
       ['a', 'b', 'c'],
       1,
+      mockDbMiddleware,
     )
   })
 
@@ -184,28 +191,48 @@ describe(ManagedMultiIndexer.name, () => {
         current = await indexer.update(current + 1, target)
       }
 
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 199, [
-        update('a', 100, 300, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(2, 200, 300, [
-        update('a', 100, 300, false),
-        update('b', 200, 500, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(3, 301, 399, [
-        update('b', 200, 500, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(4, 400, 500, [
-        update('b', 200, 500, false),
-        update('c', 400, null, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(551, 600, [
-        update('c', 400, null, false),
-        update('d', 100, null, false),
-      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        1,
+        100,
+        199,
+        [update('a', 100, 300, false), update('d', 100, null, true)],
+        mockDbMiddleware,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        2,
+        200,
+        300,
+        [
+          update('a', 100, 300, false),
+          update('b', 200, 500, false),
+          update('d', 100, null, true),
+        ],
+        mockDbMiddleware,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        3,
+        301,
+        399,
+        [update('b', 200, 500, false), update('d', 100, null, true)],
+        mockDbMiddleware,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        4,
+        400,
+        500,
+        [
+          update('b', 200, 500, false),
+          update('c', 400, null, false),
+          update('d', 100, null, true),
+        ],
+        mockDbMiddleware,
+      )
+      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
+        551,
+        600,
+        [update('c', 400, null, false), update('d', 100, null, false)],
+        mockDbMiddleware,
+      )
 
       const configurations = await getSavedConfigurations(indexerService)
 
@@ -287,8 +314,9 @@ async function initializeMockIndexer(
     indexerService,
     configurations,
     logger: Logger.SILENT,
-    encode: (v) => v,
-    decode: (v) => v,
+    serializeConfiguration: (v) => v,
+    deserializeConfiguration: (v) => v,
+    createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
   })
   return indexer
 }

@@ -1,22 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
-  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { isEqual, isError } from 'lodash'
+import { isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
   injectInitialAddresses: boolean
-  runSanityCheck: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
@@ -34,12 +31,12 @@ export class DiscoveryRunner {
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return this.discoveryProvider.getBlockNumber()
+    return await this.discoveryProvider.getBlockNumber()
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.discoveryProvider.getBlockNumberAt(
-      new DiscoveryUnixTime(timestamp.toNumber()),
+    return await this.discoveryProvider.getBlockNumberAt(
+      new UnixTime(timestamp.toNumber()),
     )
   }
 
@@ -59,16 +56,6 @@ export class DiscoveryRunner {
       options.maxRetries,
       options.retryDelayMs,
     )
-
-    if (options.runSanityCheck) {
-      const isSane = await this.isDiscoverySane(
-        discovery,
-        config,
-        blockNumber,
-        options,
-      )
-      if (!isSane) return
-    }
 
     return discovery
   }
@@ -133,39 +120,6 @@ export class DiscoveryRunner {
     return discovery
   }
 
-  // 3rd party APIs are unstable, so we do a sanity check before sending
-  // notifications, which makes the same request again and compares the
-  // results.
-  async isDiscoverySane(
-    discovery: DiscoveryOutput,
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-    options: DiscoveryRunnerOptions,
-  ) {
-    const secondDiscovery = await this.discoverWithRetry(
-      projectConfig,
-      blockNumber,
-      options.logger,
-      options.maxRetries,
-      options.retryDelayMs,
-    )
-
-    if (!isEqual(discovery, secondDiscovery)) {
-      const diff = diffDiscovery(
-        discovery.contracts,
-        secondDiscovery.contracts,
-        projectConfig,
-      )
-      options.logger.warn(`[${
-        projectConfig.name
-      }] Sanity check failed | ${blockNumber}\n
-      potential-diff ${JSON.stringify(diff)}}`)
-      return false
-    }
-
-    return true
-  }
-
   // There was a case connected with Amarok (better described in L2B-1521)
   // the problem was with stack too deep in the discovery caused by misconfigured new contract
   // that had a lot of relatives (e.g. Uniswap, DAI)
@@ -173,10 +127,7 @@ export class DiscoveryRunner {
   // this function ensures that initial addresses are taken from discovered.json
   // so this way we will always discover "known" contracts
   async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = await this.configReader.readDiscovery(
-      config.name,
-      this.chain,
-    )
+    const discovery = this.configReader.readDiscovery(config.name, this.chain)
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({
       ...config.raw,

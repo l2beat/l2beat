@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "format:fix": "prettier --write .",
-    "format": "prettier --check .",
-    "lint:fix": "yarn lint --fix",
-    "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint": "biome check --formatter-enabled=false .",
     "typecheck": "tsc --noEmit",
     "start": "node -r esbuild-register src/index.ts"
   },

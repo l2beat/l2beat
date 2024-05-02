@@ -1,33 +1,38 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
-  capitalizeFirstLetter,
   EscrowEntry,
-  EthereumAddress,
-  notUndefined,
   ProjectId,
   TotalSupplyEntry,
-  UnixTime,
+  capitalizeFirstLetter,
+  notUndefined,
 } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
+import { z } from 'zod'
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
-import {
-  BlockTimestampIndexer,
-  BlockTimestampProvider,
-} from '../indexers/BlockTimestampIndexer'
+import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
+import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
-import { createAmountId } from '../utils/createAmountId'
+import { BlockTimestampService } from '../services/BlockTimestampService'
+import { ValueService } from '../services/ValueService'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createAmountId } from '../utils/createAmountId'
+import { PriceModule } from './PriceModule'
 
 interface ChainModule {
   start: () => Promise<void> | void
@@ -40,10 +45,13 @@ export function createChainModules(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): ChainModule[] {
   return config.chains
     .map((chain) =>
       createChainModule(
+        config,
         chain,
         config.amounts,
         peripherals,
@@ -51,6 +59,8 @@ export function createChainModules(
         hourlyIndexer,
         syncOptimizer,
         indexerService,
+        priceModule,
+        idConverter,
       ),
     )
     .filter(notUndefined)
@@ -58,6 +68,7 @@ export function createChainModules(
 }
 
 function createChainModule(
+  config: Tvl2Config,
   chainConfig: ChainTvlConfig,
   amounts: AmountConfigEntry[],
   peripherals: Peripherals,
@@ -65,15 +76,19 @@ function createChainModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): ChainModule | undefined {
-  const name = `${capitalizeFirstLetter(chainConfig.chain)}TvlModule`
+  const chain = chainConfig.chain
+
+  const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!chainConfig.config) {
     logger.info(`${name} disabled`)
     return
   }
-  logger = logger.tag(chainConfig.chain)
+  logger = logger.tag(chain)
 
-  const provider: BlockTimestampProvider =
+  const blockTimestampProvider =
     chainConfig.config.blockNumberProviderConfig.type === 'etherscan'
       ? peripherals.getClient(EtherscanClient, {
           apiKey: chainConfig.config.blockNumberProviderConfig.etherscanApiKey,
@@ -87,35 +102,42 @@ function createChainModule(
           chainId: chainConfig.config.chainId,
         })
 
+  const rpcClient = peripherals.getClient(RpcClient, {
+    url: chainConfig.config.providerUrl,
+    callsPerMinute: chainConfig.config.providerCallsPerMinute,
+  })
+
+  const blockTimestampService = new BlockTimestampService({
+    blockTimestampProvider,
+    rpcClient,
+    logger,
+  })
+
   const blockTimestampIndexer = new BlockTimestampIndexer({
     logger,
-    tag: chainConfig.chain,
+    tag: chain,
     parents: [hourlyIndexer],
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
-    chain: chainConfig.chain,
-    blockTimestampProvider: provider,
+    chain,
+    blockTimestampService,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
     syncOptimizer,
   })
 
-  const rpcClient = peripherals.getClient(RpcClient, {
-    url: chainConfig.config.providerUrl,
-    callsPerMinute: chainConfig.config.providerCallsPerMinute,
-  })
   const amountService = new AmountService({
     rpcClient: rpcClient,
     multicallClient: new MulticallClient(
       rpcClient,
       chainConfig.config.multicallConfig,
     ),
-    logger: logger.tag(chainConfig.chain),
+    logger: logger.tag(chain),
   })
 
   const escrowsAndTotalSupplies = amounts
-    .filter((a) => a.chain === chainConfig.chain)
+    .filter((a) => a.chain === chain)
     .filter(
       (a): a is ChainAmountConfig =>
         a.type === 'escrow' || a.type === 'totalSupply',
@@ -135,30 +157,77 @@ function createChainModule(
 
   const chainAmountIndexer = new ChainAmountIndexer({
     logger,
-    tag: chainConfig.chain,
+    tag: chain,
     parents: [blockTimestampIndexer],
     indexerService,
     configurations,
-    chain: chainConfig.chain,
+    chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
-    blockTimestampsRepository: peripherals.getRepository(
+    blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    encode,
-    decode,
+    serializeConfiguration,
+    deserializeConfiguration,
     syncOptimizer,
+    createDatabaseMiddleware: async () =>
+      new KnexMiddleware(peripherals.getRepository(AmountRepository)),
   })
+
+  const perProject = groupBy(escrowsAndTotalSupplies, 'project')
+
+  const valueIndexers: ValueIndexer[] = []
+  const parents = [priceModule.descendant, chainAmountIndexer]
+  for (const [project, amountConfigs] of Object.entries(perProject)) {
+    const priceConfigs = new Set(
+      amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
+    )
+
+    const valueService = new ValueService({
+      amountRepository: peripherals.getRepository(AmountRepository),
+      priceRepository: peripherals.getRepository(PriceRepository),
+    })
+
+    const minHeight = Math.min(
+      ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+    )
+    const maxHeight = Math.max(
+      ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+    )
+
+    const indexer = new ValueIndexer({
+      valueService,
+      valueRepository: peripherals.getRepository(ValueRepository),
+      priceConfigs: [...priceConfigs],
+      amountConfigs,
+      project: ProjectId(project),
+      dataSource: chain,
+      syncOptimizer,
+      parents,
+      tag: `${project}_${chain}`,
+      indexerService,
+      logger,
+      minHeight,
+      maxHeight,
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
+    })
+
+    valueIndexers.push(indexer)
+  }
 
   return {
     start: async () => {
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
+
+      for (const indexer of valueIndexers) {
+        await indexer.start()
+      }
     },
   }
 }
 
-function encode(value: EscrowEntry | TotalSupplyEntry): string {
+function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
   switch (value.type) {
     case 'escrow':
       return JSON.stringify({
@@ -186,52 +255,8 @@ function encode(value: EscrowEntry | TotalSupplyEntry): string {
   }
 }
 
-// TODO: validate the config with zod
-function decode(value: string): EscrowEntry | TotalSupplyEntry {
-  const obj = JSON.parse(value) as {
-    type: string
-    address: string
-    escrowAddress: string | undefined
-    chain: string
-    project: string
-    source: string
-    sinceTimestamp: number
-    untilTimestamp?: number
-    includeInTotal: boolean
-  }
-
-  switch (obj.type) {
-    case 'escrow':
-      assert(obj.escrowAddress !== undefined, 'escrowAddress is required')
-      return {
-        address:
-          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-        escrowAddress: EthereumAddress(obj.escrowAddress),
-        chain: obj.chain,
-        project: ProjectId(obj.project),
-        source: obj.source,
-        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-        ...({
-          untilTimestamp:
-            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-        } ?? {}),
-        includeInTotal: obj.includeInTotal,
-      } as EscrowEntry
-    case 'totalSupply':
-      return {
-        address:
-          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-        chain: obj.chain,
-        project: ProjectId(obj.project),
-        source: obj.source,
-        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-        ...({
-          untilTimestamp:
-            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-        } ?? {}),
-        includeInTotal: obj.includeInTotal,
-      } as TotalSupplyEntry
-    default:
-      throw new Error('Unknown type')
-  }
+function deserializeConfiguration(
+  value: string,
+): EscrowEntry | TotalSupplyEntry {
+  return z.union([EscrowEntry, TotalSupplyEntry]).parse(JSON.parse(value))
 }

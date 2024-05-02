@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x2c48b4baa32bc52ac4cbc6a436747d651989a5be
+Generated with discovered.json: 0x28a8906387ecd26b322e89d9c1696ebf525a5d6c
+
+# Diff at Wed, 29 May 2024 15:03:42 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19882098
+- current block number: 19976289
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19882098 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+    }
+```
+
+Generated with discovered.json: 0x4515b3bf0a04d364ba904bb95dfb9f63eb817b41
+
+# Diff at Thu, 16 May 2024 11:00:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@59d36171ee3aaf27d6db0c75fdfba523d2dad686 block: 19718019
+- current block number: 19882098
+
+## Description
+
+Changes related to merging with shared-polygon-cdk module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718019 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdminOwner (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xefb4ab49d34c980ed2331351d16f29395fabf092
 
 # Diff at Tue, 23 Apr 2024 12:13:17 GMT:
 

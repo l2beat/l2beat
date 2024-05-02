@@ -5,6 +5,7 @@ import {
 } from '@l2beat/config'
 import {
   ActivityApiCharts,
+  ActivityApiChartsWithEstimation,
   ActivityApiResponse,
   ProjectId,
   TvlApiCharts,
@@ -50,7 +51,6 @@ export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
     ['combined', tvlApiResponse.combined],
     ...Object.entries(tvlApiResponse.projects)
       .filter(([id]) => ids.includes(id))
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .map(([id, project]) => [id, project?.charts] as const),
   ] as TvlProjectData[]
 
@@ -80,7 +80,7 @@ export function checkIfDelayedTvl(
 ) {
   const delayedProjects = allProjects
     .map(([name, charts]) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
       const lastValue = charts.hourly.data.at(-1)!
       const lastTimestamp = lastValue[0].toNumber()
       const delay = now.toNumber() - lastTimestamp
@@ -131,7 +131,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
   checkIfEmptyActivityCharts(allProjectsData)
   checkIfZeroTpsProjects(allProjectsData, importantProjects)
-  checkIfDelayedActivity(allProjectsData, UnixTime.now())
+  checkIfDelayedActivity(activityApiResponse.combined, UnixTime.now())
 }
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
@@ -167,7 +167,7 @@ export function checkIfZeroTpsProjects(
     .filter(([name]) => importantProjects.includes(name))
     .map(([name, data]) => {
       // can we assume here that data is always sorted?
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
       return [name, data.daily.data.at(-1)!] as const
     })
     .filter(([_, lastValue]) => lastValue[1] === 0)
@@ -189,26 +189,16 @@ export function checkIfZeroTpsProjects(
 const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + 2 * UnixTime.HOUR
 
 export function checkIfDelayedActivity(
-  allProjects: ActivityProjectData[],
+  response: ActivityApiChartsWithEstimation,
   now: UnixTime,
 ) {
-  const delayedProjects = allProjects
-    .map(([name, data]) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const lastValue = data.daily.data.at(-1)!
-      const lastTimestamp = lastValue[0]
-      const delay = now.toNumber() - lastTimestamp.toNumber()
-      return { name, delay }
-    })
-    .filter(({ delay }) => delay > ACTIVITY_ACCEPTABLE_DELAY)
+  const lastValue = response.daily.data.at(-1)!
+  const lastTimestamp = lastValue[0]
+  const delay = now.toNumber() - lastTimestamp.toNumber()
 
-  if (delayedProjects.length > 0) {
+  if(delay > ACTIVITY_ACCEPTABLE_DELAY){
     throw new Error(
-      `Some projects activity data is delayed! ${delayedProjects
-        .map(({ name, delay }) => `${name} (${delay} seconds)`)
-        .join(
-          ', ',
-        )}. Acceptable delay is ${ACTIVITY_ACCEPTABLE_DELAY} seconds.`,
+      `Combined activity data is delayed! ${delay} seconds. Acceptable delay is ${ACTIVITY_ACCEPTABLE_DELAY} seconds.`,
     )
   }
 }

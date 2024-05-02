@@ -5,9 +5,9 @@ import { parseSocial } from '../../pages/project/components/LinkSectionLink'
 import { ProjectLink } from '../../pages/project/types'
 import { formatLink } from '../../utils/formatLink'
 import { HoverableDropdown } from '../HoverableDropdown'
-import { OutLinkIcon, ProductIcon, ProjectLinkIcon } from '../icons'
 import { Link } from '../Link'
 import { PlainLink } from '../PlainLink'
+import { OutLinkIcon, ProductIcon, ProjectLinkIcon } from '../icons'
 
 interface LinkSectionProps {
   projectLinks: ProjectLink[]

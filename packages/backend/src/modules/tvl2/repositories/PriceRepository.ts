@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
@@ -25,15 +26,50 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
-  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
+  async getByConfigIdsInRange(
+    configIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<PriceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('prices').where('timestamp', timestamp.toDate())
+    const rows = await knex('prices')
+      .whereIn('configuration_id', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .andWhere('timestamp', '<=', toInclusive.toDate())
+      .orderBy('timestamp')
+
     return rows.map(toRecord)
   }
 
-  async addMany(records: PriceRecord[]) {
-    const rows: PriceRow[] = records.map(toRow)
+  async getDailyByConfigId(configId: string) {
     const knex = await this.knex()
+    const rows = await knex('prices')
+      .where({ configuration_id: configId })
+      .orderBy('timestamp')
+    return rows.map(toRecord)
+  }
+
+  async getByConfigId(configId: string): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices').where('configuration_id', configId)
+    return rows.map(toRecord)
+  }
+
+  async getByConfigIdsAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+      .whereIn('configuration_id', configIds)
+      .andWhere('timestamp', timestamp.toDate())
+
+    return rows.map(toRecord)
+  }
+
+  async addMany(records: PriceRecord[], trx?: Knex.Transaction) {
+    const rows: PriceRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
     await knex.batchInsert('prices', rows, 10_000)
     return rows.length
   }

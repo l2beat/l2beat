@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "synapse",
   "initialAddresses": [
@@ -8,7 +8,8 @@
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
   ],
   "names": {
-    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Bridge Multisig"
+    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Bridge Multisig",
+    "0x2796317b0fF8538F253012862c06787Adfb8cEb6": "SynapseBridge"
   },
   "overrides": {
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": {
@@ -20,7 +21,9 @@
       ],
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -32,7 +35,9 @@
       ],
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -42,6 +47,15 @@
     },
     "Bridge Multisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "SynapseBridge": {
+      "fields": {
+        "accessControl": {
+          "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        }
+      }
     }
   }
 }

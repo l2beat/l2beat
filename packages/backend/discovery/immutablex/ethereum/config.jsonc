@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "immutablex",
   "initialAddresses": ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"],
@@ -10,7 +10,7 @@
     "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91": "ProxyGovernanceMultisig"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
@@ -35,19 +35,26 @@
         "getVaultRoot"
       ],
       "fields": {
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        },
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         }
       }
     },
     "Committee": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },

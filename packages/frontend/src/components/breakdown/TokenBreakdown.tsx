@@ -1,22 +1,22 @@
 import React from 'react'
-
-import { RoundedWarningIcon } from '../icons'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { WarningBar } from '../WarningBar'
+import { cn } from '../../utils/cn'
 import { Breakdown } from './Breakdown'
 
-export interface TokenBreakdownProps {
+export interface TokenBreakdownProps extends Props {
   warning?: string
   warningSeverity: 'warning' | 'bad'
+}
+
+interface Props {
   label: React.ReactNode
-  empty: boolean
   associated: number
   ether: number
   stable: number
   other: number
+  className?: string
 }
 
-export function TokenBreakdown(props: TokenBreakdownProps) {
+export function TokenBreakdown(props: Props) {
   const values = [
     {
       value: props.associated,
@@ -31,24 +31,6 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
   ]
 
   return (
-    <Tooltip>
-      <TooltipTrigger className="flex items-center gap-1">
-        <Breakdown values={values} className="opacity-80" />
-        {props.warning && (
-          <RoundedWarningIcon sentiment={props.warningSeverity} />
-        )}
-      </TooltipTrigger>
-      <TooltipContent>
-        {props.label}
-        {props.warning && (
-          <WarningBar
-            className="mt-2"
-            text={props.warning}
-            icon={RoundedWarningIcon}
-            color={props.warningSeverity === 'warning' ? 'yellow' : 'red'}
-          />
-        )}
-      </TooltipContent>
-    </Tooltip>
+    <Breakdown values={values} className={cn('opacity-80', props.className)} />
   )
 }

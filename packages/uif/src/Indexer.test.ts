@@ -3,10 +3,10 @@ import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
 import { Indexer } from './Indexer'
+import { RetryStrategy } from './Retries'
 import { ChildIndexer } from './indexers/ChildIndexer'
 import { RootIndexer } from './indexers/RootIndexer'
 import { IndexerAction } from './reducer/types/IndexerAction'
-import { RetryStrategy } from './Retries'
 
 describe(Indexer.name, () => {
   describe('correctly informs about updates', () => {
@@ -23,7 +23,7 @@ describe(Indexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.initialize()).toEqual(1)
+      expect(await child.initialize()).toEqual({ safeHeight: 1 })
     })
 
     it('first parent update then invalidate', async () => {
@@ -39,7 +39,7 @@ describe(Indexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.initialize()).toEqual(1)
+      expect(await child.initialize()).toEqual({ safeHeight: 1 })
     })
   })
 
@@ -295,11 +295,11 @@ export class TestRootIndexer extends RootIndexer {
     })
   }
 
-  override async initialize(): Promise<number> {
+  override async initialize() {
     const promise = this.tick()
     this.resolveTick(this.testSafeHeight)
     await promise
-    return this.testSafeHeight
+    return { safeHeight: this.testSafeHeight }
   }
 }
 
@@ -358,12 +358,19 @@ class TestChildIndexer extends ChildIndexer {
     })
   }
 
-  override initialize(): Promise<number> {
-    return Promise.resolve(this.testSafeHeight)
+  override initialize() {
+    return Promise.resolve({ safeHeight: this.testSafeHeight })
   }
 
-  override setSafeHeight(safeHeight: number): Promise<void> {
+  override setSafeHeight(safeHeight: number) {
     this.testSafeHeight = safeHeight
+    return Promise.resolve()
+  }
+
+  override setInitialState(
+    _safeHeight: number,
+    _configHash?: string | undefined,
+  ): Promise<void> {
     return Promise.resolve()
   }
 

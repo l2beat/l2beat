@@ -1,5 +1,6 @@
 import {
   Layer2Provider,
+  Layer3Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
@@ -11,12 +12,13 @@ import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
 export interface ScalingTvlViewEntry {
+  type: 'layer2' | 'layer3'
   name: string
   shortName: string | undefined
   slug: string
   riskValues: RiskValues
   category: ScalingProjectCategory
-  provider?: Layer2Provider
+  provider?: Layer2Provider | Layer3Provider
   warning?: string
   redWarning: string | undefined
   tvlWarning?: WarningWithSentiment

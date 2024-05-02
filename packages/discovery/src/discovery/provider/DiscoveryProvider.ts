@@ -1,16 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
-import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { TraceTransactionResponse } from './TransactionTrace'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export interface ContractMetadata {
   name: string
@@ -34,6 +31,9 @@ type Topics = (string | string[] | null)[]
 export class DiscoveryProvider {
   constructor(
     private readonly provider: providers.JsonRpcProvider | RateLimitedProvider,
+    private readonly eventProvider:
+      | providers.JsonRpcProvider
+      | RateLimitedProvider,
     private readonly etherscanLikeClient: EtherscanLikeClient,
     private readonly logger: DiscoveryLogger,
     private readonly getLogsMaxRange?: number,
@@ -127,7 +127,7 @@ export class DiscoveryProvider {
     toBlock: number,
   ): Promise<providers.Log[]> {
     this.logger.logFetchingEvents(fromBlock, toBlock)
-    return await this.provider.getLogs({
+    return await this.eventProvider.getLogs({
       address: address.toString(),
       fromBlock,
       toBlock,
@@ -138,7 +138,7 @@ export class DiscoveryProvider {
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse> {
-    return this.provider.getTransaction(transactionHash.toString())
+    return await this.provider.getTransaction(transactionHash.toString())
   }
 
   async getTransactionTrace(
@@ -162,7 +162,7 @@ export class DiscoveryProvider {
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block> {
-    return this.provider.getBlock(blockNumber)
+    return await this.provider.getBlock(blockNumber)
   }
 
   async getCode(address: EthereumAddress, blockNumber: number): Promise<Bytes> {
@@ -191,7 +191,7 @@ export class DiscoveryProvider {
   async getContractDeploymentTx(
     address: EthereumAddress,
   ): Promise<Hash256 | undefined> {
-    return this.etherscanLikeClient.getContractDeploymentTx(address)
+    return await this.etherscanLikeClient.getContractDeploymentTx(address)
   }
 
   async getDeployer(
@@ -208,7 +208,7 @@ export class DiscoveryProvider {
   }
 
   async getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime> {
-    return this.etherscanLikeClient.getFirstTxTimestamp(address)
+    return await this.etherscanLikeClient.getFirstTxTimestamp(address)
   }
 
   async getDeploymentInfo(address: EthereumAddress): Promise<
@@ -222,6 +222,12 @@ export class DiscoveryProvider {
     if (txHash === undefined) {
       return undefined
     }
+    if (txHash === Hash256.ZERO) {
+      return {
+        blockNumber: 0,
+        timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+      }
+    }
 
     const tx = await this.getTransaction(txHash)
     assert(tx.blockNumber, 'Transaction returned without a block number.')
@@ -233,11 +239,13 @@ export class DiscoveryProvider {
   }
 
   async getBlockNumber(): Promise<number> {
-    return this.provider.getBlockNumber()
+    return await getBlockNumberTwoProviders(this.provider, this.eventProvider)
   }
 
   async getBlockNumberAt(timestampNumber: UnixTime): Promise<number> {
-    return this.etherscanLikeClient.getBlockNumberAtOrBefore(timestampNumber)
+    return await this.etherscanLikeClient.getBlockNumberAtOrBefore(
+      timestampNumber,
+    )
   }
 
   async getLast10OutgoingTxs(
@@ -246,4 +254,16 @@ export class DiscoveryProvider {
   ): ReturnType<EtherscanLikeClient['getLast10OutgoingTxs']> {
     return await this.etherscanLikeClient.getLast10OutgoingTxs(address, toBlock)
   }
+}
+
+export async function getBlockNumberTwoProviders(
+  p1: providers.JsonRpcProvider | RateLimitedProvider,
+  p2: providers.JsonRpcProvider | RateLimitedProvider,
+): Promise<number> {
+  if (p1 === p2) {
+    return p1.getBlockNumber()
+  }
+  return Math.min(
+    ...(await Promise.all([p1.getBlockNumber(), p2.getBlockNumber()])),
+  )
 }

@@ -1,4 +1,60 @@
-Generated with discovered.json: 0x2ae913f7b36b264cfa37ecf76fd5a829940e569f
+Generated with discovered.json: 0xf5cc1df67b1b9d5d702e8baf9f832c938def1f27
+
+# Diff at Wed, 29 May 2024 14:56:01 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19966417
+- current block number: 19976249
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19966417 (main branch discovery), not current.
+
+```diff
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C"
+    }
+```
+
+Generated with discovered.json: 0x4aae1613d57de7e3527114f668b01cb0dba6ccf3
+
+# Diff at Tue, 28 May 2024 05:57:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 19531453
+- current block number: 19966417
+
+## Description
+
+Blast uses blobs.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.owner:
+-        "0x7c4682F89313810582fb77CF6A4A388A6C77f3aF"
++        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+    }
+```
+
+Generated with discovered.json: 0x0c410f5f03c4e57c70159f8c31458a9b0ce17204
 
 # Diff at Thu, 28 Mar 2024 08:36:10 GMT:
 

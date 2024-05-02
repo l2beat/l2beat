@@ -1,4 +1,68 @@
-Generated with discovered.json: 0xa54b30cd938519ebc4c54ade5bb2fe7b20831145
+Generated with discovered.json: 0x264bd861a65349ee79e7d213b146fb2d90f6005d
+
+# Diff at Mon, 27 May 2024 17:44:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 213468283
+- current block number: 215638135
+
+## Description
+
+Updated the SequencerInbox template, no onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 213468283 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+    }
+```
+
+Generated with discovered.json: 0x848bbae5e04966290420d336f30aabdbbe60a00e
+
+# Diff at Fri, 17 May 2024 08:40:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 211899322
+- current block number: 212134037
+
+## Description
+
+Minor changes in the SentryReferee contract:
+- Expire challenge rewards after 270 instead of 180 days
+- 'stakeAmountTierThresholds[]' values deleted from initializer, but can be set anytime by admin with updateStakingTier()
+
+## Watched changes
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"
++        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
+      implementations.0:
+-        "0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"
++        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
+      derivedName:
+-        "Referee6"
++        "Referee7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SentryReferee/Referee7.sol}                    | 53 +++++++++-------------
+ 1 file changed, 21 insertions(+), 32 deletions(-)
+```
+
+Generated with discovered.json: 0x897a47e36aae203ad1b76427051d8c24b7bc8dfe
 
 # Diff at Fri, 26 Apr 2024 14:19:34 GMT:
 

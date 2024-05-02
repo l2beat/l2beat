@@ -1,4 +1,5 @@
 import { RpcClient } from '../rpcclient/RpcClient'
+import { parseEthersError } from './parseEthersError'
 import {
   MulticallConfigEntry,
   MulticallRequest,
@@ -7,7 +8,7 @@ import {
 
 export class MulticallClient {
   constructor(
-    private readonly ethereumClient: RpcClient,
+    private readonly rcpClient: RpcClient,
     private readonly config: MulticallConfigEntry[],
   ) {}
 
@@ -30,9 +31,12 @@ export class MulticallClient {
         return batchedResults.flat()
       }
     } catch (e) {
-      throw new Error(
-        `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
-      )
+      const ethersError = parseEthersError(e)
+
+      if (ethersError) {
+        throw ethersError
+      }
+      throw e
     }
   }
 
@@ -42,7 +46,7 @@ export class MulticallClient {
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
       requests.map((request) =>
-        this.ethereumClient.call(
+        this.rcpClient.call(
           {
             to: request.address,
             data: request.data,
@@ -65,7 +69,7 @@ export class MulticallClient {
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
     const encoded = config.encodeBatch(requests)
-    const result = await this.ethereumClient.call(
+    const result = await this.rcpClient.call(
       { to: config.address, data: encoded },
       blockNumber,
     )

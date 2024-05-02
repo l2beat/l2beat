@@ -1,9 +1,9 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 19711616,
-  "configHash": "0x4480711b6dc42cf170695c100465436f5f7411fa08997b45ca548e343fd3fbd0",
-  "version": 3,
+  "blockNumber": 19927713,
+  "configHash": "0xd375a7ea9011a48910d0ddaf66b8b6bbbb7a25495a9fc21c3f65e3c430774c5d",
+  "version": 4,
   "contracts": [
     {
       "name": "L1ERC721Bridge",
@@ -94,10 +94,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6813000,
-        "latestOutputIndex": 3784,
-        "nextBlockNumber": 6814800,
-        "nextOutputIndex": 3785,
+        "latestBlockNumber": 8118000,
+        "latestOutputIndex": 4509,
+        "nextBlockNumber": 8119800,
+        "nextOutputIndex": 4510,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -122,13 +122,13 @@
       }
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -136,14 +136,16 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 3,
-        "nonce": 28,
+        "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -334,7 +336,7 @@
         "L2_ORACLE": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
         "l2Oracle": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 287624, 19711594],
+        "params": [1000000000, 288136, 19927473],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
@@ -374,7 +376,7 @@
       "sinceTimestamp": 1700167631,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292804348",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292822290",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -506,7 +508,9 @@
     "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
     "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
     "0xE895076cD050F1f042d1040E47b5929bE989E514",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
     "0x2901dA832a4D0297FF0691100A8E496626cc626D": [

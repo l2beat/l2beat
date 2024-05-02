@@ -8,6 +8,7 @@ import {
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
+  VerifiersApiResponse,
 } from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
 
@@ -22,8 +23,6 @@ export interface Wrapped<Props> {
 }
 
 export interface WrapperProps {
-  htmlClassName?: string
-  bodyClassName?: string
   metadata: PageMetadata
   preloadApis?: string[]
   banner: boolean | undefined
@@ -45,4 +44,5 @@ export interface PagesData {
   finalityApiResponse: FinalityApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
+  verifiersApiResponse: VerifiersApiResponse | undefined
 }

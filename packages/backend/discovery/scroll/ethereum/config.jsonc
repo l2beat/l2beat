@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "scroll",
   "initialAddresses": [
@@ -9,7 +9,8 @@
     "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
     "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
     "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504"
   ],
   "names": {
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
@@ -46,9 +47,18 @@
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifierV0",
     "0x2293cd12e8564e8219d314b075867c2f66ac6941": "PlonkVerifierV1",
     "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV0",
-    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1",
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
+    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin"
   },
   "overrides": {
+    "wstETHescrowLidoProxyAdmin": {
+      "ignoreRelatives": ["owner"]
+    },
+    "wstETHescrowLido": {
+      "ignoreMethods": ["l1Token", "l2Token"],
+      "ignoreRelatives": ["owner"]
+    },
     "L1MessageQueue": {
       "ignoreMethods": [
         "estimateCrossDomainMessageFee",
@@ -80,47 +90,61 @@
       "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
       "fields": {
         "sequencers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateSequencer",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateSequencer",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "provers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateProver",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateProver",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "revertedBatches": {
-          "type": "stateFromEvent",
-          "event": "RevertBatch",
-          "returnParams": ["batchIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RevertBatch",
+            "returnParams": ["batchIndex"]
+          }
         }
       }
     },
     "MultipleVersionRollupVerifier": {
+      "description": "Used to update the verifier and keep track of current and old versions.",
       "ignoreMethods": ["getVerifier"],
       "fields": {
         "latestVerifier": {
-          "type": "array",
-          "length": 5
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
         },
         "legacyVerifiersLength": {
-          "type": "array",
-          "length": 5
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
         }
       }
     },
     "ScrollOwner": {
+      "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
       "fields": {
         "accessControl": {
-          "type": "scrollAccessControl",
-          "roleNames": {
-            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
-            "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
-            "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
-            "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
-            "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+          "handler": {
+            "type": "scrollAccessControl",
+            "roleNames": {
+              "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
+              "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
+              "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
+              "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
+              "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+            }
           }
         }
       }
@@ -128,21 +152,27 @@
     "TimelockSlow": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockFast": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockMid": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -168,10 +198,20 @@
     "Whitelist": {
       "fields": {
         "whitelisted": {
-          "type": "arrayFromOneEvent",
-          "event": "WhitelistStatusChanged",
-          "valueKey": "_account",
-          "flagKey": "_status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "WhitelistStatusChanged",
+            "valueKey": "_account",
+            "flagKey": "_status"
+          }
+        }
+      }
+    },
+    "EnforcedTxGateway": {
+      "fields": {
+        "paused": {
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
+          "severity": "HIGH"
         }
       }
     }

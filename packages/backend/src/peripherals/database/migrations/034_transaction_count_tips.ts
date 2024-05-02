@@ -18,13 +18,11 @@ export async function up(knex: Knex) {
     .withSchema('transactions')
     .createTable('block_tip', function (table) {
       table.string('project_id').primary()
-      // eslint-disable-next-line custom-rules/db_ts_no_tz
       table.dateTime('unix_timestamp').notNullable()
       table.integer('block_number').notNullable()
       table.integer('count').notNullable()
     })
     .createTable('zksync_tip', function (table) {
-      // eslint-disable-next-line custom-rules/db_ts_no_tz
       table.dateTime('unix_timestamp').notNullable()
       table.integer('block_number').notNullable()
       table.integer('block_index').notNullable()

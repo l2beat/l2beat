@@ -1,10 +1,10 @@
-import { hashJson } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
 import { sortBy } from 'lodash'
 
 import { ReportUpdater } from '../assets'
 
-// the USDC on Arbitrum changed type from EBV to NMV
-const AGGREGATED_REPORT_LOGIC_VERSION = 3
+// LayerZero tokens changed type to EBV
+const AGGREGATED_REPORT_LOGIC_VERSION = 4
 
 export function getAggregatedConfigHash(updaters: ReportUpdater[]) {
   const chainIds = sortBy(updaters.map((x) => x.getChainId()))

@@ -5,7 +5,11 @@ import {
 } from '@l2beat/shared-pure'
 
 export function getIncludedProjectsTvlBreakdown<
-  T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },
+  T extends {
+    id: ProjectId
+    isUpcoming?: boolean
+    type: 'bridge' | 'layer2' | 'layer3'
+  },
 >(
   projects: T[],
   tvlApiResponse: TvlApiResponse,
@@ -16,7 +20,6 @@ export function getIncludedProjectsTvlBreakdown<
     .filter(
       (x) =>
         !!tvlApiResponse.projects[x.id.toString()] &&
-        // eslint-disable-next-line
         !!tvlBreakdownApiResponse.breakdowns[x.id.toString()],
     )
 

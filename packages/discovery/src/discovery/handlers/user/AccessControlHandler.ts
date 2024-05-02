@@ -1,7 +1,7 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
@@ -117,7 +117,6 @@ export async function fetchAccessControl(
     adminRole: string
     members: Set<EthereumAddress>
   } {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const value = roles[role] ?? {
       adminRole: DEFAULT_ADMIN_ROLE_BYTES,
       members: new Set(),

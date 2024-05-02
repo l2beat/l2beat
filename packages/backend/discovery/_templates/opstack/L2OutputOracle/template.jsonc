@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Central actor allowed to post new L2 state roots to L1.",
+  "ignoreMethods": [
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "getL2Output",
+    "computeL2Timestamp"
+  ],
+  "ignoreInWatchMode": [
+    "nextBlockNumber",
+    "nextOutputIndex",
+    "latestBlockNumber",
+    "latestOutputIndex"
+  ],
+  "fields": {
+    "deletedOutputs": {
+      "handler": {
+        "type": "stateFromEvent",
+        "event": "OutputsDeleted",
+        "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+      }
+    }
+  }
+}

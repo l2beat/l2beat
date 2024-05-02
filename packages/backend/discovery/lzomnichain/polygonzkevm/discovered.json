@@ -1,9 +1,9 @@
 {
   "name": "lzomnichain",
   "chain": "polygonzkevm",
-  "blockNumber": 11870389,
-  "configHash": "0x9ee5d18520bdef0bd3a57cebfb66432dbdaa00201552564d115761c44cf0f581",
-  "version": 3,
+  "blockNumber": 12848751,
+  "configHash": "0x3eb47c0529a669f2532e22188327287ff2a1bb33f6bb9d15638eb1dde5e8d28b",
+  "version": 4,
   "contracts": [
     {
       "name": "",
@@ -53,7 +53,7 @@
       "sinceTimestamp": 1679974072
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "LayerZeroMultisig_pzkevm",
       "address": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827",
       "upgradeability": {
         "type": "gnosis safe",
@@ -73,9 +73,9 @@
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
         "getThreshold": 2,
-        "nonce": 26,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "ProxyAdmin",
@@ -208,7 +208,8 @@
           "263": 20,
           "265": 20,
           "266": 20,
-          "267": 20
+          "267": 20,
+          "274": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -456,6 +457,10 @@
           "267": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "274": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
         },
         "defaultAppConfig": {
@@ -621,9 +626,9 @@
           },
           "158": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 64,
+            "inboundBlockConfirm": 225000,
             "outboundProofType": 2,
-            "outboundBlockConfirm": 64,
+            "outboundBlockConfirm": 225000,
             "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           },
@@ -938,6 +943,14 @@
             "outboundBlockConfirm": 225000,
             "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
+          "274": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 225000,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 225000,
+            "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           }
         },
         "endpoint": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
@@ -1175,6 +1188,10 @@
           "267": [
             "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+          ],
+          "274": [
+            "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+            "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -1241,7 +1258,8 @@
           "263": 2,
           "265": 2,
           "266": 2,
-          "267": 2
+          "267": 2,
+          "274": 2
         },
         "treasuryContract": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
         "treasuryZROFees": 0,
@@ -1305,7 +1323,8 @@
           "263": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "265": "0x000000000000000000000000e1844c5d63a9543023008d332bd3d2e6f1fe1043",
           "266": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "274": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"

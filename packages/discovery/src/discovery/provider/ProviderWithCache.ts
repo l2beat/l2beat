@@ -1,11 +1,9 @@
-import { assert } from '@l2beat/backend-tools'
 import { createHash } from 'crypto'
+import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
@@ -37,6 +35,7 @@ export class ProviderWithCache extends DiscoveryProvider {
 
   constructor(
     provider: providers.JsonRpcProvider | RateLimitedProvider,
+    eventProvider: providers.JsonRpcProvider | RateLimitedProvider,
     etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
     private readonly chain: string,
@@ -44,7 +43,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     getLogsMaxRange?: number,
     readonly reorgSafeDepth?: number,
   ) {
-    super(provider, etherscanLikeClient, logger, getLogsMaxRange)
+    super(provider, eventProvider, etherscanLikeClient, logger, getLogsMaxRange)
   }
 
   public async cacheOrFetch<R>(

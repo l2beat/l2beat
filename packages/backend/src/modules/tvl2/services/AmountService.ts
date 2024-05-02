@@ -1,17 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  assertUnreachable,
   EscrowEntry,
   TotalSupplyEntry,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   erc20Codec,
   nativeAssetCodec,
 } from '../../../peripherals/multicall/codecs'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   MulticallRequest,
   MulticallResponse,
@@ -28,21 +28,16 @@ export interface AmountServiceDependencies {
   logger: Logger
 }
 
-interface Amount {
-  configId: string
-  amount: bigint
-}
-
 export class AmountService {
   constructor(private readonly $: AmountServiceDependencies) {
     this.$.logger = $.logger.for(this)
   }
 
   public async fetchAmounts(
-    configurations: Configuration<ChainAmountConfig>[],
-    blockNumber: number,
     timestamp: UnixTime,
-  ): Promise<AmountRecord[]> {
+    blockNumber: number,
+    configurations: Configuration<ChainAmountConfig>[],
+  ): Promise<(AmountRecord & { type: 'escrow' | 'totalSupply' })[]> {
     const [forRpc, forMulticall] = partition(
       configurations,
       (c): c is Configuration<EscrowEntry> =>
@@ -65,8 +60,8 @@ export class AmountService {
   private async fetchWithRpc(
     configurations: Configuration<EscrowEntry>[],
     blockNumber: number,
-  ): Promise<Amount[]> {
-    return Promise.all(
+  ) {
+    return await Promise.all(
       configurations.map(async (configuration) => {
         const amount = await this.$.rpcClient.getBalance(
           configuration.properties.escrowAddress,
@@ -75,6 +70,7 @@ export class AmountService {
 
         return {
           configId: configuration.id,
+          type: configuration.properties.type,
           amount: amount.toBigInt(),
         }
       }),
@@ -84,7 +80,7 @@ export class AmountService {
   private async fetchWithMulticall(
     configurations: Configuration<ChainAmountConfig>[],
     blockNumber: number,
-  ): Promise<Amount[]> {
+  ) {
     if (configurations.length === 0) {
       return []
     }
@@ -97,7 +93,7 @@ export class AmountService {
       blockNumber,
     )
 
-    return responses.map((response, i): Amount => {
+    return responses.map((response, i) => {
       const amount = this.decodeForMulticall(configurations[i], response)
 
       // In the rare event of a contract call revert we do not want backend to stop because of it
@@ -108,12 +104,14 @@ export class AmountService {
         )
         return {
           configId: configurations[i].id,
+          type: configurations[i].properties.type,
           amount: 0n,
         }
       }
 
       return {
         configId: configurations[i].id,
+        type: configurations[i].properties.type,
         amount,
       }
     })

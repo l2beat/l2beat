@@ -1,12 +1,12 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
-import { getReferencedName, Reference, resolveReference } from '../reference'
+import { Reference, getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
@@ -19,7 +19,7 @@ export const ArrayHandlerDefinition = z.strictObject({
   length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
   maxLength: z.optional(z.number().int().nonnegative()),
   startIndex: z.optional(z.number().int().nonnegative()),
-  pickFields: z.optional(z.array(z.union([z.string(), z.number()]))),
+  pickFields: z.optional(z.array(z.string())),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -88,18 +88,17 @@ export class ArrayHandler implements ClassicHandler {
               return { field: this.field, error: current.error }
             }
           }
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // biome-ignore lint/style/noNonNullAssertion: we know it's there
           return { field: this.field, value: current.value! }
         }),
       )
       if (results.some((r) => r.error)) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const errors = results.filter((r) => r.error).map((r) => r.error)
         return { field: this.field, error: errors.join(',') }
       }
 
       for (const result of results) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         value.push(result.value!)
       }
     } else {
@@ -114,7 +113,7 @@ export class ArrayHandler implements ClassicHandler {
           }
           break
         }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         value.push(current.value!)
       }
     }
@@ -136,7 +135,7 @@ function createCallIndex(
   address: EthereumAddress,
   fragment: utils.FunctionFragment,
   blockNumber: number,
-  pickFields?: (string | number)[],
+  pickFields?: string[],
 ) {
   return async (index: number) => {
     return await callMethod(

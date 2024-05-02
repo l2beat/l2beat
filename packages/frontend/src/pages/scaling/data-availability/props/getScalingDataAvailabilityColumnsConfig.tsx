@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
-import { getOrderValueBySentiment } from '../../../../components/table/props/sorting/getOrderValueBySentiment'
 import { SentimentText } from '../../../../components/table/SentimentText'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
+import { getOrderValueBySentiment } from '../../../../components/table/props/sorting/getOrderValueBySentiment'
 import { ColumnConfig } from '../../../../components/table/types'
 import { ScalingDataAvailabilityViewEntry } from '../types'
 

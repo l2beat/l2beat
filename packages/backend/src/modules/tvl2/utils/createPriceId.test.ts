@@ -1,4 +1,5 @@
 import {
+  AssetId,
   CoingeckoId,
   EthereumAddress,
   PriceConfigEntry,
@@ -59,6 +60,7 @@ function mock(v?: Partial<PriceConfigEntry>): PriceConfigEntry {
     type: 'coingecko',
     coingeckoId: CoingeckoId('id'),
     sinceTimestamp: UnixTime.ZERO,
+    assetId: AssetId.ARB,
     ...v,
   }
 }

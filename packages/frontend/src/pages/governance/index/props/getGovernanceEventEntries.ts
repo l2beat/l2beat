@@ -1,8 +1,8 @@
 import { CollectionEntry } from '../../../../content/getCollection'
 import { formatTimestamp } from '../../../../utils'
 import {
-  getOneTimeEvents,
   OneTimeEvent,
+  getOneTimeEvents,
 } from '../../../../utils/events/getOneTimeEvents'
 
 export interface GovernanceEventEntry {

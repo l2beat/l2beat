@@ -1,9 +1,9 @@
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, assertUnreachable } from '@l2beat/shared-pure'
 
 import {
-  isSingleAddress,
   ScalingProjectContract,
   ScalingProjectUpgradeability,
+  isSingleAddress,
 } from '../../src'
 import { VerificationMapPerChain } from './output'
 import { Project } from './types'
@@ -58,7 +58,7 @@ function isContractOnChain(contract: ScalingProjectContract, chain: string) {
   return contract.chain === chain
 }
 
-function gatherAddressesFromUpgradeability(
+export function gatherAddressesFromUpgradeability(
   item: ScalingProjectUpgradeability,
 ): EthereumAddress[] {
   const result: EthereumAddress[] = []

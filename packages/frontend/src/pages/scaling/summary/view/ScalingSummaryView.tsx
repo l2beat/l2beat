@@ -1,15 +1,15 @@
 import React from 'react'
 
+import { ScalingLegend } from '../../../../components/ScalingLegend'
+import { Tabs } from '../../../../components/Tabs'
 import { Layer3sIcon } from '../../../../components/icons'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
-import { ScalingLegend } from '../../../../components/ScalingLegend'
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
-import { Tabs } from '../../../../components/Tabs'
 import {
   getActiveScalingSummaryColumnsConfig,
   getArchivedScalingSummaryColumnsConfig,
@@ -25,11 +25,13 @@ import {
 export interface ScalingSummaryViewProps {
   layer2s: ScalingL2SummaryViewEntry[]
   layer3s: ScalingL3SummaryViewEntry[]
+  layer3sTvl: boolean
 }
 
 export function ScalingSummaryView({
   layer2s,
   layer3s,
+  layer3sTvl,
 }: ScalingSummaryViewProps) {
   const rows: RowConfig<ScalingSummaryViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
@@ -69,6 +71,22 @@ export function ScalingSummaryView({
             icon: <ActiveIcon />,
           },
           {
+            id: 'layer3s',
+            name: 'Layer 3 projects',
+            shortName: 'Layer 3s',
+            content: (
+              <TableView
+                items={layer3sProjects}
+                rows={rows}
+                columnsConfig={getLayer3sScalingSummaryColumnsConfig(
+                  layer3sTvl,
+                )}
+              />
+            ),
+            itemsCount: layer3sProjects.length,
+            icon: <Layer3sIcon />,
+          },
+          {
             id: 'upcoming',
             name: 'Upcoming projects',
             shortName: 'Upcoming',
@@ -101,20 +119,6 @@ export function ScalingSummaryView({
             ),
             itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
-          },
-          {
-            id: 'layer3s',
-            name: 'Layer 3 projects',
-            shortName: 'Layer 3s',
-            content: (
-              <TableView
-                items={layer3sProjects}
-                rows={rows}
-                columnsConfig={getLayer3sScalingSummaryColumnsConfig()}
-              />
-            ),
-            itemsCount: layer3sProjects.length,
-            icon: <Layer3sIcon />,
           },
         ]}
       />

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
+import { GrayedOut } from '../../../../components/table/GrayedOut'
 import { NumberCell } from '../../../../components/table/NumberCell'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
@@ -22,13 +23,15 @@ export function getScalingActivityColumnsConfig() {
       colSpan: (project) => (project.data === undefined ? 5 : undefined),
       getValue: (project) =>
         project.data ? (
-          <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
+          <GrayedOut grayOut={!project.data.syncStatus.isSynced}>
+            <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
+          </GrayedOut>
         ) : (
           <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
             MISSING DATA
           </Badge>
         ),
-      removeCellOnFalsyValue: true,
+      removeCellOnFalsyValue: (project) => project.data === undefined,
       sorting: {
         getOrderValue: (project) => project.data?.tpsDaily,
         rule: 'numeric',
@@ -42,9 +45,11 @@ export function getScalingActivityColumnsConfig() {
       align: 'right',
       getValue: (project) =>
         project.data && (
-          <NumberCell signed>{project.data.tpsWeeklyChange}</NumberCell>
+          <GrayedOut grayOut={!project.data.syncStatus.isSynced}>
+            <NumberCell signed>{project.data.tpsWeeklyChange}</NumberCell>
+          </GrayedOut>
         ),
-      removeCellOnFalsyValue: true,
+      removeCellOnFalsyValue: (project) => project.data === undefined,
       sorting: {
         getOrderValue: (project) => project.data?.tpsWeeklyChange,
         rule: 'numeric',
@@ -57,19 +62,21 @@ export function getScalingActivityColumnsConfig() {
       align: 'right',
       getValue: (project) =>
         project.data !== undefined && (
-          <span className="flex items-baseline justify-end gap-1.5">
-            <NumberCell>{formatTps(project.data.maxTps)}</NumberCell>
-            <span
-              className={cn(
-                'text-gray-700 dark:text-gray-300',
-                'block min-w-[115px] text-left',
-              )}
-            >
-              on {project.data.maxTpsDate}
+          <GrayedOut grayOut={!project.data.syncStatus.isSynced}>
+            <span className="flex items-baseline justify-end gap-1.5">
+              <NumberCell>{formatTps(project.data.maxTps)}</NumberCell>
+              <span
+                className={cn(
+                  'text-gray-700 dark:text-gray-300',
+                  'block min-w-[115px] text-left',
+                )}
+              >
+                on {project.data.maxTpsDate}
+              </span>
             </span>
-          </span>
+          </GrayedOut>
         ),
-      removeCellOnFalsyValue: true,
+      removeCellOnFalsyValue: (project) => project.data === undefined,
       sorting: {
         getOrderValue: (project) => project.data?.maxTps,
         rule: 'numeric',
@@ -81,11 +88,13 @@ export function getScalingActivityColumnsConfig() {
       align: 'right',
       getValue: (project) =>
         project.data && (
-          <NumberCell>
-            {formatNumber(project.data.transactionsMonthlyCount)}
-          </NumberCell>
+          <GrayedOut grayOut={!project.data.syncStatus.isSynced}>
+            <NumberCell>
+              {formatNumber(project.data.transactionsMonthlyCount)}
+            </NumberCell>
+          </GrayedOut>
         ),
-      removeCellOnFalsyValue: true,
+      removeCellOnFalsyValue: (project) => project.data === undefined,
       sorting: {
         getOrderValue: (project) => project.data?.transactionsMonthlyCount,
         rule: 'numeric',
@@ -95,7 +104,7 @@ export function getScalingActivityColumnsConfig() {
       name: 'Data source',
       tooltip: 'Where is the transaction data coming from.',
       getValue: (project) => project.data !== undefined && project.dataSource,
-      removeCellOnFalsyValue: true,
+      removeCellOnFalsyValue: (project) => project.data === undefined,
     },
   ]
   return columns

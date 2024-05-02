@@ -3,8 +3,8 @@ import { HttpClient } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
-import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
+import { createActivityModule } from './modules/activity/ActivityModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -16,8 +16,9 @@ import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createTvl2Module } from './modules/tvl2/modules/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
-import { Database } from './peripherals/database/Database'
+import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
+import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
@@ -65,6 +66,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvl2Module(config, logger, peripherals, clock),
+      createVerifiersModule(config, logger, peripherals),
       createFeaturesModule(config),
     ]
 

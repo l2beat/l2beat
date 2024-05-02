@@ -17,7 +17,6 @@ export async function up(knex: Knex) {
   await knex.schema.dropTable('events')
   await knex.schema.createTable('events', function (table) {
     table.increments('id')
-    // eslint-disable-next-line custom-rules/db_ts_no_tz
     table.dateTime('unix_timestamp').notNullable()
     table.string('event_name').notNullable()
     table.string('project_id').notNullable()

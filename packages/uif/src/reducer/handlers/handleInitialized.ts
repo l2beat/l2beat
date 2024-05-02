@@ -13,6 +13,7 @@ export function handleInitialized(
   const newState: IndexerState = {
     ...state,
     height: action.safeHeight,
+    configHash: action.configHash,
     initializedSelf: true,
     children: Array.from({ length: action.childCount }).map(() => ({
       ready: true,

@@ -13,6 +13,7 @@ import { Knex } from 'knex'
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ChainConverter } from '../tools/ChainConverter'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
 
@@ -40,6 +41,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
+  readonly verifiers: boolean
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
@@ -56,7 +58,7 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
-    readonly l2costs: boolean
+    readonly verifiers: boolean
   }
 }
 
@@ -89,7 +91,12 @@ export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
+  readonly projects: Project[]
   readonly coingeckoApiKey: string | undefined
+  readonly chainConverter: ChainConverter
+  // used by value indexer
+  readonly maxTimestampsToAggregateAtOnce: number
+  readonly projectsExcludedFromApi: string[]
 }
 
 export interface TrackedTxsConfig {
@@ -103,8 +110,8 @@ export interface TrackedTxsConfig {
     readonly liveness: boolean
     readonly l2costs:
       | {
-          readonly ethereumProviderUrl: string
-          readonly ethereumProviderCallsPerMinute?: number
+          readonly aggregatorEnabled: boolean
+          readonly coingeckoApiKey: string
         }
       | false
   }

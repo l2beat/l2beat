@@ -1,0 +1,50 @@
+name: Deploy update monitor
+# inputs.target_env is not populated on schedule runs, thus manually passing default value
+run-name: Deploy update monitor to ${{ inputs.target_env || 'staging' }}
+
+concurrency:
+  group: ${{ inputs.target_env || 'staging' }}
+permissions: {}
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: Environment where update monitor will be deployed
+        type: choice
+        default: 'staging'
+        options:
+          - staging
+          - production
+  schedule:
+    - cron: "45 3 * * *"
+
+env:
+  HEROKU_APP_NAME: ${{ inputs.target_env == 'production' && secrets.HEROKU_UPDATE_MONITOR_PROD || secrets.HEROKU_UPDATE_MONITOR_DEV }}
+
+jobs:
+  deploy-update-monitor:
+    name: Deploy update monitor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install heroku CLI
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - name: Login to heroku container registry
+        uses: docker/login-action@v3
+        with:
+          username: "_"
+          password: ${{ secrets.HEROKU_TOKEN }}
+          registry: registry.heroku.com
+      - name: Build and publish container
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: Dockerfile.backend
+          tags: registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+      - name: Release published container
+        run: heroku container:release -a ${{ env.HEROKU_APP_NAME }} -v web
+        env:
+          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}

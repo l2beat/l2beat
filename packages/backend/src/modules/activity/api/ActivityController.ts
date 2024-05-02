@@ -1,18 +1,18 @@
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiCharts,
   ActivityApiResponse,
-  json,
   ProjectId,
   Result,
   UnixTime,
+  json,
 } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
-import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
+import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -235,6 +235,12 @@ export class ActivityController {
         processor.hasProcessedAll(),
         now,
       )
+
+      // This is needed because currently there is a window between the project being
+      // synced_once and the data being available in the materialized view.
+      // TODO(imxeno): Remove this check once we change materialized view logic.
+      if (postprocessCounts.length === 0) continue
+
       result.set(projectId, postprocessedCounts)
     }
     return result

@@ -1,3 +1,206 @@
+Generated with discovered.json: 0xf0c97ee110e8ec5c671f43cd04bf06c74a0ebd67
+
+# Diff at Thu, 30 May 2024 11:50:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3fadb11e3d19143a19dce8628dd550d0213d6c9b block: 19875788
+- current block number: 19982475
+
+## Description
+
+One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system_config.html#ecotone-scalar-overhead-uint256uint256-change).
+
+## Watched changes
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
++++ description: Signers of the multisig, high severity if threshold changes
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.0:
+-        "0x892D3076fb9Ac7Cb2B9cF25F051A275E69D460e3"
++        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+    }
+```
+
+Generated with discovered.json: 0xb4e392b5d9341f4a7fce949f64679f35dd02550b
+
+# Diff at Wed, 15 May 2024 13:50:16 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@2a68252776877f0b82e9f7cf6261b744952be771 block: 19859844
+- current block number: 19875788
+
+## Description
+
+### Immutables now variable
+
+This upgrade is touching all major contracts of the rollup system, with only minor changes to immutables, identical to the [Optimism Upgrade Proposal #6: Multi-Chain Prep (MCP) L1](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677)
+
+The new implementations are code-identical to the optimism upgrade on which comments can be found in optimisms diffHistory.md under 'Diff at Fri, 12 Apr 2024 12:08:01 GMT'. Only exception is the customized OptimismPortal (FraxchainPortal) by Fraxtal. But that one has again the optimism changes, just merged.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x31c25985E6b10CF335FC01cf9790aF4890d0505c"
++        "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"
+      implementations.0:
+-        "0x31c25985E6b10CF335FC01cf9790aF4890d0505c"
++        "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.otherMessenger:
++        "0x4200000000000000000000000000000000000007"
+    }
+```
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"
++        "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"
+      implementations.0:
+-        "0x22052c592f763CA14a090D9974c5Bf9Fd3a44b8c"
++        "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"
+      values.version:
+-        "1.11.0"
++        "1.12.0"
+      values.BATCH_INBOX_SLOT:
++        "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597"
+      values.batchInbox:
++        "0xfF000000000000000000000000000000000420fC"
+      values.L1_CROSS_DOMAIN_MESSENGER_SLOT:
++        "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636"
+      values.L1_ERC_721_BRIDGE_SLOT:
++        "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7"
+      values.L1_STANDARD_BRIDGE_SLOT:
++        "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376"
+      values.l1CrossDomainMessenger:
++        "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed"
+      values.l1ERC721Bridge:
++        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      values.l1StandardBridge:
++        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      values.L2_OUTPUT_ORACLE_SLOT:
++        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      values.OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT:
++        "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c"
+      values.OPTIMISM_PORTAL_SLOT:
++        "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac"
+      values.optimismMintableERC20Factory:
++        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      values.optimismPortal:
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      values.START_BLOCK_SLOT:
++        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
+      values.startBlock:
++        19135324
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xCC26248B71284B812Ff7825e005560DB01a874C7"
++        "0x30Cd695249394eED44C576f2caEC5304be6455F9"
+      implementations.0:
+-        "0xCC26248B71284B812Ff7825e005560DB01a874C7"
++        "0x30Cd695249394eED44C576f2caEC5304be6455F9"
+      values.version:
+-        "2.0.0"
++        "2.1.0"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x59B6903044Fa9439a5D621D3605789A6E654b1D6"
++        "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"
+      implementations.0:
+-        "0x59B6903044Fa9439a5D621D3605789A6E654b1D6"
++        "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"
+      values.version:
+-        "2.4.0"
++        "2.5.0"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x84c2f365733c6560bd49D8768d9c23B07A9DD630"
++        "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"
+      implementations.0:
+-        "0x84c2f365733c6560bd49D8768d9c23B07A9DD630"
++        "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"
+      values.version:
+-        "1.7.0"
++        "1.8.0"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x23A0478996241F9f966b7054c06FdeB96Ddf3475"
++        "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"
+      implementations.0:
+-        "0x23A0478996241F9f966b7054c06FdeB96Ddf3475"
++        "0x7eE1637C33Ed0DFEE6403f3301B6d404106018e4"
+      values.version:
+-        "2.0.0"
++        "2.1.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessenger.sol                     | 201 +++++++++++++++----
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              | 190 ++++++++++++++----
+ .../L1StandardBridge/L1StandardBridge.sol          | 213 ++++++++++++++++-----
+ .../L2OutputOracle/L2OutputOracle.sol              | 151 ++++++++-------
+ .../OptimismPortal/FraxchainPortal.sol             |  95 +++++----
+ .../SystemConfig/SystemConfig.sol                  | 166 +++++++++++++---
+ 6 files changed, 769 insertions(+), 247 deletions(-)
+```
+
+Generated with discovered.json: 0x1be769dd7c57d040bbbab89bd20d2c7b751d5419
+
+# Diff at Mon, 13 May 2024 08:17:32 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@142cacbaef1c026127ab0d88f45c576741b3a345 block: 19573574
+- current block number: 19859844
+
+## Description
+
+One signer of the frxETH Multisig is changed.
+
+## Watched changes
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: This address is the owner of the gas token contract frxETH, and the frxETHMinter contract. It can pause and unpause ETH deposits, and change how much ETH is withheld from each submit() transaction.
+      values.getOwners.3:
+-        "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228"
++        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+    }
+```
+
 Generated with discovered.json: 0x8b040a76aba80d05b354d6a3599890e6aefd6263
 
 # Diff at Wed, 03 Apr 2024 06:51:43 GMT:

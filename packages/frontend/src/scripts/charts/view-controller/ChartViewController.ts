@@ -131,7 +131,7 @@ export class ChartViewController {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   private getRenderParams(): RenderParams<any> {
     switch (this.state?.data?.type) {
       case 'tvl':

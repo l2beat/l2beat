@@ -20,13 +20,24 @@ export class BlockIndexer extends ChildIndexer {
     super(logger, [hourlyIndexer], options)
   }
 
-  override async initialize(): Promise<number> {
+  override async initialize() {
     const height = await this.blockIndexerRepository.loadHeight()
-    return height ?? this.minHeight - 1
+    return { safeHeight: height ?? this.minHeight - 1 }
   }
 
   override async setSafeHeight(height: number): Promise<void> {
     await this.blockIndexerRepository.saveHeight(height)
+  }
+
+  override async setInitialState(
+    safeHeight: number,
+    configHash?: string | undefined,
+  ) {
+    await this.blockIndexerRepository.upsert({
+      indexerId: 'block_indexer',
+      height: safeHeight,
+      configHash,
+    })
   }
 
   override async update(from: number): Promise<number> {
@@ -40,6 +51,6 @@ export class BlockIndexer extends ChildIndexer {
 
   override async invalidate(targetHeight: number): Promise<number> {
     // We don't need to delete any data
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

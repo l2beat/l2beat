@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "amarok",
   "names": {
@@ -25,13 +25,13 @@
     "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector",
     "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
     "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector",
-
     "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": "NewWormholeHubConnector",
     "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
     "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
     "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector",
-    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector"
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector",
+    "0x279fDA9AdDB854541f0bb86733d924e28c24c625": "xLayerZkHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -39,25 +39,35 @@
     "ConnextBridge": {
       "fields": {
         "SEQUENCERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event SequencerAdded(address sequencer, address caller)",
-          "addKey": "sequencer",
-          "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
-          "removeKey": "sequencer"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event SequencerAdded(address sequencer, address caller)",
+            "addKey": "sequencer",
+            "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
+            "removeKey": "sequencer"
+          }
         },
         "RELAYERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event RelayerAdded(address relayer, address caller)",
-          "addKey": "relayer",
-          "removeEvent": "event RelayerRemoved(address relayer, address caller)",
-          "removeKey": "relayer"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event RelayerAdded(address relayer, address caller)",
+            "addKey": "relayer",
+            "removeEvent": "event RelayerRemoved(address relayer, address caller)",
+            "removeKey": "relayer"
+          }
         },
         "ROUTERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event RouterAdded(address indexed router, address caller)",
-          "addKey": "router",
-          "removeEvent": "event RouterRemoved(address indexed router, address caller)",
-          "removeKey": "router"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event RouterAdded(address indexed router, address caller)",
+            "addKey": "router",
+            "removeEvent": "event RouterRemoved(address indexed router, address caller)",
+            "removeKey": "router"
+          }
+        },
+        "relayerFeeVault": {
+          "description": "This address receives the bridge fees",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
@@ -80,11 +90,16 @@
     "WatcherManager": {
       "fields": {
         "WATCHERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event WatcherAdded(address watcher)",
-          "addKey": "watcher",
-          "removeEvent": "event WatcherRemoved(address watcher)",
-          "removeKey": "watcher"
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event WatcherAdded(address watcher)",
+            "addKey": "watcher",
+            "removeEvent": "event WatcherRemoved(address watcher)",
+            "removeKey": "watcher"
+          }
         }
       },
       "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
@@ -92,14 +107,27 @@
     "RootManager": {
       "fields": {
         "connectors": {
-          "type": "array",
-          "method": "connectors",
-          "maxLength": 14
+          "handler": {
+            "type": "array",
+            "method": "connectors",
+            "maxLength": 15
+          }
         },
         "domains": {
-          "type": "array",
-          "method": "domains",
-          "maxLength": 14
+          "handler": {
+            "type": "array",
+            "method": "domains",
+            "maxLength": 15
+          }
+        },
+        "connectorsHash": {
+          "description": "Hash of all connectors' addresses. Changes when a connector is added or removed.",
+          "severity": "LOW"
+        },
+        "watcherManager": {
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
         }
       },
       "ignoreMethods": ["validAggregateRoots"],
@@ -159,6 +187,10 @@
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "PolygonZkHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "xLayerZkHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },

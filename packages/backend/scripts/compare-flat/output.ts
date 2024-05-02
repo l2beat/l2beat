@@ -1,12 +1,8 @@
+import { estimateSimilarity } from '@l2beat/discovery'
 import chalk from 'chalk'
 
-import { printAsciiTable } from '../../src/tools/printAsciiTable'
-import {
-  estimateSimilarity,
-  Project,
-  removeCommonPath,
-  transpose,
-} from './common'
+import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { Project, removeCommonPath, transpose } from './common'
 
 export function formatHeader(title: string): string {
   return `= ${title} `.padEnd(36, '=')
@@ -48,7 +44,7 @@ export function formatTable(
     row.unshift(shouldTranspose ? bIDs[i] : aIDs[i])
   }
 
-  return printAsciiTable(header, rows)
+  return formatAsAsciiTable(header, rows)
 }
 
 export function computeTableWidth(headerColumns: string[]): number {

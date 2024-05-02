@@ -1,6 +1,6 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { Hash256 } from '@l2beat/shared-pure'
 
-import { Hash256 } from '../../utils/Hash256'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 
@@ -39,6 +39,7 @@ export function processAnalysis(
           name: x.name,
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
+          ignoreInWatchMode: x.ignoreInWatchMode,
           upgradeability: x.upgradeability,
           implementations:
             Object.keys(x.implementations).length === 0

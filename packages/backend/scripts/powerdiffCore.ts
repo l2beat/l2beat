@@ -1,9 +1,9 @@
-import Convert from 'ansi-to-html'
-import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
+import Convert from 'ansi-to-html'
+import chalk from 'chalk'
 
 function diffToHtml(
   path1: string,
@@ -148,7 +148,7 @@ function genDiffHtml(
 function checkDeps() {
   try {
     osExec('which difft')
-  } catch (error) {
+  } catch {
     console.log(
       'difft is not found. Please install it using `brew install difftastic`',
     )

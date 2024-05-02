@@ -1,36 +1,36 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
+import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
 import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
+import { TemplateService } from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
-import { MulticallClient } from './provider/multicall/MulticallClient'
-import { MulticallConfig } from './provider/multicall/types'
+import { getBlockNumberTwoProviders } from './provider/DiscoveryProvider'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { SQLiteCache } from './provider/SQLiteCache'
+import { MulticallClient } from './provider/multicall/MulticallClient'
+import { MulticallConfig } from './provider/multicall/types'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
 export async function runDiscovery(
   provider: providers.StaticJsonRpcProvider,
+  eventProvider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   multicallConfig: MulticallConfig,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
-  const projectConfig = await configReader.readConfig(
-    config.project,
-    config.chain.name,
-  )
-  const projectMeta = await configReader.readMeta(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -38,13 +38,14 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chain.name))
+      ? configReader.readDiscovery(config.project, config.chain.name)
           .blockNumber
-      : await provider.getBlockNumber())
+      : await getBlockNumberTwoProviders(provider, eventProvider))
 
   const logger = DiscoveryLogger.CLI
   const result = await discover(
     provider,
+    eventProvider,
     etherscanClient,
     multicallConfig,
     projectConfig,
@@ -52,22 +53,24 @@ export async function runDiscovery(
     blockNumber,
     config.chain.rpcGetLogsMaxRange,
   )
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    projectMeta,
-    blockNumber,
-    logger,
-    {
-      sourcesFolder: config.sourcesFolder,
-      flatSourcesFolder: config.flatSourcesFolder,
-      discoveryFilename: config.discoveryFilename,
-    },
+
+  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+    sourcesFolder: config.sourcesFolder,
+    flatSourcesFolder: config.flatSourcesFolder,
+    discoveryFilename: config.discoveryFilename,
+    skipHints: config.skipHints,
+  })
+
+  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+  const backrefConfigs = allConfigs.filter((c) =>
+    c.sharedModules.includes(config.project),
   )
+  printSharedModuleInfo(backrefConfigs)
 }
 
 export async function dryRunDiscovery(
   provider: providers.StaticJsonRpcProvider,
+  eventProvider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   multicallConfig: MulticallConfig,
   configReader: ConfigReader,
@@ -77,7 +80,7 @@ export async function dryRunDiscovery(
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -85,6 +88,7 @@ export async function dryRunDiscovery(
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(
       provider,
+      eventProvider,
       etherscanClient,
       multicallConfig,
       projectConfig,
@@ -93,6 +97,7 @@ export async function dryRunDiscovery(
     ),
     justDiscover(
       provider,
+      eventProvider,
       etherscanClient,
       multicallConfig,
       projectConfig,
@@ -104,7 +109,6 @@ export async function dryRunDiscovery(
   const diff = diffDiscovery(
     discoveredYesterday.contracts,
     discovered.contracts,
-    projectConfig,
   )
 
   if (diff.length > 0) {
@@ -116,6 +120,7 @@ export async function dryRunDiscovery(
 
 export async function justDiscover(
   provider: providers.StaticJsonRpcProvider,
+  eventProvider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   multicallConfig: MulticallConfig,
   config: DiscoveryConfig,
@@ -124,6 +129,7 @@ export async function justDiscover(
 ): Promise<DiscoveryOutput> {
   const result = await discover(
     provider,
+    eventProvider,
     etherscanClient,
     multicallConfig,
     config,
@@ -143,6 +149,7 @@ export async function justDiscover(
 
 export async function discover(
   provider: providers.StaticJsonRpcProvider,
+  eventProvider: providers.StaticJsonRpcProvider,
   etherscanClient: EtherscanLikeClient,
   multicallConfig: MulticallConfig,
   config: DiscoveryConfig,
@@ -156,6 +163,7 @@ export async function discover(
 
   const discoveryProvider = new ProviderWithCache(
     provider,
+    eventProvider,
     etherscanClient,
     logger,
     config.chain,
@@ -175,11 +183,13 @@ export async function discover(
     multicallClient,
     logger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

@@ -1,9 +1,9 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { ethers, providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { getChainConfig } from '../../../config/config.discovery'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../../utils/EtherscanLikeClient'
 import { HttpClient } from '../../../utils/HttpClient'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -238,6 +238,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     if (curProvider instanceof ProviderWithCache) {
       return new ProviderWithCache(
         provider,
+        provider,
         etherscanClient,
         logger,
         chainConfig.name,
@@ -247,6 +248,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
       )
     } else {
       return new DiscoveryProvider(
+        provider,
         provider,
         etherscanClient,
         logger,

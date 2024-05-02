@@ -1,16 +1,15 @@
 import { ContractParameters } from '@l2beat/discovery-types'
+import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { UnixTime } from '../../utils/UnixTime'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
 import { AddressAnalyzer } from './AddressAnalyzer'
+import { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
   const BLOCK_NUMBER = 1234
@@ -24,6 +23,9 @@ describe(AddressAnalyzer.name, () => {
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>(),
         mockObject<HandlerExecutor>(),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -37,7 +39,7 @@ describe(AddressAnalyzer.name, () => {
 
       expect(result).toEqual({
         analysis: { type: 'EOA', address },
-        relatives: [],
+        relatives: {},
       })
     })
 
@@ -106,6 +108,9 @@ describe(AddressAnalyzer.name, () => {
             errors: {},
           }),
         }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -131,8 +136,14 @@ describe(AddressAnalyzer.name, () => {
           errors: {},
           abis: sources.abis,
           sourceBundles: sources.sources,
+          matchingTemplates: {},
+          extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
 
@@ -200,6 +211,9 @@ describe(AddressAnalyzer.name, () => {
             errors: {},
           }),
         }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -225,8 +239,14 @@ describe(AddressAnalyzer.name, () => {
           errors: {},
           abis: sources.abis,
           sourceBundles: sources.sources,
+          matchingTemplates: {},
+          extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
 
@@ -292,6 +312,9 @@ describe(AddressAnalyzer.name, () => {
             errors: {},
           }),
         }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -317,8 +340,14 @@ describe(AddressAnalyzer.name, () => {
           errors: {},
           abis: sources.abis,
           sourceBundles: sources.sources,
+          matchingTemplates: {},
+          extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
   })
@@ -357,6 +386,9 @@ describe(AddressAnalyzer.name, () => {
                 foo: 'error',
               },
             }),
+        }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
         }),
         DiscoveryLogger.SILENT,
       )
@@ -427,6 +459,9 @@ describe(AddressAnalyzer.name, () => {
               errors: {},
             }),
         }),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -472,6 +507,9 @@ describe(AddressAnalyzer.name, () => {
             .resolvesToOnce(mockSources({ isVerified: true })),
         }),
         mockObject<HandlerExecutor>(),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -515,6 +553,9 @@ describe(AddressAnalyzer.name, () => {
             .resolvesToOnce(mockSources({ isVerified: true })),
         }),
         mockObject<HandlerExecutor>(),
+        mockObject<TemplateService>({
+          findMatchingTemplates: () => ({}),
+        }),
         DiscoveryLogger.SILENT,
       )
 
@@ -561,6 +602,9 @@ describe(AddressAnalyzer.name, () => {
       mockObject<ProxyDetector>(),
       mockObject<SourceCodeService>(),
       mockObject<HandlerExecutor>(),
+      mockObject<TemplateService>({
+        findMatchingTemplates: () => ({}),
+      }),
       DiscoveryLogger.SILENT,
     )
 

@@ -4,12 +4,11 @@ import {
   ContractValue,
   UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { UnixTime } from '../../utils/UnixTime'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -17,7 +16,8 @@ import {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { getRelatives } from './getRelatives'
+import { TemplateService } from './TemplateService'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -35,6 +35,14 @@ export interface AnalyzedContract {
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
+  matchingTemplates: Record<string, number>
+  extendedTemplate?: ExtendedTemplate
+  ignoreInWatchMode?: string[]
+}
+
+export interface ExtendedTemplate {
+  template: string
+  reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
 }
 
 export interface AnalyzedEOA {
@@ -42,12 +50,15 @@ export interface AnalyzedEOA {
   address: EthereumAddress
 }
 
+export type AddressesWithTemplates = Record<string, Set<string>>
+
 export class AddressAnalyzer {
   constructor(
     private readonly provider: DiscoveryProvider,
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
+    private readonly templateService: TemplateService,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -56,14 +67,40 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-  ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
+    suggestedTemplates?: Set<string>,
+  ): Promise<{
+    analysis: Analysis
+    relatives: AddressesWithTemplates
+  }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: [] }
+      return { analysis: { type: 'EOA', address }, relatives: {} }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)
+
+    const templateErrors: Record<string, string> = {}
+    let extendedTemplate: ExtendedTemplate | undefined = undefined
+
+    if (overrides?.extends !== undefined) {
+      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+    } else if (suggestedTemplates !== undefined) {
+      const template = Array.from(suggestedTemplates)[0]
+      if (template !== undefined) {
+        overrides = this.templateService.applyTemplateOnContractOverrides(
+          overrides ?? { address },
+          template,
+        )
+        extendedTemplate = { template, reason: 'byReferrer' }
+      }
+      if (suggestedTemplates.size > 1) {
+        templateErrors['@template'] =
+          `Multiple templates suggested (${Array.from(suggestedTemplates).join(
+            ', ',
+          )})`
+      }
+    }
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
@@ -76,8 +113,14 @@ export class AddressAnalyzer {
       address,
       proxy?.implementations,
     )
-
     logger.logName(sources.name)
+
+    // Match templates only if there are no explicitly set
+    const matchingTemplates =
+      overrides?.extends === undefined &&
+      (suggestedTemplates === undefined || suggestedTemplates.size === 0)
+        ? this.templateService.findMatchingTemplates(sources)
+        : {}
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
@@ -99,15 +142,19 @@ export class AddressAnalyzer {
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         implementations: proxy?.implementations ?? [],
         values: values ?? {},
-        errors: errors ?? {},
+        errors: { ...templateErrors, ...(errors ?? {}) },
         abis: sources.abis,
         sourceBundles: sources.sources,
+        matchingTemplates,
+        extendedTemplate,
+        ignoreInWatchMode: overrides?.ignoreInWatchMode,
       },
-      relatives: getRelatives(
+      relatives: getRelativesWithSuggestedTemplates(
         results,
         overrides?.ignoreRelatives,
         proxy?.relatives,
         proxy?.implementations,
+        overrides?.fields,
       ),
     }
   }
@@ -131,7 +178,7 @@ export class AddressAnalyzer {
       abis,
       contract.address,
       contract.implementations,
-      overrides.ignoreInWatchMode,
+      contract.ignoreInWatchMode,
     )
 
     const { values: newValues, errors } = await this.handlerExecutor.execute(
@@ -149,7 +196,7 @@ export class AddressAnalyzer {
 
     const prevRelevantValues = getRelevantValues(
       contract.values ?? {},
-      overrides.ignoreInWatchMode ?? [],
+      contract.ignoreInWatchMode ?? [],
     )
 
     if (!isEqual(newValues, prevRelevantValues)) {

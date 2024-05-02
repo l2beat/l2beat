@@ -1,8 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
-import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
+import { assert, Logger } from '@l2beat/backend-tools'
+import {
+  ChildIndexer,
+  Indexer,
+  IndexerOptions,
+  RetryStrategy,
+} from '@l2beat/uif'
 
-import { assetUniqueIndexerId } from './ids'
 import { IndexerService } from './IndexerService'
+import { assetUniqueIndexerId } from './ids'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]
@@ -11,6 +16,8 @@ export interface ManagedChildIndexerOptions extends IndexerOptions {
   minHeight: number
   indexerService: IndexerService
   logger: Logger
+  updateRetryStrategy?: RetryStrategy
+  configHash?: string
 }
 
 export abstract class ManagedChildIndexer extends ChildIndexer {
@@ -25,14 +32,64 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
     assetUniqueIndexerId(this.indexerId)
   }
 
-  async initialize() {
-    const safeHeight = await this.options.indexerService.getSafeHeight(
+  async initialize(): Promise<{ safeHeight: number; configHash?: string }> {
+    const indexerState = await this.options.indexerService.getIndexerState(
       this.indexerId,
     )
-    return safeHeight ?? this.options.minHeight - 1
+
+    // Subtract 1 from minHeight to make minHeight inclusive
+    // later in the UIF pipeline 1 will be added to from
+    // see executeUpdate() in Indexer.ts
+    const minHeight = this.options.minHeight - 1
+
+    if (indexerState === undefined) {
+      return {
+        safeHeight: minHeight,
+        configHash: this.options.configHash,
+      }
+    }
+
+    if (
+      this.options.configHash &&
+      this.options.configHash !== indexerState.configHash
+    ) {
+      this.logger.info('Config hash change detected. Invalidating...', {
+        previousHeight: indexerState.safeHeight,
+        targetHeight: minHeight,
+      })
+
+      return {
+        safeHeight: minHeight,
+        configHash: this.options.configHash,
+      }
+    }
+
+    assert(
+      indexerState.configHash === this.options.configHash,
+      `Programmer error: configHash mismatch ${indexerState.configHash} !== ${this.options.configHash}`,
+    )
+
+    return {
+      safeHeight: indexerState.safeHeight,
+      configHash: indexerState.configHash,
+    }
+  }
+
+  override setInitialState(
+    safeHeight: number,
+    configHash?: string | undefined,
+  ): Promise<void> {
+    return this.options.indexerService.setInitialState(
+      this.indexerId,
+      safeHeight,
+      configHash,
+    )
   }
 
   async setSafeHeight(safeHeight: number) {
-    return this.options.indexerService.setSafeHeight(this.indexerId, safeHeight)
+    return await this.options.indexerService.setSafeHeight(
+      this.indexerId,
+      safeHeight,
+    )
   }
 }

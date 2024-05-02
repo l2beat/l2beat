@@ -3,8 +3,8 @@ import range from 'lodash/range'
 import React from 'react'
 
 import { cn } from '../../utils/cn'
-import { InfoIcon } from '../icons'
 import { Link } from '../Link'
+import { InfoIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { SortingArrows } from './SortingArrows'
 import { ColumnConfig, RowConfig, SingleColumnConfig } from './types'
@@ -229,7 +229,7 @@ function DataCell<T>(props: {
   const isLastColumn = props.groupOptions?.isLast && !props.isLastColumn
   const value = props.columnConfig.getValue(props.item, props.rowIndex)
 
-  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+  if (!value && props.columnConfig.removeCellOnFalsyValue?.(props.item)) {
     if (isLastColumn) {
       return <RowFiller idHref={idHref} />
     }

@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
-import { getNativelyMintedColumns } from './table/props/getTVLBreakdownTableColumns'
-import { TableSum } from './table/TableSum'
 import { TVLBreakdownTableView } from './table/TVLBreakdownTableView'
+import { TableSum } from './table/TableSum'
+import { getNativelyMintedColumns } from './table/props/getTVLBreakdownTableColumns'
 
 interface NativelyMintedTableProps {
   tokens: TVLProjectBreakdown['native']

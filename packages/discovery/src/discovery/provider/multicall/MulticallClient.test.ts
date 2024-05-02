@@ -1,7 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../DiscoveryProvider'
 import { MulticallClient } from './MulticallClient'
 import {
@@ -58,7 +57,7 @@ describe(MulticallClient.name, () => {
     )
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
-      // empty result is is treated as unsuccessful!
+      // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])

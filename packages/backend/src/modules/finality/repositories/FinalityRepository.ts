@@ -15,6 +15,8 @@ export interface FinalityRecord {
   minimumTimeToInclusion: number
   maximumTimeToInclusion: number
   averageTimeToInclusion: number
+
+  averageStateUpdate: number | null
 }
 
 export interface ProjectFinalityRecord {
@@ -129,6 +131,8 @@ function toRecord(row: FinalityRow): FinalityRecord {
     minimumTimeToInclusion: row.minimum_time_to_inclusion,
     maximumTimeToInclusion: row.maximum_time_to_inclusion,
     averageTimeToInclusion: row.average_time_to_inclusion,
+
+    averageStateUpdate: row.average_state_update,
   }
 }
 
@@ -139,5 +143,7 @@ function toRow(record: FinalityRecord): FinalityRow {
     minimum_time_to_inclusion: record.minimumTimeToInclusion,
     maximum_time_to_inclusion: record.maximumTimeToInclusion,
     average_time_to_inclusion: record.averageTimeToInclusion,
+
+    average_state_update: record.averageStateUpdate,
   }
 }

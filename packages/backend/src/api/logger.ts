@@ -4,7 +4,7 @@ import { Context, Middleware, Next } from 'koa'
 export function createApiLogger(logger: Logger): Middleware {
   return async function (ctx: Context, next: Next): Promise<void> {
     const key = Symbol.for('request-received.startTime')
-    // eslint-disable-next-line
+    // biome-ignore lint/suspicious/noExplicitAny: generic type
     const start: number = ctx[key as any]?.getTime?.() ?? Date.now()
 
     logger.info({ type: 'request', method: ctx.method, url: ctx.originalUrl })

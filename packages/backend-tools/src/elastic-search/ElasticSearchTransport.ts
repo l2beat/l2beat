@@ -46,7 +46,6 @@ export class ElasticSearchTransport implements LoggerTransport {
   }
 
   private start(): void {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const interval = setInterval(async () => {
       await this.flushLogs()
     }, this.options.flushInterval ?? 10000)
@@ -70,16 +69,19 @@ export class ElasticSearchTransport implements LoggerTransport {
       //clear buffer
       this.buffer.splice(0)
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const documents = batch.map((log) => ({
         id: this.uuidProvider(),
         ...JSON.parse(log),
       }))
 
-      const success = await this.client.bulk(documents, index)
+      const response = await this.client.bulk(documents, index)
 
-      if (!success) {
-        throw new Error('Failed to push liogs to Elastic Search node')
+      if (!response.isSuccess) {
+        throw new Error('Failed to push logs to Elastic Search node', {
+          cause: {
+            documentErrors: response.errors,
+          },
+        })
       }
     } catch (error) {
       console.log(error)
@@ -87,9 +89,9 @@ export class ElasticSearchTransport implements LoggerTransport {
   }
 
   private async createIndex(): Promise<string> {
-    const indexName = `${
-      this.options.indexPrefix ?? 'logs'
-    }-${formatDate(new Date())}`
+    const indexName = `${this.options.indexPrefix ?? 'logs'}-${formatDate(
+      new Date(),
+    )}`
 
     const exist = await this.client.indexExist(indexName)
     if (!exist) {

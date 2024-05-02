@@ -1,4 +1,4 @@
-import { Layer2, layer2s, Layer3 } from '@l2beat/config'
+import { Layer2, Layer3, layer2s } from '@l2beat/config'
 import {
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
@@ -37,14 +37,18 @@ export function getProjectHeader(
     implementationChangeForProject !== undefined &&
     Object.values(implementationChangeForProject).length > 0
 
+  const hideTvl =
+    project.config.escrows.length === 0 ||
+    (project.type === 'layer3' && !config.features.layer3sTvl)
+
   const getDetailed = (chart: TvlApiCharts | undefined) => {
     const { parts, partsWeeklyChange } = getDetailedTvlWithChange(chart)
     return {
-      tvl: parts.tvl,
-      tvlWeeklyChange: partsWeeklyChange.tvl,
-      canonical: parts.canonical,
-      external: parts.external,
-      native: parts.native,
+      tvl: !hideTvl ? parts.tvl : 0,
+      tvlWeeklyChange: !hideTvl ? partsWeeklyChange.tvl : '0',
+      canonical: !hideTvl ? parts.canonical : 0,
+      external: !hideTvl ? parts.external : 0,
+      native: !hideTvl ? parts.native : 0,
     }
   }
 
@@ -64,12 +68,14 @@ export function getProjectHeader(
     ? getTransactionCount(activityData, 'project', 30)
     : undefined
 
-  const tvlBreakdown = getTvlBreakdown(
-    project.display.name,
-    project.config.associatedTokens ?? [],
-    tvl,
-    unifyTokensResponse(apiProject?.tokens),
-  )
+  const tvlBreakdown = hideTvl
+    ? undefined
+    : getTvlBreakdown(
+        project.display.name,
+        project.config.associatedTokens ?? [],
+        tvl,
+        unifyTokensResponse(apiProject?.tokens),
+      )
 
   return {
     icon: `/icons/${project.display.slug}.png`,
@@ -77,7 +83,7 @@ export function getProjectHeader(
     description: project.display.description,
     tvlStats: {
       tvlChange: tvlWeeklyChange,
-      tvl: project.config.escrows.length > 0 ? tvl : 0,
+      tvl,
       canonical,
       external,
       native,

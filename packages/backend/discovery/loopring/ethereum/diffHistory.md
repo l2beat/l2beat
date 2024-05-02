@@ -1,4 +1,51 @@
-Generated with discovered.json: 0x56a0ceaef67fe02d33afeee06946f63f8f19e9b2
+Generated with discovered.json: 0x0b8b96cd701f713f7fbfe5c110e91309ee7036ae
+
+# Diff at Mon, 27 May 2024 09:50:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e3af44de7f5996e5fc7d7b401325abe876105664 block: 19916570
+- current block number: 19960423
+
+## Description
+
+A new manager is added to the ForcedWithdrawalAgent contract.
+
+## Watched changes
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      values.managers.4:
+-        "0xaFF7719a5BEAFb7e9BF47d7d0b1f073433D7024E"
++        "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374"
+    }
+```
+
+Generated with discovered.json: 0x9ba584bd2266fe0463e7d6a8904f6aeefdcb0b04
+
+# Diff at Tue, 21 May 2024 06:44:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fb4c64221d00d53ed6ec1609ef10dc99f1842087 block: 19697812
+- current block number: 19916570
+
+## Description
+
+A LoopringWalletAgent contract is given the UniversalAgent role. The smart contract is an implementation of account abstraction.
+The deployer also created a WalletFactory to deploy proxies to this new LoopringWalletAgent.
+Context: Probably related to [this](https://x.com/loopringorg/status/1792517073857392821).
+
+## Watched changes
+
+```diff
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14) {
+    +++ description: None
+      values.agents.136:
++        "0x1945e350291C9c7DFe9B7cEe428cA815DF31Fec2"
+    }
+```
+
+Generated with discovered.json: 0x3681c995acd49dac7c89891f4a0fed0bee1021f7
 
 # Diff at Sat, 20 Apr 2024 16:28:05 GMT:
 

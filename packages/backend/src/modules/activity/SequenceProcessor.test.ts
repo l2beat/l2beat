@@ -1,16 +1,16 @@
+import { once } from 'events'
 import {
   LogFormatterPretty,
   Logger,
   LoggerOptions,
 } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
-import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockFn, MockFunction } from 'earl'
-import { once } from 'events'
+import { InstalledClock, install } from '@sinonjs/fake-timers'
+import { MockFunction, expect, mockFn } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
+import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
 describeDatabase(SequenceProcessor.name, (database) => {
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)

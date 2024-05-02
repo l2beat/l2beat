@@ -1,7 +1,8 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { utils } from 'ethers'
+import { callMethod } from '../../handlers/utils/callMethod'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
 
@@ -35,6 +36,25 @@ export async function getAdmin(
   )
 }
 
+export async function getOwner(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+): Promise<EthereumAddress> {
+  const iface = new utils.Interface(['function owner() view returns (address)'])
+  const result = await callMethod(
+    provider,
+    address,
+    iface.getFunction('owner'),
+    [],
+    blockNumber,
+  )
+  if (result.value !== undefined) {
+    return EthereumAddress(result.value.toString())
+  }
+  return EthereumAddress.ZERO
+}
+
 export async function detectEip1967Proxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -44,7 +64,10 @@ export async function detectEip1967Proxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
-  const admin = await getAdmin(provider, address, blockNumber)
+  let admin = await getAdmin(provider, address, blockNumber)
+  if (admin === EthereumAddress.ZERO) {
+    admin = await getOwner(provider, address, blockNumber)
+  }
   return {
     implementations: [implementation],
     relatives: [admin],
