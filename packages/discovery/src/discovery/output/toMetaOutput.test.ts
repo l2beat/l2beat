@@ -1,8 +1,7 @@
 import { UpgradeabilityParameters } from '@l2beat/discovery-types'
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress,UnixTime  } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { toMetaOutput } from './toMetaOutput'
 

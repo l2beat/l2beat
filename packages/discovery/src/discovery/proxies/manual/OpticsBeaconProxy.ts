@@ -1,9 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { Bytes } from '@l2beat/shared-pure'
+import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'

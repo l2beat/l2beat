@@ -1,8 +1,7 @@
-import { Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress,Hash256  } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

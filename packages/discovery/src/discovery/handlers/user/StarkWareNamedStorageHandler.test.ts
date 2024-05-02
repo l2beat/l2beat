@@ -1,8 +1,7 @@
-import { Bytes } from '@l2beat/shared-pure'
+import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'

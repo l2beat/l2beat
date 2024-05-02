@@ -1,8 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
-import { Bytes } from '@l2beat/shared-pure'
+import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { isRevert } from './isRevert'
 

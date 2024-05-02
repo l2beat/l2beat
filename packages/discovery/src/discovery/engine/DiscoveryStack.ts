@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/backend-tools'
-
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 export interface DiscoveryStackItem {

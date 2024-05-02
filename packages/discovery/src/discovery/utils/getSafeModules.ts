@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { getCallResult } from './getCallResult'
 

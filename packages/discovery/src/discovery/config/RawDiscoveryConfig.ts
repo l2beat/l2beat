@@ -1,8 +1,7 @@
 import { ManualProxyType } from '@l2beat/discovery-types'
-import { stringAs } from '@l2beat/shared-pure'
+import { EthereumAddress,stringAs  } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { UserHandlerDefinition } from '../handlers/user'
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>

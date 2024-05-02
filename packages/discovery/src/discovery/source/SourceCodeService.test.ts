@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import {
   ContractMetadata,
   DiscoveryProvider,

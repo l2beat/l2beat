@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { createMetaTxt, processSources } from './processSources'
 
 describe(processSources.name, () => {

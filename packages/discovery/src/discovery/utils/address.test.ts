@@ -1,7 +1,6 @@
-import { Bytes } from '@l2beat/shared-pure'
+import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { addressToBytes32, bytes32ToAddress } from './address'
 
 describe(addressToBytes32.name, () => {
