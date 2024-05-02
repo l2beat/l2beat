@@ -571,6 +571,7 @@ export class ProjectDiscovery {
   }
 
   getOrbitStackContractDetails(
+    upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
     overrides?: Partial<Record<OrbitStackContractName, string>>,
   ): ScalingProjectContractSingleAddress[] {
     return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
@@ -579,6 +580,7 @@ export class ProjectDiscovery {
           d.coreDescription,
           overrides?.[d.name] ?? d.name,
         ),
+        ...upgradesProxy,
       }),
     )
   }
