@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress,Hash256  } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { providers } from 'ethers'
 

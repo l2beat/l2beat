@@ -1,4 +1,4 @@
-import { EthereumAddress,UnixTime  } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { map } from 'lodash'
 

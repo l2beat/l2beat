@@ -10,7 +10,7 @@ It does not have an owner
 */
 import { assert } from '@l2beat/backend-tools'
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

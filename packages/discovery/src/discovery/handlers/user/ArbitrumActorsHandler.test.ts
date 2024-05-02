@@ -1,4 +1,4 @@
-import { EthereumAddress,Hash256  } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'

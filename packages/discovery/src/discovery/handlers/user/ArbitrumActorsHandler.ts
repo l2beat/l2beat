@@ -1,4 +1,4 @@
-import { EthereumAddress,Hash256  } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import * as z from 'zod'
 

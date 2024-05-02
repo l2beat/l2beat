@@ -1,4 +1,4 @@
-import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'

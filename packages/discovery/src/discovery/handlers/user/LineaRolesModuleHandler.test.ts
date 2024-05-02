@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Bytes , EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 

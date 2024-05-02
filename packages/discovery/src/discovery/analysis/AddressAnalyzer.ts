@@ -4,7 +4,7 @@ import {
   ContractValue,
   UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
-import { EthereumAddress,UnixTime  } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
 import { ContractOverrides } from '../config/DiscoveryOverrides'
