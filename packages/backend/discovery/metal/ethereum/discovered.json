@@ -1,8 +1,8 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 19768545,
-  "configHash": "0x885be556b0dfea540b8d6dd0ce7d55a167d7d5b04ebda73ddda764ff22e91a5a",
+  "blockNumber": 19781431,
+  "configHash": "0x6fc5746e494437324fc026355c3d913dddbe1449ad4231cb5974fa011acc54d8",
   "version": 3,
   "contracts": [
     {
@@ -83,10 +83,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1447200,
-        "latestOutputIndex": 66,
-        "nextBlockNumber": 1468800,
-        "nextOutputIndex": 67,
+        "latestBlockNumber": 1533600,
+        "latestOutputIndex": 70,
+        "nextBlockNumber": 1555200,
+        "nextOutputIndex": 71,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -168,7 +168,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 28,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
