@@ -86,11 +86,11 @@ export const zora: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
+      'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      'Member of the ProxyAdminOwner.',
+      'Member of the SuperchainProxyAdminOwner.',
       [
         {
           text: 'Security Council members - Optimism Collective forum',
