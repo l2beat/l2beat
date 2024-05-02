@@ -1,8 +1,8 @@
+import { Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { providers } from 'ethers'
 
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryCache, ProviderWithCache } from './ProviderWithCache'
 

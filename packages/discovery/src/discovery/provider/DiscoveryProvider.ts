@@ -1,11 +1,10 @@
 import { assert } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Bytes } from '../../utils/Bytes'
 import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'

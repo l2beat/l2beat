@@ -1,9 +1,9 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
+import { Hash256 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
-import { Hash256 } from '../../../utils/Hash256'
 import { parseSemver, Semver } from '../../../utils/semver'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
