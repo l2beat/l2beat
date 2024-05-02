@@ -22,8 +22,8 @@
     "clean": "rm -rf dist",
     "build": "tsc",
     "start": "node -r esbuild-register src/",
-    "format:fix": "prettier --write .",
-    "format": "prettier --check .",
+    "format": "biome check .",
+    "format:fix": "biome format --write .",
     "lint:fix": "yarn lint --fix",
     "lint": "eslint --ext .ts,.tsx --max-warnings 0 src",
     "typecheck": "tsc --noEmit"

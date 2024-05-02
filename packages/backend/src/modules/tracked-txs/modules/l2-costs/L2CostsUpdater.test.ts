@@ -67,9 +67,8 @@ describe(L2CostsUpdater.name, () => {
 
         const transactions = getMockTrackedTxResults()
 
-        const result = await updater.addDetailsTransactionsAndTransform(
-          transactions,
-        )
+        const result =
+          await updater.addDetailsTransactionsAndTransform(transactions)
 
         const expected: L2CostsRecord[] = [
           {

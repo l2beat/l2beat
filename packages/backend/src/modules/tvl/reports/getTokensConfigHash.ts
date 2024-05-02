@@ -1,4 +1,5 @@
-import { hashJson, Token } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
+import { Token } from '@l2beat/shared-pure'
 
 const LOGIC_VERSION = 0
 

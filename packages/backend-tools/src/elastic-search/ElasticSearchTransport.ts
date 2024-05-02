@@ -76,10 +76,14 @@ export class ElasticSearchTransport implements LoggerTransport {
         ...JSON.parse(log),
       }))
 
-      const success = await this.client.bulk(documents, index)
+      const response = await this.client.bulk(documents, index)
 
-      if (!success) {
-        throw new Error('Failed to push liogs to Elastic Search node')
+      if (!response.isSuccess) {
+        throw new Error('Failed to push logs to Elastic Search node', {
+          cause: {
+            documentErrors: response.errors,
+          },
+        })
       }
     } catch (error) {
       console.log(error)
@@ -87,9 +91,9 @@ export class ElasticSearchTransport implements LoggerTransport {
   }
 
   private async createIndex(): Promise<string> {
-    const indexName = `${
-      this.options.indexPrefix ?? 'logs'
-    }-${formatDate(new Date())}`
+    const indexName = `${this.options.indexPrefix ?? 'logs'}-${formatDate(
+      new Date(),
+    )}`
 
     const exist = await this.client.indexExist(indexName)
     if (!exist) {

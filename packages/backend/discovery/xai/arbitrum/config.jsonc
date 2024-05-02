@@ -28,7 +28,8 @@
   "overrides": {
     "PoolFactory": {
       "ignoreMethods": ["getPoolAddress", "stakingPools"],
-      "ignoreRelatives": ["esXaiAddress"]
+      "ignoreRelatives": ["esXaiAddress"],
+      "ignoreInWatchMode": ["getPoolsCount"]
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]

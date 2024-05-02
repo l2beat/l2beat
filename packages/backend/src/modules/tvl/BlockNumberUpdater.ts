@@ -98,9 +98,8 @@ export class BlockNumberUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const blockNumber = await this.blockNumberProvider.getBlockNumberAtOrBefore(
-      timestamp,
-    )
+    const blockNumber =
+      await this.blockNumberProvider.getBlockNumberAtOrBefore(timestamp)
     const block = { timestamp, blockNumber, chainId: this.chainId }
     await this.blockNumberRepository.add(block)
     this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)

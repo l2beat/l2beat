@@ -1,6 +1,6 @@
+import { Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { Hash256 } from '../types'
 import { hashJson } from './hashJson'
 
 describe(hashJson.name, () => {

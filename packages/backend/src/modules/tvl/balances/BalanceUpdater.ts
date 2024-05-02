@@ -119,9 +119,8 @@ export class BalanceUpdater {
     const missing = getMissingData(timestamp, known, this.projects)
 
     if (missing.length > 0) {
-      const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
-        timestamp,
-      )
+      const blockNumber =
+        await this.blockNumberUpdater.getBlockNumberWhenReady(timestamp)
 
       assert(blockNumber, 'No timestamp for this block number')
 

@@ -99,7 +99,9 @@ export const near: Bridge = {
       name: 'Both inbound and outbound transfers are verified by the light client',
       description: `Near Rainbow bridge implements a light client for both inbound and outbound transfers. For inbound transfers, checkpoints of NEAR state are submitted every ${lockDurationHours} hours. \
           These are optimistically assumed to be signed by 2/3 of Near Validators. The signatures are not immediately verified by Ethereum due to a different signature scheme \
-          used on NEAR and - as a result - very high gas cost on Ethereum. Checkpoints relayers are required to lock ${utils.formatEther(lockRequirementInWei)} ETH in order to submit block headers. If signatures are found to be invalid, checkpoints can be permissionlessly challenged and the relayers' bond is slashed. \
+          used on NEAR and - as a result - very high gas cost on Ethereum. Checkpoints relayers are required to lock ${utils.formatEther(
+            lockRequirementInWei,
+          )} ETH in order to submit block headers. If signatures are found to be invalid, checkpoints can be permissionlessly challenged and the relayers' bond is slashed. \
           Challengers can specify an address to receive half of the slashed bond. \
           Users can withdraw funds by submitting a Merkle proof of a burn event against the checkpoint. \
           For outbound transfers, Ethereum light client is implemented on NEAR and a Merkle proof of a lock event must be presented.`,

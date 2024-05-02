@@ -190,9 +190,8 @@ export class LivenessController {
 
   async getLivenessTransactions(): Promise<LivenessTransactionsResult> {
     const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
-    const indexerState = await this.indexerStateRepository.findIndexerState(
-      'liveness_indexer',
-    )
+    const indexerState =
+      await this.indexerStateRepository.findIndexerState('liveness_indexer')
     if (
       indexerState === undefined ||
       new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
