@@ -85,7 +85,7 @@ export function orbitStackCommon(
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
+    upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
 
@@ -283,7 +283,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
+    upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
 
@@ -410,7 +410,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin (through UpgradeExecutor)'],
+    upgradableBy: ['ProxyAdmin'],
     upgradeDelay: 'No delay',
   }
 
