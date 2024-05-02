@@ -67,37 +67,8 @@
       }
     },
     {
-      "name": "FunctionVerifier",
-      "values": {
-        "CIRCUIT_DIGEST": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verificationKeyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FunctionVerifier",
-      "values": {
-        "CIRCUIT_DIGEST": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verificationKeyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafeL2",
+      "name": "BlobstreamXMultisig",
+      "description": "Admin of the BlobstreamX contract. VerifierOwner of the BlobstreamX functionIDs in the SuccinctGateway.",
       "values": {
         "VERSION": {
           "description": null,
@@ -132,34 +103,29 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "FunctionVerifier",
       "values": {
-        "VERSION": {
+        "CIRCUIT_DIGEST": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "verificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FunctionVerifier",
+      "values": {
+        "CIRCUIT_DIGEST": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
+        "verificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null
@@ -184,7 +150,17 @@
           "severity": null,
           "type": null
         },
+        "headerRangeProvers": {
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
         "headerRangeVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "headerRangeVerifierOwner": {
           "description": null,
           "severity": null,
           "type": null
@@ -194,7 +170,17 @@
           "severity": null,
           "type": null
         },
+        "nextHeaderProvers": {
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
         "nextHeaderVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextHeaderVerifierOwner": {
           "description": null,
           "severity": null,
           "type": null
@@ -220,6 +206,42 @@
           "type": null
         },
         "verifiedOutput": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuccinctMultisig",
+      "description": "Owner of the SuccinctGateway",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null

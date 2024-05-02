@@ -8,7 +8,8 @@ Generated with discovered.json: 0x734b2dd3dab2dd46bab0bed01d775d4c066bddd1
 
 ## Description
 
-A prover / relayer is added to the Succictgateway. It is whitelisted for both functionIds (headerRange and nextHeader).
+A prover / relayer is added to the Succictgateway. It is whitelisted for both functionIds (headerRange and nextHeader) of BlobstreamX.
+Same change as on Arbitrum.
 
 ## Watched changes
 
