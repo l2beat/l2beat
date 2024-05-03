@@ -24,6 +24,7 @@ export type DataAvailabilityLayer =
 
 export type DataAvailabilityBridge =
   | { type: 'None' }
+  | { type: 'None + DA challenges' }
   | { type: 'Enshrined' }
   | { type: 'Optimistic' }
   | { type: 'DAC Members'; requiredSignatures?: number; membersCount?: number }

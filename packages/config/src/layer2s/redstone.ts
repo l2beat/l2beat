@@ -62,7 +62,7 @@ export const redstone: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None' },
+    bridge: { type: 'None + DA challenges' },
   },
   nonTemplatePermissions: [
     /* TODO: fix

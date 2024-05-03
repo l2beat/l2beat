@@ -109,6 +109,13 @@ function addSentimentToBridge(
         description:
           'There is no bridge that can attest if the data has been made available.',
       }
+    case 'None + DA challenges':
+      return {
+        value: 'None + DA challenges',
+        sentiment: 'bad',
+        description:
+          'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge unavailability of data.',
+      }
     case 'Enshrined':
       return {
         value: 'Enshrined',
