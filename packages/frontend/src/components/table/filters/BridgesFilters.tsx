@@ -28,7 +28,13 @@ export function BridgesFilters({ items }: Props) {
     .sort()
     .map((p) => ({
       label: p ?? 'No type',
-      value: generateSlugList(items, (i) => i.destination?.value === p),
+      value: generateSlugList(
+        items,
+        (i) =>
+          (i.destination?.value === p ||
+            i.destination?.description.includes(p ?? '')) ??
+          false,
+      ),
     }))
 
   return (
