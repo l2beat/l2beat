@@ -27,6 +27,7 @@ export const redstone: Layer2 = opStackL2({
         'https://discord.com/invite/latticexyz',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   daProvider: {
     name: 'RedstoneDA',
@@ -37,7 +38,7 @@ export const redstone: Layer2 = opStackL2({
       sentiment: 'bad',
     },
     technology: {
-      name: 'Data required to compute fraud proof is published offchain without onchain attestations.',
+      name: 'Data required to compute fraud proof is published offchain without onchain attestations',
       description:
         'Redstone relies on DA challenges for data availability. If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond. A challenge can be resolved by publishing the preimage data. In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.',
       references: [
@@ -60,10 +61,12 @@ export const redstone: Layer2 = opStackL2({
     bridge: { type: 'None' },
   },
   nonTemplatePermissions: [
+    /* TODO: fix
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
       'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
+    */
     {
       name: 'DataAvailabilityChallenge owner',
       accounts: [
