@@ -53,11 +53,11 @@ export const redstone: Layer2 = opStackL2({
       ],
       risks: [
         {
-          category: 'Funds can be lost if',
+          category: 'Funds can be stolen if',
           text: 'the sequencer is malicious and is able to economically outspend the altruistic challengers.',
         },
         {
-          category: 'Funds can be lost if',
+          category: 'Funds can be stolen if',
           text: 'there is no challenger willing to challenge unavailable data commitments.',
         },
       ],
