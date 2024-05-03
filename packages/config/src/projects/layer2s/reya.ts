@@ -69,7 +69,8 @@ export const reya: Layer2 = orbitStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xdff78a949e47c1e90f3dd6dd7fe2fa72b42a75f7'),
       tokens: ['USDC'],
-      description: 'Socket brige vault dedicated to Reya network. Governed by the Socket Admin.',
+      description:
+        'Socket brige vault dedicated to Reya network. Governed by the Socket Admin.',
     }),
   ],
   isNodeAvailable: 'UnderReview',
