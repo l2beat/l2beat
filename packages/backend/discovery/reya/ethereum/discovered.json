@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 19789112,
-  "configHash": "0x4ff46cffbd87e8abedab27051531d1b13099fe14a8b4caf0f3f8383c3f7d5897",
+  "blockNumber": 19789584,
+  "configHash": "0x1715a99317b97b0dc1d401b7128f1f1373de5edb694fa2fec95b6b2c1e20a0b8",
   "version": 3,
   "contracts": [
     {
@@ -88,11 +88,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 1114,
+        "delayedMessageCount": 1118,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 871,
-        "sequencerReportedSubMessageCount": 43008
+        "sequencerMessageCount": 873,
+        "sequencerReportedSubMessageCount": 43425
       },
       "derivedName": "Bridge"
     },
@@ -142,12 +142,12 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 484,
+        "firstUnresolvedNode": 486,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
-        "latestConfirmed": 483,
-        "latestNodeCreated": 484,
+        "latestConfirmed": 485,
+        "latestNodeCreated": 486,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -210,7 +210,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1709380607,
       "values": {
-        "batchCount": 871,
+        "batchCount": 873,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -226,7 +226,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1112
+        "totalDelayedMessagesRead": 1117
       },
       "derivedName": "SequencerInbox"
     },
