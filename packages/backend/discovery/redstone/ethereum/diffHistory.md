@@ -7,7 +7,7 @@ Generated with discovered.json: 0x9f69d7a29409ba95ef9c882cbb60f27e664a8f8c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+OP stack chain in Plasma mode (DA challenges, not really Plasma imo). Reading the project page is enough to understand the system, in particular the Technology section. In the discovery there are additional contracts related to the proof system (the one live on Sepolia for OP Mainnet) but they are currently not utilized and disconnected. The way to notice that is that this system is still using the L2OutputOracle for state roots while in the version with the fraud proof system it is deprecated.
 
 ## Initial discovery
 
