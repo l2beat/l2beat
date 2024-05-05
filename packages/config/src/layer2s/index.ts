@@ -4,6 +4,7 @@ import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
 import { astarzkevm } from './astarzkevm'
+import { axonum } from './axonum'
 import { aztecconnect } from './aztecconnect'
 import { aztecV1 } from './aztecV1'
 import { aztecV2 } from './aztecV2'
@@ -111,6 +112,7 @@ export const layer2s: Layer2[] = [
   apex,
   arbitrum,
   astarzkevm,
+  axonum,
   aztecV1,
   aztecconnect,
   aztecV2,
