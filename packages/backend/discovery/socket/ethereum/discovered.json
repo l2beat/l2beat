@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19738604,
-  "configHash": "0xf34f42caa6d624a6e0593000a7b59355de145e946237b27665f513ba1bc408ce",
+  "blockNumber": 19805467,
+  "configHash": "0x05e78ec6d623049f50b05b04b93ab4c771e54c5fe6d94d120e5cc34ee4285fe0",
   "version": 3,
   "contracts": [
     {
@@ -94,7 +94,7 @@
       "derivedName": "OptimismSwitchboard"
     },
     {
-      "name": "USDCVaultOwner",
+      "name": "LyraMultisig",
       "address": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "upgradeability": {
         "type": "gnosis safe",
@@ -119,7 +119,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "WBTC Vault",
+      "name": "WBTC Vault Lyra",
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
       "upgradeability": {
         "type": "immutable"
@@ -144,7 +144,21 @@
       }
     },
     {
-      "name": "USDC Vault",
+      "name": "USDT Vault Lyra",
+      "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1705566299,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+        "token__": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "derivedName": "Vault"
+    },
+    {
+      "name": "USDC Vault Lyra",
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
       "upgradeability": {
         "type": "immutable"
@@ -157,7 +171,7 @@
       "derivedName": "Vault"
     },
     {
-      "name": "SNX Vault",
+      "name": "SNX Vault Lyra",
       "address": "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
       "upgradeability": {
         "type": "immutable"
@@ -180,7 +194,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 1797,
+        "globalMessageCount": 2285,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -230,7 +244,7 @@
       "derivedName": "Socket"
     },
     {
-      "name": "WETH Vault 2",
+      "name": "WETH Vault Hook",
       "address": "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
       "upgradeability": {
         "type": "immutable"
@@ -243,7 +257,7 @@
       "derivedName": "Vault"
     },
     {
-      "name": "WETH Vault",
+      "name": "WETH Vault Lyra",
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
       "upgradeability": {
         "type": "immutable"
@@ -305,7 +319,7 @@
       "derivedName": "ArbitrumL1Switchboard"
     },
     {
-      "name": "USDC Vault 2",
+      "name": "USDC Vault Reya",
       "address": "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
       "upgradeability": {
         "type": "immutable"
@@ -321,7 +335,7 @@
       "derivedName": "Vault"
     },
     {
-      "name": "wstETH Vault",
+      "name": "wstETH Vault Lyra",
       "address": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
       "upgradeability": {
         "type": "immutable"
@@ -659,6 +673,40 @@
       "function packMessage(uint32 srcChainSlug_, address srcPlug_, uint32 dstChainSlug_, address dstPlug_, tuple(bytes32 msgId, uint256 executionFee, uint256 minMsgGasLimit, bytes32 executionParams, bytes payload) messageDetails_) pure returns (bytes32)",
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
+    ],
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": [
       "constructor(address token_)",

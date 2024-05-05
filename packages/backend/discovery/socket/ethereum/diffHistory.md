@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x030c4c2bc2867d98d2a4302e6b97108b0330217f
+Generated with discovered.json: 0xbb5b0641893687891db7aea1c18c2b79ebf4f141
 
-# Diff at Fri, 26 Apr 2024 09:21:30 GMT:
+# Diff at Sun, 05 May 2024 17:46:10 GMT:
 
-- author: sekuba (<sekuba@users.noreply.githum.com>)
-- comparing to: main@36667a8d3ad546527d0bbcb7f2e62ced244c06b9 block: 19609491
-- current block number: 19738604
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@91ddfe46c9a8cff7aff522924d50fd166a15932b block: 19609491
+- current block number: 19805467
 
 ## Description
 
@@ -45,8 +45,77 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19609491 (main branch discovery), not current.
 
 ```diff
+    contract USDCVaultOwner (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      name:
+-        "USDCVaultOwner"
++        "LyraMultisig"
+    }
+```
+
+```diff
+    contract WBTC Vault (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      name:
+-        "WBTC Vault"
++        "WBTC Vault Lyra"
+    }
+```
+
+```diff
+    contract USDC Vault (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      name:
+-        "USDC Vault"
++        "USDC Vault Lyra"
+    }
+```
+
+```diff
+    contract SNX Vault (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      name:
+-        "SNX Vault"
++        "SNX Vault Lyra"
+    }
+```
+
+```diff
+    contract WETH Vault 2 (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa) {
+    +++ description: None
+      name:
+-        "WETH Vault 2"
++        "WETH Vault Hook"
+    }
+```
+
+```diff
+    contract WETH Vault (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      name:
+-        "WETH Vault"
++        "WETH Vault Lyra"
+    }
+```
+
+```diff
+    contract wstETH Vault (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      name:
+-        "wstETH Vault"
++        "wstETH Vault Lyra"
+    }
+```
+
+```diff
 +   Status: CREATED
-    contract USDC Vault 2 (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    contract USDT Vault Lyra (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
     +++ description: None
 ```
 

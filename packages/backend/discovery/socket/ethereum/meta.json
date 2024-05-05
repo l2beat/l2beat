@@ -192,6 +192,41 @@
       }
     },
     {
+      "name": "LyraMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "OptimismSwitchboard",
       "values": {
         "capacitor__": {
@@ -412,7 +447,7 @@
       }
     },
     {
-      "name": "SNX Vault",
+      "name": "SNX Vault Lyra",
       "values": {
         "nominee": {
           "description": null,
@@ -537,7 +572,7 @@
       }
     },
     {
-      "name": "USDC Vault",
+      "name": "USDC Vault Lyra",
       "values": {
         "owner": {
           "description": null,
@@ -552,7 +587,7 @@
       }
     },
     {
-      "name": "USDC Vault 2",
+      "name": "USDC Vault Reya",
       "values": {
         "bridgeType": {
           "description": null,
@@ -582,34 +617,19 @@
       }
     },
     {
-      "name": "USDCVaultOwner",
+      "name": "USDT Vault Lyra",
       "values": {
-        "VERSION": {
+        "nominee": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
+        "token__": {
           "description": null,
           "severity": null,
           "type": null
@@ -617,7 +637,7 @@
       }
     },
     {
-      "name": "WBTC Vault",
+      "name": "WBTC Vault Lyra",
       "values": {
         "nominee": {
           "description": null,
@@ -632,7 +652,7 @@
       }
     },
     {
-      "name": "WETH Vault",
+      "name": "WETH Vault Hook",
       "values": {
         "nominee": {
           "description": null,
@@ -647,7 +667,7 @@
       }
     },
     {
-      "name": "WETH Vault 2",
+      "name": "WETH Vault Lyra",
       "values": {
         "nominee": {
           "description": null,
@@ -662,7 +682,7 @@
       }
     },
     {
-      "name": "wstETH Vault",
+      "name": "wstETH Vault Lyra",
       "values": {
         "nominee": {
           "description": null,

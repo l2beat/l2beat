@@ -95,38 +95,38 @@ export const socket: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),
-        name: 'USDC Vault',
-        tokens: ['USDC'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
-        name: 'USDC Vault 2',
+        name: 'USDC Vault Lyra',
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
-        name: 'WBTC Vault',
+        name: 'WBTC Vault Lyra',
         tokens: ['WBTC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
-        name: 'WETH Vault',
-        tokens: ['WETH'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
-        name: 'WETH Vault 2',
+        name: 'WETH Vault Lyra',
         tokens: ['WETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592'),
-        name: 'SNX Vault',
+        name: 'SNX Vault Lyra',
         tokens: ['SNX'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
-        name: 'wstETH Vault',
+        name: 'wstETH Vault Lyra',
         tokens: ['wstETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
+        name: 'USDC Vault Reya',
+        tokens: ['USDC'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
+        name: 'WETH Vault Hook',
+        tokens: ['WETH'],
       }),
     ],
   },
@@ -138,7 +138,7 @@ export const socket: Bridge = {
       ),
       discovery.getContractDetails(
         'FastSwitchboard',
-        'Fast Switchboard having set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
+        'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
       ),
       discovery.getContractDetails(
         'PolygonL1Switchboard',
@@ -162,8 +162,17 @@ export const socket: Bridge = {
     {
       name: 'Socket Owner.',
       description:
-        'Account privileged to set up different roles in the main Socket contract.',
+        'Account privileged to set up different roles in the main Socket contract and owner of the Reya USDC vault.',
       accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
+    },
+    ...discovery.getMultisigPermission(
+      'LyraMultisig',
+      'Multisig that owns the Vaults associated with Lyra.',
+    ),
+    {
+      name: 'Hook Vault Owner.',
+      description: 'EOA that owns the WETH Vault associated with hook.xyz.',
+      accounts: [discovery.getPermissionedAccount('WETH Vault Hook', 'owner')],
     },
   ],
   knowledgeNuggets: [],
