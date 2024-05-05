@@ -18,6 +18,7 @@
     },
     {
       "name": "SwellMultisig",
+      "description": "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem",
       "values": {
         "VERSION": {
           "description": null,
@@ -45,8 +46,8 @@
           "type": null
         },
         "nonce": {
-          "description": null,
-          "severity": null,
+          "description": "Watch out for txs concerning the prelaunch vault and swell L2 launch",
+          "severity": "MEDIUM",
           "type": null
         }
       }
