@@ -2,4 +2,9 @@
 // (so we don't show them on the frontend), but we still
 // want to monitor using discovery.
 
-export const onChainProjects: string[] = ['blobstream', 'eigenda', 'eigenlayer', 'swell']
+export const onChainProjects: string[] = [
+  'blobstream',
+  'eigenda',
+  'eigenlayer',
+  'swell',
+]
