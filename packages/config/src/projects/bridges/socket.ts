@@ -167,18 +167,18 @@ export const socket: Bridge = {
   },
   permissions: [
     {
-      name: 'Socket Owner.',
+      name: 'Socket Owner',
       description:
-        'Account privileged to set up different roles in the main Socket contract and owner of the Reya USDC vault.',
+        'Account privileged to set up different roles in the main Socket contract and owner of the Socket USDC vault associated with Reya.',
       accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
     },
     ...discovery.getMultisigPermission(
       'LyraMultisig',
-      'Multisig that owns the Vaults associated with Lyra.',
+      'Multisig that owns the Socket Vaults associated with Lyra.',
     ),
     {
       name: 'Hook Vault Owner.',
-      description: 'EOA that owns the WETH Vault associated with hook.xyz.',
+      description: 'EOA that owns the Socket WETH Vault associated with hook.xyz.',
       accounts: [discovery.getPermissionedAccount('WETH Vault Hook', 'owner')],
     },
   ],
