@@ -3,36 +3,43 @@ import { ConfigReader } from '@l2beat/discovery'
 import { expect } from 'earl'
 
 describe('specialCases', () => {
-  describe('Blobstream functionIds in config.json are up-to-date?', () => {
-    it('FunctionIDs from BlobstreamX contract discovery should match the call args in config.json.', async () => {
-      const configReader = new ConfigReader()
-      const blobstreamConfig = await configReader.readConfig('blobstream', 'base')
-      const blobstreamDiscovery = await configReader.readDiscovery('blobstream', 'base')
+  const hostChains = [
+    { config: 'base', discovery: 'base' },
+    { config: 'arbitrum', discovery: 'arbitrum' },
+  ]
 
-      const configOverrides = getConfigOverrides(blobstreamConfig)
-      const discoveryBlobstream = getDiscoveryBlobstream(blobstreamDiscovery)
+  for (const { config, discovery } of hostChains) {
+    describe(`Blobstream functionIds in config.json are up-to-date for ${config}?`, () => {
+      it(`FunctionIDs from BlobstreamX contract discovery should match the call args in config.json for ${config}.`, async () => {
+        const configReader = new ConfigReader()
+        const blobstreamConfig = await configReader.readConfig('blobstream', config)
+        const blobstreamDiscovery = await configReader.readDiscovery('blobstream', discovery)
 
-      // Define test cases for function ID checks
-      const cases = [
-        ['nextHeaderFunctionId', 'nextHeaderVerifier', 'nextHeaderProvers', 'nextHeaderVerifierOwner'],
-        ['headerRangeFunctionId', 'headerRangeVerifier', 'headerRangeProvers', 'headerRangeVerifierOwner'],
-      ]
+        const configOverrides = getConfigOverrides(blobstreamConfig)
+        const discoveryBlobstream = getDiscoveryBlobstream(blobstreamDiscovery)
 
-      // Check the function IDs and argValues
-      await Promise.all(cases.map(async ([valueKey, override, prover, verifierOwner]) => {
-        const configFunctionId = getConfigFunctionId(configOverrides, override)
-        const discoveryFunctionId = getDiscoveryFunctionId(discoveryBlobstream, valueKey)
+        // Define test cases for function ID checks
+        const cases = [
+          ['nextHeaderFunctionId', 'nextHeaderVerifier', 'nextHeaderProvers', 'nextHeaderVerifierOwner'],
+          ['headerRangeFunctionId', 'headerRangeVerifier', 'headerRangeProvers', 'headerRangeVerifierOwner'],
+        ]
 
-        expect(configFunctionId).toEqual(discoveryFunctionId)
+        // Check the function IDs and argValues
+        await Promise.all(cases.map(async ([valueKey, override, prover, verifierOwner]) => {
+          const configFunctionId = getConfigFunctionId(configOverrides, override)
+          const discoveryFunctionId = getDiscoveryFunctionId(discoveryBlobstream, valueKey)
 
-        const proverArgValue = getConfigArgValue(configOverrides, prover)
-        expect(proverArgValue).toEqual(discoveryFunctionId)
+          expect(configFunctionId).toEqual(discoveryFunctionId)
 
-        const verifierOwnerArg = getConfigCallArg(configOverrides, verifierOwner, 0)
-        expect(verifierOwnerArg).toEqual(discoveryFunctionId)
-      }))
+          const proverArgValue = getConfigArgValue(configOverrides, prover)
+          expect(proverArgValue).toEqual(discoveryFunctionId)
+
+          const verifierOwnerArg = getConfigCallArg(configOverrides, verifierOwner, 0)
+          expect(verifierOwnerArg).toEqual(discoveryFunctionId)
+        }))
+      })
     })
-  })
+  }
 })
 
 function getConfigOverrides(blobstreamConfig: any) {
