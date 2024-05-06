@@ -14,7 +14,13 @@ export function createStatusRouter(
     const configurations = await indexerConfigurations.getAll()
 
     ctx.body = {
-      configurations,
+      configurations: configurations.map((c) => ({
+        ...c,
+        properties: JSON.parse(c.properties) as unknown as Record<
+          string,
+          unknown
+        >,
+      })),
     }
   })
 
