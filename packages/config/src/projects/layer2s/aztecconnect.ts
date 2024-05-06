@@ -22,7 +22,7 @@ export const aztecconnect: Layer2 = {
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
-    warning: `EOL: Aztec team announced they are going to shut down the rollup infrastructure on March 31st, 2024. Deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
+    warning: `EOL: Aztec team shut down their rollup infrastructure on March 31st, 2024. Deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['DeFi'],
@@ -291,8 +291,14 @@ export const aztecconnect: Layer2 = {
     dataFormat:
       'The code to decode onchain data can be found [here](https://github.com/AztecProtocol/aztec-connect/blob/master/yarn-project/barretenberg.js/src/rollup_proof/rollup_proof_data.ts#L453)',
   },
-  // permissions: [],
   milestones: [
+    {
+      name: 'Aztec operator sunset',
+      date: '2024-04-30T00:00:00Z',
+      link: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',
+      description:
+        'Aztec stops rollup operators, renouces ownership. Users must run the Rollup manually to withdraw.',
+    },
     {
       name: 'Mainnet Launch',
       date: '2022-07-07T00:00:00Z',
