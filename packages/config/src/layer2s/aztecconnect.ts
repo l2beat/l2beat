@@ -77,7 +77,6 @@ export const aztecconnect: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-      ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
           contract: 'RollupProcessorV2',
@@ -106,10 +105,7 @@ export const aztecconnect: Layer2 = {
       value: 'Immutable',
     },
     dataAvailability: {
-      description:
-        'Since EOL the data is not automatically published and the users must self-publish to L1.',
-      sentiment: 'bad',
-      value: 'No automatic data publishing',
+      ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
           contract: 'RollupProcessorV2',
