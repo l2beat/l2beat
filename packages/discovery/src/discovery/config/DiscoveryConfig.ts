@@ -1,9 +1,9 @@
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
 import { DiscoveryOverrides } from './DiscoveryOverrides'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 // values inside this class should not be modified during the runtime
 // this will result in the hash being different and break the update mechanism

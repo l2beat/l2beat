@@ -6,7 +6,6 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
-  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -39,7 +38,7 @@ export class DiscoveryRunner {
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
     return this.discoveryProvider.getBlockNumberAt(
-      new DiscoveryUnixTime(timestamp.toNumber()),
+      new UnixTime(timestamp.toNumber()),
     )
   }
 

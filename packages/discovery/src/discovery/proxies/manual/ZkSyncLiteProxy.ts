@@ -1,6 +1,6 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'

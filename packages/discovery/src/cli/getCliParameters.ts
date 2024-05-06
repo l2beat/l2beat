@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { chains } from '../config/chains'
-import { EthereumAddress } from '../utils/EthereumAddress'
 
 export type CliParameters =
   | ServerCliParameters
