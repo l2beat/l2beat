@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
