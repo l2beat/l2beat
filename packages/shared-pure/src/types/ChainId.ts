@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
 export interface ChainId extends Number {
   _ChainIdBrand: number
 }

@@ -100,7 +100,6 @@ export class CoingeckoQueryService {
 
     let currentTo = adjustedTo
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       let currentFrom = currentTo.add(-MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
       if (adjustedFrom && currentFrom.lt(adjustedFrom)) {

@@ -78,8 +78,6 @@ const BaseAssetBreakdownData = z.object({
   usdPrice: z.string(),
 })
 
-type BaseAssetBreakdownData = z.infer<typeof BaseAssetBreakdownData>
-
 export const CanonicalAssetBreakdownData = BaseAssetBreakdownData.extend({
   escrows: z.array(
     z.object({
