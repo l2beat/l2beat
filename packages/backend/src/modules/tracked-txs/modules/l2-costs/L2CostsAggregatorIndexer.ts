@@ -123,13 +123,13 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         } else {
           existing.blobsGasUsd += calculations.blobsGasUsd
         }
+      } else {
+        map.set(key, {
+          timestamp,
+          projectId: record.projectId,
+          ...calculations,
+        })
       }
-
-      map.set(key, {
-        timestamp,
-        projectId: record.projectId,
-        ...calculations,
-      })
     }
 
     return Array.from(map.values())
