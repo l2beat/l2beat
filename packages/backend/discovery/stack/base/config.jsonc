@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "base",
   "name": "stack",
   "initialAddresses": ["0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"],

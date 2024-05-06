@@ -103,7 +103,7 @@ export const sygma: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Tokens received on the destination chain can be either wrapped tokens or native tokens depending on the specific implementation. For example, on Phalas integrated use-case with Sygma, native tokens are burned in Substrate/Polkadot and unlocked on EVM, and vice versa where tokens get locked on EVM and minted in Substrate/Polkadot.',
+        'Depending on the integration of the specific token route, bridged tokens will follow either a lock/release (1:1 backed, wrapped asset) mechanism or a burn/mint (synthetic asset) mechanism.',
       risks: [],
       references: [],
     },

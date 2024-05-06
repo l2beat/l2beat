@@ -1,0 +1,126 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "SwellL2PrelaunchVault",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SwellMultisig",
+      "description": "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": "Watch out for txs concerning the prelaunch vault and swell L2 launch",
+          "severity": "MEDIUM",
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Zap",
+      "values": {
+        "eETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wstETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

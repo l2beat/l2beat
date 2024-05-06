@@ -32,6 +32,10 @@ export interface OrbitStackConfigCommon {
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nonTemplateEscrows?: ScalingProjectEscrow[]
+  upgradeability?: {
+    upgradableBy: string[] | undefined
+    upgradeDelay: string | undefined
+  }
   bridge: ContractParameters
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
@@ -80,12 +84,16 @@ export function orbitStackCommon(
     'sequencerVersion',
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
       addresses: [
-        ...templateVars.discovery.getOrbitStackContractDetails(),
+        ...templateVars.discovery.getOrbitStackContractDetails(upgradeability),
         ...(templateVars.nonTemplateContracts ?? []),
       ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -274,6 +282,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     'validators',
   ).length
 
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -344,6 +357,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           description: templateVars.nativeToken
             ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+          ...upgradeability,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
@@ -394,6 +408,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     'RollupProxy',
     'validators',
   ).length
+
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: ['ProxyAdmin'],
+    upgradeDelay: 'No delay',
+  }
 
   return {
     type: 'layer2',
@@ -489,6 +508,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           description: templateVars.nativeToken
             ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+          ...upgradeability,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
