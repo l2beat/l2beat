@@ -1,9 +1,9 @@
 {
   "name": "aztec",
   "chain": "ethereum",
-  "blockNumber": 19774035,
+  "blockNumber": 19811607,
   "configHash": "0xa30f085f28e94ea8915afd21158f55d644610e828a7d328ddbe1c14ae0f6251e",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -47,7 +47,7 @@
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 1725],
+        "getEscapeHatchStatus": [false, 2553],
         "getTotalDeposited": [
           "35761624133451296404343",
           "19481078867265097315675826",
