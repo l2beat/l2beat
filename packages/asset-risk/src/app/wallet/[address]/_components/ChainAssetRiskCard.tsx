@@ -16,7 +16,7 @@ export interface ChainAssetRiskCardProps {
       decimals: number
       symbol: string
       iconUrl?: string
-      bridge?: string
+      bridge?: string | null
     }
     balance: bigint
   }[]
