@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start -p 8080",
     "lint": "next lint",
-    "format": "biome check .",
+    "format": "biome format .",
     "format:fix": "biome format --write ."
   },
   "dependencies": {
