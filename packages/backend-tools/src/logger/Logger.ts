@@ -108,6 +108,7 @@ export class Logger {
     return logger
   }
 
+  // biome-ignore lint/complexity/noBannedTypes: generic type
   for(object: {} | string): Logger {
     const name = typeof object === 'string' ? object : object.constructor.name
     return this.configure({

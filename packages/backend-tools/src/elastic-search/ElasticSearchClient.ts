@@ -38,7 +38,7 @@ export class ElasticSearchClient {
   }
 
   public async bulk(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: generic type
     documents: any[],
     index: string,
   ): Promise<BulkResponse> {
