@@ -1,7 +1,7 @@
 import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
 import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 
-export { }
+export {}
 
 import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'

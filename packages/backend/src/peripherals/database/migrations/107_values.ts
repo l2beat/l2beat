@@ -17,9 +17,11 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('values', function (table) {
     table.dateTime('timestamp', { useTz: false })
     table.string('project_id')
+    table.string('data_source')
     table.integer('external')
     table.integer('canonical')
     table.integer('native')
+    table.primary(['timestamp', 'project_id', 'data_source'])
   })
 }
 

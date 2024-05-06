@@ -15,14 +15,14 @@ describeDatabase(ValueRepository.name, (database) => {
   describe(ValueRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       await repository.addMany([
-        saved('a', UnixTime.ZERO, 1, 2, 3),
-        saved('b', UnixTime.ZERO, 2, 3, 4),
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
       ])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        saved('a', UnixTime.ZERO, 1, 2, 3),
-        saved('b', UnixTime.ZERO, 2, 3, 4),
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
       ])
     })
 
@@ -33,14 +33,32 @@ describeDatabase(ValueRepository.name, (database) => {
     it('performs batch insert when more than 10k records', async () => {
       const records: ValueRecord[] = []
       for (let i = 5; i < 15_000; i++) {
-        records.push(saved('a', new UnixTime(i), i, i * 2, i + 1))
+        records.push(saved('a', new UnixTime(i), 'data_src', i, i * 2, i + 1))
       }
       await expect(repository.addMany(records)).not.toBeRejected()
     })
   })
 
+  describe(ValueRepository.prototype.addOrUpdate.name, () => {
+    it('adds new row', async () => {
+      await repository.addOrUpdate(saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3))
+
+      const results = await repository.getAll()
+      expect(results).toEqual([saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3)])
+    })
+
+    it('updates existing row', async () => {
+      await repository.addOrUpdate(saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3))
+
+      await repository.addOrUpdate(saved('a', UnixTime.ZERO, 'data_src', 4, 5, 6))
+
+      const results = await repository.getAll()
+      expect(results).toEqual([saved('a', UnixTime.ZERO, 'data_src', 4, 5, 6)])
+    })
+  })
+
   it(ValueRepository.prototype.deleteAll.name, async () => {
-    await repository.addMany([saved('a', UnixTime.ZERO, 1, 2, 3)])
+    await repository.addMany([saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3)])
 
     await repository.deleteAll()
 
@@ -53,6 +71,7 @@ describeDatabase(ValueRepository.name, (database) => {
 function saved(
   id: string,
   timestamp: UnixTime,
+  dataSource: string,
   canonical: number,
   external: number,
   native: number,
@@ -60,6 +79,7 @@ function saved(
   return {
     projectId: ProjectId(id),
     timestamp,
+    dataSource,
     canonical,
     external,
     native,

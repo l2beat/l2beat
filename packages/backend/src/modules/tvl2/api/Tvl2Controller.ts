@@ -75,6 +75,10 @@ export class Tvl2Controller {
       .toEndOf('day')
   }
 
+  /**
+   * @deprecated
+   * This logic was copied to the ValueIndexer
+   */
   async getTvl(maxTimestamp: UnixTime): Promise<Tvl2Result> {
     // TODO: we should return daily, sixHourly and hourly results.
     const result: Tvl2Result = {

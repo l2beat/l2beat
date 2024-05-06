@@ -10,6 +10,7 @@ import { Database } from '../../../peripherals/database/Database'
 export interface ValueRow {
   project_id: string
   timestamp: Date
+  data_source: string
   external: number
   canonical: number
   native: number
@@ -18,6 +19,7 @@ export interface ValueRow {
 export interface ValueRecord {
   projectId: ProjectId
   timestamp: UnixTime
+  dataSource: string
   external: number
   canonical: number
   native: number
@@ -36,10 +38,13 @@ export class ValueRepository extends BaseRepository {
     return rows.length
   }
 
-  async add(record: ValueRecord) {
+  async addOrUpdate(record: ValueRecord) {
     const knex = await this.knex()
     const row = toRow(record)
-    await knex.insert(row)
+    await knex('values')
+      .insert(row)
+      .onConflict(['project_id', 'timestamp', 'data_source'])
+      .merge()
     return row.project_id
   }
 
@@ -63,6 +68,7 @@ function toRecord(row: ValueRow): ValueRecord {
   return {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
+    dataSource: row.data_source,
     native: row.native,
     canonical: row.canonical,
     external: row.external,
@@ -73,8 +79,9 @@ function toRow(record: ValueRecord): ValueRow {
   return {
     project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
+    data_source: record.dataSource,
     native: record.native,
     canonical: record.canonical,
-    external: record.external
+    external: record.external,
   }
 }

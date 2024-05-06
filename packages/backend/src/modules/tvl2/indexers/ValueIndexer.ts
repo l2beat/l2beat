@@ -39,6 +39,9 @@ interface Values {
 type AssetId = string
 type PriceId = string
 
+/**
+ * Indexer that aggregates TVL for a project.
+ */
 export class ValueIndexer extends ManagedChildIndexer {
   private readonly amountConfigs: (AmountConfigEntry & { configId: string })[]
   private readonly priceConfigIds: Map<AssetId, PriceId>
@@ -53,10 +56,9 @@ export class ValueIndexer extends ManagedChildIndexer {
       configId: createAmountId(x),
     }))
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
-
-    // calculate configHash
   }
 
+  // TODO: this method should know about the potential of empty slots in the db in case of zeros.
   override async update(from: number, to: number): Promise<number> {
     // Potential future optimization
     // check if db.configHash === this.configHash
@@ -71,9 +73,10 @@ export class ValueIndexer extends ManagedChildIndexer {
     }
 
     const value = await this.getTvlAt(timestamp)
-    await this.$.valueRepo.add({
+    await this.$.valueRepo.addOrUpdate({
       projectId: this.$.project,
       timestamp,
+      dataSource: this.$.dataSource,
       ...value,
     })
 
