@@ -1,12 +1,12 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 119698162,
-  "configHash": "0xe2c065e6f178236eb946cbd724233616006060c4b027ec29d87c27e04288ba8f",
+  "blockNumber": 119700093,
+  "configHash": "0xe094ba026e591c8cdcefa1b4f637209c5a9e3168bb3005f19986bd174fadf242",
   "version": 4,
   "contracts": [
     {
-      "name": "GnosisSafeL2",
+      "name": "InternalProxyAdminOwnerMultisig1",
       "address": "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C",
       "upgradeability": {
         "type": "gnosis safe",
@@ -26,6 +26,49 @@
         "getThreshold": 2,
         "nonce": 190,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "MintManagerOwner",
+      "address": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
+      },
+      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
+      "sinceTimestamp": 1650712171,
+      "values": {
+        "domainSeparator": "0x462891ca8f7777ee79e5fe4366d0577864fdf00769c59e345303b084bf0cf38d",
+        "getChainId": 10,
+        "getOwners": [
+          "0x3041BA32f451F5850c147805F5521AC206421623",
+          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "0xdb203D7f00fF435dA107543B33495f9cA2c484C6",
+          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+          "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94"
+        ],
+        "getThreshold": 3,
+        "nonce": 11,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "DeployerWhitelist",
+      "address": "0x4200000000000000000000000000000000000002",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "owner": "0x0000000000000000000000000000000000000000",
+        "version": "1.0.0"
       }
     },
     {
@@ -41,7 +84,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636288",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636289",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -52,9 +95,31 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.0"
       },
-      "errors": {
-        "xDomainMessageSender": "Multicall failed"
-      }
+      "derivedName": "L2CrossDomainMessenger"
+    },
+    {
+      "name": "GasPriceOracle",
+      "address": "0x420000000000000000000000000000000000000F",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xb528D11cC114E026F138fE568744c6D45ce6Da7A",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xb528D11cC114E026F138fE568744c6D45ce6Da7A"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "baseFee": 0,
+        "baseFeeScalar": 1368,
+        "blobBaseFee": 1,
+        "blobBaseFeeScalar": 810949,
+        "decimals": 6,
+        "DECIMALS": 6,
+        "gasPrice": 0,
+        "isEcotone": true,
+        "l1BaseFee": 8272482002,
+        "version": "1.2.0"
+      },
+      "derivedName": "GasPriceOracle"
     },
     {
       "name": "L2StandardBridge",
@@ -76,6 +141,54 @@
       "derivedName": "L2StandardBridge"
     },
     {
+      "name": "SequencerFeeVault",
+      "address": "0x4200000000000000000000000000000000000011",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "l1FeeWallet": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "totalProcessed": "3295835456307289236126",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "address": "0x4200000000000000000000000000000000000012",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "BRIDGE": "0x4200000000000000000000000000000000000010",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "name": "L1BlockNumber",
+      "address": "0x4200000000000000000000000000000000000013",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "getL1BlockNumber": 19811074,
+        "version": "1.0.0"
+      }
+    },
+    {
       "name": "L2ERC721Bridge",
       "address": "0x4200000000000000000000000000000000000014",
       "upgradeability": {
@@ -94,6 +207,32 @@
       }
     },
     {
+      "name": "L1Block",
+      "address": "0x4200000000000000000000000000000000000015",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "basefee": 8272482002,
+        "baseFeeScalar": 1368,
+        "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
+        "blobBaseFee": 1,
+        "blobBaseFeeScalar": 810949,
+        "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "hash": "0x68489937ef8fd075a65b6aeb3e4cb9ad5bf031dc6746f20920d8f6ccf27ea0a4",
+        "l1FeeOverhead": 188,
+        "l1FeeScalar": 684000,
+        "number": 19811074,
+        "sequenceNumber": 1,
+        "timestamp": 1714998887,
+        "version": "1.2.0"
+      }
+    },
+    {
       "name": "L2ToL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "upgradeability": {
@@ -105,8 +244,24 @@
       "sinceTimestamp": 1636665399,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636298",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636299",
         "version": "1.0.0"
+      }
+    },
+    {
+      "name": "OptimismMintableERC721Factory",
+      "address": "0x4200000000000000000000000000000000000017",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "BRIDGE": "0x4200000000000000000000000000000000000014",
+        "REMOTE_CHAIN_ID": 1,
+        "version": "1.2.0"
       }
     },
     {
@@ -126,6 +281,90 @@
       }
     },
     {
+      "name": "BaseFeeVault",
+      "address": "0x4200000000000000000000000000000000000019",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "totalProcessed": "1224906714536859797583",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "name": "L1FeeVault",
+      "address": "0x420000000000000000000000000000000000001A",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
+        "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+        "totalProcessed": "10689311445014001173604",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "name": "SchemaRegistry",
+      "address": "0x4200000000000000000000000000000000000020",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "version": "1.0.1"
+      }
+    },
+    {
+      "name": "EAS",
+      "address": "0x4200000000000000000000000000000000000021",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088",
+        "admin": "0x4200000000000000000000000000000000000018"
+      },
+      "implementations": ["0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088"],
+      "sinceTimestamp": 1636665399,
+      "values": {
+        "getAttestTypeHash": "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61",
+        "getDomainSeparator": "0xd963157246e3d9bacafb6121ee5c596e8048baf5c3814c1b9fa094fdc4d6aed1",
+        "getName": "EAS",
+        "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
+        "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
+        "version": "1.0.1"
+      }
+    },
+    {
+      "name": "GovernanceToken",
+      "address": "0x4200000000000000000000000000000000000042",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1650979836,
+      "values": {
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xd423c9c6b838296762a6bbf9663d4609148ea6bc83b5e94ce2c05615edc69072",
+        "name": "Optimism",
+        "owner": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+        "symbol": "OP",
+        "totalSupply": "4294967294989853760711675076"
+      },
+      "derivedName": "GovernanceToken"
+    },
+    {
       "name": "L2ERC721Bridge",
       "address": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
       "upgradeability": {
@@ -139,7 +378,23 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "MintManager",
+      "address": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1665174739,
+      "values": {
+        "DENOMINATOR": 1000,
+        "governanceToken": "0x4200000000000000000000000000000000000042",
+        "MINT_CAP": 20,
+        "MINT_PERIOD": 31536000,
+        "mintPermittedAfter": 0,
+        "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
+      }
+    },
+    {
+      "name": "ProxyAdminOwner",
       "address": "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe",
       "upgradeability": {
         "type": "gnosis safe",
@@ -164,7 +419,8 @@
         "getThreshold": 5,
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     }
   ],
   "eoas": [
@@ -175,15 +431,59 @@
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
     "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
     "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
+    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
+    "0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94",
     "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
     "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+    "0xdb203D7f00fF435dA107543B33495f9cA2c484C6",
+    "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
     "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
   ],
   "abis": {
+    "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff": [
+      "function DEPOSITOR_ACCOUNT() view returns (address)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function hash() view returns (bytes32)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValuesEcotone()",
+      "function timestamp() view returns (uint64)",
+      "function version() view returns (string)"
+    ],
     "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": [
       "constructor(address _singleton)"
     ],
+    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": [
+      "constructor(address _singleton)"
+    ],
+    "0x4200000000000000000000000000000000000002": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x4200000000000000000000000000000000000007": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x420000000000000000000000000000000000000F": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -203,7 +503,47 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x4200000000000000000000000000000000000011": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000012": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000013": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x4200000000000000000000000000000000000014": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000015": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -223,6 +563,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x4200000000000000000000000000000000000017": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x4200000000000000000000000000000000000018": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -232,6 +582,132 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000019": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x420000000000000000000000000000000000001A": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000020": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000021": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000042": [
+      "constructor()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function getPastTotalSupply(uint256 blockNumber) view returns (uint256)",
+      "function getPastVotes(address account, uint256 blockNumber) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address _account, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function owner() view returns (address)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088": [
+      "constructor()",
+      "error AccessDenied()",
+      "error AlreadyRevoked()",
+      "error AlreadyRevokedOffchain()",
+      "error AlreadyTimestamped()",
+      "error InsufficientValue()",
+      "error InvalidAttestation()",
+      "error InvalidAttestations()",
+      "error InvalidExpirationTime()",
+      "error InvalidLength()",
+      "error InvalidOffset()",
+      "error InvalidRegistry()",
+      "error InvalidRevocation()",
+      "error InvalidRevocations()",
+      "error InvalidSchema()",
+      "error InvalidSignature()",
+      "error InvalidVerifier()",
+      "error Irrevocable()",
+      "error NotFound()",
+      "error NotPayable()",
+      "error WrongSchema()",
+      "event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schema)",
+      "event Revoked(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schema)",
+      "event RevokedOffchain(address indexed revoker, bytes32 indexed data, uint64 indexed timestamp)",
+      "event Timestamped(bytes32 indexed data, uint64 indexed timestamp)",
+      "function attest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data) request) payable returns (bytes32)",
+      "function attestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address attester) delegatedRequest) payable returns (bytes32)",
+      "function getAttestTypeHash() pure returns (bytes32)",
+      "function getAttestation(bytes32 uid) view returns (tuple(bytes32 uid, bytes32 schema, uint64 time, uint64 expirationTime, uint64 revocationTime, bytes32 refUID, address recipient, address attester, bool revocable, bytes data))",
+      "function getDomainSeparator() view returns (bytes32)",
+      "function getName() view returns (string)",
+      "function getNonce(address account) view returns (uint256)",
+      "function getRevokeOffchain(address revoker, bytes32 data) view returns (uint64)",
+      "function getRevokeTypeHash() pure returns (bytes32)",
+      "function getSchemaRegistry() pure returns (address)",
+      "function getTimestamp(bytes32 data) view returns (uint64)",
+      "function isAttestationValid(bytes32 uid) view returns (bool)",
+      "function multiAttest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data)[] multiRequests) payable returns (bytes32[])",
+      "function multiAttestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address attester)[] multiDelegatedRequests) payable returns (bytes32[])",
+      "function multiRevoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data)[] multiRequests) payable",
+      "function multiRevokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address revoker)[] multiDelegatedRequests) payable",
+      "function multiRevokeOffchain(bytes32[] data) returns (uint64)",
+      "function multiTimestamp(bytes32[] data) returns (uint64)",
+      "function revoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data) request) payable",
+      "function revokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address revoker) delegatedRequest) payable",
+      "function revokeOffchain(bytes32 data) returns (uint64)",
+      "function timestamp(bytes32 data) returns (uint64)",
+      "function version() view returns (string)"
     ],
     "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": [
       "constructor(address _messenger, address _otherBridge)",
@@ -244,8 +720,60 @@
       "function otherBridge() view returns (address)",
       "function version() view returns (string)"
     ],
+    "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": [
+      "constructor(address _upgrader, address _governanceToken)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function DENOMINATOR() view returns (uint256)",
+      "function MINT_CAP() view returns (uint256)",
+      "function MINT_PERIOD() view returns (uint256)",
+      "function governanceToken() view returns (address)",
+      "function mint(address _account, uint256 _amount)",
+      "function mintPermittedAfter() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _newMintManager)"
+    ],
+    "0x6232208d66bAc2305b46b4Cb6BCB3857B298DF13": [
+      "constructor()",
+      "error AlreadyExists()",
+      "event Registered(bytes32 indexed uid, address registerer)",
+      "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
+      "function register(string schema, address resolver, bool revocable) returns (bytes32)",
+      "function version() view returns (string)"
+    ],
     "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe": [
       "constructor(address _singleton)"
+    ],
+    "0xb528D11cC114E026F138fE568744c6D45ce6Da7A": [
+      "function DECIMALS() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function decimals() pure returns (uint256)",
+      "function gasPrice() view returns (uint256)",
+      "function getL1Fee(bytes _data) view returns (uint256)",
+      "function getL1GasUsed(bytes _data) view returns (uint256)",
+      "function isEcotone() view returns (bool)",
+      "function l1BaseFee() view returns (uint256)",
+      "function overhead() view returns (uint256)",
+      "function scalar() view returns (uint256)",
+      "function setEcotone()",
+      "function version() view returns (string)"
+    ],
+    "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
+      "constructor()",
+      "event OwnerChanged(address oldOwner, address newOwner)",
+      "event WhitelistDisabled(address oldOwner)",
+      "event WhitelistStatusChanged(address deployer, bool whitelisted)",
+      "function enableArbitraryContractDeployment()",
+      "function isDeployerAllowed(address _deployer) view returns (bool)",
+      "function owner() view returns (address)",
+      "function setOwner(address _owner)",
+      "function setWhitelistedDeployer(address _deployer, bool _isWhitelisted)",
+      "function version() view returns (string)",
+      "function whitelist(address) view returns (bool)"
     ],
     "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
       "constructor(address _l1CrossDomainMessenger)",
@@ -298,6 +826,30 @@
       "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
       "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
     ],
+    "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function l1FeeWallet() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
+    "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": [
+      "constructor(address _bridge)",
+      "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "event StandardL2TokenCreated(address indexed remoteToken, address indexed localToken)",
+      "function BRIDGE() view returns (address)",
+      "function createOptimismMintableERC20(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function version() view returns (string)"
+    ],
+    "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": [
+      "constructor()",
+      "function getL1BlockNumber() view returns (uint256)",
+      "function version() view returns (string)"
+    ],
     "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014": [
       "constructor(address _messenger, address _otherBridge)",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -322,6 +874,15 @@
       "function sentMessages(bytes32) view returns (bool)",
       "function version() view returns (string)"
     ],
+    "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017": [
+      "constructor(address _bridge, uint256 _remoteChainId)",
+      "event OptimismMintableERC721Created(address indexed localToken, address indexed remoteToken, address deployer)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_CHAIN_ID() view returns (uint256)",
+      "function createOptimismMintableERC721(address _remoteToken, string _name, string _symbol) returns (address)",
+      "function isOptimismMintableERC721(address) view returns (bool)",
+      "function version() view returns (string)"
+    ],
     "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -342,6 +903,24 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
+    ],
+    "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": [
+      "constructor(address _recipient)",
+      "event Withdrawal(uint256 value, address to, address from)",
+      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function RECIPIENT() view returns (address)",
+      "function totalProcessed() view returns (uint256)",
+      "function version() view returns (string)",
+      "function withdraw()"
     ],
     "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",

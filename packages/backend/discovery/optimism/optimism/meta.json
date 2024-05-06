@@ -2,7 +2,172 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "GnosisSafeL2",
+      "name": "BaseFeeVault",
+      "values": {
+        "MIN_WITHDRAWAL_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RECIPIENT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalProcessed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DeployerWhitelist",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EAS",
+      "values": {
+        "getAttestTypeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDomainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRevokeTypeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSchemaRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GasPriceOracle",
+      "values": {
+        "DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "baseFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "baseFeeScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blobBaseFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blobBaseFeeScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isEcotone": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1BaseFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GovernanceToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "InternalProxyAdminOwnerMultisig1",
       "values": {
         "VERSION": {
           "description": null,
@@ -37,34 +202,109 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "L1Block",
       "values": {
-        "VERSION": {
+        "DEPOSITOR_ACCOUNT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "baseFeeScalar": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "basefee": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "batcherHash": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "blobBaseFee": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
+        "blobBaseFeeScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1FeeOverhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1FeeScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "number": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1BlockNumber",
+      "values": {
+        "getL1BlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1FeeVault",
+      "values": {
+        "MIN_WITHDRAWAL_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RECIPIENT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalProcessed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -237,6 +477,111 @@
       }
     },
     {
+      "name": "MintManager",
+      "values": {
+        "DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_CAP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governanceToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintPermittedAfter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MintManagerOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC721Factory",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REMOTE_CHAIN_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "values": {
         "addressManager": {
@@ -250,6 +595,81 @@
           "type": null
         },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdminOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SchemaRegistry",
+      "values": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SequencerFeeVault",
+      "values": {
+        "MIN_WITHDRAWAL_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RECIPIENT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1FeeWallet": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalProcessed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null

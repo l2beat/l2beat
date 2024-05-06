@@ -11,7 +11,6 @@
     "0x4200000000000000000000000000000000000017",
     "0x4200000000000000000000000000000000000015",
     "0x420000000000000000000000000000000000000F",
-    "0x4200000000000000000000000000000000000001",
     "0x4200000000000000000000000000000000000002",
     "0x4200000000000000000000000000000000000013",
     "0x4200000000000000000000000000000000000019",
@@ -22,5 +21,42 @@
   ],
   "names": {
     "0x4200000000000000000000000000000000000010": "L2StandardBridge",
+    "0x420000000000000000000000000000000000000F": "GasPriceOracle",
+    "0x4200000000000000000000000000000000000042": "GovernanceToken",
+    "0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
+    "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe": "ProxyAdminOwner",
+    "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
+    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
+    "0x4200000000000000000000000000000000000013": "L1BlockNumber",
+    "0x4200000000000000000000000000000000000015": "L1Block",
+    "0x4200000000000000000000000000000000000016": "L1TL1MessagePasser",
+  },
+  "overrides": {
+    "GasPriceOracle": {
+      "ignoreMethods": ["overhead", "scalar"],
+      "ignoreInWatchMode": ["l1BaseFee"],
+    },
+    "GovernanceToken": {
+      "ignoreMethods": ["getPastTotalSupply"],
+    },
+    "L2CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"],
+    },
+    "L1BlockNumber": {
+      "ignoreMethods": ["getL1BlockNumber"],
+    },
+    "L1Block": {
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber",
+      ],
+    },
+    "L1TL1MessagePasser": {
+      "ignoreMethods": ["messageNonce"],
+    },
   },
 }
