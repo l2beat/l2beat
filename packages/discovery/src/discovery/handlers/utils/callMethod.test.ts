@@ -1,10 +1,10 @@
+import { ContractValue } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { callMethod } from './callMethod'
-import { ContractValue } from '@l2beat/discovery-types'
 
 describe('callMethod', () => {
   const ADDRESS = EthereumAddress.random()
