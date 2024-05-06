@@ -11,11 +11,20 @@ import { Database } from '../../../../../peripherals/database/Database'
 export interface AggregatedL2CostsRecord {
   timestamp: UnixTime
   projectId: ProjectId
-  totalGasUsed: number
-  calldataGasUsed: number
-  blobsGasUsed: number | null
-  computeGasUsed: number
-  overheadGasUsed: number
+  totalGas: number
+  totalGasEth: number
+  totalGasUsd: number
+  blobsGas: number | null
+  blobsGasEth: number | null
+  blobsGasUsd: number | null
+  calldataGas: number
+  calldataGasEth: number
+  calldataGasUsd: number
+  computeGas: number
+  computeGasEth: number
+  computeGasUsd: number
+  overheadGasEth: number
+  overheadGasUsd: number
 }
 
 export class AggregatedL2CostsRepository extends BaseRepository {
@@ -43,17 +52,31 @@ export class AggregatedL2CostsRepository extends BaseRepository {
       .where('timestamp', '>=', from.toDate())
       .delete()
   }
+
+  async deleteAll() {
+    const knex = await this.knex()
+    return await knex('aggregated_l2_costs').delete()
+  }
 }
 
 function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {
   return {
     timestamp: record.timestamp.toDate(),
     project_id: record.projectId,
-    total_gas_used: record.totalGasUsed,
-    calldata_gas_used: record.calldataGasUsed,
-    blobs_gas_used: record.blobsGasUsed,
-    compute_gas_used: record.computeGasUsed,
-    overhead_gas_used: record.overheadGasUsed,
+    total_gas: record.totalGas,
+    total_gas_eth: record.totalGasEth,
+    total_gas_usd: record.totalGasUsd,
+    blobs_gas: record.blobsGas,
+    blobs_gas_eth: record.blobsGasEth,
+    blobs_gas_usd: record.blobsGasUsd,
+    calldata_gas: record.calldataGas,
+    calldata_gas_eth: record.calldataGasEth,
+    calldata_gas_usd: record.calldataGasUsd,
+    compute_gas: record.computeGas,
+    compute_gas_eth: record.computeGasEth,
+    compute_gas_usd: record.computeGasUsd,
+    overhead_gas_eth: record.overheadGasEth,
+    overhead_gas_usd: record.overheadGasUsd,
   }
 }
 
@@ -61,10 +84,19 @@ function toRecord(row: AggregatedL2CostsRow): AggregatedL2CostsRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     projectId: ProjectId(row.project_id),
-    totalGasUsed: row.total_gas_used,
-    calldataGasUsed: row.calldata_gas_used,
-    blobsGasUsed: row.blobs_gas_used,
-    computeGasUsed: row.compute_gas_used,
-    overheadGasUsed: row.overhead_gas_used,
+    totalGas: row.total_gas,
+    totalGasEth: row.total_gas_eth,
+    totalGasUsd: row.total_gas_usd,
+    blobsGas: row.blobs_gas,
+    blobsGasEth: row.blobs_gas_eth,
+    blobsGasUsd: row.blobs_gas_usd,
+    calldataGas: row.calldata_gas,
+    calldataGasEth: row.calldata_gas_eth,
+    calldataGasUsd: row.calldata_gas_usd,
+    computeGas: row.compute_gas,
+    computeGasEth: row.compute_gas_eth,
+    computeGasUsd: row.compute_gas_usd,
+    overheadGasEth: row.overhead_gas_eth,
+    overheadGasUsd: row.overhead_gas_usd,
   }
 }

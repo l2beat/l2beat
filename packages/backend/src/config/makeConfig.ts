@@ -57,6 +57,7 @@ export function makeConfig(
   const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
 
   if (esEnabled) {
+    console.log('Elastic Search logging enabled')
     const options: ElasticSearchTransportOptions = {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),

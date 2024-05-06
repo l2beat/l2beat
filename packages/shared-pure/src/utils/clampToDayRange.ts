@@ -9,7 +9,6 @@ export function clampRangeToDay(
 
   if (!fromUnixTime.toStartOf('day').equals(toUnixTime.toStartOf('day'))) {
     return { from: fromUnixTime, to: fromUnixTime.toNext('day') }
-  } else {
-    return { from: fromUnixTime, to: toUnixTime }
   }
+  return { from: fromUnixTime, to: toUnixTime }
 }

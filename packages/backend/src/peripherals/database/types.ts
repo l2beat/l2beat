@@ -190,11 +190,20 @@ declare module 'knex/types/tables' {
   interface AggregatedL2CostsRow {
     timestamp: Date
     project_id: string
-    total_gas_used: number
-    calldata_gas_used: number
-    blobs_gas_used: number | null
-    compute_gas_used: number
-    overhead_gas_used: number
+    total_gas: number
+    total_gas_eth: number
+    total_gas_usd: number
+    blobs_gas: number | null
+    blobs_gas_eth: number | null
+    blobs_gas_usd: number | null
+    calldata_gas: number
+    calldata_gas_eth: number
+    calldata_gas_usd: number
+    compute_gas: number
+    compute_gas_eth: number
+    compute_gas_usd: number
+    overhead_gas_eth: number
+    overhead_gas_usd: number
   }
 
   interface DiscoveryCacheRow {
