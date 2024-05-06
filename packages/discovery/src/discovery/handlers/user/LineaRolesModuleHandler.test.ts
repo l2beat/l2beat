@@ -1,11 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { LineaRolesModuleHandler, ScopeConfig } from './LineaRolesModuleHandler'
+import type { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import {
+  LineaRolesModuleHandler,
+  type ScopeConfig,
+} from './LineaRolesModuleHandler'
 
 describe(LineaRolesModuleHandler.name, () => {
   const BLOCK_NUMBER = 1234
