@@ -293,4 +293,24 @@ describe(UnixTime.name, () => {
       expect(() => new UnixTime(1).toHours()).toThrow()
     })
   })
+
+  it(UnixTime.fromDays.name, () => {
+    const secondsInDay = 86_400
+    const days = 4
+    const expected = new UnixTime(days * secondsInDay)
+
+    const result = UnixTime.fromDays(days)
+
+    expect(result).toEqual(expected)
+  })
+
+  it(UnixTime.fromHours.name, () => {
+    const secondsInHour = 3_600
+    const hours = 4
+    const expected = new UnixTime(hours * secondsInHour)
+
+    const result = UnixTime.fromHours(hours)
+
+    expect(result).toEqual(expected)
+  })
 })

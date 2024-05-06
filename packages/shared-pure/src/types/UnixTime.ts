@@ -36,6 +36,10 @@ export class UnixTime {
     return new UnixTime(days * UnixTime.DAY)
   }
 
+  static fromHours(hours: number) {
+    return new UnixTime(hours * UnixTime.HOUR)
+  }
+
   static min(a: UnixTime, b: UnixTime) {
     return a.lt(b) ? a : b
   }
