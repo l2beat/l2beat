@@ -4,8 +4,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { NUGGETS, ScalingProjectRiskViewEntry } from '../../common'
-import { ScalingProjectTechnologyChoice } from '../../common/ScalingProjectTechnologyChoice'
+import {
+  NUGGETS,
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnologyChoice,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { getReferencedAddresses } from '../layer2s/index.test'

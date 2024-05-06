@@ -1,3 +1,4 @@
+import { ProofVerification } from '../projects/types'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 
 type CategoryTitle =
@@ -14,4 +15,5 @@ type ScalingProjectStateValidationCategory = {
 export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
+  proofVerification?: ProofVerification
 }
