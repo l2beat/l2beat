@@ -32,8 +32,19 @@ export class AmountRepository extends BaseRepository {
     const rows = await knex('amounts')
       .whereIn('configuration_id', configIds)
       .where('timestamp', timestamp.toDate())
+      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
       .orderBy('configuration_id')
-    return rows.map((row) => toRecord(row))
+    return rows.map(toRecord)
+  }
+
+  async getByConfigId(configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
+      .orderBy('timestamp')
+
+    return rows.map(toRecord)
   }
 
   async addMany(records: AmountRecord[]) {

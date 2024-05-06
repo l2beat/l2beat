@@ -40,8 +40,6 @@ type AmountConfigMap = Map<
 
 type PriceConfigIdMap = Map<string, string>
 
-const USD_DECIMALS = 2
-
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly priceConfigIds: PriceConfigIdMap
@@ -137,14 +135,81 @@ export class Tvl2Controller {
       const price = prices.find((x) => x.configId === priceId)
       assert(price, 'Price not found')
 
-      const value =
-        (Number(record.amount) * price.priceUsd) / 10 ** amountConfig.decimals
+      const value = calculateValue({
+        amount: record.amount,
+        priceUsd: price.priceUsd,
+        decimals: amountConfig.decimals,
+      })
 
-      // we want to save the balance as an integer, keeping the USD decimal places
-      results[amountConfig.source] += Math.floor(value * 10 ** USD_DECIMALS)
+      results[amountConfig.source] += value
     }
     return results
   }
+
+  async getTokenChart(
+    token: { address: EthereumAddress | 'native'; chain: string },
+    project: ProjectId,
+  ) {
+    const projectAmounts = this.amountConfig.get(project)
+    if (!projectAmounts) return
+
+    const assetId = createAssetId(token)
+    const amountConfigs = projectAmounts.filter(
+      (x) => createAssetId(x) === assetId,
+    )
+
+    const amounts = await this.amountRepository.getByConfigId(
+      amountConfigs.map((x) => x.configId),
+    )
+    const priceId = this.priceConfigIds.get(assetId)
+    assert(priceId, 'PriceId not found!')
+    const prices = await this.priceRepository.getByConfigId(priceId)
+    const pricesMap = new Map(
+      prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+
+    const amountsByTimestamp = groupBy(amounts, 'timestamp')
+
+    const values: [number, number][] = []
+    for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
+      const price = pricesMap.get(Number(timestamp))
+      assert(price, 'Programmer error ' + timestamp)
+      const value = amounts.reduce((acc, curr) => {
+        // not a fan of this solution,
+        // but sometimes there's multiple amountConfigs
+        const amountConfig = amountConfigs.find(
+          (x) => x.configId === curr.configId,
+        )
+        assert(amountConfig, 'Amount config not found')
+        const value = calculateValue({
+          amount: curr.amount,
+          priceUsd: price,
+          decimals: amountConfig.decimals,
+        })
+        return acc + value
+      }, 0)
+      values.push([Number(timestamp), value])
+    }
+
+    return values
+  }
+}
+
+const USD_DECIMALS = 2
+function calculateValue({
+  amount,
+  priceUsd,
+  decimals,
+}: {
+  amount: bigint
+  priceUsd: number
+  decimals: number
+}) {
+  const value = (Number(amount) * priceUsd) / 10 ** decimals
+
+  // we want to expose the balance as an integer, keeping the USD decimal places
+  // not sure it it's necessary to calculate cents when we calculate billions
+  return Math.floor(value * 10 ** USD_DECIMALS)
 }
 
 function getAmountConfigMap(config: Tvl2Config) {
