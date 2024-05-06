@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "chain": "optimism",
+  "name": "optimism",
+  "initialAddresses": ["0x4200000000000000000000000000000000000010"],
+  "names": {
+    "0x4200000000000000000000000000000000000010": "L2StandardBridge",
+  },
+}
