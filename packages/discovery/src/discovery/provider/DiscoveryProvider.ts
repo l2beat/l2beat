@@ -222,6 +222,12 @@ export class DiscoveryProvider {
     if (txHash === undefined) {
       return undefined
     }
+    if (txHash === Hash256.ZERO) {
+      return {
+        blockNumber: 0,
+        timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+      }
+    }
 
     const tx = await this.getTransaction(txHash)
     assert(tx.blockNumber, 'Transaction returned without a block number.')
