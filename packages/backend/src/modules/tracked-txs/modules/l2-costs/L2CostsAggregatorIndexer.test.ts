@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerService } from '../../../../tools/uif/IndexerService'
@@ -18,10 +18,62 @@ import {
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
 
+const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)
 
 describe(L2CostsAggregatorIndexer.name, () => {
-  describe(L2CostsAggregatorIndexer.prototype.update.name, () => {})
+  describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
+    it('clamps to day', async () => {
+      const txs = [
+        tx({
+          timestamp: MIN.add(1, 'minutes'),
+        }),
+      ]
+
+      const ethPrices = new Map([
+        // 2023-05-01 00:00:00
+        [MIN.toNumber(), 2000],
+        // 2023-05-01 23:00:00
+        [MIN.add(23, 'hours').toNumber(), 2000],
+      ])
+
+      const l2CostsRepository = mockObject<L2CostsRepository>({
+        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
+      })
+
+      const priceRepository = mockObject<PriceRepository>({
+        findByTimestampRange: mockFn().resolvesTo(ethPrices),
+      })
+
+      const indexer = createIndexer({
+        tag: 'update',
+        l2CostsRepository,
+        priceRepository,
+      })
+
+      // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
+      const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
+
+      // should get records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
+      expect(
+        l2CostsRepository.getWithProjectIdByTimeRange,
+      ).toHaveBeenOnlyCalledWith([MIN, new UnixTime(1682985599)])
+
+      // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
+      expect(priceRepository.findByTimestampRange).toHaveBeenOnlyCalledWith(
+        AssetId.ETH,
+        MIN,
+        new UnixTime(1682985599),
+      )
+
+      // 2023-05-02 00:00:00
+      expect(to).toEqual(1682985600)
+    })
+
+    it('clamps to hour', async () => {})
+
+    it('returns from if prices not available', async () => {})
+  })
 
   describe(L2CostsAggregatorIndexer.prototype.aggregate.name, () => {
     it('aggregates correctly', () => {
@@ -61,7 +113,6 @@ describe(L2CostsAggregatorIndexer.name, () => {
         [NOW.add(1, 'hours').toNumber(), 2100],
       ])
       const result = indexer.aggregate(txs, ethPrices)
-      console.log(result)
 
       expect(result).toEqualUnsorted([
         {
@@ -173,7 +224,9 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
-    aggregatedL2CostsRepository: mockObject<AggregatedL2CostsRepository>(),
+    aggregatedL2CostsRepository: mockObject<AggregatedL2CostsRepository>({
+      addMany: mockFn().resolvesTo(1),
+    }),
     l2CostsRepository: mockObject<L2CostsRepository>(),
     priceRepository: mockObject<PriceRepository>(),
     ...deps,

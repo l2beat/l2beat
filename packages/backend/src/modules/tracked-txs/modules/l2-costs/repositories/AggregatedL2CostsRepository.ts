@@ -28,6 +28,8 @@ export interface AggregatedL2CostsRecord {
 }
 
 export class AggregatedL2CostsRepository extends BaseRepository {
+  private readonly TABLE_NAME = 'aggregated_l2_costs'
+
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<AggregatedL2CostsRepository>>(this)
@@ -35,27 +37,27 @@ export class AggregatedL2CostsRepository extends BaseRepository {
 
   async getAll() {
     const knex = await this.knex()
-    const rows = await knex('aggregated_l2_costs')
+    const rows = await knex(this.TABLE_NAME)
     return rows.map(toRecord)
   }
 
   async addMany(records: AggregatedL2CostsRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex.batchInsert('aggregated_l2_costs', rows, 10_000)
+    await knex.batchInsert(this.TABLE_NAME, rows, 10_000)
     return rows.length
   }
 
   async deleteFrom(from: UnixTime) {
     const knex = await this.knex()
-    return await knex('aggregated_l2_costs')
+    return await knex(this.TABLE_NAME)
       .where('timestamp', '>=', from.toDate())
       .delete()
   }
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('aggregated_l2_costs').delete()
+    return await knex(this.TABLE_NAME).delete()
   }
 }
 

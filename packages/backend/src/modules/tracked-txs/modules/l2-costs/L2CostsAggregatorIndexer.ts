@@ -31,23 +31,31 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    from -= 1 // TODO: refactor logic after uif update
+    // move to a begining of an hour
+    from = new UnixTime(from).toStartOf('hour').toNumber()
+
+    // limit time range to one day
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
+
+    // limit do not include the beging of next hour ( <= xx:59:59)
+    const shiftedUnixTo = unixTo.add(-1, 'seconds')
 
     const costs = await this.$.l2CostsRepository.getWithProjectIdByTimeRange([
       unixFrom,
-      unixTo.add(-1, 'seconds'),
+      shiftedUnixTo,
     ])
 
     const ethPrices = await this.$.priceRepository.findByTimestampRange(
       AssetId.ETH,
       unixFrom,
-      unixTo.add(-1, 'seconds'),
+      shiftedUnixTo,
     )
 
     if (
+      // price for the first hour of the range
       !ethPrices.get(unixFrom.toNumber()) ||
-      !ethPrices.get(unixTo.toNumber())
+      // price for last our of the range
+      !ethPrices.get(shiftedUnixTo.toStartOf('hour').toNumber())
     ) {
       this.logger.warn('ETH price not found for the range', {
         from: unixFrom.toNumber(),
