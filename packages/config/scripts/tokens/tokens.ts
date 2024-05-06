@@ -179,7 +179,7 @@ function getChainId(logger: ScriptLogger, chain: ChainConfig) {
   let chainId: ChainId | undefined = undefined
   try {
     chainId = ChainId(chain.chainId)
-  } catch (e) {
+  } catch (_e) {
     logger.assert(false, `ChainId not found for`)
   }
   return chainId

@@ -1,6 +1,5 @@
 import { assert, getEnv } from '@l2beat/backend-tools'
 import { RateLimitedProvider } from '@l2beat/discovery'
-// eslint-disable-next-line import/no-internal-modules
 import { RawDiscoveryConfig } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
 import { EthereumAddress, notUndefined } from '@l2beat/shared-pure'
 import { exec } from 'child_process'

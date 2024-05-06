@@ -12,11 +12,8 @@ interface Config {
 
 export const config: Config = {
   alchemyApiKey:
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     getEnv().optionalString('CONFIG_ALCHEMY_API_KEY') ||
     'mlGD422scpwVOpn3lye_swHEebbKQy0D',
 
-  coingeckoApiKey:
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    getEnv().optionalString('COINGECKO_API_KEY') || undefined,
+  coingeckoApiKey: getEnv().optionalString('COINGECKO_API_KEY') || undefined,
 }
