@@ -12,7 +12,7 @@ export const axonum: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.axonum.io'],
+      websites: ['https://axonum.io'],
       apps: ['https://app.axonum.io/bridge/deposit'],
       documentation: ['https://docs.axonum.io'],
       explorers: ['https://sepolia-explorer.axonum.io'],
