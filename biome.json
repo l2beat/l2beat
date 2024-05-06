@@ -118,7 +118,8 @@
       "bracketSameLine": false,
       "quoteStyle": "single",
       "attributePosition": "auto"
-    }
+    },
+    "jsxRuntime": "reactClassic"
   },
   "overrides": [
     {

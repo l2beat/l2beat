@@ -28,7 +28,7 @@ export class ZksyncCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(): Promise<number> {
-    return this.zksyncClient.getLatestBlock()
+    return await this.zksyncClient.getLatestBlock()
   }
 
   protected override async processRange(

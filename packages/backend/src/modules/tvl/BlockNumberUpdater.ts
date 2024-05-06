@@ -61,7 +61,6 @@ export class BlockNumberUpdater {
       timestamp.gte(this.minTimestamp),
       'Programmer error: requested timestamp does not exist',
     )
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const blockNumber = this.blocksByTimestamp.get(timestamp.toNumber())
       if (blockNumber !== undefined) {

@@ -192,7 +192,7 @@ function getMainBranchName(): 'main' | 'master' {
       stdio: 'ignore',
     })
     return 'master'
-  } catch (error) {
+  } catch (_error) {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
     return 'main'
   }
@@ -237,7 +237,7 @@ function getFileVersionOnMainBranch(filePath: string): {
       content,
       mainBranchHash,
     }
-  } catch (e) {
+  } catch (_e) {
     console.log(`No previous version of ${filePath} found`)
     return {
       content: '',
@@ -251,7 +251,7 @@ function getGitUser(): { name: string; email: string } {
     const name = execSync('git config user.name').toString().trim()
     const email = execSync('git config user.email').toString().trim()
     return { name, email }
-  } catch (e) {
+  } catch (_e) {
     console.log('No git user found')
     return { name: 'unknown', email: 'unknown' }
   }

@@ -35,7 +35,7 @@ export class PolyglotMigrationSource
   }
 
   override async getMigrations(): Promise<unknown[]> {
-    return this.fsSource.getMigrations(this.loadExtensions)
+    return await this.fsSource.getMigrations(this.loadExtensions)
   }
 
   override getMigration(migration: unknown): Promise<Knex.Migration> {

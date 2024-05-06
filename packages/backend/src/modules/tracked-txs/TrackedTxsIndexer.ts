@@ -241,6 +241,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

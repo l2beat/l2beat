@@ -148,7 +148,7 @@ function genDiffHtml(
 function checkDeps() {
   try {
     osExec('which difft')
-  } catch (error) {
+  } catch (_error) {
     console.log(
       'difft is not found. Please install it using `brew install difftastic`',
     )

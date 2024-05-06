@@ -93,7 +93,7 @@ export function generateTvlApiResponse(
   const projectsResult = projects.reduce<TvlApiResponse['projects']>(
     (acc, project) => {
       acc[project.id.toString()] = {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         charts: charts.get(project.id)!,
         tokens: getProjectTokensCharts(groupedLatestReports, project.id),
       }
@@ -103,11 +103,11 @@ export function generateTvlApiResponse(
   )
 
   return {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     layers2s: charts.get(ProjectId.LAYER2S)!,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     bridges: charts.get(ProjectId.BRIDGES)!,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     combined: charts.get(ProjectId.ALL)!,
     projects: projectsResult,
   }

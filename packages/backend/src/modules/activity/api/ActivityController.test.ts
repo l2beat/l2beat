@@ -750,17 +750,19 @@ function formatActivity({
       estimatedImpact: combined.estimatedImpact,
       estimatedSince: combined.estimatedSince,
     },
-    projects: Object.entries(projects).reduce((acc, cur) => {
-      return {
-        ...acc,
-        [cur[0]]: {
+    projects: Object.entries(projects).reduce(
+      (acc, cur) => {
+        acc[cur[0]] = {
           daily: {
             types: ['timestamp', 'transactions', 'ethereumTransactions'],
             data: cur[1],
           },
-        },
-      }
-    }, {}),
+        }
+
+        return acc
+      },
+      {} as ActivityApiResponse['projects'],
+    ),
   }
 }
 

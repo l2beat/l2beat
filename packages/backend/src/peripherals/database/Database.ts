@@ -104,7 +104,7 @@ export class Database {
   }
 
   private enableQueryLogging(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: generic type
     this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
       this.logger.trace('SQL Query', {
         query: queryCtx.sql,

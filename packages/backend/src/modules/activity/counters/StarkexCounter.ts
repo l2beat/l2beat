@@ -39,7 +39,7 @@ export class StarkexCounter extends SequenceProcessor {
 
   protected override async getLatest(): Promise<number> {
     const day = this.clock.getLastHour().toStartOf('day').toDays()
-    return Promise.resolve(day)
+    return await Promise.resolve(day)
   }
 
   protected override async processRange(

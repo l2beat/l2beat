@@ -33,11 +33,11 @@ export class DiscoveryRunner {
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return this.discoveryProvider.getBlockNumber()
+    return await this.discoveryProvider.getBlockNumber()
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.discoveryProvider.getBlockNumberAt(
+    return await this.discoveryProvider.getBlockNumberAt(
       new UnixTime(timestamp.toNumber()),
     )
   }

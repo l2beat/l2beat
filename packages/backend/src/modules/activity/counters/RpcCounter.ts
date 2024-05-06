@@ -34,7 +34,7 @@ export class RpcCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(current: number): Promise<number> {
-    return this.rpcClient.getBlockNumberAtOrBefore(
+    return await this.rpcClient.getBlockNumberAtOrBefore(
       this.clock.getLastHour(),
       current,
     )

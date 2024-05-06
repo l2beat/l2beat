@@ -33,6 +33,9 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
   }
 
   async setSafeHeight(safeHeight: number) {
-    return this.options.indexerService.setSafeHeight(this.indexerId, safeHeight)
+    return await this.options.indexerService.setSafeHeight(
+      this.indexerId,
+      safeHeight,
+    )
   }
 }

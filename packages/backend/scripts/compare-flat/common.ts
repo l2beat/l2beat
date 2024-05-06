@@ -202,7 +202,7 @@ async function readProject(
       },
       sources,
     }
-  } catch (e) {
+  } catch (_e) {
     console.log(
       `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
         'run discovery to generate flat files',

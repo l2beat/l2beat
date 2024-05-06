@@ -15,7 +15,6 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('total_supplies', function (table) {
-    // eslint-disable-next-line custom-rules/db_ts_no_tz
     table.dateTime('unix_timestamp').notNullable()
     table.decimal('total_supply', 80, 0).notNullable()
     table.string('asset_id').notNullable()
@@ -26,7 +25,6 @@ export async function up(knex: Knex) {
 
   await knex.schema.createTable('total_supplies_status', function (table) {
     table.string('config_hash').notNullable()
-    // eslint-disable-next-line custom-rules/db_ts_no_tz
     table.dateTime('unix_timestamp').notNullable()
     table.integer('chain_id').notNullable()
 
