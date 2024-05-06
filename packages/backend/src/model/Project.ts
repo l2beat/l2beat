@@ -63,7 +63,9 @@ export function layer2ToProject(layer2: Layer2): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === 'CBV')
+          ? tokenList.filter(
+              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+            )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
@@ -89,7 +91,9 @@ export function bridgeToProject(bridge: Bridge): Project {
       sinceTimestamp: escrow.sinceTimestamp,
       tokens:
         escrow.tokens === '*'
-          ? tokenList.filter((t) => t.type === 'CBV')
+          ? tokenList.filter(
+              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+            )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
   }
@@ -148,16 +152,18 @@ export function layer3ToProject(layer3: Layer3): Project {
         tokens:
           escrow.tokens === '*'
             ? tokensOnChain
-            : escrow.tokens.map((tokenSymbol) => {
-                const token = tokensOnChain.find(
-                  (t) => t.symbol === tokenSymbol,
-                )
-                assert(
-                  token,
-                  `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
-                )
-                return token
-              }),
+            : escrow.tokens
+                .filter((t) => t !== 'ETH')
+                .map((tokenSymbol) => {
+                  const token = tokensOnChain.find(
+                    (t) => t.symbol === tokenSymbol,
+                  )
+                  assert(
+                    token,
+                    `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
+                  )
+                  return token
+                }),
         chain,
       }
     }),
