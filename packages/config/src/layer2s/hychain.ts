@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { subtractOne } from '../common/assessCount'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -27,7 +28,13 @@ export const hychain: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  // rpcUrl: 'https://rpc.hychain.com/http',
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    defaultUrl: 'https://rpc.hychain.com/http',
+    defaultCallsPerMinute: 1500,
+    assessCount: subtractOne,
+  },
   escrows: [
     // bridge is only for TOPIA token
     {
