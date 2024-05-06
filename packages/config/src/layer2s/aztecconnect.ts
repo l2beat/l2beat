@@ -77,7 +77,7 @@ export const aztecconnect: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
-
+      ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
           contract: 'RollupProcessorV2',
@@ -97,10 +97,7 @@ export const aztecconnect: Layer2 = {
       ],
     },
     proposerFailure: {
-      description:
-        'The system is EOL and the user must self-propose to withdraw.',
-      sentiment: 'neutral',
-      value: 'No rollup proposer',
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
     },
     sourceUpgradeability: {
       description:
