@@ -18,7 +18,7 @@ const config: StorybookConfig = {
     storyStoreV7: true,
   },
   staticDirs: ['../src/static', './static'],
-  async viteFinal(config, { configType }) {
+  viteFinal(config, { configType }) {
     return mergeConfig(config, {
       optimizeDeps: {
         exclude: ['@l2beat/discovery'],
@@ -41,4 +41,5 @@ const config: StorybookConfig = {
     })
   },
 }
+// biome-ignore lint/style/noDefaultExport: this is a storybook config
 export default config

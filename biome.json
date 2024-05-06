@@ -132,7 +132,7 @@
       }
     },
     {
-      "include": ["src/**/*.stories.{ts,tsx}"],
+      "include": ["src/**/*.stories.ts", "src/**/*.tsx"],
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
     },
     {

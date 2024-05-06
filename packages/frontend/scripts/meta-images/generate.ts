@@ -30,12 +30,12 @@ async function screenshot(slug: string, name: string) {
   const html = template.replace(/__NAME__/g, name)
 
   const app = express()
-  app.get('/', (req, res) => res.send(html))
+  app.get('/', (_req, res) => res.send(html))
   app.use('/fonts', express.static(FONT_DIR))
-  app.get('/template.png', (req, res) =>
+  app.get('/template.png', (_req, res) =>
     res.sendFile(join(OUTPUT_DIR, 'template.png')),
   )
-  app.get('/icon.png', (req, res) =>
+  app.get('/icon.png', (_req, res) =>
     res.sendFile(join(ICON_DIR, `${slug}.png`)),
   )
   const server = await new Promise<ReturnType<typeof app.listen>>((resolve) => {
