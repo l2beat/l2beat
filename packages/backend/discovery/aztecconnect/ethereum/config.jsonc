@@ -56,15 +56,6 @@
         "prevDefiInteractionsHash",
         "rollupStateHash"
       ]
-    },
-    "Aztec Multisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "Emergency Multisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "Resume Multisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
