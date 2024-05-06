@@ -4,6 +4,7 @@ import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { callMethod } from './callMethod'
+import { ContractValue } from '@l2beat/discovery-types'
 
 describe('callMethod', () => {
   const ADDRESS = EthereumAddress.random()
@@ -120,7 +121,7 @@ describe('callMethod', () => {
       [1],
     )
 
-    expect(result.value[0]).toEqual(RESULT_VALUES[1])
+    expect((result.value as ContractValue[])[0]).toEqual(RESULT_VALUES[1])
   })
 
   it('decodes an array return value', async () => {
