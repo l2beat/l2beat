@@ -89,7 +89,7 @@ export const linea: Layer2 = {
       repositories: [],
       socialMedia: [
         'https://twitter.com/LineaBuild',
-        'https://discord.gg/consensys',
+        'https://discord.gg/linea',
         'https://linea.mirror.xyz/',
       ],
       rollupCodes: 'https://rollup.codes/linea',
