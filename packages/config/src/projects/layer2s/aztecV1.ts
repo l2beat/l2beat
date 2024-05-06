@@ -167,7 +167,7 @@ export const aztecV1: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
+        delayWith30DExitWindow: null,
       },
     },
     {
