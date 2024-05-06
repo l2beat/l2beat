@@ -40,7 +40,7 @@ type AssetId = string
 type PriceId = string
 
 /**
- * Indexer that aggregates TVL for a project.
+ * Indexer that aggregates TVL for a project. Skips the configurations that are not included in the total.
  */
 export class ValueIndexer extends ManagedChildIndexer {
   private readonly amountConfigs: (AmountConfigEntry & { configId: string })[]
@@ -51,14 +51,15 @@ export class ValueIndexer extends ManagedChildIndexer {
     const name = 'value_indexer'
     super({ ...$, name, logger })
 
-    this.amountConfigs = $.amountConfigs.map((x) => ({
-      ...x,
-      configId: createAmountId(x),
-    }))
+    this.amountConfigs = $.amountConfigs
+      .filter((x) => x.includeInTotal)
+      .map((x) => ({
+        ...x,
+        configId: createAmountId(x),
+      }))
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
   }
 
-  // TODO: this method should know about the potential of empty slots in the db in case of zeros.
   override async update(from: number, to: number): Promise<number> {
     // Potential future optimization
     // check if db.configHash === this.configHash
