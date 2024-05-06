@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.schema.json",
+  "ignoreMethods": [
+    "getL2OutputAfter",
+    "getL2OutputIndexAfter",
+    "getL2Output",
+    "computeL2Timestamp"
+  ],
+  "ignoreInWatchMode": [
+    "nextBlockNumber",
+    "nextOutputIndex",
+    "latestBlockNumber",
+    "latestOutputIndex"
+  ],
+  "fields": {
+    "deletedOutputs": {
+      "type": "stateFromEvent",
+      "event": "OutputsDeleted",
+      "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+    }
+  }
+}
