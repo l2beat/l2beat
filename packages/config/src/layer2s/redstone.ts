@@ -78,12 +78,10 @@ export const redstone: Layer2 = opStackL2({
     bridge: { type: 'None + DA challenges' },
   },
   nonTemplatePermissions: [
-    /* TODO: fix
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
       'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
-    */
     {
       name: 'DataAvailabilityChallenge owner',
       accounts: [
