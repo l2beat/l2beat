@@ -138,8 +138,8 @@ export const aztecconnect: Layer2 = {
     {
       stage0: {
         callsItselfRollup: true,
-        stateRootsPostedToL1: false,
-        dataAvailabilityOnL1: false,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
       },
       stage1: {
