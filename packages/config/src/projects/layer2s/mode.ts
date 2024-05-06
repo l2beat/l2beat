@@ -67,6 +67,7 @@ export const mode: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
+    stateUpdate: 'disabled',
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

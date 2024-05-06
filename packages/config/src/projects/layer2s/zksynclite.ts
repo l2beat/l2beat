@@ -150,6 +150,7 @@ export const zksynclite: Layer2 = {
       lag: 0,
       type: 'zkSyncLite',
       minTimestamp: new UnixTime(1592218708),
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

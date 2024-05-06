@@ -217,6 +217,7 @@ export const linea: Layer2 = {
       type: 'Linea',
       lag: 0,
       minTimestamp: new UnixTime(1707831168),
+      stateUpdate: 'disabled',
     },
   },
   chainConfig: {
