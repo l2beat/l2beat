@@ -178,7 +178,8 @@ export const socket: Bridge = {
     ),
     {
       name: 'Hook Vault Owner.',
-      description: 'EOA that owns the Socket WETH Vault associated with hook.xyz.',
+      description:
+        'EOA that owns the Socket WETH Vault associated with hook.xyz.',
       accounts: [discovery.getPermissionedAccount('WETH Vault Hook', 'owner')],
     },
   ],
