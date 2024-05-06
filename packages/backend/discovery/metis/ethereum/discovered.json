@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19761802,
+  "blockNumber": 19809730,
   "configHash": "0x19bf0002aad0a7b0ff5cb49b94a15703b05823783ce49490b96fcc8ffcbc5a65",
   "version": 3,
   "contracts": [
@@ -57,8 +57,8 @@
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "118634578080235465000000",
-        "totalRewardsLiquidated": "82748882048000000000"
+        "totalLocked": "180000000000000000000000",
+        "totalRewardsLiquidated": "154792633228205000000"
       },
       "derivedName": "LockingInfo"
     },
@@ -71,10 +71,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000662f9f7b0001011b41",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000662f9f7b0001011b41",
-        "length": 23568,
-        "lengthByChainId": 23568,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006638507300010264f1",
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006638507300010264f1",
+        "length": 23640,
+        "lengthByChainId": 23640,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -136,7 +136,7 @@
           "0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "getThreshold": 4,
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -156,8 +156,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 1243,
-        "getQueueLength": 37527,
+        "getNumPendingQueueElements": 1394,
+        "getQueueLength": 37678,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -210,6 +210,14 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "BeaconProxy",
+      "address": "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1714705619
     },
     {
       "name": "MVM_CanonicalTransaction",
@@ -324,12 +332,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1714397051,
-        "getLastSequencerTimestampByChainId": 1714397051,
-        "getTotalBatches": 23568,
-        "getTotalBatchesByChainId": 23568,
-        "getTotalElements": 16849729,
-        "getTotalElementsByChainId": 16849729,
+        "getLastSequencerTimestamp": 1714966643,
+        "getLastSequencerTimestampByChainId": 1714966643,
+        "getTotalBatches": 23640,
+        "getTotalBatchesByChainId": 23640,
+        "getTotalElements": 16934129,
+        "getTotalElementsByChainId": 16934129,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -364,18 +372,18 @@
       "implementations": ["0xd87Da73F82abe83915d61342199A4690cfdf4718"],
       "sinceTimestamp": 1710314939,
       "values": {
-        "BLOCK_REWARD": 1504744000000000,
-        "currentBatch": 3,
+        "BLOCK_REWARD": 2245402873000000,
+        "currentBatch": 4,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
-        "rewardPerBlock": 1504744000000000,
+        "rewardPerBlock": 2245402873000000,
         "sequencers": [
           [
             "20000000000000000000000",
-            "463349930000000000000",
+            "472365222535095000000",
             1,
             1,
             0,
@@ -390,7 +398,7 @@
           ],
           [
             "20000000000000000000000",
-            "417148270352000000000",
+            "451278394021600000000",
             1,
             1,
             0,
@@ -405,7 +413,7 @@
           ],
           [
             "20000000000000000000000",
-            "359252039000000000000",
+            "379460664857000000000",
             1,
             1,
             0,
@@ -419,23 +427,38 @@
             2
           ],
           [
-            "58634578080235465000000",
+            "100000000000000000000000",
             0,
             2,
             2,
             0,
             0,
             0,
-            1,
+            4,
             "0x735Aad08c5eF7620b6422E85613f8335Ec07b573",
             "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
             "0xa3f2635f4d555f68f7be80fcf7b13ec9ecdf09365e6a57f6c5f513aa1d1af4565e53a0612e4e4a97124aa95cc17a3e56b5da1afb21c41d9cdb7e5264380a0790",
             "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             2
+          ],
+          [
+            "20000000000000000000000",
+            0,
+            4,
+            4,
+            0,
+            0,
+            0,
+            1,
+            "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
+            "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
+            "0x26d8c349c2acb2aec89d8da44ff8a6a3c322336d3c0e3c3dfafcc51da090f4af221341c4caddf202b0be13be63fa65b3564a314596522c4a75653d1e80179b76",
+            "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
+            2
           ]
         ],
         "signerUpdateThrottle": 1,
-        "totalSequencers": 4,
+        "totalSequencers": 5,
         "WITHDRAWAL_DELAY": 1814400
       },
       "derivedName": "LockingPool"
@@ -489,9 +512,11 @@
     "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
     "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
     "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+    "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x7a9059F4A6e50090e4f55994d465918200AB4454",
+    "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
     "0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
     "0xa6D8941F935932a531A856C2e48046DA73a1098E",
     "0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
@@ -715,6 +740,12 @@
     ],
     "0x62478E4eeb4070fE399866aB05e821AB97200947": [
       "constructor(address _singleton)"
+    ],
+    "0x66c7674732357b01B3E9a8F94A05C411BeA1767A": [
+      "constructor(address beacon, bytes data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": [
       "constructor(address _owner)",
