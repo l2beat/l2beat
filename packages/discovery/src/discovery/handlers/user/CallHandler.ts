@@ -58,7 +58,6 @@ export class CallHandler implements ClassicHandler {
     this.logger.logExecution(this.field, [
       'Calling ',
       `${this.fragment.name}(${resolved.args
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         .map((x) => x.toString())
         .join(', ')})`,
     ])

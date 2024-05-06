@@ -73,7 +73,7 @@ export class ConstructorArgsHandler implements ClassicHandler {
         await this.getWithDeploymentTransaction(provider, address)
 
       return serializeResult(decodedConstructorArguments)
-    } catch (error) {
+    } catch (_error) {
       this.logger.log(
         'Could not get constructor arguments with heuristic approach. Trying with block explorer.',
       )
@@ -132,12 +132,10 @@ export function serializeResult(result: ethers.utils.Result): ContractValue {
     return result.toString()
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (result && typeof result === 'object') {
     return Object.fromEntries(
       Object.entries(result).map(([key, value]) => [
         key,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         serializeResult(value),
       ]),
     )
@@ -167,10 +165,10 @@ export function serializeResult(result: ethers.utils.Result): ContractValue {
  *    So we just pick the longest decoded chunk that works.
  *  */
 export function decodeConstructorArgs(
-  constructor: ethers.utils.Fragment,
+  constructorFragment: ethers.utils.Fragment,
   txData: string,
 ): ethers.utils.Result {
-  assert(constructor, 'Constructor does not exist in abi')
+  assert(constructorFragment, 'Constructor does not exist in abi')
 
   let longestDecodedArgs: ethers.utils.Result | undefined = undefined
   const offset = 64
@@ -184,10 +182,10 @@ export function decodeConstructorArgs(
       }
 
       longestDecodedArgs = ethers.utils.defaultAbiCoder.decode(
-        constructor.inputs,
+        constructorFragment.inputs,
         '0x' + slice,
       )
-    } catch (error) {
+    } catch (_error) {
       continue
     }
   }

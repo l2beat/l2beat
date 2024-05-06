@@ -7,5 +7,5 @@ export async function getStorage(
   blockNumber: number,
 ): Promise<string> {
   const address = typeof contract === 'string' ? contract : contract.address
-  return provider.getStorageAt(address, slot, blockNumber)
+  return await provider.getStorageAt(address, slot, blockNumber)
 }

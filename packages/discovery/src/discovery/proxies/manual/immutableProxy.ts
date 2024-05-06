@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 
-// eslint-disable-next-line
+// biome-ignore lint/suspicious/useAwait: this does not do anything, but just keep the interface the same
 export async function getImmutableProxy(
   _provider: DiscoveryProvider,
   _address: EthereumAddress,

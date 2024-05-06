@@ -100,9 +100,8 @@ export class ProxyDetector {
     blockNumber: number,
   ): Promise<ProxyDetails | undefined> {
     const detector = this.manualDetectors[manualProxyType]
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (detector) {
-      return detector(this.provider, address, blockNumber)
+      return await detector(this.provider, address, blockNumber)
     }
   }
 }

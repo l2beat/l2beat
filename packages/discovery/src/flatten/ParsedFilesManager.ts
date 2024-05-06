@@ -440,7 +440,6 @@ function decodeRemappings(remappingStrings: string[]): Remapping[] {
     let context = undefined
     let prefix: string | undefined = contextPrefix
     if (contextPrefix.includes(':')) {
-      // eslint-disable-next-line no-extra-semi
       ;[context, prefix] = contextPrefix.split(':')
     }
     context ??= ''

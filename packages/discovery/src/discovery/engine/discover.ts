@@ -28,5 +28,5 @@ export async function discover(
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
-  return discoveryEngine.discover(config, blockNumber)
+  return await discoveryEngine.discover(config, blockNumber)
 }

@@ -204,7 +204,7 @@ describe(StorageHandler.name, () => {
       )
       let slot: bigint | number | Bytes | undefined
       const provider = mockObject<DiscoveryProvider>({
-        async getStorage(passedAddress, receivedSlot) {
+        async getStorage(_passedAddress, receivedSlot) {
           slot = receivedSlot
           return Bytes.fromHex('0'.repeat(64))
         },
