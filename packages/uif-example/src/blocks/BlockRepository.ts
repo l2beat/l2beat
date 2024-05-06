@@ -3,6 +3,6 @@ export class BlockRepository {
 
   async save(block: { number: number; timestamp: number }): Promise<void> {
     this.blocks.set(block.timestamp, block.number)
-    return Promise.resolve()
+    return await Promise.resolve()
   }
 }

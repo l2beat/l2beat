@@ -11,6 +11,6 @@ export class HourlyIndexer extends RootIndexer {
   async tick(): Promise<number> {
     const now = new Date().getTime()
     const hours = Math.floor(now / ONE_HOUR_MS)
-    return Promise.resolve(hours)
+    return await Promise.resolve(hours)
   }
 }

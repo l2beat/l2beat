@@ -40,6 +40,6 @@ export class BlockIndexer extends ChildIndexer {
 
   override async invalidate(targetHeight: number): Promise<number> {
     // We don't need to delete any data
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }
