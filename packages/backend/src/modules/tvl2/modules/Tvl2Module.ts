@@ -13,6 +13,7 @@ import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
@@ -84,11 +85,12 @@ export function createTvl2Module(
   const tvlController = new Tvl2Controller(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
+    peripherals.getRepository(ValueRepository),
     config.projects.map((p) => p.projectId),
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
-  const tvlRouter = createTvl2Router(tvlController, clock)
+  const tvlRouter = createTvl2Router(tvlController)
 
   const start = async () => {
     await hourlyIndexer.start()

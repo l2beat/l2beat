@@ -11,24 +11,36 @@ export interface ValueRow {
   project_id: string
   timestamp: Date
   data_source: string
-  external: number
-  canonical: number
-  native: number
+  external: string
+  canonical: string
+  native: string
 }
 
 export interface ValueRecord {
   projectId: ProjectId
   timestamp: UnixTime
   dataSource: string
-  external: number
-  canonical: number
-  native: number
+  external: bigint
+  canonical: bigint
+  native: bigint
 }
 
 export class ValueRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<ValueRepository>>(this)
+  }
+
+  async getDailyForProjects(projectIds: ProjectId[]) {
+    const knex = await this.knex()
+    const rows = await knex('values')
+      .whereIn(
+        'project_id',
+        projectIds.map((id) => id.toString()),
+      )
+      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecord)
   }
 
   async addMany(records: ValueRecord[]) {
@@ -69,9 +81,9 @@ function toRecord(row: ValueRow): ValueRecord {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
     dataSource: row.data_source,
-    native: row.native,
-    canonical: row.canonical,
-    external: row.external,
+    native: BigInt(row.native),
+    canonical: BigInt(row.canonical),
+    external: BigInt(row.external),
   }
 }
 
@@ -80,8 +92,8 @@ function toRow(record: ValueRecord): ValueRow {
     project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
     data_source: record.dataSource,
-    native: record.native,
-    canonical: record.canonical,
-    external: record.external,
+    native: record.native.toString(),
+    canonical: record.canonical.toString(),
+    external: record.external.toString(),
   }
 }

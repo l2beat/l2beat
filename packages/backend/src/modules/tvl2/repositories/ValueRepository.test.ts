@@ -86,8 +86,8 @@ function saved(
     projectId: ProjectId(id),
     timestamp,
     dataSource,
-    canonical,
-    external,
-    native,
+    canonical: BigInt(canonical),
+    external: BigInt(external),
+    native: BigInt(native),
   }
 }

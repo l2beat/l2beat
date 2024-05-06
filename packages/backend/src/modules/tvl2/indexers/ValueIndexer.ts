@@ -31,9 +31,9 @@ export interface ValueIndexerDeps
 }
 
 interface Values {
-  canonical: number
-  external: number
-  native: number
+  canonical: bigint
+  external: bigint
+  native: bigint
 }
 
 type AssetId = string
@@ -99,9 +99,9 @@ export class ValueIndexer extends ManagedChildIndexer {
     const prices = await this.$.priceRepo.getByTimestamp(timestamp)
 
     const results = {
-      canonical: 0,
-      external: 0,
-      native: 0,
+      canonical: 0n,
+      external: 0n,
+      native: 0n,
     }
 
     for (const record of records) {
@@ -131,8 +131,8 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 }
 
-const USD_DECIMALS = 2
-function calculateValue({
+const USD_DECIMALS = 2n
+export function calculateValue({
   amount,
   priceUsd,
   decimals,
@@ -141,11 +141,10 @@ function calculateValue({
   priceUsd: number
   decimals: number
 }) {
-  const value = (Number(amount) * priceUsd) / 10 ** decimals
-
   // we want to expose the balance as an integer, keeping the USD decimal places
-  // not sure it it's necessary to calculate cents when we calculate billions
-  return Math.floor(value * 10 ** USD_DECIMALS)
+  const priceWithDecimals =
+    amount * BigInt(priceUsd) * 10n ** BigInt(USD_DECIMALS)
+  return priceWithDecimals / 10n ** BigInt(decimals)
 }
 
 function createAssetId(price: {
