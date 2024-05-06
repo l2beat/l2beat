@@ -120,7 +120,7 @@ describe('callMethod', () => {
       [1],
     )
 
-    expect(result.value).toEqual(RESULT_VALUES[1])
+    expect(result.value[0]).toEqual(RESULT_VALUES[1])
   })
 
   it('decodes an array return value', async () => {
