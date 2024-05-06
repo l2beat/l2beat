@@ -21,5 +21,5 @@ export function fillMissingCounts(
     timestamp = timestamp.add(1, 'days')
   }
 
-  return result
+  return result.sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
 }

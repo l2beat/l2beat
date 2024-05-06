@@ -42,7 +42,7 @@ export interface Config {
   readonly tvlCleanerEnabled: boolean
 }
 
-export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
+export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
   Partial<LoggerOptions>
 
 export interface LogThrottlerConfig {

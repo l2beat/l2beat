@@ -193,6 +193,28 @@ export const scroll: Layer2 = {
       },
       {
         uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+          ),
+          selector: '0x00b0f4d7',
+          functionSignature:
+            'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
+          sinceTimestampInclusive: new UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'batchSubmissions' },
           { type: 'l2costs', subtype: 'batchSubmissions' },
         ],
@@ -222,7 +244,7 @@ export const scroll: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
@@ -233,7 +255,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -244,7 +266,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -283,7 +305,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
+            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
           ],
         },
       ],
@@ -299,17 +321,17 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol#L341 - Etherscan source code, verifyAggregateProof() call',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L341',
+          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyAggregateProof4844() calls',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'ScrollChain.sol#L186 - Etherscan source, code commitBatch() function',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L186',
+          text: 'ScrollChain.sol - Etherscan source, code commitBatch() function',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },
@@ -317,8 +339,8 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol#L312 - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L312',
+          text: 'ScrollChain.sol - Etherscan source code, finalizeBatchWithProof() function modifier',
+          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
         },
       ],
     },
@@ -326,8 +348,8 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol#L93 - Etherscan source code, EnforcedTxGateway is paused',
-          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code#F1#L93',
+          text: 'EnforcedTxGateway.sol - Etherscan source code, EnforcedTxGateway is paused',
+          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
         },
       ],
     },
@@ -337,8 +359,8 @@ export const scroll: Layer2 = {
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1ETHGateway.sol#L70 - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code#L1#L70',
+            text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
+            href: 'https://etherscan.io/address/0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d#code',
           },
         ],
       },
@@ -346,7 +368,7 @@ export const scroll: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The ability to check consistency with L1 data is [in the works](https://github.com/scroll-tech/go-ethereum/pull/515).',
+      'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
     compressionScheme: 'The rollup does not use compression.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
@@ -396,12 +418,21 @@ export const scroll: Layer2 = {
         description:
           'Contract used to update the verifier and keep track of current and old versions.',
       }),
+      discovery.getContractDetails('ZkEvmVerifierV0', {
+        description:
+          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifier.',
+      }),
       discovery.getContractDetails('ZkEvmVerifierV1', {
         description:
-          'Current verifier, used to prepare data for the PlonkVerifier.',
+          'Current verifier using blobs for DA, used to prepare data for the PlonkVerifier.',
       }),
-      discovery.getContractDetails('PlonkVerifier', {
-        description: 'Plonk verifier used to verify the ZK proof.',
+      discovery.getContractDetails('PlonkVerifierV0', {
+        description:
+          'Plonk verifier used to verify ZK proofs using calldata for DA.',
+      }),
+      discovery.getContractDetails('PlonkVerifierV1', {
+        description:
+          'Plonk verifier used to verify ZK proofs using blobs for DA.',
       }),
       discovery.getContractDetails('L1ETHGateway', {
         description: 'Contract used to bridge ETH from L1 to L2.',
@@ -485,6 +516,13 @@ export const scroll: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'Bernoulli upgrade',
+      link: 'https://scroll.io/blog/blobs-are-here-scrolls-bernoulli-upgrade',
+      date: '2024-04-29T00:00:00.00Z',
+      description:
+        'Introduces EIP-4844 data blobs for L1 data availability, and the SHA2-256 precompile on L2.',
+    },
     {
       name: 'Scroll official launch',
       link: 'https://x.com/Scroll_ZKP/status/1714286874020528554',

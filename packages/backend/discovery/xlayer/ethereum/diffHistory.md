@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2364cca38947d6eb3d200f01d5fe0f5da4f64877
+
+# Diff at Thu, 25 Apr 2024 09:16:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@10dca19aa3157c731f7438b0d699d97aafdf4cd7 block: 19718023
+- current block number: 19731428
+
+## Description
+
+The contract (`PolygonValidiumStorageMigration.sol`, here `XLayerValidiumEtrog`) was already diff'd to Astar by Luca (0 diff).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718023 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumEtrog (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      unverified:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xf7a1cc6de98a35d884df3f95f5d35f645ab1b400
 
 # Diff at Tue, 23 Apr 2024 12:14:08 GMT:

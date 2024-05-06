@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xba5ae72660ac70c6e19a5ec8b75ec88e85c613f7
+
+# Diff at Mon, 29 Apr 2024 10:01:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@37e0de831cd2543b1a40aefc42a1ba0947644d82 block: 19532167
+- current block number: 19760239
+
+## Description
+
+Added blob support.
+
+### ScrollChain
+
+Use of errors instead of requires. `commitBatch` now supports version `1`, which is blobs. Added `finalizeBatchWithProof4844` function.
+
+### MultipleVersionRollupVerifier
+
+It has been updated to support multiple versions. Before, it just contained a single `latestVerifier`, now it's a mapping from versions to latest verifiers.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: None
+      values.accessControl.targets.0x1Ea29d57dAC237152d878758bAe4BeB2668998f6:
++        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE","SECURITY_COUNCIL_NO_DELAY_ROLE"]}
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xFA148514d03420b7b1a13eC74da06D2Ca875539C"
++        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
+      implementations.0:
+-        "0xFA148514d03420b7b1a13eC74da06D2Ca875539C"
++        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
+      values.verifier:
+-        "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0"
++        "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x1Ea29d57dAC237152d878758bAe4BeB2668998f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../MultipleVersionRollupVerifier/meta.txt         |   2 +-
+ .../src/L1/rollup/IScrollChain.sol                 |  51 +-
+ .../L1/rollup/MultipleVersionRollupVerifier.sol    | 116 +++-
+ .../src/libraries/verifier/IRollupVerifier.sol     |  16 +-
+ .../src/libraries/verifier/IZkEvmVerifier.sol      |   2 +-
+ .../scroll/ethereum/.code/PlonkVerifierV1/meta.txt |   2 +
+ .../ScrollChain/implementation/meta.txt            |   2 +-
+ .../src/L1/rollup/IL1MessageQueue.sol              |   2 +-
+ .../implementation/src/L1/rollup/IScrollChain.sol  |  54 +-
+ .../implementation/src/L1/rollup/ScrollChain.sol   | 716 ++++++++++++++++-----
+ .../src/libraries/codec/BatchHeaderV0Codec.sol     |  54 +-
+ .../src/libraries/codec/BatchHeaderV1Codec.sol     | 230 +++++++
+ .../src/libraries/codec/ChunkCodecV0.sol}          |  27 +-
+ .../src/libraries/codec/ChunkCodecV1.sol           |  86 +++
+ .../src/libraries/verifier/IRollupVerifier.sol     |  16 +-
+ .../scroll/ethereum/.code/ZkEvmVerifierV1/meta.txt |   2 +
+ .../src/libraries/verifier/IZkEvmVerifier.sol      |  10 +
+ .../src/libraries/verifier/ZkEvmVerifierV1.sol     |  65 ++
+ 18 files changed, 1202 insertions(+), 251 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532167 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifier (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      name:
+-        "PlonkVerifier"
++        "PlonkVerifierV0"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      name:
+-        "ZkEvmVerifierV1"
++        "ZkEvmVerifierV0"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0) {
+    +++ description: None
+      values.getVerifier:
++        ["0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D","0x585DfaD7bF4099E011D185E266907A8ab60DAD2D"]
+      errors:
++        {"getVerifier":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0xab2564ccd95153417c52dae00a8e78fb02f47de6
 
 # Diff at Thu, 28 Mar 2024 11:00:21 GMT:

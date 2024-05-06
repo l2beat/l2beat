@@ -35,8 +35,6 @@ export function createStatusModule(
     },
   )
 
-  // TODO: add labels for automatic grouping in grafana
-  // this can be achieved via tagging indexers e.g. name::tag
   const gauges = new Map<string, Gauge>()
   const setIndexerGauges = async () => {
     const indexers = await peripherals
@@ -44,19 +42,41 @@ export function createStatusModule(
       .getAll()
 
     for (const i of indexers) {
-      const name = i.indexerId.replaceAll('-', '_')
-      const gauge = gauges.get(name)
+      const parts = i.indexerId.split('::')
+      const name = parts[0].replaceAll('-', '_')
+      const tag = parts[1]
+
+      const id = getGaugeId(name, tag)
+
+      const gauge = gauges.get(id)
+
       if (!gauge) {
-        gauges.set(
-          name,
-          new Gauge({
-            name,
-            help: 'Value showing the safe height of the indexer',
-          }),
-        )
-        gauges.get(name)?.set(i.safeHeight)
+        if (tag) {
+          gauges.set(
+            id,
+            new Gauge({
+              name: id,
+              help: 'Value showing the safe height of the indexer',
+              labelNames: ['tag'],
+            }),
+          )
+          gauges.get(id)?.set({ tag }, i.safeHeight)
+        } else {
+          gauges.set(
+            id,
+            new Gauge({
+              name: id,
+              help: 'Value showing the safe height of the indexer',
+            }),
+          )
+          gauges.get(id)?.set(i.safeHeight)
+        }
       } else {
-        gauge.set(i.safeHeight)
+        if (tag) {
+          gauge.set({ tag }, i.safeHeight)
+        } else {
+          gauge.set(i.safeHeight)
+        }
       }
     }
   }
@@ -72,4 +92,12 @@ export function createStatusModule(
     start,
     routers,
   }
+}
+
+function getGaugeId(name: string, tag?: string): string {
+  if (tag === undefined) {
+    return name
+  }
+
+  return `${name}::tagged`
 }

@@ -17,3 +17,9 @@ build
 
 # TypeScript
 *.tsbuildinfo
+
+dist
+
+# .env files
+.env
+.env.local

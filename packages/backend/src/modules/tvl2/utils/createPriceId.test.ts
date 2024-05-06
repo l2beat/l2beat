@@ -30,6 +30,11 @@ describe(createPriceId.name, () => {
       newValue: new UnixTime(2),
       shouldUpdateHash: false,
     },
+    {
+      key: 'coingeckoId',
+      newValue: CoingeckoId('new-id'),
+      shouldUpdateHash: true,
+    },
   ]
 
   for (const f of fields) {

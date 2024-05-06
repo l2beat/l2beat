@@ -290,6 +290,10 @@
       "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3"
     },
     {
+      "symbol": "ENA",
+      "address": "0x57e114B691Db790C35207b2e685D4A43181e6061"
+    },
+    {
       "symbol": "ENJ",
       "address": "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c"
     },
@@ -495,6 +499,10 @@
     {
       "symbol": "KNC",
       "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
+    },
+    {
+      "symbol": "KOI",
+      "address": "0x9d14bce1daddf408d77295bb1be9b343814f44de"
     },
     {
       "symbol": "KP3R",
@@ -1638,6 +1646,12 @@
       }
     },
     {
+      "symbol": "LINDA", // LayerZero bridged but Linea native with OFT adapter (locking escrow)
+      "address": "0x82cC61354d78b846016b559e3cCD766fa7E793D5",
+      "type": "NMV",
+      "formula": "totalSupply" // no circulating on coingecko and almost totalsupply is close to circ
+    },
+    {
       "symbol": "LUBE",
       "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
       "type": "NMV",
@@ -1655,6 +1669,13 @@
       "type": "NMV",
       "formula": "circulatingSupply",
       "coingeckoId": "lynex"
+    },
+    {
+      "symbol": "FOXY",
+      "address": "0x5fbdf89403270a1846f5ae7d113a989f850d1566",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "foxy"
     }
   ],
   "zkfair": [
@@ -1785,6 +1806,17 @@
       "bridgedUsing": {
         "bridge": "Free"
       }
+    },
+    {
+      "symbol": "weETH.mode",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "wrapped-eeth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ],
   "scroll": [
@@ -1794,6 +1826,17 @@
       "type": "NMV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "stakestone-ether",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1884,6 +1927,12 @@
     {
       "symbol": "ZORRO",
       "address": "0x244c238325fc1bdf6eded726ee1b47d55895d944",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "HOLD",
+      "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
       "type": "NMV",
       "formula": "circulatingSupply"
     }

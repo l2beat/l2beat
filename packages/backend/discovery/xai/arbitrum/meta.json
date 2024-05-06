@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "",
@@ -49,6 +49,106 @@
           "type": null
         },
         "sequencerReportedSubMessageCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BucketTracker",
+      "values": {
+        "_totalDividendsDistributed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDividendsDistributed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trackerOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BucketTracker",
+      "values": {
+        "_totalDividendsDistributed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDividendsDistributed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trackerOwner": {
           "description": null,
           "severity": null,
           "type": null
@@ -169,41 +269,6 @@
           "type": null
         },
         "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafeL2",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -527,9 +592,134 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "PoolBeacon",
       "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PoolBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PoolBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PoolFactory",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bucketshareMaxValues": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deployerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPoolsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nodeLicenseAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "refereeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeEsXaiDelayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeGenesisKeyDelayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeKeysDelayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updateRewardBreakdownDelayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PoolProxyDeployer",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keyBucketBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolBeacon": {
           "description": null,
           "severity": null,
           "type": null
@@ -769,11 +959,6 @@
           "severity": null,
           "type": null
         },
-        "getBoostFactorForKeyId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "getKycWalletCount": {
           "description": null,
           "severity": null,
@@ -784,12 +969,22 @@
           "severity": null,
           "type": null
         },
+        "maxKeysPerPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "maxStakeAmountPerLicense": {
           "description": null,
           "severity": null,
           "type": null
         },
         "nodeLicenseAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolFactoryAddress": {
           "description": null,
           "severity": null,
           "type": null
@@ -897,6 +1092,121 @@
       }
     },
     {
+      "name": "StakingPool",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "POOL_ADMIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegateOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "description": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "esXaiStakeBucket": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDelegateOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPoolOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakedKeys": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keyBucket": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keyBucketShare": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "logo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ownerShare": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolOwnerClaimableRewards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "refereeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socials": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakedBucketShare": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakedKeys": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakingProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "UpgradeExecutor",
       "values": {
         "ADMIN_ROLE": {
@@ -934,111 +1244,6 @@
           "type": null
         },
         "template": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Xai",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_SUPPLY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "esXai",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiBurnFoundationBasePoints": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "esXaiBurnFoundationRecipient": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getWhitelistCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getWhitelistedAddressAtIndex": {
-          "description": "Address allowed to initiate esXAI token transfers. Currently assigned to Referee smart contract, in case this changes, the referee contract description should be updated (and the reason investigated).",
-          "severity": "MEDIUM",
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "xai": {
           "description": null,
           "severity": null,
           "type": null

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "AVSDirectory",
@@ -85,17 +85,47 @@
       "name": "DelegationManager",
       "description": "Manages interactions between stakers and Eigenlayer operators, registers operators.",
       "values": {
-        "DELEGATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
+        "DELEGATION_APPROVAL_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
         "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STAKER_OPT_OUT_WINDOW_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKER_DELEGATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minWithdrawalDelayBlocks": {
           "description": null,
           "severity": null,
           "type": null
@@ -193,14 +223,24 @@
       }
     },
     {
+      "name": "EigenLayerBeaconOracle",
+      "values": {
+        "GENESIS_BLOCK_TIMESTAMP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "EigenPod",
       "values": {
-        "REQUIRED_BALANCE_GWEI": {
+        "GENESIS_TIME": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "REQUIRED_BALANCE_WEI": {
+        "MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR": {
           "description": null,
           "severity": null,
           "type": null
@@ -225,7 +265,12 @@
           "severity": null,
           "type": null
         },
-        "mostRecentWithdrawalBlockNumber": {
+        "mostRecentWithdrawalTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonBeaconChainETHBalanceWei": {
           "description": null,
           "severity": null,
           "type": null
@@ -235,7 +280,12 @@
           "severity": null,
           "type": null
         },
-        "restakedExecutionLayerGwei": {
+        "sumOfPartialWithdrawalsClaimedGwei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawableRestakedExecutionLayerGwei": {
           "description": null,
           "severity": null,
           "type": null
@@ -245,7 +295,22 @@
     {
       "name": "EigenPodManager",
       "values": {
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "beaconChainOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegationManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "denebForkTimestamp": {
           "description": null,
           "severity": null,
           "type": null
@@ -256,11 +321,6 @@
           "type": null
         },
         "ethPOS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxPods": {
           "description": null,
           "severity": null,
           "type": null
@@ -614,27 +674,17 @@
           "severity": null,
           "type": null
         },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "DOMAIN_TYPEHASH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "beaconChainETHStrategy": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
@@ -670,11 +720,6 @@
           "type": null
         },
         "strategyWhitelister": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "withdrawalDelayBlocks": {
           "description": null,
           "severity": null,
           "type": null

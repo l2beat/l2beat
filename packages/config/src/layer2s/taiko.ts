@@ -12,9 +12,9 @@ export const taiko: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.test.taiko.xyz'],
-      documentation: ['https://taiko.xyz/docs'],
-      explorers: ['https://katla.taikoscan.network/'],
+      apps: ['https://bridge.hekla.taiko.xyz/'],
+      documentation: ['https://docs.taiko.xyz/'],
+      explorers: ['https://hekla.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',

@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xb90c0c968dd58aa2b68aeea5844d4144445aeaf7
+
+# Diff at Thu, 02 May 2024 08:17:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@306760396dc5133ea2ec932bf81b9f36e88dbdd3 block: 19630573
+- current block number: 19781186
+
+## Description
+
+The implementation of SequencerInbox was upgraded to a differenct contract with identical code.
+This was done to change the immutable boolean `isUsingFeeToken` to false. This immutable should indeed be false on ethereum mainnet as it signifies the base L1 using a custom fee token. (Used as a check for `submitBatchSpendingReport()` function that is needed for fee sequencer fee reimbursement)
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
+      implementations.0:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
+      values.isUsingFeeToken:
+-        true
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.code@19630573 => .code}/SequencerInbox/implementation/meta.txt    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 
 # Diff at Thu, 11 Apr 2024 06:24:39 GMT:

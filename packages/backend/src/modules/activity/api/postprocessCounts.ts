@@ -36,6 +36,7 @@ export function postprocessCounts(
     : filledBefore
 
   const lastFull = lteYesterday[lteYesterday.length - 1]
+
   // we have data up til yesterday
   if (lastFull.timestamp.equals(yesterday)) {
     return lteYesterday
