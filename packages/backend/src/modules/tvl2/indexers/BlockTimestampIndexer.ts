@@ -27,10 +27,10 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
+      UnixTime.fromHours(from),
     )
 
-    if (timestamp.gt(new UnixTime(to))) {
+    if (timestamp.gt(UnixTime.fromHours(to))) {
       return to
     }
 
@@ -60,7 +60,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     const deletedRecords =
       await this.$.blockTimestampRepository.deleteAfterExclusive(
         this.$.chain,
-        new UnixTime(targetHeight),
+        UnixTime.fromHours(targetHeight),
       )
 
     this.logger.info('Deleted block timestamps after height', {
