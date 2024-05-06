@@ -3,7 +3,7 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
-import { bridges } from '../bridges'
+import { bridges } from '../projects'
 import { config } from '../test/config'
 import { canonicalTokenList, tokenList } from './tokens'
 
