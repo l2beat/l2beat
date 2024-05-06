@@ -12,6 +12,15 @@ describeDatabase(PriceRepository.name, (database) => {
     await repository.deleteAll()
   })
 
+  describe(PriceRepository.prototype.getByConfigId.name, () => {
+    it('gets by id', async () => {
+      const record = saved('a', UnixTime.ZERO, 1)
+      await repository.addMany([record, saved('b', UnixTime.ZERO, 2)])
+      const result = await repository.getByConfigId(record.configId)
+      expect(result).toEqual([record])
+    })
+  })
+
   describe(PriceRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       await repository.addMany([

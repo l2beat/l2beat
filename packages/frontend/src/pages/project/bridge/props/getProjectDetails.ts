@@ -115,7 +115,7 @@ export function getProjectDetails(
     })
   }
 
-  if (bridge.contracts)
+  if (bridge.contracts?.addresses && bridge.contracts.addresses.length > 0)
     items.push({
       type: 'ContractsSection',
       props: getContractSection(

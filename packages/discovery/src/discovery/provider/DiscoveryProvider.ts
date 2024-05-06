@@ -1,11 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
-import { UnixTime } from '../../utils/UnixTime'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
@@ -224,6 +221,12 @@ export class DiscoveryProvider {
     const txHash = await this.getContractDeploymentTx(address)
     if (txHash === undefined) {
       return undefined
+    }
+    if (txHash === Hash256.ZERO) {
+      return {
+        blockNumber: 0,
+        timestamp: new UnixTime((await this.getBlock(1)).timestamp),
+      }
     }
 
     const tx = await this.getTransaction(txHash)

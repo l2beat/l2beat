@@ -1,8 +1,7 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { map } from 'lodash'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { UnixTime } from '../../utils/UnixTime'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { getSourceOutputPath } from './saveDiscoveryResult'
 

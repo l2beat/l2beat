@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { Semver } from '../../../utils/semver'
 import { fetchAccessControl } from '../../handlers/user/AccessControlHandler'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'

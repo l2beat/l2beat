@@ -1,7 +1,6 @@
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { isRevert } from '../../utils/isRevert'
@@ -55,5 +54,16 @@ export function decodeMethodResult(
     ? pickFields.map((i) => decoded[i] as utils.Result)
     : decoded
   const mapped = filtered.map(toContractValue)
+
+  // TODO(radomski): ethers returns every result wrapped in an array. If the
+  // result is an array of a single element we don't want to index-access it.
+  // This whole function should really be refactored. See L2B-5191.
+  const resultIsArray =
+    fragment.outputs?.[0]?.arrayLength !== null &&
+    fragment.outputs?.length === 1
+  if (resultIsArray) {
+    return mapped
+  }
+
   return mapped.length === 1 ? mapped[0] : mapped
 }

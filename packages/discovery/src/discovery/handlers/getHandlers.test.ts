@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
