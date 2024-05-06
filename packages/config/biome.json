@@ -2,8 +2,8 @@
   "extends": ["../../biome.json"],
   "files": {
     "ignore": [
-      "src/bridges/multichain-config.json",
-      "src/bridges/socket-vaults.json",
+      "src/projects/bridges/multichain-config.json",
+      "src/projects/bridges/socket-vaults.json",
       "src/verification/*/verified.json",
       "src/verification/*/manuallyVerified.jsonc",
       "scripts/multichain/cache.json",
