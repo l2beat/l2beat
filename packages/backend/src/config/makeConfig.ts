@@ -46,7 +46,7 @@ export function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const loggerBackends: LoggerTransportOptions[] = [
+  const loggerTransports: LoggerTransportOptions[] = [
     {
       transport: console,
       formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
@@ -65,7 +65,7 @@ export function makeConfig(
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 
-    loggerBackends.push({
+    loggerTransports.push({
       transport: new ElasticSearchTransport(options),
       formatter: new LogFormatterEcs(),
     })
@@ -79,7 +79,7 @@ export function makeConfig(
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       utc: isLocal ? false : true,
-      transports: loggerBackends,
+      transports: loggerTransports,
     },
     logThrottler: isLocal
       ? false
