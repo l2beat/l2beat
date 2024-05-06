@@ -169,8 +169,8 @@ function createChainModule(
   const valueIndexers: ValueIndexer[] = []
 
   for (const [project, amountConfigs] of Object.entries(perProject)) {
-    const priceConfigs = amountConfigs.map((c) =>
-      idConverter.getPriceConfigFromAmountConfig(c),
+    const priceConfigs = new Set(
+      amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
     )
 
     const parents = [priceModule.indexer, chainAmountIndexer]
@@ -179,7 +179,7 @@ function createChainModule(
       priceRepo: peripherals.getRepository(PriceRepository),
       amountRepo: peripherals.getRepository(AmountRepository),
       valueRepo: peripherals.getRepository(ValueRepository),
-      priceConfigs,
+      priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),
       dataSource: chain,

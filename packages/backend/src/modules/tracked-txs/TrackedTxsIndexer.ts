@@ -189,7 +189,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
 
     if (indexerState === undefined) {
-      await this.stateRepository.add(
+      await this.stateRepository.addOrUpdate(
         {
           indexerId: this.indexerId,
           safeHeight,
