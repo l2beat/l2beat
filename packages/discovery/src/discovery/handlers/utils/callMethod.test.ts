@@ -1,3 +1,4 @@
+import { ContractValue } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
@@ -120,7 +121,7 @@ describe('callMethod', () => {
       [1],
     )
 
-    expect(result.value).toEqual(RESULT_VALUES[1])
+    expect((result.value as ContractValue[])[0]).toEqual(RESULT_VALUES[1])
   })
 
   it('decodes an array return value', async () => {
