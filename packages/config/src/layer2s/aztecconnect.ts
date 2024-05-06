@@ -154,7 +154,7 @@ export const aztecconnect: Layer2 = {
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: true,
+        fraudProofSystemIsPermissionless: null,
         delayWith30DExitWindow: null,
       },
     },
