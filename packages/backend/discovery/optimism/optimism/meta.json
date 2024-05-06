@@ -1,0 +1,260 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ERC721Bridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ERC721Bridge",
+      "values": {
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2StandardBridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
