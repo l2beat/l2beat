@@ -1,10 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
-import { Hash256 } from '../../../utils/Hash256'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'

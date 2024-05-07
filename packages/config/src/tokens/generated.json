@@ -1142,6 +1142,21 @@
       "formula": "locked"
     },
     {
+      "id": "ena-ena",
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1709674199,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "enj-enjin-coin",
       "name": "Enjin Coin",
       "coingeckoId": "enjincoin",
@@ -3286,6 +3301,21 @@
       "formula": "locked"
     },
     {
+      "id": "cstone-stone-carnival-lp",
+      "name": "STONE Carnival LP",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
+      "symbol": "cSTONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1711799423,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "super-superfarm",
       "name": "SuperFarm",
       "coingeckoId": "superfarm",
@@ -4580,6 +4610,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "zksync2:zf-zkswap-finance",
+      "name": "zkSwap Finance",
+      "coingeckoId": "zkswap-finance",
+      "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
+      "symbol": "ZF",
+      "decimals": 18,
+      "deploymentTimestamp": 1685413427,
+      "coingeckoListingTimestamp": 1694476800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31633/large/zf.png?1696530449",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "zksync2:zorro-zorro",
       "name": "Zorro",
       "coingeckoId": "zorro",
@@ -5053,6 +5098,25 @@
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
+      }
+    },
+    {
+      "id": "mode:weeth.mode-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "symbol": "weETH.mode",
+      "decimals": 18,
+      "deploymentTimestamp": 1713248229,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 34443,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {

@@ -1,12 +1,5 @@
 import Router from '@koa/router'
-import {
-  assertUnreachable,
-  AssetId,
-  AssetType,
-  branded,
-  ChainId,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { Context } from 'koa'
 import { z } from 'zod'
 
@@ -67,37 +60,41 @@ export function createTvlRouter(
     ),
   )
 
-  router.get(
-    '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+  // There is currently no use case for this endpoint as we disabled token selector on fronted
+  // Someone is calling this endpoint every 30s and it's causing a lot of load on the server
+  // I am disabling it until the tvl2 rewrite is finished
 
-    withTypedContext(
-      z.object({
-        params: z.object({
-          chainId: z.string(),
-          projectId: branded(z.string(), ProjectId),
-          assetId: branded(z.string(), AssetId),
-          assetType: branded(z.string(), AssetType),
-        }),
-      }),
-      async (ctx) => {
-        const { assetId, chainId, assetType, projectId } = ctx.params
+  // router.get(
+  //   '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
 
-        const assetData = await tvlController.getAssetTvlApiResponse(
-          projectId,
-          ChainId(+chainId),
-          assetId,
-          assetType,
-        )
+  //   withTypedContext(
+  //     z.object({
+  //       params: z.object({
+  //         chainId: z.string(),
+  //         projectId: branded(z.string(), ProjectId),
+  //         assetId: branded(z.string(), AssetId),
+  //         assetType: branded(z.string(), AssetType),
+  //       }),
+  //     }),
+  //     async (ctx) => {
+  //       const { assetId, chainId, assetType, projectId } = ctx.params
 
-        if (assetData.type === 'error') {
-          handleTvlError(ctx, assetData)
-          return
-        }
+  //       const assetData = await tvlController.getAssetTvlApiResponse(
+  //         projectId,
+  //         ChainId(+chainId),
+  //         assetId,
+  //         assetType,
+  //       )
 
-        ctx.body = assetData.data
-      },
-    ),
-  )
+  //       if (assetData.type === 'error') {
+  //         handleTvlError(ctx, assetData)
+  //         return
+  //       }
+
+  //       ctx.body = assetData.data
+  //     },
+  //   ),
+  // )
 
   router.get('/api/project-assets-breakdown', async (ctx) => {
     const projectAssetsBreakdown =

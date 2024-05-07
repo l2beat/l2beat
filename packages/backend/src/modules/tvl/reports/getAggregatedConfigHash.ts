@@ -1,4 +1,4 @@
-import { hashJson } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
 import { sortBy } from 'lodash'
 
 import { ReportUpdater } from '../assets'

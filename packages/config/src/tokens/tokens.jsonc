@@ -290,6 +290,10 @@
       "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3"
     },
     {
+      "symbol": "ENA",
+      "address": "0x57e114B691Db790C35207b2e685D4A43181e6061"
+    },
+    {
       "symbol": "ENJ",
       "address": "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c"
     },
@@ -890,6 +894,11 @@
     {
       "symbol": "STONE",
       "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C"
+    },
+    {
+      "symbol": "cSTONE",
+      "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
+      "coingeckoId": "stakestone-ether"
     },
     {
       "symbol": "STRK",
@@ -1794,6 +1803,17 @@
       "bridgedUsing": {
         "bridge": "Free"
       }
+    },
+    {
+      "symbol": "weETH.mode",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "wrapped-eeth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ],
   "scroll": [
@@ -1884,6 +1904,12 @@
       "coingeckoId": "frax-ether"
     },
     {
+      "symbol": "HOLD",
+      "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "sfrxETH",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
       "type": "EBV",
@@ -1908,8 +1934,8 @@
       "formula": "circulatingSupply"
     },
     {
-      "symbol": "HOLD",
-      "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
+      "symbol": "ZF",
+      "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
       "type": "NMV",
       "formula": "circulatingSupply"
     }

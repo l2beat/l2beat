@@ -1,22 +1,10 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 12726128,
-  "configHash": "0x20cd9668f6ad442485e1387b460144997c3ce77b0b55f8adcc21215bfd69966f",
+  "blockNumber": 14061228,
+  "configHash": "0x876a51934a591fc69c43109e2f4495e892d75096fa6e5c93210bf4394704d1c0",
   "version": 3,
   "contracts": [
-    {
-      "name": "FunctionVerifier",
-      "address": "0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1710952739,
-      "values": {
-        "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
-        "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
-      }
-    },
     {
       "name": "SuccinctFeeVault",
       "address": "0x296666e937b270193B960a7cEC526B351F353166",
@@ -29,7 +17,7 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "BlobstreamXMultisig",
       "address": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
       "upgradeability": {
         "type": "gnosis safe",
@@ -51,9 +39,10 @@
           "0x91D456f83f4a117B07866fdEdC29306f7E974e15"
         ],
         "getThreshold": 4,
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "SuccinctGateway",
@@ -64,9 +53,19 @@
       "sinceTimestamp": 1706574051,
       "values": {
         "feeVault": "0x296666e937b270193B960a7cEC526B351F353166",
-        "headerRangeVerifier": "0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529",
+        "headerRangeProvers": [
+          "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+        ],
+        "headerRangeVerifier": "0xF2415C44F47983F7dD22003B46A034B1F1d04e44",
+        "headerRangeVerifierOwner": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
         "isCallback": false,
-        "nextHeaderVerifier": "0xeEadfac6E689443d237B10F78e8424579e2e0177",
+        "nextHeaderProvers": [
+          "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+        ],
+        "nextHeaderVerifier": "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6",
+        "nextHeaderVerifierOwner": "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6",
         "nonce": 0,
         "owner": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
         "verifiedFunctionId": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -106,16 +105,16 @@
         "gateway": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca",
-        "latestBlock": 1152600,
+        "latestBlock": 1378200,
         "nextHeaderFunctionId": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
-        "state_proofNonce": 464,
+        "state_proofNonce": 1203,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "VERSION": "0.1.0"
       },
       "derivedName": "BlobstreamX"
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "SuccinctMultisig",
       "address": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
       "upgradeability": {
         "type": "gnosis safe",
@@ -137,18 +136,31 @@
         "getThreshold": 3,
         "nonce": 0,
         "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "FunctionVerifier",
+      "address": "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711140063,
+      "values": {
+        "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
+        "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
       }
     },
     {
       "name": "FunctionVerifier",
-      "address": "0xeEadfac6E689443d237B10F78e8424579e2e0177",
+      "address": "0xF2415C44F47983F7dD22003B46A034B1F1d04e44",
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1710952827,
+      "sinceTimestamp": 1711140011,
       "values": {
-        "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
-        "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
+        "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
+        "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
       }
     }
   ],
@@ -156,6 +168,8 @@
     "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
     "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
     "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
+    "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+    "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
     "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
     "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
     "0x793979789Ec179183E396e76c1e241bE0c9eE899",
@@ -165,12 +179,6 @@
     "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
   ],
   "abis": {
-    "0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529": [
-      "function CIRCUIT_DIGEST() view returns (bytes32)",
-      "function verificationKeyHash() pure returns (bytes32)",
-      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
-      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
-    ],
     "0x296666e937b270193B960a7cEC526B351F353166": [
       "error FailedToSendNative(uint256 amount)",
       "error InsufficentAllowance(address token, uint256 amount)",
@@ -320,7 +328,13 @@
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": [
       "constructor(address _singleton)"
     ],
-    "0xeEadfac6E689443d237B10F78e8424579e2e0177": [
+    "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6": [
+      "function CIRCUIT_DIGEST() view returns (bytes32)",
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
+      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
+    "0xF2415C44F47983F7dD22003B46A034B1F1d04e44": [
       "function CIRCUIT_DIGEST() view returns (bytes32)",
       "function verificationKeyHash() pure returns (bytes32)",
       "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",

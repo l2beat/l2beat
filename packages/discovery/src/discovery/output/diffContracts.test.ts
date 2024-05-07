@@ -1,7 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { diffContracts } from './diffContracts'
 
 describe(diffContracts.name, () => {

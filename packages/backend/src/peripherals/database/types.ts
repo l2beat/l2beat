@@ -167,6 +167,8 @@ declare module 'knex/types/tables' {
     minimum_time_to_inclusion: number
     maximum_time_to_inclusion: number
     average_time_to_inclusion: number
+
+    average_state_update: number | null
   }
 
   interface TrackedTxsConfigRow {

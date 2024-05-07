@@ -9,7 +9,11 @@ import {
 
 import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
+import {
+  FinalityPagesData,
+  ScalingFinalityViewEntry,
+  ScalingFinalityViewEntryData,
+} from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
 
 export function getScalingFinalityView(
@@ -68,13 +72,20 @@ function getFinalityData(
   project: Layer2,
 ) {
   if (!finalityProjectData) return undefined
-  return {
+  const data: ScalingFinalityViewEntryData = {
     timeToInclusion: {
       averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
       minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
       maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
-      warning: project.display.finality?.warning,
+      warning: project.display.finality?.warnings?.timeToInclusion,
     },
+    stateUpdateDelay: finalityProjectData.stateUpdateDelays
+      ? {
+          averageInSeconds:
+            finalityProjectData.stateUpdateDelays.averageInSeconds,
+          warning: project.display.finality?.warnings?.stateUpdateDelay,
+        }
+      : undefined,
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
       displaySyncedUntil: formatTimestamp(
@@ -86,6 +97,8 @@ function getFinalityData(
       ),
     },
   }
+
+  return data
 }
 
 function isSynced(syncedUntil: UnixTime) {

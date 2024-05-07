@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -9,7 +10,6 @@ import {
   FileContent,
   ParsedFilesManager,
 } from '../../flatten/ParsedFilesManager'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
