@@ -1,10 +1,8 @@
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { EthereumAddress } from './EthereumAddress'
 import { EtherscanLikeClient } from './EtherscanLikeClient'
-import { Hash256 } from './Hash256'
 import { HttpClient } from './HttpClient'
-import { UnixTime } from './UnixTime'
 
 describe(EtherscanLikeClient.name, () => {
   const URL = 'http://example.com'

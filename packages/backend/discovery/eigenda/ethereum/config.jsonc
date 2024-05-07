@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "eigenda",
   "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
@@ -37,13 +37,23 @@
     "EigenLayerCommunityMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
+    // for reference:
+    // "operatorSetParams":
+    //     "0_maxOperatorCount" : 30,
+    //     "1_kickBIPsOfOperatorStake" : 11000,
+    //     "2_kickBIPsOfTotalStake" : 50
     "RegistryCoordinator": {
       "fields": {
-        "operatorSetParams": {
+        "operatorSetParamsQuorum1": {
           "type": "call",
           "method": "getOperatorSetParams",
           "args": [0]
-        }
+        },
+        "operatorSetParamsQuorum2": {
+          "type": "call",
+          "method": "getOperatorSetParams",
+          "args": [1]
+        },
       }
     }
   }

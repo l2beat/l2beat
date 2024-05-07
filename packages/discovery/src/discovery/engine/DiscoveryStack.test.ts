@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryStack } from './DiscoveryStack'
 
 describe(DiscoveryStack.name, () => {

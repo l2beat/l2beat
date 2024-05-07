@@ -1,6 +1,5 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-
-import { EthereumAddress } from '../utils/EthereumAddress'
 
 interface LoggerOptions {
   buffered: boolean

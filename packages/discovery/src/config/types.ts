@@ -1,5 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { MulticallConfig } from '../discovery/provider/multicall/types'
-import { EthereumAddress } from '../utils/EthereumAddress'
 import { EtherscanUnsupportedMethods } from '../utils/EtherscanLikeClient'
 
 export interface DiscoveryCliConfig {

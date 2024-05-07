@@ -16,7 +16,7 @@ export interface ChainAssetRiskCardProps {
       decimals: number
       symbol: string
       iconUrl?: string
-      bridge?: string
+      bridge?: string | null
     }
     balance: bigint
   }[]
@@ -28,24 +28,31 @@ export function ChainAssetRiskCard({
   tokens,
 }: ChainAssetRiskCardProps) {
   // This assumes that the project is a L2 and not a L3
-  const chain = layer2s.find(
-    (project) => project.chainConfig?.chainId === chainId,
-  )
+  const chain =
+    chainId === 1
+      ? {
+          stage: null,
+          technology: null,
+          riskView: null,
+        }
+      : layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
 
   if (!chain) {
     throw new Error('Chain is not defined')
   }
 
-  const risks = [
-    chain.technology.stateCorrectness,
-    chain.technology.newCryptography,
-    chain.technology.dataAvailability,
-    chain.technology.operator,
-    chain.technology.forceTransactions,
-    ...chain.technology.exitMechanisms,
-    chain.technology.massExit,
-    ...(chain.technology.otherConsiderations ?? []),
-  ].flatMap((choice) => choice?.risks ?? [])
+  const risks = chain.technology
+    ? [
+        chain.technology.stateCorrectness,
+        chain.technology.newCryptography,
+        chain.technology.dataAvailability,
+        chain.technology.operator,
+        chain.technology.forceTransactions,
+        ...chain.technology.exitMechanisms,
+        chain.technology.massExit,
+        ...(chain.technology.otherConsiderations ?? []),
+      ].flatMap((choice) => choice?.risks ?? [])
+    : []
 
   const groupedRisks = groupBy(risks, (risk) => risk.category)
 
@@ -54,7 +61,7 @@ export function ChainAssetRiskCard({
       <div className="flex flex-col gap-8 w-full">
         <div>
           <h2 className="text-2xl font-bold">{chainName}</h2>
-          <StageBadge stage={chain.stage.stage} />
+          {chain.stage && <StageBadge stage={chain.stage.stage} />}
         </div>
         <div className="flex flex-col gap-4">
           {Object.entries(groupedRisks)
@@ -156,9 +163,7 @@ export function ChainAssetRiskCard({
           })}
         </div>
       </div>
-      <div>
-        <BigRosette risks={chain.riskView} />
-      </div>
+      <div>{chain.riskView && <BigRosette risks={chain.riskView} />}</div>
     </div>
   )
 }

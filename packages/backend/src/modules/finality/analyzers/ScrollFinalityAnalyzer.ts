@@ -17,7 +17,7 @@ export class ScrollFinalityAnalyzer extends BaseAnalyzer {
     return 'batchSubmissions'
   }
 
-  async getFinality(transaction: {
+  async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
   }): Promise<number[]> {
