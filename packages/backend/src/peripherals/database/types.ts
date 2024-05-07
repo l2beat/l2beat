@@ -190,6 +190,25 @@ declare module 'knex/types/tables' {
     data: TransactionData
   }
 
+  interface AggregatedL2CostsRow {
+    timestamp: Date
+    project_id: string
+    total_gas: number
+    total_gas_eth: number
+    total_gas_usd: number
+    blobs_gas: number | null
+    blobs_gas_eth: number | null
+    blobs_gas_usd: number | null
+    calldata_gas: number
+    calldata_gas_eth: number
+    calldata_gas_usd: number
+    compute_gas: number
+    compute_gas_eth: number
+    compute_gas_usd: number
+    overhead_gas_eth: number
+    overhead_gas_usd: number
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
@@ -237,6 +256,7 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    aggregated_l2_costs: AggregatedL2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
     amounts: AmountRow

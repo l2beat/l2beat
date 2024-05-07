@@ -5,14 +5,20 @@ import { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
+import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
+import { PriceRepository } from '../tvl/repositories/PriceRepository'
 import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { HourlyIndexer } from './HourlyIndexer'
+import { L2CostsAggregatorIndexer } from './modules/l2-costs/L2CostsAggregatorIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
+import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/AggregatedL2CostsRepository'
+import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
@@ -29,8 +35,12 @@ export function createTrackedTxsModule(
     return
   }
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const indexerService = new IndexerService(
+    peripherals.getRepository(IndexerStateRepository),
+    peripherals.getRepository(IndexerConfigurationRepository),
+  )
 
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,
@@ -75,6 +85,22 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.minTimestamp,
   )
 
+  const aggregatorEnabled =
+    config.trackedTxsConfig.uses.l2costs &&
+    config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
+
+  const l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
+    l2CostsRepository: peripherals.getRepository(L2CostsRepository),
+    aggregatedL2CostsRepository: peripherals.getRepository(
+      AggregatedL2CostsRepository,
+    ),
+    priceRepository: peripherals.getRepository(PriceRepository),
+    parents: [trackedTxsIndexer],
+    indexerService,
+    minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+    logger,
+  })
+
   const start = async () => {
     logger = logger.for('TrackedTxsModule')
     logger.info('Starting...')
@@ -84,6 +110,9 @@ export function createTrackedTxsModule(
       await subModule?.start?.()
     }
     await trackedTxsIndexer.start()
+    if (aggregatorEnabled) {
+      await l2CostsAggregatorIndexer.start()
+    }
   }
 
   return {

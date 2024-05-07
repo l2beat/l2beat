@@ -46,7 +46,7 @@ export function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const loggerBackends: LoggerTransportOptions[] = [
+  const loggerTransports: LoggerTransportOptions[] = [
     {
       transport: console,
       formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
@@ -57,6 +57,7 @@ export function makeConfig(
   const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
 
   if (esEnabled) {
+    console.log('Elastic Search logging enabled')
     const options: ElasticSearchTransportOptions = {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),
@@ -64,7 +65,7 @@ export function makeConfig(
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 
-    loggerBackends.push({
+    loggerTransports.push({
       transport: new ElasticSearchTransport(options),
       formatter: new LogFormatterEcs(),
     })
@@ -78,7 +79,7 @@ export function makeConfig(
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       utc: isLocal ? false : true,
-      transports: loggerBackends,
+      transports: loggerTransports,
     },
     logThrottler: isLocal
       ? false
@@ -172,6 +173,11 @@ export function makeConfig(
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
         l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          aggregatorEnabled: flags.isEnabled(
+            'tracked-txs',
+            'l2costs',
+            'aggregator',
+          ),
           ethereumProviderUrl: env.string([
             'ETHEREUM_RPC_URL_FOR_L2COSTS',
             'ETHEREUM_RPC_URL',
