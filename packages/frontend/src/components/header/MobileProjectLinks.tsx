@@ -3,7 +3,7 @@ import React from 'react'
 import { LinkSectionLink } from '../../pages/project/components/LinkSectionLink'
 import { ProjectLink } from '../../pages/project/types'
 import { cn } from '../../utils/cn'
-import { Dropdown, DropdownContent, DropdownTrigger } from '../Dropdown'
+import { Accordion, AccordionContent, AccordionTrigger } from '../Accordion'
 
 interface MobileProjectLinksProps {
   projectLinks: ProjectLink[]
@@ -11,14 +11,14 @@ interface MobileProjectLinksProps {
 
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
-    <Dropdown>
-      <DropdownTrigger className="py-4">
+    <Accordion>
+      <AccordionTrigger className="py-4">
         <span className="font-bold">Links:</span>
         <span className="ml-2 font-medium text-gray-600">
           Website, Docs, etc.
         </span>
-      </DropdownTrigger>
-      <DropdownContent>
+      </AccordionTrigger>
+      <AccordionContent>
         <table className="w-full table-fixed border-collapse text-left text-xs">
           <tbody>
             {props.projectLinks.map(({ name, links }, i) => (
@@ -43,7 +43,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
             ))}
           </tbody>
         </table>
-      </DropdownContent>
-    </Dropdown>
+      </AccordionContent>
+    </Accordion>
   )
 }

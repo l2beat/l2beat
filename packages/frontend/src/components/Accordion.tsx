@@ -3,33 +3,33 @@ import React, { ReactElement } from 'react'
 import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
-interface DropdownProps {
+interface AccordionProps {
   children: [
-    ReactElement<DropdownTriggerProps>,
-    ReactElement<DropdownContentProps>,
+    ReactElement<AccordionTriggerProps>,
+    ReactElement<AccordionContentProps>,
   ]
   className?: string
 }
 
-export function Dropdown({ children, className }: DropdownProps) {
+export function Accordion({ children, className }: AccordionProps) {
   return (
-    <div data-role="dropdown" className={className}>
+    <div data-role="accordion" className={className}>
       {children}
     </div>
   )
 }
 
-interface DropdownTriggerProps {
+interface AccordionTriggerProps {
   children: React.ReactNode
   className?: string
   childrenClassName?: string
 }
 
-export function DropdownTrigger({
+export function AccordionTrigger({
   children,
   className,
   childrenClassName,
-}: DropdownTriggerProps) {
+}: AccordionTriggerProps) {
   return (
     <label
       className={cn(
@@ -41,7 +41,7 @@ export function DropdownTrigger({
         type="checkbox"
         autoComplete="off"
         className="peer hidden"
-        data-role="dropdown-trigger"
+        data-role="accordion-trigger"
       />
       <div className={childrenClassName}>{children}</div>
       <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
@@ -49,15 +49,18 @@ export function DropdownTrigger({
   )
 }
 
-interface DropdownContentProps {
+interface AccordionContentProps {
   children: React.ReactNode
   className?: string
 }
 
-export function DropdownContent({ children, className }: DropdownContentProps) {
+export function AccordionContent({
+  children,
+  className,
+}: AccordionContentProps) {
   return (
     <div
-      data-role="dropdown-content"
+      data-role="accordion-content"
       className={cn('hidden data-[open]:block', className)}
     >
       {children}

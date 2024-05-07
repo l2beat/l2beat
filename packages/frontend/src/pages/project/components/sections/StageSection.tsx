@@ -2,10 +2,10 @@ import { UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
 import {
-  Dropdown,
-  DropdownContent,
-  DropdownTrigger,
-} from '../../../../components/Dropdown'
+  Accordion,
+  AccordionContent,
+  AccordionTrigger,
+} from '../../../../components/Accordion'
 import {
   MissingIcon,
   RoundedWarningIcon,
@@ -101,11 +101,11 @@ export function StageSection(props: StageSectionProps) {
         )
 
         return (
-          <Dropdown
+          <Accordion
             key={stage.stage}
             className="mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
           >
-            <DropdownTrigger
+            <AccordionTrigger
               className="p-4"
               childrenClassName="flex select-none items-center gap-3"
             >
@@ -133,8 +133,8 @@ export function StageSection(props: StageSectionProps) {
                   <span>{reqTextMissing(missing.length)}</span>
                 </div>
               )}
-            </DropdownTrigger>
-            <DropdownContent>
+            </AccordionTrigger>
+            <AccordionContent>
               <ul className="mx-4 space-y-2 pb-4 md:px-4 md:pb-6">
                 {satisfied.map((req, i) => (
                   <li key={i} className="flex">
@@ -165,8 +165,8 @@ export function StageSection(props: StageSectionProps) {
                   </li>
                 ))}
               </ul>
-            </DropdownContent>
-          </Dropdown>
+            </AccordionContent>
+          </Accordion>
         )
       })}
       <Link
