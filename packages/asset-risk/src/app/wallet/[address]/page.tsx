@@ -82,8 +82,6 @@ export default async function Page({ params: { address } }: Props) {
 
         if (arr.length < 1) return []
 
-        const balance = await publicClient.getBalance({ address })
-
         const nativeToken: Omit<Token, 'address'> | undefined = arr.find(
           (token) => !token.address,
         )
@@ -121,7 +119,8 @@ export default async function Page({ params: { address } }: Props) {
             ))
 
         const nativeTokenBalance =
-          nativeToken && (await publicClient.getBalance({ address }))
+          nativeToken &&
+          (await publicClient.getBalance({ address }).catch(() => null))
 
         return [
           ...(nativeToken
