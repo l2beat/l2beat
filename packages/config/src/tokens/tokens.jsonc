@@ -1352,6 +1352,10 @@
       "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "ETH",
+      "category": "ether"
     }
   ],
   "optimism": [
@@ -1541,6 +1545,10 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "ETH",
+      "category": "ether"
     }
   ],
   "lyra": [

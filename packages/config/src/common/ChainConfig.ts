@@ -5,6 +5,7 @@ export interface MulticallContractConfig {
   sinceBlock: number
   batchSize: number
   version: '1' | '2' | '3' | 'optimism'
+  isNativeBalanceSupported?: boolean
 }
 
 export interface ChainConfig {
