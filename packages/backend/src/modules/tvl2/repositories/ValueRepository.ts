@@ -49,6 +49,31 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getSixHourlyForProjects(projectIds: ProjectId[], from: UnixTime) {
+    const knex = await this.knex()
+    const rows = await knex('values')
+      .whereIn(
+        'project_id',
+        projectIds.map((id) => id.toString()),
+      )
+      .andWhereRaw(`extract(hour from "timestamp") % 6 = 0`)
+      .andWhere('timestamp', '>=', from.toDate())
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecord)
+  }
+
+  async getHourlyForProjects(projectIds: ProjectId[], from: UnixTime) {
+    const knex = await this.knex()
+    const rows = await knex('values')
+      .whereIn(
+        'project_id',
+        projectIds.map((id) => id.toString()),
+      )
+      .andWhere('timestamp', '>=', from.toDate())
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecord)
+  }
+
   async addMany(records: ValueRecord[]) {
     const rows: ValueRow[] = records.map(toRow)
     const knex = await this.knex()

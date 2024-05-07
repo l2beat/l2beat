@@ -3,6 +3,7 @@ import {
   AmountConfigEntry,
   EthereumAddress,
   ProjectId,
+  TvlApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -10,10 +11,11 @@ import { groupBy } from 'lodash'
 import { Tvl2Config } from '../../../config/Config'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
+import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface Tvl2Project {
   id: ProjectId
@@ -55,6 +57,7 @@ export class Tvl2Controller {
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
+    private readonly syncOptimizer: SyncOptimizer,
     projects: ProjectId[],
     config: Tvl2Config,
   ) {
@@ -113,6 +116,95 @@ export class Tvl2Controller {
     }
 
     return result
+  }
+  async getOldTvl() {
+    const projects = this.projects.map((x) => x.id)
+    const dailyValues = await this.valueRepository.getDailyForProjects(projects)
+    const sixHourlyCutOff = this.syncOptimizer.sixHourlyCutOff
+    const sixHourlyValues = await this.valueRepository.getSixHourlyForProjects(
+      projects,
+      sixHourlyCutOff,
+    )
+    const hourlyCutOff = this.syncOptimizer.hourlyCutOff
+    const hourlyValues = await this.valueRepository.getHourlyForProjects(
+      projects,
+      hourlyCutOff,
+    )
+
+    const dailyValuesByProject = groupBy(dailyValues, 'projectId')
+    const sixHourlyValuesByProject = groupBy(sixHourlyValues, 'projectId')
+    const hourlyValuesByProject = groupBy(hourlyValues, 'projectId')
+
+    const result: Record<string, TvlApiCharts> = {}
+    for (const project of this.projects) {
+      const dailyValues = dailyValuesByProject[project.id]
+      const sixHourlyValues = sixHourlyValuesByProject[project.id]
+      const hourlyValues = hourlyValuesByProject[project.id]
+
+      if (!dailyValues || !sixHourlyValues || !hourlyValues) {
+        continue
+      }
+      const dailyResult = this.getTvlApiCharts(dailyValues)
+      const sixHourlyResult = this.getTvlApiCharts(sixHourlyValues)
+      const hourlyResult = this.getTvlApiCharts(hourlyValues)
+
+      result[project.id.toString()] = {
+        daily: dailyResult,
+        sixHourly: sixHourlyResult,
+        hourly: hourlyResult,
+      }
+    }
+
+    return result
+  }
+
+  private getTvlApiCharts(values: ValueRecord[]) {
+    return {
+      types: [
+        'timestamp',
+        'valueUsd',
+        'cbvUsd',
+        'ebvUsd',
+        'nmvUsd',
+        'valueEth',
+        'cbvEth',
+        'ebvEth',
+        'nmvEth',
+      ] as [
+          'timestamp',
+          'valueUsd',
+          'cbvUsd',
+          'ebvUsd',
+          'nmvUsd',
+          'valueEth',
+          'cbvEth',
+          'ebvEth',
+          'nmvEth',
+        ],
+      data: values.map<
+        [
+          UnixTime,
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+        ]
+      >((x) => [
+        x.timestamp,
+        Number(x.canonical + x.external + x.native),
+        Number(x.canonical),
+        Number(x.external),
+        Number(x.native),
+        0,
+        0,
+        0,
+        0,
+      ]),
+    }
   }
 
   async getTokenChart(

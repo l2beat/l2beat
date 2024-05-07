@@ -86,6 +86,7 @@ export function createTvl2Module(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(ValueRepository),
+    syncOptimizer,
     config.projects.map((p) => p.projectId),
     config.tvl2,
   )

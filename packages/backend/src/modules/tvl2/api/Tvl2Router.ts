@@ -9,7 +9,7 @@ export function createTvl2Router(controller: Tvl2Controller) {
   const router = new Router()
 
   router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getTvl()
+    const tvl = await controller.getOldTvl()
     ctx.body = tvl
   })
 
