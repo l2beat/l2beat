@@ -31,9 +31,11 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
     'mode',
     'zksync2',
     'zora',
+    'starknet',
   ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
     acc[cur] = {
       timeToInclusion: generateMockData(),
+      stateUpdateDelays: generateMockData(),
       syncedUntil: UnixTime.now(),
     }
     return acc

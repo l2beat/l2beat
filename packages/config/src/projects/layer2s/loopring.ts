@@ -138,6 +138,7 @@ export const loopring: Layer2 = {
       lag: 0,
       type: 'Loopring',
       minTimestamp: new UnixTime(1616396742),
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

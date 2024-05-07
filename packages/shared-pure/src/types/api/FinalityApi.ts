@@ -12,6 +12,11 @@ export type FinalityDataPoint = z.infer<typeof FinalityDataPoint>
 
 export const FinalityProjectData = z.object({
   timeToInclusion: FinalityDataPoint,
+  stateUpdateDelays: z
+    .object({
+      averageInSeconds: z.number().nonnegative().int(),
+    })
+    .nullable(),
   syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
 export type FinalityProjectData = z.infer<typeof FinalityProjectData>

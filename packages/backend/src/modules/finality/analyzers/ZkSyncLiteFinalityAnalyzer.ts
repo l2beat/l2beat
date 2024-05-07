@@ -20,7 +20,7 @@ export class ZkSyncLiteFinalityAnalyzer extends BaseAnalyzer {
     return 'proofSubmissions'
   }
 
-  async getFinality(transaction: {
+  async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
   }): Promise<number[]> {

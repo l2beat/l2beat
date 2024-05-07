@@ -26,7 +26,7 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async getFinality({
+  async analyze({
     txHash,
     timestamp: l1Timestamp,
   }: {

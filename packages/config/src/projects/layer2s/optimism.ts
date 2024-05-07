@@ -59,6 +59,7 @@ export const optimism: Layer2 = opStackL2({
     l2BlockTimeSeconds: 2,
     genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
+    stateUpdate: 'disabled',
   },
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),

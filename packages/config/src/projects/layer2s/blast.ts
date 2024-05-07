@@ -105,6 +105,7 @@ export const blast: Layer2 = opStackL2({
   finality: {
     type: 'OPStack',
     lag: 0,
+    stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
   nonTemplatePermissions: [
