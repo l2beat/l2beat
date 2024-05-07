@@ -1,7 +1,7 @@
 import Router from '@koa/router'
 import { EscrowEntry } from '@l2beat/shared-pure'
-import { chain, groupBy } from 'lodash'
-import { string, z } from 'zod'
+import { groupBy } from 'lodash'
+import { z } from 'zod'
 
 import { withTypedContext } from '../../api/types'
 import { Config } from '../../config'
@@ -111,5 +111,5 @@ export function createStatusRouter(
 }
 
 function escrowToDisplay(escrow: EscrowEntry) {
-  return escrow.address.toString()
+  return `${escrow.symbol} - ${escrow.address.toString()}`
 }

@@ -142,6 +142,7 @@ function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
     sinceTimestamp: new UnixTime(123),
     includeInTotal: true,
     decimals: 18,
+    symbol: 'SYMBOL',
     ...base,
   }
 }

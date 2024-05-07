@@ -95,6 +95,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'circulatingSupply':
@@ -108,6 +109,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'locked':
@@ -136,6 +138,7 @@ function getAmountsConfig(
           source: toSource(token.type),
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
+          symbol: token.symbol,
         })
       }
     }
