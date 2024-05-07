@@ -264,7 +264,7 @@ describe(TrackedTxsIndexer.name, () => {
       const configurationRepository = getMockConfigRepository([])
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
-        add: async () => '',
+        addOrUpdate: async () => '',
         setSafeHeight: async () => 0,
         runInTransaction: async (fn) => fn(TRX),
       })
@@ -276,7 +276,7 @@ describe(TrackedTxsIndexer.name, () => {
 
       await livenessIndexer.start()
 
-      expect(stateRepository.add).toHaveBeenOnlyCalledWith(
+      expect(stateRepository.addOrUpdate).toHaveBeenOnlyCalledWith(
         {
           indexerId: livenessIndexer.indexerId,
           safeHeight: MIN_TIMESTAMP.toNumber(),
@@ -420,7 +420,7 @@ function getMockStateRepository(
 ) {
   const stateRepository = mockObject<IndexerStateRepository>({
     findIndexerState: async () => indexerState,
-    add: async () => '',
+    addOrUpdate: async () => '',
     setSafeHeight: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
   })

@@ -11,12 +11,7 @@ export class IndexerService {
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    const record = await this.indexerStateRepository.findIndexerState(indexerId)
-    if (!record) {
-      await this.indexerStateRepository.add({ indexerId, safeHeight })
-      return
-    }
-    await this.indexerStateRepository.setSafeHeight(indexerId, safeHeight)
+    await this.indexerStateRepository.addOrUpdate({ indexerId, safeHeight })
   }
 
   async getSafeHeight(indexerId: string): Promise<number | undefined> {

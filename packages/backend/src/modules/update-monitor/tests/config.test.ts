@@ -37,7 +37,7 @@ describe('discovery config.jsonc', () => {
       notCorresponding.length === 0,
       'Following projects do not have the same name as ProjectIds: ' +
         notCorresponding.join(', ') +
-        '. Add them to config/src/[layer2s|bridges|layer3s|onChainProjects]',
+        '. Add them to config/src/projects/[layer2s|bridges|layer3s|onChainProjects]',
     )
   })
 
