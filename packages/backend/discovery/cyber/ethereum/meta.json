@@ -12,6 +12,56 @@
       }
     },
     {
+      "name": "DataAvailabilityChallenge",
+      "values": {
+        "bondSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fixedResolutionCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resolveWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resolverRefundPercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "variableResolutionCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "variableResolutionCostPrecision": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L1CrossDomainMessenger",
       "values": {
         "MESSAGE_VERSION": {

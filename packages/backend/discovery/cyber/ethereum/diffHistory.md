@@ -1,15 +1,21 @@
-Generated with discovered.json: 0x6ee51181580f8c843e9e23f127446d4ec3e03a58
+Generated with discovered.json: 0xd2c6a22cdda6295819d99045ee0df5877cf7b47b
 
-# Diff at Tue, 07 May 2024 10:06:01 GMT:
+# Diff at Tue, 07 May 2024 10:34:38 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 19817481
+- current block number: 19817624
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Cyber is an OP stack L2 using custom DA (supposedly EigenDA).
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract DataAvailabilityChallenge (0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED

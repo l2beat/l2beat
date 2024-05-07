@@ -4,6 +4,8 @@
   "name": "cyber",
   "initialAddresses": [
     "0x12a580c05466eefb2c467C6b115844cDaF55B255",
+    "0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49" // DataAvailabilityChallenge
+    // probably DisputeGame related, but unverified: 0xFe42cC6ac1f47D1b343a631a31B6D242dBF36b0c
   ],
   "names": {
     "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055": "SystemConfig",
