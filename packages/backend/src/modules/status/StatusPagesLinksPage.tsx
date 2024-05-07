@@ -36,7 +36,7 @@ const LINKS = [
         name: 'projects',
         description: 'Comma separated list of project ids',
         example:
-          'http://localhost:3000/status/escrows?projects=arbitrum,optimism',
+          'https://staging.l2beat.com/status/escrows?projects=arbitrum,optimism',
       },
     ],
   },
