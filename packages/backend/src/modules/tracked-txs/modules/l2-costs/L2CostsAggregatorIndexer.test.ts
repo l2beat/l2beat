@@ -268,6 +268,52 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
     })
   })
+
+  describe(L2CostsAggregatorIndexer.prototype.shift.name, () => {
+    const indexer = createIndexer({ tag: 'shift' })
+
+    it('shift to a single day if range longer than day', async () => {
+      // 2023-05-01 00:00:01
+      const from = MIN.add(1, 'seconds')
+      // 2024-05-02 15:00:00
+      const to = NOW
+
+      const result = indexer.shift(from.toNumber(), to.toNumber())
+
+      // from 2023-05-01 00:00:00 to 2023-05-01 23:59:59
+      expect(result).toEqual([
+        from.toStartOf('hour'),
+        from.toStartOf('hour').add(1, 'days').add(-1, 'seconds'),
+      ])
+    })
+
+    it('shift to include full hours only', async () => {
+      // 2023-05-01 00:0:01
+      const from = MIN.add(1, 'seconds')
+      // 2023-05-01 01:30:00
+      const to = MIN.add(1, 'hours').add(1, 'minutes')
+
+      const result = indexer.shift(from.toNumber(), to.toNumber())
+
+      // from 2023-05-01 00:00:00 to 2023-05-01 00:59:59
+      expect(result).toEqual([
+        from.toStartOf('hour'),
+        to.toStartOf('hour').add(-1, 'seconds'),
+      ])
+    })
+
+    it('shift zero span if less than an hour', async () => {
+      // 2023-05-01 00:0:01
+      const from = MIN.add(1, 'seconds')
+      // 2023-05-01 00:30:00
+      const to = MIN.add(1, 'minutes')
+
+      const result = indexer.shift(from.toNumber(), to.toNumber())
+
+      // from 2023-05-01 00:00:00 to 2023-05-01 00:00:00
+      expect(result).toEqual([from.toStartOf('hour'), from.toStartOf('hour')])
+    })
+  })
 })
 
 function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {

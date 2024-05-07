@@ -34,6 +34,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const [shiftedFrom, shiftedTo] = this.shift(from, to)
 
     if (shiftedFrom.equals(shiftedTo)) {
+      // there's nothing to sync
       return to
     }
 
