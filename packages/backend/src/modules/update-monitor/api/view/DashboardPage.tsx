@@ -4,7 +4,6 @@ import { TableData, TableHead } from '../../../status/Components'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import { DashboardProject } from '../props/getDashboardProjects'
-import { getHardcoded } from '../props/utils/getHardcoded'
 import { DASHBOARD_COLORS } from './constants'
 
 interface DashboardPageProps {
@@ -12,8 +11,6 @@ interface DashboardPageProps {
 }
 
 export function DashboardPage(props: DashboardPageProps) {
-  const hardcoded = getHardcoded()
-
   const ethereumProjects = props.projects.ethereum
   const configuredEthereumProjects = ethereumProjects.filter(
     (p) => p.configured,
@@ -38,7 +35,6 @@ export function DashboardPage(props: DashboardPageProps) {
           <tr>
             <TableHead rowSpan={2}>🤖</TableHead>
             <TableHead rowSpan={2}>Project</TableHead>
-            <TableHead rowSpan={2}>Hardcoded</TableHead>
             <TableHead colSpan={4} style={{ textAlign: 'center' }}>
               Contracts
             </TableHead>
@@ -128,19 +124,6 @@ export function DashboardPage(props: DashboardPageProps) {
                         </a>
                       ) : (
                         <span key={index}>{project.name}</span>
-                      )
-                    }
-                  />
-                  <TableData
-                    value={
-                      hardcoded[project.name] === 0 ? (
-                        <span style={{ color: DASHBOARD_COLORS.WATCHED }}>
-                          0
-                        </span>
-                      ) : (
-                        <span style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>
-                          {hardcoded[project.name]}
-                        </span>
                       )
                     }
                   />
