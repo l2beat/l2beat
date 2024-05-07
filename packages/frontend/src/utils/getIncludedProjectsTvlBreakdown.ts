@@ -16,7 +16,6 @@ export function getIncludedProjectsTvlBreakdown<
     .filter(
       (x) =>
         !!tvlApiResponse.projects[x.id.toString()] &&
-        // eslint-disable-next-line
         !!tvlBreakdownApiResponse.breakdowns[x.id.toString()],
     )
 

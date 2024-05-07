@@ -143,7 +143,6 @@ export class LogFormatterPretty implements LogFormatter {
   }
 
   private sanitize(parameters: object): object {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(toJSON(parameters))
   }
 }

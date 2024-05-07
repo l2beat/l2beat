@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { join } from 'path'
 
 import { assertUnreachable } from '../utils/assertUnreachable'

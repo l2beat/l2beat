@@ -50,7 +50,6 @@ export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
     ['combined', tvlApiResponse.combined],
     ...Object.entries(tvlApiResponse.projects)
       .filter(([id]) => ids.includes(id))
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .map(([id, project]) => [id, project?.charts] as const),
   ] as TvlProjectData[]
 

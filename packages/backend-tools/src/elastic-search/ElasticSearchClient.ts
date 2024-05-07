@@ -42,7 +42,6 @@ export class ElasticSearchClient {
     documents: any[],
     index: string,
   ): Promise<BulkResponse> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const operations = documents.flatMap((doc) => [
       { index: { _index: index } },
       doc,

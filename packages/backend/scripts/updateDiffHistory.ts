@@ -13,7 +13,6 @@ import {
   DiscoveryMeta,
   getChainConfig,
 } from '@l2beat/discovery'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
