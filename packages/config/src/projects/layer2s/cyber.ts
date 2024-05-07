@@ -48,7 +48,7 @@ export const cyber: Layer2 = opStackL2({
     riskView: {
       value: 'External',
       description:
-        'Proof construction and state derivation rely on data that is NOT published onchain. Cyber uses a custom data availability provider without attestations, relying though on DA challenges.',
+        'Proof construction and state derivation rely on data that is NOT published onchain. Cyber uses EigenDA for data publishing and posts resulting blob keys (blob identifier hashes) to the L1.',
       sentiment: 'bad',
     },
     technology: {

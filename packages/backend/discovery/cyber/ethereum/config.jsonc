@@ -68,21 +68,5 @@
       },
       "ignoreInWatchMode": ["scalar"],
     },
-    "DisputeGameFactory": {
-      "ignoreMethods": ["gameAtIndex"],
-      "fields": {
-        "gameImpls": {
-          "type": "array",
-          "length": 5,
-        },
-        "initBonds": {
-          "type": "array",
-          "length": 5,
-        },
-      },
-    },
-    "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"],
-    },
   },
 }
