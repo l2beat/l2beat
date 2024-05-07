@@ -705,7 +705,9 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           ...templateVars.discovery.getEscrowDetails({
             address: portal.address,
             tokens: optimismPortalTokens,
-            description: `Main entry point for users depositing ${optimismPortalTokens.join(', ')}.`,
+            description: `Main entry point for users depositing ${optimismPortalTokens.join(
+              ', ',
+            )}.`,
             ...upgradeability,
           }),
         },
