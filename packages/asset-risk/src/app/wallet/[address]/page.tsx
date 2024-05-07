@@ -48,10 +48,8 @@ export default async function Page({ params: { address } }: Props) {
   const groupedTokens = Object.entries(
     generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
       const { chainId, address } = token
-      // Skip mainnet tokens
-      if (chainId === 1) return acc
 
-      // Skip tokens without address
+      // Skip tokens without address (coins)
       if (!address || !isAddress(address)) return acc
 
       if (!acc[chainId]) {
