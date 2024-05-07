@@ -31,38 +31,22 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    // move to a begining of an hour
-    from = new UnixTime(from).toStartOf('hour').toNumber()
+    const [shiftedFrom, shiftedTo] = this.shift(from, to)
 
-    // limit time range to one day
-    const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
-
-    // limit do not include the beging of next hour ( <= xx:59:59)
-    const shiftedUnixTo = unixTo.add(-1, 'seconds')
+    if (shiftedFrom.equals(shiftedTo)) {
+      return to
+    }
 
     const costs = await this.$.l2CostsRepository.getWithProjectIdByTimeRange([
-      unixFrom,
-      shiftedUnixTo,
+      shiftedFrom,
+      shiftedTo,
     ])
 
     const ethPrices = await this.$.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      unixFrom,
-      shiftedUnixTo,
+      shiftedFrom,
+      shiftedTo,
     )
-
-    if (
-      // price for the first hour of the range
-      !ethPrices.get(unixFrom.toNumber()) ||
-      // price for last our of the range
-      !ethPrices.get(shiftedUnixTo.toStartOf('hour').toNumber())
-    ) {
-      this.logger.warn('ETH price not found for the range', {
-        from: unixFrom.toNumber(),
-        to: unixTo.toNumber(),
-      })
-      return unixFrom.toNumber()
-    }
 
     const aggregated = this.aggregate(costs, ethPrices)
     await this.$.aggregatedL2CostsRepository.addMany(aggregated)
@@ -70,7 +54,43 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       count: aggregated.length,
     })
 
-    return unixTo.toNumber()
+    return shiftedTo.add(1, 'seconds').toNumber()
+  }
+
+  override async invalidate(targetHeight: number): Promise<number> {
+    //TODO: Check if targetHeight is inclusive
+    const unixTargetHeight = new UnixTime(targetHeight)
+    await this.$.aggregatedL2CostsRepository.deleteFrom(unixTargetHeight)
+
+    return targetHeight
+  }
+
+  shift(from: number, to: number): [UnixTime, UnixTime] {
+    // limit time range to one day if greater
+    const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
+
+    // start from a begining of an hour
+    // 13:00:01 => 13:00:00
+    const shiftedUnixFrom = unixFrom.toStartOf('hour')
+
+    // end on last full hour
+    // 13:45:51 => 13:00:00
+    let shiftedUnixTo = unixTo.toStartOf('hour')
+
+    if (shiftedUnixFrom.equals(shiftedUnixTo)) {
+      return [shiftedUnixFrom, shiftedUnixTo]
+    }
+
+    // do not include ending hour
+    // 13:00:00 => 12:59:59
+    shiftedUnixTo = shiftedUnixTo.add(-1, 'seconds')
+
+    this.logger.info('Time range shifted', {
+      shiftedFrom: shiftedUnixFrom,
+      shiftedTo: shiftedUnixTo,
+    })
+
+    return [shiftedUnixFrom, shiftedUnixTo]
   }
 
   aggregate(
@@ -86,7 +106,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       const ethUsdPrice = ethPrices.get(timestamp.toNumber())
       assert(
         ethUsdPrice,
-        `[L2Costs]: ETH price not found: ${timestamp.toNumber()}`,
+        `[${L2CostsAggregatorIndexer.name}]: ETH price not found: ${timestamp.toNumber()}`,
       )
       const calculations = this.calculate(record, ethUsdPrice)
       const existing = map.get(key)
@@ -203,13 +223,5 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       blobsGasUsd,
       blobsGasEth,
     }
-  }
-
-  override async invalidate(targetHeight: number): Promise<number> {
-    //TODO: Check if targetHeight is inclusive
-    const unixTargetHeight = new UnixTime(targetHeight)
-    await this.$.aggregatedL2CostsRepository.deleteFrom(unixTargetHeight)
-
-    return targetHeight
   }
 }

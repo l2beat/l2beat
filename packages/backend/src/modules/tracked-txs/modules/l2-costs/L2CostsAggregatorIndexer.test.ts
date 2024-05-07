@@ -23,135 +23,107 @@ const NOW = new UnixTime(1714662000)
 
 describe(L2CostsAggregatorIndexer.name, () => {
   describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
-    it('clamps to day', async () => {
+    it('updates correctly', async () => {
+      // 2023-05-01 00:01:00
+      const txTime = MIN.add(1, 'minutes')
+
       const txs = [
         tx({
-          timestamp: MIN.add(1, 'minutes'),
+          timestamp: txTime,
         }),
       ]
 
-      const ethPrices = new Map([
-        // 2023-05-01 00:00:00
-        [MIN.toNumber(), 2000],
-        // 2023-05-01 23:00:00
-        [MIN.add(23, 'hours').toNumber(), 2000],
-      ])
+      const ethPrices = new Map([[txTime.toStartOf('hour').toNumber(), 2000]])
 
-      const l2CostsRepository = mockObject<L2CostsRepository>({
+      const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
         getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
       })
 
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepositoryMock = mockObject<PriceRepository>({
         findByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
       const indexer = createIndexer({
-        tag: 'update-day',
-        l2CostsRepository,
-        priceRepository,
+        tag: 'update-correct',
+        l2CostsRepository: l2CostsRepositoryMock,
+        priceRepository: priceRepositoryMock,
       })
+
+      // 2023-05-02 23:59:59
+      const endOfFirstDay = NOW.add(1, 'days').add(-1, 'seconds')
+      indexer.shift = mockFn().returns([MIN, endOfFirstDay])
 
       // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
       const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
 
       // should get records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
       expect(
-        l2CostsRepository.getWithProjectIdByTimeRange,
-      ).toHaveBeenOnlyCalledWith([MIN, new UnixTime(1682985599)])
+        l2CostsRepositoryMock.getWithProjectIdByTimeRange,
+      ).toHaveBeenOnlyCalledWith([MIN, endOfFirstDay])
 
       // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
-      expect(priceRepository.findByTimestampRange).toHaveBeenOnlyCalledWith(
+      expect(priceRepositoryMock.findByTimestampRange).toHaveBeenOnlyCalledWith(
         AssetId.ETH,
         MIN,
-        new UnixTime(1682985599),
+        endOfFirstDay,
       )
 
       // 2023-05-02 00:00:00
-      expect(to).toEqual(1682985600)
+      expect(to).toEqual(endOfFirstDay.add(1, 'seconds').toNumber())
     })
 
-    it('clamps to hour', async () => {
-      // 2024-05-02 14:00:01
-      const from = NOW.add(-1, 'hours').add(1, 'seconds')
+    it('does nothing if range shorter than hour', async () => {
+      // 2023-05-01 00:30:00
+      const to = MIN.add(30, 'minutes')
+
+      const indexer = createIndexer({
+        tag: 'update-nothing',
+      })
+
+      indexer.shift = mockFn().returns([MIN, MIN])
+
+      // from 2023-05-01 00:00:00 to 2023-05-01 00:30:00
+      const result = await indexer.update(MIN.toNumber(), to.toNumber())
+
+      // 2023-05-01 00:30:00
+      expect(result).toEqual(to.toNumber())
+    })
+
+    it('throws if prices not available', async () => {
+      // 2023-05-01 00:01:00
+      const txTime = MIN.add(1, 'minutes')
 
       const txs = [
         tx({
-          timestamp: from,
+          timestamp: txTime,
         }),
       ]
 
-      const ethPrices = new Map([
-        // 2024-05-02 14:00:00
-        [from.add(-1, 'seconds').toNumber(), 2000],
-      ])
+      const ethPrices = new Map([])
 
-      const l2CostsRepository = mockObject<L2CostsRepository>({
+      const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
         getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
       })
 
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepositoryMock = mockObject<PriceRepository>({
         findByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
       const indexer = createIndexer({
-        tag: 'update-hour',
-        l2CostsRepository,
-        priceRepository,
+        tag: 'update-day',
+        l2CostsRepository: l2CostsRepositoryMock,
+        priceRepository: priceRepositoryMock,
       })
 
-      // from 2024-05-02 14:00:01 to 2024-05-02 15:00:00
-      const to = await indexer.update(from.toNumber(), NOW.toNumber())
+      // 2023-05-02 23:59:59
+      const endOfFirstDay = NOW.add(1, 'days').add(-1, 'seconds')
+      indexer.shift = mockFn().returns([MIN, endOfFirstDay])
 
-      // should get records between 2024-05-02 14:00:00 and 2023-05-02 14:59:59
-      expect(
-        l2CostsRepository.getWithProjectIdByTimeRange,
-      ).toHaveBeenOnlyCalledWith([
-        from.add(-1, 'seconds'),
-        NOW.add(-1, 'seconds'),
-      ])
-
-      // should get prices records between 2024-05-02 14:00:00 and 2023-05-02 14:59:59
-      expect(priceRepository.findByTimestampRange).toHaveBeenOnlyCalledWith(
-        AssetId.ETH,
-        from.add(-1, 'seconds'),
-        NOW.add(-1, 'seconds'),
+      await expect(
+        async () => await indexer.update(MIN.toNumber(), NOW.toNumber()),
+      ).toBeRejectedWith(
+        `Assertion Error: [${L2CostsAggregatorIndexer.name}]: ETH price not found: ${txTime.toStartOf('hour').toNumber()}`,
       )
-
-      // 2023-05-02 00:00:00
-      expect(to).toEqual(NOW.toNumber())
-    })
-
-    it('returns from if prices not available', async () => {
-      const txs = [
-        tx({
-          timestamp: MIN.add(1, 'minutes'),
-        }),
-      ]
-
-      const ethPrices = new Map([
-        // 2023-05-01 00:00:00
-        [MIN.toNumber(), 2000],
-      ])
-
-      const l2CostsRepository = mockObject<L2CostsRepository>({
-        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
-      })
-
-      const priceRepository = mockObject<PriceRepository>({
-        findByTimestampRange: mockFn().resolvesTo(ethPrices),
-      })
-
-      const indexer = createIndexer({
-        tag: 'update',
-        l2CostsRepository,
-        priceRepository,
-      })
-
-      // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
-      const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
-
-      // 2023-05-01 00:00:00
-      expect(to).toEqual(MIN.toNumber())
     })
   })
 
