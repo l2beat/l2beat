@@ -107,7 +107,9 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       const ethUsdPrice = ethPrices.get(timestamp.toNumber())
       assert(
         ethUsdPrice,
-        `[${L2CostsAggregatorIndexer.name}]: ETH price not found: ${timestamp.toNumber()}`,
+        `[${
+          L2CostsAggregatorIndexer.name
+        }]: ETH price not found: ${timestamp.toNumber()}`,
       )
       const calculations = this.calculate(record, ethUsdPrice)
       const existing = map.get(key)

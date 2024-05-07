@@ -122,7 +122,9 @@ describe(L2CostsAggregatorIndexer.name, () => {
       await expect(
         async () => await indexer.update(MIN.toNumber(), NOW.toNumber()),
       ).toBeRejectedWith(
-        `Assertion Error: [${L2CostsAggregatorIndexer.name}]: ETH price not found: ${txTime.toStartOf('hour').toNumber()}`,
+        `Assertion Error: [${
+          L2CostsAggregatorIndexer.name
+        }]: ETH price not found: ${txTime.toStartOf('hour').toNumber()}`,
       )
     })
   })
