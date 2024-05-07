@@ -1,14 +1,26 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import { CirculatingSupplyEntry } from '@l2beat/shared-pure'
+import {
+  CirculatingSupplyEntry,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
+import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
+import { createAmountId } from '../utils/createAmountId'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
@@ -21,18 +33,20 @@ export function createCirculatingSupplyModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
+  priceModule: PriceModule,
+  idConverter: IdConverter,
 ): CirculatingSupplyModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-
   const circulatingSupplies = config.amounts.filter(
     (a): a is CirculatingSupplyEntry => a.type === 'circulatingSupply',
   )
+  const indexersMap = new Map<string, CirculatingSupplyIndexer>()
 
   const indexers = circulatingSupplies.map((circulatingSupply) => {
-    return new CirculatingSupplyIndexer({
+    const indexer = new CirculatingSupplyIndexer({
       logger,
       tag: circulatingSupply.coingeckoId.toString(),
       parents: [hourlyIndexer],
@@ -43,6 +57,59 @@ export function createCirculatingSupplyModule(
       amountRepository: peripherals.getRepository(AmountRepository),
       syncOptimizer,
     })
+    indexersMap.set(createAmountId(circulatingSupply), indexer)
+    return indexer
+  })
+
+  const perProject = groupBy(circulatingSupplies, 'project')
+
+  const valueIndexers: ValueIndexer[] = []
+
+  for (const [project, amountConfigs] of Object.entries(perProject)) {
+    const priceConfigs = new Set(
+      amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
+    )
+
+    const csIndexers = amountConfigs.map((c) => {
+      const indexer = indexersMap.get(createAmountId(c))
+      assert(indexer)
+      return indexer
+    })
+
+    const parents = [priceModule.indexer, ...csIndexers]
+
+    const indexer = new ValueIndexer({
+      priceRepo: peripherals.getRepository(PriceRepository),
+      amountRepo: peripherals.getRepository(AmountRepository),
+      valueRepo: peripherals.getRepository(ValueRepository),
+      priceConfigs: [...priceConfigs],
+      amountConfigs,
+      project: ProjectId(project),
+      dataSource: 'coingecko',
+      syncOptimizer,
+      parents,
+      tag: `${project}_coingecko`,
+      indexerService,
+      logger,
+      minHeight: amountConfigs
+        .reduce(
+          (prev, curr) => UnixTime.min(prev, curr.sinceTimestamp),
+          amountConfigs[0].sinceTimestamp,
+        )
+        .toNumber(),
+    })
+
+    valueIndexers.push(indexer)
+  }
+
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'circulating_supply',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...circulatingSupplies.map((cs) => cs.sinceTimestamp.toNumber()),
+    ),
   })
 
   return {
@@ -50,6 +117,12 @@ export function createCirculatingSupplyModule(
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      for (const indexer of valueIndexers) {
+        await indexer.start()
+      }
+
+      await descendant.start()
     },
   }
 }

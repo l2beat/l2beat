@@ -12,13 +12,15 @@ import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-interface PriceModule {
+export interface PriceModule {
   start: () => Promise<void> | void
+  indexer: DescendantIndexer
 }
 
 export function createPriceModule(
@@ -58,12 +60,25 @@ export function createPriceModule(
       }),
   )
 
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'price',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...config.prices.map((price) => price.sinceTimestamp.toNumber()),
+    ),
+  })
+
   return {
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      await descendant.start()
     },
+    indexer: descendant,
   }
 }
 
