@@ -1,0 +1,54 @@
+{
+  "$id": "https://l2beat.com/contract.schema.json",
+  "title": "Discovery contract config",
+  "description": "Specific configuration for single contract discovery",
+  "type": "object",
+  "unevaluatedProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "extends": { "type": "string" },
+    "ignoreDiscovery": { "type": "boolean" },
+    "proxyType": { "type": "string" },
+    "ignoreInWatchMode": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ignoreMethods": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ignoreRelatives": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fields": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "required": ["type"],
+          "properties": {
+            "type": { "type": "string" }
+          }
+        }
+      }
+    },
+    "description": {
+      "description": "Description for the contract ",
+      "type": "string"
+    },
+    "methods": {
+      "type": "object",
+      "description": "Key-Value store for description <Method>: <Description>",
+      "unevaluatedProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
