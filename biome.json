@@ -61,6 +61,7 @@
         "useYield": "error"
       },
       "style": {
+        "useForOf": "error",
         "noDefaultExport": "error",
         "noNamespace": "error",
         "noNonNullAssertion": "error",
