@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5ee9eadf99dff21ccf5d95974efa99aa3c248dbc
+Generated with discovered.json: 0x8fc8d9ade1e1276e4b138f0c028034f107d89b20
 
-# Diff at Mon, 29 Apr 2024 15:51:15 GMT:
+# Diff at Tue, 07 May 2024 17:35:11 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19761972
+- current block number: 19819706
 
 ## Description
 
@@ -49,6 +49,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract EIGEN Timelock (0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract METH-Strategy (0x298aFB19A105D59E74658C4C334Ff360BadE6dd2)
     +++ description: None
 ```
@@ -69,6 +75,12 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
     +++ description: Manages interactions between stakers and Eigenlayer operators, registers operators.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
 ```
 
 ```diff
@@ -98,6 +110,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
     +++ description: None
 ```
 
@@ -157,7 +175,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract bEIGEN-Strategy (0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract RiverV1-Strategy (0xAe60d8180437b5C34bB956822ac2710972584473)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenlayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
     +++ description: None
 ```
 
@@ -169,8 +205,20 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract bEIGEN Timelock (0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
     +++ description: Registers contracts with slashing rights, tracks historic stake updates.
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: None
 ```
 
 ```diff

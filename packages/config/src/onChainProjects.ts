@@ -7,5 +7,4 @@ export const onChainProjects: string[] = [
   'eigenda',
   'shared-eigenlayer',
   'swell',
-,
 ]
