@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { TriangleWarningIcon } from '../icons/symbols/TriangleWarningIcon'
 import { Link } from '../Link'
+import { TriangleWarningIcon } from '../icons/symbols/TriangleWarningIcon'
 
 export function ChartErrorState() {
   return (

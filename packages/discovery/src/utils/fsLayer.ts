@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
-import { readdir } from 'fs/promises'
 import { basename, dirname, resolve } from 'path'
+import { readdir } from 'fs/promises'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
 // NTFS the path names are not case sensitive. So while you can have a file

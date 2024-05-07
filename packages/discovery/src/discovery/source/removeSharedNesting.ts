@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import path from 'path'
+import { assert } from '@l2beat/backend-tools'
 
 import { sanitizePath } from './sanitizePath'
 

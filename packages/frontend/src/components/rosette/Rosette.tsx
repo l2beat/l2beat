@@ -4,11 +4,11 @@ import { cn } from '../../utils/cn'
 import { sentimentToFillColor } from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
+import { WarningBar } from '../WarningBar'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { Icon } from '../icons/Icon'
 import { SentimentText } from '../table/SentimentText'
-import { WarningBar } from '../WarningBar'
 
 export interface RosetteProps {
   risks: RiskSentiments

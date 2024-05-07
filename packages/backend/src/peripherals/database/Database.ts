@@ -1,11 +1,11 @@
+import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import KnexConstructor, { Knex } from 'knex'
-import path from 'path'
 
 import { DatabaseConfig } from '../../config/Config'
-import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
+import { configureUtc } from './configureUtc'
 interface VersionQueryResult {
   rows: {
     server_version: string

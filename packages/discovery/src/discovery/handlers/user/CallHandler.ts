@@ -7,7 +7,7 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
-import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
+import { EXEC_REVERT_MSG, callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>

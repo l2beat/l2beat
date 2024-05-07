@@ -2,8 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -13,16 +13,16 @@ import {
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
 import { PriceRepository } from '../tvl/repositories/PriceRepository'
-import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { HourlyIndexer } from './HourlyIndexer'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/L2CostsAggregatorIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/AggregatedL2CostsRepository'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
   config: Config,

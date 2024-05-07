@@ -1,8 +1,8 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import crypto from 'crypto'
-import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
+import { expect } from 'earl'
 
 const projects = [...layer2s, ...bridges, ...layer3s]
 

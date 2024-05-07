@@ -1,8 +1,8 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryStack } from './DiscoveryStack'
 import { shouldSkip } from './shouldSkip'
 

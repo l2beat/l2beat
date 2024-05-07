@@ -4,19 +4,19 @@
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
+import { execSync } from 'child_process'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
+  DiscoveryDiff,
+  DiscoveryMeta,
   diffDiscovery,
   discover,
-  DiscoveryDiff,
   discoveryDiffToMarkdown,
-  DiscoveryMeta,
   getChainConfig,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
-import { execSync } from 'child_process'
-import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'

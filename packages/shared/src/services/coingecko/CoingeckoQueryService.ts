@@ -2,8 +2,8 @@ import {
   assert,
   CoingeckoId,
   EthereumAddress,
-  getHourlyTimestamps,
   UnixTime,
+  getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { install, InstalledClock } from '@sinonjs/fake-timers'
+import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
 import { promiseAllPlus } from './promiseAllPlus'

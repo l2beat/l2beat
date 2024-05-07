@@ -1,7 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from './contracts'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import { CONTRACTS } from './contracts'
 
 function ARBITRUM_DAO(
   l1Delay: number,

@@ -5,9 +5,9 @@ import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { TraceTransactionResponse } from './TransactionTrace'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export interface ContractMetadata {
   name: string

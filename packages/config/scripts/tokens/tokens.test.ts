@@ -1,11 +1,11 @@
+import { deepStrictEqual } from 'assert'
 import { assert } from '@l2beat/backend-tools'
 import { ChainId } from '@l2beat/shared-pure'
-import { deepStrictEqual } from 'assert'
 
 import { chains } from '../../src'
 import { GeneratedToken } from '../../src/tokens/types'
-import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 import { ScriptLogger } from './utils/ScriptLogger'
+import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 
 describe('tokens script', () => {
   const logger = ScriptLogger.SILENT

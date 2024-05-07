@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
 import { FinalityDurationCell } from '../../../../components/table/FinalityDurationCell'
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
 import { ScalingFinalityViewEntry } from '../types'
 

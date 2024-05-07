@@ -8,11 +8,11 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { Clock } from '../../../tools/Clock'
+import { SequenceProcessor } from '../SequenceProcessor'
 import {
   ActivityViewRepository,
   DailyTransactionCountRecord,
 } from '../repositories/ActivityViewRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 import { ActivityController } from './ActivityController'
 import { DailyTransactionCount } from './types'
 

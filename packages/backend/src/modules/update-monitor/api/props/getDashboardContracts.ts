@@ -12,8 +12,8 @@ import {
   DiscoveredByInfo,
   getDiscoveredBy,
 } from './dashboardContracts/getDiscoveredBy'
-import { getIgnoredMethods } from './dashboardContracts/getIgnoredMethods'
 import { getIgnoreInWatchMode } from './dashboardContracts/getIgnoreInWatchMode'
+import { getIgnoredMethods } from './dashboardContracts/getIgnoredMethods'
 import { getWatched } from './dashboardContracts/getWatched'
 import { getViewABI } from './utils/getFunctions'
 import { getUpgradeabilityParams } from './utils/getUpgradeabilityParams'

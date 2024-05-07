@@ -5,8 +5,8 @@ import {
   ContractMetadata,
   DiscoveryProvider,
 } from '../provider/DiscoveryProvider'
-import { processSources } from './processSources'
 import { SourceCodeService } from './SourceCodeService'
+import { processSources } from './processSources'
 
 describe(SourceCodeService.name, () => {
   const FOO_ADDRESS = EthereumAddress.random()

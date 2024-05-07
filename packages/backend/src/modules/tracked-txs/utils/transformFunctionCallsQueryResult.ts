@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 
 import {
-  BigQueryFunctionCallResult,
-  TrackedTxFunctionCallResult,
-} from '../types/model'
-import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
+import {
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(

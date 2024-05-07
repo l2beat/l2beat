@@ -10,8 +10,8 @@ import { expect } from 'earl'
 
 import { AggregatedReportRecord } from '../repositories/AggregatedReportRepository'
 import { ReportRecord } from '../repositories/ReportRepository'
-import { aggregateReports } from './aggregateReports'
 import { ReportProject } from './ReportProject'
+import { aggregateReports } from './aggregateReports'
 
 describe(aggregateReports.name, () => {
   const NOW = UnixTime.now().toStartOf('hour')

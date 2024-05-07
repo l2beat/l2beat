@@ -1,9 +1,9 @@
 import { ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
+import { WarningBar } from '../../../../components/WarningBar'
 import { ShieldIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
-import { WarningBar } from '../../../../components/WarningBar'
 import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 

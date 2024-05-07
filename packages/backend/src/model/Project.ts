@@ -1,14 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
 import {
   Bridge,
-  chains,
-  getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
   Layer2LivenessConfig,
   Layer2TxConfig,
   Layer3,
   ScalingProjectTransactionApi,
+  chains,
+  getCanonicalTokenBySymbol,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -23,8 +23,8 @@ import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  TrackedTxsConfig,
   TrackedTxUseWithId,
+  TrackedTxsConfig,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
 import { ChainConverter } from '../tools/ChainConverter'
 

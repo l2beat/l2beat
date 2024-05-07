@@ -1,15 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
-  cacheAsyncFunction,
   LivenessApiProject,
   LivenessApiResponse,
-  notUndefined,
   ProjectId,
   Result,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigSubtypeValues,
   UnixTime,
+  cacheAsyncFunction,
+  notUndefined,
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
@@ -22,8 +22,8 @@ import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
 import {
-  calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
+  calcIntervalWithAvgsPerProject,
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
 

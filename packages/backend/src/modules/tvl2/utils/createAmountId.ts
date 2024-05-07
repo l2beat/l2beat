@@ -1,5 +1,5 @@
-import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
+import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 
 export function createAmountId(amountConfig: AmountConfigEntry): string {
   const input = []

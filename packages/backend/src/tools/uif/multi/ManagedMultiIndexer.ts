@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions } from '@l2beat/uif'
 
-import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { IndexerService } from '../IndexerService'
+import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
 import { Configuration, SavedConfiguration } from './types'
 

@@ -1,7 +1,7 @@
-import { bridges, layer2s } from '@l2beat/config'
-import { expect } from 'earl'
 import { readdirSync } from 'fs'
 import path from 'path'
+import { bridges, layer2s } from '@l2beat/config'
+import { expect } from 'earl'
 
 describe('architecture image', () => {
   const files = readdirSync(path.join(__dirname, '../static/images/')).filter(

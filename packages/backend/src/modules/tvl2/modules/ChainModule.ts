@@ -2,19 +2,19 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
-  capitalizeFirstLetter,
   EscrowEntry,
   EthereumAddress,
-  notUndefined,
   ProjectId,
   TotalSupplyEntry,
   UnixTime,
+  capitalizeFirstLetter,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { Configuration } from '../../../tools/uif/multi/types'
@@ -30,9 +30,9 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
-import { createAmountId } from '../utils/createAmountId'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
 
 interface ChainModule {

@@ -6,23 +6,23 @@ import {
   EtherscanClient,
 } from '@l2beat/shared'
 import {
-  capitalizeFirstLetter,
   ChainId,
-  notUndefined,
   ProjectId,
   Token,
   UnixTime,
+  capitalizeFirstLetter,
+  notUndefined,
 } from '@l2beat/shared-pure'
 
 import { ChainTvlConfig } from '../../../config/Config'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../../tools/Clock'
-import { CirculatingSupplyFormulaUpdater } from '../assets/CirculatingSupplyFormulaUpdater'
-import { TotalSupplyFormulaUpdater } from '../assets/TotalSupplyFormulaUpdater'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { PriceUpdater } from '../PriceUpdater'
+import { CirculatingSupplyFormulaUpdater } from '../assets/CirculatingSupplyFormulaUpdater'
+import { TotalSupplyFormulaUpdater } from '../assets/TotalSupplyFormulaUpdater'
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
 import { CirculatingSupplyRepository } from '../repositories/CirculatingSupplyRepository'
 import { ReportRepository } from '../repositories/ReportRepository'

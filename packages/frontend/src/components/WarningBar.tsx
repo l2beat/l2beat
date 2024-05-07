@@ -2,9 +2,9 @@ import React from 'react'
 
 import { cn } from '../utils/cn'
 import { Callout } from './Callout'
-import { OutLinkIcon, ShieldIcon } from './icons'
 import { Markdown } from './Markdown'
 import { PlainLink } from './PlainLink'
+import { OutLinkIcon, ShieldIcon } from './icons'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow'

@@ -1,9 +1,9 @@
+import assert from 'assert'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import assert from 'assert'
 import { BigNumber, utils } from 'ethers'
 
 import { DegateClient } from '../../../peripherals/degate'

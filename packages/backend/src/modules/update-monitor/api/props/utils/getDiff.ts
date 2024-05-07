@@ -1,7 +1,7 @@
 import {
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
+  diffDiscovery,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId } from '@l2beat/shared-pure'

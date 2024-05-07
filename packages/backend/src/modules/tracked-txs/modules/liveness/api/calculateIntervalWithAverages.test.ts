@@ -3,10 +3,10 @@ import { expect } from 'earl'
 import { cloneDeep } from 'lodash'
 
 import {
-  calculateIntervals,
-  calculateIntervalWithAverages,
-  calculateMinMaxAverages,
   LivenessRecordWithInterval,
+  calculateIntervalWithAverages,
+  calculateIntervals,
+  calculateMinMaxAverages,
 } from './calculateIntervalWithAverages'
 
 const NOW = UnixTime.now()

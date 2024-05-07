@@ -1,20 +1,20 @@
 import {
   EthereumAddress,
-  formatLargeNumberShared,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatLargeNumberShared,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { RISK_VIEW } from '../../common/riskView'

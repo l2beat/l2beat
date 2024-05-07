@@ -2,8 +2,8 @@ import React from 'react'
 
 import { cn } from '../../utils/cn'
 import { NavigationPage } from '../../utils/getNavigationPages'
-import { NewItemBadge } from '../badge/NewItemBadge'
 import { OverflowWrapper } from '../OverflowWrapper'
+import { NewItemBadge } from '../badge/NewItemBadge'
 
 export interface MobileTabsProps {
   pages: NavigationPage[]

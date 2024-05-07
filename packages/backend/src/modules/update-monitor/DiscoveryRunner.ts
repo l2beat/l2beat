@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryProvider,
+  diffDiscovery,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'

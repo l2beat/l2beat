@@ -1,15 +1,15 @@
 import React from 'react'
 
+import { ScalingLegend } from '../../../../components/ScalingLegend'
+import { Tabs } from '../../../../components/Tabs'
 import { Layer3sIcon } from '../../../../components/icons'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
-import { ScalingLegend } from '../../../../components/ScalingLegend'
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
-import { Tabs } from '../../../../components/Tabs'
 import {
   getActiveScalingSummaryColumnsConfig,
   getArchivedScalingSummaryColumnsConfig,

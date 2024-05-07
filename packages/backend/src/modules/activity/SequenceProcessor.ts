@@ -1,6 +1,6 @@
+import { EventEmitter } from 'events'
 import { Logger } from '@l2beat/backend-tools'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { EventEmitter } from 'events'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 

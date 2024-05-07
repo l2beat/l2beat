@@ -5,9 +5,9 @@ import { range } from 'lodash'
 
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class LoopringCounter extends SequenceProcessor {
   constructor(

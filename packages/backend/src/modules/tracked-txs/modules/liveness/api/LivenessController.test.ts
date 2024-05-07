@@ -15,11 +15,11 @@ import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
+import { LivenessController } from './LivenessController'
 import {
   calculateDetailsFor,
   calculateIntervals,
 } from './calculateIntervalWithAverages'
-import { LivenessController } from './LivenessController'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {

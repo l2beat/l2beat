@@ -1,7 +1,7 @@
-import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
-import { parse, ParseError } from 'jsonc-parser'
 import path from 'path'
+import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
+import { ParseError, parse } from 'jsonc-parser'
 
 export function parseManuallyVerifiedContracts(
   content: string,

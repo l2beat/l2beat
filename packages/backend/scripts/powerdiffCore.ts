@@ -1,9 +1,9 @@
-import Convert from 'ansi-to-html'
-import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
+import Convert from 'ansi-to-html'
+import chalk from 'chalk'
 
 function diffToHtml(
   path1: string,

@@ -1,9 +1,9 @@
-import { bridges, layer2s, layer3s } from '@l2beat/config'
-import express from 'express'
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import tinify from 'tinify'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
+import express from 'express'
 import puppeteer from 'puppeteer'
+import tinify from 'tinify'
 
 const STATIC_DIR = join(__dirname, '../../src/static')
 const OUTPUT_DIR = join(STATIC_DIR, 'meta-images/projects')

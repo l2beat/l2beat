@@ -14,10 +14,10 @@ export class DescendantIndexer extends ManagedChildIndexer {
   }
 
   override async update(_from: number, to: number): Promise<number> {
-    return Promise.resolve(to)
+    return await Promise.resolve(to)
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

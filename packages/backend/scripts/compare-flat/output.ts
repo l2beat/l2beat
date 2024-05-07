@@ -2,8 +2,8 @@ import chalk from 'chalk'
 
 import { printAsciiTable } from '../../src/tools/printAsciiTable'
 import {
-  estimateSimilarity,
   Project,
+  estimateSimilarity,
   removeCommonPath,
   transpose,
 } from './common'
