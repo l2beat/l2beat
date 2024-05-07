@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'fs'
 
-const BRIDGES_PATH = '../config/src/bridges/'
-const LAYER2_PATH = '../config/src/layer2s/'
+const BRIDGES_PATH = '../config/src/projects/bridges/'
+const LAYER2_PATH = '../config/src/projects/layer2s/'
 
 const ETHEREUM_ADDRESS_REGEX = /'0x[a-fA-F0-9]{40}'/g
 const PROJECT_ID_REGEX = /ProjectId\('(.*)'\)/
