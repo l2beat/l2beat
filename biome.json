@@ -69,7 +69,8 @@
         "useLiteralEnumMembers": "error"
       },
       "performance": {
-        "noAccumulatingSpread": "error"
+        "noAccumulatingSpread": "error",
+        "noDelete": "error"
       },
       "nursery": {
         "noDuplicateElseIf": "error"

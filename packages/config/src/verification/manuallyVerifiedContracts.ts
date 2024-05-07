@@ -14,6 +14,7 @@ export function parseManuallyVerifiedContracts(
     throw new Error('Cannot parse manuallyVerified.jsonc')
   }
 
+  // biome-ignore lint/performance/noDelete: not a performance problem
   delete parsed.$schema
 
   return ManuallyVerifiedContractsPerChain.parse(parsed)

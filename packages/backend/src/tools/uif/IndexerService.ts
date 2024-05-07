@@ -49,6 +49,7 @@ export class IndexerService {
       )
 
     for (const config of configurations) {
+      // biome-ignore lint/performance/noDelete: not a performance problem
       delete config.indexerId
     }
 
