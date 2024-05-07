@@ -1,29 +1,29 @@
 import {
   Bridge,
   CONTRACTS,
-  isSingleAddress,
   Layer2,
   Layer3,
   ScalingProjectContract,
   ScalingProjectEscrow,
+  isSingleAddress,
 } from '@l2beat/config'
 import {
   assert,
-  assertUnreachable,
   EthereumAddress,
   ImplementationChangeReportApiResponse,
   ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
 import { languageJoin } from '../../../utils/utils'
+import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
   TechnologyContract,
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'
-import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(

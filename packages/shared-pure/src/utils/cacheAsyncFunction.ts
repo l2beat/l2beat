@@ -21,7 +21,7 @@ export function cacheAsyncFunction<T>(fn: () => Promise<T>): {
       return cached.value
     }
     await refetch()
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: allow non-null
     return cached!.value
   }
 

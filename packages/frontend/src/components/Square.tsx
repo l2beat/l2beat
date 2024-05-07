@@ -1,4 +1,4 @@
-import { cva, VariantProps } from 'class-variance-authority'
+import { VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
 
 interface SquareProps extends VariantProps<typeof squareVariants> {}

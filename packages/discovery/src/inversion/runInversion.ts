@@ -1,7 +1,7 @@
+import { execSync } from 'child_process'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { execSync } from 'child_process'
 import { constants, utils } from 'ethers'
 import { mkdir, writeFile } from 'fs/promises'
 import { isObject } from 'lodash'

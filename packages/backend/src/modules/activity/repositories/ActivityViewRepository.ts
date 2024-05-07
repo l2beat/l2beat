@@ -25,9 +25,7 @@ export type ProjectsAggregatedDailyTransactionCounts = Pick<
 export class ActivityViewRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-    /* eslint-disable @typescript-eslint/unbound-method */
     this.refresh = this.wrapAny(this.refresh)
-    /* eslint-enable @typescript-eslint/unbound-method */
     this.autoWrap<CheckConvention<ActivityViewRepository>>(this)
   }
 

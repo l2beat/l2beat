@@ -13,7 +13,7 @@ const apiHistogram = new Histogram({
 export function createApiMetrics(): Middleware {
   return async function (ctx: Context, next: Next): Promise<void> {
     const key = Symbol.for('request-received.startTime')
-    // eslint-disable-next-line
+    // biome-ignore lint/suspicious/noExplicitAny: generic type
     const start: number = ctx[key as any]?.getTime?.() ?? Date.now()
 
     await next()
@@ -27,7 +27,6 @@ export function createApiMetrics(): Middleware {
       const timeMs = Date.now() - start
 
       // ctx._matchedRoute will include parameter range like /user/:id
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const path = (ctx._matchedRoute as string | undefined) ?? ctx.path
 
       apiHistogram

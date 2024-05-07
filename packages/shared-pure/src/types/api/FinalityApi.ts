@@ -1,7 +1,7 @@
 import z from 'zod'
 
-import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
+import { branded } from '../branded'
 
 export const FinalityDataPoint = z.object({
   minimumInSeconds: z.number().nonnegative().int().optional(),

@@ -2,7 +2,7 @@
 
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { type ReactNode } from 'react'
-import { createConfig, WagmiProvider } from 'wagmi'
+import { WagmiProvider, createConfig } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 
 import { env } from '~/env'

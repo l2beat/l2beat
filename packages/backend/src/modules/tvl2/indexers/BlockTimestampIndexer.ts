@@ -20,7 +20,7 @@ export interface BlockTimestampIndexerDeps
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
-    const logger = $.logger.tag($.chain)
+    const logger = $.logger.tag($.tag)
     const name = 'block_timestamp_indexer'
     super({ ...$, name, logger })
   }

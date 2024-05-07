@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
   DiscoveryMeta,
+  diffDiscovery,
   normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -15,9 +15,9 @@ import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
-import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
 

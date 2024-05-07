@@ -1,4 +1,4 @@
-import { getEnv, LogFormatterPretty, Logger } from '@l2beat/backend-tools'
+import { LogFormatterPretty, Logger, getEnv } from '@l2beat/backend-tools'
 
 import { check } from './check'
 

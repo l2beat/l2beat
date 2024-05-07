@@ -6,7 +6,7 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
-import { getReferencedName, Reference, resolveReference } from '../reference'
+import { Reference, getReferencedName, resolveReference } from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -60,7 +60,6 @@ export class StorageHandler implements ClassicHandler {
 
 function getDependencies(definition: StorageHandlerDefinition): string[] {
   const dependencies: string[] = []
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const add = (value: string | undefined) => value && dependencies.push(value)
 
   add(getReferencedName(definition.offset))
@@ -91,12 +90,10 @@ function resolveDependencies(
   let slot: bigint | bigint[]
   if (Array.isArray(definition.slot)) {
     slot = definition.slot.map((x) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const resolved = resolveReference(x, previousResults)
       return valueToBigInt(resolved)
     })
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const resolved = resolveReference(definition.slot, previousResults)
     slot = valueToBigInt(resolved)
   }
@@ -118,9 +115,9 @@ function computeSlot(resolved: ResolvedDefinition): bigint {
 
   const parts = [...resolved.slot]
   while (parts.length >= 3) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const a = parts.shift()!
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const b = parts.shift()!
     parts.unshift(hashBigints([b, a]))
   }

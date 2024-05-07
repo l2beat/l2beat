@@ -5,11 +5,11 @@ import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
   LoopringIcon,
-  OptimismIcon,
   OVMIcon,
+  OptimismIcon,
   PolygonIcon,
-  StarknetIcon,
   StarkWareIcon,
+  StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
 } from '../icons'

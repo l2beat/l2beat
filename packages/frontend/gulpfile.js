@@ -58,7 +58,7 @@ const proxyUrls = [
 function serve() {
   const app = express()
   app.use(express.static('build'))
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 

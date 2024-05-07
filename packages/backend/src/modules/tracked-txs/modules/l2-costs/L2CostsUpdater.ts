@@ -4,9 +4,9 @@ import { Knex } from 'knex'
 import { partition } from 'lodash'
 
 import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
-import { TrackedTxResult } from '../../types/model'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
+import { TrackedTxResult } from '../../types/model'
 import {
   L2CostsRecord,
   L2CostsRepository,

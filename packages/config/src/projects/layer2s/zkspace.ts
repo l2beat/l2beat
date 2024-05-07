@@ -1,16 +1,16 @@
 import {
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'

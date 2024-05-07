@@ -1,9 +1,9 @@
 import { assert } from '@l2beat/backend-tools'
 import {
-  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'

@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { TrackedTxResult } from './model'
 import { TrackedTxId } from './TrackedTxId'
+import { TrackedTxResult } from './model'
 
 export interface TxUpdaterInterface {
   update: (txs: TrackedTxResult[], knexTx?: Knex.Transaction) => Promise<void>

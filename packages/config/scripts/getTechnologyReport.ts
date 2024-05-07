@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { layer2s, ScalingProjectTechnologyChoice } from '../src'
+import { ScalingProjectTechnologyChoice, layer2s } from '../src'
 
 const keys = [
   'stateCorrectness',

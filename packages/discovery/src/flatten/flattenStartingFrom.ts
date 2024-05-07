@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { createHash } from 'crypto'
+import { assert } from '@l2beat/backend-tools'
 
 import {
   ByteRange,

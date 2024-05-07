@@ -1,14 +1,14 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { MulticallClient } from '../provider/multicall/MulticallClient'
+import { HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
 import { getValuesAndErrors } from './getValuesAndErrors'
-import { HandlerResult } from './Handler'
 
 export class HandlerExecutor {
   constructor(

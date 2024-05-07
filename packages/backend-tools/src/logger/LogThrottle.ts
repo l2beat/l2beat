@@ -40,7 +40,6 @@ export class LogThrottle {
       this.callCount[key] = count
 
       if (count > this.options.callsUntilThrottle) {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this.callCount[key]
 
         isThrottling = true
@@ -63,7 +62,6 @@ export class LogThrottle {
   ): void {
     setTimeout(() => {
       const messageCount = this.throttleCount[key] ?? 0
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete this.throttleCount[key]
       this.printer.print(
         logLevel,

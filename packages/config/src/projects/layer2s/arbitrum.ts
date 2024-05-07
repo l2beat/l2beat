@@ -1,21 +1,21 @@
 import {
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   MILESTONES,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { UPGRADE_MECHANISM } from '../../common/upgradeMechanism'
@@ -295,12 +295,16 @@ export const arbitrum: Layer2 = {
         batchSize: 150,
         sinceBlock: 7654707,
         version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
       {
         sinceBlock: 821923,
         batchSize: 150,
         address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
         version: '2',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'arbitrum-one',

@@ -36,10 +36,10 @@ export class DiscordClient {
       throw new Error(`Discord error: Message size exceeded (2000 characters)`)
     }
     if (channel === 'PUBLIC' && this.config.publicChannelId) {
-      return this.send(message, this.config.publicChannelId)
+      return await this.send(message, this.config.publicChannelId)
     }
     if (channel === 'INTERNAL') {
-      return this.send(message, this.config.internalChannelId)
+      return await this.send(message, this.config.internalChannelId)
     }
   }
 
@@ -53,7 +53,7 @@ export class DiscordClient {
       content: message,
     }
 
-    return this.query(endpoint, {
+    return await this.query(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
     })

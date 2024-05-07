@@ -45,7 +45,6 @@ export function getProjectTokensCharts(
   }
 
   // Project may be missing reports
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!assetValuesPerProject) {
     return baseResult
   }
@@ -53,17 +52,15 @@ export function getProjectTokensCharts(
   // Sort assets per type by USD value
   const tokens = Object.entries(assetValuesPerProject).reduce(
     (prev, [reportType, reports]) => {
-      return {
-        ...prev,
-        [reportType]: reports
-          .map((report) => ({
-            assetId: report.asset,
-            chainId: report.chainId,
-            assetType: report.reportType,
-            usdValue: asNumber(report.usdValue, 2),
-          }))
-          .sort((a, b) => b.usdValue - a.usdValue),
-      }
+      prev[reportType as keyof typeof prev] = reports
+        .map((report) => ({
+          assetId: report.asset,
+          chainId: report.chainId,
+          assetType: report.reportType,
+          usdValue: asNumber(report.usdValue, 2),
+        }))
+        .sort((a, b) => b.usdValue - a.usdValue)
+      return prev
     },
     baseResult,
   )
@@ -235,20 +232,16 @@ export function groupAndMergeBreakdowns(
 
     // Grouped entries may be missing, fill the gaps with empty primitives
     // i.e no native assets
-    /* eslint-disable @typescript-eslint/no-unnecessary-condition */
     const external = groupedExternalBreakdownEntries[projectId] ?? []
     const native = groupedNativeBreakdownEntries[projectId] ?? []
     const canonical = groupedCanonicalBreakdownEntries[projectId] ?? []
-    /* eslint-enable @typescript-eslint/no-unnecessary-condition */
 
-    return {
-      ...prev,
-      [projectId]: {
-        external,
-        native,
-        canonical,
-      },
+    prev[projectId] = {
+      external,
+      native,
+      canonical,
     }
+    return prev
   }, base)
 }
 

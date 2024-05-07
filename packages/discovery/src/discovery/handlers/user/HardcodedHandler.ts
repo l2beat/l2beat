@@ -18,11 +18,10 @@ export class HardCodedHandler implements ClassicHandler {
     readonly logger: DiscoveryLogger,
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // biome-ignore lint/suspicious/useAwait: this is a handler
   async execute(): Promise<HandlerResult> {
     return {
       field: this.field,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value: this.definition.value,
     }
   }

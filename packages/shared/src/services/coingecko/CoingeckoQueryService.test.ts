@@ -1,20 +1,20 @@
 import {
   CoingeckoId,
   EthereumAddress,
-  getHourlyTimestamps,
   UnixTime,
+  getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { HttpClient } from '../HttpClient'
 import { CoingeckoClient } from './CoingeckoClient'
 import {
-  approximateCirculatingSupply,
   CoingeckoQueryService,
-  generateRangesToCallHourly,
   MAX_DAYS_FOR_HOURLY_PRECISION,
-  pickClosestValues,
   QueryResultPoint,
+  approximateCirculatingSupply,
+  generateRangesToCallHourly,
+  pickClosestValues,
 } from './CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {

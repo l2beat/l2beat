@@ -1,11 +1,11 @@
 import React from 'react'
 
+import { Link } from '../../../components/Link'
 import {
   GlobeIcon,
   ProductIcon,
   ProductIconType,
 } from '../../../components/icons'
-import { Link } from '../../../components/Link'
 import { formatLink } from '../../../utils/formatLink'
 
 interface Props {

@@ -3,9 +3,9 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  UnixTime,
   numberAs,
   stringAs,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 

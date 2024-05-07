@@ -1,7 +1,7 @@
 import {
-  assertUnreachable,
   Sentiment,
   ValueWithSentiment,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import {

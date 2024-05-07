@@ -6,9 +6,9 @@ import { range } from 'lodash'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class StarknetCounter extends SequenceProcessor {
   constructor(

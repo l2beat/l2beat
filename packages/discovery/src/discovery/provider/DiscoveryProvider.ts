@@ -5,9 +5,9 @@ import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { TraceTransactionResponse } from './TransactionTrace'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export interface ContractMetadata {
   name: string
@@ -138,7 +138,7 @@ export class DiscoveryProvider {
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse> {
-    return this.provider.getTransaction(transactionHash.toString())
+    return await this.provider.getTransaction(transactionHash.toString())
   }
 
   async getTransactionTrace(
@@ -162,7 +162,7 @@ export class DiscoveryProvider {
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block> {
-    return this.provider.getBlock(blockNumber)
+    return await this.provider.getBlock(blockNumber)
   }
 
   async getCode(address: EthereumAddress, blockNumber: number): Promise<Bytes> {
@@ -191,7 +191,7 @@ export class DiscoveryProvider {
   async getContractDeploymentTx(
     address: EthereumAddress,
   ): Promise<Hash256 | undefined> {
-    return this.etherscanLikeClient.getContractDeploymentTx(address)
+    return await this.etherscanLikeClient.getContractDeploymentTx(address)
   }
 
   async getDeployer(
@@ -208,7 +208,7 @@ export class DiscoveryProvider {
   }
 
   async getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime> {
-    return this.etherscanLikeClient.getFirstTxTimestamp(address)
+    return await this.etherscanLikeClient.getFirstTxTimestamp(address)
   }
 
   async getDeploymentInfo(address: EthereumAddress): Promise<
@@ -239,11 +239,13 @@ export class DiscoveryProvider {
   }
 
   async getBlockNumber(): Promise<number> {
-    return getBlockNumberTwoProviders(this.provider, this.eventProvider)
+    return await getBlockNumberTwoProviders(this.provider, this.eventProvider)
   }
 
   async getBlockNumberAt(timestampNumber: UnixTime): Promise<number> {
-    return this.etherscanLikeClient.getBlockNumberAtOrBefore(timestampNumber)
+    return await this.etherscanLikeClient.getBlockNumberAtOrBefore(
+      timestampNumber,
+    )
   }
 
   async getLast10OutgoingTxs(

@@ -5,10 +5,10 @@ import {
 import React from 'react'
 
 import { Callout, CalloutProps } from '../../../../../components/Callout'
-import { ShieldIcon } from '../../../../../components/icons'
-import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
+import { ShieldIcon } from '../../../../../components/icons'
+import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
 import { UnverifiedContractsWarning } from '../ContractsSection/UnverifiedContractsWarning'

@@ -8,7 +8,6 @@ import { toContractValue } from './toContractValue'
 
 export const EXEC_REVERT_MSG = 'Execution reverted'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function callMethod(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -33,7 +32,6 @@ export async function callMethod(
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function decodeMethodResult(
   abi: utils.Interface,
   fragment: utils.FunctionFragment,

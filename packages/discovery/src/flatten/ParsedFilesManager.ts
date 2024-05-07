@@ -1,7 +1,7 @@
+import * as posix from 'path'
 import { assert } from '@l2beat/backend-tools'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
-import * as posix from 'path'
 
 import { getASTIdentifiers } from './getASTIdentifiers'
 
@@ -440,7 +440,6 @@ function decodeRemappings(remappingStrings: string[]): Remapping[] {
     let context = undefined
     let prefix: string | undefined = contextPrefix
     if (contextPrefix.includes(':')) {
-      // eslint-disable-next-line no-extra-semi
       ;[context, prefix] = contextPrefix.split(':')
     }
     context ??= ''

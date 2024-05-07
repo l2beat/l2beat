@@ -1,9 +1,9 @@
-import { formatSeconds, ProjectId, Sentiment } from '@l2beat/shared-pure'
+import { ProjectId, Sentiment, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { DATA_AVAILABILITY } from './dataAvailability'
 import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import { DATA_AVAILABILITY } from './dataAvailability'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,

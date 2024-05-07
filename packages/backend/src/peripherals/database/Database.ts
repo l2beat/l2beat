@@ -1,11 +1,11 @@
+import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import KnexConstructor, { Knex } from 'knex'
-import path from 'path'
 
 import { DatabaseConfig } from '../../config/Config'
-import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
+import { configureUtc } from './configureUtc'
 interface VersionQueryResult {
   rows: {
     server_version: string
@@ -104,7 +104,7 @@ export class Database {
   }
 
   private enableQueryLogging(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: generic type
     this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
       this.logger.trace('SQL Query', {
         query: queryCtx.sql,

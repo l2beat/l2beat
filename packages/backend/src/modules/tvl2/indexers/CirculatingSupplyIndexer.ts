@@ -11,8 +11,8 @@ import {
   AmountRecord,
   AmountRepository,
 } from '../repositories/AmountRepository'
-import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createAmountId } from '../utils/createAmountId'
 
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

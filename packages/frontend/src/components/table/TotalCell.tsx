@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { ScalingL2SummaryViewEntry } from '../../pages/scaling/summary/types'
-import { Badge } from '../badge/Badge'
 import { Callout } from '../Callout'
+import { Badge } from '../badge/Badge'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'

@@ -2,11 +2,11 @@ import React from 'react'
 
 import { AnomalyIndicator } from '../../../../components/AnomalyIndicator'
 import { InfoIcon } from '../../../../components/icons'
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
 import {
   Tooltip,

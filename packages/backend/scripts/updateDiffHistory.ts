@@ -4,20 +4,19 @@
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
-import {
-  ConfigReader,
-  diffDiscovery,
-  discover,
-  DiscoveryDiff,
-  discoveryDiffToMarkdown,
-  DiscoveryMeta,
-  getChainConfig,
-} from '@l2beat/discovery'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import {
+  ConfigReader,
+  DiscoveryDiff,
+  DiscoveryMeta,
+  diffDiscovery,
+  discover,
+  discoveryDiffToMarkdown,
+  getChainConfig,
+} from '@l2beat/discovery'
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
@@ -193,7 +192,7 @@ function getMainBranchName(): 'main' | 'master' {
       stdio: 'ignore',
     })
     return 'master'
-  } catch (error) {
+  } catch {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
     return 'main'
   }
@@ -238,7 +237,7 @@ function getFileVersionOnMainBranch(filePath: string): {
       content,
       mainBranchHash,
     }
-  } catch (e) {
+  } catch {
     console.log(`No previous version of ${filePath} found`)
     return {
       content: '',
@@ -252,7 +251,7 @@ function getGitUser(): { name: string; email: string } {
     const name = execSync('git config user.name').toString().trim()
     const email = execSync('git config user.email').toString().trim()
     return { name, email }
-  } catch (e) {
+  } catch {
     console.log('No git user found')
     return { name: 'unknown', email: 'unknown' }
   }

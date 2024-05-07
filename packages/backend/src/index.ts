@@ -45,7 +45,6 @@ async function reportError(e: unknown) {
   } else {
     Bugsnag.notify('Unknown error', (event) => {
       event.context = 'Backend index.ts'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       event.addMetadata('error', { message: e })
     })
   }

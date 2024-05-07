@@ -2,21 +2,21 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { ConfigFeatures } from '../../build/config/Config'
-import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { PlainLink } from '../PlainLink'
+import { MenuOpenIcon } from '../icons'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { PageLink } from './PageLink'
 import { SidebarMenu } from './SidebarMenu'
 import {
-  getSocialLinksProps,
   SocialLinks,
   SocialLinksProps,
+  getSocialLinksProps,
 } from './SocialLinks'
-import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
+import { NavbarPage } from './types'
 
 export interface NavbarProps {
   features: ConfigFeatures

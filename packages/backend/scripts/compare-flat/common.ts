@@ -1,8 +1,9 @@
+import { resolve } from 'path'
 import { assert } from '@l2beat/backend-tools'
 import {
   Layer2Provider,
-  layer2s,
   Layer3Provider,
+  layer2s,
   layer3s,
 } from '@l2beat/config'
 import {
@@ -12,8 +13,7 @@ import {
   removeComments,
 } from '@l2beat/discovery'
 import chalk from 'chalk'
-import { readdir, readFile } from 'fs/promises'
-import { resolve } from 'path'
+import { readFile, readdir } from 'fs/promises'
 
 export const ALL_CONFIGS = [...layer2s, ...layer3s]
 
@@ -197,7 +197,7 @@ async function readProject(
       },
       sources,
     }
-  } catch (e) {
+  } catch {
     console.log(
       `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
         'run discovery to generate flat files',

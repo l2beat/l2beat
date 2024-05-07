@@ -5,25 +5,35 @@ import { Histogram } from 'prom-client'
 
 import { Database } from './Database'
 
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
+// biome-ignore lint/complexity/noBannedTypes: we need to use these types
 type IdType = number | string | String | Number
 
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 type AnyMethod = (...args: any[]) => Promise<any>
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 type AddMethod = (record: any, ...args: any[]) => Promise<IdType>
 type AddManyMethod = (
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   records: any[],
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   ...args: any[]
 ) => Promise<IdType[] | number>
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 type UpdateMethod = (record: any, ...args: any[]) => Promise<IdType>
 type UpdateManyMethod = (
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   records: any[],
+  // biome-ignore lint/suspicious/noExplicitAny: generic type
   ...args: any[]
 ) => Promise<IdType[] | number>
+// biome-ignore lint: generic type
 type GetMethod = (...args: any[]) => Promise<{}[]>
+// biome-ignore lint: generic type
 type FindMethod = (...args: any[]) => Promise<{} | undefined>
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 type DeleteMethod = (...args: any[]) => Promise<number>
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 type SetMethod = (...args: any[]) => Promise<number>
-/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
 type Keys<T, U> = Extract<keyof T, U>
 type Match<T, U> = T extends U ? T : Exclude<U, T>
@@ -111,7 +121,6 @@ export abstract class BaseRepository {
     return this.database.getKnex(trx)
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   autoWrap<T>(obj: T) {
     const methodNames = Object.getOwnPropertyNames(
       Object.getPrototypeOf(obj),
@@ -196,13 +205,11 @@ export abstract class BaseRepository {
       )
     }
   }
-  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   protected wrapAny<T extends AnyMethod>(method: T): T {
     return this.wrap(method, () => this.logger.debug({ method: method.name }))
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   protected wrapAdd<T extends AddMethod>(method: T): T {
     return this.wrap(method, (id) =>
       this.logger.debug({ method: method.name, id: id.valueOf() }),
@@ -241,7 +248,7 @@ export abstract class BaseRepository {
       if (records.length === 0) {
         return []
       }
-      return method.call(this, records, ...args)
+      return await method.call(this, records, ...args)
     }
 
     return this.wrap(fn, (result) =>
@@ -261,13 +268,11 @@ export abstract class BaseRepository {
       histogram: this.histogram,
       labels: { repository: this.constructor.name, method: method.name },
     })
-    /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
     const fn = async (...args: Parameters<T>) => {
       const result: Awaited<ReturnType<T>> = await measured(...args)
       log(result)
       return result
     }
-    /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
     Object.defineProperty(fn, 'name', { value: method.name })
     Object.defineProperty(fn, 'wrapped', { value: true })
     return fn as T

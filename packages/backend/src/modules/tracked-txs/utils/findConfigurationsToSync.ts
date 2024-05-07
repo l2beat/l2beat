@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { cn } from '../utils/cn'
-import { ArrowRightIcon } from './icons'
 import { PlainLink } from './PlainLink'
+import { ArrowRightIcon } from './icons'
 
 export interface LinkWithThumbnailProps {
   title: string
