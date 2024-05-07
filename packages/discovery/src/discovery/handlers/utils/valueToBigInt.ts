@@ -10,7 +10,7 @@ export function valueToBigInt(value: bigint | Bytes | ContractValue): bigint {
   }
   try {
     return BigInt(value)
-  } catch (_e) {
+  } catch {
     throw new Error('Cannot convert value to bigint')
   }
 }

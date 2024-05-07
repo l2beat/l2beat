@@ -157,7 +157,7 @@ export class UnixTime {
     try {
       new UnixTime(timestamp)
       return true
-    } catch (_e) {
+    } catch {
       return false
     }
   }

@@ -73,7 +73,7 @@ export class ConstructorArgsHandler implements ClassicHandler {
         await this.getWithDeploymentTransaction(provider, address)
 
       return serializeResult(decodedConstructorArguments)
-    } catch (_error) {
+    } catch {
       this.logger.log(
         'Could not get constructor arguments with heuristic approach. Trying with block explorer.',
       )
@@ -185,7 +185,7 @@ export function decodeConstructorArgs(
         constructorFragment.inputs,
         '0x' + slice,
       )
-    } catch (_error) {
+    } catch {
       continue
     }
   }
