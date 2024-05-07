@@ -101,7 +101,7 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2">
-            <strong>{contract.name}</strong>{' '}
+            <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
@@ -139,7 +139,9 @@ export function ContractEntry({
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>{' '}
-              {contract.upgradeableBy}
+              <Link href={`#${contract.upgradeableBy}`}>
+                {contract.upgradeableBy}
+              </Link>
             </p>
           )}
           {contract.upgradeDelay && (

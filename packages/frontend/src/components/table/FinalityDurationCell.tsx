@@ -53,7 +53,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <span>Past day avg. {popUpText}</span>
           <ul className="mt-1 list-inside list-disc">
             {props.scope === 'timeToInclusion' &&
-              props.timings.minimumInSeconds && (
+              props.timings.minimumInSeconds !== undefined && (
                 <li className="flex justify-between gap-4">
                   Minimum:
                   <div>
@@ -72,7 +72,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
               </div>
             </li>
             {props.scope === 'timeToInclusion' &&
-              props.timings.maximumInSeconds && (
+              props.timings.maximumInSeconds !== undefined && (
                 <li className="flex justify-between gap-4">
                   Maximum:
                   <div>
