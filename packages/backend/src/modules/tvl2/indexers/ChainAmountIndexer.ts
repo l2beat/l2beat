@@ -47,6 +47,13 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       (c) => !c.hasData,
     )
 
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Skipping update for configurations with data', {
+        configurations: configurations.length,
+        configurationsWithMissingData: configurationsWithMissingData.length,
+      })
+    }
+
     const blockNumber =
       await this.$.blockTimestampsRepository.findByChainAndTimestamp(
         this.$.chain,
