@@ -22,6 +22,7 @@ export function createStatusModule(
 
   const routers: Router[] = [
     createStatusRouter(
+      config,
       peripherals.getRepository(IndexerStateRepository),
       peripherals.getRepository(IndexerConfigurationRepository),
     ),

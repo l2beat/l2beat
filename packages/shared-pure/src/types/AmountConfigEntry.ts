@@ -38,4 +38,5 @@ export interface AmountConfigBase {
   untilTimestamp?: UnixTime
   includeInTotal: boolean
   decimals: number
+  symbol: string
 }

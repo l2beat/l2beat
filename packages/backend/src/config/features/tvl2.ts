@@ -1,5 +1,12 @@
 import { assert, Env } from '@l2beat/backend-tools'
-import { bridges, chains, Layer2, layer2s, tokenList } from '@l2beat/config'
+import {
+  bridges,
+  chains,
+  Layer2,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import {
   AmountConfigEntry,
   ChainId,
@@ -9,7 +16,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
+import {
+  bridgeToProject,
+  layer2ToProject,
+  layer3ToProject,
+  Project,
+} from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
@@ -23,6 +35,7 @@ export function getTvl2Config(
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
+    .concat(layer3s.map(layer3ToProject))
 
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
@@ -63,6 +76,9 @@ function getAmountsConfig(
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
+      if (token.symbol === 'ETH') {
+        continue
+      }
       const project = chainToProject.get(chainConverter.toName(token.chainId))
       assert(project, 'Project is required for token')
 
@@ -79,6 +95,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'circulatingSupply':
@@ -92,6 +109,7 @@ function getAmountsConfig(
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
+            symbol: token.symbol,
           })
           break
         case 'locked':
@@ -111,17 +129,41 @@ function getAmountsConfig(
             token.sinceTimestamp,
             escrow.sinceTimestamp,
           ),
+          untilTimestamp: getUntilTimestamp(
+            token.untilTimestamp,
+            escrow.untilTimestamp,
+          ),
           escrowAddress: escrow.address,
           project: project.projectId,
           source: toSource(token.type),
-          includeInTotal: true,
+          includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
+          symbol: token.symbol,
         })
       }
     }
   }
 
   return entries
+}
+
+function getUntilTimestamp(
+  tokenUntil: UnixTime | undefined,
+  escrowUntil: UnixTime | undefined,
+): UnixTime | undefined {
+  if (tokenUntil === undefined && escrowUntil === undefined) {
+    return undefined
+  }
+
+  if (tokenUntil === undefined) {
+    return escrowUntil
+  }
+
+  if (escrowUntil === undefined) {
+    return tokenUntil
+  }
+
+  return UnixTime.max(tokenUntil, escrowUntil)
 }
 
 function getPricesConfig(
