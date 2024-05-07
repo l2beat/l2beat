@@ -215,4 +215,5 @@ const config: Config = {
   },
   plugins: [require('tailwindcss-animate')],
 }
+// biome-ignore lint/style/noDefaultExport: this is a storybook config
 export default config

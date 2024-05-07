@@ -26,4 +26,5 @@ const nextConfig = {
   },
 }
 
+// biome-ignore lint/style/noDefaultExport: this is a storybook config
 export default withBundleAnalyzer(nextConfig)
