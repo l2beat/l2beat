@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb486b49df204c63a11083bb805aadd9196eb8a07
+Generated with discovered.json: 0x5ee9eadf99dff21ccf5d95974efa99aa3c248dbc
 
-# Diff at Mon, 29 Apr 2024 15:16:13 GMT:
+# Diff at Mon, 29 Apr 2024 15:51:15 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19761791
+- current block number: 19761972
 
 ## Description
 
@@ -68,7 +68,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
-    +++ description: None
+    +++ description: Manages interactions between stakers and Eigenlayer operators, registers operators.
 ```
 
 ```diff
@@ -104,7 +104,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
-    +++ description: None
+    +++ description: The entry- and exit-point for funds into and out of EigenLayer, manages strategies.
 ```
 
 ```diff
@@ -164,17 +164,17 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EigenlayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
-    +++ description: None
+    +++ description: This multisig is 1/2 of the Eigenlayer SC system owners (full upgradability with a timelock)
 ```
 
 ```diff
 +   Status: CREATED
     contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
-    +++ description: None
+    +++ description: Registers contracts with slashing rights, tracks historic stake updates.
 ```
 
 ```diff
 +   Status: CREATED
     contract EigenlayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
-    +++ description: None
+    +++ description: This multisig is 1/2 of the Eigenlayer SC system owners (full direct upgradability)
 ```

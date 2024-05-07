@@ -83,6 +83,7 @@
     },
     {
       "name": "DelegationManager",
+      "description": "Manages interactions between stakers and Eigenlayer operators, registers operators.",
       "values": {
         "DELEGATION_APPROVAL_TYPEHASH": {
           "description": null,
@@ -180,19 +181,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -358,6 +359,7 @@
     },
     {
       "name": "EigenlayerCommunityMultisig",
+      "description": "This multisig is 1/2 of the Eigenlayer SC system owners (full direct upgradability)",
       "values": {
         "VERSION": {
           "description": null,
@@ -393,6 +395,7 @@
     },
     {
       "name": "EigenlayerOperationsMultisig",
+      "description": "This multisig is 1/2 of the Eigenlayer SC system owners (full upgradability with a timelock)",
       "values": {
         "VERSION": {
           "description": null,
@@ -470,19 +473,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -520,19 +523,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -590,19 +593,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -633,6 +636,7 @@
     },
     {
       "name": "Slasher",
+      "description": "Registers contracts with slashing rights, tracks historic stake updates.",
       "values": {
         "delegation": {
           "description": null,
@@ -663,6 +667,7 @@
     },
     {
       "name": "StrategyManager",
+      "description": "The entry- and exit-point for funds into and out of EigenLayer, manages strategies.",
       "values": {
         "DEPOSIT_TYPEHASH": {
           "description": null,
@@ -780,19 +785,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -830,19 +835,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -880,19 +885,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -930,19 +935,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -980,19 +985,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -1030,19 +1035,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -1080,19 +1085,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
@@ -1130,19 +1135,19 @@
           "type": null
         },
         "getTVLLimits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxPerDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "maxTotalDeposits": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
         },
         "paused": {
           "description": null,
