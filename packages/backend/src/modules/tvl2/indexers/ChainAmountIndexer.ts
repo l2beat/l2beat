@@ -63,16 +63,18 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
       blockNumber,
-      amounts: amounts.length,
-      configurations: configurationsWithMissingData.length,
+      escrows: amounts.filter((a) => a.type === 'escrow').length,
+      totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
     await this.$.amountRepository.addMany(nonZeroAmounts)
 
     this.logger.info('Saved amounts for timestamp into DB', {
-      amounts: nonZeroAmounts.length,
-      configurations: configurationsWithMissingData.length,
+      timestamp: timestamp.toNumber(),
+      escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+      totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+        .length,
     })
 
     return timestamp.toNumber()
