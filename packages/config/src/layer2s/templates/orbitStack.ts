@@ -350,6 +350,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         {
+          chain: templateVars.hostChain.toString(),
+          includeInTotal: false,
           ...templateVars.discovery.getEscrowDetails({
             address: templateVars.bridge.address,
             tokens: templateVars.nativeToken
@@ -360,8 +362,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
             ...upgradeability,
           }),
-          chain: templateVars.hostChain.toString(),
-          includeInTotal: false,
         },
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
