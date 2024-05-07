@@ -88,45 +88,6 @@ describe(L2CostsAggregatorIndexer.name, () => {
       // 2023-05-01 00:30:00
       expect(result).toEqual(to.toNumber())
     })
-
-    it('throws if prices not available', async () => {
-      // 2023-05-01 00:01:00
-      const txTime = MIN.add(1, 'minutes')
-
-      const txs = [
-        tx({
-          timestamp: txTime,
-        }),
-      ]
-
-      const ethPrices = new Map([])
-
-      const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
-        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
-      })
-
-      const priceRepositoryMock = mockObject<PriceRepository>({
-        findByTimestampRange: mockFn().resolvesTo(ethPrices),
-      })
-
-      const indexer = createIndexer({
-        tag: 'update-day',
-        l2CostsRepository: l2CostsRepositoryMock,
-        priceRepository: priceRepositoryMock,
-      })
-
-      // 2023-05-02 23:59:59
-      const endOfFirstDay = NOW.add(1, 'days').add(-1, 'seconds')
-      indexer.shift = mockFn().returns([MIN, endOfFirstDay])
-
-      await expect(
-        async () => await indexer.update(MIN.toNumber(), NOW.toNumber()),
-      ).toBeRejectedWith(
-        `Assertion Error: [${
-          L2CostsAggregatorIndexer.name
-        }]: ETH price not found: ${txTime.toStartOf('hour').toNumber()}`,
-      )
-    })
   })
 
   describe(L2CostsAggregatorIndexer.prototype.aggregate.name, () => {
@@ -224,6 +185,18 @@ describe(L2CostsAggregatorIndexer.name, () => {
           overheadGasUsd: 1,
         },
       ])
+    })
+
+    it('throws if prices not available', async () => {
+      const indexer = createIndexer({ tag: 'aggregate-throw' })
+      const txs = [tx()]
+      const ethPrices = new Map([[NOW.add(1, 'hours').toNumber(), 2100]])
+
+      expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
+        `Assertion Error: [${
+          L2CostsAggregatorIndexer.name
+        }]: ETH price not found: ${NOW.toStartOf('hour').toNumber()}`,
+      )
     })
   })
 
