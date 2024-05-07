@@ -6,36 +6,32 @@ export function configureDropdowns() {
   const dropdowns = $$('[data-role=dropdown]')
 
   for (const dropdown of dropdowns) {
-    const button = dropdown.querySelector<HTMLInputElement>(
-      '[data-role=dropdown-button]',
+    const {$} = makeQuery(dropdown)
+
+    const trigger = $<HTMLInputElement>(
+      '[data-role=dropdown-trigger]',
     )
-    if (!button) continue
-    const hiddenItems = dropdown.querySelectorAll<HTMLElement>(
-      '[data-role=dropdown-item]',
+    const content = $<HTMLElement>(
+      '[data-role=dropdown-content]',
     )
 
-    const closeDropdown = () => {
-      hiddenItems.forEach((item) => {
-        item.classList.add('hidden')
-      })
-    }
+    const close = () =>
+      content.removeAttribute('data-open')
 
-    const openDropdown = () => {
-      hiddenItems.forEach((item) => {
-        item.classList.toggle('hidden')
-      })
-    }
+    const open = () =>
+      content.setAttribute('data-open', 'true')
 
-    button.addEventListener('click', () => {
-      openDropdown()
+    trigger.addEventListener('change', () => {
+      if (trigger.checked) open()
+      else close()
     })
 
     document.addEventListener('click', (event) => {
       const isClickInsideDropdown = dropdown.contains(event.target as Node)
 
-      if (!isClickInsideDropdown) {
-        closeDropdown()
-        button.checked = false
+      if (!isClickInsideDropdown && trigger.checked) {
+        close()
+        trigger.checked = false
       }
     })
   }

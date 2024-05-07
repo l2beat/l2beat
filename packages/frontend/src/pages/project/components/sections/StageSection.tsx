@@ -2,7 +2,11 @@ import { UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
 import {
-  ChevronDownIcon,
+  Dropdown,
+  DropdownContent,
+  DropdownTrigger,
+} from '../../../../components/Dropdown'
+import {
   MissingIcon,
   RoundedWarningIcon,
   SatisfiedIcon,
@@ -97,80 +101,72 @@ export function StageSection(props: StageSectionProps) {
         )
 
         return (
-          <div
+          <Dropdown
             key={stage.stage}
             className="mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
-            data-role="dropdown"
           >
-            <label className="flex cursor-pointer items-center justify-between p-4">
-              <input
-                type="checkbox"
-                autoComplete="off"
-                className="peer hidden"
-                data-role="dropdown-button"
-              />
-              <div className="flex select-none items-center gap-3">
-                <StageBadge stage={stage.stage} big />
-                {missing.length === 0 ? (
-                  <div className="flex flex-col gap-3 md:flex-row">
-                    <div className="flex items-center gap-2">
-                      <SatisfiedIcon className="shrink-0" />
-                      <span>{reqTextSatisfied(satisfied.length)}</span>
-                    </div>
-                    {underReview.length > 0 && (
-                      <div className="flex items-center gap-2">
-                        <UnderReviewIcon className="shrink-0" />
-                        <span>{underReview.length} under review</span>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    {stage.stage === 'Stage 0' ? (
-                      <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
-                    ) : (
-                      <MissingIcon className="shrink-0" />
-                    )}
-                    <span>{reqTextMissing(missing.length)}</span>
-                  </div>
-                )}
-              </div>
-              <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
-            </label>
-            <ul
-              className="mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
-              data-role="dropdown-item"
+            <DropdownTrigger
+              className="p-4"
+              childrenClassName="flex select-none items-center gap-3"
             >
-              {satisfied.map((req, i) => (
-                <li key={i} className="flex">
-                  <SatisfiedIcon className="relative top-0.5 shrink-0" />
-                  <Markdown className="ml-2" inline>
-                    {req.description}
-                  </Markdown>
-                </li>
-              ))}
-              {underReview.map((req, i) => (
-                <li key={i} className="flex">
-                  <UnderReviewIcon className="relative top-0.5 shrink-0 " />
-                  <Markdown className="ml-2" inline>
-                    {req.description}
-                  </Markdown>
-                </li>
-              ))}
-              {missing.map((req, i) => (
-                <li key={i} className="flex">
+              <StageBadge stage={stage.stage} big />
+              {missing.length === 0 ? (
+                <div className="flex flex-col gap-3 md:flex-row">
+                  <div className="flex items-center gap-2">
+                    <SatisfiedIcon className="shrink-0" />
+                    <span>{reqTextSatisfied(satisfied.length)}</span>
+                  </div>
+                  {underReview.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <UnderReviewIcon className="shrink-0" />
+                      <span>{underReview.length} under review</span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
                   {stage.stage === 'Stage 0' ? (
                     <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
                   ) : (
-                    <MissingIcon className="relative top-0.5 shrink-0" />
+                    <MissingIcon className="shrink-0" />
                   )}
-                  <Markdown className="ml-2" inline>
-                    {req.description}
-                  </Markdown>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  <span>{reqTextMissing(missing.length)}</span>
+                </div>
+              )}
+            </DropdownTrigger>
+            <DropdownContent>
+              <ul className="mx-4 space-y-2 pb-4 md:px-4 md:pb-6">
+                {satisfied.map((req, i) => (
+                  <li key={i} className="flex">
+                    <SatisfiedIcon className="relative top-0.5 shrink-0" />
+                    <Markdown className="ml-2" inline>
+                      {req.description}
+                    </Markdown>
+                  </li>
+                ))}
+                {underReview.map((req, i) => (
+                  <li key={i} className="flex">
+                    <UnderReviewIcon className="relative top-0.5 shrink-0 " />
+                    <Markdown className="ml-2" inline>
+                      {req.description}
+                    </Markdown>
+                  </li>
+                ))}
+                {missing.map((req, i) => (
+                  <li key={i} className="flex">
+                    {stage.stage === 'Stage 0' ? (
+                      <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
+                    ) : (
+                      <MissingIcon className="relative top-0.5 shrink-0" />
+                    )}
+                    <Markdown className="ml-2" inline>
+                      {req.description}
+                    </Markdown>
+                  </li>
+                ))}
+              </ul>
+            </DropdownContent>
+          </Dropdown>
         )
       })}
       <Link

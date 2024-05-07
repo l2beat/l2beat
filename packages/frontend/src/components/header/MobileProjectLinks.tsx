@@ -3,7 +3,7 @@ import React from 'react'
 import { LinkSectionLink } from '../../pages/project/components/LinkSectionLink'
 import { ProjectLink } from '../../pages/project/types'
 import { cn } from '../../utils/cn'
-import { ChevronDownIcon } from '../icons'
+import { Dropdown, DropdownContent, DropdownTrigger } from '../Dropdown'
 
 interface MobileProjectLinksProps {
   projectLinks: ProjectLink[]
@@ -11,23 +11,14 @@ interface MobileProjectLinksProps {
 
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
-    <div data-role="dropdown">
-      <label className="flex items-center justify-between py-4">
-        <input
-          type="checkbox"
-          autoComplete="off"
-          className="peer hidden"
-          data-role="dropdown-button"
-        />
-        <div>
-          <span className="font-bold">Links:</span>
-          <span className="ml-2 font-medium text-gray-600">
-            Website, Docs, etc.
-          </span>
-        </div>
-        <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
-      </label>
-      <div className="hidden" data-role="dropdown-item">
+    <Dropdown>
+      <DropdownTrigger className="py-4">
+        <span className="font-bold">Links:</span>
+        <span className="ml-2 font-medium text-gray-600">
+          Website, Docs, etc.
+        </span>
+      </DropdownTrigger>
+      <DropdownContent>
         <table className="w-full table-fixed border-collapse text-left text-xs">
           <tbody>
             {props.projectLinks.map(({ name, links }, i) => (
@@ -52,7 +43,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
             ))}
           </tbody>
         </table>
-      </div>
-    </div>
+      </DropdownContent>
+    </Dropdown>
   )
 }
