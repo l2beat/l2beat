@@ -1,3 +1,5 @@
+// TODO(imxeno): These are now unused, but we will use them in the new UI, so I'm leaving it here.
+
 export const NetworkType = {
   Unknown: 'Unknown',
   Mainnet: 'Mainnet',
