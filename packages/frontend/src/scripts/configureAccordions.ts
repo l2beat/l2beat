@@ -7,32 +7,40 @@ export function configureAccordions() {
   accordions.forEach(configureAccordion)
 }
 
-function configureAccordion(accordion: HTMLElement){
-  const {$} = makeQuery(accordion)
+function configureAccordion(accordion: HTMLElement) {
+  const { $$ } = makeQuery(accordion)
+  const type = accordion.getAttribute('data-type') ?? 'single'
+  const items = $$('[data-role=accordion-item]')
 
-  const trigger = $<HTMLInputElement>(
-    '[data-role=accordion-trigger]',
-  )
+  const closeAllItems = () => {
+    items.forEach((item) => item.removeAttribute('data-open'))
+  }
+  const onOpen = type === 'single' ? closeAllItems : undefined
 
-  const close = () =>
-    accordion.removeAttribute('data-open')
+  items.forEach((item) => configureAccordionItem(item, onOpen))
+}
 
-  const open = () =>
-    accordion.setAttribute('data-open', 'true')
+function configureAccordionItem(
+  item: HTMLElement,
+  onOpen: (() => void) | undefined,
+) {
+  const { $ } = makeQuery(item)
 
-  const isOpen = () => accordion.hasAttribute('data-open')
+  const trigger = $<HTMLInputElement>('[data-role=accordion-trigger]')
+
+  const close = () => item.removeAttribute('data-open')
+
+  const open = () => item.setAttribute('data-open', 'true')
+
+  const isOpen = () => item.hasAttribute('data-open')
 
   trigger.addEventListener('click', () => {
-    if (isOpen()) close()
-    else open()
-  })
-
-  document.addEventListener('click', (event) => {
-    const isClickInsideAccordion = accordion.contains(event.target as Node)
-
-    if (!isClickInsideAccordion && isOpen()) {
+    if (isOpen()) {
       close()
-      trigger.checked = false
+      return
     }
+
+    onOpen?.()
+    open()
   })
 }

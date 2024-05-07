@@ -4,6 +4,21 @@ import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
 interface AccordionProps {
+  children:
+    | ReactElement<AccordionItemProps>
+    | ReactElement<AccordionItemProps>[]
+  type?: 'single' | 'multiple'
+}
+
+export function Accordion({ children, type = 'single' }: AccordionProps) {
+  return (
+    <div data-role="accordion" data-type={type}>
+      {children}
+    </div>
+  )
+}
+
+interface AccordionItemProps {
   children: [
     ReactElement<AccordionTriggerProps>,
     ReactElement<AccordionContentProps>,
@@ -11,9 +26,12 @@ interface AccordionProps {
   className?: string
 }
 
-export function Accordion({ children, className }: AccordionProps) {
+export function AccordionItem({ children, className }: AccordionItemProps) {
   return (
-    <div data-role="accordion" className={cn('group/accordion', className)}>
+    <div
+      data-role="accordion-item"
+      className={cn('group/accordion-item', className)}
+    >
       {children}
     </div>
   )
@@ -39,7 +57,7 @@ export function AccordionTrigger({
       )}
     >
       <div className={childrenClassName}>{children}</div>
-      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion:-rotate-180" />
+      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
     </div>
   )
 }
@@ -56,7 +74,7 @@ export function AccordionContent({
   return (
     <div
       data-role="accordion-content"
-      className={cn('hidden group-data-[open]/accordion:block', className)}
+      className={cn('hidden group-data-[open]/accordion-item:block', className)}
     >
       {children}
     </div>
