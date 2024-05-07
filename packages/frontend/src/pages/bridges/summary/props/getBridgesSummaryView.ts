@@ -69,10 +69,11 @@ export function getBridgesSummaryViewEntry(
     isArchived: project.isArchived,
     isVerified,
     hasImplementationChanged,
-    destination:
+    destination: getDestination(
       project.type === 'bridge'
-        ? getDestination(project.technology.destination)
-        : undefined,
+        ? project.technology.destination
+        : [project.display.name],
+    ),
     showProjectUnderReview: isAnySectionUnderReview(project),
     tvl: stats
       ? {

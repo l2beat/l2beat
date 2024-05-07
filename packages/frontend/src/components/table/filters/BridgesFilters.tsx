@@ -24,18 +24,6 @@ export function BridgesFilters({ items }: Props) {
       label: p ?? 'No type',
       value: generateSlugList(items, (i) => i.category === p),
     }))
-  const destinations = uniq(items.map((i) => i.destination?.value))
-    .sort()
-    .map((p) => ({
-      label: p ?? 'No type',
-      value: generateSlugList(
-        items,
-        (i) =>
-          (i.destination?.value === p ||
-            i.destination?.description.includes(p ?? '')) ??
-          false,
-      ),
-    }))
 
   return (
     <OverflowWrapper>
@@ -60,17 +48,6 @@ export function BridgesFilters({ items }: Props) {
               value={type.value}
             >
               {type.label}
-            </RichSelect.Item>
-          ))}
-        </RichSelect>
-        <RichSelect label="Destination" id="destination-select">
-          {destinations.map((destination) => (
-            <RichSelect.Item
-              selectedLabel={destination.label}
-              key={destination.label}
-              value={destination.value}
-            >
-              {destination.label}
             </RichSelect.Item>
           ))}
         </RichSelect>
