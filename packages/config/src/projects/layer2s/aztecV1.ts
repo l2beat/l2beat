@@ -167,7 +167,10 @@ export const aztecV1: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: null,
+        delayWith30DExitWindow: [
+          true,
+          'Users can exit through the escape hatch mechanism and the rollup contract is immutable.',
+        ],
       },
     },
     {

@@ -148,7 +148,10 @@ export const aztecconnect: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: null,
+        delayWith30DExitWindow: [
+          true,
+          'Users can exit at any time and the rollup contract is immutable.',
+        ],
       },
     },
     {
