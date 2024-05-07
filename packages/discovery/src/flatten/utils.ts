@@ -1,6 +1,6 @@
 import { ContractSources } from '../discovery/source/SourceCodeService'
-import { flattenStartingFrom } from './flattenStartingFrom'
 import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flattenStartingFrom'
 
 export interface HashedChunks {
   content: string

@@ -1,10 +1,9 @@
 import { readdirSync } from 'fs'
-import { posix } from 'path'
+import path, { posix } from 'path'
 import { assert } from '@l2beat/backend-tools'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { readFile } from 'fs/promises'
-import { parse, ParseError } from 'jsonc-parser'
-import path, { posix } from 'path'
+import { ParseError, parse } from 'jsonc-parser'
 
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'

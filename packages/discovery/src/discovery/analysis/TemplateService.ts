@@ -1,11 +1,11 @@
-import { existsSync, readdirSync, readFileSync } from 'fs'
+import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 
 import {
+  HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
   flattenFirstSource,
-  HashedFileContent,
   removeComments,
 } from '../../flatten/utils'
 import { TEMPLATES_PATH } from '../config/ConfigReader'

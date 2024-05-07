@@ -1,10 +1,9 @@
-import { dirname, posix } from 'path'
+import path, { dirname, posix } from 'path'
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { isEmpty } from 'lodash'
 import { mkdirp } from 'mkdirp'
-import path, { dirname, posix } from 'path'
 import { rimraf } from 'rimraf'
 
 import {
@@ -13,6 +12,7 @@ import {
 } from '../../flatten/ParsedFilesManager'
 import { flattenStartingFrom } from '../../flatten/flattenStartingFrom'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryMeta } from '../config/DiscoveryMeta'

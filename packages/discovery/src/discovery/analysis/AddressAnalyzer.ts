@@ -16,8 +16,8 @@ import {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { getRelatives } from './getRelatives'
 import { TemplateService } from './TemplateService'
+import { getRelatives } from './getRelatives'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 

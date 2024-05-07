@@ -7,9 +7,9 @@ import {
   layer3s,
 } from '@l2beat/config'
 import {
+  HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
-  HashedFileContent,
   removeComments,
 } from '@l2beat/discovery'
 import chalk from 'chalk'
