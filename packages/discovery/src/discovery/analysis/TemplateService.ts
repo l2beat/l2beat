@@ -12,7 +12,7 @@ import { TEMPLATES_PATH } from '../config/ConfigReader'
 import { ContractSources } from '../source/SourceCodeService'
 
 const TEMPLATE_SHAPE_FOLDER = 'shape'
-const TEMPLATE_SIMILARITY_THRESHOLD = 0.9
+const TEMPLATE_SIMILARITY_THRESHOLD = 0.55
 
 export class TemplateService {
   constructor(
@@ -21,10 +21,14 @@ export class TemplateService {
 
   findMatchingTemplates(sources: ContractSources): Record<string, number> {
     const result: Record<string, number> = {}
-    const flatSource = flattenFirstSource(sources)
+    if (!sources.isVerified) {
+      return result
+    }
+
+    const flatSource = removeComments(flattenFirstSource(sources))
     const sourceHashed: HashedFileContent = {
       path: '',
-      hashChunks: buildSimilarityHashmap(removeComments(flatSource)),
+      hashChunks: buildSimilarityHashmap(flatSource),
       content: flatSource,
     }
     iterateFoldersRecursively(TEMPLATES_PATH, (path) => {
@@ -43,10 +47,12 @@ export class TemplateService {
       const similarities: number[] = []
       for (const file of solidityShapeFiles) {
         const shapeFilePath = join(shapePath, file.name)
-        const shapeFileContent = readFileSync(shapeFilePath, 'utf8')
+        const shapeFileContent = removeComments(
+          readFileSync(shapeFilePath, 'utf8'),
+        )
         const shapeFileHashed: HashedFileContent = {
           path: shapeFilePath,
-          hashChunks: buildSimilarityHashmap(removeComments(shapeFileContent)),
+          hashChunks: buildSimilarityHashmap(shapeFileContent),
           content: shapeFileContent,
         }
         const similarity = estimateSimilarity(sourceHashed, shapeFileHashed)
