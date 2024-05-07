@@ -49,16 +49,13 @@ export default async function Page({ params: { address } }: Props) {
     generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
       const { chainId, address } = token
 
-      // Skip tokens without address (coins)
-      if (!address || !isAddress(address)) return acc
-
       if (!acc[chainId]) {
         acc[chainId] = []
       }
       acc[chainId]?.push({
         ...token,
         // To make TypeScript happy
-        address: isAddress(address) ? address : undefined,
+        address: address && isAddress(address) ? address : undefined,
       })
 
       return acc
@@ -141,7 +138,7 @@ export default async function Page({ params: { address } }: Props) {
               ]
             : []),
           ...results.map((data, i) => {
-            const token = arr[i]
+            const token = tokenAddresses[i]
             if (!token) throw new Error('Token not found')
             return {
               token: {
