@@ -13,7 +13,7 @@ interface AccordionProps {
 
 export function Accordion({ children, className }: AccordionProps) {
   return (
-    <div data-role="accordion" className={className}>
+    <div data-role="accordion" className={cn('group/accordion', className)}>
       {children}
     </div>
   )
@@ -31,21 +31,16 @@ export function AccordionTrigger({
   childrenClassName,
 }: AccordionTriggerProps) {
   return (
-    <label
+    <div
+      data-role="accordion-trigger"
       className={cn(
         'flex cursor-pointer items-center justify-between',
         className,
       )}
     >
-      <input
-        type="checkbox"
-        autoComplete="off"
-        className="peer hidden"
-        data-role="accordion-trigger"
-      />
       <div className={childrenClassName}>{children}</div>
-      <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
-    </label>
+      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion:-rotate-180" />
+    </div>
   )
 }
 
@@ -61,7 +56,7 @@ export function AccordionContent({
   return (
     <div
       data-role="accordion-content"
-      className={cn('hidden data-[open]:block', className)}
+      className={cn('hidden group-data-[open]/accordion:block', className)}
     >
       {children}
     </div>

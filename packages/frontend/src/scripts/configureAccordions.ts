@@ -13,25 +13,24 @@ function configureAccordion(accordion: HTMLElement){
   const trigger = $<HTMLInputElement>(
     '[data-role=accordion-trigger]',
   )
-  const content = $<HTMLElement>(
-    '[data-role=accordion-content]',
-  )
 
   const close = () =>
-    content.removeAttribute('data-open')
+    accordion.removeAttribute('data-open')
 
   const open = () =>
-    content.setAttribute('data-open', 'true')
+    accordion.setAttribute('data-open', 'true')
 
-  trigger.addEventListener('change', () => {
-    if (trigger.checked) open()
-    else close()
+  const isOpen = () => accordion.hasAttribute('data-open')
+
+  trigger.addEventListener('click', () => {
+    if (isOpen()) close()
+    else open()
   })
 
   document.addEventListener('click', (event) => {
     const isClickInsideAccordion = accordion.contains(event.target as Node)
 
-    if (!isClickInsideAccordion && trigger.checked) {
+    if (!isClickInsideAccordion && isOpen()) {
       close()
       trigger.checked = false
     }
