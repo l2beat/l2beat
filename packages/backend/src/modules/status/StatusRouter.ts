@@ -1,12 +1,16 @@
 import Router from '@koa/router'
+import { EscrowEntry } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../api/types'
+import { Config } from '../../config'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { renderStatusPagesLinksPage } from './StatusPagesLinksPage'
 
 export function createStatusRouter(
+  config: Config,
   indexerStateRepository: IndexerStateRepository,
   indexerConfigurations: IndexerConfigurationRepository,
 ) {
@@ -52,9 +56,57 @@ export function createStatusRouter(
     }
   })
 
+  router.get(
+    '/status/escrows',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          projects: z.string().optional(),
+        }),
+      }),
+      (ctx) => {
+        if (!config.tvl2) {
+          ctx.body = 'TVL2 is disabled'
+          return
+        }
+
+        const escrows = config.tvl2.amounts.filter(
+          (a): a is EscrowEntry => a.type === 'escrow',
+        )
+        const byProject = groupBy(escrows, (a) => a.project.toString())
+
+        const projectsFilter = ctx.query.projects?.split(',')
+
+        const toDisplay = Object.fromEntries(
+          Object.entries(byProject)
+            .filter(
+              ([project]) =>
+                !projectsFilter || projectsFilter.includes(project),
+            )
+            .map(([project, amounts]) => [
+              project,
+              amounts.map(escrowToDisplay),
+            ]),
+        )
+
+        ctx.body = {
+          escrows: toDisplay,
+        }
+      },
+    ),
+  )
+
   router.get('/status', (ctx) => {
     ctx.body = renderStatusPagesLinksPage()
   })
 
   return router
+}
+
+function escrowToDisplay(escrow: EscrowEntry) {
+  return {
+    chain: escrow.chain,
+    address: escrow.address.toString(),
+    escrowAddress: escrow.escrowAddress.toString(),
+  }
 }

@@ -28,6 +28,10 @@ const LINKS = [
     name: 'Configurations',
     url: '/status/configurations',
   },
+  {
+    name: 'Escrows',
+    url: '/status/escrows',
+  },
 ]
 
 export function StatusPagesLinksPage() {
