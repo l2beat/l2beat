@@ -25,7 +25,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
     expect(result).toEqual(records)
   })
 
-  it(AggregatedL2CostsRepository.prototype.deleteFrom.name, async () => {
+  it(AggregatedL2CostsRepository.prototype.deleteAfter.name, async () => {
     const records = [
       record({ timestamp: NOW.add(-1, 'hours') }),
       record(),
@@ -33,7 +33,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
     ]
     await repository.addMany(records)
 
-    await repository.deleteFrom(NOW)
+    await repository.deleteAfter(NOW)
 
     const result = await repository.getAll()
     expect(result).toEqual([records[0], records[1]])

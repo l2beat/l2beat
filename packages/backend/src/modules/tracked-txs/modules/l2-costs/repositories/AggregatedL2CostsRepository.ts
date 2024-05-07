@@ -48,7 +48,7 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteFrom(from: UnixTime) {
+  async deleteAfter(from: UnixTime) {
     const knex = await this.knex()
     return await knex(this.TABLE_NAME)
       .where('timestamp', '>', from.toDate())
