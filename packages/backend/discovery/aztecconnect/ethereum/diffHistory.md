@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0557044c20dcd2da533efbd1ee4297337a33afe8
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Renamed RollupProcessor to match the onchain reality.
 
 ## Config/verification related changes
 
