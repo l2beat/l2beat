@@ -17,10 +17,12 @@ const nextConfig = {
   webpack: (config) => {
     // Fix for issues with WalletConnect-related import issues
     // See: https://docs.walletconnect.com/web3modal/nextjs/about#extra-configuration
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return config
+  },
+  eslint: {
+    // We're using biome for linting
+    ignoreDuringBuilds: true,
   },
 }
 
