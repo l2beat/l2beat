@@ -5,9 +5,12 @@ import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { ActivityIcon } from './pages/ActivityIcon'
+import { CostsIcon } from './pages/CostsIcon'
+import { DataAvailabilityIcon } from './pages/DataAvailabilityIcon'
 import { FinalityIcon } from './pages/FinalityIcon'
 import { LivenessIcon } from './pages/LivenessIcon'
 import { RiskIcon } from './pages/RiskIcon'
+import { SummaryIcon } from './pages/SummaryIcon'
 import { TvlIcon } from './pages/TvlIcon'
 import { DiscordIcon } from './products/DiscordIcon'
 import { GithubIcon } from './products/GithubIcon'
@@ -44,6 +47,13 @@ import { SunIcon } from './symbols/SunIcon'
 import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
+import { VerifiedIcon } from './symbols/VerifiedIcon'
+import { CanonicalIcon } from './symbols/CanonicalIcon'
+import { EmptyStateIcon } from './symbols/EmptyStateIcon'
+import { ExternalIcon } from './symbols/ExternalIcon'
+import { HeartIcon } from './symbols/HeartIcon'
+import { Layer3sIcon } from './symbols/Layer3sIcon'
+import { NativeIcon } from './symbols/NativeIcon'
 
 const meta = {
   title: 'Other/Icons',
@@ -74,11 +84,14 @@ export function ChartIcons() {
 export function PageIcons() {
   return (
     <Template>
+      <SummaryIcon />
       <TvlIcon />
       <RiskIcon />
-      <ActivityIcon />
+      <DataAvailabilityIcon />
       <LivenessIcon />
       <FinalityIcon />
+      <ActivityIcon />
+      <CostsIcon />
     </Template>
   )
 }
@@ -117,27 +130,34 @@ export function SymbolIcons() {
       <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
+      <CanonicalIcon />
       {/* Unchecked */}
       <CheckIcon />
       {/* Checked */}
       <CheckIcon className="stroke-black dark:stroke-white" />
       <CodeIcon />
       <DocumentIcon />
+      <EmptyStateIcon />
+      <ExternalIcon />
       <FinanceIcon />
       <GlobeIcon />
+      <HeartIcon />
       <InfoIcon />
-      <OutLinkIcon />
+      <Layer3sIcon />
       <MenuCloseIcon />
       <MenuOpenIcon />
       <MilestoneIcon />
       <MoonIcon />
+      <NativeIcon />
+      <OutLinkIcon />
       <SearchIcon />
       <ShieldIcon />
       <SunIcon />
+      <RoundedWarningIcon />
       <UnverifiedIcon />
       <UpcomingIcon />
       <UserIcon />
-      <RoundedWarningIcon />
+      <VerifiedIcon />
     </Template>
   )
 }
