@@ -36,7 +36,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
     await repository.deleteFrom(NOW)
 
     const result = await repository.getAll()
-    expect(result).toEqual([records[0]])
+    expect(result).toEqual([records[0], records[1]])
   })
 })
 

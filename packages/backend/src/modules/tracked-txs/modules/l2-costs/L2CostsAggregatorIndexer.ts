@@ -59,7 +59,6 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    //TODO: Check if targetHeight is inclusive
     const unixTargetHeight = new UnixTime(targetHeight)
     await this.$.aggregatedL2CostsRepository.deleteFrom(unixTargetHeight)
 
