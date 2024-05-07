@@ -54,11 +54,10 @@ export class ValueIndexer extends ManagedChildIndexer {
     const name = 'value_indexer'
     super({ ...$, name, logger })
 
-    this.amountConfigs = $.amountConfigs
-      .map((x) => ({
-        ...x,
-        configId: createAmountId(x),
-      }))
+    this.amountConfigs = $.amountConfigs.map((x) => ({
+      ...x,
+      configId: createAmountId(x),
+    }))
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
   }
 
@@ -153,7 +152,7 @@ export function calculateValue({
 }) {
   // we want to expose the balance as an integer, keeping the USD decimal places
   const priceWithDecimals = Math.floor(priceUsd * 10 ** USD_DECIMALS)
-  return amount * BigInt(priceWithDecimals) / 10n ** BigInt(decimals)
+  return (amount * BigInt(priceWithDecimals)) / 10n ** BigInt(decimals)
 }
 
 function createAssetId(price: {
