@@ -80,8 +80,11 @@ export class AddressAnalyzer {
     )
     logger.logName(sources.name)
 
+    // Match templates only if there are no explicitly set
     const matchingTemplates =
-      this.templateService.findMatchingTemplates(sources)
+      overrides?.extends === undefined
+        ? this.templateService.findMatchingTemplates(sources)
+        : {}
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
