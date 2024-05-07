@@ -4,8 +4,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { addressToBytes32 } from './address'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
+import { addressToBytes32 } from './address'
 
 describe(FunctionSelectorDecoder.name, () => {
   const EIP2535_CALLDATA = Bytes.fromHex('0x52ef6b2c')

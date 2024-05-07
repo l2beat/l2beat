@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
 
-import { assetUniqueIndexerId } from './ids'
 import { IndexerService } from './IndexerService'
+import { assetUniqueIndexerId } from './ids'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]
@@ -33,6 +33,9 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
   }
 
   async setSafeHeight(safeHeight: number) {
-    return this.options.indexerService.setSafeHeight(this.indexerId, safeHeight)
+    return await this.options.indexerService.setSafeHeight(
+      this.indexerId,
+      safeHeight,
+    )
   }
 }

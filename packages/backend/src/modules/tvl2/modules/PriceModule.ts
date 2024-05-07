@@ -15,8 +15,8 @@ import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createPriceId } from '../utils/createPriceId'
 
 export interface PriceModule {
   start: () => Promise<void> | void

@@ -2,12 +2,10 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
-  makeBridgeCompatible,
   Milestone,
   OPERATOR,
   RISK_VIEW,
@@ -17,6 +15,8 @@ import {
   ScalingProjectTechnology,
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'

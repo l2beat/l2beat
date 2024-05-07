@@ -6,7 +6,7 @@ import * as z from 'zod'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
-import { getReferencedName, Reference, resolveReference } from '../reference'
+import { Reference, getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
@@ -88,18 +88,17 @@ export class ArrayHandler implements ClassicHandler {
               return { field: this.field, error: current.error }
             }
           }
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          // biome-ignore lint/style/noNonNullAssertion: we know it's there
           return { field: this.field, value: current.value! }
         }),
       )
       if (results.some((r) => r.error)) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const errors = results.filter((r) => r.error).map((r) => r.error)
         return { field: this.field, error: errors.join(',') }
       }
 
       for (const result of results) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         value.push(result.value!)
       }
     } else {
@@ -114,7 +113,7 @@ export class ArrayHandler implements ClassicHandler {
           }
           break
         }
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         value.push(current.value!)
       }
     }

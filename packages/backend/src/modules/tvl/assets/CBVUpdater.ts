@@ -4,13 +4,13 @@ import { setTimeout } from 'timers/promises'
 
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { PriceUpdater } from '../PriceUpdater'
 import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
-import { PriceUpdater } from '../PriceUpdater'
+import { ReportProject } from '../reports/ReportProject'
 import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { getStatus } from '../reports/getStatus'
-import { ReportProject } from '../reports/ReportProject'
 import {
   ReportRecord,
   ReportRepository,

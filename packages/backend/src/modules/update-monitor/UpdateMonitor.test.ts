@@ -20,12 +20,12 @@ import { expect, mockFn, mockObject } from 'earl'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
+import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
 } from './repositories/UpdateMonitorRepository'
-import { UpdateMonitor } from './UpdateMonitor'
-import { UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'

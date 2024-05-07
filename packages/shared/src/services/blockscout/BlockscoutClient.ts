@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ChainId,
-  getErrorMessage,
   RateLimiter,
   UnixTime,
+  getErrorMessage,
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'

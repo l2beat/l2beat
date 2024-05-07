@@ -1,7 +1,7 @@
-import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
-import { parse, ParseError } from 'jsonc-parser'
 import path from 'path'
+import { ManuallyVerifiedContractsPerChain } from '@l2beat/shared-pure'
+import { ParseError, parse } from 'jsonc-parser'
 
 export function parseManuallyVerifiedContracts(
   content: string,
@@ -14,6 +14,7 @@ export function parseManuallyVerifiedContracts(
     throw new Error('Cannot parse manuallyVerified.jsonc')
   }
 
+  // biome-ignore lint/performance/noDelete: not a performance problem
   delete parsed.$schema
 
   return ManuallyVerifiedContractsPerChain.parse(parsed)

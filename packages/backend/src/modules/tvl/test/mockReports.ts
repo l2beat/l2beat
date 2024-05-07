@@ -8,9 +8,9 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getMockToken } from '../../../test/token'
+import { ReportProject } from '../reports/ReportProject'
 import { aggregateReports } from '../reports/aggregateReports'
 import { createReports } from '../reports/createReports'
-import { ReportProject } from '../reports/ReportProject'
 import { BalanceRecord } from '../repositories/BalanceRepository'
 import { PriceRecord } from '../repositories/PriceRepository'
 

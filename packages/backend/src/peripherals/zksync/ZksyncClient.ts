@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import {
   assert,
-  getErrorMessage,
   RateLimiter,
   UnixTime,
+  getErrorMessage,
 } from '@l2beat/shared-pure'
 
 import {

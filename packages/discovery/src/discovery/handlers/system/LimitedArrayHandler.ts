@@ -44,8 +44,6 @@ export class LimitedArrayHandler implements ClassicHandler {
     for (const result of results) {
       if (result.error !== undefined) {
         if (result.error !== 'Execution reverted') {
-          // FIXME: Had no eslint ignore here
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           error = result.error
         }
         break

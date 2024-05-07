@@ -1,4 +1,4 @@
-import { assertUnreachable, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype, assertUnreachable } from '@l2beat/shared-pure'
 
 import { LivenessRecordWithSubtype } from '../repositories/LivenessRepository'
 

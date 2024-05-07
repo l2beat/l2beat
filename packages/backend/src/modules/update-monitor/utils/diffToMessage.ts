@@ -1,7 +1,7 @@
 import {
   DiscoveryDiff,
-  discoveryDiffToMarkdown,
   DiscoveryMeta,
+  discoveryDiffToMarkdown,
 } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'

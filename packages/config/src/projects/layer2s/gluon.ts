@@ -4,11 +4,11 @@ import {
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  makeBridgeCompatible,
 } from '../../common'
 import { Layer2 } from './types'
 

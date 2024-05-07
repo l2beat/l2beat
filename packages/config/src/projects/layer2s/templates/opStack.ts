@@ -2,20 +2,18 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
-  makeBridgeCompatible,
   Milestone,
   NUGGETS,
   OPERATOR,
@@ -29,9 +27,11 @@ import {
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../../common'
-import { subtractOne } from '../../../common/assessCount'
 import { ChainConfig } from '../../../common/ChainConfig'
+import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'

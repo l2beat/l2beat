@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { createPublicClient, http, PublicClient } from 'viem'
+import { http, PublicClient, createPublicClient } from 'viem'
 
 import { RateLimitedViemProvider } from './RateLimitedViemProvider'
 

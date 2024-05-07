@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { HourlyIndexer } from './HourlyIndexer'
 import { BlockIndexer } from './blocks/BlockIndexer'
 import { BlockIndexerRepository } from './blocks/BlockIndexerRepository'
 import { BlockRepository } from './blocks/BlockRepository'
 import { BlockService } from './blocks/BlockService'
-import { HourlyIndexer } from './HourlyIndexer'
-import { msToHours, ONE_HOUR_MS } from './utils'
+import { ONE_HOUR_MS, msToHours } from './utils'
 
 export class Application {
   start: () => Promise<void>

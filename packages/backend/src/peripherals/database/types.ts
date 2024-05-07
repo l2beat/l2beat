@@ -266,5 +266,5 @@ declare module 'knex/types/tables' {
 }
 
 // Some aggregations return not empty row with null values. Use this type to explicitly type them.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: generic type
 export type NullableDict<T = any> = Record<string, T | null>

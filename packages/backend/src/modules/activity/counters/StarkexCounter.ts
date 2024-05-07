@@ -6,9 +6,9 @@ import { range } from 'lodash'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class StarkexCounter extends SequenceProcessor {
   constructor(
@@ -39,7 +39,7 @@ export class StarkexCounter extends SequenceProcessor {
 
   protected override async getLatest(): Promise<number> {
     const day = this.clock.getLastHour().toStartOf('day').toDays()
-    return Promise.resolve(day)
+    return await Promise.resolve(day)
   }
 
   protected override async processRange(

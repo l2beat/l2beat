@@ -1,17 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  assertUnreachable,
   EscrowEntry,
   TotalSupplyEntry,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   erc20Codec,
   nativeAssetCodec,
 } from '../../../peripherals/multicall/codecs'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   MulticallRequest,
   MulticallResponse,
@@ -61,7 +61,7 @@ export class AmountService {
     configurations: Configuration<EscrowEntry>[],
     blockNumber: number,
   ) {
-    return Promise.all(
+    return await Promise.all(
       configurations.map(async (configuration) => {
         const amount = await this.$.rpcClient.getBalance(
           configuration.properties.escrowAddress,

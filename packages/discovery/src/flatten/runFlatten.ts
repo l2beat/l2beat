@@ -1,10 +1,10 @@
+import { basename } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { readFile, writeFile } from 'fs/promises'
-import { basename } from 'path'
 
 import { listFilesRecursively } from '../utils/fsLayer'
-import { flattenStartingFrom } from './flattenStartingFrom'
 import { ParsedFilesManager } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flattenStartingFrom'
 
 const DEFAULT_ETHERSCAN_REMAPPINGS: string[] = [
   '@base-contracts/=base-contracts/',

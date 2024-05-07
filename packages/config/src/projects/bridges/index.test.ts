@@ -1,6 +1,6 @@
 import {
-  gatherAddressesFromUpgradeability,
   UnixTime,
+  gatherAddressesFromUpgradeability,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -12,7 +12,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { getReferencedAddresses } from '../layer2s/index.test'
-import { bridges, BridgeTechnology } from './index'
+import { BridgeTechnology, bridges } from './index'
 
 describe('bridges', () => {
   describe('links', () => {

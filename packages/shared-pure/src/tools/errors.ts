@@ -4,7 +4,6 @@ export function getErrorMessage(error: unknown): string {
   } else if (error instanceof Error) {
     return error.message
   } else {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return `${error}`
   }
 }

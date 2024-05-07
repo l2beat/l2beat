@@ -1,12 +1,12 @@
 import React from 'react'
 
+import { Tabs } from '../../../../components/Tabs'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
-import { Tabs } from '../../../../components/Tabs'
 import { getScalingRiskColumnsConfig } from '../props/getScalingRiskColumnsConfig'
 import { ScalingRiskViewEntry } from '../types'
 

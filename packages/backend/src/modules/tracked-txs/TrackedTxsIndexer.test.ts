@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  clampRangeToDay,
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigType,
   UnixTime,
+  clampRangeToDay,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
@@ -13,15 +13,15 @@ import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
 import { findConfigurationsToSync } from '../tracked-txs/utils'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
 } from './repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { TrackedTxResult } from './types/model'
 import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { TrackedTxResult } from './types/model'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))

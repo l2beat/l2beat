@@ -4,8 +4,8 @@ import {
 } from '../../../../content/getCollection'
 import { formatPublicationDate } from '../../../../utils'
 import {
-  getGovernanceAuthorEntry,
   GovernanceAuthorEntry,
+  getGovernanceAuthorEntry,
 } from './getGovernanceAuthorEntry'
 
 export interface GovernancePublicationEntry {

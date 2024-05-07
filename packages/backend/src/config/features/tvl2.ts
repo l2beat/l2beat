@@ -1,8 +1,8 @@
 import { assert, Env } from '@l2beat/backend-tools'
 import {
+  Layer2,
   bridges,
   chains,
-  Layer2,
   layer2s,
   layer3s,
   tokenList,
@@ -17,15 +17,15 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  Project,
   bridgeToProject,
   layer2ToProject,
   layer3ToProject,
-  Project,
 } from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
-import { getChainsWithTokens, getChainTvlConfig } from './tvl'
+import { getChainTvlConfig, getChainsWithTokens } from './tvl'
 
 export function getTvl2Config(
   flags: FeatureFlags,

@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { parse, ParseError } from 'jsonc-parser'
+import { ParseError, parse } from 'jsonc-parser'
 
 import { GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import { ScriptLogger } from './ScriptLogger'

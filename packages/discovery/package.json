@@ -11,10 +11,10 @@
     "build": "tsc -p tsconfig.build.json",
     "build:dependencies": "cd ../.. && yarn build:dependencies",
     "clean": "rm -rf dist",
-    "format": "biome check .",
+    "format": "biome format .",
     "format:fix": "biome format --write .",
-    "lint:fix": "yarn lint --fix",
-    "lint": "eslint --ext .ts --max-warnings 0 src",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit"
   },

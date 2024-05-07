@@ -1,15 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'

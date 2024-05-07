@@ -11,12 +11,12 @@ import {
   TotalSupplyRepository,
 } from '../repositories/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../repositories/TotalSupplyStatusRepository'
-import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider } from './TotalSupplyProvider'
 import {
-  getMissingTotalSupplies,
   TotalSupplyUpdater,
+  getMissingTotalSupplies,
 } from './TotalSupplyUpdater'
+import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 
 describe(TotalSupplyUpdater.name, () => {
   const chainId = ChainId.ARBITRUM

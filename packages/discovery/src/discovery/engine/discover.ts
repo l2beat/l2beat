@@ -1,6 +1,6 @@
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { MulticallClient } from '../provider/multicall/MulticallClient'
@@ -28,5 +28,5 @@ export async function discover(
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
-  return discoveryEngine.discover(config, blockNumber)
+  return await discoveryEngine.discover(config, blockNumber)
 }

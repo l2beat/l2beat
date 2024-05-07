@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import {
-  CoingeckoClient,
   CoinListPlatformEntry,
+  CoingeckoClient,
   HttpClient,
 } from '@l2beat/shared'
 import {
@@ -15,6 +15,7 @@ import { providers } from 'ethers'
 import { chains } from '../../src'
 import { ChainConfig } from '../../src/common'
 import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
+import { ScriptLogger } from './utils/ScriptLogger'
 import {
   readGeneratedFile,
   readTokensFile,
@@ -22,7 +23,6 @@ import {
 } from './utils/fsIntegration'
 import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
-import { ScriptLogger } from './utils/ScriptLogger'
 
 main().catch((e: unknown) => {
   console.error(e)
@@ -179,7 +179,7 @@ function getChainId(logger: ScriptLogger, chain: ChainConfig) {
   let chainId: ChainId | undefined = undefined
   try {
     chainId = ChainId(chain.chainId)
-  } catch (e) {
+  } catch {
     logger.assert(false, `ChainId not found for`)
   }
   return chainId

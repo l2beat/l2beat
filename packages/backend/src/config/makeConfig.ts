@@ -20,7 +20,7 @@ import {
   getProjectsWithActivity,
 } from './features/activity'
 import { getFinalityConfigurations } from './features/finality'
-import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
+import { getChainTvlConfig, getChainsWithTokens } from './features/tvl'
 import { getTvl2Config } from './features/tvl2'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'

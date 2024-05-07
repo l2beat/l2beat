@@ -1,7 +1,7 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { DataAvailabilityPagesData } from '../types'
 import { ScalingDataAvailabilityPageProps } from '../view/ScalingDataAvailabilityPage'
 import { getScalingDataAvailabilityView } from './getScalingDataAvailabilityView'

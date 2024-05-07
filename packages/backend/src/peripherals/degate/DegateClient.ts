@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
+import { RateLimiter, getErrorMessage } from '@l2beat/shared-pure'
 
 import { DegateResponse } from './schemas'
 

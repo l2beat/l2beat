@@ -1,5 +1,5 @@
-import { assertUnreachable, PriceConfigEntry } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
+import { PriceConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 
 export function createPriceId(priceConfig: PriceConfigEntry): string {
   const input = []

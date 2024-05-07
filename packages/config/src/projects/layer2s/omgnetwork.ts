@@ -3,11 +3,11 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'

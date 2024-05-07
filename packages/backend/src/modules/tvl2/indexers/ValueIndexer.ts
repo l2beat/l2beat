@@ -1,6 +1,6 @@
 import {
-  AmountConfigEntry,
   assert,
+  AmountConfigEntry,
   EthereumAddress,
   PriceConfigEntry,
   ProjectId,
@@ -14,9 +14,9 @@ import {
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -136,7 +136,7 @@ export class ValueIndexer extends ManagedChildIndexer {
 
   override async invalidate(targetHeight: number): Promise<number> {
     // Do not delete data
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }
 

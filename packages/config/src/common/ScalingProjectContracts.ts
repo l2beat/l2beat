@@ -52,7 +52,6 @@ export interface ScalingProjectContractSingleAddress {
 export function isSingleAddress(
   c: ScalingProjectContract,
 ): c is ScalingProjectContractSingleAddress {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   return (c as ScalingProjectContractSingleAddress).address !== undefined
 }
 

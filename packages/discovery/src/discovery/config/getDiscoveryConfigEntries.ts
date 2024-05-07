@@ -25,7 +25,6 @@ function deepSortByKeys(
 
       if (isObject(entry)) {
         if (isArray(entry)) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           acc[key] = [...entry].sort()
         } else {
           if (nestLevel >= MAX_SEMANTIC_NEST_LEVEL) {

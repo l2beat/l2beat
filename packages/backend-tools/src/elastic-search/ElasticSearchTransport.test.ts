@@ -1,4 +1,4 @@
-import { expect, mockFn, MockObject, mockObject } from 'earl'
+import { MockObject, expect, mockFn, mockObject } from 'earl'
 
 import { formatDate } from '../logger/utils'
 import { ElasticSearchClient } from './ElasticSearchClient'

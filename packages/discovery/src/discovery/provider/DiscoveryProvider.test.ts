@@ -1,5 +1,5 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { expect, mockFn, MockObject, mockObject } from 'earl'
+import { MockObject, expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'

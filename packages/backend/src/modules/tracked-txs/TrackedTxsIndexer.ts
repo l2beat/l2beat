@@ -1,9 +1,9 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import {
-  clampRangeToDay,
-  notUndefined,
   TrackedTxsConfigType,
   UnixTime,
+  clampRangeToDay,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
@@ -11,14 +11,14 @@ import { pickBy } from 'lodash'
 
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { findConfigurationsToSync } from './utils'
 import {
-  diffTrackedTxConfigurations,
   ToChangeUntilTimestamp,
+  diffTrackedTxConfigurations,
 } from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
 
@@ -241,6 +241,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

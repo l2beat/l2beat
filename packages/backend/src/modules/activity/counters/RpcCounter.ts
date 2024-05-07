@@ -6,9 +6,9 @@ import { range } from 'lodash'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class RpcCounter extends SequenceProcessor {
   constructor(
@@ -34,7 +34,7 @@ export class RpcCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(current: number): Promise<number> {
-    return this.rpcClient.getBlockNumberAtOrBefore(
+    return await this.rpcClient.getBlockNumberAtOrBefore(
       this.clock.getLastHour(),
       current,
     )

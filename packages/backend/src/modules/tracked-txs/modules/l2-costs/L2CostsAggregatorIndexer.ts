@@ -1,4 +1,4 @@
-import { assert, AssetId, clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
+import { assert, AssetId, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
 import {
   ManagedChildIndexer,

@@ -3,9 +3,10 @@ import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
 import { SyncStatus } from '../../pages/types'
+import { HorizontalSeparator } from '../HorizontalSeparator'
+import { WarningBar } from '../WarningBar'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { HorizontalSeparator } from '../HorizontalSeparator'
 import { RoundedWarningIcon } from '../icons'
 import {
   Tooltip,
@@ -13,7 +14,6 @@ import {
   TooltipContentType,
   TooltipTrigger,
 } from '../tooltip/Tooltip'
-import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
 

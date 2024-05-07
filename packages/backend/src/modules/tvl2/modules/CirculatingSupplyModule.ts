@@ -17,9 +17,9 @@ import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
-import { createAmountId } from '../utils/createAmountId'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
