@@ -3,7 +3,7 @@ import { getEnv } from '@l2beat/backend-tools'
 // Github actions sets env as an empty string when secret is not set
 // this resulted in a bug on the outside contributors PRs
 // workaround: getting and optional string and then doing OR (||)
-// eslint is disabled because nullish coalescing (??) will not give expected result
+// nullish coalescing (??) will not give expected result
 
 interface Config {
   alchemyApiKey?: string
