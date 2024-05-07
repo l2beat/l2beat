@@ -1,12 +1,12 @@
 import { ProofVerification } from '@l2beat/config/build/src/projects/types'
 import React from 'react'
 
-import { ChevronDownIcon } from '../../../../components/icons'
-import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { Link } from '../../../../components/Link'
-import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
+import { ChevronDownIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
+import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
+import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
 
 interface Props {
   items: ProofVerification['verifiers']

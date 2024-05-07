@@ -1,14 +1,14 @@
 import { UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { Link } from '../../../../components/Link'
-import { Markdown } from '../../../../components/Markdown'
-import { WarningBar } from '../../../../components/WarningBar'
 import {
   Accordion,
   AccordionContent,
   AccordionTrigger,
 } from '../../../../components/Accordion'
+import { Link } from '../../../../components/Link'
+import { Markdown } from '../../../../components/Markdown'
+import { WarningBar } from '../../../../components/WarningBar'
 import {
   MissingIcon,
   RoundedWarningIcon,

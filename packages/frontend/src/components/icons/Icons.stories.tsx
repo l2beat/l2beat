@@ -29,16 +29,22 @@ import { ActiveIcon } from './symbols/ActiveIcon'
 import { AppsIcon } from './symbols/AppsIcon'
 import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { BulletIcon } from './symbols/BulletIcon'
+import { CanonicalIcon } from './symbols/CanonicalIcon'
 import { CheckIcon } from './symbols/CheckIcon'
 import { CodeIcon } from './symbols/CodeIcon'
 import { DocumentIcon } from './symbols/DocumentIcon'
+import { EmptyStateIcon } from './symbols/EmptyStateIcon'
+import { ExternalIcon } from './symbols/ExternalIcon'
 import { FinanceIcon } from './symbols/FinanceIcon'
 import { GlobeIcon } from './symbols/GlobeIcon'
+import { HeartIcon } from './symbols/HeartIcon'
 import { InfoIcon } from './symbols/InfoIcon'
+import { Layer3sIcon } from './symbols/Layer3sIcon'
 import { MenuCloseIcon } from './symbols/MenuCloseIcon'
 import { MenuOpenIcon } from './symbols/MenuOpenIcon'
 import { MilestoneIcon } from './symbols/MilestoneIcon'
 import { MoonIcon } from './symbols/MoonIcon'
+import { NativeIcon } from './symbols/NativeIcon'
 import { OutLinkIcon } from './symbols/OutLinkIcon'
 import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 import { SearchIcon } from './symbols/SearchIcon'
@@ -48,12 +54,7 @@ import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
 import { VerifiedIcon } from './symbols/VerifiedIcon'
-import { CanonicalIcon } from './symbols/CanonicalIcon'
-import { EmptyStateIcon } from './symbols/EmptyStateIcon'
-import { ExternalIcon } from './symbols/ExternalIcon'
-import { HeartIcon } from './symbols/HeartIcon'
-import { Layer3sIcon } from './symbols/Layer3sIcon'
-import { NativeIcon } from './symbols/NativeIcon'
+import { TriangleWarningIcon } from './symbols/TriangleWarningIcon'
 
 const meta = {
   title: 'Other/Icons',
@@ -150,10 +151,11 @@ export function SymbolIcons() {
       <MoonIcon />
       <NativeIcon />
       <OutLinkIcon />
+      <RoundedWarningIcon />
       <SearchIcon />
       <ShieldIcon />
       <SunIcon />
-      <RoundedWarningIcon />
+      <TriangleWarningIcon />
       <UnverifiedIcon />
       <UpcomingIcon />
       <UserIcon />

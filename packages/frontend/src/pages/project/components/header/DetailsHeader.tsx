@@ -1,5 +1,7 @@
 import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
+import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
+import { ProjectHeader } from '../../../../components/ProjectHeader'
 import { WarningBar } from '../../../../components/WarningBar'
 import { DesktopProjectLinks } from '../../../../components/header/DesktopProjectLinks'
 import { MobileProjectLinks } from '../../../../components/header/MobileProjectLinks'
@@ -8,8 +10,6 @@ import {
   ProjectSummaryStat,
 } from '../../../../components/header/ProjectSummary'
 import { TvlStats, TvlSummary } from '../../../../components/header/TvlSummary'
-import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
-import { ProjectHeader } from '../../../../components/ProjectHeader'
 import { BigRosette } from '../../../../components/rosette'
 import { cn } from '../../../../utils/cn'
 import { RiskValues } from '../../../../utils/risks/types'
