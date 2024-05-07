@@ -1,22 +1,22 @@
 import {
   assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { example } from '../other/zk-catalog/example'

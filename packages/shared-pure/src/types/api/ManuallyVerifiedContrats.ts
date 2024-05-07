@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { stringAs } from '../branded'
 import { EthereumAddress } from '../EthereumAddress'
+import { stringAs } from '../branded'
 
 export const ManuallyVerifiedContractsPerChain = z.record(
   stringAs(EthereumAddress).transform((address) => address.toString()),

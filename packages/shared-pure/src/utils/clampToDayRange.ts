@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '../types'
 
-export function adjustRangeForBigQueryCall(
+export function clampRangeToDay(
   from: number,
   to: number,
 ): { from: UnixTime; to: UnixTime } {
@@ -9,7 +9,6 @@ export function adjustRangeForBigQueryCall(
 
   if (!fromUnixTime.toStartOf('day').equals(toUnixTime.toStartOf('day'))) {
     return { from: fromUnixTime, to: fromUnixTime.toNext('day') }
-  } else {
-    return { from: fromUnixTime, to: toUnixTime }
   }
+  return { from: fromUnixTime, to: toUnixTime }
 }

@@ -1,4 +1,4 @@
-import { Layer2, layer2s, Layer3 } from '@l2beat/config'
+import { Layer2, Layer3, layer2s } from '@l2beat/config'
 import {
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,

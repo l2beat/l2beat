@@ -2,18 +2,18 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+  TrackedTxTransferConfig,
+} from './types/TrackedTxsConfig'
+import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
   TrackedTxFunctionCallResult,
   TrackedTxResult,
   TrackedTxTransferResult,
 } from './types/model'
-import {
-  TrackedTxConfigEntry,
-  TrackedTxFunctionCallConfig,
-  TrackedTxSharpSubmissionConfig,
-  TrackedTxTransferConfig,
-} from './types/TrackedTxsConfig'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'

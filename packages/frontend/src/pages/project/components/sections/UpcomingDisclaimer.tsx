@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Callout } from '../../../../components/Callout'
-import { InfoIcon } from '../../../../components/icons'
 import { Link } from '../../../../components/Link'
+import { InfoIcon } from '../../../../components/icons'
 
 export function UpcomingDisclaimer() {
   return (

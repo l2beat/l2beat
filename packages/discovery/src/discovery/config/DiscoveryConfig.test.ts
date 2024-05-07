@@ -3,8 +3,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()

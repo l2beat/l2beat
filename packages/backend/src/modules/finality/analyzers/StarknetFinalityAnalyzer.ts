@@ -58,10 +58,8 @@ function decodeTransaction(data: string) {
   const decodedInput = iface.decodeFunctionData(signature, data)
 
   return StarknetStateUpdate.parse({
-    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     programOutput: decodedInput.programOutput,
     kzgProof: decodedInput.kzgProof,
-    /* eslint-enable @typescript-eslint/no-unsafe-assignment */
   })
 }
 

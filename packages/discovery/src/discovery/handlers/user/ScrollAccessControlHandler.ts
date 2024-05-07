@@ -148,7 +148,6 @@ export class ScrollAccessControlHandler implements ClassicHandler {
         decoded.forEach((s) =>
           getSelector(target, s).add(this.getRoleName(parsed.role)),
         )
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       } else if (parsed.type === 'RevokeAccess') {
         const target = getTarget(parsed.target)
         const decoded = await Promise.all(
@@ -158,10 +157,8 @@ export class ScrollAccessControlHandler implements ClassicHandler {
           const selector = getSelector(target, s)
           selector.delete(this.getRoleName(parsed.role))
           if (selector.size === 0) {
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             delete target[s]
             if (Object.entries(target).length === 0) {
-              // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
               delete targets[parsed.target.toString()]
             }
           }

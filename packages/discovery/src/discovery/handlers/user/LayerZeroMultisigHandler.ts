@@ -74,7 +74,7 @@ export class LayerZeroMultisigHandler implements ClassicHandler {
     ])
 
     async function getLogs(topic: string): Promise<providers.Log[]> {
-      return provider.getLogs(
+      return await provider.getLogs(
         address,
         [ABI.getEventTopic(topic)],
         0,

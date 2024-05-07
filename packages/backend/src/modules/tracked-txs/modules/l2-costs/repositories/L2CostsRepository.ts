@@ -20,6 +20,12 @@ export interface L2CostsRecord<
   data: Extract<TransactionData, { type: T }>
 }
 
+export interface L2CostsRecordWithProjectId<
+  T extends TransactionData['type'] = TransactionData['type'],
+> extends L2CostsRecord<T> {
+  projectId: ProjectId
+}
+
 export class L2CostsRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -51,6 +57,24 @@ export class L2CostsRepository extends BaseRepository {
       .orderBy('timestamp', 'desc')
       .select()
     return rows.map((r) => toRecord(r))
+  }
+
+  async getWithProjectIdByTimeRange(
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<L2CostsRecordWithProjectId[]> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const rows = await knex('l2_costs')
+      .where('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<=', to.toDate())
+      .join(
+        'tracked_txs_configs',
+        'l2_costs.tracked_tx_id',
+        'tracked_txs_configs.id',
+      )
+      .select('project_id', 'tracked_tx_id', 'tx_hash', 'timestamp', 'data')
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecordWithProjectId)
   }
 
   async findCountByProjectAndTimeRange(
@@ -135,5 +159,17 @@ function toRecord<T extends TransactionData['type']>(
     txHash: row.tx_hash,
     trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
     data: row.data as L2CostsRecord<T>['data'],
+  }
+}
+
+function toRecordWithProjectId(
+  row: L2CostsRow & { project_id: string },
+): L2CostsRecord & { projectId: ProjectId } {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    txHash: row.tx_hash,
+    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    data: row.data,
+    projectId: ProjectId(row.project_id),
   }
 }

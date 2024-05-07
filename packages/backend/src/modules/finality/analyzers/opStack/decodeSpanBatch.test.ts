@@ -1,7 +1,7 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
 import path from 'path'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 
 import { BufferReader, decodeSpanBatch } from './decodeSpanBatch'
 import { byteArrFromHexStr } from './utils'

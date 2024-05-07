@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
+import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,

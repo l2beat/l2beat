@@ -1,7 +1,7 @@
 import {
   Layer2,
-  safeGetTokenByAssetId,
   WarningWithSentiment,
+  safeGetTokenByAssetId,
 } from '@l2beat/config'
 import { TvlApiResponse, TvlApiToken } from '@l2beat/shared-pure'
 

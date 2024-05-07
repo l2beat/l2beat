@@ -13,7 +13,6 @@ const CommittedBlock = z.object({
   blockNumber: z.number(),
   timestamp: z.number(),
 })
-type CommittedBlock = z.infer<typeof CommittedBlock>
 
 export class ZkSyncLiteFinalityAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
@@ -45,7 +44,6 @@ function decodeTransaction(data: string) {
 
   const decodedInput = iface.decodeFunctionData(signature, data)
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const rawCommittedBlocks: RawCommittedBlock[] = decodedInput._committedBlocks
 
   return rawCommittedBlocks.map((rawCommittedBlock) =>

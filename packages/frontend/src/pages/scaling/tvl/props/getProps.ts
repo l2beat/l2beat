@@ -1,7 +1,7 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { PagesData, Wrapped } from '../../../Page'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { ScalingTvlPageProps } from '../view/ScalingTvlPage'
 import { getScalingTvlView } from './getScalingTvlView'
 

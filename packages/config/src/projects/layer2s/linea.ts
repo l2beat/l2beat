@@ -1,23 +1,23 @@
 import {
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
+  ScalingProjectPermissionedAccount,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'

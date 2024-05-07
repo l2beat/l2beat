@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { TotalValue } from '../../../../components/table/TotalValue'
-import { ColumnConfig } from '../../../../components/table/types'
 import { ValueWithPercentageCell } from '../../../../components/table/ValueWithPercentageCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
+import { ColumnConfig } from '../../../../components/table/types'
 import { getColumnHeaderUnderline } from '../../../../utils/table/getColumnHeaderUnderline'
 import { ScalingTvlViewEntry } from '../types'
 

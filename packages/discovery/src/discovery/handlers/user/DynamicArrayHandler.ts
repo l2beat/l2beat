@@ -85,7 +85,6 @@ export class DynamicArrayHandler implements ClassicHandler {
 
 function getDependencies(definition: DynamicArrayHandlerDefinition): string[] {
   const dependencies: string[] = []
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const add = (value: string | undefined) => value && dependencies.push(value)
 
   add(getReferencedName(definition.slot))
@@ -104,7 +103,6 @@ function resolveDependencies(
   slot: bigint
   returnType: 'number' | 'address' | 'bytes'
 } {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const resolved = resolveReference(definition.slot, previousResults)
   const slot = valueToBigInt(resolved)
 

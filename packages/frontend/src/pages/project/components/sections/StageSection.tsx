@@ -1,6 +1,9 @@
 import { UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
+import { Link } from '../../../../components/Link'
+import { Markdown } from '../../../../components/Markdown'
+import { WarningBar } from '../../../../components/WarningBar'
 import {
   Accordion,
   AccordionContent,
@@ -12,11 +15,8 @@ import {
   SatisfiedIcon,
   UnderReviewIcon,
 } from '../../../../components/icons'
-import { Link } from '../../../../components/Link'
-import { Markdown } from '../../../../components/Markdown'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageDisclaimer } from '../../../../components/stages/StageDisclaimer'
-import { WarningBar } from '../../../../components/WarningBar'
 import { ProjectSection } from './common/ProjectSection'
 import { ProjectSectionId } from './common/sectionId'
 

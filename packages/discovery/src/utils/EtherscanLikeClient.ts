@@ -2,15 +2,15 @@ import { assert, Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   EthereumAddress,
   Hash256,
+  UnixTime,
   stringAs,
   stringAsInt,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { EtherscanResponse, parseEtherscanResponse } from './EtherscanModels'
-import { getErrorMessage } from './getErrorMessage'
 import { HttpClient } from './HttpClient'
+import { getErrorMessage } from './getErrorMessage'
 
 class EtherscanError extends Error {}
 

@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
 export interface Hash160 extends String {
   _Hash160Brand: string
 }

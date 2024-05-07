@@ -5,8 +5,8 @@ import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
 import { FinalityIndexer } from './FinalityIndexer'
+import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -311,7 +311,7 @@ describe(FinalityIndexer.name, () => {
     it('indexer state undefined', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
-        add: async () => '',
+        addOrUpdate: async () => '',
         setSafeHeight: async () => 0,
       })
       const finalityIndexer = getMockFinalityIndexer({
@@ -320,7 +320,7 @@ describe(FinalityIndexer.name, () => {
 
       await finalityIndexer.start()
 
-      expect(stateRepository.add).toHaveBeenNthCalledWith(1, {
+      expect(stateRepository.addOrUpdate).toHaveBeenNthCalledWith(1, {
         indexerId: finalityIndexer.indexerId,
         safeHeight: MIN_TIMESTAMP.toNumber(),
         minTimestamp: MIN_TIMESTAMP,
@@ -420,7 +420,7 @@ function getMockStateRepository(
 ) {
   const stateRepository = mockObject<IndexerStateRepository>({
     findIndexerState: async () => indexerState,
-    add: async () => '',
+    addOrUpdate: async () => '',
     setSafeHeight: async () => 0,
   })
   return stateRepository

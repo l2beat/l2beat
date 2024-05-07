@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { join } from 'path'
 
 import { assertUnreachable } from '../utils/assertUnreachable'
@@ -108,6 +107,7 @@ export class Logger {
     return logger
   }
 
+  // biome-ignore lint/complexity/noBannedTypes: generic type
   for(object: {} | string): Logger {
     const name = typeof object === 'string' ? object : object.constructor.name
     return this.configure({

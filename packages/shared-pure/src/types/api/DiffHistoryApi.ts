@@ -1,7 +1,7 @@
 import z from 'zod'
 
-import { branded } from '../branded'
 import { EthereumAddress } from '../EthereumAddress'
+import { branded } from '../branded'
 
 export const DiscoveryDiff = z.object({
   name: z.string(),

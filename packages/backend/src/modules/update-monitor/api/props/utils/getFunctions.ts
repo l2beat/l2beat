@@ -22,7 +22,6 @@ export function getViewABI(
   const abis = addresses
     .map((address) => {
       const abi = discoveryABIs[address.toString()]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (abi === undefined) {
         throw new Error(
           `Programmer Error: ABI for ${address.toString()} not found`,

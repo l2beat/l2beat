@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
 
-import { _TEST_ONLY_resetUniqueIds } from './ids'
 import { IndexerService } from './IndexerService'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from './ManagedChildIndexer'
+import { _TEST_ONLY_resetUniqueIds } from './ids'
 
 describe(ManagedChildIndexer.name, () => {
   afterEach(() => {

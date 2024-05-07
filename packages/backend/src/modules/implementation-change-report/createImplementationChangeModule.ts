@@ -6,8 +6,8 @@ import { Peripherals } from '../../peripherals/Peripherals'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { ApplicationModule } from '../ApplicationModule'
 import { UpdateMonitorRepository } from '../update-monitor/repositories/UpdateMonitorRepository'
-import { createImplementationChangeRouter } from './api/createImplementationChangeRouter'
 import { ImplementationChangeController } from './api/ImplementationChangeController'
+import { createImplementationChangeRouter } from './api/createImplementationChangeRouter'
 
 export function createImplementationChangeModule(
   config: Config,

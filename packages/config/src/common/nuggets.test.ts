@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { readdirSync } from 'fs'
+import { expect } from 'earl'
 
 import { NUGGETS } from './nuggets'
 

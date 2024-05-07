@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
 } from '../../common'
 import { Layer2 } from '../../projects'
 

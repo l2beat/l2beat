@@ -3,9 +3,9 @@ import React from 'react'
 
 import { SyncStatus } from '../../pages/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
+import { WarningBar } from '../WarningBar'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { WarningBar } from '../WarningBar'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
 

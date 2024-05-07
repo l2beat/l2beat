@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { ScalingLegend } from '../../../../components/ScalingLegend'
+import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { getScalingLivenessColumnsConfig } from '../props/getScalingLivenessColumnsConfig'
 import { ScalingLivenessViewEntry } from '../types'

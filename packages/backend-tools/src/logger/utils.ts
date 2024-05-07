@@ -1,5 +1,5 @@
 export function toJSON(parameters: object): string {
-  return JSON.stringify(parameters, (k, v: unknown) =>
+  return JSON.stringify(parameters, (_k, v: unknown) =>
     typeof v === 'bigint' ? v.toString() : v,
   )
 }

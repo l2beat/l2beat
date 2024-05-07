@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
+import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()

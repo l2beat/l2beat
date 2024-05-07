@@ -4,9 +4,9 @@ import { Config } from '../build/config'
 import { cn } from '../utils/cn'
 import { Link } from './Link'
 import {
-  getSocialLinksProps,
   SocialLinks,
   SocialLinksProps,
+  getSocialLinksProps,
 } from './navbar/SocialLinks'
 
 export interface FooterProps extends SocialLinksProps {

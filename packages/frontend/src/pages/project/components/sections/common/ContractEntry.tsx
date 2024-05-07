@@ -5,11 +5,11 @@ import {
 import React from 'react'
 
 import { Callout, CalloutProps } from '../../../../../components/Callout'
+import { Link } from '../../../../../components/Link'
+import { Markdown } from '../../../../../components/Markdown'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
-import { Link } from '../../../../../components/Link'
-import { Markdown } from '../../../../../components/Markdown'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
@@ -96,7 +96,7 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2">
-            <strong>{contract.name}</strong>{' '}
+            <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
@@ -134,7 +134,9 @@ export function ContractEntry({
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>{' '}
-              {contract.upgradeableBy}
+              <Link href={`#${contract.upgradeableBy}`}>
+                {contract.upgradeableBy}
+              </Link>
             </p>
           )}
           {contract.upgradeDelay && (

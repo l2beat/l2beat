@@ -1,4 +1,4 @@
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'

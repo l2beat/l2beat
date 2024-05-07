@@ -1,16 +1,16 @@
 import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
-  notUndefined,
   TrackedTxsConfigSubtype,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 
-import {
-  LivenessRecordsWithIntervalAndDetails,
-  LivenessRecordWithInterval,
-} from './calculateIntervalWithAverages'
 import { RunningStatistics } from './RollingVariance'
+import {
+  LivenessRecordWithInterval,
+  LivenessRecordsWithIntervalAndDetails,
+} from './calculateIntervalWithAverages'
 
 export function calculateAnomalies({
   batchSubmissions,

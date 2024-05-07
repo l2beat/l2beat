@@ -1,7 +1,7 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { ScalingRiskPagesData } from '../types'
 import { ScalingRiskPageProps } from '../view/ScalingRiskPage'
 import { getScalingRiskView } from './getScalingRiskView'

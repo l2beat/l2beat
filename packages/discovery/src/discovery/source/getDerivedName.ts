@@ -9,10 +9,10 @@ export function getDerivedName(names: string[]): string | undefined {
   } else if (names.length === 1) {
     return names[0]
   } else if (names.length === 2) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     return `${names[1]!} (${names[0]!})`
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     return `${names[0]!} (${names.length - 1} implementations)`
   }
 }

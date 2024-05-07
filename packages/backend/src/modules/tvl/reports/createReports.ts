@@ -3,8 +3,8 @@ import { assert, AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BalanceRecord } from '../repositories/BalanceRepository'
 import { PriceRecord } from '../repositories/PriceRepository'
 import { ReportRecord } from '../repositories/ReportRepository'
-import { BalancePerProject, createReport } from './createReport'
 import { ReportProject } from './ReportProject'
+import { BalancePerProject, createReport } from './createReport'
 
 export function createReports(
   prices: PriceRecord[],

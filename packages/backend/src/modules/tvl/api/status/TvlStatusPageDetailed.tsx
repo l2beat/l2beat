@@ -4,11 +4,11 @@ import React from 'react'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import {
-  getStatusIndicator,
-  getSyncStatus,
   StatusPoint,
   StatusSquare,
   UpdaterStatus,
+  getStatusIndicator,
+  getSyncStatus,
 } from './TvlStatusPage'
 
 interface StatusPageProps {

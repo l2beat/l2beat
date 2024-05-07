@@ -1,7 +1,7 @@
 import z from 'zod'
 
-import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
+import { branded } from '../branded'
 
 export const ActivityApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),

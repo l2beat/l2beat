@@ -107,10 +107,11 @@ describeDatabase(BaseRepository.name, (database) => {
       expect((dummyRepository.getAll as any).wrapped).toEqual(true)
       expect((dummyRepository.refresh as any).wrapped).toEqual(true)
     })
-    /* eslint-disable @typescript-eslint/no-unused-vars */
+
     describe.skip('checkConvention', () => {
       describe('GetMethod', () => {
         it('should show error if returning wrong type', () => {
+          // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
             constructor(database: Database, logger: Logger) {
               super(database, logger)
@@ -127,6 +128,7 @@ describeDatabase(BaseRepository.name, (database) => {
 
       describe('AddManyMethod', () => {
         it('should show error if return type is wrong', () => {
+          // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
             constructor(database: Database, logger: Logger) {
               super(database, logger)
@@ -134,13 +136,14 @@ describeDatabase(BaseRepository.name, (database) => {
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
 
-            async addMany(a: string[]): Promise<string> {
+            async addMany(_a: string[]): Promise<string> {
               return ''
             }
           }
         })
 
         it('should show error if argument is of wrong type', () => {
+          // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
             constructor(database: Database, logger: Logger) {
               super(database, logger)
@@ -148,7 +151,7 @@ describeDatabase(BaseRepository.name, (database) => {
               this.autoWrap<CheckConvention<DummyRepository>>(this)
             }
 
-            async addManyWithWrongArgumentType(a: string): Promise<number> {
+            async addManyWithWrongArgumentType(_a: string): Promise<number> {
               return 1
             }
           }
@@ -157,6 +160,7 @@ describeDatabase(BaseRepository.name, (database) => {
 
       describe('DeleteMethod', () => {
         it('should show error if return type is wrong', () => {
+          // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
             constructor(database: Database, logger: Logger) {
               super(database, logger)
@@ -171,6 +175,5 @@ describeDatabase(BaseRepository.name, (database) => {
         })
       })
     })
-    /* eslint-enable @typescript-eslint/no-unused-vars */
   })
 })

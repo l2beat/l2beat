@@ -202,7 +202,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   }
 
   async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }
 

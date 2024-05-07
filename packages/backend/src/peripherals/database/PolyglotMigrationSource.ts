@@ -1,8 +1,8 @@
 import { readdirSync } from 'fs'
+import path from 'path'
 // See https://github.com/knex/knex/issues/2756
 import { FsMigrations } from 'knex/lib/migrations/migrate/sources/fs-migrations'
 import type { Knex } from 'knex/types'
-import path from 'path'
 
 /* Based on https://github.com/knex/knex/issues/4028#issuecomment-689683353 */
 export class PolyglotMigrationSource
@@ -35,7 +35,7 @@ export class PolyglotMigrationSource
   }
 
   override async getMigrations(): Promise<unknown[]> {
-    return this.fsSource.getMigrations(this.loadExtensions)
+    return await this.fsSource.getMigrations(this.loadExtensions)
   }
 
   override getMigration(migration: unknown): Promise<Knex.Migration> {

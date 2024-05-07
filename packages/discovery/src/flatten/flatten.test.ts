@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { flattenStartingFrom } from './flattenStartingFrom'
 import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flattenStartingFrom'
 
 describe('flatten', () => {
   it('handles multiple files, imports, remappings, renames etc.', () => {

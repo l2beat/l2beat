@@ -4928,6 +4928,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "base:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1686832547,
+      "coingeckoListingTimestamp": 1686832547,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 8453,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "base:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -5231,6 +5245,20 @@
       "chainId": 42161,
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1622240100,
+      "coingeckoListingTimestamp": 1622240100,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 42161,
+      "type": "CBV",
+      "formula": "totalSupply"
     },
     {
       "id": "arbitrum:frax-frax",
@@ -5759,6 +5787,21 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "linea:zero-zerolend",
+      "name": "ZeroLend",
+      "coingeckoId": "zerolend",
+      "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
+      "symbol": "ZERO",
+      "decimals": 18,
+      "deploymentTimestamp": 1713946444,
+      "coingeckoListingTimestamp": 1715040000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/37375/large/image.png?1714884543",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "blast:rseth-kelpdao-restaked-eth",

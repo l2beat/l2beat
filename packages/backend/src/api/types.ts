@@ -25,13 +25,10 @@ export function withTypedContext<T extends z.AnyZodObject>(
       ctx.body = { issues: parseResult.error.issues }
       return
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     ctx.params = parseResult.data.params
     Object.defineProperty(ctx.request, 'body', {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       value: parseResult.data.request?.body,
     })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     Object.defineProperty(ctx, 'query', { value: parseResult.data.query })
     await handler(ctx)
   }

@@ -3,8 +3,8 @@ import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 
 import { ethereum } from '../../../src/chains/ethereum'
-import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 import { ScriptLogger } from './ScriptLogger'
+import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 
 export async function getTokenInfo(
   logger: ScriptLogger,

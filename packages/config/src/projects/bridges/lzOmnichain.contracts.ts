@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
 import {
-  assertUnreachable,
   EthereumAddress,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

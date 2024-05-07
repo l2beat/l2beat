@@ -35,7 +35,7 @@ export function printAsciiTable(headers: string[], rows: string[][]): string {
 }
 
 function stripAnsiEscapeCodes(str: string): string {
-  // eslint-disable-next-line no-control-regex
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: ansii escape codes are control characters
   const ansiEscapeCodesPattern = /\x1b\[[0-9;]*m/g
   return str.replace(ansiEscapeCodesPattern, '')
 }

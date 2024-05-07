@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryOverrides } from '../config/DiscoveryOverrides'
-import { diffContracts, FieldDiff } from './diffContracts'
+import { FieldDiff, diffContracts } from './diffContracts'
 
 export interface DiscoveryDiff {
   name: string
