@@ -71,6 +71,7 @@ export const bobanetwork: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1635393439),
     l2BlockTimeSeconds: 2,
     lag: 0,
+    stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA', 'OMG'],

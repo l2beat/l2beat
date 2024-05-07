@@ -38,6 +38,7 @@ export const lyra: Layer2 = opStackL2({
   finality: {
     type: 'OPStack',
     lag: 0,
+    stateUpdate: 'disabled',
   },
   genesisTimestamp: new UnixTime(1700022479),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),

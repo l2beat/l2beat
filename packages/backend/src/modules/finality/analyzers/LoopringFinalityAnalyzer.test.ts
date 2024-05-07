@@ -7,7 +7,7 @@ import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositor
 import { LoopringFinalityAnalyzer } from './LoopringFinalityAnalyzer'
 
 describe(LoopringFinalityAnalyzer.name, () => {
-  describe(LoopringFinalityAnalyzer.prototype.getFinality.name, () => {
+  describe(LoopringFinalityAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const projectId = ProjectId('loopring')
       const rpcClient = mockObject<RpcClient>({
@@ -31,7 +31,7 @@ describe(LoopringFinalityAnalyzer.name, () => {
         loopringClient,
       )
 
-      const result = await analyzer.getFinality({
+      const result = await analyzer.analyze({
         txHash: MOCK_DATA.txHash,
         timestamp: new UnixTime(MOCK_DATA.l1Timestamp),
       })

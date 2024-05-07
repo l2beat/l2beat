@@ -33,7 +33,7 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async getFinality(transaction: {
+  async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
   }): Promise<number[]> {

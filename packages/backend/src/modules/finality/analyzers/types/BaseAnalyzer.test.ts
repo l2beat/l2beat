@@ -6,8 +6,8 @@ import { LivenessRepository } from '../../../tracked-txs/modules/liveness/reposi
 import { BaseAnalyzer, Transaction } from './BaseAnalyzer'
 
 describe(BaseAnalyzer.name, () => {
-  describe(BaseAnalyzer.prototype.getFinalityForInterval.name, () => {
-    it('calls getFinality for each transaction from the interval', async () => {
+  describe(BaseAnalyzer.prototype.analyzeInterval.name, () => {
+    it('calls analyze for each transaction from the interval', async () => {
       const now = UnixTime.now()
 
       const mockTxs: Transaction[] = [
@@ -30,7 +30,7 @@ describe(BaseAnalyzer.name, () => {
       )
 
       expect(
-        await mockAnalyzer.getFinalityForInterval(now, now.add(10, 'hours')),
+        await mockAnalyzer.analyzeInterval(now, now.add(10, 'hours')),
       ).toEqual([1, 1])
       expect(
         mockLivenessRepository.getTransactionsWithinTimeRange,
@@ -61,7 +61,7 @@ class MockAnalyzer extends BaseAnalyzer {
     super(provider, livenessRepository, projectId)
   }
 
-  async getFinality(tx: Transaction) {
+  async analyze(tx: Transaction) {
     this.getFinalitySpy(tx)
     return [1]
   }

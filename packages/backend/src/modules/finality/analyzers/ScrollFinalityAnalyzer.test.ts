@@ -6,7 +6,7 @@ import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositor
 import { ScrollFinalityAnalyzer } from './ScrollFinalityAnalyzer'
 
 describe(ScrollFinalityAnalyzer.name, () => {
-  describe(ScrollFinalityAnalyzer.prototype.getFinality.name, () => {
+  describe(ScrollFinalityAnalyzer.prototype.analyze.name, () => {
     it('should return timestamp differences between l1 and l2 blocks', async () => {
       const TX_HASH =
         '0xd9ac85a5a989aaa9e238065f5a3e7f0d59f4836ab0796c2a356bb52384190b80'
@@ -27,7 +27,7 @@ describe(ScrollFinalityAnalyzer.name, () => {
         projectId,
       )
 
-      const result = await analyzer.getFinality({
+      const result = await analyzer.analyze({
         txHash: TX_HASH,
         timestamp: new UnixTime(L1_TIMESTAMP),
       })

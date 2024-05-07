@@ -108,8 +108,10 @@ export const kroma: Layer2 = {
       )} after it has been posted.`,
     },
     finality: {
-      warning:
-        "It's assumed that transaction data batches are submitted sequentially.",
+      warnings: {
+        timeToInclusion:
+          "It's assumed that transaction data batches are submitted sequentially.",
+      },
       finalizationPeriod,
     },
   },
@@ -190,6 +192,7 @@ export const kroma: Layer2 = {
     finality: {
       type: 'OPStack',
       lag: 0,
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

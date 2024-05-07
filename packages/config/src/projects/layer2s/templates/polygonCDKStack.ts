@@ -141,7 +141,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       finality: templateVars.display.finality ?? {
         finalizationPeriod: 0,
-        warning: 'Uniform block distribution is assumed for calculations.',
+        warnings: {
+          timeToInclusion:
+            'Uniform block distribution is assumed for calculations.',
+        },
       },
     },
     config: {
@@ -282,6 +285,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               type: 'PolygonZkEvm',
               minTimestamp: new UnixTime(1679653163),
               lag: 0,
+              stateUpdate: 'disabled',
             },
     },
     chainConfig: templateVars.chainConfig,

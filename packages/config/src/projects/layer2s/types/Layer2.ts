@@ -83,7 +83,10 @@ export interface Layer2LivenessDisplay {
 
 export interface Layer2FinalityDisplay {
   /** Warning tooltip content for finality tab for given project */
-  warning?: string
+  warnings?: {
+    timeToInclusion?: string
+    stateUpdateDelay?: string
+  }
   /** Finalization period displayed in table for given project (time in seconds) */
   finalizationPeriod?: number
 }

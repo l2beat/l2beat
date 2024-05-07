@@ -186,6 +186,7 @@ export const paradex: Layer2 = {
       lag: 0,
       type: 'Starknet',
       minTimestamp: new UnixTime(1710346920),
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({
