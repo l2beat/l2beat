@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0557044c20dcd2da533efbd1ee4297337a33afe8
+
+# Diff at Tue, 07 May 2024 06:31:48 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@20cad040a80da0f4072f1c6f9778026143a458db block: 19773867
+- current block number: 19816414
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19773867 (main branch discovery), not current.
+
+```diff
+    contract RollupProcessorV2 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      name:
+-        "RollupProcessorV2"
++        "RollupProcessorV3"
+    }
+```
+
 Generated with discovered.json: 0x0cdec08688e0bf04ae55526247b3daa31458700c
 
 # Diff at Wed, 01 May 2024 07:44:40 GMT:

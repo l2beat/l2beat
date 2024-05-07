@@ -22,7 +22,7 @@ export const aztecconnect: Layer2 = {
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',
     slug: 'aztecconnect',
-    warning: `EOL: Aztec team shut down their rollup infrastructure on March 31st, 2024. Deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
+    warning: `EOL: Aztec team shut down their offchain rollup infrastructure on March 31st, 2024. Onchain deposits are disabled and ownership of the rollup contract is irrevocably renounced. Assets in the escrow can be manually withdrawn with the [Aztec Connect Ejector](https://github.com/AztecProtocol/aztec-connect-ejector).`,
     description:
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['DeFi'],
@@ -79,7 +79,7 @@ export const aztecconnect: Layer2 = {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
         {
-          contract: 'RollupProcessorV2',
+          contract: 'RollupProcessorV3',
           references: [
             'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
             'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1041',
@@ -108,7 +108,7 @@ export const aztecconnect: Layer2 = {
       ...RISK_VIEW.DATA_ON_CHAIN,
       sources: [
         {
-          contract: 'RollupProcessorV2',
+          contract: 'RollupProcessorV3',
           references: [
             'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
           ],
@@ -120,7 +120,7 @@ export const aztecconnect: Layer2 = {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
       sources: [
         {
-          contract: 'RollupProcessorV2',
+          contract: 'RollupProcessorV3',
           references: [
             'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
           ],
@@ -161,7 +161,7 @@ export const aztecconnect: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupProcessorV2.sol#L706 - Etherscan source code',
+          text: 'RollupProcessorV3.sol#L706 - Etherscan source code',
           href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
         },
       ],
@@ -181,7 +181,7 @@ export const aztecconnect: Layer2 = {
         'Since EOL this is only true if the user themself runs the rollup locally and publishes the data.',
       references: [
         {
-          text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
+          text: 'RollupProcessorV3.sol#L686 - Etherscan source code',
           href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
         },
       ],
@@ -192,7 +192,7 @@ export const aztecconnect: Layer2 = {
       description: `Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Now that the system is EOL, the rollup can only be processed locally by volunteers.`,
       references: [
         {
-          text: 'RollupProcessorV2.sol#L692 - Etherscan source code',
+          text: 'RollupProcessorV3.sol#L692 - Etherscan source code',
           href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
         },
         {
@@ -204,16 +204,6 @@ export const aztecconnect: Layer2 = {
     forceTransactions: {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       description: FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS.description,
-      references: [
-        {
-          text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L697',
-        },
-        {
-          text: 'RollupProcessorV2.sol#L697 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1491',
-        },
-      ],
       risks: [],
     },
     exitMechanisms: [
@@ -235,12 +225,12 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'RollupProcessorV2.sol#L1042 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1042',
+            text: 'RollupProcessorV3.sol#F1#L1174 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1174',
           },
           {
-            text: 'RollupProcessorV2.sol#L1206 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1206',
+            text: 'RollupProcessorV3.sol#F1#L1332 - Etherscan source code',
+            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1332',
           },
         ],
       },
@@ -262,8 +252,8 @@ export const aztecconnect: Layer2 = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('RollupProcessorV2', {
-        description: `Main Rollup contract responsible for deposits, withdrawals and accepting transaction batches alongside a ZK proof.`,
+      discovery.getContractDetails('RollupProcessorV3', {
+        description: `Main Rollup contract (immutable) responsible for withdrawals and accepting transaction batches alongside a ZK proof.`,
       }),
       // rollupBeneficiary is encoded in proofData. Can be set arbitrarily for each rollup.
       // https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L704
@@ -284,7 +274,7 @@ export const aztecconnect: Layer2 = {
     risks: [],
   },
   stateDerivation: {
-    nodeSoftware: `The entire stack's source code is housed in a single monorepo, which can be found [here](https://github.com/AztecProtocol/aztec-connect/tree/v2.1). For instructions on running the node, please refer to [this readme](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/README.md). Since EOL the [aztec-connect-ejector](https://github.com/AztecProtocol/aztec-connect-ejector) can be used to run a rollup instance and withdraw.`,
+    nodeSoftware: `The entire stack's source code is housed in a single monorepo, which can be found [here](https://github.com/AztecProtocol/aztec-connect/). For instructions on running the node, please refer to [this readme](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/README.md). Since EOL the [aztec-connect-ejector](https://github.com/AztecProtocol/aztec-connect-ejector) can be used to run a rollup instance and withdraw.`,
     compressionScheme: 'No compression is used.',
     genesisState:
       'The genesis file is available [here](https://github.com/AztecProtocol/aztec-connect/blob/v2.1/yarn-project/falafel/src/environment/init/data/mainnet/accounts), and it includes accounts from [zk.money](http://zk.money) as well.',
