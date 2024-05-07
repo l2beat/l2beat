@@ -152,22 +152,27 @@ export function layer3ToProject(layer3: Layer3): Project {
         tokens:
           escrow.tokens === '*'
             ? tokensOnChain
-            : escrow.tokens
-                .filter((t) => t !== 'ETH')
-                .map((tokenSymbol) => {
-                  const token = tokensOnChain.find(
-                    (t) => t.symbol === tokenSymbol,
-                  )
-                  assert(
-                    token,
-                    `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
-                  )
-                  return token
-                }),
+            : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
         chain,
       }
     }),
   }
+}
+
+function mapL3Tokens(
+  tokens: string[],
+  tokensOnChain: Token[],
+  layer3: Layer3,
+  chain: string,
+): Token[] {
+  return tokens.map((tokenSymbol) => {
+    const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
+    assert(
+      token,
+      `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
+    )
+    return token
+  })
 }
 
 function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
