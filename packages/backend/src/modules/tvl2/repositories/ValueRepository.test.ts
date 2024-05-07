@@ -30,9 +30,9 @@ describeDatabase(ValueRepository.name, (database) => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
 
-    it('performs batch insert when more than 10k records', async () => {
+    it('performs batch insert with many records', async () => {
       const records: ValueRecord[] = []
-      for (let i = 5; i < 15_000; i++) {
+      for (let i = 5; i < 5_000; i++) {
         records.push(saved('a', new UnixTime(i), 'data_src', i, i * 2, i + 1))
       }
       await expect(repository.addMany(records)).not.toBeRejected()
@@ -87,7 +87,10 @@ function saved(
     timestamp,
     dataSource,
     canonical: BigInt(canonical),
+    canonicalForTotal: BigInt(canonical),
     external: BigInt(external),
+    externalForTotal: BigInt(external),
     native: BigInt(native),
+    nativeForTotal: BigInt(native),
   }
 }

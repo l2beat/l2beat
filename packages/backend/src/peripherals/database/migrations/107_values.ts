@@ -19,8 +19,11 @@ export async function up(knex: Knex) {
     table.string('project_id')
     table.string('data_source')
     table.bigInteger('external')
+    table.bigInteger('external_for_total')
     table.bigInteger('canonical')
+    table.bigInteger('canonical_for_total')
     table.bigInteger('native')
+    table.bigInteger('native_for_total')
     table.primary(['timestamp', 'project_id', 'data_source'])
   })
 }

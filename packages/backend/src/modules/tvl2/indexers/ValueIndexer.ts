@@ -32,8 +32,11 @@ export interface ValueIndexerDeps
 
 interface Values {
   canonical: bigint
+  canonicalForTotal: bigint
   external: bigint
+  externalForTotal: bigint
   native: bigint
+  nativeForTotal: bigint
 }
 
 type AssetId = string
@@ -52,7 +55,6 @@ export class ValueIndexer extends ManagedChildIndexer {
     super({ ...$, name, logger })
 
     this.amountConfigs = $.amountConfigs
-      .filter((x) => x.includeInTotal)
       .map((x) => ({
         ...x,
         configId: createAmountId(x),
@@ -100,8 +102,11 @@ export class ValueIndexer extends ManagedChildIndexer {
 
     const results = {
       canonical: 0n,
+      canonicalForTotal: 0n,
       external: 0n,
+      externalForTotal: 0n,
       native: 0n,
+      nativeForTotal: 0n,
     }
 
     for (const record of records) {
@@ -120,6 +125,11 @@ export class ValueIndexer extends ManagedChildIndexer {
       })
 
       results[amountConfig.source] += value
+
+      if (amountConfig.includeInTotal) {
+        const forTotalKey = `${amountConfig.source}ForTotal` as const
+        results[forTotalKey] += value
+      }
     }
 
     return results
@@ -131,7 +141,7 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 }
 
-const USD_DECIMALS = 2n
+const USD_DECIMALS = 2
 export function calculateValue({
   amount,
   priceUsd,
@@ -142,9 +152,8 @@ export function calculateValue({
   decimals: number
 }) {
   // we want to expose the balance as an integer, keeping the USD decimal places
-  const priceWithDecimals =
-    amount * BigInt(priceUsd) * 10n ** BigInt(USD_DECIMALS)
-  return priceWithDecimals / 10n ** BigInt(decimals)
+  const priceWithDecimals = Math.floor(priceUsd * 10 ** USD_DECIMALS)
+  return amount * BigInt(priceWithDecimals) / 10n ** BigInt(decimals)
 }
 
 function createAssetId(price: {
