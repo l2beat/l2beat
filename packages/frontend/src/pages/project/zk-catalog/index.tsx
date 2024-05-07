@@ -40,7 +40,6 @@ function mapToZkCatalogProject(
       slug: project.display.slug,
       name: project.display.name,
       shortName: project.display.shortName,
-      description: project.display.description,
       // TODO: Check if this is correct
       link: project.display.links.websites[0],
     },

@@ -22,7 +22,6 @@ export interface ZkCatalogProjectPageProps {
 interface ProjectDetails {
   title: string
   icon: string | undefined
-  description: string
   proofVerification: ProofVerification
 }
 
@@ -55,7 +54,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           </section>
           <section>
             <h2 className="mb-4 text-2xl font-bold">Description</h2>
-            <Markdown>{props.details.description}</Markdown>
+            <Markdown>{props.details.proofVerification.description}</Markdown>
           </section>
           <section>
             <h2 className="mb-4 text-2xl font-bold">List of required tools</h2>

@@ -16,7 +16,6 @@ export function getProps(
       details: {
         title: project.display.name,
         icon: `/icons/${project.display.slug}.png`,
-        description: project.display.description,
         proofVerification: project.proofVerification,
       },
       footer: getFooterProps(config),
