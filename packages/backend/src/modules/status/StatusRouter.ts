@@ -81,14 +81,18 @@ export function createStatusRouter(
 
         const byProject = groupBy(escrows, (a) => a.project.toString())
 
-        const byEscrow = {}
+        const byProjectByEscrow: Record<
+          string,
+          Record<string, { chain: string; tokens: string[] }>
+        > = {}
 
         for (const p of Object.keys(byProject)) {
-          const grouped = groupBy(byProject[p], (a) =>
+          const byEscrow = groupBy(byProject[p], (a) =>
             a.escrowAddress.toString(),
           )
-          byEscrow[p] = Object.fromEntries(
-            Object.entries(grouped).map(([k, v]) => [
+
+          byProjectByEscrow[p] = Object.fromEntries(
+            Object.entries(byEscrow).map(([k, v]) => [
               k,
               {
                 chain: v[0].chain,
@@ -98,7 +102,7 @@ export function createStatusRouter(
           )
         }
 
-        ctx.body = byEscrow
+        ctx.body = byProjectByEscrow
       },
     ),
   )
