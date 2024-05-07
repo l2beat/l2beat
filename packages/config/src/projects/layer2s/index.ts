@@ -73,6 +73,7 @@ import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
+import { reya } from './reya'
 import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
@@ -181,6 +182,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   redstone,
+  reya,
   rhinofi,
   rise,
   rss3,

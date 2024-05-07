@@ -99,8 +99,11 @@ export const scroll: Layer2 = {
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
     finality: {
-      warning:
-        'Transaction data batches that have not yet been proven can be reverted.',
+      warnings: {
+        timeToInclusion:
+          'Transaction data batches that have not yet been proven can be reverted.',
+      },
+
       finalizationPeriod: 0,
     },
   },
@@ -241,6 +244,7 @@ export const scroll: Layer2 = {
       type: 'Scroll',
       // Scroll L1 Chain Proxy deployment
       minTimestamp: new UnixTime(1696775129),
+      stateUpdate: 'disabled',
     },
   },
   dataAvailability: addSentimentToDataAvailability({

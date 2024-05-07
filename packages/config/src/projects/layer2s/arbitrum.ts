@@ -194,6 +194,7 @@ export const arbitrum: Layer2 = {
       // https://etherscan.io/tx/0x5969e9d520e138e6eeb5c020a75635fd2fdc15803f707dce7909c1bf062b32d0
       minTimestamp: new UnixTime(1710427823),
       lag: 0,
+      stateUpdate: 'disabled',
     },
     trackedTxs: [
       {

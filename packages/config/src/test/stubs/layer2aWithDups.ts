@@ -28,8 +28,10 @@ export const layer2aWithDups: Layer2 = {
       socialMedia: [],
     },
     finality: {
-      warning:
-        "It's assumed that transaction data batches are submitted sequentially.",
+      warnings: {
+        timeToInclusion:
+          "It's assumed that transaction data batches are submitted sequentially.",
+      },
     },
   },
   stage: {
