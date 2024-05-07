@@ -46,7 +46,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tag: 'update',
+        tag: 'update-day',
         l2CostsRepository,
         priceRepository,
       })
@@ -70,9 +70,89 @@ describe(L2CostsAggregatorIndexer.name, () => {
       expect(to).toEqual(1682985600)
     })
 
-    it('clamps to hour', async () => {})
+    it('clamps to hour', async () => {
+      // 2024-05-02 14:00:01
+      const from = NOW.add(-1, 'hours').add(1, 'seconds')
 
-    it('returns from if prices not available', async () => {})
+      const txs = [
+        tx({
+          timestamp: from,
+        }),
+      ]
+
+      const ethPrices = new Map([
+        // 2024-05-02 14:00:00
+        [from.add(-1, 'seconds').toNumber(), 2000],
+      ])
+
+      const l2CostsRepository = mockObject<L2CostsRepository>({
+        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
+      })
+
+      const priceRepository = mockObject<PriceRepository>({
+        findByTimestampRange: mockFn().resolvesTo(ethPrices),
+      })
+
+      const indexer = createIndexer({
+        tag: 'update-hour',
+        l2CostsRepository,
+        priceRepository,
+      })
+
+      // from 2024-05-02 14:00:01 to 2024-05-02 15:00:00
+      const to = await indexer.update(from.toNumber(), NOW.toNumber())
+
+      // should get records between 2024-05-02 14:00:00 and 2023-05-02 14:59:59
+      expect(
+        l2CostsRepository.getWithProjectIdByTimeRange,
+      ).toHaveBeenOnlyCalledWith([
+        from.add(-1, 'seconds'),
+        NOW.add(-1, 'seconds'),
+      ])
+
+      // should get prices records between 2024-05-02 14:00:00 and 2023-05-02 14:59:59
+      expect(priceRepository.findByTimestampRange).toHaveBeenOnlyCalledWith(
+        AssetId.ETH,
+        from.add(-1, 'seconds'),
+        NOW.add(-1, 'seconds'),
+      )
+
+      // 2023-05-02 00:00:00
+      expect(to).toEqual(NOW.toNumber())
+    })
+
+    it('returns from if prices not available', async () => {
+      const txs = [
+        tx({
+          timestamp: MIN.add(1, 'minutes'),
+        }),
+      ]
+
+      const ethPrices = new Map([
+        // 2023-05-01 00:00:00
+        [MIN.toNumber(), 2000],
+      ])
+
+      const l2CostsRepository = mockObject<L2CostsRepository>({
+        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
+      })
+
+      const priceRepository = mockObject<PriceRepository>({
+        findByTimestampRange: mockFn().resolvesTo(ethPrices),
+      })
+
+      const indexer = createIndexer({
+        tag: 'update',
+        l2CostsRepository,
+        priceRepository,
+      })
+
+      // from 2023-05-01 00:00:00 to 2024-05-02 15:00:00
+      const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
+
+      // 2023-05-01 00:00:00
+      expect(to).toEqual(MIN.toNumber())
+    })
   })
 
   describe(L2CostsAggregatorIndexer.prototype.aggregate.name, () => {
