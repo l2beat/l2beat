@@ -1,7 +1,7 @@
 import Router from '@koa/router'
 import { EscrowEntry } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
-import { z } from 'zod'
+import { chain, groupBy } from 'lodash'
+import { string, z } from 'zod'
 
 import { withTypedContext } from '../../api/types'
 import { Config } from '../../config'
@@ -70,28 +70,35 @@ export function createStatusRouter(
           return
         }
 
-        const escrows = config.tvl2.amounts.filter(
-          (a): a is EscrowEntry => a.type === 'escrow',
-        )
-        const byProject = groupBy(escrows, (a) => a.project.toString())
-
         const projectsFilter = ctx.query.projects?.split(',')
 
-        const toDisplay = Object.fromEntries(
-          Object.entries(byProject)
-            .filter(
-              ([project]) =>
-                !projectsFilter || projectsFilter.includes(project),
-            )
-            .map(([project, amounts]) => [
-              project,
-              amounts.map(escrowToDisplay),
-            ]),
-        )
+        const escrows = config.tvl2.amounts
+          .filter((a): a is EscrowEntry => a.type === 'escrow')
+          .filter(
+            (a) =>
+              !projectsFilter || projectsFilter.includes(a.project.toString()),
+          )
 
-        ctx.body = {
-          escrows: toDisplay,
+        const byProject = groupBy(escrows, (a) => a.project.toString())
+
+        const byEscrow = {}
+
+        for (const p of Object.keys(byProject)) {
+          const grouped = groupBy(byProject[p], (a) =>
+            a.escrowAddress.toString(),
+          )
+          byEscrow[p] = Object.fromEntries(
+            Object.entries(grouped).map(([k, v]) => [
+              k,
+              {
+                chain: v[0].chain,
+                tokens: v.map(escrowToDisplay),
+              },
+            ]),
+          )
         }
+
+        ctx.body = byEscrow
       },
     ),
   )
@@ -104,9 +111,5 @@ export function createStatusRouter(
 }
 
 function escrowToDisplay(escrow: EscrowEntry) {
-  return {
-    chain: escrow.chain,
-    address: escrow.address.toString(),
-    escrowAddress: escrow.escrowAddress.toString(),
-  }
+  return escrow.address.toString()
 }
