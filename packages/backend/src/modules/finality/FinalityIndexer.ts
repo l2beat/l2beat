@@ -152,7 +152,7 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (indexerState === undefined) {
-      await this.stateRepository.add({
+      await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
         safeHeight,
         minTimestamp: this.configuration.minTimestamp,

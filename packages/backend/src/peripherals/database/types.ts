@@ -5,6 +5,7 @@ export {}
 
 import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
+import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
 
 declare module 'knex/types/tables' {
@@ -240,6 +241,7 @@ declare module 'knex/types/tables' {
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
+    values: ValueRow
   }
 }
 

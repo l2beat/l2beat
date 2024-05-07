@@ -8,8 +8,10 @@ import {
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
+import { calculateValue } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 
@@ -28,9 +30,9 @@ interface Tvl2TimestampedResult {
 }
 
 interface Tvl2ProjectResult {
-  canonical: number
-  external: number
-  native: number
+  canonical: string
+  external: string
+  native: string
 }
 
 type AmountConfigMap = Map<
@@ -52,6 +54,7 @@ export class Tvl2Controller {
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
+    private readonly valueRepository: ValueRepository,
     projects: ProjectId[],
     config: Tvl2Config,
   ) {
@@ -75,75 +78,41 @@ export class Tvl2Controller {
       .toEndOf('day')
   }
 
-  async getTvl(maxTimestamp: UnixTime): Promise<Tvl2Result> {
+  async getTvl(): Promise<Tvl2Result> {
     // TODO: we should return daily, sixHourly and hourly results.
     const result: Tvl2Result = {
       daily: [],
     }
 
-    for (let t = this.minTimestamp; t.lte(maxTimestamp); t = t.add(1, 'days')) {
-      result.daily.push(await this.getTvlAt(t))
-    }
-    return result
-  }
-
-  async getTvlAt(timestamp: UnixTime): Promise<Tvl2TimestampedResult> {
-    const results: Record<string, Tvl2ProjectResult> = {}
-    for (const project of this.projects) {
-      if (timestamp.gte(project.minTimestamp)) {
-        results[project.id.toString()] = await this.getProjectTvl(
-          project.id,
-          timestamp,
+    const projects = this.projects.map((x) => x.id)
+    const dailyValues = await this.valueRepository.getDailyForProjects(projects)
+    const dailyValuesByTimestamp = groupBy(dailyValues, 'timestamp')
+    for (const [timestamp, values] of Object.entries(dailyValuesByTimestamp)) {
+      const valuesByProject = groupBy(values, 'projectId')
+      const projects: Record<string, Tvl2ProjectResult> = {}
+      for (const [projectId, values] of Object.entries(valuesByProject)) {
+        const result = values.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
         )
+        projects[projectId] = {
+          canonical: result.canonical.toString(),
+          external: result.external.toString(),
+          native: result.native.toString(),
+        }
       }
-    }
-
-    return {
-      timestamp: timestamp.toNumber(),
-      projects: results,
-    }
-  }
-
-  async getProjectTvl(
-    project: ProjectId,
-    timestamp: UnixTime,
-  ): Promise<Tvl2ProjectResult> {
-    const projectConfigs = this.amountConfig.get(project)
-    assert(projectConfigs, 'Config not found: ' + project.toString())
-
-    const configIds = projectConfigs.map((x) => x.configId)
-    const records = await this.amountRepository.getByConfigIdsAndTimestamp(
-      configIds,
-      timestamp,
-    )
-
-    const prices = await this.priceRepository.getByTimestamp(timestamp)
-
-    const results = {
-      canonical: 0,
-      external: 0,
-      native: 0,
-    }
-
-    for (const record of records) {
-      const amountConfig = projectConfigs.find(
-        (x) => x.configId === record.configId,
-      )
-      assert(amountConfig, 'Config not found')
-
-      const priceId = this.priceConfigIds.get(createAssetId(amountConfig))
-      const price = prices.find((x) => x.configId === priceId)
-      assert(price, 'Price not found')
-
-      const value = calculateValue({
-        amount: record.amount,
-        priceUsd: price.priceUsd,
-        decimals: amountConfig.decimals,
+      result.daily.push({
+        timestamp: Number(timestamp),
+        projects,
       })
-
-      results[amountConfig.source] += value
     }
-    return results
+
+    return result
   }
 
   async getTokenChart(
@@ -170,7 +139,7 @@ export class Tvl2Controller {
 
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const values: [number, number][] = []
+    const values: [number, bigint][] = []
     for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
       const price = pricesMap.get(Number(timestamp))
       assert(price, 'Programmer error ' + timestamp)
@@ -187,29 +156,12 @@ export class Tvl2Controller {
           decimals: amountConfig.decimals,
         })
         return acc + value
-      }, 0)
+      }, 0n)
       values.push([Number(timestamp), value])
     }
 
     return values
   }
-}
-
-const USD_DECIMALS = 2
-function calculateValue({
-  amount,
-  priceUsd,
-  decimals,
-}: {
-  amount: bigint
-  priceUsd: number
-  decimals: number
-}) {
-  const value = (Number(amount) * priceUsd) / 10 ** decimals
-
-  // we want to expose the balance as an integer, keeping the USD decimal places
-  // not sure it it's necessary to calculate cents when we calculate billions
-  return Math.floor(value * 10 ** USD_DECIMALS)
 }
 
 function getAmountConfigMap(config: Tvl2Config) {
