@@ -896,6 +896,11 @@
       "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C"
     },
     {
+      "symbol": "cSTONE",
+      "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
+      "coingeckoId": "stakestone-ether"
+    },
+    {
       "symbol": "STRK",
       "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
     },
@@ -1676,6 +1681,12 @@
       "type": "NMV",
       "formula": "circulatingSupply",
       "coingeckoId": "foxy"
+    },
+    {
+      "symbol": "ZERO",
+      "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "zkfair": [
@@ -1907,6 +1918,12 @@
       "coingeckoId": "frax-ether"
     },
     {
+      "symbol": "HOLD",
+      "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "sfrxETH",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
       "type": "EBV",
@@ -1931,8 +1948,8 @@
       "formula": "circulatingSupply"
     },
     {
-      "symbol": "HOLD",
-      "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
+      "symbol": "ZF",
+      "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
       "type": "NMV",
       "formula": "circulatingSupply"
     }

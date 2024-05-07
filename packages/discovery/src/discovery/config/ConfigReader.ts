@@ -8,7 +8,7 @@ import { posix } from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryMeta } from './DiscoveryMeta'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
   async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
@@ -21,23 +21,46 @@ export class ConfigReader {
       'Chain not found in project, check if case matches',
     )
 
-    const contents = await readFile(
+    const contents = await this.readJsonc(
       `discovery/${name}/${chain}/config.jsonc`,
-      'utf-8',
     )
-    const errors: ParseError[] = []
-    const parsed: unknown = parse(contents, errors, {
-      allowTrailingComma: true,
-    })
-    if (errors.length !== 0) {
-      throw new Error('Cannot parse file')
-    }
-    const rawConfig = RawDiscoveryConfig.parse(parsed)
+    const rawConfig = RawDiscoveryConfig.parse(contents)
+    await this.inlineTemplates(rawConfig)
     const config = new DiscoveryConfig(rawConfig)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
+  }
+
+  async readJsonc(path: string): Promise<JSON> {
+    const contents = await readFile(path, 'utf-8')
+    const errors: ParseError[] = []
+    const parsed = parse(contents, errors, {
+      allowTrailingComma: true,
+    }) as JSON
+    if (errors.length !== 0) {
+      throw new Error(`Cannot parse file ${path}`)
+    }
+    return parsed
+  }
+
+  async inlineTemplates(rawConfig: RawDiscoveryConfig): Promise<void> {
+    if (rawConfig.overrides === undefined) {
+      return
+    }
+    for (const [name, contract] of Object.entries(rawConfig.overrides)) {
+      if (contract.extends !== undefined) {
+        const templateJson = await this.readJsonc(
+          `discovery/_templates/${contract.extends}/template.jsonc`,
+        )
+        const updatedContract = DiscoveryContract.parse({
+          ...templateJson,
+          ...contract,
+        })
+        rawConfig.overrides[name] = updatedContract
+      }
+    }
   }
 
   async readMeta(

@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x94bafe549ae45883fd41860a1577ce9a7ed8a42c
+
+# Diff at Mon, 06 May 2024 06:56:42 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@91ddfe46c9a8cff7aff522924d50fd166a15932b block: 19776768
+- current block number: 19809397
+
+## Description
+
+The Inbox implementation is upgraded with very minor changes:
+- Modifier `whenRefundAddressAllowed` added (ensures that both `excessFeeRefundAddress` and `callValueRefundAddress` match the msg.sender)
+- Formatting and import folder structure
+
+## Watched changes
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
+      implementations.0:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
+    }
+```
+
+## Source code changes
+
+```diff
+.../proxy/utils/Initializable.sol => /dev/null     |  80 ------
+ .../lib/nitro-contracts}/src/bridge/IBridge.sol    |  22 ++
+ .../src/bridge/IDelayedMessageProvider.sol         |   0
+ .../lib/nitro-contracts}/src/bridge/IEthBridge.sol |   0
+ .../lib/nitro-contracts}/src/bridge/IInbox.sol     |   0
+ .../lib/nitro-contracts}/src/bridge/IInboxBase.sol |   0
+ .../lib/nitro-contracts}/src/bridge/IOwnable.sol   |   0
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++++--
+ .../src/libraries/AddressAliasHelper.sol           |   0
+ .../src/libraries/DelegateCallAware.sol            |   0
+ .../lib/nitro-contracts}/src/libraries/Error.sol   |  27 +-
+ .../nitro-contracts/src/libraries/IGasRefunder.sol |  14 +
+ .../src/libraries/MessageTypes.sol                 |   0
+ .../nitro-contracts}/src/precompiles/ArbSys.sol    |   0
+ .../contracts/proxy/utils/Initializable.sol        | 166 ++++++++++++
+ .../contracts}/security/PausableUpgradeable.sol    |  34 ++-
+ .../contracts}/utils/AddressUpgradeable.sol        |  74 ++++--
+ .../contracts}/utils/ContextUpgradeable.sol        |   0
+ .../contracts}/utils/StorageSlotUpgradeable.sol    |  60 ++++-
+ .../Inbox/implementation/meta.txt                  |   2 +-
+ .../src/libraries/IGasRefunder.sol => /dev/null    |  39 ---
+ .../src/nitro-contracts}/bridge/AbsInbox.sol       | 199 +++++++--------
+ .../src/nitro-contracts}/bridge/Inbox.sol          | 281 ++++++++++-----------
+ 23 files changed, 651 insertions(+), 438 deletions(-)
+```
+
 Generated with discovered.json: 0x4c11e99e03b2ae08fd367a9e6d1d673f2cfe3fff
 
 # Diff at Wed, 01 May 2024 17:27:29 GMT:

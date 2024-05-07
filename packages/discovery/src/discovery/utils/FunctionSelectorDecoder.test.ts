@@ -1,9 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../utils/Bytes'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { addressToBytes32 } from './address'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'

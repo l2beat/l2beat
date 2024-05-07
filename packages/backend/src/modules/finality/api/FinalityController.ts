@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { FinalityApiResponse } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
@@ -41,14 +42,62 @@ export class FinalityController {
 
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
-      (record) => ({
-        timeToInclusion: {
-          minimumInSeconds: record.minimumTimeToInclusion,
-          maximumInSeconds: record.maximumTimeToInclusion,
-          averageInSeconds: record.averageTimeToInclusion,
-        },
-        syncedUntil: record.timestamp,
-      }),
+      (record) => {
+        const {
+          averageStateUpdate,
+
+          minimumTimeToInclusion,
+          averageTimeToInclusion,
+          maximumTimeToInclusion,
+
+          projectId,
+          timestamp,
+        } = record
+
+        const base = {
+          syncedUntil: timestamp,
+          timeToInclusion: {
+            minimumInSeconds: minimumTimeToInclusion,
+            maximumInSeconds: maximumTimeToInclusion,
+            averageInSeconds: averageTimeToInclusion,
+          },
+        }
+
+        const project = projects.find(
+          (project) => project.projectId === projectId,
+        )
+
+        assert(project, 'Project not found in config')
+
+        if (project.stateUpdate === 'zeroed') {
+          return {
+            ...base,
+            stateUpdateDelays: {
+              averageInSeconds: 0,
+            },
+          }
+        }
+
+        if (project.stateUpdate === 'disabled') {
+          return {
+            ...base,
+            stateUpdateDelays: null,
+          }
+        }
+
+        const hasStateUpdateDelay = averageStateUpdate !== null
+
+        const stateUpdateDelays = hasStateUpdateDelay
+          ? {
+              averageInSeconds: averageStateUpdate - averageTimeToInclusion,
+            }
+          : null
+
+        return {
+          ...base,
+          stateUpdateDelays,
+        }
+      },
     )
 
     return result
@@ -80,6 +129,7 @@ export class FinalityController {
         if (projectResult) {
           result[project.projectId.toString()] = {
             timeToInclusion: projectResult,
+            stateUpdateDelays: null,
             syncedUntil,
           }
         }

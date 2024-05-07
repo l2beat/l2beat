@@ -1,12 +1,12 @@
 import { ManualProxyType } from '@l2beat/discovery-types'
+import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
-import { stringAs } from '../../utils/Branded'
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { UserHandlerDefinition } from '../handlers/user'
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
+  extends: z.optional(z.string()),
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
   ignoreInWatchMode: z.optional(z.array(z.string())),

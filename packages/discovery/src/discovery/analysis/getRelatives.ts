@@ -1,6 +1,6 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { HandlerResult } from '../handlers/Handler'
 
 export function getRelatives(

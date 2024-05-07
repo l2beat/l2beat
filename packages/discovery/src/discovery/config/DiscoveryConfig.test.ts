@@ -4,7 +4,7 @@ import { expect } from 'earl'
 
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()
