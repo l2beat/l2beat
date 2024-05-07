@@ -4,6 +4,7 @@ import { providers } from 'ethers'
 import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
+import { TemplateService } from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryLogger } from './DiscoveryLogger'
@@ -185,11 +186,13 @@ export async function discover(
     multicallClient,
     logger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

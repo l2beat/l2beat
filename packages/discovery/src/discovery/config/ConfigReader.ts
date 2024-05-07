@@ -3,12 +3,14 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
-import { posix } from 'path'
+import path, { posix } from 'path'
 
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryMeta } from './DiscoveryMeta'
 import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
+
+export const TEMPLATES_PATH = path.join('discovery', '_templates')
 
 export class ConfigReader {
   async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
@@ -52,7 +54,7 @@ export class ConfigReader {
     for (const [name, contract] of Object.entries(rawConfig.overrides)) {
       if (contract.extends !== undefined) {
         const templateJson = await this.readJsonc(
-          `discovery/_templates/${contract.extends}/template.jsonc`,
+          path.join(TEMPLATES_PATH, contract.extends, 'template.jsonc'),
         )
         const updatedContract = DiscoveryContract.parse({
           ...templateJson,

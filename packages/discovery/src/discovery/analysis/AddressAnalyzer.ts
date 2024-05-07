@@ -17,6 +17,7 @@ import {
   SourceCodeService,
 } from '../source/SourceCodeService'
 import { getRelatives } from './getRelatives'
+import { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -34,6 +35,7 @@ export interface AnalyzedContract {
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
+  matchingTemplates: Record<string, number>
 }
 
 export interface AnalyzedEOA {
@@ -47,6 +49,7 @@ export class AddressAnalyzer {
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
+    private readonly templateService: TemplateService,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -75,8 +78,10 @@ export class AddressAnalyzer {
       address,
       proxy?.implementations,
     )
-
     logger.logName(sources.name)
+
+    const matchingTemplates =
+      this.templateService.findMatchingTemplates(sources)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
@@ -101,6 +106,7 @@ export class AddressAnalyzer {
         errors: errors ?? {},
         abis: sources.abis,
         sourceBundles: sources.sources,
+        matchingTemplates,
       },
       relatives: getRelatives(
         results,
