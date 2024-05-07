@@ -85,6 +85,10 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.minTimestamp,
   )
 
+  const aggregatorEnabled =
+    config.trackedTxsConfig.uses.l2costs &&
+    config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
+
   const l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
     l2CostsRepository: peripherals.getRepository(L2CostsRepository),
     aggregatedL2CostsRepository: peripherals.getRepository(
@@ -106,7 +110,9 @@ export function createTrackedTxsModule(
       await subModule?.start?.()
     }
     await trackedTxsIndexer.start()
-    await l2CostsAggregatorIndexer.start()
+    if (aggregatorEnabled) {
+      await l2CostsAggregatorIndexer.start()
+    }
   }
 
   return {

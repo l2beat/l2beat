@@ -173,6 +173,11 @@ export function makeConfig(
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
         l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          aggregatorEnabled: flags.isEnabled(
+            'tracked-txs',
+            'l2costs',
+            'aggregator',
+          ),
           ethereumProviderUrl: env.string([
             'ETHEREUM_RPC_URL_FOR_L2COSTS',
             'ETHEREUM_RPC_URL',
