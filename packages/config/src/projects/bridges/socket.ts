@@ -53,7 +53,7 @@ export const socket: Bridge = {
     },
   },
   technology: {
-    destination: ['Various'],
+    destination: ['Ethereum', 'Reya', 'Lyra', 'Hook'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
