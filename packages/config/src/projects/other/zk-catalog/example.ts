@@ -10,7 +10,7 @@ export const example: ZkCatalogProject = {
   },
   proofVerification: {
     description:
-    'Exercitation est excepteur elit non do sit reprehenderit proident. Mollit deserunt tempor aliquip duis dolore. Aliqua cillum adipisicing magna voluptate eu consectetur Lorem eu veniam aute reprehenderit officia cillum. Consequat ea aute proident et ex adipisicing. Et consequat reprehenderit deserunt eiusmod proident mollit fugiat ad nulla. Qui nostrud est ea proident id duis veniam est pariatur dolor voluptate eu aute tempor. Esse amet aute sunt eu. Anim sit ad occaecat magna mollit quis.',
+      'Exercitation est excepteur elit non do sit reprehenderit proident. Mollit deserunt tempor aliquip duis dolore. Aliqua cillum adipisicing magna voluptate eu consectetur Lorem eu veniam aute reprehenderit officia cillum. Consequat ea aute proident et ex adipisicing. Et consequat reprehenderit deserunt eiusmod proident mollit fugiat ad nulla. Qui nostrud est ea proident id duis veniam est pariatur dolor voluptate eu aute tempor. Esse amet aute sunt eu. Anim sit ad occaecat magna mollit quis.',
     aggregation: true,
     requiredTools: [
       {
@@ -79,7 +79,7 @@ export const example: ZkCatalogProject = {
             trustedSetup: 'Example Trusted Setup 2',
           },
         ],
-      }
+      },
     ],
   },
 }
