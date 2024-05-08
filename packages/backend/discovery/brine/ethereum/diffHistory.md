@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x46f390052a2f8dcbd3c4bf8ac8a5a5c5b34e7574
+
+# Diff at Wed, 08 May 2024 12:32:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eb116053a3dfe1dcff4cde0b8b45a07198fbab8 block: 19624845
+- current block number: 19825361
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19624845 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07) {
+    +++ description: None
+      values.getRegisteredAvailabilityVerifiers:
+-        "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
++        ["0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"]
+      values.getRegisteredVerifiers:
+-        "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"
++        ["0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"]
+    }
+```
+
 Generated with discovered.json: 0xbad77bab912db96aa0e8e1ba2bd66b2579a0d2af
 
 # Diff at Wed, 10 Apr 2024 11:11:20 GMT:
