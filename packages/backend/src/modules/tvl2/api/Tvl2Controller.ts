@@ -139,7 +139,7 @@ export class Tvl2Controller {
 
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const values: [number, bigint][] = []
+    const values: [number, number][] = []
     for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
       const price = pricesMap.get(Number(timestamp))
       assert(price, 'Programmer error ' + timestamp)
@@ -157,7 +157,7 @@ export class Tvl2Controller {
         })
         return acc + value
       }, 0n)
-      values.push([Number(timestamp), value])
+      values.push([Number(timestamp), Number(value)])
     }
 
     return values
