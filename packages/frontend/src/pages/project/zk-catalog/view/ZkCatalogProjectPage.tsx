@@ -1,4 +1,4 @@
-import { ProofVerification } from '@l2beat/config/build/src/projects/types'
+import { ProofVerification } from '@l2beat/config'
 import React from 'react'
 
 import {
