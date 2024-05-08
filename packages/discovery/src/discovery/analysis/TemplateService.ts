@@ -31,13 +31,15 @@ export class TemplateService {
       hashChunks: buildSimilarityHashmap(flatSource),
       content: flatSource,
     }
-    iterateFoldersRecursively(TEMPLATES_PATH, (path) => {
+
+    const templatePaths = listAllPaths(TEMPLATES_PATH)
+    for (const path of templatePaths) {
       if (!existsSync(join(path, 'template.jsonc'))) {
-        return
+        continue
       }
       const shapePath = join(path, TEMPLATE_SHAPE_FOLDER)
       if (!existsSync(shapePath)) {
-        return
+        continue
       }
 
       const solidityShapeFiles = readdirSync(shapePath, {
@@ -64,21 +66,19 @@ export class TemplateService {
         const templateId = path.substring(TEMPLATES_PATH.length + 1)
         result[templateId] = maxSimilarity
       }
-    })
+    }
 
     return result
   }
 }
 
-function iterateFoldersRecursively(
-  path: string,
-  callback: (path: string) => void,
-): void {
-  callback(path)
-  const folders = readdirSync(path, { withFileTypes: true }).filter((x) =>
-    x.isDirectory(),
-  )
-  for (const folder of folders) {
-    iterateFoldersRecursively(join(path, folder.name), callback)
+function listAllPaths(path: string): string[] {
+  let result = [path]
+  const subPaths = readdirSync(path, { withFileTypes: true })
+    .filter((x) => x.isDirectory())
+    .map((x) => join(path, x.name))
+  for (const subPath of subPaths) {
+    result = result.concat(listAllPaths(subPath))
   }
+  return result
 }
