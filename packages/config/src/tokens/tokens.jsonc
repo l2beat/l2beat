@@ -1356,7 +1356,7 @@
     {
       "symbol": "ETH",
       "type": "CBV",
-      "formula": "totalSupply",
+      "formula": "totalSupply", // formula does not matter here
       "category": "ether"
     }
   ],
@@ -1551,7 +1551,7 @@
     {
       "symbol": "ETH",
       "type": "CBV",
-      "formula": "locked",
+      "formula": "totalSupply", // formula does not matter here
       "category": "ether"
     }
   ],
