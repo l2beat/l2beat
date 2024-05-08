@@ -1,12 +1,8 @@
+import { estimateSimilarity } from '@l2beat/discovery'
 import chalk from 'chalk'
 
 import { printAsciiTable } from '../../src/tools/printAsciiTable'
-import {
-  Project,
-  estimateSimilarity,
-  removeCommonPath,
-  transpose,
-} from './common'
+import { Project, removeCommonPath, transpose } from './common'
 
 export function formatHeader(title: string): string {
   return `= ${title} `.padEnd(36, '=')

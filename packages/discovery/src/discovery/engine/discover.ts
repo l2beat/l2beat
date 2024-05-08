@@ -1,5 +1,6 @@
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
+import { TemplateService } from '../analysis/TemplateService'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -20,11 +21,13 @@ export async function discover(
   const sourceCodeService = new SourceCodeService(provider)
   const multicallClient = new MulticallClient(provider, multicallConfig)
   const handlerExecutor = new HandlerExecutor(provider, multicallClient, logger)
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     provider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

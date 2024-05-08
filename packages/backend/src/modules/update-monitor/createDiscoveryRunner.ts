@@ -11,6 +11,7 @@ import {
   ProviderWithCache,
   ProxyDetector,
   SourceCodeService,
+  TemplateService,
 } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
@@ -45,11 +46,13 @@ export function createDiscoveryRunner(
     multicallClient,
     discoveryLogger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     discoveryLogger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
