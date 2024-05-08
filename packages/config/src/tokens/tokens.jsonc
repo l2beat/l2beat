@@ -872,6 +872,11 @@
       "coingeckoId": "phantasma"
     },
     {
+      "symbol": "eSOV",
+      "address": "0xbdab72602e9AD40FC6a6852CAf43258113B8F7a5",
+      "coingeckoId": "sovryn"
+    },
+    {
       "symbol": "SPELL",
       "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6"
     },

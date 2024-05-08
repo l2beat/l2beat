@@ -1217,6 +1217,21 @@
       "formula": "locked"
     },
     {
+      "id": "esov-esov",
+      "name": "eSOV",
+      "coingeckoId": "sovryn",
+      "address": "0xbdab72602e9AD40FC6a6852CAf43258113B8F7a5",
+      "symbol": "eSOV",
+      "decimals": 18,
+      "deploymentTimestamp": 1619598324,
+      "coingeckoListingTimestamp": 1623369600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16248/large/sovryn_logo_orange.png?1709174299",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",

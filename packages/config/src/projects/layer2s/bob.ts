@@ -26,7 +26,7 @@ export const bob: Layer2 = opStackL2({
   },
   usesBlobs: true,
   genesisTimestamp: new UnixTime(1712861989),
-  isNodeAvailable: true,
+  isNodeAvailable: 'UnderReview',
   milestones: [
     {
       name: 'Phase 1: Optimistic BOB',
