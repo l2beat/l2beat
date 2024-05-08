@@ -1,4 +1,4 @@
-import { assert, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -6,18 +6,14 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cyber')
 
-const daChallengeWindowBlocks = formatSeconds(
-  discovery.getContractValue<number>(
-    'DataAvailabilityChallenge',
-    'challengeWindow',
-  ),
+const daChallengeWindowBlocks = discovery.getContractValue<number>(
+  'DataAvailabilityChallenge',
+  'challengeWindow',
 )
 
-const daResolveWindowBlocks = formatSeconds(
-  discovery.getContractValue<number>(
-    'DataAvailabilityChallenge',
-    'resolveWindow',
-  ),
+const daResolveWindowBlocks = discovery.getContractValue<number>(
+  'DataAvailabilityChallenge',
+  'resolveWindow',
 )
 
 export const cyber: Layer2 = opStackL2({
@@ -49,7 +45,7 @@ export const cyber: Layer2 = opStackL2({
       value: 'External',
       description: (() => {
         assert(
-          daChallengeWindowBlocks === '1' && daResolveWindowBlocks === '1',
+          daChallengeWindowBlocks === 1 && daResolveWindowBlocks === 1,
           'The challenge window in the DataAvailabilityChallenge contract changed, please update the daProvider description',
         )
         const description =
@@ -62,7 +58,7 @@ export const cyber: Layer2 = opStackL2({
       name: 'Data is published offchain without a usable challenging mechanism',
       description: (() => {
         assert(
-          daChallengeWindowBlocks === '1' && daResolveWindowBlocks === '1',
+          daChallengeWindowBlocks === 1 && daResolveWindowBlocks === 1,
           'The challenge window in the DataAvailabilityChallenge contract changed, please update the technology section',
         )
         const description =
