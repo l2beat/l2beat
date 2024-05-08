@@ -1814,7 +1814,7 @@
       "symbol": "MODE",
       "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
       "type": "NMV",
-      "formula": "circulatingSupply",
+      "formula": "circulatingSupply"
     },
     {
       "symbol": "weETH.mode",
