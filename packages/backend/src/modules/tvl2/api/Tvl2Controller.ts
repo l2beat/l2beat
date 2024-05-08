@@ -3,19 +3,24 @@ import {
   AmountConfigEntry,
   EthereumAddress,
   ProjectId,
+  TvlApiChart,
   TvlApiCharts,
+  TvlApiProject,
+  TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
-import { AmountRepository } from '../repositories/AmountRepository'
+import { ChainConverter } from '../../../tools/ChainConverter'
+import {
+  AmountRepository,
+} from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
-import { calculateValue } from '../utils/calculateValue'
+import { ValueRepository } from '../repositories/ValueRepository'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { calculateValue } from '../utils/calculateValue'
 
 export interface Tvl2Project {
   id: ProjectId
@@ -46,23 +51,32 @@ type PriceConfigIdMap = Map<string, string>
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
+  private readonly currAmountConfigs: Map<
+    string,
+    AmountConfigEntry & { configId: string }
+  >
   private readonly priceConfigIds: PriceConfigIdMap
   private readonly projects: {
     id: ProjectId
     minTimestamp: UnixTime
   }[]
-  private readonly minTimestamp: UnixTime
 
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
-    private readonly syncOptimizer: SyncOptimizer,
+    private readonly chainConverter: ChainConverter,
     projects: ProjectId[],
     config: Tvl2Config,
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
     this.amountConfig = getAmountConfigMap(config)
+    this.currAmountConfigs = new Map(
+      [...this.amountConfig.values()]
+        .flat()
+        .filter((x) => !x.untilTimestamp)
+        .map((x) => [x.configId, x]),
+    )
     this.priceConfigIds = getPriceConfigIds(config)
     this.projects = projects.flatMap((id) => {
       const config = this.amountConfig.get(id)
@@ -75,10 +89,6 @@ export class Tvl2Controller {
         .reduce((a, b) => UnixTime.min(a, b))
       return { id, minTimestamp }
     })
-    this.minTimestamp = this.projects
-      .map((x) => x.minTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b))
-      .toEndOf('day')
   }
 
   async getTvl(): Promise<Tvl2Result> {
@@ -88,7 +98,7 @@ export class Tvl2Controller {
     }
 
     const projects = this.projects.map((x) => x.id)
-    const dailyValues = await this.valueRepository.getDailyForProjects(projects)
+    const dailyValues = await this.valueRepository.getForProjects(projects)
     const dailyValuesByTimestamp = groupBy(dailyValues, 'timestamp')
     for (const [timestamp, values] of Object.entries(dailyValuesByTimestamp)) {
       const valuesByProject = groupBy(values, 'projectId')
@@ -117,95 +127,170 @@ export class Tvl2Controller {
 
     return result
   }
-  async getOldTvl() {
+
+  async getOldTvl(timestamp: UnixTime): Promise<TvlApiResponse> {
     const projects = this.projects.map((x) => x.id)
-    const dailyValues = await this.valueRepository.getDailyForProjects(projects)
-    const sixHourlyCutOff = this.syncOptimizer.sixHourlyCutOff
-    const sixHourlyValues = await this.valueRepository.getSixHourlyForProjects(
-      projects,
-      sixHourlyCutOff,
-    )
-    const hourlyCutOff = this.syncOptimizer.hourlyCutOff
-    const hourlyValues = await this.valueRepository.getHourlyForProjects(
-      projects,
-      hourlyCutOff,
-    )
+    const values = await this.valueRepository.getForProjects(projects)
 
-    const dailyValuesByProject = groupBy(dailyValues, 'projectId')
-    const sixHourlyValuesByProject = groupBy(sixHourlyValues, 'projectId')
-    const hourlyValuesByProject = groupBy(hourlyValues, 'projectId')
+    const sixHourlyCutOff = getSixHourlyCutoff(timestamp)
+    const hourlyCutOff = getHourlyCutoff(timestamp)
 
-    const result: Record<string, TvlApiCharts> = {}
+    const valuesByProject = groupBy(values, 'projectId')
+
+    const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      const dailyValues = dailyValuesByProject[project.id]
-      const sixHourlyValues = sixHourlyValuesByProject[project.id]
-      const hourlyValues = hourlyValuesByProject[project.id]
+      const values = valuesByProject[project.id.toString()]
+      const valuesByTimestamp = groupBy(values, 'timestamp')
+      const aggregatedValues: Record<string, { canonical: bigint; native: bigint; external: bigint }> = {}
+      let minTimestamp = Infinity
+      for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
+        const result = value.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
+        )
+        aggregatedValues[timestamp] = result
+        minTimestamp = Math.min(minTimestamp, Number(timestamp))
+      }
+      minTimestamp = Math.max(minTimestamp, project.minTimestamp.toNumber())
 
-      if (!dailyValues || !sixHourlyValues || !hourlyValues) {
+      const dailyValues = []
+      for (
+        let curr = new UnixTime(minTimestamp).toNext('day');
+        curr.lte(timestamp);
+        curr = curr.add(1, 'days')
+      ) {
+        const value = aggregatedValues[curr.toNumber()]
+        assert(
+          value,
+          `Value not found for project ${project.id.toString()} at timestamp ${curr.toString()}`,
+        )
+
+        dailyValues.push(getChartPoint(curr, value))
+      }
+
+      const sixHourlyValues = []
+      for (
+        let curr = sixHourlyCutOff;
+        curr.lte(timestamp);
+        curr = curr.add(6, 'hours')
+      ) {
+        const value = aggregatedValues[curr.toNumber()]
+        assert(
+          value,
+          `Value not found for project ${project.id.toString()} at timestamp ${curr.toString()}`,
+        )
+
+        sixHourlyValues.push(getChartPoint(curr, value))
+      }
+
+      const hourlyValues = []
+      for (
+        let curr = hourlyCutOff;
+        curr.lte(timestamp);
+        curr = curr.add(1, 'hours')
+      ) {
+        const value = aggregatedValues[curr.toNumber()]
+        if (!value) {
+          console.log('Value not found for project', project.id.toString(), 'at timestamp', curr.toString())
+          continue
+        }
+
+        hourlyValues.push(getChartPoint(curr, value))
+      }
+
+      chartsMap.set(project.id.toString(), {
+        daily: getChart(dailyValues),
+        sixHourly: getChart(sixHourlyValues),
+        hourly: getChart(hourlyValues),
+      })
+    }
+
+    // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
+    // and keep only the current values in the database.
+    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
+      [...this.currAmountConfigs.keys()],
+      timestamp,
+    )
+    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
+      [...this.priceConfigIds.values()],
+      timestamp,
+    )
+
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
+    for (const amount of tokenAmounts) {
+      const config = this.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdownMap.get(config.project)
+      if (!breakdown) {
+        breakdown = {
+          CBV: [],
+          EBV: [],
+          NMV: [],
+        }
+        breakdownMap.set(config.project, breakdown)
+      }
+
+      const priceId = this.priceConfigIds.get(createAssetId(config))
+      assert(priceId, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
+
+      const value = calculateValue({
+        amount: amount.amount,
+        priceUsd: price,
+        decimals: config.decimals,
+      })
+
+      const source = convertSourceName(config.source)
+      breakdown[source].push({
+        assetId: amount.configId,
+        chainId: Number(this.chainConverter.toChainId(config.chain)),
+        assetType: source,
+        usdValue: Number(value),
+      })
+    }
+
+    const projectData: Record<string, TvlApiProject> = {}
+    for (const [projectId, charts] of chartsMap.entries()) {
+      const breakdown = breakdownMap.get(projectId)
+      if (!breakdown) {
+        projectData[projectId] = {
+          tokens: {
+            CBV: [],
+            EBV: [],
+            NMV: [],
+          },
+          charts,
+        }
         continue
       }
-      const dailyResult = this.getTvlApiCharts(dailyValues)
-      const sixHourlyResult = this.getTvlApiCharts(sixHourlyValues)
-      const hourlyResult = this.getTvlApiCharts(hourlyValues)
 
-      result[project.id.toString()] = {
-        daily: dailyResult,
-        sixHourly: sixHourlyResult,
-        hourly: hourlyResult,
+      projectData[projectId] = {
+        tokens: breakdown,
+        charts,
       }
+    }
+
+    // dirty hack to make it faster
+    const fakeAggregates = chartsMap.get('arbitrum')
+    assert(fakeAggregates, 'Fake aggregates not found')
+
+    const result: TvlApiResponse = {
+      bridges: fakeAggregates,
+      layers2s: fakeAggregates,
+      combined: fakeAggregates,
+      projects: projectData,
     }
 
     return result
   }
 
-  private getTvlApiCharts(values: ValueRecord[]) {
-    return {
-      types: [
-        'timestamp',
-        'valueUsd',
-        'cbvUsd',
-        'ebvUsd',
-        'nmvUsd',
-        'valueEth',
-        'cbvEth',
-        'ebvEth',
-        'nmvEth',
-      ] as [
-          'timestamp',
-          'valueUsd',
-          'cbvUsd',
-          'ebvUsd',
-          'nmvUsd',
-          'valueEth',
-          'cbvEth',
-          'ebvEth',
-          'nmvEth',
-        ],
-      data: values.map<
-        [
-          UnixTime,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-        ]
-      >((x) => [
-        x.timestamp,
-        Number(x.canonical + x.external + x.native),
-        Number(x.canonical),
-        Number(x.external),
-        Number(x.native),
-        0,
-        0,
-        0,
-        0,
-      ]),
-    }
-  }
 
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
@@ -282,4 +367,65 @@ function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
   }
 
   return result
+}
+
+function convertSourceName(source: 'canonical' | 'external' | 'native') {
+  switch (source) {
+    case 'canonical':
+      return 'CBV' as const
+    case 'external':
+      return 'EBV' as const
+    case 'native':
+      return 'NMV' as const
+  }
+}
+
+function getSixHourlyCutoff(lastHour?: UnixTime) {
+  return (lastHour ?? UnixTime.now()).toNext('day').add(-90, 'days')
+}
+
+function getHourlyCutoff(lastHour?: UnixTime) {
+  return (lastHour ?? UnixTime.now()).add(-7, 'days')
+}
+
+function getChart(data: TvlApiChart['data']): TvlApiChart {
+  return {
+    types: [
+      'timestamp',
+      'valueUsd',
+      'cbvUsd',
+      'ebvUsd',
+      'nmvUsd',
+      'valueEth',
+      'cbvEth',
+      'ebvEth',
+      'nmvEth',
+    ] as [
+        'timestamp',
+        'valueUsd',
+        'cbvUsd',
+        'ebvUsd',
+        'nmvUsd',
+        'valueEth',
+        'cbvEth',
+        'ebvEth',
+        'nmvEth',
+      ],
+    data,
+  }
+}
+
+function getChartPoint(timestamp: UnixTime,
+  values: { canonical: bigint; external: bigint; native: bigint }) {
+  return [
+    timestamp,
+    Number(values.canonical + values.external + values.native),
+    Number(values.canonical),
+    Number(values.external),
+    Number(values.native),
+    0,
+    0,
+    0,
+    0,
+  ] as TvlApiChart['data'][0]
 }

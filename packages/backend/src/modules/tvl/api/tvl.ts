@@ -54,8 +54,8 @@ export function getProjectTokensCharts(
     (prev, [reportType, reports]) => {
       prev[reportType as keyof typeof prev] = reports
         .map((report) => ({
-          assetId: report.asset,
-          chainId: report.chainId,
+          assetId: report.asset.toString(),
+          chainId: +report.chainId,
           assetType: report.reportType,
           usdValue: asNumber(report.usdValue, 2),
         }))
