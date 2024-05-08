@@ -5063,6 +5063,21 @@
       }
     },
     {
+      "id": "mode:mode-mode",
+      "name": "Mode",
+      "coingeckoId": "mode",
+      "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
+      "symbol": "MODE",
+      "decimals": 18,
+      "deploymentTimestamp": 1714375447,
+      "coingeckoListingTimestamp": 1715126400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34979/large/MODE.jpg?1714561871",
+      "chainId": 34443,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "mode:ezeth-renzo-restaked-eth",
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
