@@ -74,21 +74,22 @@ function VerifiedCell({ verified }: { verified: 'yes' | 'no' | 'failed' }) {
   switch (verified) {
     case 'yes':
       return (
-        <span className="text-green-700 flex items-center">
-          <VerifiedIcon className="mr-1.5" />
-          Successful
+        <span className="text-green-700 text-base dark:text-green-450 flex items-center">
+          <VerifiedIcon className="mr-1.5 dark:fill-green-450" />
+          <span>Successful</span>
         </span>
       )
     case 'no':
       return (
-        <span className="flex items-center">
+        <span className="flex items-center text-base">
           <CircleQuestionMark className="mr-1.5" />
+          {/* TODO: Ask for link */}
           Not verified <Link className="ml-4">Ask for verification</Link>
         </span>
       )
     case 'failed':
       return (
-        <span className="text-red-700 flex items-center">
+        <span className="text-red-700 dark:text-red-300 flex items-center text-base">
           <UnverifiedIcon className="mr-1.5" />
           Unsuccessful
         </span>

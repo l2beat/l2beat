@@ -1,5 +1,5 @@
 import { ProofVerification } from '@l2beat/config'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import {
   Footer,
@@ -12,6 +12,7 @@ import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
+import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
 import { Verifiers } from './Verifiers'
 
 export interface ZkCatalogProjectPageProps {
@@ -45,10 +46,16 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           </div>
           <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
             <HeaderItem title="Number of verifiers">
-              {props.details.proofVerification.verifiers.length.toString()}
+              <VerifiedCountWithDetails
+                verifiers={props.details.proofVerification.verifiers}
+              />
             </HeaderItem>
             <HeaderItem title="Aggregation">
-              {props.details.proofVerification.aggregation ? 'Yes' : 'No'}
+              {props.details.proofVerification.aggregation ? (
+                <span className="text-green-700 dark:text-green-450">Yes</span>
+              ) : (
+                <span className="text-red-700 dark:text-red-300">No</span>
+              )}
             </HeaderItem>
           </div>
         </header>
@@ -74,7 +81,10 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   )
 }
 
-function HeaderItem({ title, children }: { title: string; children: string }) {
+function HeaderItem({
+  title,
+  children,
+}: { title: string; children: ReactNode }) {
   return (
     <div>
       <h3 className="mb-2 text-xs text-gray-600 dark:text-gray-50">{title}</h3>
