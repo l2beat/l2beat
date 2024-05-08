@@ -31,6 +31,7 @@ import { ArchivedIcon } from './symbols/ArchivedIcon'
 import { BulletIcon } from './symbols/BulletIcon'
 import { CanonicalIcon } from './symbols/CanonicalIcon'
 import { CheckIcon } from './symbols/CheckIcon'
+import { CircleQuestionMark } from './symbols/CircleQuestionMark'
 import { CodeIcon } from './symbols/CodeIcon'
 import { DocumentIcon } from './symbols/DocumentIcon'
 import { EmptyStateIcon } from './symbols/EmptyStateIcon'
@@ -50,11 +51,11 @@ import { RoundedWarningIcon } from './symbols/RoundedWarningIcon'
 import { SearchIcon } from './symbols/SearchIcon'
 import { ShieldIcon } from './symbols/ShieldIcon'
 import { SunIcon } from './symbols/SunIcon'
+import { TriangleWarningIcon } from './symbols/TriangleWarningIcon'
 import { UnverifiedIcon } from './symbols/UnverifiedIcon'
 import { UpcomingIcon } from './symbols/UpcomingIcon'
 import { UserIcon } from './symbols/UserIcon'
 import { VerifiedIcon } from './symbols/VerifiedIcon'
-import { TriangleWarningIcon } from './symbols/TriangleWarningIcon'
 
 const meta = {
   title: 'Other/Icons',
@@ -136,6 +137,7 @@ export function SymbolIcons() {
       <CheckIcon />
       {/* Checked */}
       <CheckIcon className="stroke-black dark:stroke-white" />
+      <CircleQuestionMark />
       <CodeIcon />
       <DocumentIcon />
       <EmptyStateIcon />

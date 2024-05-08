@@ -5,6 +5,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { ChevronDownIcon } from '../../../../components/icons'
+import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQuestionMark'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
@@ -15,16 +16,16 @@ interface Props {
 
 export function Verifiers(props: Props) {
   return (
-    <table className="w-full" data-role="accordion" data-type="single">
+    <table className="w-full" data-role="accordion" data-type="multiple">
       <thead>
-        <tr className="h-8 border-b border-gray-200">
-          <th className="pl-5 text-start text-xs font-semibold uppercase text-zinc-500">
+        <tr className="h-8 border-b border-gray-200 dark:border-zinc-700">
+          <th className="pl-5 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Name
           </th>
-          <th className="text-start text-xs font-semibold uppercase text-zinc-500">
+          <th className="text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Verifier
           </th>
-          <th className="text-start text-xs font-semibold uppercase text-zinc-500">
+          <th className="text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Verification status
           </th>
           <th />
@@ -33,12 +34,12 @@ export function Verifiers(props: Props) {
       {props.items.map((item) => (
         <tbody
           data-role="accordion-item"
-          className="group/accordion-item"
+          className="group/accordion-item hover:!bg-[#F3F3F3] data-[open]:bg-gray-100 dark:data-[open]:bg-zinc-900 transition-colors"
           key={item.contractAddress.toString()}
         >
           <tr
             data-role="accordion-trigger"
-            className="h-14 border-b hover:bg-[#E9ECF2] transition-colors border-gray-200 cursor-pointer"
+            className="h-14 border-b border-gray-200 dark:border-zinc-700 cursor-pointer group-data-[open]/accordion-item:border-none"
           >
             <td className="pl-5 text-lg font-medium">{item.name}</td>
             <td>
@@ -53,10 +54,10 @@ export function Verifiers(props: Props) {
           </tr>
           <tr
             data-role="accordion-content"
-            className="hidden group-data-[open]/accordion-item:table-row bg-gray-100"
+            className="hidden group-data-[open]/accordion-item:table-row border-b border-gray-200 dark:border-zinc-700"
           >
             {/* TODO: Check why w-[90%] fixes header altering */}
-            <td colSpan={4} className="p-5 w-[90%]">
+            <td colSpan={4} className="px-5 pb-5 mt-1 w-[90%]">
               <span className="text-gray-500 text-xs font-medium">
                 Description
               </span>
@@ -74,20 +75,21 @@ function VerifiedCell({ verified }: { verified: 'yes' | 'no' | 'failed' }) {
     case 'yes':
       return (
         <span className="text-green-700 flex items-center">
-          <VerifiedIcon className="mr-1.5 inline" />
+          <VerifiedIcon className="mr-1.5" />
           Successful
         </span>
       )
     case 'no':
       return (
-        <span>
+        <span className="flex items-center">
+          <CircleQuestionMark className="mr-1.5" />
           Not verified <Link className="ml-4">Ask for verification</Link>
         </span>
       )
     case 'failed':
       return (
         <span className="text-red-700 flex items-center">
-          <UnverifiedIcon className="mr-1.5 inline" />
+          <UnverifiedIcon className="mr-1.5" />
           Unsuccessful
         </span>
       )

@@ -32,7 +32,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
       <PageContent>
         <header className="mb-16 mt-6 md:mt-[72px]">
           <ProjectHeader {...props.details} />
-          <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 p-6">
+          <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
             <HeaderItem title="Number of verifiers">
               {props.details.proofVerification.verifiers.length.toString()}
             </HeaderItem>
@@ -44,7 +44,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
         <div className="space-y-10">
           <div>
             <h2 className="text-3xl font-extrabold">Verifier's details</h2>
-            <p className="mt-4 text-lg font-medium text-zinc-500">
+            <p className="mt-4 text-lg font-medium text-zinc-500 dark:text-gray-50">
               We verify if the onchain verifier matches the generated ones.
             </p>
           </div>
@@ -72,7 +72,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
 function HeaderItem({ title, children }: { title: string; children: string }) {
   return (
     <div>
-      <h3 className="mb-2 text-xs text-gray-600">{title}</h3>
+      <h3 className="mb-2 text-xs text-gray-600 dark:text-gray-50">{title}</h3>
       <span className="text-lg font-bold">{children}</span>
     </div>
   )

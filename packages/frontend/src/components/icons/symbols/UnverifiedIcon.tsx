@@ -8,7 +8,7 @@ export function UnverifiedIcon(props: SVGAttributes<SVGElement>) {
       viewBox="0 0 20 20"
       width="18"
       height="18"
-      aria-label="Unverified contract icon"
+      aria-label="Unverified icon"
       {...props}
     >
       <path

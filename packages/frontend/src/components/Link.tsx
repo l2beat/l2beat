@@ -54,7 +54,7 @@ export function Link<T extends React.ElementType>({
     >
       <span
         className={cn(
-          'inline-flex items-center font-semibold transition-colors',
+          'inline-flex items-center font-medium transition-colors',
           textClassesByType[type],
           textClassName,
         )}
