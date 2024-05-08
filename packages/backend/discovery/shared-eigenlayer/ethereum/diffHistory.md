@@ -7,7 +7,7 @@ Generated with discovered.json: 0x8fc8d9ade1e1276e4b138f0c028034f107d89b20
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added shared module.
 
 ## Initial discovery
 
