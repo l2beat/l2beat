@@ -237,7 +237,18 @@ function getFileVersionOnMainBranch(filePath: string): {
       mainBranchHash,
     }
   } catch {
-    console.log(`No previous version of ${filePath} found`)
+    console.log(
+      `No previous version of ${filePath} found in git, trying filesystem`,
+    )
+    if (existsSync(filePath)) {
+      const content = readFileSync(filePath, 'utf-8')
+      return {
+        content,
+        mainBranchHash: 'filesystem',
+      }
+    }
+
+    console.log(`No previous version of ${filePath} found in filesystem`)
     return {
       content: '',
       mainBranchHash: '',
