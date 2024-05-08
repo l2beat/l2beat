@@ -5,9 +5,9 @@ import { range } from 'lodash'
 
 import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { ZksyncTransactionRepository } from '../repositories/ZksyncTransactionRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class ZksyncCounter extends SequenceProcessor {
   constructor(
@@ -28,7 +28,7 @@ export class ZksyncCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(): Promise<number> {
-    return this.zksyncClient.getLatestBlock()
+    return await this.zksyncClient.getLatestBlock()
   }
 
   protected override async processRange(

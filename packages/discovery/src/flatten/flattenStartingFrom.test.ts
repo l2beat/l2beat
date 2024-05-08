@@ -1,12 +1,12 @@
 import { expect, mockFn, mockObject } from 'earl'
 
-import { flattenStartingFrom } from './flattenStartingFrom'
 import {
   DeclarationFilePair,
   ParsedFile,
   ParsedFilesManager,
   TopLevelDeclaration,
 } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flattenStartingFrom'
 
 describe(flattenStartingFrom.name, () => {
   const DUMMY_AST_NODE = {}

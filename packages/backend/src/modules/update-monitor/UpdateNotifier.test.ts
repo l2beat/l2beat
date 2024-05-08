@@ -9,8 +9,8 @@ import {
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { printAsciiTable } from '../../tools/printAsciiTable'
-import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
+import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 
 const BLOCK = 123
 

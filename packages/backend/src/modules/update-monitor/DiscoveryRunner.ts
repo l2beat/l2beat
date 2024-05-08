@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryProvider,
+  diffDiscovery,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -33,11 +33,11 @@ export class DiscoveryRunner {
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return this.discoveryProvider.getBlockNumber()
+    return await this.discoveryProvider.getBlockNumber()
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.discoveryProvider.getBlockNumberAt(
+    return await this.discoveryProvider.getBlockNumberAt(
       new UnixTime(timestamp.toNumber()),
     )
   }

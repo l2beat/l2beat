@@ -2,9 +2,9 @@ import { Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
+  UnixTime,
   formatSeconds,
   notUndefined,
-  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { formatTimestamp } from '../../../../utils'

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import ErrorStackParser from 'error-stack-parser'
 
 export interface ResolvedError {

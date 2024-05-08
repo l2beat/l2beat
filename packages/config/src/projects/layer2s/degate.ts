@@ -7,15 +7,15 @@ import {
 import { utils } from 'ethers'
 
 import {
-  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'

@@ -22,6 +22,7 @@ export function createStatusModule(
 
   const routers: Router[] = [
     createStatusRouter(
+      config,
       peripherals.getRepository(IndexerStateRepository),
       peripherals.getRepository(IndexerConfigurationRepository),
     ),
@@ -44,7 +45,10 @@ export function createStatusModule(
     for (const i of indexers) {
       const parts = i.indexerId.split('::')
       const name = parts[0].replaceAll('-', '_')
-      const tag = parts[1]
+      let tag = parts[1]
+      if (tag !== undefined) {
+        tag = tag.replaceAll('-', '_')
+      }
 
       const id = getGaugeId(name, tag)
 

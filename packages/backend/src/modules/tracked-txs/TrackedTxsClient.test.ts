@@ -1,19 +1,19 @@
+import { readFileSync } from 'fs'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { readFileSync } from 'fs'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import {
-  BigQueryFunctionCallResult,
-  BigQueryTransferResult,
-} from './types/model'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from './types/TrackedTxsConfig'
+import {
+  BigQueryFunctionCallResult,
+  BigQueryTransferResult,
+} from './types/model'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'

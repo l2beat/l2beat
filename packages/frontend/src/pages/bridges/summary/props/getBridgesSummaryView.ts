@@ -7,7 +7,7 @@ import {
 
 import { getDestination } from '../../../../utils/getDestination'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'

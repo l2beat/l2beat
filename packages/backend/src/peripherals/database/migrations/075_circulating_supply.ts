@@ -15,7 +15,6 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('circulating_supplies', function (table) {
-    // eslint-disable-next-line custom-rules/db_ts_no_tz
     table.dateTime('unix_timestamp').notNullable()
     table.bigInteger('circulating_supply').notNullable()
     table.string('asset_id').notNullable()

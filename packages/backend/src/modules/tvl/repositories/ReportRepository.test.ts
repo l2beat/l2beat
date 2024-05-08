@@ -3,8 +3,8 @@ import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 import { ReportRecord, ReportRepository } from './ReportRepository'
+import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)

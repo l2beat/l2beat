@@ -1,4 +1,6 @@
-import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
+import fs from 'fs'
+import path from 'path'
+import { InvertedAddresses, calculateInversion } from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -7,14 +9,12 @@ import type {
 import {
   assert,
   EthereumAddress,
+  UnixTime,
   gatherAddressesFromUpgradeability,
   notUndefined,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import fs from 'fs'
 import { isArray, isString } from 'lodash'
-import path from 'path'
 
 import {
   ScalingProjectEscrow,

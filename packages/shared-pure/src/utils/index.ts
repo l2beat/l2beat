@@ -1,5 +1,6 @@
 export * from './address'
 export * from './cacheAsyncFunction'
+export * from './clampToDayRange'
 export * from './divOrZero'
 export * from './formatLargeNumberShared'
 export * from './formatSeconds'

@@ -5,8 +5,8 @@ import { UnderReviewCallout } from '../UnderReviewCallout'
 import { ProjectSection } from './common/ProjectSection'
 import { ReferenceList, TechnologyReference } from './common/ReferenceList'
 import { RiskList, TechnologyRisk } from './common/RiskList'
-import { ProjectSectionId } from './common/sectionId'
 import { TechnologyIncompleteShort } from './common/TechnologyIncomplete'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface TechnologySectionProps {
   id: ProjectSectionId

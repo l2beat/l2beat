@@ -28,7 +28,8 @@ export function toMulticallConfigEntry(
     address: config.address,
     encodeBatch,
     decodeBatch,
-    isNativeBalanceSupported,
+    isNativeBalanceSupported:
+      config.isNativeBalanceSupported ?? isNativeBalanceSupported,
   }
 }
 

@@ -2,6 +2,7 @@ import { assert } from 'node:console'
 
 import { Logger } from '@l2beat/backend-tools'
 
+import { Retries, RetryStrategy } from './Retries'
 import { assertUnreachable } from './assertUnreachable'
 import { getInitialState } from './reducer/getInitialState'
 import { indexerReducer } from './reducer/indexerReducer'
@@ -13,7 +14,6 @@ import {
   UpdateEffect,
 } from './reducer/types/IndexerEffect'
 import { IndexerState } from './reducer/types/IndexerState'
-import { Retries, RetryStrategy } from './Retries'
 
 export interface IndexerOptions {
   tickRetryStrategy?: RetryStrategy

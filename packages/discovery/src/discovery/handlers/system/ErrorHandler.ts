@@ -13,6 +13,9 @@ export class ErrorHandler implements ClassicHandler {
   }
 
   async execute(): Promise<HandlerResult> {
-    return Promise.resolve({ field: this.field, error: this.errorMessage })
+    return await Promise.resolve({
+      field: this.field,
+      error: this.errorMessage,
+    })
   }
 }

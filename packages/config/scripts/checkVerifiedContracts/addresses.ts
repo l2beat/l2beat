@@ -1,9 +1,9 @@
-import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, assertUnreachable } from '@l2beat/shared-pure'
 
 import {
-  isSingleAddress,
   ScalingProjectContract,
   ScalingProjectUpgradeability,
+  isSingleAddress,
 } from '../../src'
 import { VerificationMapPerChain } from './output'
 import { Project } from './types'

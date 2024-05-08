@@ -5,9 +5,9 @@ import { range } from 'lodash'
 
 import { DegateClient } from '../../../peripherals/degate/DegateClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { SequenceProcessor } from '../SequenceProcessor'
 
 export class DegateCounter extends SequenceProcessor {
   constructor(
@@ -28,7 +28,7 @@ export class DegateCounter extends SequenceProcessor {
   }
 
   protected override async getLatest(): Promise<number> {
-    return this.degateClient.getLatestBlockNumber()
+    return await this.degateClient.getLatestBlockNumber()
   }
 
   protected override async processRange(

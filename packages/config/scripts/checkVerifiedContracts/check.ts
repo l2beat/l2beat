@@ -9,12 +9,12 @@ import {
 import { getChainNames } from './chains'
 import { getEtherscanClient } from './etherscan'
 import {
-  getOutputPath,
-  loadPreviouslyVerifiedContracts,
   PROJECTS_OUTPUT_PATH,
-  saveResult,
   VerificationMap,
   VerificationMapPerChain,
+  getOutputPath,
+  loadPreviouslyVerifiedContracts,
+  saveResult,
 } from './output'
 import { verifyContracts } from './tasks'
 

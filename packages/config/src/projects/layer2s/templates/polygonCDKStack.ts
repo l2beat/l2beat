@@ -2,24 +2,24 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
-  ChainConfig,
   CONTRACTS,
+  ChainConfig,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   KnowledgeNugget,
-  makeBridgeCompatible,
   Milestone,
   RISK_VIEW,
+  SEQUENCER_NO_MECHANISM,
+  STATE_CORRECTNESS,
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -28,9 +28,9 @@ import {
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
-  SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { getStage } from '../common/stages/getStage'

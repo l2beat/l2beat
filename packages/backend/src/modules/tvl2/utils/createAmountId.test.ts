@@ -194,5 +194,6 @@ function mock() {
     untilTimestamp: UnixTime.ZERO,
     includeInTotal: true,
     decimals: 18,
+    symbol: 'SYMBOL',
   }
 }

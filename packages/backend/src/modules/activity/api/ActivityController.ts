@@ -1,18 +1,18 @@
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiChartPoint,
   ActivityApiCharts,
   ActivityApiResponse,
-  json,
   ProjectId,
   Result,
   UnixTime,
+  json,
 } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
-import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
+import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'

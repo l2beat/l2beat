@@ -7,8 +7,8 @@ import {
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'

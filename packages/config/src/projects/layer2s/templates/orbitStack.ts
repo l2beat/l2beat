@@ -2,12 +2,10 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
-  makeBridgeCompatible,
   Milestone,
   OPERATOR,
   RISK_VIEW,
@@ -17,6 +15,8 @@ import {
   ScalingProjectTechnology,
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -349,16 +349,20 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
-        templateVars.discovery.getEscrowDetails({
-          address: templateVars.bridge.address,
-          tokens: templateVars.nativeToken
-            ? [templateVars.nativeToken]
-            : ['ETH'],
-          description: templateVars.nativeToken
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-          ...upgradeability,
-        }),
+        {
+          chain: templateVars.hostChain.toString(),
+          includeInTotal: false,
+          ...templateVars.discovery.getEscrowDetails({
+            address: templateVars.bridge.address,
+            tokens: templateVars.nativeToken
+              ? [templateVars.nativeToken]
+              : ['ETH'],
+            description: templateVars.nativeToken
+              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+            ...upgradeability,
+          }),
+        },
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
       transactionApi:

@@ -1,9 +1,9 @@
 import Router from '@koa/router'
 import {
-  assertUnreachable,
-  branded,
   ProjectId,
   TrackedTxsConfigSubtype,
+  assertUnreachable,
+  branded,
 } from '@l2beat/shared-pure'
 import { Context } from 'koa'
 import { z } from 'zod'

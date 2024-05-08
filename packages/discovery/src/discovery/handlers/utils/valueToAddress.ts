@@ -15,7 +15,7 @@ export function valueToAddress(
 
   try {
     return EthereumAddress(value)
-  } catch (e) {
+  } catch {
     throw new Error('Cannot convert value to address, invalid value')
   }
 }

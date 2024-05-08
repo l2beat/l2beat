@@ -3,11 +3,11 @@ import React from 'react'
 
 import { cn } from '../../utils/cn'
 import { sentimentToFillColor } from '../../utils/risks/color'
+import { WarningBar } from '../WarningBar'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { WarningBar } from '../WarningBar'
 import { NoInfoCell } from './NoInfoCell'
 import { SentimentText } from './SentimentText'
 

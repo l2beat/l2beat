@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions } from '@l2beat/uif'
 
-import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { IndexerService } from '../IndexerService'
+import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
 import { Configuration, SavedConfiguration } from './types'
 
@@ -35,11 +35,14 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   }
 
   async getSafeHeight() {
-    return this.options.indexerService.getSafeHeight(this.indexerId)
+    return await this.options.indexerService.getSafeHeight(this.indexerId)
   }
 
   async setSafeHeight(safeHeight: number) {
-    return this.options.indexerService.setSafeHeight(this.indexerId, safeHeight)
+    return await this.options.indexerService.setSafeHeight(
+      this.indexerId,
+      safeHeight,
+    )
   }
 
   override async multiInitialize(): Promise<SavedConfiguration<T>[]> {

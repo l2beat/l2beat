@@ -46,7 +46,6 @@ export class ElasticSearchTransport implements LoggerTransport {
   }
 
   private start(): void {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const interval = setInterval(async () => {
       await this.flushLogs()
     }, this.options.flushInterval ?? 10000)
@@ -70,7 +69,6 @@ export class ElasticSearchTransport implements LoggerTransport {
       //clear buffer
       this.buffer.splice(0)
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const documents = batch.map((log) => ({
         id: this.uuidProvider(),
         ...JSON.parse(log),

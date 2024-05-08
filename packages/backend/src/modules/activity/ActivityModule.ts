@@ -7,11 +7,11 @@ import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { ActivityViewRefresher } from './ActivityViewRefresher'
+import { SequenceProcessor } from './SequenceProcessor'
 import { ActivityController } from './api/ActivityController'
 import { createActivityRouter } from './api/ActivityRouter'
 import { createSequenceProcessors } from './createSequenceProcessors'
 import { ActivityViewRepository } from './repositories/ActivityViewRepository'
-import { SequenceProcessor } from './SequenceProcessor'
 
 export function createActivityModule(
   config: Config,

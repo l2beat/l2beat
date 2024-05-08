@@ -152,7 +152,7 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (indexerState === undefined) {
-      await this.stateRepository.add({
+      await this.stateRepository.addOrUpdate({
         indexerId: this.indexerId,
         safeHeight,
         minTimestamp: this.configuration.minTimestamp,
@@ -188,6 +188,6 @@ export class FinalityIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

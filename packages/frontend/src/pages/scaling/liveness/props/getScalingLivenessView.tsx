@@ -1,11 +1,11 @@
 import { Layer2 } from '@l2beat/config'
 import {
-  assertUnreachable,
   ImplementationChangeReportApiResponse,
   LivenessApiProject,
   LivenessApiResponse,
   TrackedTxsConfigSubtypeValues,
   UnixTime,
+  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { formatTimestamp } from '../../../../utils'

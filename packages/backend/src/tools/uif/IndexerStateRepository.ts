@@ -22,13 +22,15 @@ export class IndexerStateRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerStateRepository>>(this)
   }
 
-  async add(
+  async addOrUpdate(
     record: IndexerStateRecord,
     trx?: Knex.Transaction,
   ): Promise<string> {
     const knex = await this.knex(trx)
-
-    await knex('indexer_state').insert(toRow(record))
+    await knex('indexer_state')
+      .insert(toRow(record))
+      .onConflict('indexer_id')
+      .merge()
 
     return `[${record.indexerId}]: ${record.safeHeight}`
   }

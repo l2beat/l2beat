@@ -1,13 +1,13 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { Roboto, Roboto_Serif } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { Roboto, Roboto_Serif } from 'next/font/google'
 
-import { Footer } from '~/components/footer/Footer'
-import { Navbar } from '~/components/navbar/Navbar'
 import { ReactQueryProvider } from '~/components/ReactQueryProvider'
 import { Web3Provider } from '~/components/Web3Provider'
+import { Footer } from '~/components/footer/Footer'
+import { Navbar } from '~/components/navbar/Navbar'
 import { cn } from '~/utils/cn'
 
 const roboto = Roboto({

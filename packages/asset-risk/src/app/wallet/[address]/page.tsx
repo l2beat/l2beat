@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { SetRequired } from 'type-fest'
-import { createPublicClient, type Hex, http, isAddress, parseAbi } from 'viem'
+import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
 import { getChain } from '~/utils/chains'
 

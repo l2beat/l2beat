@@ -26,7 +26,6 @@ describe('checkVerifiedContracts:addresses', () => {
         const allContracts = getUniqueContractsForAllProjects(projects, chain)
 
         for (const contract of allContracts) {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (verifiedJson[contract.toString()] === undefined) {
             throw new Error(
               `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,

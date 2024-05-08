@@ -13,9 +13,9 @@ import { StageSection } from './sections/StageSection'
 import { StateDerivationSection } from './sections/StateDerivationSection'
 import { StateValidationSection } from './sections/StateValidationSection'
 import { TechnologySection } from './sections/TechnologySection'
-import { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
+import { ProjectDetailsSection } from './sections/types'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]

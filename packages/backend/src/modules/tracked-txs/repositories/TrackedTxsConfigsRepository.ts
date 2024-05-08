@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { TrackedTxsConfigRow } from 'knex/types/tables'
