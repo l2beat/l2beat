@@ -33,6 +33,17 @@ export const reya: Layer2 = orbitStackL2({
     },
     // activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'reya',
+    chainId: 1729,
+    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerApi: {
+      url: 'https://explorer.reya.network/api',
+      type: 'blockscout',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: new UnixTime(1709380607),
+  },
   trackedTxs: [
     {
       uses: [

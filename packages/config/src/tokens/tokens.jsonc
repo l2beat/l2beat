@@ -1355,6 +1355,8 @@
     },
     {
       "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply",
       "category": "ether"
     }
   ],
@@ -1548,6 +1550,8 @@
     },
     {
       "symbol": "ETH",
+      "type": "CBV",
+      "formula": "locked",
       "category": "ether"
     }
   ],
@@ -2118,6 +2122,19 @@
         "slug": "fraxferry"
       },
       "coingeckoId": "staked-frax"
+    }
+  ],
+  "reya": [
+    {
+      "symbol": "USDC",
+      "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "usd-coin"
     }
   ]
 }
