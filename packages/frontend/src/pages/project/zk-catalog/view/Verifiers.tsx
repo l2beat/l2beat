@@ -3,6 +3,7 @@ import React from 'react'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { Link } from '../../../../components/Link'
+import { Markdown } from '../../../../components/Markdown'
 import { ChevronDownIcon } from '../../../../components/icons'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
@@ -14,7 +15,7 @@ interface Props {
 
 export function Verifiers(props: Props) {
   return (
-    <table className="w-full">
+    <table className="w-full" data-role="accordion" data-type="single">
       <thead>
         <tr className="h-8 border-b border-gray-200">
           <th className="pl-5 text-start text-xs font-semibold uppercase text-zinc-500">
@@ -29,11 +30,15 @@ export function Verifiers(props: Props) {
           <th />
         </tr>
       </thead>
-      <tbody>
-        {props.items.map((item) => (
+      {props.items.map((item) => (
+        <tbody
+          data-role="accordion-item"
+          className="group/accordion-item"
+          key={item.contractAddress.toString()}
+        >
           <tr
-            className="h-14 border-b border-gray-200"
-            key={item.contractAddress.toString()}
+            data-role="accordion-trigger"
+            className="h-14 border-b hover:bg-[#E9ECF2] transition-colors border-gray-200 cursor-pointer"
           >
             <td className="pl-5 text-lg font-medium">{item.name}</td>
             <td>
@@ -43,11 +48,23 @@ export function Verifiers(props: Props) {
               <VerifiedCell verified={item.verified} />
             </td>
             <td>
-              <ChevronDownIcon />
+              <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
             </td>
           </tr>
-        ))}
-      </tbody>
+          <tr
+            data-role="accordion-content"
+            className="hidden group-data-[open]/accordion-item:table-row bg-gray-100"
+          >
+            {/* TODO: Check why w-[90%] fixes header altering */}
+            <td colSpan={4} className="p-5 w-[90%]">
+              <span className="text-gray-500 text-xs font-medium">
+                Description
+              </span>
+              <Markdown className="mt-2">{item.description}</Markdown>
+            </td>
+          </tr>
+        </tbody>
+      ))}
     </table>
   )
 }
