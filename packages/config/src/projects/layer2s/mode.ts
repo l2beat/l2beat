@@ -42,6 +42,7 @@ export const mode: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['MODE'],
   upgradeability,
   rpcUrl: 'https://mainnet.mode.network/',
   genesisTimestamp: new UnixTime(1700125343),
