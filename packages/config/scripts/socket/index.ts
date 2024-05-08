@@ -212,7 +212,7 @@ async function getTokenAddress(
         tokenAddressBytes = await provider.call(tx, blockNumber)
       } catch (e) {
         console.error(
-          `Vault ${vaultAddress} does not have any token set. It probably needs to be excluded and checked manually.`,
+          `Vault ${vaultAddress} does not have any token set. It probably needs to be excluded and checked manually. (${e})`,
         )
         process.exit(1)
       }
@@ -253,7 +253,7 @@ async function getVaultAddress(
         addressBytes = await provider.call(tx, blockNumber)
       } catch (e) {
         console.error(
-          `Plug ${plugAddress} does not have hub__() nor bridge__() functions. It probably needs to be excluded and checked manually.`,
+          `Plug ${plugAddress} does not have hub__() nor bridge__() functions. It probably needs to be excluded and checked manually. (${e})`,
         )
         process.exit(1)
       }
