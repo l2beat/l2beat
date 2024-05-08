@@ -8,7 +8,7 @@ Generated with discovered.json: 0xae248316ccb53ed8a1d072efe292a56c46012859
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Contracts have been moved to a shared module.
 
 ## Config/verification related changes
 
