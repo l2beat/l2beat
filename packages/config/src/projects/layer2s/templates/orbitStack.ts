@@ -3,6 +3,7 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  ChainConfig,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
@@ -47,6 +48,7 @@ export interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
+  chainConfig?: ChainConfig
   usesBlobs?: boolean
 }
 
@@ -479,6 +481,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
+    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
