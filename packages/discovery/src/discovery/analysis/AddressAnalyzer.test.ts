@@ -137,6 +137,7 @@ describe(AddressAnalyzer.name, () => {
           abis: sources.abis,
           sourceBundles: sources.sources,
           matchingTemplates: {},
+          extendedTemplate: undefined,
         },
         relatives: [owner, admin],
       })
@@ -235,6 +236,7 @@ describe(AddressAnalyzer.name, () => {
           abis: sources.abis,
           sourceBundles: sources.sources,
           matchingTemplates: {},
+          extendedTemplate: undefined,
         },
         relatives: [owner, admin],
       })
@@ -331,6 +333,7 @@ describe(AddressAnalyzer.name, () => {
           abis: sources.abis,
           sourceBundles: sources.sources,
           matchingTemplates: {},
+          extendedTemplate: undefined,
         },
         relatives: [owner, admin],
       })

@@ -25,6 +25,13 @@ function toContractMeta(
   contract: AnalyzedContract,
   oldContractMeta: ContractMeta,
 ): ContractMeta {
+  if (contract.extendedTemplate !== undefined) {
+    return {
+      name: contract.name,
+      description: `@extends ${contract.extendedTemplate}/meta.json`,
+      values: {},
+    }
+  }
   return {
     name: contract.name,
     description: oldContractMeta.description,
