@@ -127,19 +127,19 @@ export class Tvl2Controller {
       (x) => createAssetId(x) === assetId,
     )
 
-    const amounts = await this.amountRepository.getByConfigId(
+    const amounts = await this.amountRepository.getDailyByConfigId(
       amountConfigs.map((x) => x.configId),
     )
     const priceId = this.priceConfigIds.get(assetId)
     assert(priceId, 'PriceId not found!')
-    const prices = await this.priceRepository.getByConfigId(priceId)
+    const prices = await this.priceRepository.getDailyByConfigId(priceId)
     const pricesMap = new Map(
       prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
 
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const values: [number, bigint][] = []
+    const values: [number, number][] = []
     for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
       const price = pricesMap.get(Number(timestamp))
       assert(price, 'Programmer error ' + timestamp)
@@ -157,7 +157,7 @@ export class Tvl2Controller {
         })
         return acc + value
       }, 0n)
-      values.push([Number(timestamp), value])
+      values.push([Number(timestamp), Number(value)])
     }
 
     return values

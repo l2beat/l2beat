@@ -4792,6 +4792,25 @@
       }
     },
     {
+      "id": "reya:usdc-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1712238549,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 1729,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "aevo:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4939,7 +4958,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 8453,
       "type": "CBV",
-      "formula": "locked"
+      "formula": "totalSupply"
     },
     {
       "id": "base:rseth-kelpdao-restaked-eth",
@@ -5075,6 +5094,21 @@
       "bridgedUsing": {
         "bridge": "Free"
       }
+    },
+    {
+      "id": "mode:mode-mode",
+      "name": "Mode",
+      "coingeckoId": "mode",
+      "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
+      "symbol": "MODE",
+      "decimals": 18,
+      "deploymentTimestamp": 1714375447,
+      "coingeckoListingTimestamp": 1715126400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34979/large/MODE.jpg?1714561871",
+      "chainId": 34443,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "mode:ezeth-renzo-restaked-eth",

@@ -344,6 +344,15 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
       if (field.key === undefined) {
         continue
       }
+
+      // NOTE(radomski): upgradeability section is not in the meta.json but
+      // changes to it are also in the diff. Changes to the implementation are
+      // high severity, so just handle this special edge case here.
+      if (field.key === 'upgradeability.implementation') {
+        result.high += 1
+        continue
+      }
+
       const key = normalizeDiffPath(field.key)
 
       if (contract.values[key] === undefined) {

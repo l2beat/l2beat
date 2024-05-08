@@ -1,9 +1,9 @@
 {
   "name": "immutablex",
   "chain": "ethereum",
-  "blockNumber": 19624857,
+  "blockNumber": 19825366,
   "configHash": "0xa68f06a03136fa250f2ce8a24df22ba6d87972dd5e4bee9b561d40762112d723",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "Committee",
@@ -75,14 +75,18 @@
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 259200,
         "FREEZE_GRACE_PERIOD": 604800,
-        "getLastBatchId": 23026,
-        "getOrderRoot": "3122563092649921555057710974724960430763318612602309004473646199406604580715",
+        "getLastBatchId": 23632,
+        "getOrderRoot": "1634722427298140348800214966519988370502227007056940963131942742725038141297",
         "getOrderTreeHeight": 63,
-        "getRegisteredAvailabilityVerifiers": "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
-        "getRegisteredVerifiers": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-        "getSequenceNumber": 22849,
+        "getRegisteredAvailabilityVerifiers": [
+          "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
+        ],
+        "getRegisteredVerifiers": [
+          "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+        ],
+        "getSequenceNumber": 23455,
         "getUpgradeActivationDelay": 1209600,
-        "getVaultRoot": "1065182057273840332136375700772000905332847822731641379124294922900668934030",
+        "getVaultRoot": "1175494177828161490656718152468964526063943937737631290936713305534060987825",
         "getVaultTreeHeight": 31,
         "implementation": "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
         "isFrozen": false,
@@ -135,7 +139,7 @@
           "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
         ],
         "getThreshold": 2,
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
