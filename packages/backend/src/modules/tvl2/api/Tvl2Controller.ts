@@ -127,12 +127,12 @@ export class Tvl2Controller {
       (x) => createAssetId(x) === assetId,
     )
 
-    const amounts = await this.amountRepository.getByConfigId(
+    const amounts = await this.amountRepository.getDailyByConfigId(
       amountConfigs.map((x) => x.configId),
     )
     const priceId = this.priceConfigIds.get(assetId)
     assert(priceId, 'PriceId not found!')
-    const prices = await this.priceRepository.getByConfigId(priceId)
+    const prices = await this.priceRepository.getDailyByConfigId(priceId)
     const pricesMap = new Map(
       prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
