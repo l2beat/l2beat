@@ -27,6 +27,8 @@ function configureAccordionItem(
   const { $ } = makeQuery(item)
 
   const trigger = $<HTMLInputElement>('[data-role=accordion-trigger]')
+  const { $$: trigger$$ } = makeQuery(item)
+  const links = trigger$$('a')
 
   const close = () => item.removeAttribute('data-open')
 
@@ -34,7 +36,10 @@ function configureAccordionItem(
 
   const isOpen = () => item.hasAttribute('data-open')
 
-  trigger.addEventListener('click', () => {
+  trigger.addEventListener('click', (e) => {
+    const isLinkClicked = links.some((link) => link.contains(e.target as Node))
+    if (isLinkClicked) return
+
     if (isOpen()) {
       close()
       return
