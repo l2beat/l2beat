@@ -7,9 +7,9 @@ describe('zkCatalogProjects', () => {
     it('ends with a dot', () => {
       for (const zkCatalogProject of zkCatalogProjects) {
         it(zkCatalogProject.display.name, () => {
-          expect(zkCatalogProject.display.description.endsWith('.')).toEqual(
-            true,
-          )
+          expect(
+            zkCatalogProject.proofVerification.description.endsWith('.'),
+          ).toEqual(true)
         })
       }
     })
