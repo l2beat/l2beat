@@ -66,6 +66,7 @@ import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
+import { playchain } from './playchain'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -175,6 +176,7 @@ export const layer2s: Layer2[] = [
   palm,
   paradex,
   parallel,
+  playchain,
   polygonmiden,
   polygonzkevm,
   polygonpos2,
