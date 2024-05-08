@@ -32,7 +32,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <header className="mb-16 mt-11 md:mt-[72px]">
+        <header className="mt-11 md:mt-[72px]">
           <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
             <ProjectHeader {...props.details} />
             <Link
@@ -52,13 +52,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
             </HeaderItem>
           </div>
         </header>
-        <div className="space-y-10">
-          <div>
-            <h2 className="text-3xl font-extrabold">Verifier's details</h2>
-            <p className="mt-4 text-lg font-medium text-zinc-500 dark:text-gray-50">
-              We verify if the onchain verifier matches the generated ones.
-            </p>
-          </div>
+        <div className="space-y-10 mt-16">
           <section>
             <h2 className="mb-4 text-2xl font-bold">List of verifiers</h2>
             <Verifiers items={props.details.proofVerification.verifiers} />
