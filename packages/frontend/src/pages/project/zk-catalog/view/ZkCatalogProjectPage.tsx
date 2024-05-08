@@ -7,22 +7,24 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
+import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
-import { ProjectHeader } from '../../../../components/ProjectHeader'
+import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
 import { Verifiers } from './Verifiers'
 
 export interface ZkCatalogProjectPageProps {
   navbar: NavbarProps
-  details: ProjectDetails
+  details: ZkCatalogProjectDetails
   footer: FooterProps
 }
 
-interface ProjectDetails {
+export interface ZkCatalogProjectDetails {
   title: string
   icon: string | undefined
   proofVerification: ProofVerification
+  linkToMainProjectDetails: string | undefined
 }
 
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
@@ -31,7 +33,16 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <header className="mb-16 mt-11 md:mt-[72px]">
-          <ProjectHeader {...props.details} />
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
+            <ProjectHeader {...props.details} />
+            <Link
+              href={props.details.linkToMainProjectDetails}
+              showArrow
+              textClassName="mb-2"
+            >
+              View project's detail page
+            </Link>
+          </div>
           <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
             <HeaderItem title="Number of verifiers">
               {props.details.proofVerification.verifiers.length.toString()}

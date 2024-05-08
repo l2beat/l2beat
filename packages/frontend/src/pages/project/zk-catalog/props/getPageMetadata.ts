@@ -1,8 +1,10 @@
-import { ZkCatalogProject } from '@l2beat/config'
+import { Layer2, Layer3, ZkCatalogProject } from '@l2beat/config'
 
 import { PageMetadata } from '../../../Page'
 
-export function getPageMetadata(project: ZkCatalogProject): PageMetadata {
+export function getPageMetadata(
+  project: Layer2 | Layer3 | ZkCatalogProject,
+): PageMetadata {
   // TODO: Determine correct metadata
   return {
     title: `${project.display.name} – L2BEAT`,

@@ -34,7 +34,7 @@ export function Verifiers(props: Props) {
       {props.items.map((item) => (
         <tbody
           data-role="accordion-item"
-          className="group/accordion-item hover:!bg-[#F3F3F3] data-[open]:bg-gray-100 dark:data-[open]:bg-zinc-900 transition-colors"
+          className="group/accordion-item hover:!bg-zinc-100 data-[open]:bg-gray-100 dark:data-[open]:bg-zinc-900 transition-colors"
           key={item.contractAddress.toString()}
         >
           <tr

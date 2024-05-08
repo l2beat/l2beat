@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ZkCatalogProject } from './types'
 
 export const example: ZkCatalogProject = {
+  type: 'zk-catalog',
   display: {
     slug: 'example',
     name: 'Example',
