@@ -8,7 +8,7 @@ Generated with discovered.json: 0xc23edae91e4d46f881d05dcb7b737703ebda1649
 ## Description
 
 Initial discovery: BOB (build on bitcoin) is a general-purpose OP stack rollup (.97 similarity with base excluding USDC bridge).
-They are early in their rollmap but aim to offer BTC defi options a Bitcoin light client and security inheritance from Bitcoin PoW.
+They are early in their roadmap but aim to offer BTC defi options, a Bitcoin light client and security inheritance from Bitcoin PoW.
 
 ## Initial discovery
 

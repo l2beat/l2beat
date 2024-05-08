@@ -13,7 +13,7 @@ export const bob: Layer2 = opStackL2({
     slug: 'bob',
     description:
       'BOB ("Build on Bitcoin") is an OP Stack rollup that natively supports the Bitcoin stack, incl. Ordinals, Lightning and Nostr, powered by cross-chain light clients, a universal Bitcoin smart contract SDK, and the Risc Zero zkVM.',
-    purposes: ['Bitcoin DApps', 'Universal'],
+    purposes: ['Bitcoin DApps'],
     links: {
       websites: ['https://gobob.xyz'],
       apps: ['https://app.gobob.xyz'],
