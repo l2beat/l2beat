@@ -18,8 +18,18 @@
     "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393": "SystemConfig",
     "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1": "L2OutputOracle",
     "0xC77F8768774E1c9244BEed705C4354f2113CFc09": "DepositSecurityModule",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "LidoAgent"
   },
   "overrides": {
+    "L1UsdcBridge":{
+      "ignoreRelatives": ["l1Usdc"]
+    },
+    "L1ERC20TokenBridge":{
+      "ignoreRelatives": ["l1Token", "l2Token", "l2TokenBridge"]
+    },
+    "LidoAgent":{
+      "ignoreDiscovery": true
+    },
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]

@@ -1,19 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bob')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const bob: Layer2 = opStackL2({
   discovery,
-  upgradeability,
   display: {
     name: 'BOB',
     slug: 'bob',
@@ -31,13 +25,13 @@ export const bob: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   usesBlobs: true,
-  genesisTimestamp: new UnixTime(1712861987),
+  genesisTimestamp: new UnixTime(1712861989),
   isNodeAvailable: true,
   milestones: [
     {
       name: 'Phase 1: Optimistic BOB',
       link: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
-      date: '2024-05-01T09:00:00Z',
+      date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
     },
   ],
@@ -50,8 +44,6 @@ export const bob: Layer2 = opStackL2({
       url: 'https://explorer.gobob.xyz/api',
       type: 'blockscout',
     },
-    // ~ Timestamp of block number 0 on BOB
-    // https://explorer.gobob.xyz/block/0
-    minTimestampForTvl: new UnixTime(1712861987),
+    minTimestampForTvl: new UnixTime(1712861989),
   },
 })
