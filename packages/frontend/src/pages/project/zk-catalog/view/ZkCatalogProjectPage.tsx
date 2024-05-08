@@ -30,7 +30,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <header className="mb-16 mt-6 md:mt-[72px]">
+        <header className="mb-16 mt-11 md:mt-[72px]">
           <ProjectHeader {...props.details} />
           <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
             <HeaderItem title="Number of verifiers">

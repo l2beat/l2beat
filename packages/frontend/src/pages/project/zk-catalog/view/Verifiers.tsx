@@ -41,14 +41,14 @@ export function Verifiers(props: Props) {
             data-role="accordion-trigger"
             className="h-14 border-b border-gray-200 dark:border-zinc-700 cursor-pointer group-data-[open]/accordion-item:border-none"
           >
-            <td className="pl-5 text-lg font-medium">{item.name}</td>
+            <td className="pl-5 md:text-lg font-medium">{item.name}</td>
             <td>
               <EtherscanLink address={item.contractAddress.toString()} />
             </td>
             <td>
               <VerifiedCell verified={item.verified} />
             </td>
-            <td>
+            <td className="pr-5">
               <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
             </td>
           </tr>
@@ -58,7 +58,7 @@ export function Verifiers(props: Props) {
           >
             {/* TODO: Check why w-[90%] fixes header altering */}
             <td colSpan={4} className="px-5 pb-5 mt-1 w-[90%]">
-              <span className="text-gray-500 text-xs font-medium">
+              <span className="text-gray-500 dark:text-gray-50 text-xs font-medium">
                 Description
               </span>
               <Markdown className="mt-2">{item.description}</Markdown>
