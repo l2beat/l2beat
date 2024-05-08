@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x00910df0de2cc5deb502d28df79de0743d4f584f
+Generated with discovered.json: 0xc23edae91e4d46f881d05dcb7b737703ebda1649
 
-# Diff at Wed, 08 May 2024 13:10:46 GMT:
+# Diff at Wed, 08 May 2024 14:32:16 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 19825552
+- current block number: 19825954
 
 ## Description
 
@@ -55,13 +55,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194)
+    contract UsdcBridgeOwnerMultisig (0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E)
+    contract RollupOwnerMultisig (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E)
     +++ description: None
 ```
 
