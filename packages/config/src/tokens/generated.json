@@ -122,6 +122,21 @@
       "formula": "locked"
     },
     {
+      "id": "alex-alex",
+      "name": "ALEX",
+      "coingeckoId": "alexgo",
+      "address": "0xe7c3755482d0dA522678Af05945062d4427e0923",
+      "symbol": "ALEX",
+      "decimals": 18,
+      "deploymentTimestamp": 1710946703,
+      "coingeckoListingTimestamp": 1662508800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25837/large/ALEX_Token.png?1696524922",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "amp-amp",
       "name": "Amp",
       "coingeckoId": "amp-token",

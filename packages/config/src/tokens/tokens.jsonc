@@ -35,6 +35,10 @@
       "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628"
     },
     {
+      "symbol": "ALEX",
+      "address": "0xe7c3755482d0dA522678Af05945062d4427e0923"
+    },
+    {
       "symbol": "alUSD",
       "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
       "category": "stablecoin"
