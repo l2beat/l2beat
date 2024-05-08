@@ -4,8 +4,8 @@ import React from 'react'
 import { BridgesEntry } from '../../../pages/bridges/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
-import { IncludeLayer2sCheckbox } from './checkboxes/IncludeLayer2sCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
+import { IncludeLayer2sCheckbox } from './checkboxes/IncludeLayer2sCheckbox'
 
 interface Props {
   items: BridgesEntry[]
