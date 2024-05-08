@@ -66,10 +66,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar", "overhead"]
     }
-  },
-  "AdminMultisig": {
-    "ignoreInWatchMode": ["nonce"]
   }
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xe08b1f97b0db6435e46709aeb7fd717a42448fcd
+
+# Diff at Wed, 08 May 2024 12:44:53 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eb116053a3dfe1dcff4cde0b8b45a07198fbab8 block: 19574205
+- current block number: 19825421
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: None
+      values.overhead:
+-        188
++        100
+      values.scalar:
+-        7000000000
++        800000000
+    }
+```
+
 Generated with discovered.json: 0xccb0ad14faff40a9367c3fe50b706f3767cc5bac
 
 # Diff at Wed, 03 Apr 2024 08:59:57 GMT:
