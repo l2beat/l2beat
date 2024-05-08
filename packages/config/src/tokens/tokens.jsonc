@@ -1819,6 +1819,12 @@
       }
     },
     {
+      "symbol": "MODE",
+      "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "type": "NMV",
