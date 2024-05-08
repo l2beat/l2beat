@@ -28,6 +28,8 @@ function download_dump() {
         heroku psql --app l2beat-staging -c "\copy amounts to 'amounts.csv' CSV"
         echo "Downloading the prices table to a csv file..."
         heroku psql --app l2beat-staging -c "\copy prices to 'prices.csv' CSV"
+        echo "Downloading the values table to a csv file..."
+        heroku psql --app l2beat-staging -c "\copy values to 'values.csv' CSV"
 }
 
 # Get the current timestamp
@@ -100,5 +102,8 @@ psql -d l2beat_local -c "\copy amounts FROM 'amounts.csv' DELIMITER ',' CSV;"
 echo "Restoring the prices table from the csv file..."
 psql -d l2beat_local -c "DELETE FROM prices;"
 psql -d l2beat_local -c "\copy prices FROM 'prices.csv' DELIMITER ',' CSV;"
+echo "Restoring the values table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM values;"
+psql -d l2beat_local -c "\copy values FROM 'values.csv' DELIMITER ',' CSV;"
 
 echo "Database restored successfully."
