@@ -165,6 +165,7 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+    skipHints: true,
   })
 
   const prevDiscoveryFile = readFileSync(

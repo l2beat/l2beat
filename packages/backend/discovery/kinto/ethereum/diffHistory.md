@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xa78ed74c87eef55839623ea4373878af98307bd2
+
+# Diff at Thu, 09 May 2024 06:51:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3bba0812727b9105a3f44fe55a68572c804b992 block: 19809397
+- current block number: 19830808
+
+## Description
+
+The Inbox contract is upgraded with a minor change:
+
+The l2AllowList that gets checked by the `whenRefundAddressAllowed` modifier is now settable by the owner or rollup contract whereas it was hardcoded before.
+
+## Watched changes
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
++        "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
+      implementations.0:
+-        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
++        "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Inbox/implementation/meta.txt                       |  2 +-
+ .../src/nitro-contracts/bridge/AbsInbox.sol             | 17 +++++++++--------
+ .../implementation/src/nitro-contracts/bridge/Inbox.sol |  1 -
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+```
+
 Generated with discovered.json: 0x94bafe549ae45883fd41860a1577ce9a7ed8a42c
 
 # Diff at Mon, 06 May 2024 06:56:42 GMT:
@@ -9,7 +46,8 @@ Generated with discovered.json: 0x94bafe549ae45883fd41860a1577ce9a7ed8a42c
 ## Description
 
 The Inbox implementation is upgraded with very minor changes:
-- Modifier `whenRefundAddressAllowed` added (ensures that both `excessFeeRefundAddress` and `callValueRefundAddress` match the msg.sender)
+- Modifier `whenRefundAddressAllowed` added (ensures that both `excessFeeRefundAddress` and `callValueRefundAddress` match the msg.sender unless they are whitelisted in `isAllowed`)
+- `whenRefundAddressAllowed` is used by `createRetryableTicket()` and `createUnsafeRetryableTicket()`
 - Formatting and import folder structure
 
 ## Watched changes

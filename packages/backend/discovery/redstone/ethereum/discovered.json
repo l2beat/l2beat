@@ -1,7 +1,7 @@
 {
   "name": "redstone",
   "chain": "ethereum",
-  "blockNumber": 19810497,
+  "blockNumber": 19831040,
   "configHash": "0xe3851556c21ed27fa6959859a8e15ac99ff1127ee0eb7ff3da43aa2c1e5b3900",
   "version": 4,
   "contracts": [
@@ -56,7 +56,7 @@
       "sinceTimestamp": 1712184587,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619797",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619798",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -150,16 +150,20 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "1 of 1 (100%)"
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1712184383,
       "values": {
         "domainSeparator": "0xdc521cd515bd4f3c050125ab5338bd464bb58522acd78f9b981b6dd81e923688",
         "getChainId": 1,
-        "getOwners": ["0xb356B146F1629c49C44344464F69BCDAfb4bb664"],
-        "getThreshold": 1,
-        "nonce": 16,
+        "getOwners": [
+          "0x5DeB7dD12ccF0BFb3b2D26D0A4f302Fb6ACBdcA8",
+          "0x61fB1FDA30c900404CDfa22D3eAdCA86FdB95450",
+          "0x7211399b320a0417286897fCeD1ee4ba1C1771d4"
+        ],
+        "getThreshold": 2,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -304,10 +308,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1360800,
-        "latestOutputIndex": 62,
-        "nextBlockNumber": 1382400,
-        "nextOutputIndex": 63,
+        "latestBlockNumber": 1490400,
+        "latestOutputIndex": 68,
+        "nextBlockNumber": 1512000,
+        "nextOutputIndex": 69,
         "proposer": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
         "PROPOSER": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
         "startingBlockNumber": 0,
@@ -395,7 +399,7 @@
         "L2_ORACLE": "0xa426A052f657AEEefc298b3B5c35a470e4739d69",
         "l2Oracle": "0xa426A052f657AEEefc298b3B5c35a470e4739d69",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19810361],
+        "params": [1000000000, 100000, 19830935],
         "paused": false,
         "superchainConfig": "0x4b5b41c240173191425F5928bc6bdd0d439331BB",
         "SYSTEM_CONFIG": "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
@@ -454,6 +458,9 @@
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000014",
     "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
+    "0x5DeB7dD12ccF0BFb3b2D26D0A4f302Fb6ACBdcA8",
+    "0x61fB1FDA30c900404CDfa22D3eAdCA86FdB95450",
+    "0x7211399b320a0417286897fCeD1ee4ba1C1771d4",
     "0xA31cb9Bc414601171D4537580f98F66C03aECd43",
     "0xA5bdf717af725a47Fd7378d3D9C833776951efa0",
     "0xb356B146F1629c49C44344464F69BCDAfb4bb664",

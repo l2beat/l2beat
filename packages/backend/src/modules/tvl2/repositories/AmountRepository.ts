@@ -32,12 +32,11 @@ export class AmountRepository extends BaseRepository {
     const rows = await knex('amounts')
       .whereIn('configuration_id', configIds)
       .where('timestamp', timestamp.toDate())
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
       .orderBy('configuration_id')
     return rows.map(toRecord)
   }
 
-  async getByConfigId(configIds: string[]) {
+  async getDailyByConfigId(configIds: string[]) {
     const knex = await this.knex()
     const rows = await knex('amounts')
       .whereIn('configuration_id', configIds)

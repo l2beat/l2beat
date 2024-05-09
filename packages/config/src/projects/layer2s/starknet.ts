@@ -246,10 +246,6 @@ export const starknet: Layer2 = {
     },
     finality: {
       finalizationPeriod: 0,
-      warnings: {
-        timeToInclusion: 'test',
-        stateUpdateDelay: 'test2',
-      },
     },
     costsWarning: {
       sentiment: 'warning',

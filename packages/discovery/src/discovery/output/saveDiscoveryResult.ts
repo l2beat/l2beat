@@ -1,7 +1,8 @@
-import { dirname, posix } from 'path'
+import path, { dirname, posix } from 'path'
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
+import { isEmpty } from 'lodash'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
 
@@ -12,7 +13,7 @@ import {
 import { flattenStartingFrom } from '../../flatten/flattenStartingFrom'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { Analysis } from '../analysis/AddressAnalyzer'
+import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryMeta } from '../config/DiscoveryMeta'
 import { PerContractSource } from '../source/SourceCodeService'
@@ -27,6 +28,51 @@ export interface SaveDiscoveryResultOptions {
   flatSourcesFolder?: string
   discoveryFilename?: string
   metaFilename?: string
+  skipHints?: boolean
+}
+
+export async function saveConfigHints(
+  rootPath: string,
+  results: Analysis[],
+  options: SaveDiscoveryResultOptions,
+): Promise<void> {
+  const filePath = path.join(rootPath, 'config.hints.jsonc')
+  await rimraf(filePath)
+  if (options.skipHints) {
+    return
+  }
+
+  const contractsWithMatchedTemplates = results.filter(
+    (r) => r.type === 'Contract' && !isEmpty(r.matchingTemplates),
+  ) as AnalyzedContract[]
+
+  if (contractsWithMatchedTemplates.length === 0) {
+    return
+  }
+
+  const content = [
+    `// This is a list of contract templates that were matched to the discovered contracts.`,
+    `// You can use these suggestions in your config.jsonc file or ignore them. `,
+    `// Do not commit it to the repository.`,
+    `{`,
+    `  "overrides": {`,
+    ...contractsWithMatchedTemplates.map((c) =>
+      [
+        `    "${c.address.toString()}": { // ${c.name ?? c.derivedName}`,
+        ...Object.entries(c.matchingTemplates).map(
+          ([template, similarity]) =>
+            `      "extends": "${template}", // similarity: ${similarity.toFixed(
+              4,
+            )}`,
+        ),
+        `    }`,
+      ].join('\n'),
+    ),
+    `  }`,
+    `}`,
+  ].join('\n')
+
+  await writeFile(filePath, content)
 }
 
 export async function saveDiscoveryResult(
@@ -45,6 +91,7 @@ export async function saveDiscoveryResult(
   await saveMetaJson(root, results, meta, options)
   await saveSources(root, results, options)
   await saveFlatSources(root, results, logger, options)
+  await saveConfigHints(root, results, options)
 }
 
 async function saveDiscoveredJson(

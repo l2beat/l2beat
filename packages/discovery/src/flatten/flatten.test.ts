@@ -27,7 +27,7 @@ describe('flatten', () => {
         content: `
                 import { C2 } from "remappedPath2";
                 import { C4 } from "path4";
-                import "remappedPath1";
+                import "../../../remappedPath1";
 
                 ${ROOT_CONTRACT_SOURCE}
                 `,

@@ -5,6 +5,7 @@ import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
+import { TemplateService } from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
@@ -65,6 +66,7 @@ export async function runDiscovery(
       sourcesFolder: config.sourcesFolder,
       flatSourcesFolder: config.flatSourcesFolder,
       discoveryFilename: config.discoveryFilename,
+      skipHints: config.skipHints,
     },
   )
 }
@@ -185,11 +187,13 @@ export async function discover(
     multicallClient,
     logger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
