@@ -33,9 +33,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   }
 
   async update(from: number, to: number): Promise<number> {
-    const adjustedFrom = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
+    const adjustedFrom = this.$.syncOptimizer.getTimestampToSync(from, to)
     const adjustedTo = this.getAdjustedTo(adjustedFrom, to)
 
     const amounts = await this.fetchAndOptimizeCirculatingSupplies(

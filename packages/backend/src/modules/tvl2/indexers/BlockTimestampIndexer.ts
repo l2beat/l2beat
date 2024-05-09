@@ -26,13 +26,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
-
-    if (timestamp.gt(new UnixTime(to))) {
-      return to
-    }
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
     const blockNumber =
       await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)

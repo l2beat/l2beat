@@ -35,13 +35,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
   ): Promise<number> {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
-
-    if (timestamp.gt(new UnixTime(to))) {
-      return to
-    }
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,

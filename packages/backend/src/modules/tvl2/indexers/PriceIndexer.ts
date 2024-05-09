@@ -36,13 +36,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<number> {
-    const optimizedFrom = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
-
-    if (optimizedFrom.gt(new UnixTime(to))) {
-      return to
-    }
+    const optimizedFrom = this.$.syncOptimizer.getTimestampToSync(from, to)
 
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,

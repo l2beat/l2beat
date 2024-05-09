@@ -14,10 +14,20 @@ export class SyncOptimizer {
   ) {}
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
-    return timestamp.equals(this.getTimestampToSync(timestamp))
+    return timestamp.equals(this.getOptimizedTimestamp(timestamp))
   }
 
-  getTimestampToSync(timestamp: UnixTime): UnixTime {
+  getTimestampToSync(from: number, to: number): UnixTime {
+    const timestamp = this.getOptimizedTimestamp(new UnixTime(from))
+
+    if (timestamp.gt(new UnixTime(to))) {
+      throw new Error('Invalid range')
+    }
+
+    return timestamp
+  }
+
+  getOptimizedTimestamp(timestamp: UnixTime): UnixTime {
     const lastHour = this.clock.getLastHour()
 
     const hourlyCutOff = lastHour.add(
