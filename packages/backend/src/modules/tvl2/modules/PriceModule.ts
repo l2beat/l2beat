@@ -15,6 +15,7 @@ import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createPriceId } from '../utils/createPriceId'
 
@@ -36,6 +37,12 @@ export function createPriceModule(
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
+  const priceService = new PriceService({
+    coingeckoQueryService,
+    syncOptimizer,
+    logger,
+  })
+
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
   const indexers = Object.entries(byCoingeckoId).map(
@@ -52,7 +59,7 @@ export function createPriceModule(
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
           id: createPriceId(price),
         })),
-        coingeckoQueryService,
+        priceService,
         priceRepository: peripherals.getRepository(PriceRepository),
         encode,
         decode,
