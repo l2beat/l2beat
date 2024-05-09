@@ -1,4 +1,3 @@
-
 const PRICE_PRECISION = 18
 const USD_DECIMALS = 2n
 export function calculateValue({
@@ -17,8 +16,8 @@ export function calculateValue({
 }
 
 export function getBigIntPrice(price: number, decimals: number): bigint {
-  const priceString = price.toFixed(decimals);
-  const [integerPart, fractionalPart = ''] = priceString.split('.');
-  const priceWithoutDecimal = integerPart + fractionalPart.padEnd(decimals, '0');
-  return BigInt(priceWithoutDecimal);
+  const priceString = price.toFixed(decimals)
+  const [integerPart, fractionalPart = ''] = priceString.split('.')
+  const priceWithoutDecimal = integerPart + fractionalPart.padEnd(decimals, '0')
+  return BigInt(priceWithoutDecimal)
 }

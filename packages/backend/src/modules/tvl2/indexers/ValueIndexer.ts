@@ -142,7 +142,6 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 }
 
-
 function createAssetId(price: {
   address: EthereumAddress | 'native'
   chain: string
