@@ -60,7 +60,6 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-
   async addMany(records: ValueRecord[]) {
     const rows: ValueRow[] = records.map(toRow)
     const knex = await this.knex()

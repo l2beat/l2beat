@@ -18,9 +18,9 @@ import {
 } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
+import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-import { calculateValue } from '../utils/calculateValue'
 
 export interface Tvl2Project {
   id: ProjectId
@@ -48,6 +48,12 @@ type AmountConfigMap = Map<
 >
 
 type PriceConfigIdMap = Map<string, string>
+
+type ValuesMap = Map<number, {
+  canonical: bigint
+  native: bigint
+  external: bigint
+}>
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
@@ -141,8 +147,10 @@ export class Tvl2Controller {
     for (const project of this.projects) {
       const values = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(values, 'timestamp')
-      const aggregatedValues: Record<string, { canonical: bigint; native: bigint; external: bigint }> = {}
-      let minTimestamp = Infinity
+
+
+      const aggregatedValues = new Map()
+
       for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
         const result = value.reduce(
           (acc, curr) => {
@@ -153,60 +161,53 @@ export class Tvl2Controller {
           },
           { canonical: 0n, external: 0n, native: 0n },
         )
-        aggregatedValues[timestamp] = result
-        minTimestamp = Math.min(minTimestamp, Number(timestamp))
-      }
-      minTimestamp = Math.max(minTimestamp, project.minTimestamp.toNumber())
-
-      const dailyValues = []
-      for (
-        let curr = new UnixTime(minTimestamp).toNext('day');
-        curr.lte(timestamp);
-        curr = curr.add(1, 'days')
-      ) {
-        const value = aggregatedValues[curr.toNumber()]
-        assert(
-          value,
-          `Value not found for project ${project.id.toString()} at timestamp ${curr.toString()}`,
-        )
-
-        dailyValues.push(getChartPoint(curr, value))
+        aggregatedValues.set(Number(timestamp), result)
       }
 
-      const sixHourlyValues = []
-      for (
-        let curr = sixHourlyCutOff;
-        curr.lte(timestamp);
-        curr = curr.add(6, 'hours')
-      ) {
-        const value = aggregatedValues[curr.toNumber()]
-        assert(
-          value,
-          `Value not found for project ${project.id.toString()} at timestamp ${curr.toString()}`,
-        )
+      const minValueTimestamp = new UnixTime(
+        Math.min(...aggregatedValues.keys()),
+      )
+      const maxValueTimestamp = new UnixTime(
+        Math.max(...aggregatedValues.keys()),
+      )
 
-        sixHourlyValues.push(getChartPoint(curr, value))
-      }
+      const minTimestamp = UnixTime.max(minValueTimestamp, project.minTimestamp).toEndOf('day')
+      const maxTimestamp = UnixTime.min(maxValueTimestamp, timestamp)
 
-      const hourlyValues = []
-      for (
-        let curr = hourlyCutOff;
-        curr.lte(timestamp);
-        curr = curr.add(1, 'hours')
-      ) {
-        const value = aggregatedValues[curr.toNumber()]
-        if (!value) {
-          console.log('Value not found for project', project.id.toString(), 'at timestamp', curr.toString())
-          continue
+      const dailyData = getChartData(
+        {
+          start: minTimestamp,
+          end: maxTimestamp,
+          step: [1, 'days'],
+          aggregatedValues,
+          project: project.id,
         }
+      )
 
-        hourlyValues.push(getChartPoint(curr, value))
-      }
+      const sixHourlyData = getChartData(
+        {
+          start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
+          end: maxTimestamp,
+          step: [6, 'hours'],
+          aggregatedValues,
+          project: project.id,
+        }
+      )
+
+      const hourlyData = getChartData(
+        {
+          start: UnixTime.max(hourlyCutOff, minTimestamp),
+          end: maxTimestamp,
+          step: [1, 'hours'],
+          aggregatedValues,
+          project: project.id,
+        }
+      )
 
       chartsMap.set(project.id.toString(), {
-        daily: getChart(dailyValues),
-        sixHourly: getChart(sixHourlyValues),
-        hourly: getChart(hourlyValues),
+        daily: getChart(dailyData),
+        sixHourly: getChart(sixHourlyData),
+        hourly: getChart(hourlyData),
       })
     }
 
@@ -291,7 +292,6 @@ export class Tvl2Controller {
     return result
   }
 
-
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
@@ -339,6 +339,31 @@ export class Tvl2Controller {
 
     return values
   }
+}
+
+function getChartData({ start, end, step, aggregatedValues, project }:
+  {
+    start: UnixTime,
+    end: UnixTime,
+    step: [number, 'hours' | 'days'],
+    aggregatedValues: ValuesMap,
+    project: ProjectId
+  }
+) {
+  const values = []
+  for (let curr = start; curr.lte(end); curr = curr.add(...step)) {
+    const value = aggregatedValues.get(curr.toNumber())
+    assert(
+      value,
+      'Value not found for project ' +
+      project.toString() +
+      ' at timestamp ' +
+      curr.toString(),
+    )
+
+    values.push(getChartPoint(curr, value))
+  }
+  return values
 }
 
 function getAmountConfigMap(config: Tvl2Config) {
@@ -415,8 +440,10 @@ function getChart(data: TvlApiChart['data']): TvlApiChart {
   }
 }
 
-function getChartPoint(timestamp: UnixTime,
-  values: { canonical: bigint; external: bigint; native: bigint }) {
+function getChartPoint(
+  timestamp: UnixTime,
+  values: { canonical: bigint; external: bigint; native: bigint },
+) {
   return [
     timestamp,
     Number(values.canonical + values.external + values.native),
