@@ -40,7 +40,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     )
 
     if (timestamp.gt(new UnixTime(to))) {
-      return Promise.resolve(to)
+      return to
     }
 
     const configurationsWithMissingData = configurations.filter(
@@ -52,6 +52,11 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         configurations: configurations.length,
         configurationsWithMissingData: configurationsWithMissingData.length,
       })
+    }
+
+    if (configurationsWithMissingData.length === 0) {
+      this.logger.info('No configurations with missing data')
+      return to
     }
 
     const blockNumber =

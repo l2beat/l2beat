@@ -1,5 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
-import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
@@ -14,12 +12,13 @@ import {
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
-import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface PriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry>, 'name'> {
-  coingeckoQueryService: CoingeckoQueryService
+  priceService: PriceService
   priceRepository: PriceRepository
   syncOptimizer: SyncOptimizer
   coingeckoId: CoingeckoId
@@ -37,97 +36,59 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<number> {
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-    if (configurationsWithMissingData.length === 0) {
-      return to
-    }
-
-    const prices = await this.fetchAndOptimizePrices(
-      from,
-      to,
-      configurationsWithMissingData,
-    )
-
-    if (prices.length === 0) {
-      return to
-    }
-
-    // There are multiple price configs with possibly different until timestamps.
-    // We need to find the latest until timestamp to return.
-    const maxTo = prices
-      .map((p) => p.timestamp.toNumber())
-      .reduce((a, b) => Math.max(a, b), 0)
-
-    this.logger.info('Fetched & optimized prices in range', {
-      from,
-      to: maxTo,
-      prices: prices.length,
-      configurations: configurationsWithMissingData.length,
-    })
-
-    await this.$.priceRepository.addMany(prices)
-
-    this.logger.info('Saved prices into DB', {
-      prices: prices.length,
-    })
-
-    return maxTo > to ? to : maxTo
-  }
-
-  private async fetchAndOptimizePrices(
-    from: number,
-    to: number,
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
-  ): Promise<PriceRecord[]> {
-    const adjustedFrom = this.$.syncOptimizer.getTimestampToSync(
+    const optimizedFrom = this.$.syncOptimizer.getTimestampToSync(
       new UnixTime(from),
     )
 
-    if (adjustedFrom.gt(new UnixTime(to))) {
-      return []
+    if (optimizedFrom.gt(new UnixTime(to))) {
+      return to
     }
 
-    const adjustedTo = this.getAdjustedTo(adjustedFrom, to)
-
-    const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
-      this.$.coingeckoId,
-      adjustedFrom,
-      adjustedTo,
-      undefined,
+    const configurationsWithMissingData = configurations.filter(
+      (c) => !c.hasData,
     )
 
-    const optimizedPrices = prices.filter((p) =>
-      this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Skipping update for configurations with data', {
+        configurations: configurations.length,
+        configurationsWithMissingData: configurationsWithMissingData.length,
+      })
+    }
+
+    if (configurationsWithMissingData.length === 0) {
+      this.logger.info('No configurations with missing data')
+      return to
+    }
+
+    const prices = await this.$.priceService.fetchAndOptimizePrices(
+      configurationsWithMissingData,
+      optimizedFrom,
+      new UnixTime(to),
     )
 
-    return configurations
-      .map((c) =>
-        optimizedPrices
-          .filter((p) =>
-            p.timestamp.gte(new UnixTime(c.minHeight)) && c.maxHeight
-              ? p.timestamp.lte(new UnixTime(c.maxHeight))
-              : true,
-          )
-          .map((p) => ({
-            timestamp: p.timestamp,
-            priceUsd: p.value,
-            configId: c.id,
-          })),
-      )
-      .flat()
-  }
+    this.logger.info('Fetched & optimized prices in range', {
+      from: optimizedFrom.toNumber(),
+      to: prices.fetchedUntil.toNumber(),
+      prices: prices.prices.length,
+      configurations: configurationsWithMissingData.length,
+    })
 
-  private getAdjustedTo(from: UnixTime, to: number): UnixTime {
-    const alignedTo = new UnixTime(to).toStartOf('hour')
-    assert(from.lte(alignedTo), 'Programmer error: from > to')
+    if (prices.prices.length === 0) {
+      return to
+    }
 
-    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
+    await this.$.priceRepository.addMany(prices.prices)
 
-    return alignedTo.gt(from.add(maxDaysForOneCall, 'days'))
-      ? from.add(maxDaysForOneCall, 'days')
-      : alignedTo
+    this.logger.info('Saved prices into DB', {
+      from: optimizedFrom.toNumber(),
+      to: prices.fetchedUntil.toNumber(),
+      prices: prices.prices.length,
+      configurations: configurationsWithMissingData.length,
+    })
+
+    return prices.fetchedUntil.toNumber() < to
+      ? prices.fetchedUntil.toNumber()
+      : to
   }
 
   override async removeData(
