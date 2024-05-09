@@ -111,11 +111,11 @@ function SubVerifiersTable({
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-gray-200 align-bottom text-left">
-          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500">
+        <tr className="border-b border-gray-200 dark:border-zinc-700 align-bottom text-left">
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
             Proof system
           </th>
-          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500">
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
             Trusted setup
           </th>
           <th />
@@ -124,7 +124,7 @@ function SubVerifiersTable({
       <tbody>
         {verifier.subVerfiers.map((sV) => (
           <tr
-            className="h-8 text-sm border-b last:border-none border-gray-200"
+            className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700"
             key={`${sV.proofSystem}-${sV.trustedSetup}`}
           >
             <td className="pr-3">{sV.proofSystem}</td>
