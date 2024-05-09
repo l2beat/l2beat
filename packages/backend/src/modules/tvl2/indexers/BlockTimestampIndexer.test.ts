@@ -21,23 +21,19 @@ describe(BlockTimestampIndexer.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
       const to = from.add(1, 'days')
-
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: async () => 666,
-      })
-
-      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
-        add: async () => '',
-      })
-
       const timestampToSync = from.toEndOf('day')
-
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
       })
 
-      const chain = 'ethereum'
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: async () => 666,
+      })
+      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+        add: async () => '',
+      })
 
+      const chain = 'ethereum'
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
@@ -62,6 +58,44 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       expect(newSafeHeight).toEqual(timestampToSync.toNumber())
+    })
+
+    it('returns if timestamp to sync is later than to', async () => {
+      const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
+      const to = from.add(1, 'days')
+      const timestampToSync = to.add(1, 'days')
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
+      })
+
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: async () => 666,
+      })
+      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+        add: async () => '',
+      })
+
+      const chain = 'ethereum'
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        blockTimestampProvider,
+        indexerService: mockObject<IndexerService>({}),
+        blockTimestampRepository,
+        chain,
+        minHeight: 0,
+        syncOptimizer,
+      })
+
+      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+
+      expect(
+        blockTimestampProvider.getBlockNumberAtOrBefore,
+      ).not.toHaveBeenCalled()
+
+      expect(blockTimestampRepository.add).not.toHaveBeenCalled()
+
+      expect(newSafeHeight).toEqual(to.toNumber())
     })
   })
 
