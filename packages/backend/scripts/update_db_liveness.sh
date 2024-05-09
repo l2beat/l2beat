@@ -20,6 +20,8 @@ fi
 # function that downloads the latest database dump from the staging server
 function download_dump() {
         echo "Logging into psql..."
+        echo "Downloading the block_timestamps table to a csv file..."
+        heroku psql --app l2beat-staging -c "\copy block_timestamps TO 'blocks.csv' CSV"
         echo "Downloading the indexer_configurations table to a csv file..."
         heroku psql --app l2beat-staging -c "\copy indexer_configurations TO 'configs.csv' CSV"
         echo "Downloading the indexer_state table to a csv file..."
@@ -89,7 +91,10 @@ else
 fi
 
 # restore the files 'configs.csv', 'prices.csv' and 'index.csv' to the local database
-
+ 
+echo "Restoring the block_timestamps table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM block_timestamps;"
+psql -d l2beat_local -c "\copy block_timestamps FROM 'blocks.csv' DELIMITER ',' CSV"
 echo "Restoring the indexer_configurations table from the csv file..."
 psql -d l2beat_local -c "DELETE FROM indexer_configurations;"
 psql -d l2beat_local -c "\copy indexer_configurations FROM 'configs.csv' DELIMITER ',' CSV;"
