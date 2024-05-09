@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import {
@@ -37,28 +36,14 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   ): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Skipping update for configurations with data', {
-        configurations: configurations.length,
-        configurationsWithMissingData: configurationsWithMissingData.length,
-      })
-    }
-
-    if (configurationsWithMissingData.length === 0) {
-      this.logger.info('No configurations with missing data')
-      return to
-    }
+    const configurationsWithMissingData =
+      this.getConfigurationsWithMissingData(configurations)
 
     const blockNumber =
       await this.$.blockTimestampsRepository.findByChainAndTimestamp(
         this.$.chain,
         timestamp,
       )
-    assert(blockNumber, 'Block number not found')
 
     const amounts = await this.$.amountService.fetchAmounts(
       configurationsWithMissingData,

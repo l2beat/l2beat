@@ -38,6 +38,10 @@ export class AmountService {
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<(AmountRecord & { type: 'escrow' | 'totalSupply' })[]> {
+    if (configurations.length === 0) {
+      return []
+    }
+
     const [forRpc, forMulticall] = partition(
       configurations,
       (c): c is Configuration<EscrowEntry> =>

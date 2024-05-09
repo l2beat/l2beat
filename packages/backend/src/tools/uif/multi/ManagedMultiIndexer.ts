@@ -4,7 +4,7 @@ import { Indexer, IndexerOptions } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration, SavedConfiguration } from './types'
+import { Configuration, SavedConfiguration, UpdateConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -75,5 +75,20 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
       configurationIds,
       currentHeight,
     )
+  }
+
+  getConfigurationsWithMissingData(configurations: UpdateConfiguration<T>[]) {
+    const configurationsWithMissingData = configurations.filter(
+      (c) => !c.hasData,
+    )
+
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Skipping update for configurations with data', {
+        configurations: configurations.length,
+        configurationsWithMissingData: configurationsWithMissingData.length,
+      })
+    }
+
+    return configurationsWithMissingData
   }
 }
