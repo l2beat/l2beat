@@ -340,7 +340,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               requiredSignatures,
             })
           })()
-        : RISK_VIEW.DATA_ON_CHAIN_L2,
+        : RISK_VIEW.DATA_ON_CHAIN_L3,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
@@ -496,7 +496,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               requiredSignatures,
             })
           })()
-        : RISK_VIEW.DATA_ON_CHAIN_L2,
+        : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
