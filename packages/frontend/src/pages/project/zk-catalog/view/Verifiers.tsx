@@ -113,6 +113,15 @@ function SubVerifiersTable({
       <thead>
         <tr className="border-b border-gray-200 dark:border-zinc-700 align-bottom text-left">
           <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
+            Name
+          </th>
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
+            Arithmetization
+          </th>
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
+            PCS
+          </th>
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
             Proof system
           </th>
           <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
@@ -127,7 +136,10 @@ function SubVerifiersTable({
             className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700"
             key={`${sV.proofSystem}-${sV.trustedSetup}`}
           >
+            <td className="pr-3">{sV.name}</td>
             <td className="pr-3">{sV.proofSystem}</td>
+            <td className="pr-3">{sV.mainArithmetization}</td>
+            <td className="pr-3">{sV.mainPCS}</td>
             <td className="pr-3">{sV.trustedSetup}</td>
             <td>
               <Link>Source code</Link>

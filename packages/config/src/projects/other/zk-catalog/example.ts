@@ -38,12 +38,19 @@ export const example: ZkCatalogProject = {
         contractAddress: EthereumAddress.random(),
         subVerfiers: [
           {
+            name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',
+            mainArithmetization: 'Example Main Arithmetization',
+            mainPCS: 'Example Main PCS',
             trustedSetup: 'Example Trusted Setup',
           },
           {
+            name: 'Example Sub Verifier 2',
             proofSystem: 'Example Proof System 2',
+            mainArithmetization: 'Example Main Arithmetization 2',
+            mainPCS: 'Example Main PCS 2',
             trustedSetup: 'Example Trusted Setup 2',
+            link: 'https://example.com',
           },
         ],
       },
@@ -55,12 +62,17 @@ export const example: ZkCatalogProject = {
         contractAddress: EthereumAddress.random(),
         subVerfiers: [
           {
+            name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',
-            trustedSetup: 'Example Trusted Setup',
+            mainArithmetization: 'Example Main Arithmetization',
+            mainPCS: 'Example Main PCS',
           },
           {
+            name: 'Example Sub Verifier 2',
             proofSystem: 'Example Proof System 2',
-            trustedSetup: 'Example Trusted Setup 2',
+            mainArithmetization: 'Example Main Arithmetization 2',
+            mainPCS: 'Example Main PCS 2',
+            link: 'https://example.com',
           },
         ],
       },
@@ -72,12 +84,19 @@ export const example: ZkCatalogProject = {
         contractAddress: EthereumAddress.random(),
         subVerfiers: [
           {
+            name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',
+            mainArithmetization: 'Example Main Arithmetization',
+            mainPCS: 'Example Main PCS',
             trustedSetup: 'Example Trusted Setup',
           },
           {
+            name: 'Example Sub Verifier 2',
             proofSystem: 'Example Proof System 2',
+            mainArithmetization: 'Example Main Arithmetization 2',
+            mainPCS: 'Example Main PCS 2',
             trustedSetup: 'Example Trusted Setup 2',
+            link: 'https://example.com',
           },
         ],
       },

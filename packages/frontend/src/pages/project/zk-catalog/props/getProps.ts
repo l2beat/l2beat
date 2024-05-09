@@ -54,7 +54,7 @@ function getZkCatalogProjectDetails(
 }
 
 function hasTrustedSetup(verifiers: ZkCatalogProjectDetails['verifiers']) {
-  return verifiers.every((verifier) =>
-    verifier.subVerfiers.every((subVerifier) => !!subVerifier.trustedSetup),
+  return verifiers.some((verifier) =>
+    verifier.subVerfiers.some((subVerifier) => !!subVerifier.trustedSetup),
   )
 }
