@@ -18,7 +18,7 @@ export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
-  blockTimestampsRepository: BlockTimestampRepository
+  blockTimestampRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
   chain: string
 }
@@ -55,7 +55,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     }
 
     const blockNumber =
-      await this.$.blockTimestampsRepository.findByChainAndTimestamp(
+      await this.$.blockTimestampRepository.findByChainAndTimestamp(
         this.$.chain,
         timestamp,
       )
@@ -63,13 +63,13 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
 
     const amounts = await this.$.amountService.fetchAmounts(
       configurationsWithMissingData,
-      blockNumber.blockNumber,
+      blockNumber,
       timestamp,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
-      blockNumber: blockNumber.blockNumber,
+      blockNumber: blockNumber,
       escrows: amounts.filter((a) => a.type === 'escrow').length,
       totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
