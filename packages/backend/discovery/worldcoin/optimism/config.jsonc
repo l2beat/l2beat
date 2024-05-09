@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "optimism",
+  "name": "worldcoin",
+  "initialAddresses": ["0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d"],
+  "names": {
+    "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": "RecurringGrantDrop",
+    "0xe11CEfF5034278dC62318e74aF6efBA57D54f3be": "WLDGrant",
+    "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": "OpWorldID_One",
+    "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": "OpWorldID_Zero",
+    "0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "WorldIDRouterV1"
+  },
+  "overrides": {
+    "0x4200000000000000000000000000000000000010": {
+      "ignoreDiscovery": true
+    },
+    "RecurringGrantDrop": {
+      "ignoreMethods": ["nullifierHashes"]
+    },
+    "WLDGrant": {
+      "ignoreMethods": ["getAmount"]
+    },
+    "OpWorldID_One": {
+      "ignoreMethods": ["rootHistory"],
+      "fields": {
+        "verifier": {
+          "type": "storage",
+          "slot": 3,
+          "returnType": "address"
+        }
+      }
+    },
+    "OpWorldID_Zero": {
+      "ignoreMethods": ["rootHistory"],
+      "fields": {
+        "verifier": {
+          "type": "storage",
+          "slot": 4,
+          "returnType": "address"
+        }
+      }
+    },
+    "WorldIDRouterV1": {
+      "ignoreMethods": ["proxiableUUID"]
+    }
+  }
+}

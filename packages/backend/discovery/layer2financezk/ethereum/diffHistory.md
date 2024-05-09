@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x7ec0ee88188fd44c47d42d5759b7f6a3233f5bfe
+
+# Diff at Wed, 08 May 2024 12:35:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eb116053a3dfe1dcff4cde0b8b45a07198fbab8 block: 19624862
+- current block number: 19825376
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19624862 (main branch discovery), not current.
+
+```diff
+    contract Proxy (0x82123571C8a5e0910280C066bc634c4945FFcbC8) {
+    +++ description: None
+      values.getRegisteredAvailabilityVerifiers:
+-        "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"
++        ["0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"]
+      values.getRegisteredVerifiers:
+-        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
++        ["0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"]
+    }
+```
+
 Generated with discovered.json: 0x8870dd93175a25008b5b4d8cdbdd6c0f52c7daf0
 
 # Diff at Wed, 10 Apr 2024 11:14:53 GMT:

@@ -8,6 +8,7 @@ export type {
   SingleDiscoveryModuleConfig,
 } from './config/types'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
+export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export type {
@@ -44,6 +45,12 @@ export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { getContractMeta, getValueMeta } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
+export type { HashedChunks, HashedFileContent } from './flatten/utils'
+export {
+  buildSimilarityHashmap,
+  estimateSimilarity,
+  removeComments,
+} from './flatten/utils'
 export {
   calculateInversion,
   type InvertedAddressDetails,

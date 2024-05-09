@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5d1123ab6324ea7e55ea01032dfc89c12ca212e2
+
+# Diff at Thu, 09 May 2024 07:27:13 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3bba0812727b9105a3f44fe55a68572c804b992 block: 19776802
+- current block number: 19830984
+
+## Description
+
+The gasLimit for L2 is doubled. Current block time is 2s, elasticity is 10x. This config is now identical to Base L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        30000000
++        60000000
+    }
+```
+
 Generated with discovered.json: 0x3edeab069898df087a548f652052250c2f97a55a
 
 # Diff at Thu, 28 Mar 2024 10:33:33 GMT:

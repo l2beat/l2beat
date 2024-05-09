@@ -25,8 +25,6 @@ export const redstone: Layer2 = opStackL2({
   display: {
     name: 'Redstone',
     slug: 'redstone',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result with the loss of all funds.',
     description:
       "Redstone is a chain built for onchain games and autonomous worlds running MUD. It's an implementation of OP Plasma with DA challenges.",
     purposes: ['Universal', 'Gaming'],
@@ -89,6 +87,12 @@ export const redstone: Layer2 = opStackL2({
       ],
       description:
         'Owner of the DataAvailabilityChallenge contract. It can upgrade the contract params, potentially making the system insecure.',
+    },
+    {
+      name: 'SystemConfig owner.',
+      description:
+        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
+      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
     },
   ],
   nonTemplateContracts: [

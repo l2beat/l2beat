@@ -17,6 +17,7 @@ const base = {
   implementations: [],
   abis: {},
   sourceBundles: [],
+  matchingTemplates: {},
 }
 
 const ADDRESS_A = EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa')

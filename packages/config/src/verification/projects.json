@@ -101,6 +101,7 @@
   "palm": true,
   "paradex": true,
   "parallel": true,
+  "playchain": true,
   "pNetwork": true,
   "polygon-miden": true,
   "polygon-plasma": false,

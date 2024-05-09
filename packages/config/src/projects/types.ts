@@ -22,6 +22,10 @@ interface RequiredTool {
 }
 
 interface SubVerfier {
+  name: string
   proofSystem: string
-  trustedSetup: string
+  mainArithmetization: string
+  mainPCS: string
+  trustedSetup?: string
+  link?: string
 }

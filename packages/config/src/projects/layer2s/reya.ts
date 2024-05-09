@@ -33,6 +33,17 @@ export const reya: Layer2 = orbitStackL2({
     },
     // activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'reya',
+    chainId: 1729,
+    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerApi: {
+      url: 'https://explorer.reya.network/api',
+      type: 'blockscout',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: new UnixTime(1709380607),
+  },
   trackedTxs: [
     {
       uses: [
@@ -63,14 +74,6 @@ export const reya: Layer2 = orbitStackL2({
         sinceTimestampInclusive: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
       },
     },
-  ],
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xdff78a949e47c1e90f3dd6dd7fe2fa72b42a75f7'),
-      tokens: ['USDC'],
-      description:
-        'Socket brige vault dedicated to Reya network. Governed by the Socket Admin.',
-    }),
   ],
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
