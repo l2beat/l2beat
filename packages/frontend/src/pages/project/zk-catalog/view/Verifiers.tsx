@@ -79,6 +79,7 @@ export function Verifiers(props: Props) {
                 </p>
                 <Markdown>{item.description}</Markdown>
               </div>
+              <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
                 <div>
                   <Link>Ask for verification</Link>
@@ -87,7 +88,7 @@ export function Verifiers(props: Props) {
             </td>
             <td
               colSpan={4}
-              className="hidden md:table-cell px-4 pb-5 mt-1 w-[90%]"
+              className="hidden md:table-cell px-4 pb-5 mt-1 w-[90%] space-y-5"
             >
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
@@ -95,10 +96,45 @@ export function Verifiers(props: Props) {
                 </p>
                 <Markdown>{item.description}</Markdown>
               </div>
+              <SubVerifiersTable verifier={item} />
             </td>
           </tr>
         </tbody>
       ))}
+    </table>
+  )
+}
+
+function SubVerifiersTable({
+  verifier,
+}: { verifier: ZkCatalogProjectDetails['verifiers'][number] }) {
+  return (
+    <table className="w-full">
+      <thead>
+        <tr className="border-b border-gray-200 align-bottom text-left">
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500">
+            Proof system
+          </th>
+          <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500">
+            Trusted setup
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        {verifier.subVerfiers.map((sV) => (
+          <tr
+            className="h-8 text-sm border-b last:border-none border-gray-200"
+            key={`${sV.proofSystem}-${sV.trustedSetup}`}
+          >
+            <td className="pr-3">{sV.proofSystem}</td>
+            <td className="pr-3">{sV.trustedSetup}</td>
+            <td>
+              <Link>Source code</Link>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }
