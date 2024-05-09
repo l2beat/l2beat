@@ -7,6 +7,7 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
+import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
@@ -32,10 +33,12 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent>
-        <Breadcrumbs icon={props.details.icon} title={props.details.title} />
-        <Header {...props} />
-        <div className="space-y-10 mt-8 md:mt-16">
+      <PageContent mobileFull>
+        <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
+          <Breadcrumbs icon={props.details.icon} title={props.details.title} />
+          <Header {...props} />
+        </div>
+        <div className="space-y-10 mt-8 md:mt-16 px-4">
           <Section title="List of verifiers">
             <Verifiers items={props.details.verifiers} />
           </Section>
@@ -54,7 +57,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
 
 function Breadcrumbs(props: { icon: string; title: string }) {
   return (
-    <nav className="space-x-1 select-none mt-11 md:mt-[72px] dark:text-gray-50 flex gap-1 font-medium">
+    <nav className="space-x-1 select-none dark:text-gray-50 flex gap-1 font-medium">
       <a href="/zk-catalog">ZK Catalog</a>
       <span>/</span>
       <span>
@@ -78,7 +81,8 @@ function Header(props: ZkCatalogProjectPageProps) {
           View project's detail page
         </Link>
       </div>
-      <div className="mt-8 -mx-4 md:mx-0 grid grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
+      <HorizontalSeparator className="md:hidden mt-6 mb-5" />
+      <div className="flex flex-col md:grid gap-1 md:mt-8 grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 md:p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
@@ -106,8 +110,10 @@ function HeaderItem({
   children,
 }: { title: string; children: ReactNode }) {
   return (
-    <div>
-      <h3 className="mb-2 text-xs text-gray-600 dark:text-gray-50">{title}</h3>
+    <div className="flex justify-between md:block items-baseline">
+      <h3 className="md:mb-2 text-xs text-gray-600 dark:text-gray-50">
+        {title}
+      </h3>
       <span className="text-lg font-bold">{children}</span>
     </div>
   )
