@@ -4,11 +4,9 @@ import { CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoPriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { UpdateConfiguration } from '../../../tools/uif/multi/types'
 import { PriceRecord } from '../repositories/PriceRepository'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface PriceServiceDependencies {
   readonly coingeckoQueryService: CoingeckoQueryService
-  readonly syncOptimizer: SyncOptimizer
   logger: Logger
 }
 
@@ -17,15 +15,14 @@ export class PriceService {
     this.$.logger = $.logger.for(this)
   }
 
-  async fetchAndOptimizePrices(
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+  async fetchPrices(
     from: UnixTime,
     to: UnixTime,
-  ): Promise<{
-    fetchedUntil: UnixTime
-    prices: PriceRecord[]
-  }> {
-    const adjustedTo = this.getAdjustedTo(from, to)
+    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+  ): Promise<PriceRecord[]> {
+    if (configurations.length === 0) {
+      return []
+    }
 
     const coingeckoId = configurations[0].properties.coingeckoId
     assert(
@@ -36,17 +33,13 @@ export class PriceService {
     const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
       coingeckoId,
       from,
-      adjustedTo,
+      to,
       undefined,
     )
 
-    const optimizedPrices = prices.filter((p) =>
-      this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-    )
-
-    const pricesWithConfigurations = configurations
+    return configurations
       .map((c) =>
-        optimizedPrices
+        prices
           .filter((p) =>
             p.timestamp.gte(new UnixTime(c.minHeight)) && c.maxHeight
               ? p.timestamp.lte(new UnixTime(c.maxHeight))
@@ -59,25 +52,12 @@ export class PriceService {
           })),
       )
       .flat()
-
-    const fetchedUntil =
-      pricesWithConfigurations.length === 0
-        ? to
-        : pricesWithConfigurations
-            .map((p) => p.timestamp)
-            .reduce((a, b) => UnixTime.max(a, b), new UnixTime(0))
-
-    return { fetchedUntil, prices: pricesWithConfigurations }
   }
 
-  private getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
-    const alignedTo = to.toStartOf('hour')
-    assert(from.lte(alignedTo), 'Programmer error: from > to')
-
-    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
-
-    return alignedTo.gt(from.add(maxDaysForOneCall, 'days'))
-      ? from.add(maxDaysForOneCall, 'days')
-      : alignedTo
+  getAdjustedTo(from: number, to: number): UnixTime {
+    return CoingeckoQueryService.getAdjustedTo(
+      new UnixTime(from),
+      new UnixTime(to),
+    )
   }
 }

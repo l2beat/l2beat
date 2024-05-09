@@ -159,14 +159,11 @@ export class CoingeckoQueryService {
   }
 
   static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
-    const alignedTo = to.toStartOf('hour')
-    assert(from.lte(alignedTo), 'Invalid range')
-
     const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
-    return alignedTo.gt(from.add(maxDaysForOneCall, 'days'))
+    return to.gt(from.add(maxDaysForOneCall, 'days'))
       ? from.add(maxDaysForOneCall, 'days')
-      : alignedTo
+      : to
   }
 }
 

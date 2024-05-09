@@ -3,7 +3,6 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -36,53 +35,38 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<number> {
-    const optimizedFrom = this.$.syncOptimizer.getTimestampToSync(from, to)
+    const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
+    const configurationsWithMissingData =
+      this.getConfigurationsWithMissingData(configurations)
 
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Skipping update for configurations with data', {
-        configurations: configurations.length,
-        configurationsWithMissingData: configurationsWithMissingData.length,
-      })
-    }
-
-    if (configurationsWithMissingData.length === 0) {
-      this.logger.info('No configurations with missing data')
-      return to
-    }
-
-    const prices = await this.$.priceService.fetchAndOptimizePrices(
+    const prices = await this.$.priceService.fetchPrices(
+      new UnixTime(from),
+      adjustedTo,
       configurationsWithMissingData,
-      optimizedFrom,
-      new UnixTime(to),
     )
 
-    this.logger.info('Fetched & optimized prices in range', {
-      from: optimizedFrom.toNumber(),
-      to: prices.fetchedUntil.toNumber(),
-      prices: prices.prices.length,
+    this.logger.info('Fetched prices in range', {
+      from,
+      to: adjustedTo.toNumber(),
       configurations: configurationsWithMissingData.length,
+      prices: prices.length,
     })
 
-    if (prices.prices.length === 0) {
-      return to
-    }
+    const optimizedPrices = prices.filter((p) =>
+      this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+    )
 
-    await this.$.priceRepository.addMany(prices.prices)
+    await this.$.priceRepository.addMany(optimizedPrices)
 
     this.logger.info('Saved prices into DB', {
-      from: optimizedFrom.toNumber(),
-      to: prices.fetchedUntil.toNumber(),
-      prices: prices.prices.length,
+      from,
+      to: adjustedTo.toNumber(),
       configurations: configurationsWithMissingData.length,
+      prices: optimizedPrices.length,
     })
 
-    return prices.fetchedUntil.toNumber() < to
-      ? prices.fetchedUntil.toNumber()
-      : to
+    return adjustedTo.toNumber()
   }
 
   override async removeData(
