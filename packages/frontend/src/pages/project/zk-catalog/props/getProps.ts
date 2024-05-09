@@ -35,6 +35,7 @@ function getZkCatalogProjectDetails(
       title: project.display.name,
       icon: `/icons/${project.display.slug}.png`,
       linkToMainProjectDetails: undefined,
+      hasTrustedSetup: hasTrustedSetup(project.proofVerification.verifiers),
       ...project.proofVerification,
     }
   }
@@ -45,6 +46,15 @@ function getZkCatalogProjectDetails(
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
     linkToMainProjectDetails: `/scaling/projects/${project.display.slug}`,
+    hasTrustedSetup: hasTrustedSetup(
+      project.stateValidation.proofVerification.verifiers,
+    ),
     ...project.stateValidation.proofVerification,
   }
+}
+
+function hasTrustedSetup(verifiers: ZkCatalogProjectDetails['verifiers']) {
+  return verifiers.every((verifier) =>
+    verifier.subVerfiers.every((subVerifier) => !!subVerifier.trustedSetup),
+  )
 }

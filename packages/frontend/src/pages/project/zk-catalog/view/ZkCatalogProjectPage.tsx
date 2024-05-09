@@ -24,6 +24,7 @@ export interface ZkCatalogProjectPageProps {
 export interface ZkCatalogProjectDetails extends ProofVerification {
   title: string
   icon: string
+  hasTrustedSetup: boolean
   linkToMainProjectDetails: string | undefined
 }
 
@@ -67,18 +68,29 @@ function Breadcrumbs(props: { icon: string; title: string }) {
 function Header(props: ZkCatalogProjectPageProps) {
   return (
     <header className="mt-8">
-      <div className="space-y-0 md:space-y-0">
+      <div>
         <ProjectHeader {...props.details} />
-        <Link href={props.details.linkToMainProjectDetails} showArrow>
+        <Link
+          href={props.details.linkToMainProjectDetails}
+          showArrow
+          textClassName="mt-1 md:mt-0"
+        >
           View project's detail page
         </Link>
       </div>
-      <div className="mt-8 -mx-4 md:mx-0 grid grid-cols-2 md:rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
+      <div className="mt-8 -mx-4 md:mx-0 grid grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
         <HeaderItem title="Aggregation">
           {props.details.aggregation ? (
+            <span className="text-green-700 dark:text-green-450">Yes</span>
+          ) : (
+            <span className="text-red-700 dark:text-red-300">No</span>
+          )}
+        </HeaderItem>
+        <HeaderItem title="Trusted setup">
+          {props.details.hasTrustedSetup ? (
             <span className="text-green-700 dark:text-green-450">Yes</span>
           ) : (
             <span className="text-red-700 dark:text-red-300">No</span>
