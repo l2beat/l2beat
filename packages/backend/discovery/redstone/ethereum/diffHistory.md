@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xa2e9db370976fbc7d8ba56b1236063e8e80674a2
+
+# Diff at Thu, 09 May 2024 07:38:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3bba0812727b9105a3f44fe55a68572c804b992 block: 19810497
+- current block number: 19831040
+
+## Description
+
+The ProxyAdminOwner Multisig has two new signers and is now 2/3. Challenger, Guardian, SystemConfig, DataAvailabilityChallenge stay EOA-owned.
+
+## Watched changes
+
+```diff
+    contract ProxyAdminOwner (0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89) {
+    +++ description: None
+      upgradeability.threshold:
+-        "1 of 1 (100%)"
++        "2 of 3 (67%)"
+      values.getOwners.2:
++        "0x7211399b320a0417286897fCeD1ee4ba1C1771d4"
+      values.getOwners.1:
++        "0x61fB1FDA30c900404CDfa22D3eAdCA86FdB95450"
+      values.getOwners.0:
+-        "0xb356B146F1629c49C44344464F69BCDAfb4bb664"
++        "0x5DeB7dD12ccF0BFb3b2D26D0A4f302Fb6ACBdcA8"
+      values.getThreshold:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x8c5f2b36bcdbbb428884c05c17a594382bc8a420
 
 # Diff at Mon, 06 May 2024 10:38:42 GMT:
