@@ -43,23 +43,26 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       return Promise.resolve(to)
     }
 
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Skipping update for configurations with data', {
-        configurations: configurations.length,
-        configurationsWithMissingData: configurationsWithMissingData.length,
-      })
-    }
-
     const blockNumber =
       await this.$.blockTimestampRepository.findByChainAndTimestamp(
         this.$.chain,
         timestamp,
       )
     assert(blockNumber, 'Block number not found')
+
+    const configurationsWithMissingData = configurations.filter(
+      (c) => !c.hasData,
+    )
+
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Skipping update for configurations with data', {
+        timestamp: timestamp.toNumber(),
+        blockNumber,
+        skippedConfigurations:
+          configurations.length - configurationsWithMissingData.length,
+        configurationsToSync: configurationsWithMissingData.length,
+      })
+    }
 
     const amounts = await this.$.amountService.fetchAmounts(
       configurationsWithMissingData,
@@ -79,6 +82,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
 
     this.logger.info('Saved amounts for timestamp into DB', {
       timestamp: timestamp.toNumber(),
+      blockNumber: blockNumber,
       escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
       totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
         .length,
