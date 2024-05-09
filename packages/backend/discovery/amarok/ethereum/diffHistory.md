@@ -1,4 +1,26 @@
-Generated with discovered.json: 0xe66b6789a0cadd7ee2873b545abb9cd6cf542101
+Generated with discovered.json: 0x061cd151b7fcf7548d83f6300650ff6e281060d7
+
+# Diff at Thu, 09 May 2024 13:28:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@5030a715bea4d3d008a7b5c5e3105ce34dd8b05d block: 19624596
+- current block number: 19832773
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.ROUTERS.28:
++        "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B"
+    }
+```
+
+Generated with discovered.json: 0x0897868b5ad3b9ac30e7422485e3646f39522831
 
 # Diff at Wed, 10 Apr 2024 10:21:54 GMT:
 
