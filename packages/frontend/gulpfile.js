@@ -22,7 +22,7 @@ function watchScripts() {
 
 function buildStyles() {
   return exec(
-    `tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css`,
+    'tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css --minify',
   )
 }
 
