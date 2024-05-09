@@ -37,6 +37,14 @@
       }
     },
     {
+      "name": "DeleteVerifierSize10",
+      "values": {}
+    },
+    {
+      "name": "DeleteVerifierSize100",
+      "values": {}
+    },
+    {
       "name": "RegisterIdentitiesVerifierLookupTable",
       "values": {
         "additionalBatchSizes": {
@@ -72,31 +80,19 @@
       }
     },
     {
+      "name": "RegisterVerifierSize100",
+      "values": {}
+    },
+    {
+      "name": "RegisterVerifierSize1200",
+      "values": {}
+    },
+    {
+      "name": "RegisterVerifierSize600",
+      "values": {}
+    },
+    {
       "name": "SemaphoreVerifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
-      "values": {}
-    },
-    {
-      "name": "Verifier",
       "values": {}
     },
     {
