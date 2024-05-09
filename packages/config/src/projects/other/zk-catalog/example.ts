@@ -66,6 +66,7 @@ export const example: ZkCatalogProject = {
             proofSystem: 'Example Proof System',
             mainArithmetization: 'Example Main Arithmetization',
             mainPCS: 'Example Main PCS',
+            trustedSetup: 'Example Trusted Setup',
           },
           {
             name: 'Example Sub Verifier 2',
@@ -88,7 +89,6 @@ export const example: ZkCatalogProject = {
             proofSystem: 'Example Proof System',
             mainArithmetization: 'Example Main Arithmetization',
             mainPCS: 'Example Main PCS',
-            trustedSetup: 'Example Trusted Setup',
           },
           {
             name: 'Example Sub Verifier 2',

@@ -7,6 +7,7 @@ import { ChevronDownIcon } from '../../../../components/icons'
 import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQuestionMark'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
+import { EM_DASH } from '../../../../utils/constants'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
 import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
@@ -141,9 +142,9 @@ function SubVerifiersTable({
               <td className="pr-3">{sV.proofSystem}</td>
               <td className="pr-3">{sV.mainArithmetization}</td>
               <td className="pr-3">{sV.mainPCS}</td>
-              <td className="pr-3">{sV.trustedSetup}</td>
+              <td className="pr-3">{sV.trustedSetup ?? EM_DASH}</td>
               <td>
-                <Link>Source code</Link>
+                {sV.link ? <Link href={sV.link}>Source code</Link> : EM_DASH}
               </td>
             </tr>
           ))}
