@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xae248316ccb53ed8a1d072efe292a56c46012859
+
+# Diff at Tue, 07 May 2024 17:24:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@202b915373bcf792690ef0483d0fd8eab1b8c303 block: 19775064
+- current block number: 19819650
+
+## Description
+
+Contracts have been moved to a shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19775064 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EigenLayerBeaconOracle (0x343907185b71aDF0eBa9567538314396aa985442)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerExecutorMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWithdrawalRouter (0x7Fe7E9CC0F274d2435AD5d56D5fa73E47F6A23D8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x8bA40dA60f0827d027F029aCEE62609F0527a255)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7a1b394dc3b63660e37fba29bfa6432ce4768fed
 
 # Diff at Wed, 01 May 2024 11:45:46 GMT:
