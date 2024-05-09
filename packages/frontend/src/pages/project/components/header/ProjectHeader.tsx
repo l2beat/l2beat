@@ -7,7 +7,7 @@ interface Props {
 
 export function ProjectHeader(props: Props) {
   return (
-    <h1 className="relative mb-0 flex items-center justify-start gap-3 whitespace-pre text-3xl font-bold md:text-4xl">
+    <h1 className="flex items-center justify-start gap-3">
       {props.icon && (
         <img
           className="size-8 md:size-10"
@@ -15,7 +15,7 @@ export function ProjectHeader(props: Props) {
           alt={`${props.title} logo`}
         />
       )}
-      {props.title}
+      <span className="text-3xl font-bold md:text-4xl">{props.title}</span>
     </h1>
   )
 }

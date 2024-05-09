@@ -23,7 +23,7 @@ export interface ZkCatalogProjectPageProps {
 
 export interface ZkCatalogProjectDetails {
   title: string
-  icon: string | undefined
+  icon: string
   proofVerification: ProofVerification
   linkToMainProjectDetails: string | undefined
 }
@@ -33,51 +33,64 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <header className="mt-11 md:mt-[72px]">
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
-            <ProjectHeader {...props.details} />
-            <Link
-              href={props.details.linkToMainProjectDetails}
-              showArrow
-              textClassName="mb-2"
-            >
-              View project's detail page
-            </Link>
-          </div>
-          <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
-            <HeaderItem title="Number of verifiers">
-              <VerifiedCountWithDetails
-                verifiers={props.details.proofVerification.verifiers}
-              />
-            </HeaderItem>
-            <HeaderItem title="Aggregation">
-              {props.details.proofVerification.aggregation ? (
-                <span className="text-green-700 dark:text-green-450">Yes</span>
-              ) : (
-                <span className="text-red-700 dark:text-red-300">No</span>
-              )}
-            </HeaderItem>
-          </div>
-        </header>
+        <Breadcrumbs icon={props.details.icon} title={props.details.title} />
+        <Header {...props} />
         <div className="space-y-10 mt-16">
-          <section>
-            <h2 className="mb-4 text-2xl font-bold">List of verifiers</h2>
+          <Section title="List of verifiers">
             <Verifiers items={props.details.proofVerification.verifiers} />
-          </section>
-          <section>
-            <h2 className="mb-4 text-2xl font-bold">Description</h2>
+          </Section>
+          <Section title="Description">
             <Markdown>{props.details.proofVerification.description}</Markdown>
-          </section>
-          <section>
-            <h2 className="mb-4 text-2xl font-bold">List of required tools</h2>
+          </Section>
+          <Section title="List of required tools">
             <RequiredTools
               items={props.details.proofVerification.requiredTools}
             />
-          </section>
+          </Section>
         </div>
       </PageContent>
       <Footer narrow {...props.footer} />
     </>
+  )
+}
+
+function Breadcrumbs(props: { icon: string; title: string }) {
+  return (
+    <nav className="space-x-1 select-none mt-11 md:mt-[72px] dark:text-gray-50 flex gap-1">
+      <a href="/zk-catalog">ZK Catalog</a>
+      <span>/</span>
+      <span>
+        <img src={props.icon} className="size-4 mr-1.5 inline" />
+        <span>{props.title}</span>
+      </span>
+    </nav>
+  )
+}
+
+function Header(props: ZkCatalogProjectPageProps) {
+  return (
+    <header className="mt-8">
+      <div className="space-y-0 md:space-y-0">
+        <ProjectHeader {...props.details} />
+        <Link href={props.details.linkToMainProjectDetails} showArrow>
+          View project's detail page
+        </Link>
+      </div>
+      <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
+        <HeaderItem title="Number of verifiers">
+          <VerifiedCountWithDetails
+            verifiers={props.details.proofVerification.verifiers}
+          />
+        </HeaderItem>
+        <HeaderItem title="Aggregation">
+          {props.details.proofVerification.aggregation ? (
+            <span className="text-green-700 dark:text-green-450">Yes</span>
+          ) : (
+            <span className="text-red-700 dark:text-red-300">No</span>
+          )}
+        </HeaderItem>
+      </div>
+    </header>
   )
 }
 
@@ -90,5 +103,14 @@ function HeaderItem({
       <h3 className="mb-2 text-xs text-gray-600 dark:text-gray-50">{title}</h3>
       <span className="text-lg font-bold">{children}</span>
     </div>
+  )
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
+      {children}
+    </section>
   )
 }
