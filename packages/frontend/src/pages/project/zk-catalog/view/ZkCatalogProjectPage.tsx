@@ -38,7 +38,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           <Breadcrumbs icon={props.details.icon} title={props.details.title} />
           <Header {...props} />
         </div>
-        <div className="space-y-10 mt-8 md:mt-16 px-4">
+        <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
           <Section title="List of verifiers">
             <Verifiers items={props.details.verifiers} />
           </Section>
