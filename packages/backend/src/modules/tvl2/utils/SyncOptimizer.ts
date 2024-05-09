@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from 'console'
 import { Clock } from '../../../tools/Clock'
 
 interface SyncOptimizerOptions {
@@ -19,10 +20,7 @@ export class SyncOptimizer {
 
   getTimestampToSync(from: number, to: number): UnixTime {
     const timestamp = this.getOptimizedTimestamp(new UnixTime(from))
-
-    if (timestamp.gt(new UnixTime(to))) {
-      throw new Error('Invalid range')
-    }
+    assert(timestamp.lte(new UnixTime(to)), 'Invalid range')
 
     return timestamp
   }

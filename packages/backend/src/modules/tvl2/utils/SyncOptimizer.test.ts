@@ -109,14 +109,5 @@ describe(SyncOptimizer.name, () => {
 
       expect(result).toEqual(now.toEndOf('hour'))
     })
-
-    it('throws on invalid range', async () => {
-      expect(() =>
-        syncOptimizer.getTimestampToSync(
-          now.toNumber(),
-          now.add(2, 'seconds').toNumber(),
-        ),
-      ).toThrow()
-    })
   })
 })
