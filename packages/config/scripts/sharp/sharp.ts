@@ -5,8 +5,11 @@ import { join } from 'path'
 
 const SHARP_PROVER = '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF'
 const SYSTEMS = [
+  // Starknet
   '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+  // Paradex
   '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+  // ImmutableX
   '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
 ]
 
