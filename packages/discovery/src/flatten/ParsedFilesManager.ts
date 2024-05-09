@@ -413,9 +413,6 @@ export class ParsedFilesManager {
       this.files,
       (f) => f.normalizedPath === normalizedPath,
     )
-    if (matchingFile === undefined) {
-      console.log('here')
-    }
     assert(
       matchingFile !== undefined,
       `File [${fromFile.normalizedPath}][${resolvedPath}] not found`,
@@ -469,11 +466,35 @@ function resolveRemappings(path: string, remappings: Remapping[]): string {
   return path
 }
 
+function solcAbsolutePath(path: string, context: string): string {
+  if (!path.startsWith('./') && !path.startsWith('../')) {
+    return path
+  }
+
+  let result = posix.normalize(context)
+
+  if (result !== '/' && posix.basename(result) !== '') {
+    result = posix.dirname(result)
+  }
+
+  const segments = path.split('/')
+  for (const segment of segments) {
+    if (segment === '..') {
+      result = posix.dirname(result)
+    } else if (segment !== '.') {
+      result = posix.join(result, segment)
+    }
+  }
+
+  return posix.normalize(result)
+}
+
 function resolveImportRemappings(
-  path: string,
+  rawPath: string,
   remappings: Remapping[],
   context: string,
 ): string {
+  const path = solcAbsolutePath(rawPath, context)
   let longestPrefix = 0
   let longestContext = 0
   let longest: Remapping | undefined = undefined
