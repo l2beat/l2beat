@@ -18,14 +18,14 @@ export function Verifiers(props: Props) {
   return (
     <table className="w-full" data-role="accordion" data-type="multiple">
       <thead>
-        <tr className="h-8 border-b border-gray-200 dark:border-zinc-700">
-          <th className="px-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
+        <tr className="border-b border-gray-200 dark:border-zinc-700 align-bottom">
+          <th className="px-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Name
           </th>
-          <th className="pr-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50 hidden md:table-cell">
+          <th className="pr-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50 hidden md:table-cell">
             Verifier
           </th>
-          <th className="pr-4 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
+          <th className="pr-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Verification status
           </th>
           <th />
