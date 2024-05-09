@@ -7,7 +7,7 @@ Generated with discovered.json: 0x37f2d87c3cef77ccf803046a249439f1af806d69
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added worldcoin discovery. In particular this is needed for the ZK Catalog.
 
 ## Initial discovery
 
