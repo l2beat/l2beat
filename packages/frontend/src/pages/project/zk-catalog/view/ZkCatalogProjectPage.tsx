@@ -35,7 +35,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
       <PageContent>
         <Breadcrumbs icon={props.details.icon} title={props.details.title} />
         <Header {...props} />
-        <div className="space-y-10 mt-16">
+        <div className="space-y-10 mt-8 md:mt-16">
           <Section title="List of verifiers">
             <Verifiers items={props.details.proofVerification.verifiers} />
           </Section>
@@ -76,7 +76,7 @@ function Header(props: ZkCatalogProjectPageProps) {
           View project's detail page
         </Link>
       </div>
-      <div className="mt-8 grid grid-cols-2 rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
+      <div className="mt-8 -mx-4 md:mx-0 grid grid-cols-2 md:rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails
             verifiers={props.details.proofVerification.verifiers}
