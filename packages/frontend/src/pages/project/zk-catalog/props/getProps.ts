@@ -1,5 +1,6 @@
 import { Layer2, Layer3, ZkCatalogProject } from '@l2beat/config'
 
+import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
@@ -12,14 +13,11 @@ import { getPageMetadata } from './getPageMetadata'
 export function getProps(
   project: Layer2 | Layer3 | ZkCatalogProject,
   config: Config,
-): Wrapped<ZkCatalogProjectPageProps> | undefined {
-  const details = getZkCatalogProjectDetails(project)
-  if (!details) return
-
+): Wrapped<ZkCatalogProjectPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      details,
+      details: getZkCatalogProjectDetails(project),
       footer: getFooterProps(config),
     },
     wrapper: {
@@ -31,22 +29,22 @@ export function getProps(
 
 function getZkCatalogProjectDetails(
   project: Layer2 | Layer3 | ZkCatalogProject,
-): ZkCatalogProjectDetails | undefined {
+): ZkCatalogProjectDetails {
   if (project.type === 'zk-catalog') {
     return {
       title: project.display.name,
       icon: `/icons/${project.display.slug}.png`,
-      proofVerification: project.proofVerification,
       linkToMainProjectDetails: undefined,
+      ...project.proofVerification,
     }
   }
 
-  if (!project.stateValidation?.proofVerification) return
+  assert(project.stateValidation?.proofVerification, 'Invalid project')
 
   return {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    proofVerification: project.stateValidation?.proofVerification,
     linkToMainProjectDetails: `/scaling/projects/${project.display.slug}`,
+    ...project.stateValidation.proofVerification,
   }
 }

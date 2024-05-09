@@ -1,11 +1,11 @@
-import { ProofVerification } from '@l2beat/config'
 import React from 'react'
 import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQuestionMark'
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
+import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
-  verifiers: ProofVerification['verifiers']
+  verifiers: ZkCatalogProjectDetails['verifiers']
 }
 
 export function VerifiedCountWithDetails(props: Props) {

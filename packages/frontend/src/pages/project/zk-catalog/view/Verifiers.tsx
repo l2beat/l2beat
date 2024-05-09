@@ -1,4 +1,3 @@
-import { ProofVerification } from '@l2beat/config'
 import React from 'react'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
@@ -9,9 +8,10 @@ import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQ
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
+import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
-  items: ProofVerification['verifiers']
+  items: ZkCatalogProjectDetails['verifiers']
 }
 
 export function Verifiers(props: Props) {

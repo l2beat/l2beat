@@ -1,11 +1,11 @@
-import { ProofVerification } from '@l2beat/config'
 import React from 'react'
 
 import { Link } from '../../../../components/Link'
 import { EM_DASH } from '../../../../utils/constants'
+import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
-  items: ProofVerification['requiredTools']
+  items: ZkCatalogProjectDetails['requiredTools']
 }
 
 export function RequiredTools(props: Props) {

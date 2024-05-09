@@ -21,10 +21,9 @@ export interface ZkCatalogProjectPageProps {
   footer: FooterProps
 }
 
-export interface ZkCatalogProjectDetails {
+export interface ZkCatalogProjectDetails extends ProofVerification {
   title: string
   icon: string
-  proofVerification: ProofVerification
   linkToMainProjectDetails: string | undefined
 }
 
@@ -37,15 +36,13 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
         <Header {...props} />
         <div className="space-y-10 mt-8 md:mt-16">
           <Section title="List of verifiers">
-            <Verifiers items={props.details.proofVerification.verifiers} />
+            <Verifiers items={props.details.verifiers} />
           </Section>
           <Section title="Description">
-            <Markdown>{props.details.proofVerification.description}</Markdown>
+            <Markdown>{props.details.description}</Markdown>
           </Section>
           <Section title="List of required tools">
-            <RequiredTools
-              items={props.details.proofVerification.requiredTools}
-            />
+            <RequiredTools items={props.details.requiredTools} />
           </Section>
         </div>
       </PageContent>
@@ -56,7 +53,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
 
 function Breadcrumbs(props: { icon: string; title: string }) {
   return (
-    <nav className="space-x-1 select-none mt-11 md:mt-[72px] dark:text-gray-50 flex gap-1">
+    <nav className="space-x-1 select-none mt-11 md:mt-[72px] dark:text-gray-50 flex gap-1 font-medium">
       <a href="/zk-catalog">ZK Catalog</a>
       <span>/</span>
       <span>
@@ -78,12 +75,10 @@ function Header(props: ZkCatalogProjectPageProps) {
       </div>
       <div className="mt-8 -mx-4 md:mx-0 grid grid-cols-2 md:rounded-xl bg-gray-100 dark:bg-zinc-900 p-6">
         <HeaderItem title="Number of verifiers">
-          <VerifiedCountWithDetails
-            verifiers={props.details.proofVerification.verifiers}
-          />
+          <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
         <HeaderItem title="Aggregation">
-          {props.details.proofVerification.aggregation ? (
+          {props.details.aggregation ? (
             <span className="text-green-700 dark:text-green-450">Yes</span>
           ) : (
             <span className="text-red-700 dark:text-red-300">No</span>
