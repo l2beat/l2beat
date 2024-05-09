@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x81e7f6271bee9bcf57df4b071f02612187dc750b
+Generated with discovered.json: 0x64a922b9ce48f750fdc7b9e197598abaa0009681
 
-# Diff at Mon, 08 Apr 2024 10:50:08 GMT:
+# Diff at Thu, 09 May 2024 08:31:47 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 118487300
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- current block number: 119822353
 
 ## Description
 
@@ -25,7 +25,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OpWorldID_Old (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
+    contract SemaphoreVerifier (0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpWorldID_Zero (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
     +++ description: None
 ```
 
@@ -38,6 +44,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB)
     +++ description: None
 ```
 
@@ -61,7 +73,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OpWorldID_New (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
     +++ description: None
 ```
 

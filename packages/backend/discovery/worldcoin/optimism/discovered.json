@@ -1,9 +1,9 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 118487300,
+  "blockNumber": 119822353,
   "configHash": "0x5e32f6519951ef032dc940a4128790eda0d936215a50bb6092eb4ef7b7240bda",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -180,7 +180,7 @@
           "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
         ],
         "getThreshold": 2,
-        "nonce": 10,
+        "nonce": 13,
         "VERSION": "1.3.0"
       }
     },
@@ -194,7 +194,7 @@
       "values": {
         "getTreeDepth": 30,
         "isLocal": false,
-        "latestRoot": "21219534704526922570476676090709397734243894472224878564858188365576633283241",
+        "latestRoot": "20915762964411057304698085615437664390231699052784062947202998090988652794869",
         "owner": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
         "rootHistoryExpiry": 604800,
         "verifier": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
@@ -268,7 +268,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "160912115699063652779506597",
+        "totalSupply": "164769154184841153889873435",
         "version": "1.0.0"
       }
     },
@@ -281,7 +281,7 @@
       "sinceTimestamp": 1710076379,
       "values": {
         "calculateId": [],
-        "getCurrentId": 31
+        "getCurrentId": 33
       },
       "derivedName": "WLDGrant"
     },
