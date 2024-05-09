@@ -7,4 +7,5 @@ export const onChainProjects: string[] = [
   'eigenda',
   'eigenlayer',
   'swell',
+  'worldcoin',
 ]
