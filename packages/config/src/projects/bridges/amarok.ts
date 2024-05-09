@@ -98,7 +98,7 @@ export const amarok: Bridge = {
     validation: {
       name: 'Validation via Native AMBs',
       description:
-        'Messages on the source chain are send perdiodically to the Ethereum chain via native AMB. Once they arrive on Etherum, they can be send from Ethereum, again\
+        'Messages on the source chain are sent periodically to the Ethereum chain via native AMB. Once they arrive on Etherum, they can be sent from Ethereum, again\
         via native AMB, to the destination chain. Token transfers can be fronted by Routers providing liquidity. Similarly arbitrary messages can be sped up. Watchers provide\
         additional protection in case native AMB gets compromised and forges the message. For optimistic rollups (Optimism, Arbitrum) their native AMB is used but\
         7-day dispute window is ignored. For BSC (Binance Chain) MultiChain AMB is used.',
