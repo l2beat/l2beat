@@ -1,6 +1,11 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
 import {
@@ -9,7 +14,6 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { diffToMessage } from './utils/diffToMessage'
@@ -213,7 +217,7 @@ function formatRemindersAsTable(
     ]
   })
 
-  return printAsciiTable(headers, rows)
+  return formatAsAsciiTable(headers, rows)
 }
 
 function flattenReminders(
