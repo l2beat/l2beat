@@ -59,6 +59,49 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     const knex = await this.knex()
     return await knex(this.TABLE_NAME).delete()
   }
+
+  async findCountByProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<{ count: number }> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const count = await knex(this.TABLE_NAME)
+      .where('project_id', projectId)
+      .andWhere('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<', to.toDate())
+      .count('project_id')
+
+    if (count.length === 0) {
+      return { count: 0 }
+    }
+    if (count.length > 1) {
+      throw new Error('Expected exactly one row')
+    }
+    if (typeof count[0].count !== 'string') {
+      throw new Error('Expected count to be a string')
+    }
+
+    return { count: parseInt(count[0].count) }
+  }
+
+  async getByProjectAndTimeRangePaginated(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+    start: number,
+    limit: number,
+  ): Promise<AggregatedL2CostsRecord[]> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const rows = await knex(this.TABLE_NAME)
+      .where('project_id', projectId)
+      .andWhere('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<', to.toDate())
+      .orderBy('timestamp', 'asc')
+      .offset(start)
+      .limit(limit)
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {

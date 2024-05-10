@@ -1,7 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  assert,
-  AssetId,
   L2CostsApiChart,
   L2CostsApiChartPoint,
   L2CostsApiResponse,
@@ -14,20 +12,15 @@ import {
 
 import { Project } from '../../../../../model/Project'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
-import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../../../types/TrackedTxId'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
-  L2CostsRecord,
-  L2CostsRepository,
-} from '../repositories/L2CostsRepository'
-import {
-  DetailedTransaction,
-  DetailedTransactionBase,
-} from '../types/DetailedTransaction'
+  AggregatedL2CostsRecord,
+  AggregatedL2CostsRepository,
+} from '../repositories/AggregatedL2CostsRepository'
 
 export type L2CostsTrackedTxsConfig = {
   entries: L2CostsTrackedTxsConfigEntry[]
@@ -40,9 +33,6 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const MAX_DAYS = 180
 const MAX_RECORDS = 200000
-
-// Amount of gas required for a basic tx
-const OVERHEAD = 21_000
 
 export const CHART_TYPES: L2CostsApiChart['types'] = [
   'timestamp',
@@ -63,18 +53,20 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
   'blobsUsd',
 ] as const
 
+export interface L2CostsControllerDeps {
+  trackedTxsConfigsRepository: TrackedTxsConfigsRepository
+  aggregatedL2CostsRepository: AggregatedL2CostsRepository
+  projects: Project[]
+  logger?: Logger
+}
+
 export class L2CostsController {
   private readonly taskQueue: TaskQueue<void>
+  private readonly logger: Logger
   getCachedL2CostsApiResponse: () => Promise<L2CostsApiResponse>
 
-  constructor(
-    private readonly l2CostsRepository: L2CostsRepository,
-    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
-    private readonly priceRepository: PriceRepository,
-    private readonly projects: Project[],
-    private readonly logger = Logger.SILENT,
-  ) {
-    this.logger = this.logger.for(this)
+  constructor(private readonly $: L2CostsControllerDeps) {
+    this.logger = $.logger ? $.logger.for(this) : Logger.SILENT
 
     const cached = cacheAsyncFunction(() => this.getL2Costs())
     this.getCachedL2CostsApiResponse = cached.call
@@ -102,7 +94,7 @@ export class L2CostsController {
     const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
     const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
 
-    const activeProjects = this.projects.filter((p) => !p.isArchived)
+    const activeProjects = this.$.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
       if (!project.trackedTxsConfig) {
         continue
@@ -117,7 +109,7 @@ export class L2CostsController {
       }
 
       const configurations =
-        await this.trackedTxsConfigsRepository.getByProjectIdAndType(
+        await this.$.trackedTxsConfigsRepository.getByProjectIdAndType(
           project.projectId,
           'l2costs',
         )
@@ -139,30 +131,28 @@ export class L2CostsController {
       )
 
       const { count } =
-        await this.l2CostsRepository.findCountByProjectAndTimeRange(
+        await this.$.aggregatedL2CostsRepository.findCountByProjectAndTimeRange(
           project.projectId,
           timeRanges,
         )
+
+      console.log(`Count ${count}`)
+
       for (
         let rangeIndex = 0;
         rangeIndex < Math.ceil(count / MAX_RECORDS);
         rangeIndex++
       ) {
         const records =
-          await this.l2CostsRepository.getByProjectAndTimeRangePaginated(
+          await this.$.aggregatedL2CostsRepository.getByProjectAndTimeRangePaginated(
             project.projectId,
             timeRanges,
             rangeIndex * MAX_RECORDS,
             MAX_RECORDS,
           )
-        const recordsWithDetails = await this.makeTransactionCalculations(
-          records,
-          timeRanges,
-          multipliersConfigs,
-        )
 
         const { hourly, daily } = this.aggregateL2Costs(
-          recordsWithDetails,
+          records,
           combinedHourlyMap,
           combinedDailyMap,
           nowToFullHour,
@@ -217,7 +207,7 @@ export class L2CostsController {
   }
 
   aggregateL2Costs(
-    transactions: DetailedTransaction[],
+    records: AggregatedL2CostsRecord[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
     nowToFullHour: UnixTime,
@@ -225,14 +215,14 @@ export class L2CostsController {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 
-    for (const tx of transactions) {
-      if (tx.timestamp.gt(nowToFullHour.add(-7, 'days'))) {
-        addToMap(hourlyMap, 'hour', tx)
-        addToMap(combinedHourlyMap, 'hour', tx)
+    for (const rec of records) {
+      if (rec.timestamp.gt(nowToFullHour.add(-7, 'days'))) {
+        addToMap(hourlyMap, 'hour', rec)
+        addToMap(combinedHourlyMap, 'hour', rec)
       }
-      if (tx.timestamp.lt(nowToFullHour.toStartOf('day'))) {
-        addToMap(dailyMap, 'day', tx)
-        addToMap(combinedDailyMap, 'day', tx)
+      if (rec.timestamp.lt(nowToFullHour.toStartOf('day'))) {
+        addToMap(dailyMap, 'day', rec)
+        addToMap(combinedDailyMap, 'day', rec)
       }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {
@@ -247,101 +237,6 @@ export class L2CostsController {
       hourly,
       daily,
     }
-  }
-
-  async makeTransactionCalculations(
-    transactions: L2CostsRecord[],
-    ranges: [UnixTime, UnixTime],
-    configsWithMultiplier: { id: TrackedTxId; costMultiplier: number }[],
-  ): Promise<DetailedTransaction[]> {
-    const ethPricesMap = await this.priceRepository.findByTimestampRange(
-      AssetId.ETH,
-      ranges[0],
-      ranges[1],
-    )
-
-    return transactions.map((tx) => {
-      const ethUsdPrice = ethPricesMap.get(
-        tx.timestamp.toStartOf('hour').toNumber(),
-      )
-      assert(
-        ethUsdPrice,
-        `[L2Costs]: ETH price not found: ${tx.timestamp
-          .toStartOf('hour')
-          .toDate()
-          .toISOString()}`,
-      )
-
-      let costMultiplier = 1
-      const multiplierConfig = configsWithMultiplier.find(
-        (c) => c.id === tx.trackedTxId,
-      )
-      if (multiplierConfig) {
-        costMultiplier = multiplierConfig.costMultiplier
-      }
-
-      const gasPriceGwei = parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
-      const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-
-      const calldataGasUsed = tx.data.calldataGasUsed * costMultiplier
-      const overheadGasUsed = OVERHEAD * costMultiplier
-      const totalGas = tx.data.gasUsed * costMultiplier
-      const computeGasUsed = totalGas - calldataGasUsed - overheadGasUsed
-      const gasCost = totalGas * gasPriceETH
-      const calldataGasCost = calldataGasUsed * gasPriceETH
-      const computeGasCost = computeGasUsed * gasPriceETH
-      const totalGasCost = gasCost
-      const totalOverheadGasCost = overheadGasUsed * gasPriceETH
-      const gasCostUsd = gasCost * ethUsdPrice
-      const totalGasCostUsd = totalGasCost * ethUsdPrice
-      const calldataGasCostUsd = calldataGasCost * ethUsdPrice
-      const computeGasCostUsd = computeGasCost * ethUsdPrice
-      const totalOverheadGasCostUsd = totalOverheadGasCost * ethUsdPrice
-
-      const detailedTransaction: DetailedTransactionBase = {
-        timestamp: tx.timestamp,
-        calldataGasUsed,
-        computeGasUsed,
-        overheadGasUsed,
-        totalGas,
-        gasCost,
-        calldataGasCost,
-        computeGasCost,
-        totalGasCost,
-        totalOverheadGasCost,
-        gasCostUsd,
-        totalGasCostUsd,
-        calldataGasCostUsd,
-        computeGasCostUsd,
-        totalOverheadGasCostUsd,
-      }
-      if (tx.data.type === 3) {
-        const blobGasPriceGwei = parseFloat(
-          (tx.data.blobGasPrice * 1e-9).toFixed(9),
-        )
-        const blobGasPriceETH = parseFloat(
-          (blobGasPriceGwei * 1e-9).toFixed(18),
-        )
-        const blobGasUsed = tx.data.blobGasUsed * costMultiplier
-        const blobGasCost = blobGasUsed * blobGasPriceETH
-        const blobGasCostUsd = blobGasCost * ethUsdPrice
-
-        return {
-          ...detailedTransaction,
-          type: 3,
-          blobGasCost,
-          blobGasUsed,
-          blobGasCostUsd,
-          totalGas: totalGas + blobGasUsed,
-          totalGasCost: totalGasCost + blobGasCost,
-          totalGasCostUsd: (totalGasCost + blobGasCost) * ethUsdPrice,
-        } as const
-      }
-      return {
-        ...detailedTransaction,
-        type: 2,
-      } as const
-    })
   }
 
   getL2CostsTrackedTxsConfig(
