@@ -1,6 +1,7 @@
 import {
   assert,
   AmountConfigEntry,
+  AssetId,
   EthereumAddress,
   ProjectId,
   TvlApiChart,
@@ -8,10 +9,10 @@ import {
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
-  AssetId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
+import { Project } from '../../../model/Project'
 import { Tvl2Config } from '../../../config/Config'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import {
@@ -50,11 +51,12 @@ type AmountConfigMap = Map<
 
 type PriceConfigIdMap = Map<string, { assetId: AssetId, priceId: string }>
 
-type ValuesMap = Map<number, {
+type Values = {
+  external: bigint
   canonical: bigint
   native: bigint
-  external: bigint
-}>
+}
+type ValuesMap = Map<number, Values>
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
@@ -66,14 +68,16 @@ export class Tvl2Controller {
   private readonly projects: {
     id: ProjectId
     minTimestamp: UnixTime
+    type: Project['type']
   }[]
+  private minTimestamp: Record<'layer2' | 'bridge', UnixTime>
 
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
     private readonly chainConverter: ChainConverter,
-    projects: ProjectId[],
+    projects: Project[],
     config: Tvl2Config,
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
@@ -81,11 +85,12 @@ export class Tvl2Controller {
     this.currAmountConfigs = new Map(
       [...this.amountConfig.values()]
         .flat()
+        // TODO: we should check it on runtime as well
         .filter((x) => !x.untilTimestamp)
         .map((x) => [x.configId, x]),
     )
     this.priceConfigs = getPriceConfigIds(config)
-    this.projects = projects.flatMap((id) => {
+    this.projects = projects.flatMap(({ projectId: id, type }) => {
       const config = this.amountConfig.get(id)
       if (!config) {
         return []
@@ -94,8 +99,17 @@ export class Tvl2Controller {
       const minTimestamp = config
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
-      return { id, minTimestamp }
+      return { id, minTimestamp, type }
     })
+
+    this.minTimestamp = {
+      layer2: this.projects.filter(x => x.type === 'layer2').map(x => x.minTimestamp).reduce((acc, curr) => {
+        return UnixTime.min(acc, curr)
+      }).toEndOf('day'),
+      bridge: this.projects.filter(x => x.type === 'bridge').map(x => x.minTimestamp).reduce((acc, curr) => {
+        return UnixTime.min(acc, curr)
+      }).toEndOf('day')
+    }
   }
 
   async getTvl(): Promise<Tvl2Result> {
@@ -136,6 +150,9 @@ export class Tvl2Controller {
   }
 
   async getOldTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+    //DANGER
+    lastHour = lastHour.toStartOf('day').add(6, 'hours')
+
     const projects = this.projects.map((x) => x.id)
     const values = await this.valueRepository.getForProjects(projects)
 
@@ -144,16 +161,24 @@ export class Tvl2Controller {
 
     const valuesByProject = groupBy(values, 'projectId')
 
+    const aggregates = {
+      layer2: new Map<number, Values>(),
+      bridge: new Map<number, Values>(),
+    }
+
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
+      if (project.type === 'layer3') {
+        console.log('Layer3s unsupported')
+        break
+      }
+
       const values = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
-
-      const aggregatedValues = new Map()
-
+      const valueSums = new Map<number, Values>()
       for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
-        const result = value.reduce(
+        const sum = value.reduce(
           (acc, curr) => {
             acc.canonical += curr.canonical
             acc.external += curr.external
@@ -162,14 +187,34 @@ export class Tvl2Controller {
           },
           { canonical: 0n, external: 0n, native: 0n },
         )
-        aggregatedValues.set(Number(timestamp), result)
+        valueSums.set(Number(timestamp), sum)
+
+        const resultForTotal = value.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonicalForTotal
+            acc.external += curr.externalForTotal
+            acc.native += curr.nativeForTotal
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
+        )
+
+        const aggregateSums = aggregates[project.type]
+        const aggregateSum = aggregateSums.get(Number(timestamp))
+        if (!aggregateSum) {
+          aggregateSums.set(Number(timestamp), resultForTotal)
+        } else {
+          aggregateSum.canonical += resultForTotal.canonical
+          aggregateSum.external += resultForTotal.external
+          aggregateSum.native += resultForTotal.native
+        }
       }
 
       const minValueTimestamp = new UnixTime(
-        Math.min(...aggregatedValues.keys()),
+        Math.min(...valueSums.keys()),
       )
       const maxValueTimestamp = new UnixTime(
-        Math.max(...aggregatedValues.keys()),
+        Math.max(...valueSums.keys()),
       )
 
       const minTimestamp = UnixTime.max(minValueTimestamp, project.minTimestamp).toEndOf('day')
@@ -180,8 +225,8 @@ export class Tvl2Controller {
           start: minTimestamp,
           end: maxTimestamp,
           step: [1, 'days'],
-          aggregatedValues,
-          project: project.id,
+          aggregatedValues: valueSums,
+          chartId: project.id,
         }
       )
 
@@ -190,8 +235,8 @@ export class Tvl2Controller {
           start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
           end: maxTimestamp,
           step: [6, 'hours'],
-          aggregatedValues,
-          project: project.id,
+          aggregatedValues: valueSums,
+          chartId: project.id,
         }
       )
 
@@ -200,8 +245,8 @@ export class Tvl2Controller {
           start: UnixTime.max(hourlyCutOff, minTimestamp),
           end: maxTimestamp,
           step: [1, 'hours'],
-          aggregatedValues,
-          project: project.id,
+          aggregatedValues: valueSums,
+          chartId: project.id,
         }
       )
 
@@ -209,6 +254,47 @@ export class Tvl2Controller {
         daily: getChart(dailyData),
         sixHourly: getChart(sixHourlyData),
         hourly: getChart(hourlyData),
+      })
+    }
+
+    for (const [type, value] of Object.entries(aggregates)) {
+      if (!(type === 'layer2' || type === 'bridge')) {
+        console.log("Invalid type " + type)
+        continue
+      }
+      const minTimestamp = this.minTimestamp[type]
+      const dailyData = getChartData(
+        {
+          start: minTimestamp,
+          end: lastHour,
+          step: [1, 'days'],
+          aggregatedValues: value,
+          chartId: type
+        }
+      )
+      const sixHourlyData = getChartData(
+        {
+          start: sixHourlyCutOff,
+          end: lastHour,
+          step: [6, 'hours'],
+          aggregatedValues: value,
+          chartId: type
+        }
+      )
+      const hourlyData = getChartData(
+        {
+          start: hourlyCutOff,
+          end: lastHour,
+          step: [1, 'hours'],
+          aggregatedValues: value,
+          chartId: type
+        }
+      )
+
+      chartsMap.set(type, {
+        daily: getChart(dailyData),
+        sixHourly: getChart(sixHourlyData),
+        hourly: getChart(hourlyData)
       })
     }
 
@@ -259,6 +345,7 @@ export class Tvl2Controller {
     }
 
     const projectData: Record<string, TvlApiProject> = {}
+    // TODO: we should rethink how we use chartsMap here
     for (const [projectId, charts] of chartsMap.entries()) {
       const breakdown = breakdownMap.get(projectId)
       if (!breakdown) {
@@ -299,14 +386,22 @@ export class Tvl2Controller {
       }
     }
 
-    // dirty hack to make it faster
-    const fakeAggregates = chartsMap.get('arbitrum')
-    assert(fakeAggregates, 'Fake aggregates not found')
+    const bridges = chartsMap.get('bridge')
+    assert(bridges, 'Bridges not found')
+    const layers2s = chartsMap.get('layer2')
+    assert(layers2s, 'Layer2s not found')
+
+    const combined = {
+      hourly: sumCharts(bridges.hourly, layers2s.hourly),
+      sixHourly: sumCharts(bridges.sixHourly, layers2s.sixHourly),
+      daily: sumCharts(bridges.daily, layers2s.daily),
+    }
+
 
     const result: TvlApiResponse = {
-      bridges: fakeAggregates,
-      layers2s: fakeAggregates,
-      combined: fakeAggregates,
+      bridges,
+      layers2s,
+      combined,
       projects: projectData,
     }
 
@@ -362,13 +457,13 @@ export class Tvl2Controller {
   }
 }
 
-function getChartData({ start, end, step, aggregatedValues, project }:
+function getChartData({ start, end, step, aggregatedValues, chartId }:
   {
     start: UnixTime,
     end: UnixTime,
     step: [number, 'hours' | 'days'],
     aggregatedValues: ValuesMap,
-    project: ProjectId
+    chartId: string | ProjectId
   }
 ) {
   const values = []
@@ -376,8 +471,8 @@ function getChartData({ start, end, step, aggregatedValues, project }:
     const value = aggregatedValues.get(curr.toNumber())
     assert(
       value,
-      'Value not found for project ' +
-      project.toString() +
+      'Value not found for chart ' +
+      chartId.toString() +
       ' at timestamp ' +
       curr.toString(),
     )
@@ -476,4 +571,34 @@ function getChartPoint(
     0,
     0,
   ] as TvlApiChart['data'][0]
+}
+
+function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
+  // adjust chart length to the longer chart
+  const lastTimestamp1 = chart1.data.at(-1)?.[0]
+  const lastTimestamp2 = chart2.data.at(-1)?.[0]
+
+  assert(lastTimestamp1 && lastTimestamp2 && lastTimestamp1.equals(lastTimestamp2), 'Last timestamp mismatch')
+
+  const longerChart = chart1.data.length > chart2.data.length ? chart1 : chart2
+  const shorterChart = chart1.data.length > chart2.data.length ? chart2 : chart1
+  const shorterPadded = Array(longerChart.data.length - shorterChart.data.length).fill([new UnixTime(0), 0, 0, 0, 0, 0, 0, 0, 0] as TvlApiChart['data'][0]).concat(shorterChart.data)
+
+
+  return {
+    types: longerChart.types,
+    data: longerChart.data.map((x, i) =>
+      [
+        x[0],
+        x[1] + shorterPadded[i][1],
+        x[2] + shorterPadded[i][2],
+        x[3] + shorterPadded[i][3],
+        x[4] + shorterPadded[i][4],
+        x[5] + shorterPadded[i][5],
+        x[6] + shorterPadded[i][6],
+        x[7] + shorterPadded[i][7],
+        x[8] + shorterPadded[i][8],
+      ] as TvlApiChart['data'][0]
+    ),
+  }
 }

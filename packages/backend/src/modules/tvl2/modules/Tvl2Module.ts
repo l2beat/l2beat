@@ -87,7 +87,8 @@ export function createTvl2Module(
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(ValueRepository),
     config.tvl2.chainConverter,
-    config.projects.map((p) => p.projectId),
+    // TODO: add layer3s
+    config.projects,
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
