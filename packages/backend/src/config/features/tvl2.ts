@@ -181,6 +181,7 @@ function getPricesConfig(
     if (curr === undefined) {
       uniqueEntries.set(key, {
         type: 'coingecko',
+        assetId: token.id,
         address: token.address ?? 'native',
         chain: chain,
         sinceTimestamp: token.sinceTimestamp,
@@ -190,6 +191,7 @@ function getPricesConfig(
       if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
         uniqueEntries.set(key, {
           type: 'coingecko',
+          assetId: token.id,
           address: token.address ?? 'native',
           chain: chain,
           sinceTimestamp: token.sinceTimestamp,

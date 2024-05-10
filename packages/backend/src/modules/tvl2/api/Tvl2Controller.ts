@@ -8,6 +8,7 @@ import {
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
+  AssetId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
@@ -47,7 +48,7 @@ type AmountConfigMap = Map<
   (AmountConfigEntry & { configId: string })[]
 >
 
-type PriceConfigIdMap = Map<string, string>
+type PriceConfigIdMap = Map<string, { assetId: AssetId, priceId: string }>
 
 type ValuesMap = Map<number, {
   canonical: bigint
@@ -61,7 +62,7 @@ export class Tvl2Controller {
     string,
     AmountConfigEntry & { configId: string }
   >
-  private readonly priceConfigIds: PriceConfigIdMap
+  private readonly priceConfigs: PriceConfigIdMap
   private readonly projects: {
     id: ProjectId
     minTimestamp: UnixTime
@@ -83,7 +84,7 @@ export class Tvl2Controller {
         .filter((x) => !x.untilTimestamp)
         .map((x) => [x.configId, x]),
     )
-    this.priceConfigIds = getPriceConfigIds(config)
+    this.priceConfigs = getPriceConfigIds(config)
     this.projects = projects.flatMap((id) => {
       const config = this.amountConfig.get(id)
       if (!config) {
@@ -134,12 +135,12 @@ export class Tvl2Controller {
     return result
   }
 
-  async getOldTvl(timestamp: UnixTime): Promise<TvlApiResponse> {
+  async getOldTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const projects = this.projects.map((x) => x.id)
     const values = await this.valueRepository.getForProjects(projects)
 
-    const sixHourlyCutOff = getSixHourlyCutoff(timestamp)
-    const hourlyCutOff = getHourlyCutoff(timestamp)
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const hourlyCutOff = getHourlyCutoff(lastHour)
 
     const valuesByProject = groupBy(values, 'projectId')
 
@@ -172,7 +173,7 @@ export class Tvl2Controller {
       )
 
       const minTimestamp = UnixTime.max(minValueTimestamp, project.minTimestamp).toEndOf('day')
-      const maxTimestamp = UnixTime.min(maxValueTimestamp, timestamp)
+      const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
 
       const dailyData = getChartData(
         {
@@ -215,11 +216,11 @@ export class Tvl2Controller {
     // and keep only the current values in the database.
     const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
       [...this.currAmountConfigs.keys()],
-      timestamp,
+      lastHour,
     )
     const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
-      [...this.priceConfigIds.values()],
-      timestamp,
+      [...this.priceConfigs.values()].map(x => x.priceId),
+      lastHour,
     )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
@@ -237,9 +238,9 @@ export class Tvl2Controller {
         breakdownMap.set(config.project, breakdown)
       }
 
-      const priceId = this.priceConfigIds.get(createAssetId(config))
-      assert(priceId, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceId)
+      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
       assert(price, 'Price not found for id ' + amount.configId)
 
       const value = calculateValue({
@@ -250,8 +251,8 @@ export class Tvl2Controller {
 
       const source = convertSourceName(config.source)
       breakdown[source].push({
-        assetId: amount.configId,
-        chainId: Number(this.chainConverter.toChainId(config.chain)),
+        assetId: priceConfig.assetId,
+        chainId: this.chainConverter.toChainId(config.chain),
         assetType: source,
         usdValue: Number(value),
       })
@@ -270,6 +271,26 @@ export class Tvl2Controller {
           charts,
         }
         continue
+      }
+
+      // The following is backward-compatibility layer
+      // as AssetId does a worse job of identifying tokens
+      // check for repetitions in breakdown 
+      // and sum their values
+      for (const value of Object.values(breakdown)) {
+        const assetMap = new Map()
+        for (const token of value) {
+          const assetId = token.assetId.toString()
+          const chainId = token.chainId.toString()
+          const id = `${assetId}-${chainId}`
+          const existing = assetMap.get(id)
+          if (existing) {
+            existing.usdValue += token.usdValue
+          } else {
+            assetMap.set(id, token)
+          }
+        }
+        value.splice(0, value.length, ...assetMap.values())
       }
 
       projectData[projectId] = {
@@ -307,9 +328,9 @@ export class Tvl2Controller {
     const amounts = await this.amountRepository.getDailyByConfigId(
       amountConfigs.map((x) => x.configId),
     )
-    const priceId = this.priceConfigIds.get(assetId)
-    assert(priceId, 'PriceId not found!')
-    const prices = await this.priceRepository.getDailyByConfigId(priceId)
+    const priceConfig = this.priceConfigs.get(assetId)
+    assert(priceConfig, 'PriceId not found!')
+    const prices = await this.priceRepository.getDailyByConfigId(priceConfig.priceId)
     const pricesMap = new Map(
       prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
@@ -386,9 +407,9 @@ function createAssetId(price: {
 }
 
 function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
-  const result = new Map<string, string>()
+  const result = new Map<string, { assetId: AssetId, priceId: string }>()
   for (const p of config.prices) {
-    result.set(createAssetId(p), createPriceId(p))
+    result.set(createAssetId(p), { priceId: createPriceId(p), assetId: p.assetId })
   }
 
   return result
