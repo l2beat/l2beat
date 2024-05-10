@@ -25,6 +25,7 @@ export interface ZkCatalogProjectPageProps {
 export interface ZkCatalogProjectDetails extends ProofVerification {
   title: string
   icon: string
+  description: string
   hasTrustedSetup: boolean
   linkToMainProjectDetails: string | undefined
 }
