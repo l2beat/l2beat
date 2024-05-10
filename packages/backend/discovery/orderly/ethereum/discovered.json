@@ -1,9 +1,9 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19776802,
+  "blockNumber": 19830984,
   "configHash": "0x5edb9b8eeaf1bd749321c169b2f0cf0a50803a2c52ed16d6fc39ebcb04e7d15c",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "OrderlyMultisig",
@@ -27,7 +27,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -47,10 +47,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 8985600,
-        "latestOutputIndex": 4991,
-        "nextBlockNumber": 8987400,
-        "nextOutputIndex": 4992,
+        "latestBlockNumber": 9313200,
+        "latestOutputIndex": 5173,
+        "nextBlockNumber": 9315000,
+        "nextOutputIndex": 5174,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -83,7 +83,7 @@
       "sinceTimestamp": 1696608335,
       "values": {
         "batcherHash": "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8",
-        "gasLimit": 30000000,
+        "gasLimit": 60000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": true,
@@ -122,7 +122,7 @@
         "GUARDIAN": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
         "L2_ORACLE": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19771015],
+        "params": [1000000000, 491310, 19830943],
         "paused": false,
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
         "version": "1.7.2"
@@ -173,7 +173,7 @@
       "sinceTimestamp": 1696608359,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619830",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619833",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

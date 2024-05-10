@@ -173,6 +173,101 @@
       }
     },
     {
+      "name": "EIGEN Timelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EIGEN token",
+      "values": {
+        "CLOCK_MODE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bEIGEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transferRestrictionsDisabledAfter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "ETHx-Strategy",
       "values": {
         "explanation": {
@@ -465,6 +560,41 @@
       }
     },
     {
+      "name": "EigenlayerTokenMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "METH-Strategy",
       "values": {
         "explanation": {
@@ -568,6 +698,26 @@
       "name": "PauserRegistry",
       "values": {
         "unpauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -798,6 +948,141 @@
           "description": "Same as TVL limit",
           "severity": "LOW",
           "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "bEIGEN Timelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "bEIGEN token",
+      "values": {
+        "CLOCK_MODE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIGEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transferRestrictionsDisabledAfter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "bEIGEN-Strategy",
+      "values": {
+        "EIGEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
         "paused": {
           "description": null,

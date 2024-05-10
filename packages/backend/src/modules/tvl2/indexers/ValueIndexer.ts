@@ -15,6 +15,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 
@@ -108,17 +109,18 @@ export class ValueIndexer extends ManagedChildIndexer {
       nativeForTotal: 0n,
     }
 
-    for (const record of records) {
+    for (const amountRecord of records) {
       const amountConfig = this.amountConfigs.find(
-        (x) => x.configId === record.configId,
+        (x) => x.configId === amountRecord.configId,
       )
       assert(amountConfig, 'Config not found')
 
       const priceId = this.priceConfigIds.get(createAssetId(amountConfig))
       const price = prices.find((x) => x.configId === priceId)
       assert(price, 'Price not found')
+
       const value = calculateValue({
-        amount: record.amount,
+        amount: amountRecord.amount,
         priceUsd: price.priceUsd,
         decimals: amountConfig.decimals,
       })
@@ -138,21 +140,6 @@ export class ValueIndexer extends ManagedChildIndexer {
     // Do not delete data
     return await Promise.resolve(targetHeight)
   }
-}
-
-const USD_DECIMALS = 2
-export function calculateValue({
-  amount,
-  priceUsd,
-  decimals,
-}: {
-  amount: bigint
-  priceUsd: number
-  decimals: number
-}) {
-  // we want to expose the balance as an integer, keeping the USD decimal places
-  const priceWithDecimals = Math.floor(priceUsd * 10 ** USD_DECIMALS)
-  return (amount * BigInt(priceWithDecimals)) / 10n ** BigInt(decimals)
 }
 
 function createAssetId(price: {

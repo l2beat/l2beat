@@ -101,11 +101,11 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
-    'All of the data needed for proof construction is published on chain.',
+    'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
 }
 
-export const DATA_ON_CHAIN_L2: ScalingProjectRiskViewEntry = {
+export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
@@ -488,7 +488,7 @@ export const RISK_VIEW = {
   STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
-  DATA_ON_CHAIN_L2,
+  DATA_ON_CHAIN_L3,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,

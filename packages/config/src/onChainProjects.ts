@@ -5,6 +5,7 @@
 export const onChainProjects: string[] = [
   'blobstream',
   'eigenda',
-  'eigenlayer',
+  'shared-eigenlayer',
   'swell',
+  'worldcoin',
 ]
