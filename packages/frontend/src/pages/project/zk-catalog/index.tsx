@@ -1,6 +1,5 @@
 import React from 'react'
 
-import {} from '@l2beat/config'
 import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { getProps } from './props'
