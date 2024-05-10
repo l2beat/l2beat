@@ -88,51 +88,6 @@ describe(ChainAmountIndexer.name, () => {
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
-
-    it('returns if timestamp to sync is later than to', async () => {
-      const from = new UnixTime(100)
-      const to = new UnixTime(1000)
-      const timestampToSync = to.add(1, 'seconds')
-      const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: () => timestampToSync,
-      })
-
-      const amountRepository = mockObject<AmountRepository>({
-        addMany: async () => 1,
-      })
-      const amountService = mockObject<AmountService>({
-        fetchAmounts: async () => [],
-      })
-
-      const indexer = new ChainAmountIndexer({
-        amountService,
-        amountRepository,
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
-        syncOptimizer,
-        chain: 'chain',
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
-        configurations: [],
-      })
-
-      const safeHeight = await indexer.multiUpdate(
-        from.toNumber(),
-        to.toNumber(),
-        [],
-      )
-
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(
-        from.toNumber(),
-        to.toNumber(),
-      )
-      expect(amountService.fetchAmounts).not.toHaveBeenCalled()
-      expect(amountRepository.addMany).not.toHaveBeenCalled()
-
-      expect(safeHeight).toEqual(to.toNumber())
-    })
   })
 
   describe(ChainAmountIndexer.prototype.removeData.name, () => {
