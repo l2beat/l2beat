@@ -54,6 +54,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     const prices = await this.$.priceService.fetchPrices(
       new UnixTime(from),
       adjustedTo,
+      this.$.coingeckoId,
       configurationsToSync,
     )
 

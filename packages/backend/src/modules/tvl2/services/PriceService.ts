@@ -1,30 +1,27 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/backend-tools'
 
 import { CoingeckoQueryService } from '@l2beat/shared'
-import { CoingeckoPriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import {
+  CoingeckoId,
+  CoingeckoPriceConfigEntry,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { UpdateConfiguration } from '../../../tools/uif/multi/types'
 import { PriceRecord } from '../repositories/PriceRepository'
 
 export interface PriceServiceDependencies {
   readonly coingeckoQueryService: CoingeckoQueryService
-  logger: Logger
 }
 
 export class PriceService {
-  constructor(private readonly $: PriceServiceDependencies) {
-    this.$.logger = $.logger.for(this)
-  }
+  constructor(private readonly $: PriceServiceDependencies) {}
 
   async fetchPrices(
     from: UnixTime,
     to: UnixTime,
+    coingeckoId: CoingeckoId,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<PriceRecord[]> {
-    if (configurations.length === 0) {
-      return []
-    }
-
-    const coingeckoId = configurations[0].properties.coingeckoId
     assert(
       configurations.every((c) => c.properties.coingeckoId === coingeckoId),
       'Configuration error: coingeckoId mismatch',
