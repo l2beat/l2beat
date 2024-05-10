@@ -5,29 +5,100 @@ import { join } from 'path'
 
 const SHARP_PROVER = '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF'
 const SYSTEMS = [
-  // Starknet
-  '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-  // Paradex
-  '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
-  // ImmutableX
-  '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+  { name: 'Starknet', address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4' },
+  { name: 'Paradex', address: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640' },
+  { name: 'ImmutableX', address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9' },
 ]
 
 const ABI = new utils.Interface([
   'event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)',
   'event LogStateTransitionFact(bytes32 stateTransitionFact)',
+  'event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)',
 ])
 
 const HASHES_FILE = join(__dirname, 'data/memoryHashes.json')
 
 void main()
+
 async function main() {
   const provider = new providers.AlchemyProvider(
     'mainnet',
     process.env.ALCHEMY_API_KEY,
   )
-  const block = await provider.getBlock('latest')
-  const matched = await getMatched(provider, block)
+  const matched = await getMatched(provider)
+  const transactionHash = process.argv[2]
+
+  if (!transactionHash) {
+    printStats(matched)
+  } else {
+    await printTransactionStats(provider, matched, transactionHash)
+  }
+}
+
+async function printTransactionStats(
+  provider: providers.AlchemyProvider,
+  matched: { system: string; outputs: SystemOutput[] }[],
+  transactionHash: string,
+) {
+  for (const { system, outputs } of matched) {
+    const output = outputs.find((x) => x.transactionHash === transactionHash)
+    const systemName =
+      SYSTEMS.find((x) => x.address === system)?.name ?? 'Unknown'
+    if (output) {
+      if (!output.verifiedAt) {
+        console.log(output)
+        break
+      }
+      const stateUpdateBlock = await provider.getBlock(output.blockNumber)
+      const proofBlock = await provider.getBlock(output.verifiedAt.blockNumber)
+
+      const tx = await provider.getTransactionReceipt(transactionHash)
+      const topic = ABI.getEventTopic('LogStateUpdate')
+      const event = tx.logs
+        .filter((x) => x.topics[0] === topic)
+        .map((log) => ABI.parseLog(log))
+        .at(0)
+
+      const l2BlockNumber: number | undefined =
+        event?.args.blockNumber.toNumber()
+
+      let l2Timestamp: number | undefined
+
+      if (systemName === 'Starknet' && process.env.STARKNET_API_URL) {
+        const res = await fetch(process.env.STARKNET_API_URL, {
+          method: 'POST',
+          headers: {
+            ['Content-Type']: 'application/json',
+          },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'starknet_getBlockWithTxHashes',
+            params: [{ block_number: l2BlockNumber }],
+            id: Math.floor(Math.random() * 1000),
+          }),
+        })
+        // biome-ignore lint/suspicious/noExplicitAny: required
+        const json: any = await res.json()
+        l2Timestamp = json.result.timestamp
+      }
+
+      console.log({
+        systemName,
+        stateUpdateAt: new Date(
+          stateUpdateBlock.timestamp * 1000,
+        ).toISOString(),
+        proofAt: new Date(proofBlock.timestamp * 1000).toISOString(),
+        l2BlockNumber,
+        l2BlockAt:
+          l2Timestamp !== undefined
+            ? new Date(l2Timestamp * 1000).toISOString()
+            : undefined,
+      })
+    }
+  }
+}
+
+function printStats(matched: { system: string; outputs: SystemOutput[] }[]) {
   for (const { system, outputs } of matched) {
     const differences = outputs
       .filter((x) => !!x.verifiedAt)
@@ -44,8 +115,8 @@ async function main() {
 
 async function getMatched(
   provider: providers.AlchemyProvider,
-  block: providers.Block,
 ): Promise<{ system: string; outputs: SystemOutput[] }[]> {
+  const block = await provider.getBlock('latest')
   const file = join(__dirname, 'data/matched.json')
   if (existsSync(file)) {
     return JSON.parse(readFileSync(file, 'utf-8'))
@@ -53,8 +124,8 @@ async function getMatched(
     const verifiedOutputs = await getVerifiedOutputs(provider, block)
     const systemOutputs = []
     for (const system of SYSTEMS) {
-      const outputs = await getSystemOutputs(provider, block, system)
-      systemOutputs.push({ system, outputs: outputs.reverse() })
+      const outputs = await getSystemOutputs(provider, block, system.address)
+      systemOutputs.push({ system: system.address, outputs: outputs.reverse() })
     }
 
     const verifiedMap = new Map(
