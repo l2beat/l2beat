@@ -16,16 +16,15 @@ import {
   TrackedTxsConfigsRepository,
 } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../../../types/TrackedTxId'
-import { L2CostsRecord } from '../repositories/L2CostsRepository'
+import {
+  AggregatedL2CostsRecord,
+  AggregatedL2CostsRepository,
+} from '../repositories/AggregatedL2CostsRepository'
 import {
   CHART_TYPES,
   L2CostsController,
   L2CostsControllerDeps,
 } from './L2CostsController'
-import {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from '../repositories/AggregatedL2CostsRepository'
 
 describe(L2CostsController.name, () => {
   let time: InstalledClock

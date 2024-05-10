@@ -13,7 +13,6 @@ import {
 import { Project } from '../../../../../model/Project'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'

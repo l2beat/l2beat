@@ -8,8 +8,8 @@ import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfig
 import { L2CostsUpdater } from './L2CostsUpdater'
 import { L2CostsController } from './api/L2CostsController'
 import { createL2CostsRouter } from './api/L2CostsRouter'
-import { L2CostsRepository } from './repositories/L2CostsRepository'
 import { AggregatedL2CostsRepository } from './repositories/AggregatedL2CostsRepository'
+import { L2CostsRepository } from './repositories/L2CostsRepository'
 
 export function createL2CostsModule(
   config: Config,
