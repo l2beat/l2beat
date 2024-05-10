@@ -37,19 +37,32 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   ): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
-    const configurationsWithMissingData =
-      this.getConfigurationsWithMissingData(configurations)
-
     const blockNumber =
       await this.$.blockTimestampRepository.findByChainAndTimestamp(
         this.$.chain,
         timestamp,
       )
+    assert(
+      blockNumber,
+      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+    )
 
-    assert(blockNumber, 'Block number not found for timestamp')
+    const configurationsToSync = this.getConfigurationsToSync(
+      configurations,
+      timestamp,
+      blockNumber,
+    )
+
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        timestamp: timestamp.toNumber(),
+        blockNumber,
+      })
+      return timestamp.toNumber()
+    }
 
     const amounts = await this.$.amountService.fetchAmounts(
-      configurationsWithMissingData,
+      configurationsToSync,
       blockNumber,
       timestamp,
     )
@@ -72,6 +85,27 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     return timestamp.toNumber()
+  }
+
+  private getConfigurationsToSync(
+    configurations: UpdateConfiguration<ChainAmountConfig>[],
+    timestamp: UnixTime,
+    blockNumber: number | undefined,
+  ) {
+    const configurationsWithMissingData = configurations.filter(
+      (c) => !c.hasData,
+    )
+
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with missing data', {
+        timestamp: timestamp.toNumber(),
+        blockNumber,
+        skippedConfigurations:
+          configurations.length - configurationsWithMissingData.length,
+        configurationsToSync: configurationsWithMissingData.length,
+      })
+    }
+    return configurationsWithMissingData
   }
 
   override async removeData(

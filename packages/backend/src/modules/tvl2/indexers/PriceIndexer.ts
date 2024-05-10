@@ -37,19 +37,30 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   ): Promise<number> {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
-    const configurationsWithMissingData =
-      this.getConfigurationsWithMissingData(configurations)
+    const configurationsToSync = this.getConfigurationsToSync(
+      configurations,
+      from,
+      to,
+    )
+
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
 
     const prices = await this.$.priceService.fetchPrices(
       new UnixTime(from),
       adjustedTo,
-      configurationsWithMissingData,
+      configurationsToSync,
     )
 
     this.logger.info('Fetched prices in range', {
       from,
       to: adjustedTo.toNumber(),
-      configurations: configurationsWithMissingData.length,
+      configurationsToSync: configurationsToSync.length,
       prices: prices.length,
     })
 
@@ -62,11 +73,32 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     this.logger.info('Saved prices into DB', {
       from,
       to: adjustedTo.toNumber(),
-      configurations: configurationsWithMissingData.length,
+      configurationsToSync: configurationsToSync.length,
       prices: optimizedPrices.length,
     })
 
     return adjustedTo.toNumber()
+  }
+
+  private getConfigurationsToSync(
+    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+    from: number,
+    to: number,
+  ) {
+    const configurationsWithMissingData = configurations.filter(
+      (c) => !c.hasData,
+    )
+
+    if (configurationsWithMissingData.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with missing data', {
+        from,
+        to,
+        skippedConfigurations:
+          configurations.length - configurationsWithMissingData.length,
+        configurationsToSync: configurationsWithMissingData.length,
+      })
+    }
+    return configurationsWithMissingData
   }
 
   override async removeData(
