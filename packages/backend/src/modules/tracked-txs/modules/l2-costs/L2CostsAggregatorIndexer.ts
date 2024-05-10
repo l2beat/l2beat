@@ -192,7 +192,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const gasPriceETH = Number.parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
     const totalGas = Math.round(tx.data.gasUsed * factor)
-    const calldataGas = Math.floor(tx.data.calldataGasUsed * factor)
+    const calldataGas = Math.round(tx.data.calldataGasUsed * factor)
     const overheadGas = Math.round(OVERHEAD * factor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH

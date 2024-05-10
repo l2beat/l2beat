@@ -48,12 +48,12 @@ const MOCK_PROJECTS: Project[] = [
           sinceTimestampInclusive: new UnixTime(1000),
           uses: [
             {
-              id: TrackedTxId.unsafe('multiplier'),
+              id: TrackedTxId.unsafe('p2-t1'),
               type: 'liveness',
               subtype: 'batchSubmissions',
             },
             {
-              id: TrackedTxId.unsafe('multiplier'),
+              id: TrackedTxId.unsafe('p2-t2'),
               type: 'l2costs',
               subtype: 'batchSubmissions',
             },
@@ -76,7 +76,7 @@ const MOCK_PROJECTS: Project[] = [
           sinceTimestampInclusive: new UnixTime(2000),
           uses: [
             {
-              id: TrackedTxId.unsafe('bbb'),
+              id: TrackedTxId.unsafe('p3-t1'),
               type: 'l2costs',
               subtype: 'stateUpdates',
             },
@@ -93,8 +93,10 @@ describe(L2CostsAggregatorIndexer.name, () => {
       // 2023-05-01 00:01:00
       const txTime = MIN.add(1, 'minutes')
 
+      const trackedTxId = TrackedTxId.random()
+
       const txs = [
-        tx({
+        tx(trackedTxId, {
           timestamp: txTime,
         }),
       ]
@@ -114,6 +116,14 @@ describe(L2CostsAggregatorIndexer.name, () => {
         l2CostsRepository: l2CostsRepositoryMock,
         priceRepository: priceRepositoryMock,
       })
+
+      const multipliers: TrackedTxMultiplier[] = [
+        {
+          id: trackedTxId,
+          factor: 1,
+        },
+      ]
+      indexer.findTxConfigsWithMultiplier = mockFn().returns(multipliers)
 
       // 2023-05-02 23:59:59
       const endOfFirstDay = NOW.add(1, 'days').add(-1, 'seconds')
@@ -178,21 +188,32 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
       indexer.calculate = mockedCalculate
 
+      const trackedTxId = TrackedTxId.random()
+      const multipliers: TrackedTxMultiplier[] = [
+        {
+          id: trackedTxId,
+          factor: 1,
+        },
+      ]
+      indexer.findTxConfigsWithMultiplier = mockFn().returns(multipliers)
+
       const txs = [
-        tx(),
-        tx(),
-        tx(),
-        tx({
+        tx(trackedTxId),
+        tx(trackedTxId),
+        tx(trackedTxId),
+        tx(trackedTxId, {
           projectId: ProjectId('random2'),
         }),
-        tx({
+        tx(trackedTxId, {
           timestamp: NOW.add(1, 'hours'),
         }),
       ]
+
       const ethPrices = new Map([
         [NOW.toNumber(), 2000],
         [NOW.add(1, 'hours').toNumber(), 2100],
       ])
+
       const result = indexer.aggregate(txs, ethPrices)
 
       expect(result).toEqualUnsorted([
@@ -253,9 +274,24 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ])
     })
 
+    it('throws if multplier missing', async () => {
+      const indexer = createIndexer({ tag: 'aggregate-throws-no-multiplier' })
+
+      const trackedTxId = TrackedTxId.random()
+      indexer.findTxConfigsWithMultiplier = mockFn().returns([])
+
+      const txs = [tx(trackedTxId)]
+
+      const ethPrices = new Map([[NOW.toNumber(), 2000]])
+
+      expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
+        `Assertion Error: Multiplier not found for ${trackedTxId}`,
+      )
+    })
+
     it('throws if prices not available', async () => {
-      const indexer = createIndexer({ tag: 'aggregate-throw' })
-      const txs = [tx()]
+      const indexer = createIndexer({ tag: 'aggregate-throws-no-price' })
+      const txs = [tx(TrackedTxId.random())]
       const ethPrices = new Map([[NOW.add(1, 'hours').toNumber(), 2100]])
 
       expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
@@ -274,7 +310,8 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const result = indexer.findTxConfigsWithMultiplier()
 
         expect(result).toEqual([
-          { id: TrackedTxId.unsafe('multiplier'), factor: 0.6 },
+          { id: TrackedTxId.unsafe('p2-t2'), factor: 0.6 },
+          { id: TrackedTxId.unsafe('p3-t1'), factor: 1 },
         ])
       })
     },
@@ -284,8 +321,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     const indexer = createIndexer({ tag: 'calculate' })
 
     it('calculates correctly for non blob tx', () => {
-      const multipliers: TrackedTxMultiplier[] = []
-      const result = indexer.calculate(tx(), 2000, multipliers)
+      const result = indexer.calculate(tx(TrackedTxId.random()), 2000, 1)
 
       expect(result).toEqual({
         totalGas: 601201,
@@ -305,19 +341,8 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
     })
 
-    it('calculates correctly with multipliers', () => {
-      const multipliers: TrackedTxMultiplier[] = [
-        {
-          id: TrackedTxId.unsafe('multiplier'),
-          factor: 0.6,
-        },
-      ]
-
-      const result = indexer.calculate(
-        tx({}, TrackedTxId.unsafe('multiplier')),
-        2000,
-        multipliers,
-      )
+    it('calculates correctly with multiplier', () => {
+      const result = indexer.calculate(tx(TrackedTxId.random()), 2000, 0.6)
 
       expect(result).toEqual({
         totalGas: 360721,
@@ -338,8 +363,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     })
 
     it('calculates correctly for blob tx', () => {
-      const multipliers: TrackedTxMultiplier[] = []
-      const result = indexer.calculate(txWithBlob(), 2000, multipliers)
+      const result = indexer.calculate(txWithBlob(), 2000, 1)
 
       expect(result).toEqual({
         totalGas: 732273,
@@ -424,8 +448,8 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
 }
 
 function tx(
+  trackedTxId: TrackedTxId,
   data?: Partial<AggregatedL2CostsRecord>,
-  trackedTxId: TrackedTxId = TrackedTxId.random(),
 ): L2CostsRecordWithProjectId {
   return {
     timestamp: NOW,
