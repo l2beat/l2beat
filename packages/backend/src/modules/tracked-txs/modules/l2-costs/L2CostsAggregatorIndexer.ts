@@ -105,7 +105,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     records: L2CostsRecordWithProjectId[],
     ethPrices: Map<number, number>,
   ): AggregatedL2CostsRecord[] {
-    const multipliers = this.findTxsWithMultiplier()
+    const multipliers = this.findTxConfigsWithMultiplier()
     const map = new Map<string, AggregatedL2CostsRecord>()
 
     for (const record of records) {
@@ -119,7 +119,16 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
           L2CostsAggregatorIndexer.name
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
-      const calculations = this.calculate(record, ethUsdPrice, multipliers)
+
+      const multiplier = multipliers.find((c) => c.id === record.trackedTxId)
+      assert(multiplier, `Multiplier not found for ${record.trackedTxId}`)
+
+      const calculations = this.calculate(
+        record,
+        ethUsdPrice,
+        multiplier.factor,
+      )
+
       const existing = map.get(key)
       if (existing) {
         existing.totalGas += calculations.totalGas
@@ -177,24 +186,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   calculate(
     tx: L2CostsRecord,
     ethUsdPrice: number,
-    multipliers: TrackedTxMultiplier[],
+    factor: number,
   ): Omit<AggregatedL2CostsRecord, 'timestamp' | 'projectId'> {
-    let multiplicationFactor = 1
-
-    const multiplier = multipliers.find((c) => c.id === tx.trackedTxId)
-
-    if (multiplier) {
-      multiplicationFactor = multiplier.factor
-    }
-
     const gasPriceGwei = Number.parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
     const gasPriceETH = Number.parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
-    const totalGas = Math.round(tx.data.gasUsed * multiplicationFactor)
-    const calldataGas = Math.floor(
-      tx.data.calldataGasUsed * multiplicationFactor,
-    )
-    const overheadGas = Math.round(OVERHEAD * multiplicationFactor)
+    const totalGas = Math.round(tx.data.gasUsed * factor)
+    const calldataGas = Math.floor(tx.data.calldataGasUsed * factor)
+    const overheadGas = Math.round(OVERHEAD * factor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH
     const calldataGasEth = calldataGas * gasPriceETH
@@ -232,7 +231,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const blobsGasPriceETH = Number.parseFloat(
       (blobsGasPriceGwei * 1e-9).toFixed(18),
     )
-    const blobsGas = Math.round(tx.data.blobGasUsed * multiplicationFactor)
+    const blobsGas = Math.round(tx.data.blobGasUsed * factor)
     const blobsGasEth = blobsGas * blobsGasPriceETH
     const blobsGasUsd = blobsGasEth * ethUsdPrice
 
@@ -247,7 +246,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     }
   }
 
-  findTxsWithMultiplier(): TrackedTxMultiplier[] {
+  findTxConfigsWithMultiplier(): TrackedTxMultiplier[] {
     const multipliers: TrackedTxMultiplier[] = []
 
     const activeProjects = this.$.projects.filter((p) => !p.isArchived)
@@ -256,16 +255,16 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const projectMultipliers = project.trackedTxsConfig.entries
-        .filter((e) => e.costMultiplier)
-        .flatMap((e) => {
+      const projectMultipliers = project.trackedTxsConfig.entries.flatMap(
+        (e) => {
           return e.uses
             .filter((u) => u.type === 'l2costs')
             .map((use) => ({
               id: use.id,
               factor: e.costMultiplier ?? 1,
             }))
-        })
+        },
+      )
 
       multipliers.push(...projectMultipliers)
     }

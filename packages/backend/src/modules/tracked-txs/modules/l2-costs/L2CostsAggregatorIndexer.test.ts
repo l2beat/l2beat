@@ -267,11 +267,11 @@ describe(L2CostsAggregatorIndexer.name, () => {
   })
 
   describe(
-    L2CostsAggregatorIndexer.prototype.findTxsWithMultiplier.name,
+    L2CostsAggregatorIndexer.prototype.findTxConfigsWithMultiplier.name,
     () => {
       it('finds transactions with multipliers', () => {
         const indexer = createIndexer()
-        const result = indexer.findTxsWithMultiplier()
+        const result = indexer.findTxConfigsWithMultiplier()
 
         expect(result).toEqual([
           { id: TrackedTxId.unsafe('multiplier'), factor: 0.6 },
