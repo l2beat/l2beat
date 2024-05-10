@@ -1,10 +1,12 @@
 import { assert, AssetId, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
+import { Project } from '../../../../model/Project'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 import type { PriceRepository } from '../../../tvl/repositories/PriceRepository'
+import { TrackedTxId } from '../../types/TrackedTxId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -23,6 +25,12 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   priceRepository: PriceRepository
+  projects: Project[]
+}
+
+export interface TrackedTxMultiplier {
+  id: TrackedTxId
+  factor: number
 }
 
 export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
@@ -97,6 +105,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     records: L2CostsRecordWithProjectId[],
     ethPrices: Map<number, number>,
   ): AggregatedL2CostsRecord[] {
+    const multipliers = this.findTxConfigsWithMultiplier()
     const map = new Map<string, AggregatedL2CostsRecord>()
 
     for (const record of records) {
@@ -110,7 +119,16 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
           L2CostsAggregatorIndexer.name
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
-      const calculations = this.calculate(record, ethUsdPrice)
+
+      const multiplier = multipliers.find((c) => c.id === record.trackedTxId)
+      assert(multiplier, `Multiplier not found for ${record.trackedTxId}`)
+
+      const calculations = this.calculate(
+        record,
+        ethUsdPrice,
+        multiplier.factor,
+      )
+
       const existing = map.get(key)
       if (existing) {
         existing.totalGas += calculations.totalGas
@@ -168,13 +186,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   calculate(
     tx: L2CostsRecord,
     ethUsdPrice: number,
+    factor: number,
   ): Omit<AggregatedL2CostsRecord, 'timestamp' | 'projectId'> {
-    // TODO: Multipliers in Controller
     const gasPriceGwei = Number.parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
     const gasPriceETH = Number.parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-    const totalGas = tx.data.gasUsed
-    const calldataGas = tx.data.calldataGasUsed
-    const overheadGas = OVERHEAD
+
+    const totalGas = Math.round(tx.data.gasUsed * factor)
+    const calldataGas = Math.round(tx.data.calldataGasUsed * factor)
+    const overheadGas = Math.round(OVERHEAD * factor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH
     const calldataGasEth = calldataGas * gasPriceETH
@@ -212,7 +231,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const blobsGasPriceETH = Number.parseFloat(
       (blobsGasPriceGwei * 1e-9).toFixed(18),
     )
-    const blobsGas = tx.data.blobGasUsed
+    const blobsGas = Math.round(tx.data.blobGasUsed * factor)
     const blobsGasEth = blobsGas * blobsGasPriceETH
     const blobsGasUsd = blobsGasEth * ethUsdPrice
 
@@ -225,5 +244,31 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       blobsGasUsd,
       blobsGasEth,
     }
+  }
+
+  findTxConfigsWithMultiplier(): TrackedTxMultiplier[] {
+    const multipliers: TrackedTxMultiplier[] = []
+
+    const activeProjects = this.$.projects.filter((p) => !p.isArchived)
+    for (const project of activeProjects) {
+      if (!project.trackedTxsConfig) {
+        continue
+      }
+
+      const projectMultipliers = project.trackedTxsConfig.entries.flatMap(
+        (e) => {
+          return e.uses
+            .filter((u) => u.type === 'l2costs')
+            .map((use) => ({
+              id: use.id,
+              factor: e.costMultiplier ?? 1,
+            }))
+        },
+      )
+
+      multipliers.push(...projectMultipliers)
+    }
+
+    return multipliers
   }
 }
