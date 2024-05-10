@@ -1,0 +1,10 @@
+// This is a list of contract templates that were matched to the discovered contracts.
+// You can use these suggestions in your config.jsonc file or ignore them. 
+// Do not commit it to the repository.
+{
+  "overrides": {
+    "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86": { // SystemConfig
+      "extends": "opstack/SystemConfig", // similarity: 0.9999
+    }
+  }
+}

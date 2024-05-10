@@ -11,7 +11,7 @@ interface OnchainVerifier {
   description: string
   contractAddress: EthereumAddress
   verified: 'yes' | 'no' | 'failed'
-  subVerfiers: SubVerfier[]
+  subVerifiers: SubVerifier[]
 }
 
 interface RequiredTool {
@@ -20,7 +20,7 @@ interface RequiredTool {
   link?: string
 }
 
-interface SubVerfier {
+interface SubVerifier {
   name: string
   proofSystem: string
   mainArithmetization: string
