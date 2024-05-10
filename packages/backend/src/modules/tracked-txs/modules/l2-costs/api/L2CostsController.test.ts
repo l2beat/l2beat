@@ -46,8 +46,7 @@ describe(L2CostsController.name, () => {
     it('correctly calculates l2costs', async () => {
       const aggregatedL2CostsRepository =
         mockObject<AggregatedL2CostsRepository>({
-          getByProjectAndTimeRangePaginated: mockFn().resolvesTo([]),
-          findCountByProjectAndTimeRange: mockFn().resolvesTo({ count: 51000 }),
+          getByProjectAndTimeRange: mockFn().resolvesTo([]),
         })
 
       const trackedTxsConfigsRepository =
@@ -93,17 +92,14 @@ describe(L2CostsController.name, () => {
       const result = await controller.getL2Costs()
 
       expect(
-        aggregatedL2CostsRepository.getByProjectAndTimeRangePaginated,
+        aggregatedL2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenCalledTimes(2)
       expect(
-        aggregatedL2CostsRepository.getByProjectAndTimeRangePaginated,
-      ).toHaveBeenNthCalledWith(
-        1,
-        MOCK_PROJECTS[1].projectId,
-        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
-        0,
-        200000,
-      )
+        aggregatedL2CostsRepository.getByProjectAndTimeRange,
+      ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
+        START_OF_HOUR.add(-180, 'days'),
+        START_OF_HOUR,
+      ])
       expect(result.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),

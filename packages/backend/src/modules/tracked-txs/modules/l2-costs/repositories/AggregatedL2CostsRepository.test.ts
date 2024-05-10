@@ -40,47 +40,9 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
   })
 
   describe(
-    AggregatedL2CostsRepository.prototype.findCountByProjectAndTimeRange.name,
+    AggregatedL2CostsRepository.prototype.getByProjectAndTimeRange.name,
     () => {
-      it('should return count of rows for given project id and range timestamp', async () => {
-        const records = [
-          record({ timestamp: NOW.add(-1, 'hours') }),
-          record(),
-          record({ timestamp: NOW.add(1, 'hours') }),
-        ]
-        await repository.addMany(records)
-
-        const results = await repository.findCountByProjectAndTimeRange(
-          ProjectId('random'),
-          [NOW.add(-2, 'hours'), NOW.add(1, 'hours')],
-        )
-
-        expect(results).toEqual({ count: 2 })
-      })
-
-      it('should return count of rows equal 0 for given project id and range timestamp', async () => {
-        const records = [
-          record({ timestamp: NOW.add(-1, 'hours') }),
-          record(),
-          record({ timestamp: NOW.add(1, 'hours') }),
-        ]
-        await repository.addMany(records)
-
-        const results = await repository.findCountByProjectAndTimeRange(
-          ProjectId('random2'),
-          [NOW.add(1, 'hours'), NOW.add(2, 'hours')],
-        )
-
-        expect(results).toEqual({ count: 0 })
-      })
-    },
-  )
-
-  describe(
-    AggregatedL2CostsRepository.prototype.getByProjectAndTimeRangePaginated
-      .name,
-    () => {
-      it('should return limited number of rows', async () => {
+      it('should return all rows for given project', async () => {
         await repository.deleteAll()
         const records = [
           record({ timestamp: NOW.add(-1, 'hours') }),
@@ -89,14 +51,12 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
         ]
         await repository.addMany(records)
 
-        const results = await repository.getByProjectAndTimeRangePaginated(
+        const results = await repository.getByProjectAndTimeRange(
           ProjectId('random'),
           [NOW.add(-7, 'hours'), NOW.add(2, 'hours')],
-          0,
-          2,
         )
 
-        expect(results).toEqualUnsorted(records.slice(0, 2))
+        expect(results).toEqualUnsorted(records)
       })
 
       it('should return all rows for given project id and since timestamp with exclusive to', async () => {
@@ -106,11 +66,9 @@ describeDatabase(AggregatedL2CostsRepository.name, (database) => {
           record({ timestamp: NOW.add(1, 'hours') }),
         ]
         await repository.addMany(records)
-        const results = await repository.getByProjectAndTimeRangePaginated(
+        const results = await repository.getByProjectAndTimeRange(
           ProjectId('random'),
           [NOW.add(-1, 'hours'), NOW.add(1, 'hours')],
-          0,
-          5,
         )
 
         expect(results).toEqual(records.slice(0, 2))

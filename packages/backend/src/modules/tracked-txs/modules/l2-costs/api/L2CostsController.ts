@@ -31,7 +31,6 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const MAX_DAYS = 180
-const MAX_RECORDS = 200000
 
 export const CHART_TYPES: L2CostsApiChart['types'] = [
   'timestamp',
@@ -120,47 +119,35 @@ export class L2CostsController {
 
       const nowToFullHour = UnixTime.now().toStartOf('hour')
 
-      const timeRanges: [UnixTime, UnixTime] = [
+      const timeRange: [UnixTime, UnixTime] = [
         nowToFullHour.add(-MAX_DAYS, 'days'),
         nowToFullHour,
       ]
 
-      const { count } =
-        await this.$.aggregatedL2CostsRepository.findCountByProjectAndTimeRange(
+      const records =
+        await this.$.aggregatedL2CostsRepository.getByProjectAndTimeRange(
           project.projectId,
-          timeRanges,
+          timeRange,
         )
 
-      for (
-        let rangeIndex = 0;
-        rangeIndex < Math.ceil(count / MAX_RECORDS);
-        rangeIndex++
-      ) {
-        const records =
-          await this.$.aggregatedL2CostsRepository.getByProjectAndTimeRangePaginated(
-            project.projectId,
-            timeRanges,
-            rangeIndex * MAX_RECORDS,
-            MAX_RECORDS,
-          )
+      const { hourly, daily } = this.aggregateL2Costs(
+        records,
+        combinedHourlyMap,
+        combinedDailyMap,
+        nowToFullHour,
+      )
 
-        const { hourly, daily } = this.aggregateL2Costs(
-          records,
-          combinedHourlyMap,
-          combinedDailyMap,
-          nowToFullHour,
-        )
+      const projectData = projects[project.projectId.toString()]
 
-        const projectData = projects[project.projectId.toString()]
-        if (projectData) {
-          hourly.data = [...projectData.hourly.data, ...hourly.data]
-          daily.data = [...projectData.daily.data, ...daily.data]
-        }
-        projects[project.projectId.toString()] = {
-          syncedUntil,
-          hourly,
-          daily,
-        }
+      if (projectData) {
+        hourly.data = [...projectData.hourly.data, ...hourly.data]
+        daily.data = [...projectData.daily.data, ...daily.data]
+      }
+
+      projects[project.projectId.toString()] = {
+        syncedUntil,
+        hourly,
+        daily,
       }
     }
 
