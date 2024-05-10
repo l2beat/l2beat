@@ -39,7 +39,6 @@ export function createPriceModule(
 
   const priceService = new PriceService({
     coingeckoQueryService,
-    syncOptimizer,
     logger,
   })
 

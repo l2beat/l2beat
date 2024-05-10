@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import {
@@ -36,16 +36,14 @@ export class BlockTimestampRepository extends BaseRepository {
   async findByChainAndTimestamp(
     chain: string,
     timestamp: UnixTime,
-  ): Promise<BlockTimestampRecord> {
+  ): Promise<number | undefined> {
     const knex = await this.knex()
     const row = await knex('block_timestamps')
       .where('chain', chain)
       .where('timestamp', timestamp.toDate())
       .first()
 
-    assert(row, 'Block number not found')
-
-    return toRecord(row)
+    return row ? toRecord(row).blockNumber : undefined
   }
 
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {

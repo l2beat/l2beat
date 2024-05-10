@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -17,7 +18,7 @@ export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
-  blockTimestampsRepository: BlockTimestampRepository
+  blockTimestampRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
   chain: string
 }
@@ -40,20 +41,22 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       this.getConfigurationsWithMissingData(configurations)
 
     const blockNumber =
-      await this.$.blockTimestampsRepository.findByChainAndTimestamp(
+      await this.$.blockTimestampRepository.findByChainAndTimestamp(
         this.$.chain,
         timestamp,
       )
 
+    assert(blockNumber, 'Block number not found for timestamp')
+
     const amounts = await this.$.amountService.fetchAmounts(
       configurationsWithMissingData,
-      blockNumber.blockNumber,
+      blockNumber,
       timestamp,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
-      blockNumber: blockNumber.blockNumber,
+      blockNumber: blockNumber,
       escrows: amounts.filter((a) => a.type === 'escrow').length,
       totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
