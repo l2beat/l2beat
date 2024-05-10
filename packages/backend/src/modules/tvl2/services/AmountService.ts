@@ -34,9 +34,9 @@ export class AmountService {
   }
 
   public async fetchAmounts(
-    configurations: Configuration<ChainAmountConfig>[],
-    blockNumber: number,
     timestamp: UnixTime,
+    blockNumber: number,
+    configurations: Configuration<ChainAmountConfig>[],
   ): Promise<(AmountRecord & { type: 'escrow' | 'totalSupply' })[]> {
     const [forRpc, forMulticall] = partition(
       configurations,

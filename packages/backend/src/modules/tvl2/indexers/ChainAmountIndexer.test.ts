@@ -77,9 +77,9 @@ describe(ChainAmountIndexer.name, () => {
       )
 
       expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
-        toUpdate.slice(0, 2),
-        blockNumber,
         timestampToSync,
+        blockNumber,
+        toUpdate.slice(0, 2),
       )
 
       expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([

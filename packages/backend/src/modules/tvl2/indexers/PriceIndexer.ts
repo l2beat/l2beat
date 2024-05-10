@@ -38,18 +38,11 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
     const configurationsToSync = this.getConfigurationsToSync(
-      configurations,
       from,
-      to,
+      adjustedTo,
+      configurations,
     )
-
-    if (configurationsToSync.length === 0) {
-      this.logger.info('No configurations to sync', {
-        from,
-        to,
-      })
-      return to
-    }
+    if (configurationsToSync.length === 0) return to
 
     const prices = await this.$.priceService.fetchPrices(
       new UnixTime(from),
@@ -82,9 +75,9 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   }
 
   private getConfigurationsToSync(
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
     from: number,
-    to: number,
+    to: UnixTime,
+    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ) {
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,
@@ -93,12 +86,20 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     if (configurationsWithMissingData.length !== configurations.length) {
       this.logger.info('Filtered out configurations with missing data', {
         from,
-        to,
+        to: to.toNumber(),
         skippedConfigurations:
           configurations.length - configurationsWithMissingData.length,
         configurationsToSync: configurationsWithMissingData.length,
       })
     }
+
+    if (configurationsWithMissingData.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to: to.toNumber(),
+      })
+    }
+
     return configurationsWithMissingData
   }
 

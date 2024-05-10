@@ -36,35 +36,19 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     configurations: UpdateConfiguration<ChainAmountConfig>[],
   ): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
-
-    const blockNumber =
-      await this.$.blockTimestampRepository.findByChainAndTimestamp(
-        this.$.chain,
-        timestamp,
-      )
-    assert(
-      blockNumber,
-      `Block number not found for timestamp: ${timestamp.toNumber()}`,
-    )
+    const blockNumber = await this.getBlockNumber(timestamp)
 
     const configurationsToSync = this.getConfigurationsToSync(
-      configurations,
       timestamp,
       blockNumber,
+      configurations,
     )
-
-    if (configurationsToSync.length === 0) {
-      this.logger.info('No configurations to sync', {
-        timestamp: timestamp.toNumber(),
-        blockNumber,
-      })
-      return timestamp.toNumber()
-    }
+    if (configurationsToSync.length === 0) return timestamp.toNumber()
 
     const amounts = await this.$.amountService.fetchAmounts(
-      configurationsToSync,
-      blockNumber,
       timestamp,
+      blockNumber,
+      configurationsToSync,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
@@ -87,10 +71,23 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     return timestamp.toNumber()
   }
 
+  private async getBlockNumber(timestamp: UnixTime) {
+    const blockNumber =
+      await this.$.blockTimestampRepository.findByChainAndTimestamp(
+        this.$.chain,
+        timestamp,
+      )
+    assert(
+      blockNumber,
+      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+    )
+    return blockNumber
+  }
+
   private getConfigurationsToSync(
-    configurations: UpdateConfiguration<ChainAmountConfig>[],
     timestamp: UnixTime,
     blockNumber: number | undefined,
+    configurations: UpdateConfiguration<ChainAmountConfig>[],
   ) {
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,
@@ -105,6 +102,14 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         configurationsToSync: configurationsWithMissingData.length,
       })
     }
+
+    if (configurationsWithMissingData.length === 0) {
+      this.logger.info('No configurations to sync', {
+        timestamp: timestamp.toNumber(),
+        blockNumber,
+      })
+    }
+
     return configurationsWithMissingData
   }
 
