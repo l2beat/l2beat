@@ -82,20 +82,50 @@ async function printTransactionStats(
         l2Timestamp = json.result.timestamp
       }
 
-      console.log({
-        systemName,
-        stateUpdateAt: new Date(
-          stateUpdateBlock.timestamp * 1000,
-        ).toISOString(),
-        proofAt: new Date(proofBlock.timestamp * 1000).toISOString(),
-        l2BlockNumber,
-        l2BlockAt:
-          l2Timestamp !== undefined
-            ? new Date(l2Timestamp * 1000).toISOString()
-            : undefined,
-      })
+      const properties = [
+        { name: 'System', value: systemName },
+        { name: 'L2 Block Number', value: l2BlockNumber },
+        {
+          name: 'L2 Timestamp',
+          value:
+            l2Timestamp !== undefined
+              ? new Date(l2Timestamp * 1000).toISOString()
+              : undefined,
+        },
+        {
+          name: 'Proof Timestamp',
+          value: new Date(proofBlock.timestamp * 1000).toISOString(),
+        },
+        {
+          name: 'Proof After',
+          value: timeDiff(proofBlock.timestamp, stateUpdateBlock.timestamp),
+        },
+        {
+          name: 'State Update Timestamp',
+          value: new Date(stateUpdateBlock.timestamp * 1000).toISOString(),
+        },
+        {
+          name: 'State Update After',
+          value: timeDiff(l2Timestamp, stateUpdateBlock.timestamp),
+        },
+      ]
+
+      const maxLength = Math.max(...properties.map((x) => x.name.length))
+      for (const { name, value } of properties) {
+        console.log(name.padEnd(maxLength + 1, ' '), value ?? 'unknown')
+      }
     }
   }
+}
+
+function timeDiff(start?: number, end?: number) {
+  if (start === undefined || end === undefined) {
+    return 'unknown'
+  }
+  const seconds = end - start
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  return `${hours}h ${minutes}m`
 }
 
 function printStats(matched: { system: string; outputs: SystemOutput[] }[]) {
