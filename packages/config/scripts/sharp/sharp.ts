@@ -98,7 +98,7 @@ async function printTransactionStats(
         },
         {
           name: 'Proof After',
-          value: timeDiff(proofBlock.timestamp, stateUpdateBlock.timestamp),
+          value: timeDiff(l2Timestamp, proofBlock.timestamp),
         },
         {
           name: 'State Update Timestamp',
