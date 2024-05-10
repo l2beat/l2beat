@@ -7,9 +7,9 @@ export function getPageMetadata(
 ): PageMetadata {
   // TODO: Determine correct metadata
   return {
-    title: `${project.display.name} – L2BEAT`,
+    title: `${project.display.name} – ZK Catalog`,
     description: `${project.display.name} project overview on L2BEAT.`,
     image: `https://l2beat.com/meta-images/projects/${project.display.slug}.png`,
-    url: `https://l2beat.com/scaling/projects/${project.display.slug}/`,
+    url: `https://l2beat.com/zk-catalog/${project.display.slug}`,
   }
 }

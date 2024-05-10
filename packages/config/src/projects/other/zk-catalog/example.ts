@@ -35,7 +35,7 @@ export const example: ZkCatalogProject = {
         verified: 'failed',
         contractAddress: EthereumAddress.random(),
         chainId: ChainId.ETHEREUM,
-        subVerfiers: [
+        subVerifiers: [
           {
             name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',
@@ -60,7 +60,7 @@ export const example: ZkCatalogProject = {
         verified: 'yes',
         contractAddress: EthereumAddress.random(),
         chainId: ChainId.ARBITRUM,
-        subVerfiers: [
+        subVerifiers: [
           {
             name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',
@@ -84,7 +84,7 @@ export const example: ZkCatalogProject = {
         verified: 'no',
         contractAddress: EthereumAddress.random(),
         chainId: ChainId.ETHEREUM,
-        subVerfiers: [
+        subVerifiers: [
           {
             name: 'Example Sub Verifier',
             proofSystem: 'Example Proof System',

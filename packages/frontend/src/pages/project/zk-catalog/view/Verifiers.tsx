@@ -137,7 +137,7 @@ function SubVerifiersTable({
           </tr>
         </thead>
         <tbody>
-          {verifier.subVerfiers.map((sV) => (
+          {verifier.subVerifiers.map((sV) => (
             <tr
               className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700"
               key={`${sV.proofSystem}-${sV.trustedSetup}`}
