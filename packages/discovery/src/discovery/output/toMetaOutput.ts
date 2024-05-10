@@ -1,9 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
-import { sortBy } from 'lodash'
+import { isEmpty, sortBy } from 'lodash'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { ContractMeta, DiscoveryMeta, ValueMeta } from '../config/DiscoveryMeta'
+import {
+  ContractMeta,
+  DiscoveryMeta,
+  ValueMeta,
+  isEmptyValueMeta,
+} from '../config/DiscoveryMeta'
 
 export function toMetaOutput(
   results: Analysis[],
@@ -25,17 +30,22 @@ function toContractMeta(
   contract: AnalyzedContract,
   oldContractMeta: ContractMeta,
 ): ContractMeta {
+  const valuesMeta = toValueMeta(contract.values, oldContractMeta)
+
   if (contract.extendedTemplate !== undefined) {
-    return {
-      name: contract.name,
-      description: `@extends ${contract.extendedTemplate}/meta.json`,
-      values: {},
+    // If contract extends a template, keep only non-empty values (overrides)
+    for (const [key, value] of Object.entries(valuesMeta)) {
+      if (isEmptyValueMeta(value)) {
+        delete valuesMeta[key]
+      }
     }
   }
+
   return {
     name: contract.name,
+    extends: contract.extendedTemplate,
     description: oldContractMeta.description,
-    values: toValueMeta(contract.values, oldContractMeta),
+    values: isEmpty(valuesMeta) ? undefined : valuesMeta,
   }
 }
 
@@ -54,7 +64,10 @@ function toValueMeta(
   return Object.fromEntries(
     keys
       .sort()
-      .map((key) => [key, oldContractMeta.values[key] ?? DEFAULT_REVIEW]),
+      .map((key) => [
+        key,
+        (oldContractMeta.values ?? {})[key] ?? DEFAULT_REVIEW,
+      ]),
   )
 }
 

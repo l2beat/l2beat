@@ -17,8 +17,10 @@
   "$defs": {
     "contract": {
       "type": "object",
-      "required": ["name", "values"],
+      "unevaluatedProperties": false,
+      "required": ["name"],
       "properties": {
+        "extends": { "type": ["string"] },
         "name": { "type": "string" },
         "description": { "type": ["string", "null"] },
         "values": {

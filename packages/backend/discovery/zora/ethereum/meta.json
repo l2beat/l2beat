@@ -328,8 +328,7 @@
     },
     {
       "name": "L2OutputOracle",
-      "description": "@extends opstack/L2OutputOracle/meta.json",
-      "values": {}
+      "extends": "opstack/L2OutputOracle"
     },
     {
       "name": "Lib_AddressManager",

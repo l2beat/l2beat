@@ -58,6 +58,7 @@ describe(toMetaOutput.name, () => {
       contracts: [
         {
           description: 'old description',
+          extends: undefined,
           name: 'B',
           values: {
             foo: { description: 'foo', severity: 'LOW', type: 'L2' },
@@ -76,6 +77,7 @@ describe(toMetaOutput.name, () => {
       contracts: [
         {
           description: undefined,
+          extends: undefined,
           name: 'B',
           values: {
             foo: { description: null, severity: null, type: null },
@@ -102,7 +104,14 @@ describe(toMetaOutput.name, () => {
     expect(result).toEqual({
       $schema:
         'https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json',
-      contracts: [{ name: 'A', description: undefined, values: {} }],
+      contracts: [
+        {
+          name: 'A',
+          description: undefined,
+          extends: undefined,
+          values: undefined,
+        },
+      ],
     })
   })
 

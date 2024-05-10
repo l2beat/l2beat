@@ -354,12 +354,13 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
       }
 
       const key = normalizeDiffPath(field.key)
+      const values = contract.values ?? {}
 
-      if (contract.values[key] === undefined) {
+      if (values[key] === undefined) {
         continue
       }
 
-      const severity = contract.values[key].severity
+      const severity = values[key].severity
 
       switch (severity) {
         case 'LOW':

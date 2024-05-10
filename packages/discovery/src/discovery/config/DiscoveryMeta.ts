@@ -15,11 +15,18 @@ export const ValueMeta = z.object({
   type: z.union([ValueType, z.array(ValueType)]).nullable(),
 })
 
+export function isEmptyValueMeta(value: ValueMeta): boolean {
+  return (
+    value.description === null && value.severity === null && value.type === null
+  )
+}
+
 export type ContractMeta = z.infer<typeof ContractMeta>
 export const ContractMeta = z.object({
   name: z.string(),
+  extends: z.string().optional(),
   description: z.string().optional(),
-  values: z.record(z.string(), ValueMeta),
+  values: z.record(z.string(), ValueMeta).optional(),
 })
 
 export type DiscoveryMeta = z.infer<typeof DiscoveryMeta>
