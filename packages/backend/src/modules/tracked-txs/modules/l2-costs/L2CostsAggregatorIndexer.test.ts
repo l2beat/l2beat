@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Project } from '../../../../model/Project'
 import { IndexerService } from '../../../../tools/uif/IndexerService'
 import { PriceRepository } from '../../../tvl/repositories/PriceRepository'
 import { TrackedTxId } from '../../types/TrackedTxId'
@@ -24,7 +25,6 @@ import {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
-import { Project } from '../../../../model/Project'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)

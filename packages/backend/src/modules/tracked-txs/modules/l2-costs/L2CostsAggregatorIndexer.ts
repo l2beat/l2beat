@@ -1,10 +1,12 @@
 import { assert, AssetId, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
+import { Project } from '../../../../model/Project'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
 import type { PriceRepository } from '../../../tvl/repositories/PriceRepository'
+import { TrackedTxId } from '../../types/TrackedTxId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -14,8 +16,6 @@ import type {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
-import { TrackedTxId } from '../../types/TrackedTxId'
-import { Project } from '../../../../model/Project'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
