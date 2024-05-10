@@ -132,14 +132,24 @@ function printStats(matched: { system: string; outputs: SystemOutput[] }[]) {
   for (const { system, outputs } of matched) {
     const differences = outputs
       .filter((x) => !!x.verifiedAt)
-      // biome-ignore lint/style/noNonNullAssertion: required
-      .map((x) => x.blockNumber - x.verifiedAt!.blockNumber)
-      .sort((a, b) => a - b)
+      .map((x) => ({
+        output: x,
+        // biome-ignore lint/style/noNonNullAssertion: required
+        diff: x.blockNumber - x.verifiedAt!.blockNumber,
+      }))
+      .sort((a, b) => a.diff - b.diff)
     const min = differences[0]
     const max = differences[differences.length - 1]
-    const avg = differences.reduce((a, b) => a + b, 0) / differences.length
+    const avg =
+      differences.reduce((sum, x) => sum + x.diff, 0) / differences.length
 
-    console.log(system, { min, max, avg })
+    console.log(system, {
+      min: min.diff,
+      minTx: min.output.transactionHash,
+      max: max.diff,
+      maxTx: max.output.transactionHash,
+      avg,
+    })
   }
 }
 
