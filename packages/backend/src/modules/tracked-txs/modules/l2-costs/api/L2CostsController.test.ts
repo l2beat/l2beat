@@ -42,6 +42,7 @@ describe(L2CostsController.name, () => {
   afterEach(() => {
     time.uninstall()
   })
+
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
       const aggregatedL2CostsRepository =
@@ -146,16 +147,6 @@ describe(L2CostsController.name, () => {
     })
   })
 
-  describe(L2CostsController.prototype.findConfigsWithMultiplier.name, () => {
-    it('finds configs with costMultiplier', async () => {
-      const controller = getMockL2CostsController()
-      const result = controller.findConfigsWithMultiplier(
-        MOCK_PROJECTS[1].trackedTxsConfig!,
-      )
-      expect(result[0].costMultiplier).toEqual(0.6)
-    })
-  })
-
   describe(L2CostsController.prototype.aggregateL2Costs.name, () => {
     it('aggregates l2 costs hourly and daily with blobs', () => {
       const controller = getMockL2CostsController()
@@ -221,37 +212,6 @@ describe(L2CostsController.name, () => {
     return new L2CostsController(deps)
   }
 
-  function getMockL2CostRecords(): L2CostsRecord[] {
-    return [
-      {
-        txHash: '0x1',
-        timestamp: START_OF_HOUR.add(-1, 'hours'),
-        trackedTxId: TrackedTxId.unsafe('aaa'),
-        data: {
-          type: 2,
-          gasUsed: 400000,
-          gasPrice: 41000000000,
-          calldataLength: 2000,
-          calldataGasUsed: 2700,
-        },
-      },
-      {
-        txHash: '0x2',
-        timestamp: START_OF_HOUR.add(-2, 'hours'),
-        trackedTxId: TrackedTxId.unsafe('bbb'),
-        data: {
-          type: 3,
-          gasUsed: 21000,
-          gasPrice: 29_000_000_000,
-          blobGasPrice: 1,
-          blobGasUsed: 780_000,
-          calldataGasUsed: 0,
-          calldataLength: 0,
-        },
-      },
-    ]
-  }
-
   const MOCK_PROJECTS: Project[] = [
     mockObject<Project>({
       projectId: ProjectId('project1'),
@@ -309,11 +269,6 @@ describe(L2CostsController.name, () => {
       },
     }),
   ]
-
-  function getGasPriceETH(gasPrice: number) {
-    const gasPriceGwei = parseFloat((gasPrice * 1e-9).toFixed(9))
-    return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-  }
 
   function datapoint(
     timestamp: UnixTime,

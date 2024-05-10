@@ -126,10 +126,6 @@ export class L2CostsController {
         nowToFullHour,
       ]
 
-      const multipliersConfigs = this.findConfigsWithMultiplier(
-        project.trackedTxsConfig,
-      )
-
       const { count } =
         await this.$.aggregatedL2CostsRepository.findCountByProjectAndTimeRange(
           project.projectId,
@@ -175,35 +171,6 @@ export class L2CostsController {
       projects,
       combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
     }
-  }
-
-  findConfigsWithMultiplier(config: TrackedTxsConfig) {
-    const entiresWithMultiplier = config.entries.filter((e) => e.costMultiplier)
-
-    return entiresWithMultiplier.flatMap((e) => {
-      const {
-        projectId: _,
-        uses: __,
-        costMultiplier: ___,
-        untilTimestampExclusive: ____,
-        ...queryWithoutUntilTimestamp
-      } = e
-
-      return e.uses
-        .filter((u) => u.type === 'l2costs')
-        .map((use) => {
-          return {
-            id: TrackedTxId([
-              JSON.stringify({
-                type: use.type,
-                subtype: use.subtype,
-              }),
-              JSON.stringify(queryWithoutUntilTimestamp),
-            ]),
-            costMultiplier: e.costMultiplier ?? 1,
-          }
-        })
-    })
   }
 
   aggregateL2Costs(
