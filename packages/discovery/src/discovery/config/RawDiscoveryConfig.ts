@@ -29,7 +29,10 @@ export const RawDiscoveryConfig = z.object({
   maxDepth: z.optional(z.number().positive()),
   overrides: z.optional(z.record(z.string(), DiscoveryContract)),
   names: z.optional(
-    z.record(z.string().refine(EthereumAddress.check), z.string()),
+    z.record(
+      stringAs(EthereumAddress).transform((a) => a.toString()),
+      z.string(),
+    ),
   ),
   sharedModules: z.optional(z.record(z.string(), z.string())),
 })

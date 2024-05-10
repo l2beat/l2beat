@@ -16,7 +16,7 @@ export function branded<B extends z.ZodTypeAny, R>(
       } catch {
         return false
       }
-    })
+    }, `Failed to transform to ${Brand.name} type`)
     .transform(Brand)
 }
 

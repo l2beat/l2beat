@@ -1,4 +1,7 @@
-export function printAsciiTable(headers: string[], rows: string[][]): string {
+export function formatAsAsciiTable(
+  headers: string[],
+  rows: string[][],
+): string {
   const columnBiggestWidths = headers.map((_, i) =>
     Math.max(
       ...rows.map((row) => stripAnsiEscapeCodes(row[i]).length),
@@ -34,7 +37,7 @@ export function printAsciiTable(headers: string[], rows: string[][]): string {
   return `${header}\n${separator}\n${body}`
 }
 
-function stripAnsiEscapeCodes(str: string): string {
+export function stripAnsiEscapeCodes(str: string): string {
   // biome-ignore lint/suspicious/noControlCharactersInRegex: ansii escape codes are control characters
   const ansiEscapeCodesPattern = /\x1b\[[0-9;]*m/g
   return str.replace(ansiEscapeCodesPattern, '')
