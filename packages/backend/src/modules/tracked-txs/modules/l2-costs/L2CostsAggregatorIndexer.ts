@@ -249,8 +249,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   findTxConfigsWithMultiplier(): TrackedTxMultiplier[] {
     const multipliers: TrackedTxMultiplier[] = []
 
-    const activeProjects = this.$.projects.filter((p) => !p.isArchived)
-    for (const project of activeProjects) {
+    for (const project of this.$.projects) {
       if (!project.trackedTxsConfig) {
         continue
       }
