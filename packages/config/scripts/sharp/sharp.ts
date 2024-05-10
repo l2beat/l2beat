@@ -1,7 +1,7 @@
-import { providers, utils } from 'ethers'
-import { getAllLogs } from '../omnichain/getAllLogs'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { providers, utils } from 'ethers'
+import { getAllLogs } from '../omnichain/getAllLogs'
 
 const SHARP_PROVER = '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF'
 const SYSTEMS = [
