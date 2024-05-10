@@ -14,6 +14,8 @@ import type {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
+import { TrackedTxId } from '../../types/TrackedTxId'
+import { Project } from '../../../../model/Project'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -23,6 +25,12 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   priceRepository: PriceRepository
+  projects: Project[]
+}
+
+export interface TrackedTxMultiplier {
+  id: TrackedTxId
+  factor: number
 }
 
 export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
@@ -97,6 +105,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     records: L2CostsRecordWithProjectId[],
     ethPrices: Map<number, number>,
   ): AggregatedL2CostsRecord[] {
+    const multipliers = this.findTxsWithMultiplier()
     const map = new Map<string, AggregatedL2CostsRecord>()
 
     for (const record of records) {
@@ -110,7 +119,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
           L2CostsAggregatorIndexer.name
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
-      const calculations = this.calculate(record, ethUsdPrice)
+      const calculations = this.calculate(record, ethUsdPrice, multipliers)
       const existing = map.get(key)
       if (existing) {
         existing.totalGas += calculations.totalGas
@@ -168,13 +177,24 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   calculate(
     tx: L2CostsRecord,
     ethUsdPrice: number,
+    multipliers: TrackedTxMultiplier[],
   ): Omit<AggregatedL2CostsRecord, 'timestamp' | 'projectId'> {
-    // TODO: Multipliers in Controller
+    let multiplicationFactor = 1
+
+    const multiplier = multipliers.find((c) => c.id === tx.trackedTxId)
+
+    if (multiplier) {
+      multiplicationFactor = multiplier.factor
+    }
+
     const gasPriceGwei = Number.parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
     const gasPriceETH = Number.parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-    const totalGas = tx.data.gasUsed
-    const calldataGas = tx.data.calldataGasUsed
-    const overheadGas = OVERHEAD
+
+    const totalGas = Math.round(tx.data.gasUsed * multiplicationFactor)
+    const calldataGas = Math.floor(
+      tx.data.calldataGasUsed * multiplicationFactor,
+    )
+    const overheadGas = Math.round(OVERHEAD * multiplicationFactor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH
     const calldataGasEth = calldataGas * gasPriceETH
@@ -212,7 +232,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const blobsGasPriceETH = Number.parseFloat(
       (blobsGasPriceGwei * 1e-9).toFixed(18),
     )
-    const blobsGas = tx.data.blobGasUsed
+    const blobsGas = Math.round(tx.data.blobGasUsed * multiplicationFactor)
     const blobsGasEth = blobsGas * blobsGasPriceETH
     const blobsGasUsd = blobsGasEth * ethUsdPrice
 
@@ -225,5 +245,31 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       blobsGasUsd,
       blobsGasEth,
     }
+  }
+
+  findTxsWithMultiplier(): TrackedTxMultiplier[] {
+    const multipliers: TrackedTxMultiplier[] = []
+
+    const activeProjects = this.$.projects.filter((p) => !p.isArchived)
+    for (const project of activeProjects) {
+      if (!project.trackedTxsConfig) {
+        continue
+      }
+
+      const projectMultipliers = project.trackedTxsConfig.entries
+        .filter((e) => e.costMultiplier)
+        .flatMap((e) => {
+          return e.uses
+            .filter((u) => u.type === 'l2costs')
+            .map((use) => ({
+              id: use.id,
+              factor: e.costMultiplier ?? 1,
+            }))
+        })
+
+      multipliers.push(...projectMultipliers)
+    }
+
+    return multipliers
   }
 }
