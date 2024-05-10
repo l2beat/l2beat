@@ -132,8 +132,6 @@ export class L2CostsController {
           timeRanges,
         )
 
-      console.log(`Count ${count}`)
-
       for (
         let rangeIndex = 0;
         rangeIndex < Math.ceil(count / MAX_RECORDS);
