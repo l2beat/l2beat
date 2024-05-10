@@ -8,6 +8,7 @@ import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQ
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
 import { EM_DASH } from '../../../../utils/constants'
+import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
 import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
@@ -46,7 +47,10 @@ export function Verifiers(props: Props) {
               {item.name}
             </td>
             <td className="pr-4 hidden md:table-cell text-sm md:text-base">
-              <EtherscanLink address={item.contractAddress.toString()} />
+              <EtherscanLink
+                etherscanUrl={getExplorerUrlByChainId(item.chainId)}
+                address={item.contractAddress.toString()}
+              />
             </td>
             <td className="pr-4">
               <VerifiedCell verified={item.verified} />
