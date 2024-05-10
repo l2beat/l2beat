@@ -4,12 +4,14 @@ import { zkCatalogProjects } from './index'
 
 describe('zkCatalogProjects', () => {
   describe('description', () => {
-    it('ends with a dot', () => {
+    describe('ends with a dot', () => {
       for (const zkCatalogProject of zkCatalogProjects) {
-        it(zkCatalogProject.display.name, () => {
-          expect(
-            zkCatalogProject.proofVerification.description.endsWith('.'),
-          ).toEqual(true)
+        describe(zkCatalogProject.display.name, () => {
+          zkCatalogProject.proofVerification.verifiers.forEach((sV) => {
+            it(sV.name, () => {
+              expect(sV.description.endsWith('.')).toEqual(true)
+            })
+          })
         })
       }
     })
