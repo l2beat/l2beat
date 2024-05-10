@@ -19,6 +19,7 @@ import {
   scroll, // 534352
   zkFair, // 42766
   zkSync, // 324
+  reyaNetwork, // 1729
 } from 'viem/chains'
 
 import { env } from '~/env'
@@ -78,6 +79,7 @@ const supportedChains = [
   mode,
   optimism,
   polygonZkEvm,
+  reyaNetwork,
   scroll,
   zkFair,
   zkSync,
