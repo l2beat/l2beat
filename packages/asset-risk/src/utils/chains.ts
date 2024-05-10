@@ -16,10 +16,10 @@ import {
   mode, // 34443
   optimism, // 10
   polygonZkEvm, // 1101
+  reyaNetwork, // 1729
   scroll, // 534352
   zkFair, // 42766
   zkSync, // 324
-  reyaNetwork, // 1729
 } from 'viem/chains'
 
 import { env } from '~/env'
