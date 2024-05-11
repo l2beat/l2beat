@@ -10,7 +10,7 @@ import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { DiscoveryMeta } from './DiscoveryMeta'
+import { ContractMeta, DiscoveryMeta } from './DiscoveryMeta'
 import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export const TEMPLATES_PATH = path.join('discovery', '_templates')
@@ -99,7 +99,36 @@ export class ConfigReader {
     const contents = await readFile(metaPath, 'utf-8')
 
     const meta = DiscoveryMeta.parse(JSON.parse(contents))
+    await this.inlineMetaTemplates(meta)
     return meta
+  }
+
+  async inlineMetaTemplates(rawMeta: DiscoveryMeta): Promise<void> {
+    const expandedContracts: ContractMeta[] = []
+    for (const contract of rawMeta.contracts) {
+      if (contract.extends !== undefined) {
+        const rawTemplateJson = await this.readJsonc(
+          path.join(TEMPLATES_PATH, contract.extends, 'meta.json'),
+        )
+        const templateJson = ContractMeta.parse(rawTemplateJson)
+        const expandedContract = ContractMeta.parse({
+          ...templateJson,
+          ...contract,
+        })
+        // merge each value separately to not overwrite the whole object
+        expandedContract.values = templateJson.values ?? {}
+        for (const [key, value] of Object.entries(contract.values ?? {})) {
+          expandedContract.values[key] = {
+            ...expandedContract.values[key],
+            ...value,
+          }
+        }
+        expandedContracts.push(expandedContract)
+      } else {
+        expandedContracts.push(contract)
+      }
+    }
+    rawMeta.contracts = expandedContracts
   }
 
   async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
