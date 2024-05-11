@@ -62,7 +62,7 @@ describe(toMetaOutput.name, () => {
           name: 'B',
           values: {
             foo: { description: 'foo', severity: 'LOW', type: 'L2' },
-            bar: { description: null, severity: null, type: null },
+            bar: {},
           },
         },
       ],
@@ -80,8 +80,8 @@ describe(toMetaOutput.name, () => {
           extends: undefined,
           name: 'B',
           values: {
-            foo: { description: null, severity: null, type: null },
-            bar: { description: null, severity: null, type: null },
+            foo: {},
+            bar: {},
           },
         },
       ],
@@ -89,8 +89,8 @@ describe(toMetaOutput.name, () => {
 
     // Assert sorted order of values
     expect(Object.entries(result.contracts[0]?.values ?? {})).toEqual([
-      ['bar', { description: null, severity: null, type: null }],
-      ['foo', { description: null, severity: null, type: null }],
+      ['bar', {}],
+      ['foo', {}],
     ])
   })
 

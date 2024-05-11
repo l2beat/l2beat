@@ -32,11 +32,13 @@ function toContractMeta(
 ): ContractMeta {
   const valuesMeta = toValueMeta(contract.values, oldContractMeta)
 
-  if (contract.extendedTemplate !== undefined) {
-    // If contract extends a template, keep only non-empty values (overrides)
-    for (const [key, value] of Object.entries(valuesMeta)) {
-      if (isEmptyValueMeta(value)) {
+  for (const [key, value] of Object.entries(valuesMeta)) {
+    if (isEmptyValueMeta(value)) {
+      if (contract.extendedTemplate !== undefined) {
+        // If contract extends a template, keep only non-empty values (overrides)
         delete valuesMeta[key]
+      } else {
+        valuesMeta[key] = {}
       }
     }
   }
@@ -54,20 +56,9 @@ function toValueMeta(
   oldContractMeta: ContractMeta,
 ): Record<string, ValueMeta> {
   const keys = Object.keys(value)
-
-  const DEFAULT_REVIEW = {
-    description: null,
-    severity: null,
-    type: null,
-  }
-
+  const oldValues = oldContractMeta.values ?? {}
   return Object.fromEntries(
-    keys
-      .sort()
-      .map((key) => [
-        key,
-        (oldContractMeta.values ?? {})[key] ?? DEFAULT_REVIEW,
-      ]),
+    keys.sort().map((key) => [key, oldValues[key] ?? {}]),
   )
 }
 

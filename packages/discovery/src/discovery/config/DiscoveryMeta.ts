@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import { z } from 'zod'
 
 export const ValueType = z.enum([
@@ -10,14 +11,20 @@ export const ValueType = z.enum([
 
 export type ValueMeta = z.infer<typeof ValueMeta>
 export const ValueMeta = z.object({
-  description: z.string().nullable(),
-  severity: z.enum(['HIGH', 'MEDIUM', 'LOW']).nullable(),
-  type: z.union([ValueType, z.array(ValueType)]).nullable(),
+  description: z.string().nullable().optional(),
+  severity: z.enum(['HIGH', 'MEDIUM', 'LOW']).nullable().optional(),
+  type: z
+    .union([ValueType, z.array(ValueType)])
+    .nullable()
+    .optional(),
 })
 
 export function isEmptyValueMeta(value: ValueMeta): boolean {
   return (
-    value.description === null && value.severity === null && value.type === null
+    isEmpty(value) ||
+    (value.description === null &&
+      value.severity === null &&
+      value.type === null)
   )
 }
 
