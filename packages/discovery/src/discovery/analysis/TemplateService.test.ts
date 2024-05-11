@@ -1,10 +1,9 @@
-import { expect, mockObject } from 'earl'
+import { expect, mockFn } from 'earl'
 import { TemplateService } from '../analysis/TemplateService'
-import { ConfigReader } from './ConfigReader'
-import { ContractMeta, DiscoveryMeta } from './DiscoveryMeta'
+import { ContractMeta, DiscoveryMeta } from '../config/DiscoveryMeta'
 
-describe(ConfigReader.name, () => {
-  describe(ConfigReader.prototype.inlineMetaTemplates.name, () => {
+describe(TemplateService.name, () => {
+  describe(TemplateService.prototype.inlineMetaTemplates.name, () => {
     it('correctly merges expanded template with overrides', () => {
       const template: ContractMeta = {
         name: 'VersionProvider',
@@ -40,12 +39,9 @@ describe(ConfigReader.name, () => {
           },
         ],
       }
-      const templateServiceMock = mockObject<TemplateService>({
-        readContractMetaTemplate: () => template,
-      })
-      const configReader = new ConfigReader()
-      configReader.templateService = templateServiceMock
-      configReader.inlineMetaTemplates(meta)
+      const templateService = new TemplateService()
+      templateService.readContractMetaTemplate = mockFn().returns(template)
+      templateService.inlineMetaTemplates(meta)
       console.log(JSON.stringify(meta, null, 2))
       expect(meta).toEqual({
         contracts: [

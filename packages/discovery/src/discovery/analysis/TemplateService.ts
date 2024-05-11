@@ -9,8 +9,13 @@ import {
   removeComments,
 } from '../../flatten/utils'
 import { TEMPLATES_PATH } from '../config/ConfigReader'
-import { ContractMeta } from '../config/DiscoveryMeta'
+import { ContractMeta, DiscoveryMeta } from '../config/DiscoveryMeta'
+import {
+  DiscoveryContract,
+  RawDiscoveryConfig,
+} from '../config/RawDiscoveryConfig'
 import { ContractSources } from '../source/SourceCodeService'
+import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 const TEMPLATE_SIMILARITY_THRESHOLD = 0.55
@@ -72,12 +77,60 @@ export class TemplateService {
     return result
   }
 
+  async readContractTemplate(template: string): Promise<DiscoveryContract> {
+    const templateJsonc = await readJsonc(
+      path.join(TEMPLATES_PATH, template, 'template.jsonc'),
+    )
+    return DiscoveryContract.parse(templateJsonc)
+  }
+
+  async inlineTemplates(rawConfig: RawDiscoveryConfig): Promise<void> {
+    if (rawConfig.overrides === undefined) {
+      return
+    }
+    for (const [name, contract] of Object.entries(rawConfig.overrides)) {
+      if (contract.extends !== undefined) {
+        const templateJson = await this.readContractTemplate(contract.extends)
+        const updatedContract = DiscoveryContract.parse({
+          ...templateJson,
+          ...contract,
+        })
+        rawConfig.overrides[name] = updatedContract
+      }
+    }
+  }
+
   readContractMetaTemplate(template: string): ContractMeta {
     const rawTemplate = readFileSync(
       path.join(TEMPLATES_PATH, template, 'meta.json'),
       'utf8',
     )
     return ContractMeta.parse(JSON.parse(rawTemplate))
+  }
+
+  inlineMetaTemplates(rawMeta: DiscoveryMeta): void {
+    const expandedContracts: ContractMeta[] = []
+    for (const contract of rawMeta.contracts) {
+      if (contract.extends !== undefined) {
+        const template = this.readContractMetaTemplate(contract.extends)
+        const expandedContract = ContractMeta.parse({
+          ...template,
+          ...contract,
+        })
+        // merge each value separately to not overwrite the whole object
+        expandedContract.values = template.values ?? {}
+        for (const [key, value] of Object.entries(contract.values ?? {})) {
+          expandedContract.values[key] = {
+            ...expandedContract.values[key],
+            ...value,
+          }
+        }
+        expandedContracts.push(expandedContract)
+      } else {
+        expandedContracts.push(contract)
+      }
+    }
+    rawMeta.contracts = expandedContracts
   }
 }
 
