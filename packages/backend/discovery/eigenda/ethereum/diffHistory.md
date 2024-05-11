@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x1dfa8f3f73561d2048dd7380b0efbdd9643d177d
+
+# Diff at Fri, 10 May 2024 16:41:41 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@16e4da28258ea850de75580ddfa72ad7e4264813 block: 19819650
+- current block number: 19840892
+
+## Description
+
+Only implementation change is the BLOCK_STALE_MEASURE constant variable, from 150 to 300. This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next 300 blocks, or the confirmBatch function will revert.
+
+quorumAdversaryThresholdPercentages and quorumConfirmationThresholdPercentages are currently unused in the smart contracts. They might be called by off-chain workers.
+
+## Watched changes
+
+```diff
+    contract eigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"
++        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
+      implementations.0:
+-        "0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"
++        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
+      values.BLOCK_STALE_MEASURE:
+-        150
++        300
+      values.quorumAdversaryThresholdPercentages:
+-        "0x21"
++        "0x2121"
+      values.quorumConfirmationThresholdPercentages:
+-        "0x37"
++        "0x3737"
+    }
+```
+
+## Source code changes
+
+```diff
+.../eigenDAServiceManager/EigenDAServiceManager.sol      | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0xae248316ccb53ed8a1d072efe292a56c46012859
 
 # Diff at Tue, 07 May 2024 17:24:20 GMT:

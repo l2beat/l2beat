@@ -198,6 +198,9 @@
     "EigenlayerCommunityMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
+    "EigenlayerTokenMultisig":{
+      "ignoreInWatchMode": ["nonce"]
+    },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
     },
