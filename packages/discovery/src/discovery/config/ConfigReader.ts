@@ -9,6 +9,7 @@ import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import { TemplateService } from '../analysis/TemplateService'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { ContractMeta, DiscoveryMeta } from './DiscoveryMeta'
 import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
@@ -16,6 +17,12 @@ import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 export const TEMPLATES_PATH = path.join('discovery', '_templates')
 
 export class ConfigReader {
+  public templateService: TemplateService
+
+  constructor() {
+    this.templateService = new TemplateService()
+  }
+
   async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
@@ -78,6 +85,7 @@ export class ConfigReader {
   async readMeta(
     name: string,
     chain: string,
+    skipTemplates: boolean = false,
   ): Promise<DiscoveryMeta | undefined> {
     const projectPath = posix.join('discovery', name)
     const chainPath = posix.join(projectPath, chain)
@@ -99,24 +107,26 @@ export class ConfigReader {
     const contents = await readFile(metaPath, 'utf-8')
 
     const meta = DiscoveryMeta.parse(JSON.parse(contents))
-    await this.inlineMetaTemplates(meta)
+    if (!skipTemplates) {
+      this.inlineMetaTemplates(meta)
+      meta._templatesWereInlined = true
+    }
     return meta
   }
 
-  async inlineMetaTemplates(rawMeta: DiscoveryMeta): Promise<void> {
+  inlineMetaTemplates(rawMeta: DiscoveryMeta): void {
     const expandedContracts: ContractMeta[] = []
     for (const contract of rawMeta.contracts) {
       if (contract.extends !== undefined) {
-        const rawTemplateJson = await this.readJsonc(
-          path.join(TEMPLATES_PATH, contract.extends, 'meta.json'),
+        const template = this.templateService.readContractMetaTemplate(
+          contract.extends,
         )
-        const templateJson = ContractMeta.parse(rawTemplateJson)
         const expandedContract = ContractMeta.parse({
-          ...templateJson,
+          ...template,
           ...contract,
         })
         // merge each value separately to not overwrite the whole object
-        expandedContract.values = templateJson.values ?? {}
+        expandedContract.values = template.values ?? {}
         for (const [key, value] of Object.entries(contract.values ?? {})) {
           expandedContract.values[key] = {
             ...expandedContract.values[key],

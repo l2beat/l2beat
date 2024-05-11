@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, readdirSync } from 'fs'
-import { join } from 'path'
+import path, { join } from 'path'
 
 import {
   HashedFileContent,
@@ -9,6 +9,7 @@ import {
   removeComments,
 } from '../../flatten/utils'
 import { TEMPLATES_PATH } from '../config/ConfigReader'
+import { ContractMeta } from '../config/DiscoveryMeta'
 import { ContractSources } from '../source/SourceCodeService'
 
 const TEMPLATE_SHAPE_FOLDER = 'shape'
@@ -69,6 +70,14 @@ export class TemplateService {
     }
 
     return result
+  }
+
+  readContractMetaTemplate(template: string): ContractMeta {
+    const rawTemplate = readFileSync(
+      path.join(TEMPLATES_PATH, template, 'meta.json'),
+      'utf8',
+    )
+    return ContractMeta.parse(JSON.parse(rawTemplate))
   }
 }
 

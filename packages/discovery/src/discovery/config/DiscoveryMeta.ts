@@ -30,6 +30,7 @@ export function isEmptyValueMeta(value: ValueMeta): boolean {
 
 export type ContractMeta = z.infer<typeof ContractMeta>
 export const ContractMeta = z.object({
+  ['$schema']: z.string().optional(),
   name: z.string(),
   extends: z.string().optional(),
   description: z.string().optional(),
@@ -40,4 +41,5 @@ export type DiscoveryMeta = z.infer<typeof DiscoveryMeta>
 export const DiscoveryMeta = z.object({
   ['$schema']: z.string().optional(),
   contracts: z.array(ContractMeta),
+  _templatesWereInlined: z.boolean().optional(),
 })
