@@ -17,6 +17,7 @@ export interface ZkCatalogViewProps {
   items: ZkCatalogViewEntry[]
 }
 
+// TODO: Add storybook after research team provides the config files
 export function ZkCatalogView(props: ZkCatalogViewProps) {
   return (
     <Accordion className="space-y-3" type="multiple">
