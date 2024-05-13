@@ -67,9 +67,7 @@ export class ValueIndexer extends ManagedChildIndexer {
     // YES - skip update
     // NO - continue update
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      from, to
-    )
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
     const value = await this.getTvlAt(timestamp)
     const isZeroValue = Object.values(value).every((x) => x === 0)
