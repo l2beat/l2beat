@@ -83,7 +83,7 @@ export class Tvl2Controller {
     minTimestamp: UnixTime
     type: Project['type']
   }[]
-  private minTimestamp: Record<'layer2' | 'bridge', UnixTime>
+  private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
     private readonly amountRepository: AmountRepository,
@@ -116,20 +116,9 @@ export class Tvl2Controller {
     })
 
     this.minTimestamp = {
-      layer2: this.projects
-        .filter((x) => x.type === 'layer2')
-        .map((x) => x.minTimestamp)
-        .reduce((acc, curr) => {
-          return UnixTime.min(acc, curr)
-        })
-        .toEndOf('day'),
-      bridge: this.projects
-        .filter((x) => x.type === 'bridge')
-        .map((x) => x.minTimestamp)
-        .reduce((acc, curr) => {
-          return UnixTime.min(acc, curr)
-        })
-        .toEndOf('day'),
+      layer2: this.getMinTimestamp('layer2'),
+      bridge: this.getMinTimestamp('bridge'),
+      layer3: this.getMinTimestamp('layer3'),
     }
   }
 
@@ -191,17 +180,13 @@ export class Tvl2Controller {
     const valuesByProject = groupBy(values, 'projectId')
 
     const aggregates = {
+      layer3: new Map<number, Values>(),
       layer2: new Map<number, Values>(),
       bridge: new Map<number, Values>(),
     }
 
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      if (project.type === 'layer3') {
-        console.log('Layer3s unsupported')
-        break
-      }
-
       const values = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
@@ -282,11 +267,8 @@ export class Tvl2Controller {
       })
     }
 
-    for (const [type, value] of Object.entries(aggregates)) {
-      if (!(type === 'layer2' || type === 'bridge')) {
-        console.log('Invalid type ' + type)
-        continue
-      }
+    for (const type of ['layer2', 'layer3', 'bridge'] as const) {
+      const value = aggregates[type]
       const minTimestamp = this.minTimestamp[type]
       const dailyData = getChartData({
         start: minTimestamp,
@@ -368,16 +350,24 @@ export class Tvl2Controller {
     assert(bridges, 'Bridges not found')
     const layers2s = chartsMap.get('layer2')
     assert(layers2s, 'Layer2s not found')
+    const layer3s = chartsMap.get('layer3')
+    assert(layer3s, 'Layer3s not found')
+
+    const layer2sTotal = {
+      hourly: sumCharts(layers2s.hourly, layer3s.hourly),
+      sixHourly: sumCharts(layers2s.sixHourly, layer3s.sixHourly),
+      daily: sumCharts(layers2s.daily, layer3s.daily),
+    }
 
     const combined = {
-      hourly: sumCharts(bridges.hourly, layers2s.hourly),
-      sixHourly: sumCharts(bridges.sixHourly, layers2s.sixHourly),
-      daily: sumCharts(bridges.daily, layers2s.daily),
+      hourly: sumCharts(bridges.hourly, layer2sTotal.hourly),
+      sixHourly: sumCharts(bridges.sixHourly, layer2sTotal.sixHourly),
+      daily: sumCharts(bridges.daily, layer2sTotal.daily),
     }
 
     const result: TvlApiResponse = {
       bridges,
-      layers2s,
+      layers2s: layer2sTotal,
       combined,
       projects: projectData,
     }
@@ -610,6 +600,16 @@ export class Tvl2Controller {
     }
 
     return values
+  }
+
+  private getMinTimestamp(type: Project['type']) {
+    return this.projects
+      .filter((x) => x.type === type)
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => {
+        return UnixTime.min(acc, curr)
+      })
+      .toEndOf('day')
   }
 }
 

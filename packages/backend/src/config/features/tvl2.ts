@@ -66,6 +66,7 @@ export function getTvl2Config(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
       100,
     ),
+    projects,
   }
 
   return tvl2Config
