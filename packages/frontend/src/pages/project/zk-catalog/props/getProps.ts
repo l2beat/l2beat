@@ -17,7 +17,7 @@ export function getProps(
 ): Wrapped<ZkCatalogProjectPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
+      navbar: getNavbarProps(config, 'zk-catalog'),
       details: getZkCatalogProjectDetails(project),
       footer: getFooterProps(config),
     },

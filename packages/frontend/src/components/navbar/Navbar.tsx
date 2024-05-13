@@ -82,10 +82,10 @@ export function Navbar(props: NavbarProps) {
             <MenuOpenIcon className="block" aria-label="Open menu" />
           </button>
           <div className="hidden h-full items-center gap-5 lg:flex">
-            <ul className="flex items-center gap-4">
+            <ul className="items-center gap-4 hidden xl:flex">
               <SocialLinks {...props.socialLinks} />
             </ul>
-            <VerticalBar />
+            <VerticalBar className="hidden xl:block" />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
                 <PlainLink
@@ -94,6 +94,14 @@ export function Navbar(props: NavbarProps) {
                 >
                   Forum
                 </PlainLink>
+              </li>
+              <li className="h-full">
+                <PageLink
+                  selected={props.selectedPage === 'zk-catalog'}
+                  href="/zk-catalog"
+                >
+                  ZK Catalog
+                </PageLink>
               </li>
               <li className="h-full">
                 <PageLink

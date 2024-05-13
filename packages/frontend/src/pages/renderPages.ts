@@ -22,6 +22,7 @@ import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getRiskPage } from './scaling/risk'
 import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
+import { getZkCatalogPage } from './zk-catalog'
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -116,6 +117,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   if (config.features.zkCatalog) {
+    pages.push(getZkCatalogPage(config))
     pages.push(...getZkCatalogProjectPages(config))
   }
 

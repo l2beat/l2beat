@@ -8,11 +8,16 @@ interface AccordionProps {
     | ReactElement<AccordionItemProps>
     | ReactElement<AccordionItemProps>[]
   type?: 'single' | 'multiple'
+  className?: string
 }
 
-export function Accordion({ children, type = 'single' }: AccordionProps) {
+export function Accordion({
+  children,
+  type = 'single',
+  className,
+}: AccordionProps) {
   return (
-    <div data-role="accordion" data-type={type}>
+    <div data-role="accordion" data-type={type} className={className}>
       {children}
     </div>
   )
@@ -52,11 +57,11 @@ export function AccordionTrigger({
     <div
       data-role="accordion-trigger"
       className={cn(
-        'flex cursor-pointer items-center justify-between',
+        'flex cursor-pointer items-center justify-between gap-4',
         className,
       )}
     >
-      <div className={childrenClassName}>{children}</div>
+      <div className={cn('w-full', childrenClassName)}>{children}</div>
       <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
     </div>
   )
