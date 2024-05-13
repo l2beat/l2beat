@@ -56,6 +56,26 @@ describe(PriceService.name, () => {
       ])
     })
   })
+
+  describe(PriceService.prototype.getAdjustedTo.name, () => {
+    it('adjust range for coingecko hourly query range', () => {
+      const from = 0
+      const to = 100
+
+      const service = new PriceService({
+        coingeckoQueryService: mockObject<CoingeckoQueryService>({}),
+      })
+
+      const result = service.getAdjustedTo(from, to)
+
+      const expected = CoingeckoQueryService.getAdjustedTo(
+        new UnixTime(from),
+        new UnixTime(to),
+      )
+
+      expect(result).toEqual(expected)
+    })
+  })
 })
 
 function update(
