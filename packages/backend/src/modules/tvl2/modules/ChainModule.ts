@@ -24,6 +24,7 @@ import {
   BlockTimestampProvider,
 } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
@@ -37,6 +38,7 @@ import { PriceModule } from './PriceModule'
 
 interface ChainModule {
   start: () => Promise<void> | void
+  descendant: DescendantIndexer
 }
 
 export function createChainModules(
@@ -167,14 +169,12 @@ function createChainModule(
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
+  const parents = [priceModule.descendant, chainAmountIndexer]
 
   for (const [project, amountConfigs] of Object.entries(perProject)) {
     const priceConfigs = new Set(
       amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
     )
-
-    const parents = [priceModule.indexer, chainAmountIndexer]
-
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),
       amountRepo: peripherals.getRepository(AmountRepository),
@@ -199,6 +199,16 @@ function createChainModule(
     valueIndexers.push(indexer)
   }
 
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'chain',
+    parents,
+    indexerService,
+    minHeight: Math.min(
+      ...escrowsAndTotalSupplies.map((cs) => cs.sinceTimestamp.toNumber()),
+    ),
+  })
+
   return {
     start: async () => {
       await blockTimestampIndexer.start()
@@ -208,6 +218,7 @@ function createChainModule(
         await indexer.start()
       }
     },
+    descendant,
   }
 }
 

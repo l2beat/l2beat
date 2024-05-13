@@ -25,6 +25,7 @@ import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
+  descendant: DescendantIndexer
 }
 
 export function createCirculatingSupplyModule(
@@ -81,7 +82,7 @@ export function createCirculatingSupplyModule(
       return indexer
     })
 
-    const parents = [priceModule.indexer, ...csIndexers]
+    const parents = [priceModule.descendant, ...csIndexers]
 
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),
@@ -129,5 +130,6 @@ export function createCirculatingSupplyModule(
 
       await descendant.start()
     },
+    descendant,
   }
 }
