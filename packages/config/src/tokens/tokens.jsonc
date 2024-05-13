@@ -1528,6 +1528,12 @@
       }
     },
     {
+      "symbol": "FRIEND",
+      "address": "0x0bd4887f7d41b35cd75dff9ffee2856106f86670",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "MOCHI",
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
