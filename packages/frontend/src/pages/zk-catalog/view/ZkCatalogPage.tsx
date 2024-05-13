@@ -14,7 +14,7 @@ export function ZkCatalogPage(props: ZkCatalogPageProps) {
     <>
       <Navbar {...props.navbar} />
       <PageContent>
-        <header className="text-center mt-[72px]">
+        <header className="text-left md:text-center mt-[72px]">
           <h1 className="text-6xl font-extrabold">ZK Catalog</h1>
           <p className="text-base font-medium mt-6">
             ZK Catalog by L2BEAT is a community-driven resource offering

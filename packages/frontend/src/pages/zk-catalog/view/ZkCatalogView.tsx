@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from '../../../components/Accordion'
 import { Link } from '../../../components/Link'
+import { cn } from '../../../utils/cn'
 import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../project/components/sections/ContractsSection/EtherscanLink'
@@ -24,34 +25,46 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
       {props.items.map((item) => (
         <AccordionItem key={item.slug}>
           <AccordionTrigger
-            className="py-4 relative z-10 px-6 bg-gray-100 dark:bg-zinc-900 dark:border-gray-800 rounded-xl border border-gray-300"
-            childrenClassName="grid grid-cols-5"
+            className="py-4 relative z-10 px-6 bg-gray-100 dark:bg-zinc-900 dark:border-gray-800 rounded-xl border border-gray-300 flex-col md:flex-row"
+            childrenClassName="grid md:grid-cols-5"
           >
-            <DetailsItem title="Name">
+            <div className="flex gap-2 items-center mb-3 md:hidden">
+              <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
+              <span className="text-lg font-bold">{item.name}</span>
+            </div>
+            <DetailsItem
+              title="Name"
+              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start hidden md:block"
+            >
               <div className="flex items-center gap-2">
                 <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
                 <span>{item.name}</span>
               </div>
             </DetailsItem>
-            <DetailsItem title="Number of verifiers">
+            <DetailsItem
+              title="Number of verifiers"
+              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+            >
               <VerifiedCountWithDetails verifiers={item.verifiers} />
             </DetailsItem>
-            <DetailsItem title="Aggregation">
+            <DetailsItem
+              title="Aggregation"
+              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+            >
               {item.aggregation ? 'Yes' : 'No'}
             </DetailsItem>
-            <DetailsItem title="Trusted setup">
+            <DetailsItem
+              title="Trusted setup"
+              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+            >
               {item.hasTrustedSetup ? 'Yes' : 'No'}
             </DetailsItem>
-            <a
-              href={`/zk-catalog/${item.slug}`}
-              className="self-center justify-self-center"
-            >
-              <button className="w-max text-sm rounded-lg h-8 px-6 bg-black text-white dark:bg-white dark:text-black">
-                Details page
-              </button>
-            </a>
+            <DetailsLink
+              slug={item.slug}
+              className="mt-7 w-full md:mt-0 md:w-max"
+            />
           </AccordionTrigger>
-          <AccordionContent className="border relative pt-[36px] rounded-b-xl px-6 pb-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 space-y-2">
+          <AccordionContent className="border relative pt-[36px] rounded-b-xl px-6 pb-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 space-y-6 md:space-y-2">
             {item.verifiers.map((verifier) => (
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
@@ -75,8 +88,8 @@ function DetailsItem({
   children: React.ReactNode
 }) {
   return (
-    <div className={className}>
-      <p className="text-gray-500 text-2xs mb-1 uppercase">{title}</p>
+    <div className={cn('flex gap-1 flex-col', className)}>
+      <p className="text-gray-500 text-2xs uppercase">{title}</p>
       <div className="text-lg font-bold">{children}</div>
     </div>
   )
@@ -86,7 +99,7 @@ function VerifierCard({
   verifier,
 }: { verifier: ZkCatalogViewEntry['verifiers'][number] }) {
   return (
-    <div className="space-y-5 rounded-lg border border-gray-300 dark:border-gray-800 py-4 px-5">
+    <div className="space-y-5 rounded-lg md:border border-gray-300 dark:border-gray-800 md:py-4 md:px-5">
       <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier" className="lg:col-span-2">
@@ -107,7 +120,7 @@ function VerifierCard({
           <VerifiedCell verified={verifier.verified} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_120px)] md:w-[calc(100vw_-_168px)] lg:w-full">
+      <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_120px)] md:w-[calc(100vw_-_188px)] lg:w-full">
         <table className="w-full border-collapse">
           <thead>
             <tr className="text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
@@ -139,5 +152,22 @@ function VerifierCard({
         </table>
       </div>
     </div>
+  )
+}
+
+function DetailsLink({
+  slug,
+  className,
+}: { slug: string; className?: string }) {
+  return (
+    <a
+      href={`/zk-catalog/${slug}`}
+      className={cn(
+        'flex items-center justify-center self-center justify-self-center w-max text-sm rounded-lg h-8 px-6 bg-black text-white dark:bg-white dark:text-black',
+        className,
+      )}
+    >
+      Details page
+    </a>
   )
 }
