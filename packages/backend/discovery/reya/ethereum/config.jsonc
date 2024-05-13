@@ -19,15 +19,15 @@
   },
   "overrides": {
     "ValidatorUtils": {
-        "fields": {
-          "REYA_STAKERS": {
-            "type": "call",
-            "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
-            "args": ["0x448Bbd134dE1B23976073aB4F2915849b2dcD73A", 0, 10] // args are RollupProxy address, startIndex, max no. of stakers returned
-          }
-        },
-        "ignoreRelatives": ["REYA_STAKERS"]
+      "fields": {
+        "REYA_STAKERS": {
+          "type": "call",
+          "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+          "args": ["0x448Bbd134dE1B23976073aB4F2915849b2dcD73A", 0, 10] // args are RollupProxy address, startIndex, max no. of stakers returned
+        }
       },
+      "ignoreRelatives": ["REYA_STAKERS"]
+    },
     "SocketVault_Reya": {
       "ignoreMethods": ["hook__", "token"]
     },
@@ -112,8 +112,8 @@
           "actorType": "batchPoster"
         },
         "dacKeyset": {
-            "type": "arbitrumDACKeyset"
-          },
+          "type": "arbitrumDACKeyset"
+        },
         "keySetUpdates": {
           "type": "eventCount",
           "topics": [

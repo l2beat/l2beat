@@ -41,7 +41,7 @@
           "type": "call",
           "method": "getOperatorSetParams",
           "args": [1]
-        },
+        }
       }
     }
   }

@@ -33,9 +33,9 @@
           "args": [
             // should be BlobstreamX.nextHeaderFunctionId(), manually pasted here
             "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
-          ] 
+          ]
         },
-        // catch the provers/relayers for Blobstream X from the SuccinctGateway: 
+        // catch the provers/relayers for Blobstream X from the SuccinctGateway:
         // Event ProverUpdated(bytes32 indexed functionId, address indexed prover, bool added);
         "headerRangeProvers": {
           "type": "arrayFromOneEventWithArg",
@@ -45,11 +45,14 @@
           "arg": "functionId",
           "argValue": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca" // headerRangeFunctionId, see above
         },
-        "headerRangeVerifierOwner":{ // can add/remove provers and set whitelist status for the functionID
-        "type": "call",
-        "method": "verifierOwners",
-        "args": ["0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"]
-    },
+        "headerRangeVerifierOwner": {
+          // can add/remove provers and set whitelist status for the functionID
+          "type": "call",
+          "method": "verifierOwners",
+          "args": [
+            "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca"
+          ]
+        },
         "nextHeaderProvers": {
           "type": "arrayFromOneEventWithArg",
           "event": "ProverUpdated",
@@ -58,10 +61,13 @@
           "arg": "functionId",
           "argValue": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25" // nextHeaderFunctionId, see above
         },
-        "nextHeaderVerifierOwner":{ // can add/remove provers and set whitelist status for the functionID
-            "type": "call",
-            "method": "verifierOwners",
-            "args": ["0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"]
+        "nextHeaderVerifierOwner": {
+          // can add/remove provers and set whitelist status for the functionID
+          "type": "call",
+          "method": "verifierOwners",
+          "args": [
+            "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25"
+          ]
         }
       }
     }
