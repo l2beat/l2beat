@@ -11,11 +11,13 @@ export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-export type {
+export {
   ContractMeta,
   DiscoveryMeta,
+  isEmptyValueMeta,
   ValueMeta,
 } from './discovery/config/DiscoveryMeta'
+export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export {
   DISCOVERY_LOGIC_VERSION,
