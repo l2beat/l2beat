@@ -17,7 +17,6 @@ function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
     for (const [field, fieldValues] of Object.entries(
       contractOverrides.fields,
     )) {
-      // @ts-expect-error we're adding new handler field
       if (fieldValues.handler !== undefined) {
         // We have already moved the fields into the handler object
         continue
