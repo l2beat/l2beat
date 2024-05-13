@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x1be769dd7c57d040bbbab89bd20d2c7b751d5419
+
+# Diff at Mon, 13 May 2024 08:17:32 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@142cacbaef1c026127ab0d88f45c576741b3a345 block: 19573574
+- current block number: 19859844
+
+## Description
+
+One signer of the frxETH Multisig is changed.
+
+## Watched changes
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: This address is the owner of the gas token contract frxETH, and the frxETHMinter contract. It can pause and unpause ETH deposits, and change how much ETH is withheld from each submit() transaction.
+      values.getOwners.3:
+-        "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228"
++        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+    }
+```
+
 Generated with discovered.json: 0x8b040a76aba80d05b354d6a3599890e6aefd6263
 
 # Diff at Wed, 03 Apr 2024 06:51:43 GMT:
