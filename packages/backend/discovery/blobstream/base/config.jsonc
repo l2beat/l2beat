@@ -14,7 +14,9 @@
       "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "fields": {
-        "accessControl": { "type": "accessControl" }
+        "accessControl": {
+          "type": "accessControl"
+        }
       }
     },
     "SuccinctGateway": {

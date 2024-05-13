@@ -61,7 +61,9 @@
         }
       }
     },
-    "Bridge": { "ignoreDiscovery": true },
+    "Bridge": {
+      "ignoreDiscovery": true
+    },
     "wstETHBridge": {
       "ignoreRelatives": ["originTokenAddress", "wrappedTokenAddress"],
       "ignoreMethods": ["proxiableUUID", "getStETHByWstETH", "getWstETHByStETH"]

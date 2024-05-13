@@ -224,7 +224,9 @@
       ],
       "ignoreMethods": ["read"]
     },
-    "USDC": { "ignoreDiscovery": true },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
     "TreasuryVester": {
       "ignoreInWatchMode": ["lastUpdate"]
     },

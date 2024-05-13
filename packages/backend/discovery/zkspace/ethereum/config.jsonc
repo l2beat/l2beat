@@ -76,7 +76,6 @@
         "totalOpenPriorityRequests"
       ]
     },
-
     "UniswapV2Factory": {
       "ignoreMethods": ["allPairs", "allPairsLength"]
     },
