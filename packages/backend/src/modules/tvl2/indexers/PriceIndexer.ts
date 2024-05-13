@@ -35,14 +35,27 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<number> {
-    const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
+    const configurationsToSync = configurations.filter((c) => !c.hasData)
 
-    const configurationsToSync = this.getConfigurationsToSync(
-      from,
-      adjustedTo,
-      configurations,
-    )
-    if (configurationsToSync.length === 0) return to
+    if (configurationsToSync.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with data', {
+        skippedConfigurations:
+          configurations.length - configurationsToSync.length,
+        configurationsToSync: configurationsToSync.length,
+        from,
+        to,
+      })
+    }
+
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
+
+    const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
     const prices = await this.$.priceService.fetchPrices(
       new UnixTime(from),
@@ -72,35 +85,6 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     })
 
     return adjustedTo.toNumber()
-  }
-
-  private getConfigurationsToSync(
-    from: number,
-    to: UnixTime,
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
-  ) {
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with data', {
-        from,
-        to: to.toNumber(),
-        skippedConfigurations:
-          configurations.length - configurationsWithMissingData.length,
-        configurationsToSync: configurationsWithMissingData.length,
-      })
-    }
-
-    if (configurationsWithMissingData.length === 0) {
-      this.logger.info('No configurations to sync', {
-        from,
-        to: to.toNumber(),
-      })
-    }
-
-    return configurationsWithMissingData
   }
 
   override async removeData(

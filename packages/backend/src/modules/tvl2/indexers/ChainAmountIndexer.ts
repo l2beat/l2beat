@@ -35,15 +35,28 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
   ): Promise<number> {
+    const configurationsToSync = configurations.filter((c) => !c.hasData)
+
+    if (configurationsToSync.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with data', {
+        from,
+        to,
+        skippedConfigurations:
+          configurations.length - configurationsToSync.length,
+        configurationsToSync: configurationsToSync.length,
+      })
+    }
+
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
+
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
     const blockNumber = await this.getBlockNumber(timestamp)
-
-    const configurationsToSync = this.getConfigurationsToSync(
-      timestamp,
-      blockNumber,
-      configurations,
-    )
-    if (configurationsToSync.length === 0) return timestamp.toNumber()
 
     const amounts = await this.$.amountService.fetchAmounts(
       timestamp,
@@ -82,35 +95,6 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       `Block number not found for timestamp: ${timestamp.toNumber()}`,
     )
     return blockNumber
-  }
-
-  private getConfigurationsToSync(
-    timestamp: UnixTime,
-    blockNumber: number | undefined,
-    configurations: UpdateConfiguration<ChainAmountConfig>[],
-  ) {
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with data', {
-        timestamp: timestamp.toNumber(),
-        blockNumber,
-        skippedConfigurations:
-          configurations.length - configurationsWithMissingData.length,
-        configurationsToSync: configurationsWithMissingData.length,
-      })
-    }
-
-    if (configurationsWithMissingData.length === 0) {
-      this.logger.info('No configurations to sync', {
-        timestamp: timestamp.toNumber(),
-        blockNumber,
-      })
-    }
-
-    return configurationsWithMissingData
   }
 
   override async removeData(
