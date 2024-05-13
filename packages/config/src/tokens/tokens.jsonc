@@ -1497,6 +1497,17 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "symbol": "MOCHI",
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",

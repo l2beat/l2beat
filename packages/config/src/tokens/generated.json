@@ -4995,6 +4995,25 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "base:ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1712153667,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 8453,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "id": "base:seam-seamless",
       "name": "Seamless",
       "coingeckoId": "seamless-protocol",
