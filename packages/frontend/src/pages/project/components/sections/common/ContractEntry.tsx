@@ -9,9 +9,9 @@ import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
+import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
-import { UnverifiedContractsWarning } from '../ContractsSection/UnverifiedContractsWarning'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
@@ -75,12 +75,7 @@ export function ContractEntry({
     icon = <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
   }
   if (areAddressesUnverified || areLinksUnverified) {
-    icon = (
-      <UnverifiedContractsWarning
-        className="mt-[3px]"
-        tooltip="Source code is not verified"
-      />
-    )
+    icon = <UnverifiedIcon className="fill-red-300" />
   }
 
   addresses.forEach((address) => {
