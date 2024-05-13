@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 import { expect } from 'earl'
 
-import { printAsciiTable } from './printAsciiTable'
+import { formatAsAsciiTable } from './formatAsAsciiTable'
 
-describe(printAsciiTable.name, () => {
+describe(formatAsAsciiTable.name, () => {
   it('should print a table', () => {
     const headers = ['Id', 'Name', 'Year']
     const rows = [
@@ -11,7 +11,7 @@ describe(printAsciiTable.name, () => {
       ['2', 'Minecraft', '2011'],
     ]
 
-    const table = printAsciiTable(headers, rows)
+    const table = formatAsAsciiTable(headers, rows)
     expect(table).toEqual(
       [
         '| Id |      Name | Year |',
@@ -30,7 +30,7 @@ describe(printAsciiTable.name, () => {
       ['7', '8', '9'],
     ]
 
-    const table = printAsciiTable(headers, rows)
+    const table = formatAsAsciiTable(headers, rows)
     expect(table).toEqual(
       [
         '| Highest | Average | Lowest |',
@@ -50,7 +50,7 @@ describe(printAsciiTable.name, () => {
       ['true', 'false', 'true - false'],
     ]
 
-    const table = printAsciiTable(headers, rows)
+    const table = formatAsAsciiTable(headers, rows)
     expect(table).toEqual(
       [
         '|         H |          M |            L |',
@@ -69,7 +69,7 @@ describe(printAsciiTable.name, () => {
       ['Green anaconda', ' ', 'South America'],
     ]
 
-    const table = printAsciiTable(headers, rows)
+    const table = formatAsAsciiTable(headers, rows)
     expect(table).toEqual(
       [
         '|          Snake | Venomous |        Origin |',
@@ -87,7 +87,7 @@ describe(printAsciiTable.name, () => {
       [chalk.red('Green anaconda'), ' ', 'South America'],
     ]
 
-    const table = printAsciiTable(headers, rows)
+    const table = formatAsAsciiTable(headers, rows)
     expect(table).toEqual(
       [
         '|          Snake | Venomous |        Origin |',

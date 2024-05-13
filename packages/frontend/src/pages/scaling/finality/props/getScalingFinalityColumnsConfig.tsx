@@ -60,7 +60,7 @@ export function getScalingFinalityColumnsConfig() {
     {
       name: 'State update\ndelay',
       tooltip:
-        'Time interval between time to finality and state root submission.',
+        'Time interval between time to inclusion and state root submission.',
       getValue: (project) => {
         return project.data && project.data.stateUpdateDelay ? (
           <FinalityDurationCell

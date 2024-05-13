@@ -99,6 +99,7 @@ export function createTrackedTxsModule(
     indexerService,
     minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
     logger,
+    projects: config.projects,
   })
 
   const start = async () => {

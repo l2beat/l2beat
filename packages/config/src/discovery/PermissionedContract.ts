@@ -33,6 +33,10 @@ export class PermissionedContract {
     return this.roleDescriptions.join(' ')
   }
 
+  getByTag(tag: StackPermissionsTag): string[] {
+    return this.tags[tag] ?? []
+  }
+
   formatTags(): string {
     return Object.entries(this.tags)
       .map(([tag, contracts]) => {

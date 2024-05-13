@@ -48,4 +48,16 @@ export class SyncOptimizer {
 
     return timestamp.toEndOf('day')
   }
+
+  get sixHourlyCutOff() {
+    return this.clock
+      .getLastHour()
+      .add(-this.options.removeSixHourlyAfterDays, 'days')
+  }
+
+  get hourlyCutOff() {
+    return this.clock
+      .getLastHour()
+      .add(-this.options.removeHourlyAfterDays, 'days')
+  }
 }

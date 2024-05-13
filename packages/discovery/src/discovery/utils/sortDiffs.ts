@@ -26,10 +26,9 @@ export function sortBySeverity(
       return 0
     }
 
-    const aKey =
-      contractMeta.values[normalizeDiffPath(a.key)]?.severity ?? 'NONE'
-    const bKey =
-      contractMeta.values[normalizeDiffPath(b.key)]?.severity ?? 'NONE'
+    const values = contractMeta.values ?? {}
+    const aKey = values[normalizeDiffPath(a.key)]?.severity ?? 'NONE'
+    const bKey = values[normalizeDiffPath(b.key)]?.severity ?? 'NONE'
     return severityAsNumber[bKey] - severityAsNumber[aKey]
   })
 

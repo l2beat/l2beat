@@ -178,12 +178,12 @@ async function performDiscoveryOnPreviousBlock(
   await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
 
   // get code diff with main branch
-  const codeDiff = compareFolders(
-    `${root}/.code@${blockNumberFromMainBranch}`,
-    `${root}/.code`,
+  const flatDiff = compareFolders(
+    `${root}/.flat@${blockNumberFromMainBranch}`,
+    `${root}/.flat`,
   )
 
-  return { prevDiscovery, codeDiff: codeDiff === '' ? undefined : codeDiff }
+  return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
 }
 
 function getMainBranchName(): 'main' | 'master' {

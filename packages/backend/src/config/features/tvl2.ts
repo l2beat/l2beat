@@ -61,6 +61,7 @@ export function getTvl2Config(
       'COINGECKO_API_KEY_FOR_TVL2',
       'COINGECKO_API_KEY',
     ]),
+    chainConverter,
   }
 
   return tvl2Config
@@ -180,6 +181,7 @@ function getPricesConfig(
     if (curr === undefined) {
       uniqueEntries.set(key, {
         type: 'coingecko',
+        assetId: token.id,
         address: token.address ?? 'native',
         chain: chain,
         sinceTimestamp: token.sinceTimestamp,
@@ -189,6 +191,7 @@ function getPricesConfig(
       if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
         uniqueEntries.set(key, {
           type: 'coingecko',
+          assetId: token.id,
           address: token.address ?? 'native',
           chain: chain,
           sinceTimestamp: token.sinceTimestamp,

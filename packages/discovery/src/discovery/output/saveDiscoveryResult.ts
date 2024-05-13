@@ -119,6 +119,11 @@ async function saveMetaJson(
   meta: DiscoveryMeta | undefined,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
+  if (meta && meta._templatesWereInlined) {
+    throw new Error(
+      'To save meta.json, pass the original meta object, without templates inlined',
+    )
+  }
   const project = toMetaOutput(results, meta)
   const json = await toPrettyJson(project)
   const metaFilename = options.metaFilename ?? 'meta.json'

@@ -33,10 +33,6 @@ export async function runDiscovery(
     config.project,
     config.chain.name,
   )
-  const projectMeta = await configReader.readMeta(
-    config.project,
-    config.chain.name,
-  )
 
   const blockNumber =
     config.blockNumber ??
@@ -55,6 +51,12 @@ export async function runDiscovery(
     logger,
     blockNumber,
     config.chain.rpcGetLogsMaxRange,
+  )
+
+  const projectMeta = await configReader.readMeta(
+    config.project,
+    config.chain.name,
+    true,
   )
   await saveDiscoveryResult(
     result,

@@ -52,41 +52,6 @@
       }
     },
     {
-      "name": "DelayedWithdrawalRouter",
-      "values": {
-        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eigenPodManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "withdrawalDelayBlocks": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "DelegationManager",
       "values": {
         "DELEGATION_APPROVAL_TYPEHASH": {
@@ -130,246 +95,6 @@
           "type": null
         },
         "minWithdrawalDelayBlocks": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenLayerBeaconOracle",
-      "values": {
-        "GENESIS_BLOCK_TIMESTAMP": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenLayerCommunityMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenLayerExecutorMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenLayerOperationsMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenPod",
-      "values": {
-        "GENESIS_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delayedWithdrawalRouter": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eigenPodManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ethPOS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "hasRestaked": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mostRecentWithdrawalTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonBeaconChainETHBalanceWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "podOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sumOfPartialWithdrawalsClaimedGwei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "withdrawableRestakedExecutionLayerGwei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EigenPodManager",
-      "values": {
-        "beaconChainETHStrategy": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "beaconChainOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "denebForkTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eigenPodBeacon": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ethPOS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numPods": {
           "description": null,
           "severity": null,
           "type": null
@@ -633,56 +358,6 @@
       }
     },
     {
-      "name": "Timelock",
-      "values": {
-        "GRACE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAXIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UpgradeableBeacon",
-      "values": {
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "eigenDAProxyAdmin",
       "values": {
         "owner": {
@@ -696,9 +371,9 @@
       "name": "eigenDAServiceManager",
       "values": {
         "BLOCK_STALE_MEASURE": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
         },
         "STORE_DURATION_BLOCKS": {
           "description": null,
@@ -751,14 +426,14 @@
           "type": null
         },
         "quorumAdversaryThresholdPercentages": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
         },
         "quorumConfirmationThresholdPercentages": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
         },
         "quorumNumbersRequired": {
           "description": null,
