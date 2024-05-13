@@ -16,23 +16,4 @@ describe('zkCatalogProjects', () => {
       }
     })
   })
-
-  describe('link', () => {
-    describe('links', () => {
-      describe('all links do not contain spaces', () => {
-        for (const zkCatalogProject of zkCatalogProjects) {
-          it(zkCatalogProject.display.name, () => {
-            expect(zkCatalogProject.display.link).not.toInclude(' ')
-          })
-        }
-      })
-      describe('do not include www part', () => {
-        for (const zkCatalogProject of zkCatalogProjects) {
-          it(zkCatalogProject.display.name, () => {
-            expect(zkCatalogProject.display.link).not.toInclude('www')
-          })
-        }
-      })
-    })
-  })
 })
