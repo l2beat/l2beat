@@ -61,7 +61,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             </DetailsItem>
             <DetailsLink
               slug={item.slug}
-              className="mt-7 w-full md:mt-0 md:w-max"
+              className="mt-7 w-full md:mt-0 md:w-max h-10 md:h-8"
             />
           </AccordionTrigger>
           <AccordionContent className="border relative pt-[36px] rounded-b-xl px-6 pb-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 space-y-6 md:space-y-2">
@@ -120,10 +120,10 @@ function VerifierCard({
           <VerifiedCell verified={verifier.verified} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_120px)] md:w-[calc(100vw_-_188px)] lg:w-full">
+      <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
+            <tr className="*:pr-4 text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
               <th>Name</th>
               <th>Proof system</th>
               <th>Arithmetization</th>
@@ -136,7 +136,7 @@ function VerifierCard({
             {verifier.subVerifiers.map((sV) => (
               <tr
                 key={`${verifier.name}-${sV.name}`}
-                className="border-t h-8 border-gray-300 dark:border-gray-800 text-xs font-medium"
+                className="*:pr-4 border-t h-8 border-gray-300 dark:border-gray-800 text-xs font-medium"
               >
                 <td>{sV.name}</td>
                 <td>{sV.proofSystem}</td>
@@ -163,7 +163,7 @@ function DetailsLink({
     <a
       href={`/zk-catalog/${slug}`}
       className={cn(
-        'flex items-center justify-center self-center justify-self-center w-max text-sm rounded-lg h-8 px-6 bg-black text-white dark:bg-white dark:text-black',
+        'flex items-center justify-center self-center justify-self-center w-max text-sm rounded-lg px-6 bg-black text-white dark:bg-white dark:text-black mt-7 md:mt-0 md:w-max h-10 md:h-8"',
         className,
       )}
     >
