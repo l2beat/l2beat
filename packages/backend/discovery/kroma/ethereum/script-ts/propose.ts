@@ -253,9 +253,8 @@ async function submitOutputRoot(contracts: KromaContracts) {
   const blockNumber = block.number
   const blockHash = block.hash
 
-  const expectedTimestamp = await contracts.l2OutputOracle.computeL2Timestamp(
-    nextL2BlockNumber,
-  )
+  const expectedTimestamp =
+    await contracts.l2OutputOracle.computeL2Timestamp(nextL2BlockNumber)
 
   const waitUntil = expectedTimestamp.toNumber() + 1 // +1 second for clock drift
   while (Date.now() / 1000 < waitUntil) {
