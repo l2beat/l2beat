@@ -62,7 +62,7 @@ export function AccordionTrigger({
       )}
     >
       <div className={cn('w-full', childrenClassName)}>{children}</div>
-      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
+      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
     </div>
   )
 }

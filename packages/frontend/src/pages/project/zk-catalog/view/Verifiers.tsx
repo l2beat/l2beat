@@ -52,7 +52,7 @@ export function Verifiers(props: Props) {
               <VerifiedCell verified={item.verified} />
             </td>
             <td className="pr-4">
-              <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
+              <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
             </td>
           </tr>
           <tr
