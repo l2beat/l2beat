@@ -50,7 +50,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       await indexer.invalidate(targetHeight)
 
       expect(amountRepository.deleteByConfigAfter).toHaveBeenOnlyCalledWith(
-        createAmountId(config),
+        createAmountId(configuration),
         new UnixTime(targetHeight),
       )
     })
