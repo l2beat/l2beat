@@ -54,7 +54,6 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       from,
       to: adjustedTo.toNumber(),
       amounts: nonZeroAmounts.length,
-      configurationId: this.configurationId,
     })
 
     return adjustedTo.toNumber()
@@ -69,7 +68,6 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     this.logger.info('Deleted records', {
       targetHeight,
       deletedRecords,
-      configurationId: this.configurationId,
     })
 
     return targetHeight
