@@ -12,7 +12,7 @@ export const bob: Layer2 = opStackL2({
     name: 'BOB',
     slug: 'bob',
     description:
-      'BOB ("Build on Bitcoin") is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation includes the tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs and block headers onchain and a variety of supported bridges for BTC-related assets.',
+      'BOB ("Build on Bitcoin") is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a yet unverified tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs and block headers on the L2.',
     purposes: ['Bitcoin DApps'],
     links: {
       websites: ['https://gobob.xyz'],
