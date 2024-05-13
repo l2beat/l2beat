@@ -347,7 +347,7 @@ export class Tvl2Controller {
         assetId: priceConfig.assetId,
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: source,
-        usdValue: Number(value),
+        usdValue: asNumber(value, 2),
       })
     }
 
@@ -458,7 +458,7 @@ export class Tvl2Controller {
         })
         return acc + value
       }, 0n)
-      values.push([Number(timestamp), Number(value)])
+      values.push([Number(timestamp), asNumber(value, 2)])
     }
 
     return values
