@@ -59,7 +59,7 @@ async function main() {
     console.timeEnd('[FEATURES]')
 
     console.time('[TVL]')
-    const tvlApiResponse = await fetchTvlApi(config.backend, http)
+    const tvlApiResponse = await fetchTvlApi(config.backend, http, config.features)
     console.timeEnd('[TVL]')
     tvlSanityCheck(tvlApiResponse)
 
