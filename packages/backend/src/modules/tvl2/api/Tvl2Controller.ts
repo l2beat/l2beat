@@ -8,10 +8,10 @@ import {
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
-import { calculateValue } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
+import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 

@@ -109,7 +109,7 @@ export class ParsedFilesManager {
     for (const file of result.files) {
       const alreadyImportedObjects = new Map<string, string[]>()
       alreadyImportedObjects.set(
-        file.path,
+        file.normalizedPath,
         file.topLevelDeclarations.map((c) => c.name),
       )
 
@@ -200,11 +200,13 @@ export class ParsedFilesManager {
       const remappedPath = resolveImportRemappings(
         i.path,
         remappings,
-        file.path,
+        file.normalizedPath,
       )
       const importedFile = this.resolveImportPath(file, remappedPath)
 
-      let alreadyImported = alreadyImportedObjects.get(importedFile.path)
+      let alreadyImported = alreadyImportedObjects.get(
+        importedFile.normalizedPath,
+      )
       if (alreadyImported !== undefined) {
         const gotEverything =
           alreadyImported.length >= importedFile.topLevelDeclarations.length
@@ -219,7 +221,7 @@ export class ParsedFilesManager {
       if (importEverything) {
         for (const declaration of importedFile.topLevelDeclarations) {
           const object = {
-            absolutePath: importedFile.path,
+            absolutePath: importedFile.normalizedPath,
             originalName: declaration.name,
             importedName: declaration.name,
           }
@@ -230,7 +232,7 @@ export class ParsedFilesManager {
         }
 
         alreadyImportedObjects.set(
-          importedFile.path,
+          importedFile.normalizedPath,
           importedFile.topLevelDeclarations.map((c) => c.name),
         )
 
@@ -249,7 +251,7 @@ export class ParsedFilesManager {
       assert(i.symbolAliases !== null, 'Invalid import directive')
       for (const alias of i.symbolAliases) {
         const object = {
-          absolutePath: importedFile.path,
+          absolutePath: importedFile.normalizedPath,
           originalName: alias[0],
           importedName: alias[1] ?? alias[0],
         }
@@ -284,7 +286,7 @@ export class ParsedFilesManager {
         }
       }
 
-      alreadyImportedObjects.set(importedFile.path, alreadyImported)
+      alreadyImportedObjects.set(importedFile.normalizedPath, alreadyImported)
 
       return result
     })
@@ -403,7 +405,7 @@ export class ParsedFilesManager {
   ): ParsedFile {
     const resolvedPath =
       importPath.startsWith('./') || importPath.startsWith('../')
-        ? posix.join(posix.dirname(fromFile.path), importPath)
+        ? posix.join(posix.dirname(fromFile.normalizedPath), importPath)
         : importPath
 
     const normalizedPath = posix.normalize(resolvedPath)
@@ -413,7 +415,7 @@ export class ParsedFilesManager {
     )
     assert(
       matchingFile !== undefined,
-      `File [${fromFile.path}][${resolvedPath}] not found`,
+      `File [${fromFile.normalizedPath}][${resolvedPath}] not found`,
     )
 
     return matchingFile
@@ -464,11 +466,35 @@ function resolveRemappings(path: string, remappings: Remapping[]): string {
   return path
 }
 
+function solcAbsolutePath(path: string, context: string): string {
+  if (!path.startsWith('./') && !path.startsWith('../')) {
+    return path
+  }
+
+  let result = posix.normalize(context)
+
+  if (result !== '/' && posix.basename(result) !== '') {
+    result = posix.dirname(result)
+  }
+
+  const segments = path.split('/')
+  for (const segment of segments) {
+    if (segment === '..') {
+      result = posix.dirname(result)
+    } else if (segment !== '.') {
+      result = posix.join(result, segment)
+    }
+  }
+
+  return posix.normalize(result)
+}
+
 function resolveImportRemappings(
-  path: string,
+  rawPath: string,
   remappings: Remapping[],
   context: string,
 ): string {
+  const path = solcAbsolutePath(rawPath, context)
   let longestPrefix = 0
   let longestContext = 0
   let longest: Remapping | undefined = undefined

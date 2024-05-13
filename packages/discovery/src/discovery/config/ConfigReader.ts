@@ -5,6 +5,9 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { readFile } from 'fs/promises'
 import { ParseError, parse } from 'jsonc-parser'
 
+import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import chalk from 'chalk'
+import { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryMeta } from './DiscoveryMeta'
@@ -26,9 +29,16 @@ export class ConfigReader {
     const contents = await this.readJsonc(
       `discovery/${name}/${chain}/config.jsonc`,
     )
-    const rawConfig = RawDiscoveryConfig.parse(contents)
-    await this.inlineTemplates(rawConfig)
-    const config = new DiscoveryConfig(rawConfig)
+    const rawConfig = RawDiscoveryConfig.safeParse(contents)
+    if (!rawConfig.success) {
+      const message = formatZodParsingError(rawConfig.error, 'config.jsonc')
+      console.log(message)
+
+      throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
+    }
+
+    await this.inlineTemplates(rawConfig.data)
+    const config = new DiscoveryConfig(rawConfig.data)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -173,4 +183,25 @@ export class ConfigReader {
 
     return projects
   }
+}
+
+function formatZodParsingError(error: ZodError, fileName: string): string {
+  const errors = error.errors
+  const lines = [
+    `${chalk.red(' ERROR:')} reading ${fileName} encountered ${
+      errors.length
+    } issues:`,
+    ...errors.flatMap((x) => {
+      return [` ${chalk.yellow(x.message)}`, ` >    ${x.path.join('.')}`]
+    }),
+  ]
+
+  const maxLength = Math.max(
+    ...lines.map((x) => stripAnsiEscapeCodes(x).length),
+  )
+  return [
+    chalk.red(`╔${'═'.repeat(maxLength - 1)}╗`),
+    ...lines,
+    chalk.red(`╚${'═'.repeat(maxLength - 1)}╝`),
+  ].join('\n')
 }

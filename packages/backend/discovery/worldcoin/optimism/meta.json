@@ -1,20 +1,10 @@
 {
-  "$schema": "../../../../discovery/schemas/meta.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "AVSDirectory",
+      "name": "GnosisSafe",
       "values": {
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OPERATOR_AVS_REGISTRATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegation": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -24,17 +14,22 @@
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pauserRegistry": {
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -42,44 +37,9 @@
       }
     },
     {
-      "name": "BLSApkRegistry",
+      "name": "GnosisSafe",
       "values": {
-        "registryCoordinator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "DelegationManager",
-      "values": {
-        "DELEGATION_APPROVAL_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_STAKER_OPT_OUT_WINDOW_BLOCKS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "STAKER_DELEGATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "beaconChainETHStrategy": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -89,37 +49,22 @@
           "severity": null,
           "type": null
         },
-        "eigenPodManager": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "minWithdrawalDelayBlocks": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -127,195 +72,9 @@
       }
     },
     {
-      "name": "IndexRegistry",
+      "name": "GnosisSafe",
       "values": {
-        "OPERATOR_DOES_NOT_EXIST_ID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "registryCoordinator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PauserRegistry",
-      "values": {
-        "unpauser": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "RegistryCoordinator",
-      "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
-      "values": {
-        "OPERATOR_CHURN_APPROVAL_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PUBKEY_REGISTRATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blsApkRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "churnApprover": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ejector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "indexRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numRegistries": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "operatorSetParamsQuorum1": {
-          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
-          "severity": null,
-          "type": null
-        },
-        "operatorSetParamsQuorum2": {
-          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake",
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quorumCount": {
-          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "registries": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "serviceManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Slasher",
-      "values": {
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "StakeRegistry",
-      "values": {
-        "MAX_WEIGHING_FUNCTION_LENGTH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "WEIGHTING_DIVISOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "registryCoordinator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "StrategyManager",
-      "values": {
-        "DEPOSIT_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegation": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -325,32 +84,22 @@
           "severity": null,
           "type": null
         },
-        "eigenPodManager": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyWhitelister": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -358,9 +107,34 @@
       }
     },
     {
-      "name": "eigenDAProxyAdmin",
+      "name": "GnosisSafe",
       "values": {
-        "owner": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -368,44 +142,194 @@
       }
     },
     {
-      "name": "eigenDAServiceManager",
+      "name": "GnosisSafe",
       "values": {
-        "BLOCK_STALE_MEASURE": {
-          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "STORE_DURATION_BLOCKS": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "THRESHOLD_DENOMINATOR": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "avsDirectory": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "batchId": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "blsApkRegistry": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "delegation": {
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getRestakeableStrategies": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OpWorldID_One",
+      "values": {
+        "getTreeDepth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isLocal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestRoot": {
           "description": null,
           "severity": null,
           "type": null
@@ -415,47 +339,195 @@
           "severity": null,
           "type": null
         },
-        "paused": {
+        "rootHistoryExpiry": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pauserRegistry": {
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OpWorldID_Zero",
+      "values": {
+        "getTreeDepth": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorumAdversaryThresholdPercentages": {
-          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "quorumConfirmationThresholdPercentages": {
-          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "quorumNumbersRequired": {
+        "isLocal": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "registryCoordinator": {
+        "latestRoot": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "stakeRegistry": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "staleStakesForbidden": {
+        "rootHistoryExpiry": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "taskNumber": {
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REMOTE_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RecurringGrantDrop",
+      "values": {
+        "grant": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "groupId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "holder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "worldIdRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "values": {}
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "values": {}
+    },
+    {
+      "name": "WLDGrant",
+      "values": {
+        "calculateId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WorldIDRouterV1",
+      "values": {
+        "groupCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "routeFor": {
           "description": null,
           "severity": null,
           "type": null
