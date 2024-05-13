@@ -2,7 +2,11 @@ import {
   assert,
   AmountConfigEntry,
   AssetId,
+  CanonicalAssetBreakdownData,
   EthereumAddress,
+  ExternalAssetBreakdownData,
+  NativeAssetBreakdownData,
+  ProjectAssetsBreakdownApiResponse,
   ProjectId,
   TvlApiChart,
   TvlApiCharts,
@@ -76,6 +80,7 @@ export class Tvl2Controller {
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
     private readonly chainConverter: ChainConverter,
+    private readonly parents: { safeHeight: number }[],
     projects: Project[],
     config: Tvl2Config,
   ) {
@@ -156,6 +161,7 @@ export class Tvl2Controller {
     return result
   }
 
+  // TODO: Remove lastHour
   async getOldTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPriceId = this.priceConfigs.get(
       createAssetId({ address: 'native', chain: 'ethereum' }),
@@ -305,51 +311,10 @@ export class Tvl2Controller {
       })
     }
 
-    // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
-    // and keep only the current values in the database.
-    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
-      [...this.currAmountConfigs.keys()],
-      lastHour,
-    )
-    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
-      [...this.priceConfigs.values()].map((x) => x.priceId),
-      lastHour,
-    )
-
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
-    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
-    for (const amount of tokenAmounts) {
-      const config = this.currAmountConfigs.get(amount.configId)
-      assert(config, 'Config not found for id ' + amount.configId)
-      let breakdown = breakdownMap.get(config.project)
-      if (!breakdown) {
-        breakdown = {
-          CBV: [],
-          EBV: [],
-          NMV: [],
-        }
-        breakdownMap.set(config.project, breakdown)
-      }
-
-      const priceConfig = this.priceConfigs.get(createAssetId(config))
-      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceConfig.priceId)
-      assert(price, 'Price not found for id ' + amount.configId)
-
-      const value = calculateValue({
-        amount: amount.amount,
-        priceUsd: price,
-        decimals: config.decimals,
-      })
-
-      const source = convertSourceName(config.source)
-      breakdown[source].push({
-        assetId: priceConfig.assetId,
-        chainId: this.chainConverter.toChainId(config.chain),
-        assetType: source,
-        usdValue: asNumber(value, 2),
-      })
-    }
+    const lastSafeHour = new UnixTime(
+      Math.min(...this.parents.map((x) => x.safeHeight)),
+    ).toStartOf('hour')
+    const breakdownMap = await this.getBreakdownMap(lastSafeHour)
 
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
@@ -412,6 +377,146 @@ export class Tvl2Controller {
     }
 
     return result
+  }
+
+  async getTvlBreakdown(): Promise<ProjectAssetsBreakdownApiResponse> {
+    const timestamp = new UnixTime(
+      Math.min(...this.parents.map((x) => x.safeHeight)),
+    ).toStartOf('hour')
+
+    const breakdowns = await this.getNewBreakdown(timestamp)
+    return { dataTimestamp: timestamp, breakdowns }
+  }
+
+  // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
+  // and keep only the current values in the database.
+  private async getBreakdownMap(timestamp: UnixTime) {
+    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
+      [...this.currAmountConfigs.keys()],
+      timestamp,
+    )
+    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
+      [...this.priceConfigs.values()].map((x) => x.priceId),
+      timestamp,
+    )
+
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
+    for (const amount of tokenAmounts) {
+      const config = this.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdownMap.get(config.project)
+      if (!breakdown) {
+        breakdown = {
+          CBV: [],
+          EBV: [],
+          NMV: [],
+        }
+        breakdownMap.set(config.project, breakdown)
+      }
+
+      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
+
+      const value = calculateValue({
+        amount: amount.amount,
+        priceUsd: price,
+        decimals: config.decimals,
+      })
+
+      const source = convertSourceName(config.source)
+      breakdown[source].push({
+        assetId: priceConfig.assetId,
+        chainId: this.chainConverter.toChainId(config.chain),
+        assetType: convertSourceName(config.source),
+        usdValue: asNumber(value, 2),
+      })
+    }
+    return breakdownMap
+  }
+
+  private async getNewBreakdown(timestamp: UnixTime) {
+    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
+      [...this.currAmountConfigs.keys()],
+      timestamp,
+    )
+    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
+      [...this.priceConfigs.values()].map((x) => x.priceId),
+      timestamp,
+    )
+
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdowns: Record<
+      string,
+      {
+        canonical: CanonicalAssetBreakdownData[]
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
+      }
+    > = {}
+    for (const amount of tokenAmounts) {
+      const config = this.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdowns[config.project]
+      if (!breakdown) {
+        breakdown = {
+          canonical: [],
+          external: [],
+          native: [],
+        }
+        breakdowns[config.project] = breakdown
+      }
+
+      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
+
+      const value = calculateValue({
+        amount: amount.amount,
+        priceUsd: price,
+        decimals: config.decimals,
+      })
+
+      switch (config.source) {
+        case 'canonical':
+          breakdown.canonical.push({
+            assetId: priceConfig.assetId,
+            chainId: this.chainConverter.toChainId(config.chain),
+            amount: amount.amount.toString(),
+            usdValue: asNumber(value, 2).toFixed(2),
+            usdPrice: price.toString(),
+            escrows: [],
+          })
+          break
+        case 'external':
+          breakdown.external.push({
+            assetId: priceConfig.assetId,
+            chainId: this.chainConverter.toChainId(config.chain),
+            amount: amount.amount.toString(),
+            usdValue: asNumber(value, 2).toFixed(2),
+            usdPrice: price.toString(),
+            // TODO: force fe to accept "native"
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
+          })
+          break
+        case 'native':
+          breakdown.native.push({
+            assetId: priceConfig.assetId,
+            chainId: this.chainConverter.toChainId(config.chain),
+            amount: amount.amount.toString(),
+            usdValue: asNumber(value, 2).toFixed(2),
+            usdPrice: price.toString(),
+            // TODO: force fe to accept "native"
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
+          })
+      }
+    }
+    return breakdowns
   }
 
   async getTokenChart(
