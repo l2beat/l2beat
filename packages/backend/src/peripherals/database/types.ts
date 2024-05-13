@@ -209,6 +209,11 @@ declare module 'knex/types/tables' {
     overhead_gas_usd: number
   }
 
+  interface L2CostsPricesRow {
+    timestamp: Date
+    price_usd: number
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
