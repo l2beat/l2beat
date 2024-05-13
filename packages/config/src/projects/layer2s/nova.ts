@@ -109,7 +109,7 @@ export const nova: Layer2 = orbitStackL2({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
     }),
   ],
-  riskView: {
+  nonTemplateRiskView: {
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
@@ -134,13 +134,15 @@ export const nova: Layer2 = orbitStackL2({
       },
     },
   },
-  otherConsiderations: [
-    UPGRADE_MECHANISM.ARBITRUM_DAO(
-      l1TimelockDelay,
-      challengeWindow * assumedBlockTime,
-      l2TimelockDelay,
-    ),
-  ],
+  nonTemplateTechnology: {
+    otherConsiderations: [
+      UPGRADE_MECHANISM.ARBITRUM_DAO(
+        l1TimelockDelay,
+        challengeWindow * assumedBlockTime,
+        l2TimelockDelay,
+      ),
+    ],
+  },
   milestones: [
     {
       ...MILESTONES.MAINNET_OPEN,
