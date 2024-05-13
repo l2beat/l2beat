@@ -2,12 +2,25 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { providers, utils } from 'ethers'
 import { getAllLogs } from '../omnichain/getAllLogs'
+import { add, filter } from 'lodash'
 
 const SHARP_PROVER = '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF'
+const SHARP_VERIFIER = '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60'
 const SYSTEMS = [
   { name: 'Starknet', address: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4' },
   { name: 'Paradex', address: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640' },
   { name: 'ImmutableX', address: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9' },
+  { name: 'ApeX-USDC', address: '0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb' },
+  { name: 'ApeX-USDT', address: '0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b' },
+  { name: 'RinoFi', address: '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b' },
+  { name: 'Sorare', address: '0xF5C9F957705bea56a7e806943f98F7777B995826' },
+  { name: 'TanX', address: '0x1390f521A79BaBE99b69B37154D63D431da27A07' },
+  { name: 'Myria', address: '0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7' },
+  {
+    name: 'CanvasConnect',
+    address: '0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d',
+  },
+  { name: 'ReddioEx', address: '0xB62BcD40A24985f560b5a9745d478791d8F1945C' },
 ]
 
 const ABI = new utils.Interface([
@@ -40,79 +53,95 @@ async function printTransactionStats(
   matched: { system: string; outputs: SystemOutput[] }[],
   transactionHash: string,
 ) {
-  for (const { system, outputs } of matched) {
-    const output = outputs.find((x) => x.transactionHash === transactionHash)
-    const systemName =
-      SYSTEMS.find((x) => x.address === system)?.name ?? 'Unknown'
-    if (output) {
-      if (!output.verifiedAt) {
-        console.log(output)
-        break
-      }
-      const stateUpdateBlock = await provider.getBlock(output.blockNumber)
-      const proofBlock = await provider.getBlock(output.verifiedAt.blockNumber)
+  const tx = await provider.getTransaction(transactionHash)
+  if (tx.to === SHARP_VERIFIER) {
+    console.log('Analysing SHARP_VERIFIER transaction...')
+    // we are looking for all system update transactions that are verified by SHARP_VERIFIER
+    for (const { system, outputs } of matched) {
+      const systemName =
+        SYSTEMS.find((x) => x.address === system)?.name ?? 'Unknown'
+      const filteredOutputs = outputs.filter(
+        (x) => x.verifiedAt?.transactionHash === transactionHash,
+      )
+      console.log(systemName, filteredOutputs.length)
+    }
+  } else {
+    for (const { system, outputs } of matched) {
+      const output = outputs.find((x) => x.transactionHash === transactionHash)
+      const systemName =
+        SYSTEMS.find((x) => x.address === system)?.name ?? 'Unknown'
+      if (output) {
+        if (!output.verifiedAt) {
+          console.log(output)
+          break
+        }
+        const stateUpdateBlock = await provider.getBlock(output.blockNumber)
+        const proofBlock = await provider.getBlock(
+          output.verifiedAt.blockNumber,
+        )
 
-      const tx = await provider.getTransactionReceipt(transactionHash)
-      const topic = ABI.getEventTopic('LogStateUpdate')
-      const event = tx.logs
-        .filter((x) => x.topics[0] === topic)
-        .map((log) => ABI.parseLog(log))
-        .at(0)
+        const tx = await provider.getTransactionReceipt(transactionHash)
+        const topic = ABI.getEventTopic('LogStateUpdate')
+        const event = tx.logs
+          .filter((x) => x.topics[0] === topic)
+          .map((log) => ABI.parseLog(log))
+          .at(0)
 
-      const l2BlockNumber: number | undefined =
-        event?.args.blockNumber.toNumber()
+        const l2BlockNumber: number | undefined =
+          event?.args.blockNumber.toNumber()
 
-      let l2Timestamp: number | undefined
+        let l2Timestamp: number | undefined
+        if (systemName === 'Starknet' && process.env.STARKNET_API_URL) {
+          console.log('Fetching Starknet block...')
+          const res = await fetch(process.env.STARKNET_API_URL, {
+            method: 'POST',
+            headers: {
+              ['Content-Type']: 'application/json',
+            },
+            body: JSON.stringify({
+              jsonrpc: '2.0',
+              method: 'starknet_getBlockWithTxHashes',
+              params: [{ block_number: l2BlockNumber }],
+              id: Math.floor(Math.random() * 1000),
+            }),
+          })
+          // biome-ignore lint/suspicious/noExplicitAny: required
+          const json: any = await res.json()
+          l2Timestamp = json.result.timestamp
+        }
 
-      if (systemName === 'Starknet' && process.env.STARKNET_API_URL) {
-        const res = await fetch(process.env.STARKNET_API_URL, {
-          method: 'POST',
-          headers: {
-            ['Content-Type']: 'application/json',
+        const properties = [
+          { name: 'System', value: systemName },
+          { name: 'L2 Block Number', value: l2BlockNumber },
+          {
+            name: 'L2 Timestamp',
+            value:
+              l2Timestamp !== undefined
+                ? new Date(l2Timestamp * 1000).toISOString()
+                : undefined,
           },
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            method: 'starknet_getBlockWithTxHashes',
-            params: [{ block_number: l2BlockNumber }],
-            id: Math.floor(Math.random() * 1000),
-          }),
-        })
-        // biome-ignore lint/suspicious/noExplicitAny: required
-        const json: any = await res.json()
-        l2Timestamp = json.result.timestamp
-      }
+          {
+            name: 'Proof Timestamp',
+            value: new Date(proofBlock.timestamp * 1000).toISOString(),
+          },
+          {
+            name: 'Proof After',
+            value: timeDiff(l2Timestamp, proofBlock.timestamp),
+          },
+          {
+            name: 'State Update Timestamp',
+            value: new Date(stateUpdateBlock.timestamp * 1000).toISOString(),
+          },
+          {
+            name: 'State Update After',
+            value: timeDiff(l2Timestamp, stateUpdateBlock.timestamp),
+          },
+        ]
 
-      const properties = [
-        { name: 'System', value: systemName },
-        { name: 'L2 Block Number', value: l2BlockNumber },
-        {
-          name: 'L2 Timestamp',
-          value:
-            l2Timestamp !== undefined
-              ? new Date(l2Timestamp * 1000).toISOString()
-              : undefined,
-        },
-        {
-          name: 'Proof Timestamp',
-          value: new Date(proofBlock.timestamp * 1000).toISOString(),
-        },
-        {
-          name: 'Proof After',
-          value: timeDiff(l2Timestamp, proofBlock.timestamp),
-        },
-        {
-          name: 'State Update Timestamp',
-          value: new Date(stateUpdateBlock.timestamp * 1000).toISOString(),
-        },
-        {
-          name: 'State Update After',
-          value: timeDiff(l2Timestamp, stateUpdateBlock.timestamp),
-        },
-      ]
-
-      const maxLength = Math.max(...properties.map((x) => x.name.length))
-      for (const { name, value } of properties) {
-        console.log(name.padEnd(maxLength + 1, ' '), value ?? 'unknown')
+        const maxLength = Math.max(...properties.map((x) => x.name.length))
+        for (const { name, value } of properties) {
+          console.log(name.padEnd(maxLength + 1, ' '), value ?? 'unknown')
+        }
       }
     }
   }
@@ -153,6 +182,11 @@ function printStats(matched: { system: string; outputs: SystemOutput[] }[]) {
   }
 }
 
+/*
+1. get all LogMemoryHashes events and store in memoryHashes.json
+2. for all SYSTEMS getSystemOutputs() and store in system_${system}.json
+3. match verifiedOutputs with systemOutputs and store to matched.json
+*/
 async function getMatched(
   provider: providers.AlchemyProvider,
 ): Promise<{ system: string; outputs: SystemOutput[] }[]> {
@@ -200,8 +234,12 @@ async function getVerifiedOutputs(
 ): Promise<VerifiedOutput[]> {
   let hashes: providers.Log[] = []
   if (existsSync(HASHES_FILE)) {
+    console.log('Reading memory hashes from file...')
     hashes = JSON.parse(readFileSync(HASHES_FILE, 'utf-8'))
   } else {
+    console.log(
+      'Reading memory hashes from blockchain, this will take some time...',
+    )
     const memoryHashes = await getAllLogs(provider, {
       address: SHARP_PROVER,
       topics: [ABI.getEventTopic('LogMemoryPagesHashes')],
@@ -239,8 +277,10 @@ async function getSystemOutputs(
   let systemOutputs: providers.Log[] = []
 
   if (existsSync(systemFile)) {
+    console.log(`Reading system ${system} outputs from file...`)
     systemOutputs = JSON.parse(readFileSync(systemFile, 'utf-8'))
   } else {
+    console.log(`Reading system ${system} outputs from blockchain...`)
     systemOutputs = await getAllLogs(provider, {
       address: system,
       topics: [ABI.getEventTopic('LogStateTransitionFact')],
