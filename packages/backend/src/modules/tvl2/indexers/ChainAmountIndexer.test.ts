@@ -88,6 +88,38 @@ describe(ChainAmountIndexer.name, () => {
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
+
+    it('returns if no configurations to sync', async () => {
+      const from = new UnixTime(100)
+      const to = new UnixTime(1000)
+
+      const indexer = new ChainAmountIndexer({
+        amountService: mockObject<AmountService>({}),
+        amountRepository: mockObject<AmountRepository>({}),
+        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        syncOptimizer: mockObject<SyncOptimizer>({}),
+        chain: 'chain',
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        encode: () => '',
+        decode: () => mockObject<ChainAmountConfig>({}),
+        configurations: [],
+      })
+
+      const toUpdate = [
+        update('a', 100, null, true),
+        update('b', 100, null, true),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(
+        from.toNumber(),
+        to.toNumber(),
+        toUpdate,
+      )
+
+      expect(safeHeight).toEqual(to.toNumber())
+    })
   })
 
   describe(ChainAmountIndexer.prototype.removeData.name, () => {
