@@ -77,6 +77,7 @@ export interface OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
   nativeToken?: string
 }
@@ -330,6 +331,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
+    stackedRiskView: templateVars.stackedRiskView,
     riskView: makeBridgeCompatible({
       stateValidation:
         templateVars.nonTemplateRiskView?.stateValidation ??
