@@ -9,6 +9,17 @@ on:
   merge_group:
 
 jobs:
+  build-backend:
+    name: Build backend container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Build container
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          file: Dockerfile.backend
   build-frontend:
     name: Build frontend
     runs-on: ubuntu-latest
