@@ -30,10 +30,10 @@ export const metal: Layer2 = opStackL2({
       repositories: [],
       socialMedia: [
         'https://twitter.com/metalpaysme',
-        'https://www.reddit.com/r/MetalPay',
-        'https://www.facebook.com/metalpaysme',
+        'https://reddit.com/r/MetalPay',
+        'https://facebook.com/metalpaysme',
         'https://t.me/metalpaysme',
-        'https://www.linkedin.com/company/metallicus',
+        'https://linkedin.com/company/metallicus',
       ],
     },
     activityDataSource: 'Blockchain RPC',
