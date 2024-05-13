@@ -5676,6 +5676,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "arbitrum:rwa-xend-real-world-asset",
+      "name": "Xend Real World Asset",
+      "coingeckoId": "xend-finance",
+      "address": "0x3096e7BFd0878Cc65be71f8899Bc4CFB57187Ba3",
+      "symbol": "RWA",
+      "decimals": 18,
+      "deploymentTimestamp": 1705326742,
+      "coingeckoListingTimestamp": 1616544000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14496/large/WeChat_Image_20210325163206.png?1696514181",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "zkfair:zkf-zkf",
       "name": "ZKF",
       "coingeckoId": "zkfair",

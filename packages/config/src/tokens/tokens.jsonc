@@ -1287,6 +1287,12 @@
       }
     },
     {
+      "symbol": "RWA",
+      "address": "0x3096e7BFd0878Cc65be71f8899Bc4CFB57187Ba3",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "type": "NMV",
