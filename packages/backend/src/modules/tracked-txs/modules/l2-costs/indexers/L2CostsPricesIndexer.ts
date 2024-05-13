@@ -25,19 +25,21 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const [shiftedFrom, shiftedTo] = this.shift(from, to)
+    const unixFrom = new UnixTime(from)
+    const unixTo = new UnixTime(to)
+
+    const maxRange = unixFrom.add(
+      CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL,
+      'days',
+    )
+
+    let shiftedTo = unixTo.gt(maxRange) ? maxRange : unixTo
 
     this.logger.info('Time range shifted', {
-      shiftedFrom,
       shiftedTo,
     })
 
-    if (shiftedFrom.equals(shiftedTo)) {
-      this.logger.info('Nothing to sync')
-      return to
-    }
-
-    const prices = await this.fetchPrices(shiftedFrom, shiftedTo)
+    const prices = await this.fetchPrices(unixFrom, shiftedTo)
 
     if (prices.length === 0) {
       this.logger.info('Nothing to save in DB')
@@ -50,25 +52,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       prices: prices.length,
     })
 
-    return shiftedTo.add(1, 'seconds').toNumber()
-  }
-
-  shift(from: number, to: number): [UnixTime, UnixTime] {
-    const shiftedFrom = new UnixTime(from).toStartOf('hour')
-
-    const unixTo = new UnixTime(to)
-    const maxRange = shiftedFrom.add(
-      CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL,
-      'days',
-    )
-
-    let shiftedTo = unixTo.gt(maxRange) ? maxRange : unixTo
-
-    // do not include ending hour
-    // 13:00:00 => 12:59:59
-    shiftedTo = shiftedTo.toStartOf('hour').add(-1, 'seconds')
-
-    return [shiftedFrom, shiftedTo]
+    return shiftedTo.toNumber()
   }
 
   async fetchPrices(
