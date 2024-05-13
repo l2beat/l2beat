@@ -66,7 +66,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
 
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
-      blockNumber: blockNumber,
+      blockNumber,
       escrows: amounts.filter((a) => a.type === 'escrow').length,
       totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
