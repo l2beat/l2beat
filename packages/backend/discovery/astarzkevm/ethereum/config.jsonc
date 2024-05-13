@@ -53,7 +53,9 @@
         }
       }
     },
-    "Bridge": { "ignoreDiscovery": true },
+    "Bridge": {
+      "ignoreDiscovery": true
+    },
     "AstarValidiumDAC": {
       "fields": {
         "members": {
