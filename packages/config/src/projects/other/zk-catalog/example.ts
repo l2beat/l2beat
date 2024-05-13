@@ -7,7 +7,6 @@ export const example: ZkCatalogProject = {
   display: {
     slug: 'example',
     name: 'Example',
-    link: 'https://example.com',
   },
   proofVerification: {
     aggregation: true,
