@@ -45,6 +45,10 @@ export function createCirculatingSupplyModule(
   )
   const indexersMap = new Map<string, CirculatingSupplyIndexer>()
 
+  const circulatingSupplyService = new CirculatingSupplyService({
+    coingeckoQueryService,
+  })
+
   const indexers = circulatingSupplies.map((circulatingSupply) => {
     const indexer = new CirculatingSupplyIndexer({
       logger,
@@ -52,8 +56,8 @@ export function createCirculatingSupplyModule(
       parents: [hourlyIndexer],
       minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       indexerService,
-      config: circulatingSupply,
-      coingeckoQueryService,
+      configuration: circulatingSupply,
+      circulatingSupplyService,
       amountRepository: peripherals.getRepository(AmountRepository),
       syncOptimizer,
     })
