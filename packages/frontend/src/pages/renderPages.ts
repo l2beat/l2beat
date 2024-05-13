@@ -12,6 +12,7 @@ import { outputPages } from './output'
 import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
+import { getZkCatalogProjectPages } from './project/zk-catalog'
 import { getActivityPage } from './scaling/activity'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
@@ -112,6 +113,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  }
+
+  if (config.features.zkCatalog) {
+    pages.push(...getZkCatalogProjectPages(config))
   }
 
   outputPages(pages)

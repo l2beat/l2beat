@@ -16,5 +16,11 @@ export function getExplorerUrl(chain: string) {
 }
 
 export function getExplorerUrlByChainId(chainId: ChainId): string | undefined {
-  return chains.find((c) => c.chainId === chainId.valueOf())?.explorerUrl
+  const chain = chains.find((c) => c.chainId === chainId.valueOf())
+  if (!chain) {
+    console.warn(
+      'getExplorerUrlByChainId has not found a chain in config files',
+    )
+  }
+  return chain?.explorerUrl
 }

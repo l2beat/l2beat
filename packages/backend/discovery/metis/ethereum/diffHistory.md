@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x759b0a0e3864e323491cdd0f35fd5e8153894b95
+
+# Diff at Mon, 06 May 2024 10:30:49 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@db9818837028c52979d74016bb4f011aa0545e1f block: 19761802
+- current block number: 19810457
+
+## Description
+
+### Enki liquid Metis staking
+
+A sequencer is added to the LockingPool at index 4. It seems to belong to [Enki](https://enkixyz.com/), a new liquid staking protocol on Metis L2.
+Enki deployed multiple contracts on L1 (Dealer, SequencerAgent) and L2 (eMetisMinter) to support their liquid staking protocol.
+The METIS gets bridged natively from L2 (eMetisMinter) to the Dealer contract on L1 and then deposited by SequencerAgent contracts through the Dealer to the standard LockingInfo contract. Rewards accrue to eMetisMinter on L2.
+
+### Rewards change
+
+METIS rewards for sequencers have been increased by ~50% to 0.001504744 METIS (~10 cents, or 25% APY for 20k METIS per sequencer) per L1 block (L1 block because L2 block times are dynamic).
+
+## Watched changes
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      values.BLOCK_REWARD:
+-        1504744000000000
++        2245402873000000
+      values.rewardPerBlock:
+-        1504744000000000
++        2245402873000000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxy (0x66c7674732357b01B3E9a8F94A05C411BeA1767A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../contracts/interfaces/IERC1967.sol              |  26 +++
+ .../contracts/interfaces/draft-IERC1822.sol        |  20 ++
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     | 157 +++++++++++++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |  86 ++++++++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |  61 ++++++
+ .../contracts/proxy/beacon/IBeacon.sol             |  16 ++
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++++++++++++
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  | 138 ++++++++++++
+ .../metis/ethereum/.code/BeaconProxy/meta.txt      |   2 +
+ 9 files changed, 750 insertions(+)
+```
+
 Generated with discovered.json: 0x32cd4835f42450c41cf18b3710f155a0ea983391
 
 # Diff at Sat, 27 Apr 2024 06:12:10 GMT:

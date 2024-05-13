@@ -156,7 +156,7 @@ function createChainModule(
     chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
-    blockTimestampsRepository: peripherals.getRepository(
+    blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
     encode,

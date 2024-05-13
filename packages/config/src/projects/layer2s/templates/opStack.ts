@@ -21,6 +21,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
@@ -99,6 +100,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
   nativeToken?: string
 }
@@ -627,6 +629,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
+    stackedRiskView: templateVars.stackedRiskView,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {

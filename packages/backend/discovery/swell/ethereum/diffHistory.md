@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xe81a0b6dc8ed608bd7b05dfef62949a59623169a
+
+# Diff at Mon, 13 May 2024 07:41:01 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@142cacbaef1c026127ab0d88f45c576741b3a345 block: 19794895
+- current block number: 19859664
+
+## Description
+
+A timelock transaction is queued to whitelist (`supportToken(address,(bool,bool))`) the following tokens on Wednesday, 15 May 2024 04:00:00 GMT:
+
+- sDAI (savings dai)
+- wstUSDT (stusdt.io)
+- liquidUSD (Ether.fi)
+- apxETH (Dinero)
+- pxETH (Dinero)
+
+## Watched changes
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
++++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
++++ severity: MEDIUM
+      values.nonce:
+-        107
++        108
+    }
+```
+
 Generated with discovered.json: 0xaa1dd18f19c72836f6b4087c23b82a0cab0f6b45
 
 # Diff at Sat, 04 May 2024 06:16:59 GMT:

@@ -1,7 +1,7 @@
 import { configureCharts } from './charts'
+import { configureAccordions } from './configureAccordions'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
-import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
@@ -36,7 +36,7 @@ configureTables()
 configureProjectFilters()
 configureSidebarMenu()
 configureTooltips()
-configureDropdowns()
+configureAccordions()
 configureRosetteOverlay()
 configureHoverableDropdown()
 configureProjectNavigation()
