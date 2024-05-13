@@ -1,7 +1,7 @@
 export type ProjectSectionId =
   | 'tvl'
   | 'activity'
-  | 'costs'
+  | 'onchain-costs'
   | 'detailed-description'
   | 'milestones'
   | 'knowledge-nuggets'
