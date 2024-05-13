@@ -15,11 +15,13 @@ import { Config } from '../config'
 export async function fetchTvlApi(
   backend: Config['backend'],
   http: JsonHttpClient,
+  { tvl2 }: { tvl2: boolean }
 ): Promise<TvlApiResponse> {
   if (backend.mock) {
     return getMockTvlApiResponse()
   }
-  const url = `${backend.apiUrl}/api/tvl`
+
+  const url = tvl2 ? `${backend.apiUrl}/api/tvl2` : `${backend.apiUrl}/api/tvl`
   const json = await http.fetchJson(url)
   return TvlApiResponse.parse(json)
 }

@@ -21,23 +21,19 @@ describe(BlockTimestampIndexer.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
       const to = from.add(1, 'days')
-
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: async () => 666,
-      })
-
-      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
-        add: async () => '',
-      })
-
       const timestampToSync = from.toEndOf('day')
-
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
       })
 
-      const chain = 'ethereum'
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+        getBlockNumberAtOrBefore: async () => 666,
+      })
+      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+        add: async () => '',
+      })
 
+      const chain = 'ethereum'
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],

@@ -14,7 +14,9 @@
       "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "fields": {
-        "accessControl": { "type": "accessControl" }
+        "accessControl": {
+          "type": "accessControl"
+        }
       }
     },
     "SuccinctGateway": {
@@ -33,9 +35,9 @@
           "args": [
             // should be BlobstreamX.nextHeaderFunctionId(), manually pasted here
             "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
-          ] 
+          ]
         },
-        // catch the provers/relayers for Blobstream X from the SuccinctGateway: 
+        // catch the provers/relayers for Blobstream X from the SuccinctGateway:
         // Event ProverUpdated(bytes32 indexed functionId, address indexed prover, bool added);
         "headerRangeProvers": {
           "type": "arrayFromOneEventWithArg",
@@ -45,11 +47,14 @@
           "arg": "functionId",
           "argValue": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0" // headerRangeFunctionId, see above
         },
-        "headerRangeVerifierOwner":{ // can add/remove provers and set whitelist status for the functionID
-        "type": "call",
-        "method": "verifierOwners",
-        "args": ["0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"]
-    },
+        "headerRangeVerifierOwner": {
+          // can add/remove provers and set whitelist status for the functionID
+          "type": "call",
+          "method": "verifierOwners",
+          "args": [
+            "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+          ]
+        },
         "nextHeaderProvers": {
           "type": "arrayFromOneEventWithArg",
           "event": "ProverUpdated",
@@ -58,10 +63,13 @@
           "arg": "functionId",
           "argValue": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef" // nextHeaderFunctionId, see above
         },
-        "nextHeaderVerifierOwner":{ // can add/remove provers and set whitelist status for the functionID
-            "type": "call",
-            "method": "verifierOwners",
-            "args": ["0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"]
+        "nextHeaderVerifierOwner": {
+          // can add/remove provers and set whitelist status for the functionID
+          "type": "call",
+          "method": "verifierOwners",
+          "args": [
+            "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+          ]
         }
       }
     }

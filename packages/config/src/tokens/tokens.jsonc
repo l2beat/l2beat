@@ -1314,6 +1314,16 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "STG",
+      "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       "category": "stablecoin",
@@ -1464,6 +1474,16 @@
       }
     },
     {
+      "symbol": "STG",
+      "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "category": "stablecoin",
@@ -1506,6 +1526,12 @@
         "bridge": "Connext",
         "slug": "connext"
       }
+    },
+    {
+      "symbol": "FRIEND",
+      "address": "0x0bd4887f7d41b35cd75dff9ffee2856106f86670",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "symbol": "MOCHI",

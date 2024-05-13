@@ -15,6 +15,7 @@ import { groupBy } from 'lodash'
 import { Tvl2Config } from '../../../config/Config'
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
+import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
@@ -346,7 +347,7 @@ export class Tvl2Controller {
         assetId: priceConfig.assetId,
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: source,
-        usdValue: Number(value),
+        usdValue: asNumber(value, 2),
       })
     }
 
@@ -457,7 +458,7 @@ export class Tvl2Controller {
         })
         return acc + value
       }, 0n)
-      values.push([Number(timestamp), Number(value)])
+      values.push([Number(timestamp), asNumber(value, 2)])
     }
 
     return values
@@ -579,10 +580,13 @@ function getChartPoint(
   ethPrice: number,
   values: { canonical: bigint; external: bigint; native: bigint },
 ) {
-  const valueUsd = Number(values.canonical + values.external + values.native)
-  const cbvUsd = Number(values.canonical)
-  const ebvUsd = Number(values.external)
-  const nmvUsd = Number(values.native)
+  const valueUsd = asNumber(
+    values.canonical + values.external + values.native,
+    2,
+  )
+  const cbvUsd = asNumber(values.canonical, 2)
+  const ebvUsd = asNumber(values.external, 2)
+  const nmvUsd = asNumber(values.native, 2)
   const valueEth = valueUsd / ethPrice
   const cbvEth = cbvUsd / ethPrice
   const ebvEth = ebvUsd / ethPrice

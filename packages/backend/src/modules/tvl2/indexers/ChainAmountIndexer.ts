@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -18,7 +18,7 @@ export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
   amountRepository: AmountRepository
-  blockTimestampsRepository: BlockTimestampRepository
+  blockTimestampRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
   chain: string
 }
@@ -35,41 +35,38 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
   ): Promise<number> {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
+    const configurationsToSync = configurations.filter((c) => !c.hasData)
 
-    if (timestamp.gt(new UnixTime(to))) {
-      return Promise.resolve(to)
-    }
-
-    const configurationsWithMissingData = configurations.filter(
-      (c) => !c.hasData,
-    )
-
-    if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Skipping update for configurations with data', {
-        configurations: configurations.length,
-        configurationsWithMissingData: configurationsWithMissingData.length,
+    if (configurationsToSync.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with data', {
+        from,
+        to,
+        skippedConfigurations:
+          configurations.length - configurationsToSync.length,
+        configurationsToSync: configurationsToSync.length,
       })
     }
 
-    const blockNumber =
-      await this.$.blockTimestampsRepository.findByChainAndTimestamp(
-        this.$.chain,
-        timestamp,
-      )
-    assert(blockNumber, 'Block number not found')
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
+
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
+    const blockNumber = await this.getBlockNumber(timestamp)
 
     const amounts = await this.$.amountService.fetchAmounts(
-      configurationsWithMissingData,
-      blockNumber.blockNumber,
       timestamp,
+      blockNumber,
+      configurationsToSync,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
       timestamp: timestamp.toNumber(),
-      blockNumber: blockNumber.blockNumber,
+      blockNumber,
       escrows: amounts.filter((a) => a.type === 'escrow').length,
       totalSupplies: amounts.filter((a) => a.type === 'totalSupply').length,
     })
@@ -85,6 +82,19 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     return timestamp.toNumber()
+  }
+
+  private async getBlockNumber(timestamp: UnixTime) {
+    const blockNumber =
+      await this.$.blockTimestampRepository.findByChainAndTimestamp(
+        this.$.chain,
+        timestamp,
+      )
+    assert(
+      blockNumber,
+      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+    )
+    return blockNumber
   }
 
   override async removeData(

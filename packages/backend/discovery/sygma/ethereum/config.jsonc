@@ -19,7 +19,9 @@
   "overrides": {
     "FeeHandlerRouter": {
       "fields": {
-        "accessControl": { "type": "accessControl" }
+        "accessControl": {
+          "type": "accessControl"
+        }
       }
     },
     "Bridge": {
@@ -37,7 +39,6 @@
         }
       }
     },
-
     "AccessControlSegregator": {
       "fields": {
         "role_pauseTransfers": {
@@ -114,7 +115,6 @@
     }
   }
 }
-
 /*
         "0xffaac0eb": {
           "type": "storage",
