@@ -36,6 +36,7 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
+  extendedTemplate?: string
 }
 
 export interface AnalyzedEOA {
@@ -110,6 +111,7 @@ export class AddressAnalyzer {
         abis: sources.abis,
         sourceBundles: sources.sources,
         matchingTemplates,
+        extendedTemplate: overrides?.extends,
       },
       relatives: getRelatives(
         results,

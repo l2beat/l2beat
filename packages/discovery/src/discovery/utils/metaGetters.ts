@@ -12,7 +12,7 @@ export function getValueMeta(
   contractMeta: ContractMeta | undefined,
   name: string | undefined,
 ): ValueMeta | undefined {
-  return name !== undefined
-    ? contractMeta?.values[normalizeDiffPath(name)]
+  return name !== undefined && contractMeta?.values !== undefined
+    ? contractMeta.values[normalizeDiffPath(name)]
     : undefined
 }

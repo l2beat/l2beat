@@ -58,10 +58,11 @@ describe(toMetaOutput.name, () => {
       contracts: [
         {
           description: 'old description',
+          extends: undefined,
           name: 'B',
           values: {
             foo: { description: 'foo', severity: 'LOW', type: 'L2' },
-            bar: { description: null, severity: null, type: null },
+            bar: {},
           },
         },
       ],
@@ -76,10 +77,11 @@ describe(toMetaOutput.name, () => {
       contracts: [
         {
           description: undefined,
+          extends: undefined,
           name: 'B',
           values: {
-            foo: { description: null, severity: null, type: null },
-            bar: { description: null, severity: null, type: null },
+            foo: {},
+            bar: {},
           },
         },
       ],
@@ -87,8 +89,8 @@ describe(toMetaOutput.name, () => {
 
     // Assert sorted order of values
     expect(Object.entries(result.contracts[0]?.values ?? {})).toEqual([
-      ['bar', { description: null, severity: null, type: null }],
-      ['foo', { description: null, severity: null, type: null }],
+      ['bar', {}],
+      ['foo', {}],
     ])
   })
 
@@ -102,7 +104,14 @@ describe(toMetaOutput.name, () => {
     expect(result).toEqual({
       $schema:
         'https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json',
-      contracts: [{ name: 'A', description: undefined, values: {} }],
+      contracts: [
+        {
+          name: 'A',
+          description: undefined,
+          extends: undefined,
+          values: undefined,
+        },
+      ],
     })
   })
 
