@@ -35,10 +35,13 @@ import {
 import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
-  OrbitStackContractName,
+  OrbitStackContractTemplate,
 } from './OrbitStackTypes'
 import { PermissionedContract } from './PermissionedContract'
-import { StackPermissionTemplate } from './StackTemplateTypes'
+import {
+  StackPermissionTemplate,
+  StackPermissionsTag,
+} from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
@@ -164,33 +167,106 @@ export class ProjectDiscovery {
     return calculateInversion(this.discovery)
   }
 
+  transformToPermissions(resolved: Record<string, PermissionedContract>) {
+    return Object.values(resolved)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description,
+            chain: this.chain,
+          }
+        }
+      })
+      .filter(notUndefined)
+  }
+
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(
+    const resolved = this.computeStackContractPermissions(
       OP_STACK_PERMISSION_TEMPLATES,
       overrides,
       contractOverrides,
     )
+    return this.transformToPermissions(resolved)
   }
 
-  getOrbitStackPermissions(
+  resolveOrbitStackTemplates(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(
+  ): {
+    permissions: ScalingProjectPermission[]
+    contracts: ScalingProjectContractSingleAddress[]
+  } {
+    return this.resolveStackTemplates(
       ORBIT_STACK_PERMISSION_TEMPLATES,
+      ORBIT_STACK_CONTRACT_DESCRIPTION,
       overrides,
       contractOverrides,
     )
   }
 
-  getStackTemplatePermissions(
+  invertByTag(
+    resolved: Record<string, PermissionedContract>,
+    tag: StackPermissionsTag,
+  ): Record<string, string> {
+    const result: Record<string, string> = {}
+
+    for (const [contractName, contract] of Object.entries(resolved)) {
+      const tagged = contract.getByTag(tag)
+      for (const contractTag of tagged) {
+        result[contractTag] = contractName
+      }
+    }
+
+    return result
+  }
+
+  resolveStackTemplates(
+    permissionTemplates: StackPermissionTemplate[],
+    contractTemplates: OrbitStackContractTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): {
+    permissions: ScalingProjectPermission[]
+    contracts: ScalingProjectContractSingleAddress[]
+  } {
+    const resolved = this.computeStackContractPermissions(
+      permissionTemplates,
+      overrides,
+      contractOverrides,
+    )
+
+    const adminOf = this.invertByTag(resolved, 'admin')
+
+    const contracts = contractTemplates.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
+        ...(adminOf[d.name] && {
+          upgradableBy: [adminOf[d.name]],
+          upgradeDelay: 'No delay',
+        }),
+      }),
+    )
+
+    return {
+      permissions: this.transformToPermissions(resolved),
+      contracts,
+    }
+  }
+
+  computeStackContractPermissions(
     templates: StackPermissionTemplate[],
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
+  ): Record<string, PermissionedContract> {
     const inversion = this.getInversion()
 
     const contracts: Record<string, PermissionedContract> = {}
@@ -232,19 +308,7 @@ export class ProjectDiscovery {
       }
     }
 
-    return Object.values(contracts)
-      .map((contract) => {
-        const description = contract.generateDescription()
-        if (description !== '') {
-          return {
-            name: contract.name,
-            accounts: [this.formatPermissionedAccount(contract.address)],
-            description,
-            chain: this.chain,
-          }
-        }
-      })
-      .filter(notUndefined)
+    return contracts
   }
 
   getMultisigPermission(
@@ -560,21 +624,6 @@ export class ProjectDiscovery {
     return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
       this.hasContract(overrides?.[d.name] ?? d.name),
     ).map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...upgradesProxy,
-      }),
-    )
-  }
-
-  getOrbitStackContractDetails(
-    upgradesProxy: Partial<ScalingProjectContractSingleAddress>,
-    overrides?: Partial<Record<OrbitStackContractName, string>>,
-  ): ScalingProjectContractSingleAddress[] {
-    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
       this.getContractDetails(overrides?.[d.name] ?? d.name, {
         description: stringFormat(
           d.coreDescription,
