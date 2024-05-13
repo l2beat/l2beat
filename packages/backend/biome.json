@@ -9,7 +9,8 @@
       "discovery/**/.flat*",
       "discovery/**/mermaid",
       "discovery/**/.mermaid",
-      "discovery/**/.flat"
+      "discovery/**/.flat",
+      "discovery/**/script-ts"
     ]
   }
 }
