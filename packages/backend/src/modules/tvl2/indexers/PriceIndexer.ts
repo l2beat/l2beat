@@ -84,7 +84,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     )
 
     if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with missing data', {
+      this.logger.info('Filtered out configurations with data', {
         from,
         to: to.toNumber(),
         skippedConfigurations:

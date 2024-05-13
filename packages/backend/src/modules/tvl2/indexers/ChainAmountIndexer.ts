@@ -94,7 +94,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     )
 
     if (configurationsWithMissingData.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with missing data', {
+      this.logger.info('Filtered out configurations with data', {
         timestamp: timestamp.toNumber(),
         blockNumber,
         skippedConfigurations:
