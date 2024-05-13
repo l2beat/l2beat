@@ -46,7 +46,7 @@ function mergeMetaIntoConfig(path: string) {
   moveFieldParamsIntoHandlerObject(configJsonc)
 
   const metaJson = JSON.parse(readFileSync(metaFilePath, 'utf8'))
-  const meta: DiscoveryMeta = JSON.parse(metaJson) as DiscoveryMeta
+  const meta = DiscoveryMeta.parse(metaJson)
   for (const contract of meta.contracts) {
     for (const [key, metaValue] of Object.entries(contract.values ?? {})) {
       if (isEmptyValueMeta(metaValue)) {
