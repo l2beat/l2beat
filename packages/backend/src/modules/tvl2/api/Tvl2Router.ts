@@ -3,13 +3,14 @@ import { EthereumAddress, ProjectId, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
+import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
 
-export function createTvl2Router(controller: Tvl2Controller) {
+export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
   router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getTvl()
+    const tvl = await controller.getOldTvl(clock.getLastHour())
     ctx.body = tvl
   })
 

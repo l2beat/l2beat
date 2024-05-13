@@ -76,10 +76,6 @@ export class ValueIndexer extends ManagedChildIndexer {
     }
 
     const value = await this.getTvlAt(timestamp)
-    const isZeroValue = Object.values(value).every((x) => x === 0)
-    if (isZeroValue) {
-      return timestamp.toNumber()
-    }
 
     await this.$.valueRepo.addOrUpdate({
       projectId: this.$.project,

@@ -35,8 +35,25 @@ export class PriceRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('prices')
       .where({ configuration_id: configId })
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
       .orderBy('timestamp')
+    return rows.map(toRecord)
+  }
+
+  async getByConfigId(configId: string): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices').where('configuration_id', configId)
+    return rows.map(toRecord)
+  }
+
+  async getByConfigIdsAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+      .whereIn('configuration_id', configIds)
+      .andWhere('timestamp', timestamp.toDate())
+
     return rows.map(toRecord)
   }
 
