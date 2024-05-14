@@ -21,11 +21,11 @@ export function PageWrapper(props: PageWrapperProps) {
     >
       <Head {...props.metadata} preloadApis={props.preloadApis} />
       <body className={props.bodyClassName}>
-        <script src="/scripts/prerender.js" />
+        <script src="/scripts/prerenderIndex.js" />
         {props.children}
         <TooltipProvider />
         {props.banner && <FloatingBanner />}
-        <script src="/scripts/main.js" />
+        <script src="/scripts/index.js" />
       </body>
     </html>
   )
