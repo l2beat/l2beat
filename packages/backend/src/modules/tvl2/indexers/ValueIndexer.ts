@@ -78,7 +78,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       return to
     }
     const configIds = this.amountConfigs
-      .filter((x) => x.sinceTimestamp.gte(timestamp))
+      .filter((x) => x.sinceTimestamp.lte(timestamp))
       .map((x) => x.configId)
     if (configIds.length === 0) {
       this.logger.info('Skipping update due to no configs', {
