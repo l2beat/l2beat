@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd83b684a93563daf27aca5ff9b42b2bd2067c547
+
+# Diff at Tue, 14 May 2024 07:37:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 19810457
+- current block number: 19866806
+
+## Description
+
+Sequencer relatives and sequencing rewards are now ignored in watch mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19810457 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EqbToken (0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BeaconProxy (0x66c7674732357b01B3E9a8F94A05C411BeA1767A)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x759b0a0e3864e323491cdd0f35fd5e8153894b95
 
 # Diff at Mon, 06 May 2024 10:30:49 GMT:
