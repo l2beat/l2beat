@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from '../../../components/Accordion'
 import { Link } from '../../../components/Link'
+import { ChevronDownIcon } from '../../../components/icons'
 import { cn } from '../../../utils/cn'
 import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
@@ -27,6 +28,15 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
           <AccordionTrigger
             className="py-4 relative z-10 px-6 bg-gray-100 dark:bg-zinc-900 dark:border-gray-800 rounded-xl border border-gray-300 flex-col md:flex-row"
             childrenClassName="grid md:grid-cols-5"
+            indicator={
+              <>
+                <button className="w-full border border-black h-10 rounded-lg dark:border-white md:hidden flex items-center justify-center gap-1.5">
+                  <span className="text-base font-bold">Verifiers info</span>
+                  <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+                </button>
+                <ChevronDownIcon className="hidden md:block transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+              </>
+            }
           >
             <div className="flex gap-2 items-center mb-3 md:hidden">
               <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
@@ -64,7 +74,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
               className="mt-7 w-full md:mt-0 md:w-max h-10 md:h-8"
             />
           </AccordionTrigger>
-          <AccordionContent className="border relative pt-[36px] rounded-b-xl px-6 pb-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 space-y-6 md:space-y-2">
+          <AccordionContent className="border relative pt-3 md:pb-6 rounded-b-xl md:px-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 md:space-y-2">
             {item.verifiers.map((verifier) => (
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
@@ -99,7 +109,7 @@ function VerifierCard({
   verifier,
 }: { verifier: ZkCatalogViewEntry['verifiers'][number] }) {
   return (
-    <div className="space-y-5 rounded-lg md:border border-gray-300 dark:border-gray-800 md:py-4 md:px-5">
+    <div className="space-y-5 md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
       <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier" className="lg:col-span-2">

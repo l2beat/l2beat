@@ -46,23 +46,29 @@ interface AccordionTriggerProps {
   children: React.ReactNode
   className?: string
   childrenClassName?: string
+  indicator?: React.ReactNode
 }
 
 export function AccordionTrigger({
   children,
   className,
   childrenClassName,
+  indicator,
 }: AccordionTriggerProps) {
   return (
     <div
       data-role="accordion-trigger"
       className={cn(
-        'flex cursor-pointer items-center justify-between gap-4',
+        'flex cursor-pointer items-center justify-between gap-2 md:gap-4',
         className,
       )}
     >
       <div className={cn('w-full', childrenClassName)}>{children}</div>
-      <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+      {indicator ? (
+        indicator
+      ) : (
+        <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+      )}
     </div>
   )
 }
