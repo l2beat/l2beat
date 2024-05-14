@@ -35,6 +35,10 @@
       "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628"
     },
     {
+      "symbol": "ALEX",
+      "address": "0xe7c3755482d0dA522678Af05945062d4427e0923"
+    },
+    {
       "symbol": "alUSD",
       "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
       "category": "stablecoin"
@@ -872,6 +876,11 @@
       "coingeckoId": "phantasma"
     },
     {
+      "symbol": "eSOV",
+      "address": "0xbdab72602e9AD40FC6a6852CAf43258113B8F7a5",
+      "coingeckoId": "sovryn"
+    },
+    {
       "symbol": "SPELL",
       "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6"
     },
@@ -923,6 +932,10 @@
     {
       "symbol": "SYN",
       "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29"
+    },
+    {
+      "symbol": "tBTC",
+      "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88"
     },
     {
       "symbol": "TEL",
