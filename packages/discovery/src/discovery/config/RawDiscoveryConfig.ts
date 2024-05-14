@@ -43,7 +43,7 @@ export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({
   name: z.string().min(1),
   chain: z.string().min(1),
-  configVersion: z.number().default(1),
+  configVersion: z.number().optional(),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number().positive()),

@@ -87,7 +87,10 @@ function transformConfig(path: string) {
   if (configJsonc === null) {
     return
   }
-  if (configJsonc.configVersion >= 2) {
+  if (
+    configJsonc.configVersion !== undefined &&
+    configJsonc.configVersion >= 2
+  ) {
     console.log('Skipping', path, 'because it is already version 2')
     return
   }

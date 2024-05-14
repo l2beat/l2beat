@@ -204,7 +204,7 @@ describe('discovery config.jsonc', () => {
             }
 
             for (const [key, value] of Object.entries(override.fields)) {
-              if (value.type === 'accessControl') {
+              if (value.handler?.type === 'accessControl') {
                 assert(
                   key === 'accessControl',
                   `${
