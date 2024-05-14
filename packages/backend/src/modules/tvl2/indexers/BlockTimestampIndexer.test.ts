@@ -19,11 +19,11 @@ describe(BlockTimestampIndexer.name, () => {
 
   describe(BlockTimestampIndexer.prototype.update.name, () => {
     it('finds timestamp to sync and gets closest block', async () => {
-      const from = UnixTime.fromDate(new Date('2021-01-01T21:00:00Z'))
-      const to = from.add(1, 'days')
-      const timestampToSync = from.toEndOf('day')
+      const from = 100
+      const to = 300
+      const timestampToSync = new UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(timestampToSync), // 21:00
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
 
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
@@ -45,7 +45,9 @@ describe(BlockTimestampIndexer.name, () => {
         syncOptimizer,
       })
 
-      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+      const newSafeHeight = await indexer.update(from, to)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
@@ -58,6 +60,32 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       expect(newSafeHeight).toEqual(timestampToSync.toNumber())
+    })
+
+    it('returns if optimized timestamp is later than to', async () => {
+      const from = 100
+      const to = 300
+      const timestampToSync = new UnixTime(to + 100)
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: mockFn().returnsOnce(timestampToSync),
+      })
+
+      const indexer = new BlockTimestampIndexer({
+        logger: Logger.SILENT,
+        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+        indexerService: mockObject<IndexerService>({}),
+        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        chain: 'chain',
+        minHeight: 0,
+        syncOptimizer,
+      })
+
+      const newSafeHeight = await indexer.update(from, to)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+
+      expect(newSafeHeight).toEqual(to)
     })
   })
 

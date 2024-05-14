@@ -108,6 +108,7 @@ export interface TrackedTxsConfig {
           readonly ethereumProviderUrl: string
           readonly ethereumProviderCallsPerMinute?: number
           readonly aggregatorEnabled: boolean
+          readonly coingeckoApiKey: string
         }
       | false
   }

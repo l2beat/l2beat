@@ -14,26 +14,28 @@ import { DiscoveryConfig } from './DiscoveryConfig'
 import { DiscoveryMeta } from './DiscoveryMeta'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
-export const TEMPLATES_PATH = path.join('discovery', '_templates')
-
 export class ConfigReader {
   public templateService: TemplateService
 
-  constructor() {
+  constructor(private readonly rootPath: string = '') {
     this.templateService = new TemplateService()
   }
 
   async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
     assert(
-      fileExistsCaseSensitive(`discovery/${name}`),
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
       'Chain not found in project, check if case matches',
     )
 
-    const contents = await readJsonc(`discovery/${name}/${chain}/config.jsonc`)
+    const contents = await readJsonc(
+      path.join(this.rootPath, 'discovery', name, chain, 'config.jsonc'),
+    )
     const rawConfig = RawDiscoveryConfig.safeParse(contents)
     if (!rawConfig.success) {
       const message = formatZodParsingError(rawConfig.error, 'config.jsonc')
@@ -55,7 +57,7 @@ export class ConfigReader {
     chain: string,
     skipTemplates: boolean = false,
   ): Promise<DiscoveryMeta | undefined> {
-    const projectPath = posix.join('discovery', name)
+    const projectPath = posix.join(this.rootPath, 'discovery', name)
     const chainPath = posix.join(projectPath, chain)
     const metaPath = posix.join(chainPath, 'meta.json')
 
@@ -84,16 +86,18 @@ export class ConfigReader {
 
   async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
     assert(
-      fileExistsCaseSensitive(`discovery/${name}`),
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
       'Chain not found in project, check if case matches',
     )
 
     const contents = await readFile(
-      `discovery/${name}/${chain}/discovered.json`,
+      path.join(this.rootPath, 'discovery', name, chain, 'discovered.json'),
       'utf-8',
     )
 
@@ -103,12 +107,14 @@ export class ConfigReader {
   }
 
   readAllChains(): string[] {
-    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
-      (x) => x.isDirectory() && !x.name.startsWith('_'),
-    )
+    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+      withFileTypes: true,
+    }).filter((x) => x.isDirectory() && !x.name.startsWith('_'))
     const chains = new Set<string>()
     for (const folder of folders) {
-      readdirSync(`discovery/${folder.name}`, { withFileTypes: true })
+      readdirSync(path.join(this.rootPath, 'discovery', folder.name), {
+        withFileTypes: true,
+      })
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
         .forEach((x) => chains.add(x))
@@ -129,16 +135,19 @@ export class ConfigReader {
   }
 
   readAllProjectsForChain(chain: string): string[] {
-    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
-      (x) => x.isDirectory(),
-    )
+    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+      withFileTypes: true,
+    }).filter((x) => x.isDirectory())
 
     const projects = []
 
     for (const folder of folders) {
-      const contents = readdirSync(`discovery/${folder.name}`, {
-        withFileTypes: true,
-      })
+      const contents = readdirSync(
+        path.join(this.rootPath, 'discovery', folder.name),
+        {
+          withFileTypes: true,
+        },
+      )
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
@@ -146,9 +155,12 @@ export class ConfigReader {
         continue
       }
 
-      const chainFiles = readdirSync(`discovery/${folder.name}/${chain}`, {
-        withFileTypes: true,
-      })
+      const chainFiles = readdirSync(
+        path.join(this.rootPath, 'discovery', folder.name, chain),
+        {
+          withFileTypes: true,
+        },
+      )
         .filter((x) => x.isFile())
         .map((x) => x.name)
 
