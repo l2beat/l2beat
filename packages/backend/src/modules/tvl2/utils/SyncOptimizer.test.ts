@@ -5,7 +5,7 @@ import { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
-  describe(SyncOptimizer.prototype.getOptimizedTimestamp.name, () => {
+  describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
     const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
     const SIX_HOURLY_CUTOFF = 10
     const DAILY_CUTOFF = 93
@@ -26,8 +26,9 @@ describe(SyncOptimizer.name, () => {
         1,
         'hours',
       )
-      const timestampToSync =
-        syncOptimizer.getOptimizedTimestamp(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case daily should be returned
       const expected = hourlyTimestamp.toEndOf('day')
 
@@ -43,8 +44,9 @@ describe(SyncOptimizer.name, () => {
         'days',
       ).add(1, 'hours')
 
-      const timestampToSync =
-        syncOptimizer.getOptimizedTimestamp(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case sixHourly should be returned
       const expected = hourlyTimestamp.toEndOf('six hours')
 
@@ -56,8 +58,9 @@ describe(SyncOptimizer.name, () => {
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
-      const timestampToSync =
-        syncOptimizer.getOptimizedTimestamp(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case daily should be returned
       const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
 
@@ -86,28 +89,6 @@ describe(SyncOptimizer.name, () => {
         now.add(365, 'days').add(-1, 'hours'),
       )
       expect(result).toEqual(true)
-    })
-  })
-
-  describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const now = UnixTime.fromDate(new Date('2023-05-01T00:00:01Z'))
-
-    const clock = mockObject<Clock>({
-      getLastHour: () => now,
-    })
-
-    const syncOptimizer = new SyncOptimizer(clock, {
-      removeHourlyAfterDays: 10,
-      removeSixHourlyAfterDays: 93,
-    })
-
-    it('returns timestamp to sync', () => {
-      const result = syncOptimizer.getTimestampToSync(
-        now.toNumber(),
-        now.add(365, 'days').toNumber(),
-      )
-
-      expect(result).toEqual(now.toEndOf('hour'))
     })
   })
 })

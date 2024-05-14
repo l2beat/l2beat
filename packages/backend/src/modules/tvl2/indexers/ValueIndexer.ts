@@ -68,7 +68,15 @@ export class ValueIndexer extends ManagedChildIndexer {
     // YES - skip update
     // NO - continue update
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+    if (timestamp.toNumber() > to) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+        optimizedTimestamp: timestamp.toNumber(),
+      })
+      return to
+    }
 
     const value = await this.getTvlAt(timestamp)
 
