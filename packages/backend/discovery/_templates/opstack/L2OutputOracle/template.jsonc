@@ -14,9 +14,11 @@
   ],
   "fields": {
     "deletedOutputs": {
-      "type": "stateFromEvent",
-      "event": "OutputsDeleted",
-      "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+      "handler": {
+        "type": "stateFromEvent",
+        "event": "OutputsDeleted",
+        "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+      }
     }
   }
 }
