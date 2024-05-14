@@ -30,7 +30,7 @@ export const metal: Layer2 = opStackL2({
       repositories: [],
       socialMedia: [
         'https://twitter.com/metalpaysme',
-        'https://reddit.com/r/MetalPay',
+        'https://reddit.com/r/metalpay/',
         'https://facebook.com/metalpaysme',
         'https://t.me/metalpaysme',
         'https://linkedin.com/company/metallicus',
