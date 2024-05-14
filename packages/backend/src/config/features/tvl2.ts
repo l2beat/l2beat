@@ -55,7 +55,7 @@ export function getTvl2Config(
       chainConverter,
       chainToProject,
     ),
-    prices: getPricesConfig(tokenList, chainConverter),
+    prices: getPricesConfig(tokenList),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString([
       'COINGECKO_API_KEY_FOR_TVL2',
@@ -167,41 +167,34 @@ function getUntilTimestamp(
   return UnixTime.max(tokenUntil, escrowUntil)
 }
 
-function getPricesConfig(
-  tokenList: Token[],
-  chainConverter: ChainConverter,
-): PriceConfigEntry[] {
-  const uniqueEntries = new Map<string, PriceConfigEntry>()
+function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
+  const prices = new Map<string, PriceConfigEntry>()
 
   for (const token of tokenList) {
-    const chain = chainConverter.toName(token.chainId)
-    const key = `${chain}-${(token.address ?? 'native').toString()}`
-    const curr = uniqueEntries.get(key)
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.id}`)
 
-    if (curr === undefined) {
-      uniqueEntries.set(key, {
-        type: 'coingecko',
-        assetId: token.id,
-        address: token.address ?? 'native',
-        chain: chain,
-        sinceTimestamp: token.sinceTimestamp,
-        coingeckoId: token.coingeckoId,
-      })
-    } else {
-      if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
-        uniqueEntries.set(key, {
-          type: 'coingecko',
-          assetId: token.id,
-          address: token.address ?? 'native',
-          chain: chain,
-          sinceTimestamp: token.sinceTimestamp,
-          coingeckoId: token.coingeckoId,
-        })
-      }
-    }
+    const key = `${chain.name}-${(token.address ?? 'native').toString()}`
+
+    assert(prices.get(key) === undefined, 'Every price should be unique')
+
+    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+    const sinceTimestamp = UnixTime.max(
+      chain.minTimestampForTvl,
+      token.sinceTimestamp,
+    )
+
+    prices.set(key, {
+      type: 'coingecko',
+      assetId: token.id,
+      address: token.address ?? 'native',
+      chain: chain.name,
+      sinceTimestamp,
+      coingeckoId: token.coingeckoId,
+    })
   }
 
-  return Array.from(uniqueEntries.values())
+  return Array.from(prices.values())
 }
 
 function getChainToProjectMapping(
