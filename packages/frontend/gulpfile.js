@@ -42,7 +42,7 @@ function watchStatic() {
 }
 
 function buildContent() {
-  return exec(`bunx --bun run src/build/buildPages.ts`)
+  return exec(`bun src/build/buildPages.ts`)
 }
 
 function watchContent() {
