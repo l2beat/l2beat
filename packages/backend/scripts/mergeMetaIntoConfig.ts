@@ -4,6 +4,7 @@ import { join } from 'path'
 import { DiscoveryMeta, isEmptyValueMeta } from '@l2beat/discovery'
 import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
+import { rimraf } from 'rimraf'
 
 function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
   if (configJsonc.overrides === undefined) {
@@ -77,6 +78,8 @@ function mergeMetaIntoConfig(path: string, configJsonc: RawDiscoveryConfig) {
       fields[key] = { ...metaValuesWithoutNulls, ...fields[key] }
     }
   }
+
+  rimraf(metaFilePath)
 }
 
 function transformConfig(path: string) {
