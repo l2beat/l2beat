@@ -2,7 +2,10 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { orbitStackL2 } from './templates/orbitStack'
+import {
+  DEFAULT_OTHER_CONSIDERATIONS,
+  orbitStackL2,
+} from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -22,6 +25,16 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+
+const proxyAdmin2Upgradeability = {
+  upgradableBy: ['UpgradeExecutorAdmin'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
 
 const maxTimeVariation = discovery.getContractValue<number[]>(
   'SequencerInbox',
@@ -91,6 +104,7 @@ export const nova: Layer2 = orbitStackL2({
     discovery.getContractDetails('L1ArbitrumTimelock', {
       description:
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+      ...proxyAdmin2Upgradeability,
     }),
   ],
   nonTemplateEscrows: [
@@ -136,6 +150,7 @@ export const nova: Layer2 = orbitStackL2({
   },
   nonTemplateTechnology: {
     otherConsiderations: [
+      ...DEFAULT_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
