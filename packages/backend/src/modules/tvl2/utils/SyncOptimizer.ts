@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { assert } from 'console'
 import { Clock } from '../../../tools/Clock'
 
 interface SyncOptimizerOptions {
@@ -15,19 +14,11 @@ export class SyncOptimizer {
   ) {}
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
-    return timestamp.equals(this.getOptimizedTimestamp(timestamp))
+    return timestamp.equals(this.getTimestampToSync(timestamp.toNumber()))
   }
 
-  getTimestampToSync(from: number, to: number): UnixTime {
-    const timestamp = this.getOptimizedTimestamp(new UnixTime(from))
-    // It relies on an assumption that all indexers use SyncOptimizer
-    // If this assert starts throwing either update logic of fix configuration
-    assert(timestamp.lte(new UnixTime(to)), 'Invalid range')
-
-    return timestamp
-  }
-
-  getOptimizedTimestamp(timestamp: UnixTime): UnixTime {
+  getTimestampToSync(_timestamp: number): UnixTime {
+    const timestamp = new UnixTime(_timestamp)
     const lastHour = this.clock.getLastHour()
 
     const hourlyCutOff = lastHour.add(
