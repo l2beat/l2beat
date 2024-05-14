@@ -18,6 +18,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import { ValueService } from '../services/ValueService'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
@@ -83,9 +84,13 @@ export function createCirculatingSupplyModule(
 
     const parents = [priceModule.indexer, ...csIndexers]
 
+    const valueService = new ValueService({
+      amountRepository: peripherals.getRepository(AmountRepository),
+      priceRepository: peripherals.getRepository(PriceRepository),
+    })
+
     const indexer = new ValueIndexer({
-      priceRepo: peripherals.getRepository(PriceRepository),
-      amountRepo: peripherals.getRepository(AmountRepository),
+      valueService,
       valueRepository: peripherals.getRepository(ValueRepository),
       priceConfigs: [...priceConfigs],
       amountConfigs,
@@ -102,6 +107,7 @@ export function createCirculatingSupplyModule(
           amountConfigs[0].sinceTimestamp,
         )
         .toNumber(),
+      maxTimestampsToProcessAtOnce: 48,
     })
 
     valueIndexers.push(indexer)
