@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
 
@@ -18,12 +18,7 @@ export class SyncOptimizer {
   }
 
   getTimestampToSync(from: number, to: number): UnixTime {
-    const timestamp = this.getOptimizedTimestamp(new UnixTime(from))
-    // It relies on an assumption that all indexers use SyncOptimizer
-    // If this assert starts throwing either update logic of fix configuration
-    assert(timestamp.lte(new UnixTime(to)), 'Invalid range')
-
-    return timestamp
+    return this.getOptimizedTimestamp(new UnixTime(from))
   }
 
   getOptimizedTimestamp(timestamp: UnixTime): UnixTime {
