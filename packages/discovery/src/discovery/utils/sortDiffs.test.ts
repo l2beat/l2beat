@@ -1,12 +1,14 @@
 import { expect } from 'earl'
 
-import { ContractMeta, ValueMeta } from '../config/DiscoveryMeta'
 import { FieldDiff } from '../output/diffContracts'
 import { sortBySeverity } from './sortDiffs'
+import {
+  ContractFieldSeverity,
+  DiscoveryContract,
+} from '../config/RawDiscoveryConfig'
 
-const CONTRACT_META: ContractMeta = {
-  name: 'Contract',
-  values: {
+const CONTRACT: DiscoveryContract = {
+  fields: {
     key1: valueMetaWithSeverity('HIGH'),
     key2: valueMetaWithSeverity('MEDIUM'),
     key3: valueMetaWithSeverity('LOW'),
@@ -25,7 +27,7 @@ const DIFFS: FieldDiff[] = [
 
 describe(sortBySeverity.name, () => {
   it('sorts diffs by severity', () => {
-    expect(sortBySeverity(DIFFS, CONTRACT_META)).toEqual([
+    expect(sortBySeverity(DIFFS, CONTRACT)).toEqual([
       { key: 'values.key1' },
       { key: 'values.key2' },
       { key: 'values.key5' },
@@ -36,7 +38,7 @@ describe(sortBySeverity.name, () => {
   })
 
   it('returns empty array if diffs is undefined', () => {
-    expect(sortBySeverity(undefined, CONTRACT_META)).toEqual([])
+    expect(sortBySeverity(undefined, CONTRACT)).toEqual([])
     expect(sortBySeverity(undefined, undefined)).toEqual([])
   })
 
@@ -45,10 +47,8 @@ describe(sortBySeverity.name, () => {
   })
 })
 
-function valueMetaWithSeverity(severity: ValueMeta['severity']) {
+function valueMetaWithSeverity(severity: ContractFieldSeverity) {
   return {
-    description: null,
-    type: null,
     severity,
   }
 }

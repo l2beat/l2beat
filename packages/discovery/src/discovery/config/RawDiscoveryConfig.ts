@@ -12,11 +12,14 @@ export const ValueType = z.enum([
   'PERMISSION',
 ])
 
+export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   description: z.string().nullable().optional(),
-  severity: z.enum(['HIGH', 'MEDIUM', 'LOW']).nullable().optional(),
+  severity: z.optional(ContractFieldSeverity).nullable(),
   type: z
     .union([ValueType, z.array(ValueType)])
     .nullable()

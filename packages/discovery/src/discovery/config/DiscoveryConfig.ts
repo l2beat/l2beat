@@ -1,8 +1,10 @@
 import { hashJson } from '@l2beat/shared'
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
-import { DiscoveryOverrides } from './DiscoveryOverrides'
-import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { ContractOverrides, DiscoveryOverrides } from './DiscoveryOverrides'
+import type {
+  RawDiscoveryConfig,
+} from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 // values inside this class should not be modified during the runtime
@@ -58,6 +60,12 @@ export class DiscoveryConfig {
       return
     }
     return this.config.sharedModules?.[name]
+  }
+
+  getContract(
+    nameOrAddress: string | EthereumAddress,
+  ): ContractOverrides | undefined {
+    return this.overrides.get(nameOrAddress)
   }
 
   private getName(address: EthereumAddress): string | undefined {
