@@ -71,7 +71,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             </DetailsItem>
             <DetailsLink
               slug={item.slug}
-              className="mt-7 w-full md:mt-0 md:w-max h-10 md:h-8"
+              className="self-center justify-self-center"
             />
           </AccordionTrigger>
           <AccordionContent className="border relative pt-3 md:pb-6 rounded-b-xl md:px-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 md:space-y-2">
@@ -165,7 +165,7 @@ function DetailsLink({
     <a
       href={`/zk-catalog/${slug}`}
       className={cn(
-        'flex items-center justify-center self-center justify-self-center w-max text-sm rounded-lg px-6 bg-black text-white dark:bg-white dark:text-black mt-7 md:mt-0 md:w-max h-10 md:h-8"',
+        'flex items-center font-bold justify-center w-full text-base rounded-lg px-6 bg-black text-white dark:bg-white dark:text-black mt-7 md:mt-0 md:w-max h-10 md:h-8',
         className,
       )}
     >
