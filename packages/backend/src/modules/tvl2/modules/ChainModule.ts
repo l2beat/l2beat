@@ -201,7 +201,7 @@ function createChainModule(
 
   const descendant = new DescendantIndexer({
     logger,
-    tag: 'chain',
+    tag: `chain:${chain}`,
     parents,
     indexerService,
     minHeight: Math.min(

@@ -35,5 +35,12 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
       },
     ),
   )
+
+  router.get('/api/tvl2/project-assets-breakdown', async (ctx) => {
+    const breakdown = await controller.getTvlBreakdown()
+
+    ctx.body = breakdown
+  })
+
   return router
 }
