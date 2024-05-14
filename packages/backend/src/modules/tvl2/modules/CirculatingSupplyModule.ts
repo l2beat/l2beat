@@ -86,7 +86,7 @@ export function createCirculatingSupplyModule(
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),
       amountRepo: peripherals.getRepository(AmountRepository),
-      valueRepo: peripherals.getRepository(ValueRepository),
+      valueRepository: peripherals.getRepository(ValueRepository),
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),
