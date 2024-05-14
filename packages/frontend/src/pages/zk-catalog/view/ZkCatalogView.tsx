@@ -44,7 +44,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             </div>
             <DetailsItem
               title="Name"
-              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start hidden md:block"
+              className="flex-col justify-start items-start hidden md:flex"
             >
               <div className="flex items-center gap-2">
                 <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
@@ -110,20 +110,12 @@ function VerifierCard({
 }: { verifier: ZkCatalogViewEntry['verifiers'][number] }) {
   return (
     <div className="space-y-5 md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
-      <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
+      <div className="grid lg:grid-cols-3 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
-        <DetailsItem title="Verifier" className="lg:col-span-2">
+        <DetailsItem title="Verifier">
           <EtherscanLink
-            className="hidden md:block"
             etherscanUrl={getExplorerUrlByChainId(verifier.chainId)}
             address={verifier.contractAddress.toString()}
-            truncate={false}
-          />
-          <EtherscanLink
-            className="md:hidden"
-            etherscanUrl={getExplorerUrlByChainId(verifier.chainId)}
-            address={verifier.contractAddress.toString()}
-            truncate={true}
           />
         </DetailsItem>
         <DetailsItem title="Verification status">
