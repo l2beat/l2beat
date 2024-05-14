@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import {
+  ConfigReader,
   DiscoveryConfig,
   DiscoveryMeta,
   isEmptyValueMeta,
@@ -9,6 +10,11 @@ import {
 import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
 import { rimraf } from 'rimraf'
+import {
+  getDiffHistoryHash,
+  getDiscoveryHash,
+  updateDiffHistoryHash,
+} from '../src/modules/update-monitor/utils/hashing'
 
 function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
   if (configJsonc.overrides === undefined) {
@@ -86,9 +92,13 @@ function mergeMetaIntoConfig(path: string, configJsonc: RawDiscoveryConfig) {
   rimraf(metaFilePath)
 }
 
-function updateConfigHashInDiscovery(path: string, config: RawDiscoveryConfig) {
-  const reparsedConfig = RawDiscoveryConfig.parse(config)
-  const discoveryConfig = new DiscoveryConfig(reparsedConfig)
+async function updateConfigHashInDiscovery(
+  path: string,
+  name: string,
+  chain: string,
+) {
+  const configReader = new ConfigReader()
+  const discoveryConfig = await configReader.readConfig(name, chain)
   const configHash = discoveryConfig.hash
   const discoveryFilePath = join(path, 'discovered.json')
   const discoveryFileContent = readFileSync(discoveryFilePath, 'utf8')
@@ -97,9 +107,11 @@ function updateConfigHashInDiscovery(path: string, config: RawDiscoveryConfig) {
     `"configHash": "${configHash}"`,
   )
   writeFileSync(discoveryFilePath, discoveryFileContentWithUpdatedHash)
+  const diffHistoryPath = join(path, 'diffHistory.md')
+  await updateDiffHistoryHash(diffHistoryPath, name, chain)
 }
 
-function transformConfig(path: string) {
+async function transformConfig(path: string) {
   const configFilePath = join(path, 'config.jsonc')
   const configJsonc = parse(
     readFileSync(configFilePath, 'utf8'),
@@ -135,7 +147,11 @@ function transformConfig(path: string) {
 
   writeFileSync(configFilePath, stringify(configJsoncWithVersion2, null, 2))
 
-  updateConfigHashInDiscovery(path, configJsoncWithVersion2)
+  await updateConfigHashInDiscovery(
+    path,
+    configJsoncWithVersion2.name,
+    configJsoncWithVersion2.chain,
+  )
 }
 
 function listAllPaths(path: string): string[] {
@@ -149,13 +165,15 @@ function listAllPaths(path: string): string[] {
   return result
 }
 
-function main() {
+async function main() {
   console.log('Mergeing meta.json files into config.jsonc files...')
   const discoveryFolder = './discovery'
   const configPaths = listAllPaths(discoveryFolder).filter((path) =>
     existsSync(join(path, 'config.jsonc')),
   )
-  configPaths.forEach(transformConfig)
+  for (const configPath of configPaths) {
+    await transformConfig(configPath)
+  }
 }
 
 main()
