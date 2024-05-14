@@ -1,7 +1,11 @@
 /* eslint-disable  @typescript-eslint/no-non-null-assertion */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { DiscoveryMeta, isEmptyValueMeta } from '@l2beat/discovery'
+import {
+  DiscoveryConfig,
+  DiscoveryMeta,
+  isEmptyValueMeta,
+} from '@l2beat/discovery'
 import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
 import { rimraf } from 'rimraf'
@@ -82,6 +86,18 @@ function mergeMetaIntoConfig(path: string, configJsonc: RawDiscoveryConfig) {
   rimraf(metaFilePath)
 }
 
+function updateConfigHashInDiscovery(path: string, config: RawDiscoveryConfig) {
+  const discoveryConfig = new DiscoveryConfig(config)
+  const configHash = discoveryConfig.hash
+  const discoveryFilePath = join(path, 'discovered.json')
+  const discoveryFileContent = readFileSync(discoveryFilePath, 'utf8')
+  const discoveryFileContentWithUpdatedHash = discoveryFileContent.replace(
+    /"configHash": ".+?"/,
+    `"configHash": "${configHash}"`,
+  )
+  writeFileSync(discoveryFilePath, discoveryFileContentWithUpdatedHash)
+}
+
 function transformConfig(path: string) {
   const configFilePath = join(path, 'config.jsonc')
   const configJsonc = parse(
@@ -114,8 +130,11 @@ function transformConfig(path: string) {
     // @ts-ignore
     configVersion: 2,
     ...configJsonc,
-  }
+  } as RawDiscoveryConfig
+
   writeFileSync(configFilePath, stringify(configJsoncWithVersion2, null, 2))
+
+  updateConfigHashInDiscovery(path, configJsoncWithVersion2)
 }
 
 function listAllPaths(path: string): string[] {
