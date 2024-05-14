@@ -1,9 +1,9 @@
 {
-  "$id": "https://l2beat.com/config.schema.json",
+  "$id": "https://l2beat.com/configV2.schema.json",
   "title": "Discovery config",
   "description": "A configuration file for smart contract discovery",
   "type": "object",
-  "required": ["name", "initialAddresses", "configVersion"],
+  "required": ["name", "initialAddresses"],
   "unevaluatedProperties": false,
   "properties": {
     "$schema": {
@@ -30,10 +30,6 @@
         "gnosis",
         "sepolia"
       ]
-    },
-    "configVersion": {
-      "description": "Version number of the config file format",
-      "type": "number"
     },
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",
@@ -65,7 +61,7 @@
       "description": "Specific configuration for discovered contracts",
       "unevaluatedProperties": false,
       "patternProperties": {
-        "^.+$": { "$ref": "contract.schema.json" }
+        "^.+$": { "$ref": "contract.v2.schema.json" }
       }
     },
     "names": {

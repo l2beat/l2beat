@@ -9,9 +9,7 @@ import {
 import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
 import { rimraf } from 'rimraf'
-import {
-  updateDiffHistoryHash,
-} from '../src/modules/update-monitor/utils/hashing'
+import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
   if (configJsonc.overrides === undefined) {
@@ -112,14 +110,12 @@ async function transformConfig(path: string) {
   const configFilePath = join(path, 'config.jsonc')
   const configJsonc = parse(
     readFileSync(configFilePath, 'utf8'),
-  ) as unknown as RawDiscoveryConfig
+  ) as unknown as RawDiscoveryConfig & { ['$schema']: string }
   if (configJsonc === null) {
     return
   }
-  if (
-    configJsonc.configVersion !== undefined &&
-    configJsonc.configVersion >= 2
-  ) {
+
+  if (configJsonc['$schema'].includes('config.v2.schema.json')) {
     console.log('Skipping', path, 'because it is already version 2')
     return
   }
@@ -127,28 +123,10 @@ async function transformConfig(path: string) {
   moveFieldParamsIntoHandlerObject(configJsonc)
   mergeMetaIntoConfig(path, configJsonc)
 
-  configJsonc.configVersion = 2
-  // I want .configVersion to come right after $schema, chain and name,
-  // that's why I'm adding configVersion in such a weird way:
-  const configJsoncWithVersion2 = {
-    // @ts-ignore
-    $schema: configJsonc['$schema'],
-    // @ts-ignore
-    chain: configJsonc.chain,
-    // @ts-ignore
-    name: configJsonc.name,
-    // @ts-ignore
-    configVersion: 2,
-    ...configJsonc,
-  } as RawDiscoveryConfig
+  configJsonc['$schema'] = '../../../../discovery/schemas/config.v2.schema.json'
+  writeFileSync(configFilePath, stringify(configJsonc, null, 2))
 
-  writeFileSync(configFilePath, stringify(configJsoncWithVersion2, null, 2))
-
-  await updateConfigHashInDiscovery(
-    path,
-    configJsoncWithVersion2.name,
-    configJsoncWithVersion2.chain,
-  )
+  await updateConfigHashInDiscovery(path, configJsonc.name, configJsonc.chain)
 }
 
 function listAllPaths(path: string): string[] {
