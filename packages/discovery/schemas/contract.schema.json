@@ -8,10 +8,6 @@
     "$schema": {
       "type": "string"
     },
-    "configVersion": {
-      "description": "Version number of the config file format",
-      "type": "number"
-    },
     "extends": { "type": "string" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": { "type": "string" },
@@ -33,6 +29,7 @@
       "patternProperties": {
         "^.+$": {
           "type": "object",
+          "unevaluatedProperties": false,
           "properties": {
             "description": { "type": ["string", "null"] },
             "severity": {
