@@ -11,16 +11,16 @@ import {
   L2CostsPricesRepository,
 } from '../repositories/L2CostsPricesRepository'
 
-export interface L2CostsPricesDeps
+export interface L2CostsPricesIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   l2CostsPricesRepository: L2CostsPricesRepository
   coingeckoQueryService: CoingeckoQueryService
 }
 
-const COINGECKO_ID = CoingeckoId('ethereum')
+export const ETHEREUM_COINGECKO_ID = CoingeckoId('ethereum')
 
 export class L2CostsPricesIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: L2CostsPricesDeps) {
+  constructor(private readonly $: L2CostsPricesIndexerDeps) {
     super({ ...$, name: 'l2_costs_prices' })
   }
 
@@ -33,7 +33,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       'days',
     )
 
-    let shiftedTo = unixTo.gt(maxRange) ? maxRange : unixTo
+    const shiftedTo = unixTo.gt(maxRange) ? maxRange : unixTo
 
     this.logger.info('Time range shifted', {
       shiftedTo,
@@ -60,7 +60,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
     to: UnixTime,
   ): Promise<L2CostsPricesRecord[]> {
     const prices = await this.$.coingeckoQueryService.getUsdPriceHistoryHourly(
-      COINGECKO_ID,
+      ETHEREUM_COINGECKO_ID,
       from,
       to,
       undefined,
