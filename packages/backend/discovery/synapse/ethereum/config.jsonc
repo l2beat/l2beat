@@ -8,7 +8,8 @@
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
   ],
   "names": {
-    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Bridge Multisig"
+    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": "Bridge Multisig",
+    "0x2796317b0fF8538F253012862c06787Adfb8cEb6": "SynapseBridge"
   },
   "overrides": {
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": {
