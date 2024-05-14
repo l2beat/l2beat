@@ -29,7 +29,7 @@
     "compare-orbit-chains": "ts-node --transpile-only scripts/compareOrbitChains.ts",
     "compare-opstack-chains": "ts-node --transpile-only scripts/compareOpStackChains.ts",
     "compare-flat-sources": "ts-node --transpile-only scripts/compare-flat/index.ts",
-    "merge-meta-into-config": "ts-node --transpile-only scripts/mergeMetaIntoConfig.ts"
+    "merge-meta-into-config": "ts-node --transpile-only scripts/mergeMetaIntoConfig.ts && yarn format:fix"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",

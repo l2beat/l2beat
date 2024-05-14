@@ -29,20 +29,11 @@ function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
   }
 }
 
-function mergeMetaIntoConfig(path: string) {
+function mergeMetaIntoConfig(path: string, configJsonc: RawDiscoveryConfig) {
   const metaFilePath = join(path, 'meta.json')
   if (!existsSync(metaFilePath)) {
     return
   }
-  const configFilePath = join(path, 'config.jsonc')
-  const configJsonc = parse(
-    readFileSync(configFilePath, 'utf8'),
-  ) as unknown as RawDiscoveryConfig
-  if (configJsonc === null) {
-    return
-  }
-
-  moveFieldParamsIntoHandlerObject(configJsonc)
 
   const metaJson = JSON.parse(readFileSync(metaFilePath, 'utf8'))
   const meta = DiscoveryMeta.parse(metaJson)
@@ -86,8 +77,39 @@ function mergeMetaIntoConfig(path: string) {
       fields[key] = { ...metaValuesWithoutNulls, ...fields[key] }
     }
   }
+}
 
-  writeFileSync(configFilePath, stringify(configJsonc, null, 2))
+function transformConfig(path: string) {
+  const configFilePath = join(path, 'config.jsonc')
+  const configJsonc = parse(
+    readFileSync(configFilePath, 'utf8'),
+  ) as unknown as RawDiscoveryConfig
+  if (configJsonc === null) {
+    return
+  }
+  if (configJsonc.configVersion >= 2) {
+    console.log('Skipping', path, 'because it is already version 2')
+    return
+  }
+
+  moveFieldParamsIntoHandlerObject(configJsonc)
+  mergeMetaIntoConfig(path, configJsonc)
+
+  configJsonc.configVersion = 2
+  // I want .configVersion to come right after $schema, chain and name,
+  // that's why I'm adding configVersion in such a weird way:
+  const configJsoncWithVersion2 = {
+    // @ts-ignore
+    $schema: configJsonc['$schema'],
+    // @ts-ignore
+    chain: configJsonc.chain,
+    // @ts-ignore
+    name: configJsonc.name,
+    // @ts-ignore
+    configVersion: 2,
+    ...configJsonc,
+  }
+  writeFileSync(configFilePath, stringify(configJsoncWithVersion2, null, 2))
 }
 
 function listAllPaths(path: string): string[] {
@@ -107,7 +129,7 @@ function main() {
   const configPaths = listAllPaths(discoveryFolder).filter((path) =>
     existsSync(join(path, 'config.jsonc')),
   )
-  configPaths.forEach(mergeMetaIntoConfig)
+  configPaths.forEach(transformConfig)
 }
 
 main()

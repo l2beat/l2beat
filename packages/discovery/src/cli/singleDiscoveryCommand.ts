@@ -24,6 +24,7 @@ export async function singleDiscoveryCommand(
   const projectConfig = new DiscoveryConfig({
     name: singleDiscovery.address.toString(),
     chain: singleDiscovery.chain.name,
+    configVersion: 2,
     initialAddresses: [singleDiscovery.address],
   })
 
