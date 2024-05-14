@@ -8,7 +8,6 @@ import {
   flattenFirstSource,
   removeComments,
 } from '../../flatten/utils'
-import { TEMPLATES_PATH } from '../config/ConfigReader'
 import { ContractMeta, DiscoveryMeta } from '../config/DiscoveryMeta'
 import {
   DiscoveryContract,
@@ -17,11 +16,13 @@ import {
 import { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
+const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 const TEMPLATE_SIMILARITY_THRESHOLD = 0.55
 
 export class TemplateService {
   constructor(
+    private readonly rootPath: string = '',
     private readonly similarityThreshold: number = TEMPLATE_SIMILARITY_THRESHOLD,
   ) {}
 
@@ -38,7 +39,8 @@ export class TemplateService {
       content: flatSource,
     }
 
-    const templatePaths = listAllPaths(TEMPLATES_PATH)
+    const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    const templatePaths = listAllPaths(resolvedRootPath)
     for (const path of templatePaths) {
       if (!existsSync(join(path, 'template.jsonc'))) {
         continue
@@ -69,7 +71,7 @@ export class TemplateService {
 
       const maxSimilarity = Math.max(...similarities)
       if (maxSimilarity >= this.similarityThreshold) {
-        const templateId = path.substring(TEMPLATES_PATH.length + 1)
+        const templateId = path.substring(resolvedRootPath.length + 1)
         result[templateId] = maxSimilarity
       }
     }
@@ -79,7 +81,7 @@ export class TemplateService {
 
   async readContractTemplate(template: string): Promise<DiscoveryContract> {
     const templateJsonc = await readJsonc(
-      path.join(TEMPLATES_PATH, template, 'template.jsonc'),
+      path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
     return DiscoveryContract.parse(templateJsonc)
   }
@@ -102,7 +104,7 @@ export class TemplateService {
 
   readContractMetaTemplate(template: string): ContractMeta {
     const rawTemplate = readFileSync(
-      path.join(TEMPLATES_PATH, template, 'meta.json'),
+      path.join(this.rootPath, TEMPLATES_PATH, template, 'meta.json'),
       'utf8',
     )
     return ContractMeta.parse(JSON.parse(rawTemplate))
