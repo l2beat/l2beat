@@ -14,14 +14,10 @@ export class SyncOptimizer {
   ) {}
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
-    return timestamp.equals(this.getOptimizedTimestamp(timestamp))
+    return timestamp.equals(this.getTimestampToSync(timestamp))
   }
 
-  getTimestampToSync(from: number, to: number): UnixTime {
-    return this.getOptimizedTimestamp(new UnixTime(from))
-  }
-
-  getOptimizedTimestamp(timestamp: UnixTime): UnixTime {
+  getTimestampToSync(timestamp: UnixTime): UnixTime {
     const lastHour = this.clock.getLastHour()
 
     const hourlyCutOff = lastHour.add(
