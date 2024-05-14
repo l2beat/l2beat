@@ -52,7 +52,9 @@
         }
       }
     },
-    "Bridge": { "ignoreDiscovery": true },
+    "Bridge": {
+      "ignoreDiscovery": true
+    },
     "XLayerValidiumDAC": {
       "fields": {
         "members": {

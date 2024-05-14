@@ -43,7 +43,6 @@
           "valueKey": "providerAddress",
           "flagKey": "valid"
         },
-
         "removedRollupProviders": {
           "type": "arrayFromOneEvent",
           "event": "RollupProviderUpdated",

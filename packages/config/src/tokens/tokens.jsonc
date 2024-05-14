@@ -1271,6 +1271,18 @@
       }
     },
     {
+      "symbol": "JONES",
+      "address": "0x10393c20975cf177a3513071bc110f7962cd67da",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "LODE",
+      "address": "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "MOZ",
       "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
       "type": "NMV",
@@ -1322,6 +1334,12 @@
         "bridge": "Stargate",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "UMAMI",
+      "address": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "symbol": "USDC",
@@ -1526,6 +1544,12 @@
         "bridge": "Connext",
         "slug": "connext"
       }
+    },
+    {
+      "symbol": "FRIEND",
+      "address": "0x0bd4887f7d41b35cd75dff9ffee2856106f86670",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "symbol": "MOCHI",
