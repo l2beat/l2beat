@@ -1,7 +1,9 @@
 import { createHash } from 'crypto'
 import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 
-export function createAmountId(amountConfig: AmountConfigEntry): string {
+export type AmountId = string
+
+export function createAmountId(amountConfig: AmountConfigEntry): AmountId {
   const input = []
 
   input.push(amountConfig.chain)

@@ -1,15 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
 
-import {
-  AmountConfigEntry,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { AmountConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
+import { AmountId } from '../utils/createAmountId'
+import { AssetId, createAssetId } from '../utils/createAssetId'
+import { PriceId } from '../utils/createPriceId'
 
 interface Values {
   canonical: bigint
@@ -31,8 +29,8 @@ export class ValueService {
   async getTvlAt(
     project: ProjectId,
     source: string,
-    amountConfigs: Map<string, AmountConfigEntry>,
-    priceConfigIds: Map<string, string>,
+    amountConfigs: Map<AmountId, AmountConfigEntry>,
+    priceConfigIds: Map<AssetId, PriceId>,
     timestamps: UnixTime[],
   ): Promise<ValueRecord[]> {
     const amounts = await this.$.amountRepository.getByConfigIdsInRange(
@@ -96,12 +94,4 @@ export class ValueService {
       externalForTotal: value.externalForTotal,
     }))
   }
-}
-
-// TODO: unify it
-function createAssetId(price: {
-  address: EthereumAddress | 'native'
-  chain: string
-}): string {
-  return `${price.chain}-${price.address.toString()}`
 }

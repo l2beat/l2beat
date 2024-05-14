@@ -1,6 +1,5 @@
 import {
   AmountConfigEntry,
-  EthereumAddress,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
@@ -13,8 +12,9 @@ import {
 import { ValueRepository } from '../repositories/ValueRepository'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
-import { createPriceId } from '../utils/createPriceId'
+import { AmountId, createAmountId } from '../utils/createAmountId'
+import { AssetId, createAssetId } from '../utils/createAssetId'
+import { PriceId, createPriceId } from '../utils/createPriceId'
 
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -28,14 +28,8 @@ export interface ValueIndexerDeps
   maxTimestampsToProcessAtOnce: number
 }
 
-type AssetId = string
-type PriceId = string
-
-/**
- * Indexer that aggregates TVL for a project. Skips the configurations that are not included in the total.
- */
 export class ValueIndexer extends ManagedChildIndexer {
-  private readonly amountConfigs: Map<string, AmountConfigEntry>
+  private readonly amountConfigs: Map<AmountId, AmountConfigEntry>
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
   constructor(private readonly $: ValueIndexerDeps) {
@@ -87,15 +81,8 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 }
 
-function createAssetId(price: {
-  address: EthereumAddress | 'native'
-  chain: string
-}): string {
-  return `${price.chain}-${price.address.toString()}`
-}
-
 function getAmountConfigs(amounts: AmountConfigEntry[]) {
-  const result = new Map<string, AmountConfigEntry>()
+  const result = new Map<AmountId, AmountConfigEntry>()
   for (const p of amounts) {
     result.set(createAmountId(p), p)
   }
@@ -104,7 +91,7 @@ function getAmountConfigs(amounts: AmountConfigEntry[]) {
 }
 
 function getPriceConfigIds(prices: PriceConfigEntry[]) {
-  const result = new Map<string, string>()
+  const result = new Map<AssetId, string>()
   for (const p of prices) {
     result.set(createAssetId(p), createPriceId(p))
   }

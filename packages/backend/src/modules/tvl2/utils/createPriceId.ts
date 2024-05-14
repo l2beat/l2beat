@@ -1,7 +1,9 @@
 import { createHash } from 'crypto'
 import { PriceConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 
-export function createPriceId(priceConfig: PriceConfigEntry): string {
+export type PriceId = string
+
+export function createPriceId(priceConfig: PriceConfigEntry): PriceId {
   const input = []
 
   input.push(priceConfig.address.toString())
