@@ -22,13 +22,13 @@
     "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "RollupOwnerMultisig"
   },
   "overrides": {
-    "L1UsdcBridge":{
+    "L1UsdcBridge": {
       "ignoreRelatives": ["l1Usdc"]
     },
-    "L1ERC20TokenBridge":{
+    "L1ERC20TokenBridge": {
       "ignoreRelatives": ["l1Token", "l2Token", "l2TokenBridge"]
     },
-    "LidoAgent":{
+    "LidoAgent": {
       "ignoreDiscovery": true
     },
     "OptimismPortal": {
