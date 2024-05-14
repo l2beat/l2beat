@@ -112,7 +112,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
-        findByTimestampRange: mockFn().resolvesTo(ethPrices),
+        getByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
       const indexer = createIndexer({
@@ -143,7 +143,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
       expect(
-        l2CostsPricesRepositoryMock.findByTimestampRange,
+        l2CostsPricesRepositoryMock.getByTimestampRange,
       ).toHaveBeenOnlyCalledWith(MIN, endOfFirstDay)
 
       // 2023-05-02 00:00:00

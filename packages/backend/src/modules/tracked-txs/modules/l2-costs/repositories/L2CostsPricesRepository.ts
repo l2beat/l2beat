@@ -27,7 +27,7 @@ export class L2CostsPricesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async findByTimestampRange(
+  async getByTimestampRange(
     from: UnixTime,
     to: UnixTime,
   ): Promise<L2CostsPricesRecord[]> {

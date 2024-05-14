@@ -28,12 +28,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
     const unixFrom = new UnixTime(from)
     const unixTo = new UnixTime(to)
 
-    const maxRange = unixFrom.add(
-      CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL,
-      'days',
-    )
-
-    const shiftedTo = unixTo.gt(maxRange) ? maxRange : unixTo
+    const shiftedTo = CoingeckoQueryService.getAdjustedTo(unixFrom, unixTo)
 
     this.logger.info('Time range shifted', {
       shiftedTo,

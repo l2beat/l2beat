@@ -15,7 +15,7 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('l2_costs_prices', function (table) {
-    table.dateTime('timestamp').notNullable().primary()
+    table.dateTime('timestamp', { useTz: false }).notNullable().primary()
     table.float('price_usd').notNullable()
   })
 }

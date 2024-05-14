@@ -54,7 +54,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       shiftedTo,
     ])
 
-    const ethPrices = await this.$.l2CostsPricesRepository.findByTimestampRange(
+    const ethPrices = await this.$.l2CostsPricesRepository.getByTimestampRange(
       shiftedFrom,
       shiftedTo,
     )

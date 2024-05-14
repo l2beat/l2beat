@@ -25,7 +25,7 @@ describeDatabase(L2CostsPricesRepository.name, (database) => {
     expect(result).toEqual(records)
   })
 
-  it(L2CostsPricesRepository.prototype.findByTimestampRange.name, async () => {
+  it(L2CostsPricesRepository.prototype.getByTimestampRange.name, async () => {
     const records = [
       record({ timestamp: NOW.add(-2, 'hours') }),
       record({ timestamp: NOW.add(-1, 'hours') }),
@@ -35,7 +35,7 @@ describeDatabase(L2CostsPricesRepository.name, (database) => {
     ]
     await repository.addMany(records)
 
-    const result = await repository.findByTimestampRange(
+    const result = await repository.getByTimestampRange(
       NOW.add(-1, 'hours'),
       NOW.add(1, 'hours'),
     )
