@@ -55,7 +55,16 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       return to
     }
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+    if (timestamp.toNumber() > to) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+        optimizedTimestamp: timestamp.toNumber(),
+      })
+      return to
+    }
+
     const blockNumber = await this.getBlockNumber(timestamp)
 
     const amounts = await this.$.amountService.fetchAmounts(
