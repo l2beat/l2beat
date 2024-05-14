@@ -8,6 +8,10 @@
     "$schema": {
       "type": "string"
     },
+    "configVersion": {
+      "description": "Version number of the config file format",
+      "type": "number"
+    },
     "extends": { "type": "string" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": { "type": "string" },
@@ -29,9 +33,30 @@
       "patternProperties": {
         "^.+$": {
           "type": "object",
-          "required": ["type"],
           "properties": {
-            "type": { "type": "string" }
+            "description": { "type": ["string", "null"] },
+            "severity": {
+              "type": ["string", "null"],
+              "enum": ["LOW", "MEDIUM", "HIGH", null]
+            },
+            "type": {
+              "anyOf": [
+                { "$ref": "#/$defs/valueType" },
+                {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/valueType" }
+                }
+              ]
+            },
+            "handler": {
+              "^.+$": {
+                "type": "object",
+                "required": ["type"],
+                "properties": {
+                  "type": { "type": "string" }
+                }
+              }
+            }
           }
         }
       }
@@ -49,6 +74,19 @@
           "type": "string"
         }
       }
+    }
+  },
+  "$defs": {
+    "valueType": {
+      "type": ["string", "null"],
+      "enum": [
+        "CODE_CHANGE",
+        "L2",
+        "EXTERNAL",
+        "RISK_PARAMETER",
+        "PERMISSION",
+        null
+      ]
     }
   }
 }

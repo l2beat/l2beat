@@ -3,7 +3,7 @@
   "title": "Discovery config",
   "description": "A configuration file for smart contract discovery",
   "type": "object",
-  "required": ["name", "initialAddresses"],
+  "required": ["name", "initialAddresses", "configVersion"],
   "unevaluatedProperties": false,
   "properties": {
     "$schema": {
@@ -30,6 +30,10 @@
         "gnosis",
         "sepolia"
       ]
+    },
+    "configVersion": {
+      "description": "Version number of the config file format",
+      "type": "number"
     },
     "initialAddresses": {
       "description": "A list of addresses that discovery starts from",
