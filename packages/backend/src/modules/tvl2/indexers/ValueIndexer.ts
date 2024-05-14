@@ -49,10 +49,14 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    // Potential future optimization
-    // check if db.configHash === this.configHash
-    // YES - skip update
-    // NO - continue update
+    if (this.$.minHeight > to) {
+      this.logger.info('Skipping update due to minHeight', {
+        from,
+        to,
+        minHeight: this.$.minHeight,
+      })
+      return to
+    }
 
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp.toNumber() > to) {
@@ -63,17 +67,8 @@ export class ValueIndexer extends ManagedChildIndexer {
       })
       return to
     }
-    const configIds = this.amountConfigs
-      .filter((x) => x.sinceTimestamp.gte(timestamp))
-      .map((x) => x.configId)
-    if (configIds.length === 0) {
-      this.logger.info('Skipping update due to no configs', {
-        from,
-        to,
-        timestamp: timestamp.toNumber(),
-      })
-      return timestamp.toNumber()
-    }
+
+    const configIds = this.amountConfigs.map((x) => x.configId)
 
     const value = await this.$.valueService.getTvlAt(
       timestamp,
