@@ -20,7 +20,7 @@
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2"
   },
   "overrides": {
-    "ProxyAdminOwner":{
+    "ProxyAdminOwner": {
       "ignoreInWatchMode": ["nonce"]
     },
     "0x4200000000000000000000000000000000000010": {

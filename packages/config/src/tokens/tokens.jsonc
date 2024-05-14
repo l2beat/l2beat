@@ -1271,6 +1271,18 @@
       }
     },
     {
+      "symbol": "JONES",
+      "address": "0x10393c20975cf177a3513071bc110f7962cd67da",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "LODE",
+      "address": "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "MOZ",
       "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
       "type": "NMV",
@@ -1310,6 +1322,22 @@
     {
       "symbol": "SPARTA",
       "address": "0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "STG",
+      "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "UMAMI",
+      "address": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1464,6 +1492,16 @@
       }
     },
     {
+      "symbol": "STG",
+      "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "category": "stablecoin",
@@ -1493,6 +1531,23 @@
     {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
+      "symbol": "FRIEND",
+      "address": "0x0bd4887f7d41b35cd75dff9ffee2856106f86670",
       "type": "NMV",
       "formula": "circulatingSupply"
     },

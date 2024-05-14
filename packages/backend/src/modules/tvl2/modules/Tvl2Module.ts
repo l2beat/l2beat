@@ -86,11 +86,13 @@ export function createTvl2Module(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(ValueRepository),
-    config.projects.map((p) => p.projectId),
+    config.tvl2.chainConverter,
+    // TODO: add layer3s
+    config.projects,
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
-  const tvlRouter = createTvl2Router(tvlController)
+  const tvlRouter = createTvl2Router(tvlController, clock)
 
   const start = async () => {
     await hourlyIndexer.start()

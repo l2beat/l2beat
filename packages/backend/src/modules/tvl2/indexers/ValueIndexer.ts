@@ -68,18 +68,9 @@ export class ValueIndexer extends ManagedChildIndexer {
     // YES - skip update
     // NO - continue update
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
-    if (timestamp.toNumber() > to) {
-      return to
-    }
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
 
     const value = await this.getTvlAt(timestamp)
-    const isZeroValue = Object.values(value).every((x) => x === 0)
-    if (isZeroValue) {
-      return timestamp.toNumber()
-    }
 
     await this.$.valueRepo.addOrUpdate({
       projectId: this.$.project,

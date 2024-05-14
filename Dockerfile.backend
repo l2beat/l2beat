@@ -1,0 +1,19 @@
+FROM node:18 as builder
+ARG ARCH=x86_64
+
+COPY . /src/
+RUN cd /src/ && \
+  yarn install && \
+  yarn build:backend
+RUN mkdir /dist/ && \
+  cd /dist/ && \
+  wget https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \
+  tar -xf difft-$ARCH-unknown-linux-gnu.tar.gz && \
+  rm -f difft-$ARCH-unknown-linux-gnu.tar.gz
+
+
+FROM node:18-slim as release
+COPY --from=builder /src/ /app/
+COPY --from=builder /dist/difft /usr/bin/difft
+WORKDIR /app/
+CMD yarn start

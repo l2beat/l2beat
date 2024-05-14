@@ -74,8 +74,8 @@ export function getProjectDetails(
       type: 'ChartSection',
       props: {
         ...charts.costs,
-        id: 'costs',
-        title: 'Costs',
+        id: 'onchain-costs',
+        title: 'Onchain costsys',
       },
     })
   }
