@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   PriceConfigEntry,
   ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import {
@@ -24,6 +25,7 @@ export interface ValueIndexerDeps
   project: ProjectId
   dataSource: string
   syncOptimizer: SyncOptimizer
+  maxTimestampsToProcessAtOnce: number
 }
 
 type AssetId = string
@@ -33,7 +35,7 @@ type PriceId = string
  * Indexer that aggregates TVL for a project. Skips the configurations that are not included in the total.
  */
 export class ValueIndexer extends ManagedChildIndexer {
-  private readonly amountConfigs: (AmountConfigEntry & { configId: string })[]
+  private readonly amountConfigs: Map<string, AmountConfigEntry>
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
   constructor(private readonly $: ValueIndexerDeps) {
@@ -41,10 +43,7 @@ export class ValueIndexer extends ManagedChildIndexer {
     const name = 'value_indexer'
     super({ ...$, name, logger })
 
-    this.amountConfigs = $.amountConfigs.map((x) => ({
-      ...x,
-      configId: createAmountId(x),
-    }))
+    this.amountConfigs = getAmountConfigs($.amountConfigs)
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
   }
 
@@ -58,32 +57,28 @@ export class ValueIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp.toNumber() > to) {
-      this.logger.info('Skipping update due to sync optimization', {
-        from,
-        to,
-        optimizedTimestamp: timestamp.toNumber(),
-      })
-      return to
+    const timestamps: UnixTime[] = []
+
+    let current = from > this.$.minHeight ? from : this.$.minHeight
+    while (
+      this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= to &&
+      timestamps.length < this.$.maxTimestampsToProcessAtOnce
+    ) {
+      timestamps.push(this.$.syncOptimizer.getTimestampToSync(current))
+      current += 1
     }
 
-    const configIds = this.amountConfigs.map((x) => x.configId)
-
-    const value = await this.$.valueService.getTvlAt(
-      timestamp,
-      configIds,
+    const values = await this.$.valueService.getTvlAt(
+      this.$.project,
+      this.$.dataSource,
       this.amountConfigs,
       this.priceConfigIds,
+      timestamps,
     )
-    await this.$.valueRepository.addOrUpdate({
-      projectId: this.$.project,
-      timestamp,
-      dataSource: this.$.dataSource,
-      ...value,
-    })
 
-    return timestamp.toNumber()
+    await this.$.valueRepository.addOrUpdateMany(values)
+
+    return timestamps[timestamps.length - 1].toNumber()
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -97,6 +92,15 @@ function createAssetId(price: {
   chain: string
 }): string {
   return `${price.chain}-${price.address.toString()}`
+}
+
+function getAmountConfigs(amounts: AmountConfigEntry[]) {
+  const result = new Map<string, AmountConfigEntry>()
+  for (const p of amounts) {
+    result.set(createAmountId(p), p)
+  }
+
+  return result
 }
 
 function getPriceConfigIds(prices: PriceConfigEntry[]) {

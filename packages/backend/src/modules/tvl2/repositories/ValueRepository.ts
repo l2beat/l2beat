@@ -60,7 +60,8 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: ValueRecord[]) {
+  async addOrUpdateMany(records: ValueRecord[]) {
+    //todo: on conflict merge
     const rows: ValueRow[] = records.map(toRow)
     const knex = await this.knex()
     await knex.batchInsert('values', rows, 10_000)

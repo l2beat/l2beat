@@ -3,10 +3,12 @@ import { assert } from '@l2beat/backend-tools'
 import {
   AmountConfigEntry,
   EthereumAddress,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRecord } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 
 interface Values {
@@ -18,9 +20,6 @@ interface Values {
   nativeForTotal: bigint
 }
 
-type AssetId = string
-type PriceId = string
-
 export interface ValueServiceDependencies {
   priceRepository: PriceRepository
   amountRepository: AmountRepository
@@ -30,31 +29,39 @@ export class ValueService {
   constructor(private readonly $: ValueServiceDependencies) {}
 
   async getTvlAt(
-    timestamp: UnixTime,
-    configIds: string[],
-    amountConfigs: (AmountConfigEntry & { configId: string })[],
-    priceConfigIds: Map<AssetId, PriceId>,
-  ): Promise<Values> {
-    const records = await this.$.amountRepository.getByConfigIdsAndTimestamp(
-      configIds,
-      timestamp,
+    project: ProjectId,
+    source: string,
+    amountConfigs: Map<string, AmountConfigEntry>,
+    priceConfigIds: Map<string, string>,
+    timestamps: UnixTime[],
+  ): Promise<ValueRecord[]> {
+    const amounts = await this.$.amountRepository.getByConfigIdsInRange(
+      Array.from(amountConfigs.keys()),
+      timestamps[0],
+      timestamps[timestamps.length - 1],
     )
 
-    const prices = await this.$.priceRepository.getByTimestamp(timestamp)
+    const prices = await this.$.priceRepository.getByConfigIdsInRange(
+      Array.from(priceConfigIds.values()),
+      timestamps[0],
+      timestamps[timestamps.length - 1],
+    )
 
-    const results = {
-      canonical: 0n,
-      canonicalForTotal: 0n,
-      external: 0n,
-      externalForTotal: 0n,
-      native: 0n,
-      nativeForTotal: 0n,
+    const results = new Map<number, Values>()
+
+    for (const timestamp of timestamps) {
+      results.set(timestamp.toNumber(), {
+        canonical: 0n,
+        canonicalForTotal: 0n,
+        external: 0n,
+        externalForTotal: 0n,
+        native: 0n,
+        nativeForTotal: 0n,
+      })
     }
 
-    for (const amountRecord of records) {
-      const amountConfig = amountConfigs.find(
-        (x) => x.configId === amountRecord.configId,
-      )
+    for (const amount of amounts) {
+      const amountConfig = amountConfigs.get(amount.configId)
       assert(amountConfig, 'Config not found')
 
       const priceId = priceConfigIds.get(createAssetId(amountConfig))
@@ -62,23 +69,36 @@ export class ValueService {
       assert(price, 'Price not found')
 
       const value = calculateValue({
-        amount: amountRecord.amount,
+        amount: amount.amount,
         priceUsd: price.priceUsd,
         decimals: amountConfig.decimals,
       })
 
-      results[amountConfig.source] += value
+      const result = results.get(amount.timestamp.toNumber())
+      assert(result, 'Programmer error: result should be defined')
+      result[amountConfig.source] += value
 
       if (amountConfig.includeInTotal) {
         const forTotalKey = `${amountConfig.source}ForTotal` as const
-        results[forTotalKey] += value
+        result[forTotalKey] += value
       }
     }
 
-    return results
+    return Array.from(results.entries()).map(([timestamp, value]) => ({
+      projectId: project,
+      timestamp: new UnixTime(timestamp),
+      dataSource: source,
+      native: value.native,
+      nativeForTotal: value.nativeForTotal,
+      canonical: value.canonical,
+      canonicalForTotal: value.canonicalForTotal,
+      external: value.external,
+      externalForTotal: value.externalForTotal,
+    }))
   }
 }
 
+// TODO: unify it
 function createAssetId(price: {
   address: EthereumAddress | 'native'
   chain: string
