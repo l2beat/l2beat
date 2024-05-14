@@ -1,6 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 
-import { assert } from 'console'
 import { Clock } from '../../../tools/Clock'
 
 interface SyncOptimizerOptions {
