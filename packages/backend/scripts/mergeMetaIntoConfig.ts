@@ -87,7 +87,8 @@ function mergeMetaIntoConfig(path: string, configJsonc: RawDiscoveryConfig) {
 }
 
 function updateConfigHashInDiscovery(path: string, config: RawDiscoveryConfig) {
-  const discoveryConfig = new DiscoveryConfig(config)
+  const reparsedConfig = RawDiscoveryConfig.parse(config)
+  const discoveryConfig = new DiscoveryConfig(reparsedConfig)
   const configHash = discoveryConfig.hash
   const discoveryFilePath = join(path, 'discovered.json')
   const discoveryFileContent = readFileSync(discoveryFilePath, 'utf8')
