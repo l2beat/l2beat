@@ -3,7 +3,6 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import {
   ConfigReader,
-  DiscoveryConfig,
   DiscoveryMeta,
   isEmptyValueMeta,
 } from '@l2beat/discovery'
@@ -11,8 +10,6 @@ import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
 import { rimraf } from 'rimraf'
 import {
-  getDiffHistoryHash,
-  getDiscoveryHash,
   updateDiffHistoryHash,
 } from '../src/modules/update-monitor/utils/hashing'
 
