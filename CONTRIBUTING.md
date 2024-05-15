@@ -46,7 +46,7 @@ yarn start
 
 If you want to add a new Layer 2 project you can do that by opening a PR. To do this you need to:
 
-1. Read the specification in `packages/config/src/layer2s/types/Layer2.ts`. It contains an annotated
+1. Read the specification in `/packages/config/src/projects/layer2s/types/Layer2.ts`. It contains an annotated
    data format for the project definition.
 2. Add a .ts file to describe your project inside `packages/config/src/layer2s`. You can use the
    existing projects as reference.
