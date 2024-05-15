@@ -2,8 +2,8 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 19718134,
-  "configHash": "0x4e33be17fecb0e99f42f840347a700627502c5c8721acf11118a91b997b1b05d",
-  "version": 3,
+  "configHash": "0xf8706c7e50f2d28d1dba21b57ce7b79186c822ce94420c2fdaa60adf9e90ac47",
+  "version": 4,
   "contracts": [
     {
       "name": "Permit2",
@@ -15,14 +15,6 @@
       "values": {
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
       }
-    },
-    {
-      "name": "FflonkVerifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1711291211
     },
     {
       "name": "SharedProxyAdmin",
@@ -473,9 +465,6 @@
       "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
-    ],
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

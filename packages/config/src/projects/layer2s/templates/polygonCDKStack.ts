@@ -462,7 +462,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         name: 'ProxyAdminOwner',
         accounts: [
           templateVars.discovery.formatPermissionedAccount(
-            templateVars.discovery.getContractValue('ProxyAdmin', 'owner'), // could be EOA or multisig
+            shared.getContractValue('SharedProxyAdmin', 'owner'), // could be EOA or multisig
           ),
         ],
         description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.`,

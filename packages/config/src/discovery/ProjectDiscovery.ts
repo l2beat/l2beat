@@ -1,6 +1,8 @@
-import fs from 'fs'
-import path from 'path'
-import { InvertedAddresses, calculateInversion } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  InvertedAddresses,
+  calculateInversion,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -54,31 +56,20 @@ type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
   ? T[K]
   : undefined
 
-export type Filesystem = typeof filesystem
-const filesystem = {
-  readFileSync: (path: string) => {
-    return fs.readFileSync(path, 'utf-8')
-  },
-}
-
 export class ProjectDiscovery {
-  private readonly discovery: DiscoveryOutput
+  private readonly discoveries: DiscoveryOutput[]
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    private readonly fs: Filesystem = filesystem,
   ) {
-    this.discovery = this.getDiscoveryJson(projectName)
-  }
-
-  private getDiscoveryJson(project: string): DiscoveryOutput {
-    const discoveryFile = this.fs.readFileSync(
-      path.resolve(
-        `../backend/discovery/${project}/${this.chain}/discovered.json`,
+    const configReader = new ConfigReader('../backend/')
+    const config = configReader.readConfig(projectName, chain)
+    this.discoveries = [
+      configReader.readDiscovery(projectName, chain),
+      ...config.sharedModules.map((module) =>
+        configReader.readDiscovery(module, chain),
       ),
-    )
-
-    return JSON.parse(discoveryFile) as DiscoveryOutput
+    ]
   }
 
   getContractDetails(
@@ -160,11 +151,12 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: EthereumAddress): boolean {
-    return this.discovery.eoas.includes(address)
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.includes(address)
   }
 
   getInversion(): InvertedAddresses {
-    return calculateInversion(this.discovery)
+    return calculateInversion(this.discoveries[0])
   }
 
   transformToPermissions(resolved: Record<string, PermissionedContract>) {
@@ -430,9 +422,10 @@ export class ProjectDiscovery {
     )
     const address = EthereumAddress(account)
     const isEOA = this.isEOA(address)
-    const contract = this.discovery.contracts.find(
-      (contract) => contract.address === address,
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
     )
+    const contract = contracts.find((contract) => contract.address === address)
     const isMultisig = contract?.upgradeability.type === 'gnosis safe'
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
@@ -604,15 +597,21 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
-      (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const addressesWithinUpgradeability = contracts.flatMap((contract) =>
+      gatherAddressesFromUpgradeability(contract.upgradeability),
     )
 
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
   getContractByAddress(address: string): ContractParameters | undefined {
-    return this.discovery.contracts.find(
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    return contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )
   }
@@ -635,7 +634,10 @@ export class ProjectDiscovery {
   }
 
   private getContractByName(name: string): ContractParameters[] {
-    return this.discovery.contracts.filter((contract) => contract.name === name)
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    return contracts.filter((contract) => contract.name === name)
   }
 }
 

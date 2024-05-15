@@ -26,6 +26,10 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+// TODO(radomski): Ideally this wouldn't be here, but we can't actually share
+// one escrow between multiple projects. Can be removed once TVL2 is done.
+const shared = new ProjectDiscovery('shared-polygon-cdk')
+
 export const xlayer: Layer2 = polygonCDKStack({
   discovery,
   daProvider: {
@@ -96,7 +100,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupManagerContract: discovery.getContract('PolygonRollupManager'),
+  rollupManagerContract: shared.getContract('PolygonRollupManager'),
   rollupModuleContract: discovery.getContract('XLayerValidiumEtrog'),
   rollupVerifierContract: discovery.getContract('XLayerVerifier'),
   rpcUrl: 'https://rpc.xlayer.tech',
