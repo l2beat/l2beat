@@ -14,7 +14,6 @@ import { Project } from '../../../../../model/Project'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
-import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   AggregatedL2CostsRecord,
@@ -168,12 +167,12 @@ export class L2CostsController {
 
     for (const rec of records) {
       if (rec.timestamp.gte(nowToFullHour.add(-7, 'days'))) {
-        addToMap(hourlyMap, 'hour', rec)
-        addToMap(combinedHourlyMap, 'hour', rec)
+        this.addToMap(hourlyMap, 'hour', rec)
+        this.addToMap(combinedHourlyMap, 'hour', rec)
       }
       if (rec.timestamp.lt(nowToFullHour.toStartOf('day'))) {
-        addToMap(dailyMap, 'day', rec)
-        addToMap(combinedDailyMap, 'day', rec)
+        this.addToMap(dailyMap, 'day', rec)
+        this.addToMap(combinedDailyMap, 'day', rec)
       }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {
@@ -228,6 +227,77 @@ export class L2CostsController {
           (a, b) => a[0].toNumber() - b[0].toNumber(),
         ),
       },
+    }
+  }
+
+  private addToMap(
+    map: Map<number, L2CostsApiChartPoint>,
+    toStartOf: 'hour' | 'day',
+    record: AggregatedL2CostsRecord,
+  ) {
+    const key = record.timestamp.toStartOf(toStartOf).toNumber()
+    const currentRecord = map.get(key)
+
+    if (currentRecord) {
+      let currentBlobGas: number | null = currentRecord[13]
+      let currentBlobGasEth: number | null = currentRecord[14]
+      let currentBlobGasUsd: number | null = currentRecord[15]
+
+      if (currentBlobGas === null) {
+        currentBlobGas = record.blobsGas
+      } else if (record.blobsGas) {
+        currentBlobGas += record.blobsGas
+      }
+
+      if (currentBlobGasEth === null) {
+        currentBlobGasEth = record.blobsGasEth
+      } else if (record.blobsGasEth) {
+        currentBlobGasEth += record.blobsGasEth
+      }
+
+      if (currentBlobGasUsd === null) {
+        currentBlobGasUsd = record.blobsGasUsd
+      } else if (record.blobsGasUsd) {
+        currentBlobGasUsd += record.blobsGasUsd
+      }
+
+      map.set(key, [
+        currentRecord[0],
+        (currentRecord[1] += record.totalGas),
+        (currentRecord[2] += record.totalGasEth),
+        (currentRecord[3] += record.totalGasUsd),
+        (currentRecord[4] += record.overheadGas),
+        (currentRecord[5] += record.overheadGasEth),
+        (currentRecord[6] += record.overheadGasUsd),
+        (currentRecord[7] += record.calldataGas),
+        (currentRecord[8] += record.calldataGasEth),
+        (currentRecord[9] += record.calldataGasUsd),
+        (currentRecord[10] += record.computeGas),
+        (currentRecord[11] += record.computeGasEth),
+        (currentRecord[12] += record.computeGasUsd),
+        currentBlobGas,
+        currentBlobGasEth,
+        currentBlobGasUsd,
+      ])
+    } else {
+      map.set(key, [
+        new UnixTime(key),
+        record.totalGas,
+        record.totalGasEth,
+        record.totalGasUsd,
+        record.overheadGas,
+        record.overheadGasEth,
+        record.overheadGasUsd,
+        record.calldataGas,
+        record.calldataGasEth,
+        record.calldataGasUsd,
+        record.computeGas,
+        record.computeGasEth,
+        record.computeGasUsd,
+        record.blobsGas,
+        record.blobsGasEth,
+        record.blobsGasUsd,
+      ])
     }
   }
 }

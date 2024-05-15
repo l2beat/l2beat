@@ -298,6 +298,7 @@ describe(L2CostsController.name, () => {
         totalGas: 1,
         totalGasEth: 1,
         totalGasUsd: 1,
+        overheadGas: 21000,
         overheadGasEth: 1,
         overheadGasUsd: 1,
         calldataGas: 1,
