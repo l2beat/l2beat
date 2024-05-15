@@ -14,7 +14,7 @@ The timelock tx explained in the update below is executed.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 +++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
 +++ severity: MEDIUM
       values.nonce:
