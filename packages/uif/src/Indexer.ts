@@ -151,6 +151,7 @@ export abstract class Indexer {
   async start(): Promise<void> {
     assert(!this.started, 'Indexer already started')
     this.started = true
+    this.logger.info('Starting...')
     const height = await this.initialize()
     this.dispatch({
       type: 'Initialized',

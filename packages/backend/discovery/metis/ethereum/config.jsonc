@@ -32,11 +32,18 @@
           "type": "array",
           // status: Unavailabe, Inactive, Active, Unlocked (Exited, the sequencer has no locked tokens, and it's no longer produce blocks on L2)
           "pickFields": ["owner", "signer", "rewardRecipient", "status"],
-          "length": "{{ totalSequencers }}"
+          "length": "{{ totalSequencers }}",
+          "ignoreRelative": true
         }
       },
       "ignoreMethods": ["curBatchState"], // interesting for finality?
-      "ignoreInWatchMode": ["currentBatch", "totalSequencers", "sequencers"],
+      "ignoreInWatchMode": [
+        "currentBatch",
+        "totalSequencers",
+        "sequencers",
+        "BLOCK_REWARD",
+        "rewardPerBlock"
+      ],
       "ignoreRelatives": ["rewardRecipient"]
     },
     "Lib_AddressManager": {
