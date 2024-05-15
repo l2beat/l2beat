@@ -1,11 +1,14 @@
 import { Layer2, Layer3 } from '@l2beat/config'
 import {
+  assert,
   ActivityApiChart,
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
+  UnixTime,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { formatTimestamp } from '../../../../utils'
 import { getMaxTps } from '../../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
@@ -105,16 +108,30 @@ function getActivityViewEntryDetails(
     return undefined
   }
 
+  const syncedUntil = data.at(-1)?.[0]
+  assert(syncedUntil !== undefined, 'syncedUntil is undefined')
   return {
     tpsDaily: getTpsDaily(data, type),
     tpsWeeklyChange: getTpsWeeklyChange(data, type),
     transactionsMonthlyCount: getTransactionCount(data, type, 30),
+    syncStatus: {
+      isSynced: isSynced(syncedUntil),
+      displaySyncedUntil: formatTimestamp(syncedUntil.toNumber(), {
+        mode: 'datetime',
+        longMonthName: true,
+      }),
+    },
     ...getMaxTps(data, type),
   }
 }
 
-export function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
+function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
   return projects.filter(
     (x) => (x.type === 'layer2' ? !x.isArchived : true) && !x.isUpcoming,
   )
+}
+
+function isSynced(timestamp: UnixTime) {
+  const threshold = UnixTime.now().add(-1, 'days').add(-1, 'hours')
+  return timestamp.gt(threshold)
 }

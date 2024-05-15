@@ -130,7 +130,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
   checkIfEmptyActivityCharts(allProjectsData)
   checkIfZeroTpsProjects(allProjectsData, importantProjects)
-  checkIfDelayedActivity(allProjectsData, UnixTime.now())
+  checkIfDelayedActivity(activityApiResponse, UnixTime.now())
 }
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
@@ -188,26 +188,16 @@ export function checkIfZeroTpsProjects(
 const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + 2 * UnixTime.HOUR
 
 export function checkIfDelayedActivity(
-  allProjects: ActivityProjectData[],
+  response: ActivityApiResponse,
   now: UnixTime,
 ) {
-  const delayedProjects = allProjects
-    .map(([name, data]) => {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      const lastValue = data.daily.data.at(-1)!
-      const lastTimestamp = lastValue[0]
-      const delay = now.toNumber() - lastTimestamp.toNumber()
-      return { name, delay }
-    })
-    .filter(({ delay }) => delay > ACTIVITY_ACCEPTABLE_DELAY)
+  const lastValue = response.combined.daily.data.at(-1)!
+  const lastTimestamp = lastValue[0]
+  const delay = now.toNumber() - lastTimestamp.toNumber()
 
-  if (delayedProjects.length > 0) {
+  if(delay > ACTIVITY_ACCEPTABLE_DELAY){
     throw new Error(
-      `Some projects activity data is delayed! ${delayedProjects
-        .map(({ name, delay }) => `${name} (${delay} seconds)`)
-        .join(
-          ', ',
-        )}. Acceptable delay is ${ACTIVITY_ACCEPTABLE_DELAY} seconds.`,
+      `Combined activity data is delayed! ${delay} seconds. Acceptable delay is ${ACTIVITY_ACCEPTABLE_DELAY} seconds.`,
     )
   }
 }
