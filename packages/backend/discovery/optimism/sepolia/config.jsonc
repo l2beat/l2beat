@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "sepolia",
   "name": "optimism",
   "initialAddresses": ["0x868D59fF9710159C2B330Cc0fBDF57144dD7A13b"],
@@ -10,37 +10,19 @@
     "0x9bFE9c5609311DF1c011c47642253B78a4f33F4B": "AddressManager",
     "0x034edD2A225f7f429A63E0f1D2084B9E0A93b538": "SystemConfig",
     "0x58Cc85b8D04EA49cC6DBd3CbFFd00B4B8D6cb3ef": "L1CrossDomainMessenger",
-    "0x05F9613aDB30026FFd634f38e5C4dFd30a197Fa1": "DisputeGameFactory"
+    "0x05F9613aDB30026FFd634f38e5C4dFd30a197Fa1": "DisputeGameFactory",
   },
   "overrides": {
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+      "ignoreInWatchMode": ["params"],
     },
     "L2OutputOracle": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "fields": {
-        "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
-        }
-      }
+      "extends": "opstack/L2OutputOracle",
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "ignoreInWatchMode": ["messageNonce"],
     },
     "SystemConfig": {
       "fields": {
@@ -48,31 +30,31 @@
         "batcherHash": {
           "type": "call",
           "method": "function batcherHash() view returns (address)",
-          "args": []
+          "args": [],
         },
         "opStackDA": {
           "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "sequencerAddress": "{{ batcherHash }}",
         },
         "sequencerInbox": {
           "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
-        }
+          "sequencerAddress": "{{ batcherHash }}",
+        },
       },
-      "ignoreInWatchMode": ["scalar"]
+      "ignoreInWatchMode": ["scalar"],
     },
     "DisputeGameFactory": {
       "ignoreMethods": ["gameAtIndex"],
       "fields": {
         "gameImpls": {
           "type": "array",
-          "length": 5
+          "length": 5,
         },
         "initBonds": {
           "type": "array",
-          "length": 5
-        }
-      }
-    }
-  }
+          "length": 5,
+        },
+      },
+    },
+  },
 }

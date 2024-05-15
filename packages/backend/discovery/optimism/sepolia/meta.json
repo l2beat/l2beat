@@ -4,941 +4,294 @@
     {
       "name": "AddressManager",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "owner": {}
+      }
+    },
+    {
+      "name": "AnchorStateRegistry",
+      "values": {
+        "disputeGameFactory": {},
+        "version": {}
       }
     },
     {
       "name": "DelayedWETH",
       "values": {
-        "config": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "config": {},
+        "decimals": {},
+        "delay": {},
+        "name": {},
+        "owner": {},
+        "symbol": {},
+        "totalSupply": {},
+        "version": {}
       }
     },
     {
       "name": "DisputeGameFactory",
       "values": {
-        "gameCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameImpls": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "initBonds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "gameCount": {},
+        "gameImpls": {},
+        "initBonds": {},
+        "owner": {},
+        "version": {}
       }
     },
     {
       "name": "FaultDisputeGame",
       "values": {
-        "absolutePrestate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimDataLen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimedBondFlag": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "createdAt": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "extraData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameDuration": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Head": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2ChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxGameDepth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resolvedAt": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootClaim": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "splitDepth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingOutputRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingRootHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "status": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "vm": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "weth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "absolutePrestate": {},
+        "anchorStateRegistry": {},
+        "claimData": {},
+        "claimDataLen": {},
+        "clockExtension": {},
+        "createdAt": {},
+        "extraData": {},
+        "gameCreator": {},
+        "gameData": {},
+        "gameType": {},
+        "getChallengerDuration": {},
+        "getNumToResolve": {},
+        "l1Head": {},
+        "l2BlockNumber": {},
+        "l2ChainId": {},
+        "maxClockDuration": {},
+        "maxGameDepth": {},
+        "resolutionCheckpoints": {},
+        "resolvedAt": {},
+        "resolvedSubgames": {},
+        "rootClaim": {},
+        "splitDepth": {},
+        "startingBlockNumber": {},
+        "startingOutputRoot": {},
+        "startingRootHash": {},
+        "status": {},
+        "version": {},
+        "vm": {},
+        "weth": {}
       }
     },
     {
       "name": "GnosisSafeL2",
       "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "VERSION": {},
+        "domainSeparator": {},
+        "getChainId": {},
+        "getOwners": {},
+        "getThreshold": {},
+        "nonce": {}
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {},
+        "domainSeparator": {},
+        "getChainId": {},
+        "getOwners": {},
+        "getThreshold": {},
+        "nonce": {}
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {},
+        "domainSeparator": {},
+        "getChainId": {},
+        "getOwners": {},
+        "getThreshold": {},
+        "nonce": {}
       }
     },
     {
       "name": "L1CrossDomainMessenger",
       "values": {
-        "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "MESSAGE_VERSION": {},
+        "MIN_GAS_CALLDATA_OVERHEAD": {},
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {},
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {},
+        "OTHER_MESSENGER": {},
+        "PORTAL": {},
+        "RELAY_CALL_OVERHEAD": {},
+        "RELAY_CONSTANT_OVERHEAD": {},
+        "RELAY_GAS_CHECK_BUFFER": {},
+        "RELAY_RESERVED_GAS": {},
+        "messageNonce": {},
+        "otherMessenger": {},
+        "paused": {},
+        "portal": {},
+        "superchainConfig": {},
+        "version": {}
       }
     },
     {
       "name": "L1ERC721Bridge",
       "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "MESSENGER": {},
+        "OTHER_BRIDGE": {},
+        "messenger": {},
+        "otherBridge": {},
+        "paused": {},
+        "superchainConfig": {},
+        "version": {}
       }
     },
     {
       "name": "L1StandardBridge",
       "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "MESSENGER": {},
+        "OTHER_BRIDGE": {},
+        "l2TokenBridge": {},
+        "messenger": {},
+        "otherBridge": {},
+        "paused": {},
+        "superchainConfig": {},
+        "version": {}
       }
     },
     {
       "name": "L2OutputOracle",
       "values": {
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "finalizationPeriodSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BlockTime": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "submissionInterval": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "CHALLENGER": {},
+        "FINALIZATION_PERIOD_SECONDS": {},
+        "L2_BLOCK_TIME": {},
+        "PROPOSER": {},
+        "SUBMISSION_INTERVAL": {},
+        "challenger": {},
+        "deletedOutputs": {},
+        "finalizationPeriodSeconds": {},
+        "l2BlockTime": {},
+        "latestBlockNumber": {},
+        "latestOutputIndex": {},
+        "nextBlockNumber": {},
+        "nextOutputIndex": {},
+        "proposer": {},
+        "startingBlockNumber": {},
+        "startingTimestamp": {},
+        "submissionInterval": {},
+        "version": {}
       }
     },
     {
       "name": "MIPS",
       "values": {
-        "BRK_START": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "oracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "BRK_START": {},
+        "oracle": {},
+        "version": {}
       }
     },
     {
       "name": "OptimismMintableERC20Factory",
       "values": {
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "BRIDGE": {},
+        "bridge": {},
+        "version": {}
       }
     },
     {
       "name": "OptimismPortal",
       "values": {
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "disputeGameFactory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "disputeGameFinalityDelaySeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proofMaturityDelaySeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "respectedGameType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "respectedGameTypeUpdatedAt": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "systemConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "disputeGameFactory": {},
+        "disputeGameFinalityDelaySeconds": {},
+        "guardian": {},
+        "l2Sender": {},
+        "params": {},
+        "paused": {},
+        "proofMaturityDelaySeconds": {},
+        "respectedGameType": {},
+        "respectedGameTypeUpdatedAt": {},
+        "superchainConfig": {},
+        "systemConfig": {},
+        "version": {}
       }
     },
     {
       "name": "PermissionedDisputeGame",
       "values": {
-        "absolutePrestate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimDataLen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "claimedBondFlag": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "createdAt": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "extraData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameData": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameDuration": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gameType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Head": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2ChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxGameDepth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resolvedAt": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootClaim": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "splitDepth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingOutputRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingRootHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "status": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "vm": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "weth": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "absolutePrestate": {},
+        "anchorStateRegistry": {},
+        "challenger": {},
+        "claimData": {},
+        "claimDataLen": {},
+        "clockExtension": {},
+        "createdAt": {},
+        "extraData": {},
+        "gameCreator": {},
+        "gameData": {},
+        "gameType": {},
+        "getChallengerDuration": {},
+        "getNumToResolve": {},
+        "l1Head": {},
+        "l2BlockNumber": {},
+        "l2ChainId": {},
+        "maxClockDuration": {},
+        "maxGameDepth": {},
+        "proposer": {},
+        "resolutionCheckpoints": {},
+        "resolvedAt": {},
+        "resolvedSubgames": {},
+        "rootClaim": {},
+        "splitDepth": {},
+        "startingBlockNumber": {},
+        "startingOutputRoot": {},
+        "startingRootHash": {},
+        "status": {},
+        "version": {},
+        "vm": {},
+        "weth": {}
       }
     },
     {
       "name": "ProxyAdmin",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "addressManager": {},
+        "isUpgrading": {},
+        "owner": {}
       }
     },
     {
       "name": "SuperchainConfig",
       "values": {
-        "GUARDIAN_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAUSED_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "GUARDIAN_SLOT": {},
+        "PAUSED_SLOT": {},
+        "guardian": {},
+        "paused": {},
+        "version": {}
       }
     },
     {
       "name": "SystemConfig",
       "values": {
-        "BATCH_INBOX_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1_CROSS_DOMAIN_MESSENGER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1_ERC_721_BRIDGE_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1_STANDARD_BRIDGE_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_OUTPUT_ORACLE_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OPTIMISM_PORTAL_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "START_BLOCK_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batchInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1CrossDomainMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1ERC721Bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1StandardBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2OutputOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "optimismMintableERC20Factory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "optimismPortal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resourceConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startBlock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "BATCH_INBOX_SLOT": {},
+        "L1_CROSS_DOMAIN_MESSENGER_SLOT": {},
+        "L1_ERC_721_BRIDGE_SLOT": {},
+        "L1_STANDARD_BRIDGE_SLOT": {},
+        "L2_OUTPUT_ORACLE_SLOT": {},
+        "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": {},
+        "OPTIMISM_PORTAL_SLOT": {},
+        "START_BLOCK_SLOT": {},
+        "UNSAFE_BLOCK_SIGNER_SLOT": {},
+        "VERSION": {},
+        "batchInbox": {},
+        "batcherHash": {},
+        "gasLimit": {},
+        "l1CrossDomainMessenger": {},
+        "l1ERC721Bridge": {},
+        "l1StandardBridge": {},
+        "l2OutputOracle": {},
+        "minimumGasLimit": {},
+        "opStackDA": {},
+        "optimismMintableERC20Factory": {},
+        "optimismPortal": {},
+        "overhead": {},
+        "owner": {},
+        "resourceConfig": {},
+        "scalar": {},
+        "sequencerInbox": {},
+        "startBlock": {},
+        "unsafeBlockSigner": {},
+        "version": {}
       }
     }
   ]
