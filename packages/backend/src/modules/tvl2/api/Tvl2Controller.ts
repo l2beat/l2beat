@@ -3,6 +3,7 @@ import {
   AmountConfigEntry,
   AssetId,
   CanonicalAssetBreakdownData,
+  ChainId,
   EthereumAddress,
   ExternalAssetBreakdownData,
   NativeAssetBreakdownData,
@@ -45,6 +46,15 @@ interface Tvl2ProjectResult {
   canonical: string
   external: string
   native: string
+}
+
+interface CanonicalAssetBreakdown {
+  assetId: AssetId
+  chainId: ChainId
+  amount: number
+  usdValue: number
+  usdPrice: string
+  escrows: CanonicalAssetBreakdownData['escrows']
 }
 
 type AmountConfigMap = Map<
@@ -384,6 +394,9 @@ export class Tvl2Controller {
       Math.min(...this.parents.map((x) => x.safeHeight)),
     ).toStartOf('hour')
 
+    // TODO: we could check if all the parents have started.
+    assert(timestamp.toNumber() > 0, 'Invalid timestamp')
+
     const breakdowns = await this.getNewBreakdown(timestamp)
     return { dataTimestamp: timestamp, breakdowns }
   }
@@ -451,7 +464,7 @@ export class Tvl2Controller {
     const breakdowns: Record<
       string,
       {
-        canonical: CanonicalAssetBreakdownData[]
+        canonical: Map<AssetId, CanonicalAssetBreakdown>
         external: ExternalAssetBreakdownData[]
         native: NativeAssetBreakdownData[]
       }
@@ -462,7 +475,7 @@ export class Tvl2Controller {
       let breakdown = breakdowns[config.project]
       if (!breakdown) {
         breakdown = {
-          canonical: [],
+          canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
           external: [],
           native: [],
         }
@@ -474,41 +487,55 @@ export class Tvl2Controller {
       const price = pricesMap.get(priceConfig.priceId)
       assert(price, 'Price not found for id ' + amount.configId)
 
-      const value = calculateValue({
-        amount: amount.amount,
-        priceUsd: price,
-        decimals: config.decimals,
-      })
+      const amountAsNumber = asNumber(amount.amount, config.decimals)
+      const valueAsNumber = amountAsNumber * price
 
       switch (config.source) {
-        case 'canonical':
-          breakdown.canonical.push({
-            assetId: priceConfig.assetId,
-            chainId: this.chainConverter.toChainId(config.chain),
-            amount: amount.amount.toString(),
-            usdValue: asNumber(value, 2).toFixed(2),
-            usdPrice: price.toString(),
-            escrows: [],
-          })
+        case 'canonical': {
+          // The canonical logic is the most complex one
+          assert(config.type === 'escrow', 'Only escrow can be canonical')
+          const asset = breakdown.canonical.get(priceConfig.assetId)
+          if (asset) {
+            asset.usdValue += valueAsNumber
+            asset.amount += amountAsNumber
+            asset.escrows.push({
+              amount: amountAsNumber.toString(),
+              usdValue: valueAsNumber.toString(),
+              escrowAddress: config.escrowAddress,
+            })
+          } else {
+            breakdown.canonical.set(priceConfig.assetId, {
+              assetId: priceConfig.assetId,
+              chainId: this.chainConverter.toChainId(config.chain),
+              amount: amountAsNumber,
+              usdValue: valueAsNumber,
+              usdPrice: price.toString(),
+              escrows: [
+                {
+                  amount: amountAsNumber.toString(),
+                  usdValue: valueAsNumber.toString(),
+                  escrowAddress: config.escrowAddress,
+                },
+              ],
+            })
+          }
           break
+        }
         case 'external':
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: this.chainConverter.toChainId(config.chain),
-            amount: amount.amount.toString(),
-            usdValue: asNumber(value, 2).toFixed(2),
+            amount: amountAsNumber.toString(),
+            usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
-            // TODO: force fe to accept "native"
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
           })
           break
         case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: this.chainConverter.toChainId(config.chain),
-            amount: amount.amount.toString(),
-            usdValue: asNumber(value, 2).toFixed(2),
+            amount: amountAsNumber.toString(),
+            usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
             // TODO: force fe to accept "native"
             tokenAddress:
@@ -516,7 +543,32 @@ export class Tvl2Controller {
           })
       }
     }
-    return breakdowns
+    const result: Record<
+      string,
+      {
+        canonical: CanonicalAssetBreakdownData[]
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
+      }
+    > = {}
+    for (const [project, breakdown] of Object.entries(breakdowns)) {
+      const canonical = [...breakdown.canonical.values()].sort(
+        (a, b) => +b.usdValue - +a.usdValue,
+      )
+
+      result[project] = {
+        canonical: canonical.map((x) => ({
+          ...x,
+          escrows:  x.escrows.sort((a, b) => +b.amount - +a.amount),
+          amount: x.amount.toString(),
+          usdValue: x.usdValue.toString(),
+        })),
+        external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
+        native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
+      }
+    }
+
+    return result
   }
 
   async getTokenChart(
