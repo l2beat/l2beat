@@ -1,5 +1,6 @@
 import {
   DataAvailabilityMode,
+  Layer2FinalityDisplayWarning,
   Layer2Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
@@ -38,10 +39,10 @@ export interface ScalingFinalityViewEntry {
 
 export interface ScalingFinalityViewEntryData {
   timeToInclusion: {
-    warning?: string
+    warning?: Layer2FinalityDisplayWarning
   } & FinalityDataPoint
   stateUpdateDelay?: {
-    warning?: string
+    warning?: Layer2FinalityDisplayWarning
     averageInSeconds: number
   }
   syncStatus: SyncStatus
