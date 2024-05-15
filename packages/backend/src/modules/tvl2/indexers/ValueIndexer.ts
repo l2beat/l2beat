@@ -53,7 +53,7 @@ export class ValueIndexer extends ManagedChildIndexer {
 
     const timestamps: UnixTime[] = []
 
-    let current = from > this.$.minHeight ? from : this.$.minHeight
+    let current = Math.max(from, this.$.minHeight)
     while (
       this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= to &&
       timestamps.length < this.$.maxTimestampsToProcessAtOnce
