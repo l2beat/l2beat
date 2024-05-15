@@ -338,6 +338,7 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
 
     for (const field of diff.diff) {
       if (field.key === undefined) {
+        result.unknown += 1
         continue
       }
 
@@ -353,6 +354,7 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
       const fields = contract.fields ?? {}
 
       if (fields[key] === undefined) {
+        result.unknown += 1
         continue
       }
 

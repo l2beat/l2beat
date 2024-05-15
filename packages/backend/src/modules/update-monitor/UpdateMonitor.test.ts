@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryDiff,
+  RawDiscoveryConfig,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
@@ -96,7 +101,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   version: 0,
 }
 
-describe(UpdateMonitor.name, () => {
+describe.only(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let discoveryRunner = mockObject<DiscoveryRunner>({})
   const chainConverter = new ChainConverter([
@@ -199,11 +204,13 @@ describe(UpdateMonitor.name, () => {
 
   describe(UpdateMonitor.prototype.updateChain.name, () => {
     it('iterates over projects and finds diff', async () => {
+      const config = mockConfig(PROJECT_A)
       const configReader = mockObject<ConfigReader>({
         readDiscovery: async () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
+        readConfig: async () => config,
 
         readAllConfigsForChain: async () => [
           mockConfig(PROJECT_A),
@@ -260,7 +267,7 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
-        undefined,
+        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -270,7 +277,7 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
-        undefined,
+        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -366,6 +373,7 @@ describe(UpdateMonitor.name, () => {
 
       const configReader = mockObject<ConfigReader>({
         readAllConfigsForChain: async () => [config],
+        readConfig: async () => config,
         readDiscovery: async () => ({
           ...mockProject,
           blockNumber: BLOCK_NUMBER - 1,
@@ -683,35 +691,23 @@ describe(UpdateMonitor.name, () => {
           if (chain === 'arbitrum') {
             return [mockConfig(PROJECT_B, chain)]
           }
+          const innerConfig: Partial<RawDiscoveryConfig> = {
+            overrides: {
+              [NAME_A]: {
+                fields: {
+                  a: {
+                    severity: 'MEDIUM',
+                  },
+                },
+              },
+            },
+          }
 
-          return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
+          return [
+            mockConfig(PROJECT_A, chain, innerConfig),
+            mockConfig(PROJECT_B, chain, innerConfig),
+          ]
         },
-
-        // readMeta: async (_: string, chain: string) => {
-        //   let valueMeta: ValueMeta | undefined = undefined
-        //   if (chain === 'arbitrum') {
-        //     valueMeta = {
-        //       severity: null,
-        //       description: null,
-        //       type: null,
-        //     }
-        //   } else {
-        //     valueMeta = {
-        //       severity: 'MEDIUM',
-        //       description: null,
-        //       type: null,
-        //     }
-        //   }
-
-        //   return {
-        //     contracts: [
-        //       {
-        //         name: NAME_A,
-        //         values: { a: valueMeta },
-        //       },
-        //     ],
-        //   }
-        // },
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -734,13 +730,13 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_A]: [
           {
             chainName: 'ethereum',
-            severityCounts: { low: 0, medium: 1, high: 0, unknown: 0 },
+            severityCounts: { low: 0, medium: 1, high: 0, unknown: 1 },
           },
         ],
         [PROJECT_B]: [
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
           },
         ],
       })
@@ -873,11 +869,16 @@ function mockContract(
   }
 }
 
-function mockConfig(name: string, chain = 'ethereum'): DiscoveryConfig {
+function mockConfig(
+  name: string,
+  chain = 'ethereum',
+  innerConfig: Partial<RawDiscoveryConfig> = {},
+): DiscoveryConfig {
   return new DiscoveryConfig({
     name,
     chain,
     initialAddresses: [],
+    ...innerConfig,
   })
 }
 
