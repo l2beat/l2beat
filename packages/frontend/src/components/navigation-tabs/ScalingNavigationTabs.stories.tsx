@@ -17,6 +17,7 @@ export const ScalingNavigationTabs: Story = {
       activity: true,
       costsPage: true,
       zkCatalog: true,
+      glossary: true,
       banner: false,
       tvlBreakdown: false,
       implementationChange: false,
