@@ -8,10 +8,11 @@ import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
+import { Layer2FinalityDisplayWarning } from '@l2beat/config'
 
 type BaseProps = {
   syncStatus: SyncStatus
-  warning?: string
+  warning?: Layer2FinalityDisplayWarning
 }
 
 type Props =
@@ -37,7 +38,10 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
         </GrayedOut>
         {props.warning && (
-          <RoundedWarningIcon className="size-5" sentiment="warning" />
+          <RoundedWarningIcon
+            className="size-5"
+            sentiment={props.warning.type === 'project' ? 'warning' : 'neutral'}
+          />
         )}
       </TooltipTrigger>
       <TooltipContent>
@@ -88,8 +92,8 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <WarningBar
             className="mt-2"
             icon={RoundedWarningIcon}
-            color="yellow"
-            text={props.warning}
+            color={props.warning.type === 'project' ? 'yellow' : 'gray'}
+            text={props.warning.content}
           />
         )}
       </TooltipContent>

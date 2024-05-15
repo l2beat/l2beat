@@ -29,8 +29,11 @@ export const layer2aWithDups: Layer2 = {
     },
     finality: {
       warnings: {
-        timeToInclusion:
-          "It's assumed that transaction data batches are submitted sequentially.",
+        timeToInclusion: {
+          type: 'l2beat',
+          content:
+            "It's assumed that transaction data batches are submitted sequentially.",
+        },
       },
     },
   },

@@ -81,11 +81,16 @@ export interface Layer2LivenessDisplay {
   }
 }
 
+export interface Layer2FinalityDisplayWarning {
+  type: 'project' | 'l2beat'
+  content: string
+}
+
 export interface Layer2FinalityDisplay {
   /** Warning tooltip content for finality tab for given project */
   warnings?: {
-    timeToInclusion?: string
-    stateUpdateDelay?: string
+    timeToInclusion?: Layer2FinalityDisplayWarning
+    stateUpdateDelay?: Layer2FinalityDisplayWarning
   }
   /** Finalization period displayed in table for given project (time in seconds) */
   finalizationPeriod?: number
