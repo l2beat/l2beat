@@ -7,6 +7,7 @@ export function getProductionConfig(): Config {
     features: {
       ...common.features,
       zkCatalog: false,
+      glossary: false
     },
     backend: {
       apiUrl: 'https://api.l2beat.com',

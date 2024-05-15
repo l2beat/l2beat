@@ -22,7 +22,7 @@ export function VerifiedCountWithDetails(props: Props) {
   return (
     <div className="flex gap-1.5 items-center">
       {props.verifiers.length}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 text-zinc-500 dark:text-gray-50 font-medium text-base select-none">
         <div className="flex items-center">
           ({successfullyVerifiedCount}
           <VerifiedIcon className="size-4 inline" />

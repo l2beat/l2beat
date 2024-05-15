@@ -5,7 +5,7 @@ import { makeQuery } from './query'
 const ARROWS_THRESHOLD = 4
 
 export function configureOverflowWrappers() {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const overflowWrappers = $$('[data-role=overflow-wrapper]')
   overflowWrappers.forEach((wrapper) => configureOverflowWrapper(wrapper))
 }

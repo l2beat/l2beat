@@ -185,6 +185,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 1,
         computeGasEth: 1,
         computeGasUsd: 1,
+        overheadGas: 1,
         overheadGasEth: 1,
         overheadGasUsd: 1,
       })
@@ -234,6 +235,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 3,
           computeGasEth: 3,
           computeGasUsd: 3,
+          overheadGas: 3,
           overheadGasEth: 3,
           overheadGasUsd: 3,
         },
@@ -252,6 +254,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 1,
           computeGasEth: 1,
           computeGasUsd: 1,
+          overheadGas: 1,
           overheadGasEth: 1,
           overheadGasUsd: 1,
         },
@@ -270,6 +273,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 1,
           computeGasEth: 1,
           computeGasUsd: 1,
+          overheadGas: 1,
           overheadGasEth: 1,
           overheadGasUsd: 1,
         },
@@ -343,6 +347,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 129221,
         computeGasEth: 0.00210593570777626,
         computeGasUsd: 4.21187141555252,
+        overheadGas: 21000,
         overheadGasEth: 0.00034224042426,
         overheadGasUsd: 0.68448084852,
       })
@@ -364,6 +369,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 77533,
         computeGasEth: 0.00126356794353098,
         computeGasUsd: 2.5271358870619602,
+        overheadGas: 12600,
         overheadGasEth: 0.00020534425455600002,
         overheadGasUsd: 0.41068850911200006,
       })
@@ -385,6 +391,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 129221,
         computeGasEth: 0.00210593570777626,
         computeGasUsd: 4.21187141555252,
+        overheadGas: 21000,
         overheadGasEth: 0.00034224042426,
         overheadGasUsd: 0.68448084852,
       })

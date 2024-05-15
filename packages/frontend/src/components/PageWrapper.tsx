@@ -7,6 +7,7 @@ import { Head } from './head'
 import { TooltipProvider } from './tooltip/TooltipProvider'
 
 export interface PageWrapperProps extends WrapperProps {
+  htmlClassName?: string
   children: ReactNode
 }
 
@@ -20,7 +21,7 @@ export function PageWrapper(props: PageWrapperProps) {
       )}
     >
       <Head {...props.metadata} preloadApis={props.preloadApis} />
-      <body className={props.bodyClassName}>
+      <body className="flex flex-col min-h-screen">
         <script src="/scripts/prerender.js" />
         {props.children}
         <TooltipProvider />
