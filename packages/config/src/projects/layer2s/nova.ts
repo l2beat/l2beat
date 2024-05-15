@@ -28,7 +28,7 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['UpgradeExecutorAdmin'],
+  upgradableBy: ['SecurityCouncil'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by Security Council`,
