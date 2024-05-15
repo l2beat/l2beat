@@ -559,7 +559,7 @@ export class Tvl2Controller {
       result[project] = {
         canonical: canonical.map((x) => ({
           ...x,
-          escrows:  x.escrows.sort((a, b) => +b.amount - +a.amount),
+          escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
           amount: x.amount.toString(),
           usdValue: x.usdValue.toString(),
         })),
