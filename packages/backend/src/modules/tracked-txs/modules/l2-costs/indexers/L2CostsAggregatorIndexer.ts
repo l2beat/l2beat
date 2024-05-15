@@ -145,6 +145,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         existing.computeGasEth += calculations.computeGasEth
         existing.computeGasUsd += calculations.computeGasUsd
 
+        existing.overheadGas += calculations.overheadGas
         existing.overheadGasEth += calculations.overheadGasEth
         existing.overheadGasUsd += calculations.overheadGasUsd
 
@@ -219,6 +220,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       computeGas,
       computeGasUsd,
       computeGasEth,
+      overheadGas,
       overheadGasEth,
       overheadGasUsd,
     }

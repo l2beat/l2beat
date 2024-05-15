@@ -23,6 +23,7 @@ export interface AggregatedL2CostsRecord {
   computeGas: number
   computeGasEth: number
   computeGasUsd: number
+  overheadGas: number
   overheadGasEth: number
   overheadGasUsd: number
 }
@@ -77,6 +78,7 @@ function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {
     compute_gas: record.computeGas,
     compute_gas_eth: record.computeGasEth,
     compute_gas_usd: record.computeGasUsd,
+    overhead_gas: record.overheadGas,
     overhead_gas_eth: record.overheadGasEth,
     overhead_gas_usd: record.overheadGasUsd,
   }
@@ -98,6 +100,7 @@ function toRecord(row: AggregatedL2CostsRow): AggregatedL2CostsRecord {
     computeGas: row.compute_gas,
     computeGasEth: row.compute_gas_eth,
     computeGasUsd: row.compute_gas_usd,
+    overheadGas: row.overhead_gas,
     overheadGasEth: row.overhead_gas_eth,
     overheadGasUsd: row.overhead_gas_usd,
   }
