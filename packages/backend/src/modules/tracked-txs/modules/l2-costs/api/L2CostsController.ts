@@ -167,7 +167,7 @@ export class L2CostsController {
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 
     for (const rec of records) {
-      if (rec.timestamp.gt(nowToFullHour.add(-7, 'days'))) {
+      if (rec.timestamp.gte(nowToFullHour.add(-7, 'days'))) {
         addToMap(hourlyMap, 'hour', rec)
         addToMap(combinedHourlyMap, 'hour', rec)
       }
