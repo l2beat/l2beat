@@ -173,6 +173,7 @@ module.exports = {
       sm: '550px',
       md: '750px',
       lg: '1120px',
+      xl: '1256px',
     },
     zIndex: {
       1: '1',
