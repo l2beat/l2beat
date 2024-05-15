@@ -122,45 +122,7 @@ export class Tvl2Controller {
     }
   }
 
-  async getTvl(): Promise<Tvl2Result> {
-    // TODO: we should return daily, sixHourly and hourly results.
-    const result: Tvl2Result = {
-      daily: [],
-    }
-
-    const projects = this.projects.map((x) => x.id)
-    const dailyValues = await this.valueRepository.getForProjects(projects)
-    const dailyValuesByTimestamp = groupBy(dailyValues, 'timestamp')
-    for (const [timestamp, values] of Object.entries(dailyValuesByTimestamp)) {
-      const valuesByProject = groupBy(values, 'projectId')
-      const projects: Record<string, Tvl2ProjectResult> = {}
-      for (const [projectId, values] of Object.entries(valuesByProject)) {
-        const result = values.reduce(
-          (acc, curr) => {
-            acc.canonical += curr.canonical
-            acc.external += curr.external
-            acc.native += curr.native
-            return acc
-          },
-          { canonical: 0n, external: 0n, native: 0n },
-        )
-        projects[projectId] = {
-          canonical: result.canonical.toString(),
-          external: result.external.toString(),
-          native: result.native.toString(),
-        }
-      }
-      result.daily.push({
-        timestamp: Number(timestamp),
-        projects,
-      })
-    }
-
-    return result
-  }
-
-  // TODO: Remove lastHour
-  async getOldTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+  async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPriceId = this.priceConfigs.get(
       createAssetId({ address: 'native', chain: 'ethereum' }),
     )?.priceId
