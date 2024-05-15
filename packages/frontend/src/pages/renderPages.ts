@@ -99,7 +99,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getGovernancePublicationPages(config))
   }
 
-  pages.push(getGlossaryPage(config))
+  if (config.features.glossary) {
+    pages.push(getGlossaryPage(config))
+  }
 
   pages.push(
     getScalingDataAvailabilityPage(config, {
