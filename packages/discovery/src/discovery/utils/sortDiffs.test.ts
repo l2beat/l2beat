@@ -1,11 +1,11 @@
 import { expect } from 'earl'
 
-import { FieldDiff } from '../output/diffContracts'
-import { sortBySeverity } from './sortDiffs'
 import {
   ContractFieldSeverity,
   DiscoveryContract,
 } from '../config/RawDiscoveryConfig'
+import { FieldDiff } from '../output/diffContracts'
+import { sortBySeverity } from './sortDiffs'
 
 const CONTRACT: DiscoveryContract = {
   fields: {

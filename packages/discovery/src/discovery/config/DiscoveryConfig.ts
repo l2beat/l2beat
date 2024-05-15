@@ -63,10 +63,8 @@ export class DiscoveryConfig {
     return this.config.sharedModules?.[name]
   }
 
-  getContract(
-    name: string,
-  ): DiscoveryContract | undefined {
-    return this.config.overrides?.[name ?? ''] 
+  getContract(name: string): DiscoveryContract | undefined {
+    return this.config.overrides?.[name ?? '']
   }
 
   private getName(address: EthereumAddress): string | undefined {

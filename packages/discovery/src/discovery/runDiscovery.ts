@@ -53,18 +53,12 @@ export async function runDiscovery(
     config.chain.rpcGetLogsMaxRange,
   )
 
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    blockNumber,
-    logger,
-    {
-      sourcesFolder: config.sourcesFolder,
-      flatSourcesFolder: config.flatSourcesFolder,
-      discoveryFilename: config.discoveryFilename,
-      skipHints: config.skipHints,
-    },
-  )
+  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+    sourcesFolder: config.sourcesFolder,
+    flatSourcesFolder: config.flatSourcesFolder,
+    discoveryFilename: config.discoveryFilename,
+    skipHints: config.skipHints,
+  })
 }
 
 export async function dryRunDiscovery(

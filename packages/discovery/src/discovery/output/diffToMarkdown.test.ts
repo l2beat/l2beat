@@ -1,18 +1,18 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import {
+  DiscoveryContract,
+  DiscoveryContractField,
+  RawDiscoveryConfig,
+} from '../config/RawDiscoveryConfig'
 import { DiscoveryDiff } from './diffDiscovery'
 import {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
   fieldDiffToMarkdown,
 } from './diffToMarkdown'
-import {
-  DiscoveryContract,
-  RawDiscoveryConfig,
-  DiscoveryContractField,
-} from '../config/RawDiscoveryConfig'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
 
 const ADDRESS = EthereumAddress.random()
 

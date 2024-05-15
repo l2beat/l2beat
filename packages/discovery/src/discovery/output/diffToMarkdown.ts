@@ -1,14 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
 import { toUpper } from 'lodash'
 
-import { FieldDiff } from './diffContracts'
-import { DiscoveryDiff } from './diffDiscovery'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import {
   DiscoveryContract,
   DiscoveryContractField,
 } from '../config/RawDiscoveryConfig'
 import { getContractField } from '../utils/metaGetters'
+import { FieldDiff } from './diffContracts'
+import { DiscoveryDiff } from './diffDiscovery'
 
 export function discoveryDiffToMarkdown(
   diffs: DiscoveryDiff[],

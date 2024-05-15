@@ -1,12 +1,12 @@
 /* eslint-disable  @typescript-eslint/no-non-null-assertion */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { isEmpty } from 'lodash'
-import { z } from 'zod'
 import { ConfigReader } from '@l2beat/discovery'
 import { RawDiscoveryConfig } from '@l2beat/discovery'
 import { parse, stringify } from 'comment-json'
+import { isEmpty } from 'lodash'
 import { rimraf } from 'rimraf'
+import { z } from 'zod'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 function moveFieldParamsIntoHandlerObject(configJsonc: RawDiscoveryConfig) {
