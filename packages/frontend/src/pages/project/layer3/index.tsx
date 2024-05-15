@@ -13,7 +13,7 @@ export function getL3sProjectPages(config: Config, pagesData: PagesData) {
     return {
       slug: `/scaling/projects/${project.display.slug}`,
       page: (
-        <PageWrapper {...wrapper} bodyClassName="flex flex-col min-h-screen">
+        <PageWrapper {...wrapper}>
           <ProjectPage {...props} />
         </PageWrapper>
       ),

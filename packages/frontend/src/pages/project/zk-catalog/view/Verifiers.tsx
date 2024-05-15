@@ -1,15 +1,11 @@
 import React from 'react'
-
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { ChevronDownIcon } from '../../../../components/icons'
-import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQuestionMark'
-import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
-import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
 import { EM_DASH } from '../../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
+import { VerifiedCell } from './VerifiedCell'
 import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
@@ -56,7 +52,7 @@ export function Verifiers(props: Props) {
               <VerifiedCell verified={item.verified} />
             </td>
             <td className="pr-4">
-              <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:-rotate-180" />
+              <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
             </td>
           </tr>
           <tr
@@ -156,34 +152,4 @@ function SubVerifiersTable({
       </table>
     </div>
   )
-}
-
-function VerifiedCell({ verified }: { verified: 'yes' | 'no' | 'failed' }) {
-  switch (verified) {
-    case 'yes':
-      return (
-        <span className="text-green-700 text-sm md:text-base dark:text-green-450 flex items-center">
-          <VerifiedIcon className="mr-1.5 dark:fill-green-450" />
-          <span>Successful</span>
-        </span>
-      )
-    case 'no':
-      return (
-        <span className="flex items-center text-sm md:text-base">
-          <CircleQuestionMark className="mr-1.5" />
-          {/* TODO: Ask for link */}
-          Not verified
-          <Link className="ml-4 hidden md:inline">Ask for verification</Link>
-        </span>
-      )
-    case 'failed':
-      return (
-        <span className="text-red-700 dark:text-red-300 flex items-center text-sm md:text-base">
-          <UnverifiedIcon className="mr-1.5" />
-          Unsuccessful
-        </span>
-      )
-    default:
-      assertUnreachable(verified)
-  }
 }
