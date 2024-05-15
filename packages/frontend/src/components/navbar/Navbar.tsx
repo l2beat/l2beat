@@ -127,14 +127,16 @@ export function Navbar(props: NavbarProps) {
                   </PageLink>
                 )}
               </li>
-              <li className="h-full">
-                <PageLink
-                  selected={props.selectedPage === 'glossary'}
-                  href="/glossary"
-                >
-                  Glossary
-                </PageLink>
-              </li>
+              {props.features.glossary ? (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'glossary'}
+                    href="/glossary"
+                  >
+                    Glossary
+                  </PageLink>
+                </li>
+              ) : null}
               <li className="h-full">
                 <PageLink selected={props.selectedPage === 'faq'} href="/faq">
                   FAQ

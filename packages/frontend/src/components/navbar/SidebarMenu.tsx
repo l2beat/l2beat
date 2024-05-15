@@ -138,9 +138,11 @@ function AdditionalSections(props: AdditionalSectionProps) {
           </PlainLink>
         )}
       </li>
-      <li>
-        <PlainLink href="/glossary">Glossary</PlainLink>
-      </li>
+      {props.features.glossary ? (
+        <li>
+          <PlainLink href="/glossary">Glossary</PlainLink>
+        </li>
+      ) : null}
       <li>
         <PlainLink href="/faq">FAQ</PlainLink>
       </li>
