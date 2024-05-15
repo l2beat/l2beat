@@ -336,20 +336,20 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       expect(result).toEqual({
         totalGas: 601201,
-        totalGasEth: 0.00979787072883506,
-        totalGasUsd: 19.59574145767012,
+        totalGasEth: 0.009797870728835058,
+        totalGasUsd: 19.595741457670115,
         blobsGas: null,
         blobsGasEth: null,
         blobsGasUsd: null,
         calldataGas: 450980,
-        calldataGasEth: 0.007349694596798801,
-        calldataGasUsd: 14.699389193597602,
+        calldataGasEth: 0.007349694596798799,
+        calldataGasUsd: 14.699389193597598,
         computeGas: 129221,
-        computeGasEth: 0.00210593570777626,
-        computeGasUsd: 4.21187141555252,
+        computeGasEth: 0.0021059357077762597,
+        computeGasUsd: 4.211871415552519,
         overheadGas: 21000,
-        overheadGasEth: 0.00034224042426,
-        overheadGasUsd: 0.68448084852,
+        overheadGasEth: 0.00034224042425999996,
+        overheadGasUsd: 0.6844808485199999,
       })
     })
 
@@ -358,20 +358,20 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       expect(result).toEqual({
         totalGas: 360721,
-        totalGasEth: 0.0058787289561662605,
-        totalGasUsd: 11.757457912332521,
+        totalGasEth: 0.00587872895616626,
+        totalGasUsd: 11.75745791233252,
         blobsGas: null,
         blobsGasEth: null,
         blobsGasUsd: null,
         calldataGas: 270588,
-        calldataGasEth: 0.00440981675807928,
-        calldataGasUsd: 8.81963351615856,
+        calldataGasEth: 0.0044098167580792795,
+        calldataGasUsd: 8.819633516158559,
         computeGas: 77533,
-        computeGasEth: 0.00126356794353098,
-        computeGasUsd: 2.5271358870619602,
+        computeGasEth: 0.0012635679435309799,
+        computeGasUsd: 2.52713588706196,
         overheadGas: 12600,
-        overheadGasEth: 0.00020534425455600002,
-        overheadGasUsd: 0.41068850911200006,
+        overheadGasEth: 0.00020534425455599997,
+        overheadGasUsd: 0.41068850911199994,
       })
     })
 
@@ -380,20 +380,20 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       expect(result).toEqual({
         totalGas: 732273,
-        totalGasEth: 0.009797870728966132,
-        totalGasUsd: 19.595741457932263,
+        totalGasEth: 0.00979787072896613,
+        totalGasUsd: 19.59574145793226,
         blobsGas: 131072,
         blobsGasEth: 1.31072e-13,
         blobsGasUsd: 2.62144e-10,
         calldataGas: 450980,
-        calldataGasEth: 0.007349694596798801,
-        calldataGasUsd: 14.699389193597602,
+        calldataGasEth: 0.007349694596798799,
+        calldataGasUsd: 14.699389193597598,
         computeGas: 129221,
-        computeGasEth: 0.00210593570777626,
-        computeGasUsd: 4.21187141555252,
+        computeGasEth: 0.0021059357077762597,
+        computeGasUsd: 4.211871415552519,
         overheadGas: 21000,
-        overheadGasEth: 0.00034224042426,
-        overheadGasUsd: 0.68448084852,
+        overheadGasEth: 0.00034224042425999996,
+        overheadGasUsd: 0.6844808485199999,
       })
     })
   })

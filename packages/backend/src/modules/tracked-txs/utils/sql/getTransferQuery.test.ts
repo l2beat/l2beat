@@ -43,7 +43,6 @@ describe(getTransferQuery.name, () => {
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
-      txs.transaction_type,
       txs.receipt_gas_used,
       txs.gas_price,
       txs.receipt_blob_gas_used,
