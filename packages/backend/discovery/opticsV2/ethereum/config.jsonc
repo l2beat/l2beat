@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "opticsV2",
   "initialAddresses": [
@@ -37,9 +37,11 @@
       "proxyType": "Optics Beacon proxy",
       "fields": {
         "routers": {
-          "type": "call",
-          "method": "routers",
-          "args": ["{{ governorDomain }}"]
+          "handler": {
+            "type": "call",
+            "method": "routers",
+            "args": ["{{ governorDomain }}"]
+          }
         }
       }
     },
@@ -58,10 +60,12 @@
     "XAppConnectionManager": {
       "fields": {
         "watchers": {
-          "type": "arrayFromOneEvent",
-          "event": "WatcherPermissionSet",
-          "valueKey": "watcher",
-          "flagKey": "access"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "WatcherPermissionSet",
+            "valueKey": "watcher",
+            "flagKey": "access"
+          }
         }
       }
     }
