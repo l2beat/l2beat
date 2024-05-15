@@ -1,0 +1,5 @@
+{
+    "term": "Exit window",
+    "description": "The amount of time that users have to exit a system before an unwanted upgrade. It takes into account upgrade delays, forced transaction delays and other time factors. To be considered Stage 1, a rollup needs to have an exit window of at least 7d if upgrades are initiated by a permissioned actor less decentralized than a Security Council. For Stage 2, a rollup needs at least 30d in all cases outside of onchain provable bugs.",
+    "isSpicy": false
+}

@@ -1,0 +1,5 @@
+{
+    "term": "Time to inclusion",
+    "description": "Time between L2 (or L3) tx submission and inclusion in an L1 block such that it can be reorged only if the L1 reorgs. If the project operators can reorg transactions even after tx data submission on L1, the transaction is not yet considered included in the canonical L2 (or L3) chain.",
+    "isSpicy": false
+}

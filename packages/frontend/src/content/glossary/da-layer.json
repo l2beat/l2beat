@@ -1,0 +1,5 @@
+{
+    "term": "DA layer",
+    "description": "An infrastructure that is used to make publish data so that it's available to the public. They take the form of Data Availability Committees (DACs) or blockchains. Not to confuse with the layer responsible with ordering, since ordering and DA can be separated.",
+    "isSpicy": false
+}

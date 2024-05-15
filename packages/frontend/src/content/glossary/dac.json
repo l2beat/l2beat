@@ -1,0 +1,5 @@
+{
+    "term": "Data Availability Committee (DAC)",
+    "description": "A set of members whose task is attesting and ensuring that the data is available for the public. An onchain DAC verifier checks that a threshold of signatures from the DAC members is reached before considering a data commitment as available and therefore valid to be used in the system.",
+    "isSpicy": false
+}
