@@ -51,6 +51,42 @@ export class ValueIndexer extends ManagedChildIndexer {
       return to
     }
 
+    const timestamps: UnixTime[] = this.getTimestampsToSync(from, to)
+
+    if (timestamps.length === 0) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+      })
+      return to
+    }
+
+    const isAnythingToCalculate = Array.from(this.amountConfigs.values()).some(
+      (config) => config.sinceTimestamp.toNumber() <= timestamps[0].toNumber(),
+    )
+
+    if (!isAnythingToCalculate) {
+      this.logger.info('Skipping update due to no configs in range', {
+        from,
+        to,
+      })
+      return to
+    }
+
+    const values = await this.$.valueService.calculateTvlForTimestamps(
+      this.$.project,
+      this.$.dataSource,
+      this.amountConfigs,
+      this.priceConfigIds,
+      timestamps,
+    )
+
+    await this.$.valueRepository.addOrUpdateMany(values)
+
+    return timestamps[timestamps.length - 1].toNumber()
+  }
+
+  private getTimestampsToSync(from: number, to: number) {
     const timestamps: UnixTime[] = []
 
     let current = Math.max(from, this.$.minHeight)
@@ -62,18 +98,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       timestamps.push(newTimestamp)
       current = newTimestamp.toNumber() + 1
     }
-
-    const values = await this.$.valueService.getTvlAt(
-      this.$.project,
-      this.$.dataSource,
-      this.amountConfigs,
-      this.priceConfigIds,
-      timestamps,
-    )
-
-    await this.$.valueRepository.addOrUpdateMany(values)
-
-    return timestamps[timestamps.length - 1].toNumber()
+    return timestamps
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

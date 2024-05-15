@@ -26,7 +26,7 @@ export interface ValueServiceDependencies {
 export class ValueService {
   constructor(private readonly $: ValueServiceDependencies) {}
 
-  async getTvlAt(
+  async calculateTvlForTimestamps(
     project: ProjectId,
     source: string,
     amountConfigs: Map<AmountId, AmountConfigEntry>,
