@@ -19,7 +19,7 @@ export const ArrayHandlerDefinition = z.strictObject({
   length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
   maxLength: z.optional(z.number().int().nonnegative()),
   startIndex: z.optional(z.number().int().nonnegative()),
-  pickFields: z.optional(z.array(z.union([z.string(), z.number()]))),
+  pickFields: z.optional(z.array(z.string())),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -135,7 +135,7 @@ function createCallIndex(
   address: EthereumAddress,
   fragment: utils.FunctionFragment,
   blockNumber: number,
-  pickFields?: (string | number)[],
+  pickFields?: string[],
 ) {
   return async (index: number) => {
     return await callMethod(
