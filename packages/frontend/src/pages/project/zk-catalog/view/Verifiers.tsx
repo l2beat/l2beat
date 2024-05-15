@@ -78,7 +78,7 @@ export function Verifiers(props: Props) {
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
                 </p>
-                <Markdown>{item.description}</Markdown>
+                <Markdown className="text-xs">{item.description}</Markdown>
               </div>
               <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
@@ -95,7 +95,9 @@ export function Verifiers(props: Props) {
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
                 </p>
-                <Markdown>{item.description}</Markdown>
+                <Markdown className="text-xs font-medium text-zinc-900/80 dark:text-white/80">
+                  {item.description}
+                </Markdown>
               </div>
               <SubVerifiersTable verifier={item} />
             </td>
