@@ -280,12 +280,10 @@ export class L2CostsController {
         costMultiplier = multiplierConfig.costMultiplier
       }
 
-      const gasPriceGwei = parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
-      const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-
-      const calldataGasUsed = tx.data.calldataGasUsed * costMultiplier
+      const gasPriceETH = this.weiToEth(tx.gasPrice)
+      const calldataGasUsed = tx.calldataGasUsed * costMultiplier
       const overheadGasUsed = OVERHEAD * costMultiplier
-      const totalGas = tx.data.gasUsed * costMultiplier
+      const totalGas = tx.gasUsed * costMultiplier
       const computeGasUsed = totalGas - calldataGasUsed - overheadGasUsed
       const gasCost = totalGas * gasPriceETH
       const calldataGasCost = calldataGasUsed * gasPriceETH
@@ -315,14 +313,9 @@ export class L2CostsController {
         computeGasCostUsd,
         totalOverheadGasCostUsd,
       }
-      if (tx.data.type === 3) {
-        const blobGasPriceGwei = parseFloat(
-          (tx.data.blobGasPrice * 1e-9).toFixed(9),
-        )
-        const blobGasPriceETH = parseFloat(
-          (blobGasPriceGwei * 1e-9).toFixed(18),
-        )
-        const blobGasUsed = tx.data.blobGasUsed * costMultiplier
+      if (tx.blobGasPrice && tx.blobGasUsed) {
+        const blobGasPriceETH = this.weiToEth(tx.blobGasPrice)
+        const blobGasUsed = tx.blobGasUsed * costMultiplier
         const blobGasCost = blobGasUsed * blobGasPriceETH
         const blobGasCostUsd = blobGasCost * ethUsdPrice
 
@@ -383,5 +376,14 @@ export class L2CostsController {
         ),
       },
     }
+  }
+
+  private weiToEth(wei: bigint): number {
+    // Biggest wei we can get from DB is 2^63-1 which divided by 1e18 is safe to parse to Number
+    const integerPartGwei = Number(wei / 1_000_000_000n)
+    const fractionPartGwei = Number(wei % 1_000_000_000n)
+    const gwei = integerPartGwei + fractionPartGwei / 1_000_000_000
+
+    return gwei / 1_000_000_000
   }
 }

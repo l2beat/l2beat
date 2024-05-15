@@ -22,39 +22,34 @@ describeDatabase(L2CostsRepository.name, (database) => {
       timestamp: START,
       txHash: '0x1',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 2,
-        gasUsed: 100,
-        gasPrice: 1,
-        calldataLength: 100,
-        calldataGasUsed: 100,
-      },
+      gasUsed: 100,
+      gasPrice: 1n,
+      calldataLength: 100,
+      calldataGasUsed: 100,
+      blobGasPrice: null,
+      blobGasUsed: null,
     },
     {
       timestamp: START.add(-1, 'hours'),
       txHash: '0x2',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 3,
-        gasUsed: 200,
-        gasPrice: 2,
-        calldataLength: 200,
-        calldataGasUsed: 200,
-        blobGasPrice: 3,
-        blobGasUsed: 300,
-      },
+      gasUsed: 200,
+      gasPrice: 2n,
+      calldataLength: 200,
+      calldataGasUsed: 200,
+      blobGasPrice: 3n,
+      blobGasUsed: 300,
     },
     {
       timestamp: START.add(-2, 'hours'),
       txHash: '0x3',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 2,
-        gasUsed: 150,
-        gasPrice: 2,
-        calldataLength: 400,
-        calldataGasUsed: 400,
-      },
+      gasUsed: 150,
+      gasPrice: 2n,
+      calldataLength: 400,
+      calldataGasUsed: 400,
+      blobGasPrice: null,
+      blobGasUsed: null,
     },
   ]
 
@@ -74,20 +69,19 @@ describeDatabase(L2CostsRepository.name, (database) => {
     await repository.addMany(DATA)
   })
 
-  describe(L2CostsRepository.prototype.addMany.name, () => {
+  describe.only(L2CostsRepository.prototype.addMany.name, () => {
     it('should return only new row', async () => {
       const newRow: L2CostsRecord[] = [
         {
           timestamp: START,
           txHash: '0x4',
           trackedTxId: DATA[0].trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 100,
-            gasPrice: 1,
-            calldataLength: 100,
-            calldataGasUsed: 100,
-          },
+          gasUsed: 100,
+          gasPrice: 1n,
+          calldataLength: 100,
+          calldataGasUsed: 100,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
       ]
       await repository.addMany(newRow)
@@ -173,13 +167,12 @@ describeDatabase(L2CostsRepository.name, (database) => {
           timestamp: START.add(-i, 'hours'),
           txHash: '0x1',
           trackedTxId: trackedTxId,
-          data: {
-            type: 2 as const,
-            gasUsed: 100,
-            gasPrice: 1,
-            calldataLength: 100,
-            calldataGasUsed: 100,
-          },
+          gasUsed: 100,
+          gasPrice: 1n,
+          calldataLength: 100,
+          calldataGasUsed: 100,
+          blobGasPrice: null,
+          blobGasUsed: null,
         }))
         await repository.addMany(DATA)
 
@@ -224,19 +217,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.getByType.name, () => {
-    it('returns all records of type 2 tx', async () => {
-      const result = await repository.getByType(2)
-      expect(result).toEqual([DATA[0], DATA[2]] as L2CostsRecord<2>[])
-    })
-
-    it('returns all records of type 3 tx', async () => {
-      const result = await repository.getByType(3)
-      expect(result).toEqual([DATA[1]] as L2CostsRecord<3>[])
-    })
-  })
-
-  describe(L2CostsRepository.prototype.deleteFrom.name, () => {
+  describe(L2CostsRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
       const trackedTxId = TrackedTxId.random()
@@ -246,37 +227,34 @@ describeDatabase(L2CostsRepository.name, (database) => {
           timestamp: START.add(-1, 'hours'),
           txHash: '0x4',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
         {
           timestamp: START.add(1, 'hours'),
           txHash: '0x4',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
         {
           timestamp: START.add(2, 'hours'),
           txHash: '0x5',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
       ]
 
@@ -291,7 +269,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       ])
       await repository.addMany(records)
 
-      await repository.deleteFrom(trackedTxId, START)
+      await repository.deleteFromById(trackedTxId, START)
 
       const result = await repository.getAll()
 

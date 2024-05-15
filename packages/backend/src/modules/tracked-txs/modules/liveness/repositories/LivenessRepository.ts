@@ -146,7 +146,7 @@ export class LivenessRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteFrom(
+  async deleteFromById(
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
     trx?: Knex.Transaction,
@@ -156,6 +156,11 @@ export class LivenessRepository extends BaseRepository {
       .where('tracked_tx_id', id)
       .andWhere('timestamp', '>=', deleteFromInclusive.toDate())
       .delete()
+  }
+
+  async deleteAfter(after: UnixTime, trx?: Knex.Transaction) {
+    const knex = await this.knex(trx)
+    return knex('liveness').where('timestamp', '>', after.toDate()).delete()
   }
 
   async deleteAll() {

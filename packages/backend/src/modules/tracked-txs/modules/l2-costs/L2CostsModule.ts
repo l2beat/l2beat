@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../../config'
 import { Peripherals } from '../../../../peripherals/Peripherals'
-import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { PriceRepository } from '../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
@@ -32,11 +31,6 @@ export function createL2CostsModule(
 
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.getRepository(L2CostsRepository),
-    peripherals.getClient(ViemRpcClient, {
-      url: config.trackedTxsConfig.uses.l2costs.ethereumProviderUrl,
-      callsPerMinute:
-        config.trackedTxsConfig.uses.l2costs.ethereumProviderCallsPerMinute,
-    }),
     logger,
   )
 
