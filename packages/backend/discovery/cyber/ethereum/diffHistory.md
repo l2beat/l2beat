@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xc64b749967ef28630597f2f49622d864d8665d07
+Generated with discovered.json: 0x562ac4196a9bc7c3cfe8cc3096b62deaf6797075
 
-# Diff at Tue, 07 May 2024 11:09:06 GMT:
+# Diff at Wed, 15 May 2024 13:11:12 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 19817793
+- current block number: 19875593
 
 ## Description
 
-Initial discovery: Cyber is an OP stack L2 using custom DA (supposedly EigenDA).
+Initial discovery: Cyber is an OP stack L2 using custom DA (currently not yet EigenDA).
 
 ## Initial discovery
 
@@ -74,7 +74,7 @@ Initial discovery: Cyber is an OP stack L2 using custom DA (supposedly EigenDA).
 ```diff
 +   Status: CREATED
     contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d)
-    +++ description: None
+    +++ description: Central actor allowed to post new L2 state roots to L1.
 ```
 
 ```diff
