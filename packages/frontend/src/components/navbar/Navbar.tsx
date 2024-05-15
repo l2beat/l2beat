@@ -95,14 +95,16 @@ export function Navbar(props: NavbarProps) {
                   Forum
                 </PlainLink>
               </li>
-              <li className="h-full">
-                <PageLink
-                  selected={props.selectedPage === 'zk-catalog'}
-                  href="/zk-catalog"
-                >
-                  ZK Catalog
-                </PageLink>
-              </li>
+              {props.features.zkCatalog ? (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'zk-catalog'}
+                    href="/zk-catalog"
+                  >
+                    ZK Catalog
+                  </PageLink>
+                </li>
+              ) : null}
               <li className="h-full">
                 <PageLink
                   selected={props.selectedPage === 'donate'}
