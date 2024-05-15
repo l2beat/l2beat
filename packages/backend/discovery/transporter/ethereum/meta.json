@@ -1,0 +1,1170 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ARM",
+      "values": {
+        "getCurseProgress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isCursed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ARMProxy",
+      "values": {
+        "getARM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore1",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore2",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore3",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore4",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore5",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore6",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore7",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CommitStore8",
+      "values": {
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLatestPriceEpochAndRound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUnpausedAndARMHealthy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EVM2EVMMainWhatever",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedNextSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNopFeesJuels": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linkAvailableForPayment": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EtherSenderReceiver",
+      "values": {
+        "getRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "i_weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LinkToken",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ManyChainMultiSig",
+      "values": {
+        "MAX_NUM_SIGNERS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NUM_GROUPS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOpCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRootMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp1",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp2",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp3",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp4",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp5",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp6",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp7",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OffRamp8",
+      "values": {
+        "currentRateLimiterState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDynamicConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaticConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenLimitAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfigDigestAndEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PriceRegistry",
+      "values": {
+        "getFeeTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriceUpdaters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStalenessThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RBACTimelock",
+      "values": {
+        "ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BYPASSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBlockedFunctionSelectorAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBlockedFunctionSelectorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Router",
+      "values": {
+        "MAX_RET_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getArmProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOffRamps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWrappedNative": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "typeAndVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WETH9",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
