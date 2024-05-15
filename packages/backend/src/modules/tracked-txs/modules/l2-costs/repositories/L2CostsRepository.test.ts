@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { range } from 'lodash'
+import { describe } from 'mocha'
 
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
@@ -122,6 +123,35 @@ describeDatabase(L2CostsRepository.name, (database) => {
       })
     },
   )
+
+  describe(L2CostsRepository.prototype.getWithProjectIdByTimeRange.name, () => {
+    it('should return all rows for given time range', async () => {
+      const results = await repository.getWithProjectIdByTimeRange([
+        START.add(-2, 'hours'),
+        START.add(-1, 'minutes'),
+      ])
+
+      expect(results).toEqualUnsorted([
+        {
+          projectId: ProjectId('project-1'),
+          ...DATA[1],
+        },
+        {
+          projectId: ProjectId('project-2'),
+          ...DATA[2],
+        },
+      ])
+    })
+
+    it('should return empty array', async () => {
+      const results = await repository.getWithProjectIdByTimeRange([
+        START.add(5, 'hours'),
+        START.add(6, 'hours'),
+      ])
+
+      expect(results).toEqual([])
+    })
+  })
 
   describe(
     L2CostsRepository.prototype.getByProjectAndTimeRangePaginated.name,

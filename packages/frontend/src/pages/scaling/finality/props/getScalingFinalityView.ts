@@ -2,14 +2,18 @@ import { Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
+  UnixTime,
   formatSeconds,
   notUndefined,
-  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
+import {
+  FinalityPagesData,
+  ScalingFinalityViewEntry,
+  ScalingFinalityViewEntryData,
+} from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
 
 export function getScalingFinalityView(
@@ -68,13 +72,20 @@ function getFinalityData(
   project: Layer2,
 ) {
   if (!finalityProjectData) return undefined
-  return {
+  const data: ScalingFinalityViewEntryData = {
     timeToInclusion: {
       averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
       minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
       maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
-      warning: project.display.finality?.warning,
+      warning: project.display.finality?.warnings?.timeToInclusion,
     },
+    stateUpdateDelay: finalityProjectData.stateUpdateDelays
+      ? {
+          averageInSeconds:
+            finalityProjectData.stateUpdateDelays.averageInSeconds,
+          warning: project.display.finality?.warnings?.stateUpdateDelay,
+        }
+      : undefined,
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
       displaySyncedUntil: formatTimestamp(
@@ -86,12 +97,12 @@ function getFinalityData(
       ),
     },
   }
+
+  return data
 }
 
-function isSynced(_: UnixTime) {
-  // TODO: remove this when liveness is fixed
-  // return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
-  return true
+function isSynced(syncedUntil: UnixTime) {
+  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
 function getIncludedProjects(

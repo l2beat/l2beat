@@ -1,7 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { existsSync, mkdirSync } from 'fs'
-import { readFile, writeFile } from 'fs/promises'
 import path from 'path'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { readFile, writeFile } from 'fs/promises'
 import z from 'zod'
 
 export const FileStructure = z.record(z.boolean())

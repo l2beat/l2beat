@@ -1,16 +1,9 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
-import { About } from '../../../../components/About'
+import { FooterProps, NavbarProps } from '../../../../components'
 import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../../components/other-sites/OtherSites'
-import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { LivenessWarning } from './LivenessWarning'
 import {
   ScalingLivenessView,
@@ -25,22 +18,19 @@ export interface ScalingLivenessPageProps {
 
 export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent>
+    <DashboardLayout
+      navbar={props.navbar}
+      footer={props.footer}
+      tabs={
         <ScalingNavigationTabs
           features={props.navbar.features}
           selected="liveness"
         />
-        <main>
-          <SimplePageHeader>Liveness</SimplePageHeader>
-          <LivenessWarning />
-          <ScalingLivenessView {...props.livenessView} />
-          <OtherSites />
-          <About />
-        </main>
-      </PageContent>
-      <Footer {...props.footer} />
-    </>
+      }
+    >
+      <SimplePageHeader>Liveness</SimplePageHeader>
+      <LivenessWarning />
+      <ScalingLivenessView {...props.livenessView} />
+    </DashboardLayout>
   )
 }

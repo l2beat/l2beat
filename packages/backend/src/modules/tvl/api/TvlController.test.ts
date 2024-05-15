@@ -28,8 +28,8 @@ import {
   ReportRecord,
   ReportRepository,
 } from '../repositories/ReportRepository'
-import { getProjectAssetChartData } from './charts'
 import { TvlController } from './TvlController'
+import { getProjectAssetChartData } from './charts'
 
 describe(TvlController.name, () => {
   const START = UnixTime.fromDate(new Date('2022-05-31'))
@@ -205,7 +205,7 @@ describe(TvlController.name, () => {
         type,
       )
 
-      assert(result.result === 'success')
+      assert(result.type === 'success')
 
       expect(result.data.daily).toEqual({
         types: ['timestamp', USDC.symbol.toLowerCase(), 'usd'],
@@ -429,7 +429,7 @@ describe(TvlController.name, () => {
 
         const result = await controller.getProjectTokenBreakdownApiResponse()
 
-        assert(result.result === 'success')
+        assert(result.type === 'success')
 
         expect(result.data.dataTimestamp).toEqual(timestamp)
         expect(result.data.breakdowns).toEqual({

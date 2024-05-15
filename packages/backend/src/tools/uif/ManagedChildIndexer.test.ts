@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockObject } from 'earl'
 
-import { _TEST_ONLY_resetUniqueIds } from './ids'
 import { IndexerService } from './IndexerService'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from './ManagedChildIndexer'
+import { _TEST_ONLY_resetUniqueIds } from './ids'
 
 describe(ManagedChildIndexer.name, () => {
   afterEach(() => {
@@ -21,9 +21,9 @@ describe(ManagedChildIndexer.name, () => {
         logger: Logger.SILENT,
         minHeight: 0,
       }
-      new TestIndexer({ ...common, id: 'a' })
+      new TestIndexer({ ...common, name: 'a' })
       expect(() => {
-        new TestIndexer({ ...common, id: 'a' })
+        new TestIndexer({ ...common, name: 'a' })
       }).toThrow('Indexer id a is duplicated!')
     })
   })
@@ -36,7 +36,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const indexer = new TestIndexer({
         parents: [],
-        id: 'indexer',
+        name: 'indexer',
         minHeight: 0,
         indexerService,
         logger: Logger.SILENT,
@@ -54,7 +54,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const indexer = new TestIndexer({
         parents: [],
-        id: 'indexer',
+        name: 'indexer',
         minHeight: 100,
         indexerService,
         logger: Logger.SILENT,
@@ -74,7 +74,7 @@ describe(ManagedChildIndexer.name, () => {
 
     const indexer = new TestIndexer({
       parents: [],
-      id: 'indexer',
+      name: 'indexer',
       minHeight: 0,
       indexerService,
       logger: Logger.SILENT,

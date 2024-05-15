@@ -1,4 +1,4 @@
-import { Layer2, layer2s, Layer3 } from '@l2beat/config'
+import { Layer2, Layer3, layer2s } from '@l2beat/config'
 import {
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWarnings } from '../../../../utils/tvl/getTVLWarnings'
+import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { getProjectTvlTooltipText } from '../../../project/common/getProjectTvlTooltipText'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { ScalingL2SummaryViewEntry, ScalingL3SummaryViewEntry } from '../types'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
 

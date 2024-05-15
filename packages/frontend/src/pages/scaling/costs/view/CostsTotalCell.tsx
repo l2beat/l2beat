@@ -1,16 +1,16 @@
 import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
-import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
+import { Callout } from '../../../../components/Callout'
 import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
+import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
 import { RoundedWarningIcon } from '../../../../components/icons'
-import { Callout } from '../../../../components/project/Callout'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
-import { LONG_HYPHEN } from '../../../../utils/constants'
+import { EM_DASH } from '../../../../utils/constants'
 import { CostsData, CostsDataBreakdown, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
 
@@ -176,7 +176,7 @@ function TotalValue({
             />
           </>
         ) : (
-          LONG_HYPHEN
+          EM_DASH
         )}
       </div>
     </div>

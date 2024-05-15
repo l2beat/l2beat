@@ -1,16 +1,16 @@
+import { readFileSync } from 'fs'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { readFileSync } from 'fs'
 
-import {
-  BigQueryFunctionCallResult,
-  TrackedTxFunctionCallResult,
-} from '../types/model'
 import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
+import {
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()

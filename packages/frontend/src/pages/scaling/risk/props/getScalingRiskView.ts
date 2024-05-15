@@ -1,7 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { ScalingRiskPagesData, ScalingRiskViewEntry } from '../types'
 import { ScalingRiskViewProps } from '../view/ScalingRiskView'
 

@@ -1,6 +1,6 @@
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
 import path from 'path'
+import { expect } from 'earl'
 
 import {
   byteArrFromHexStr,

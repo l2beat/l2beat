@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
 import { FinalityDurationCell } from '../../../../components/table/FinalityDurationCell'
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig } from '../../../../components/table/types'
 import { ScalingFinalityViewEntry } from '../types'
 
@@ -40,7 +40,12 @@ export function getScalingFinalityColumnsConfig() {
       name: 'Past day avg.\nTime to inclusion',
       getValue: (project) =>
         project.data ? (
-          <FinalityDurationCell data={project.data} />
+          <FinalityDurationCell
+            scope="timeToInclusion"
+            warning={project.data.timeToInclusion.warning}
+            timings={project.data.timeToInclusion}
+            syncStatus={project.data.syncStatus}
+          />
         ) : (
           <Badge type="gray">COMING SOON</Badge>
         ),
@@ -55,8 +60,24 @@ export function getScalingFinalityColumnsConfig() {
     {
       name: 'State update\ndelay',
       tooltip:
-        'Time interval between time to finality and state root submission.',
-      getValue: () => <Badge type="gray">COMING SOON</Badge>,
+        'Time interval between time to inclusion and state root submission.',
+      getValue: (project) => {
+        return project.data && project.data.stateUpdateDelay ? (
+          <FinalityDurationCell
+            scope="stateUpdateDelay"
+            warning={project.data.stateUpdateDelay.warning}
+            timings={project.data.stateUpdateDelay}
+            syncStatus={project.data.syncStatus}
+          />
+        ) : (
+          <Badge type="gray">COMING SOON</Badge>
+        )
+      },
+      sorting: {
+        rule: 'numeric',
+        getOrderValue: (project) =>
+          project.data?.stateUpdateDelay?.averageInSeconds,
+      },
     },
     {
       name: 'Execution\ndelay',

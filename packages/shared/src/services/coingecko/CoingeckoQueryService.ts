@@ -2,8 +2,8 @@ import {
   assert,
   CoingeckoId,
   EthereumAddress,
-  getHourlyTimestamps,
   UnixTime,
+  getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
@@ -100,7 +100,6 @@ export class CoingeckoQueryService {
 
     let currentTo = adjustedTo
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       let currentFrom = currentTo.add(-MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
       if (adjustedFrom && currentFrom.lt(adjustedFrom)) {
@@ -157,6 +156,14 @@ export class CoingeckoQueryService {
     })
 
     return result
+  }
+
+  static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
+    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
+
+    return to.gt(from.add(maxDaysForOneCall, 'days'))
+      ? from.add(maxDaysForOneCall, 'days')
+      : to
   }
 }
 

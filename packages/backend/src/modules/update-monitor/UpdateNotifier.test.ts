@@ -1,6 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -8,9 +13,8 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { printAsciiTable } from '../../tools/printAsciiTable'
-import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
+import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 
 const BLOCK = 123
 
@@ -421,7 +425,7 @@ describe(UpdateNotifier.name, () => {
         ['project-a', 'ethereum', '2', '', '1', '4'],
         ['project-a', 'arbitrum', '', '', '', '12'],
       ]
-      const table = printAsciiTable(headers, rows)
+      const table = formatAsAsciiTable(headers, rows)
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 

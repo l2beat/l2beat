@@ -9,9 +9,9 @@ import { expect, mockObject } from 'earl'
 
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
+  TotalSupplyProvider,
   decodeErc20TotalSupplyQuery,
   encodeErc20TotalSupplyQuery,
-  TotalSupplyProvider,
 } from './TotalSupplyProvider'
 
 describe(TotalSupplyProvider.name, () => {

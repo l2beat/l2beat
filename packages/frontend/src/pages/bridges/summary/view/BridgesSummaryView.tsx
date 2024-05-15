@@ -1,16 +1,16 @@
 import React from 'react'
 
+import { Tabs } from '../../../../components/Tabs'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
+import { TableView } from '../../../../components/table/TableView'
 import { BridgesFilters } from '../../../../components/table/filters/BridgesFilters'
 import { getBridgesRowProps } from '../../../../components/table/props/getBridgesRowProps'
 import {
   getActiveBridgesSummaryColumnsConfig,
   getArchivedBridgesSummaryColumnsConfig,
 } from '../../../../components/table/props/getBridgesTableColumnsConfig'
-import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
-import { Tabs } from '../../../../components/Tabs'
 import { BridgesSummaryViewEntry } from '../types'
 
 export interface BridgesSummaryViewProps {

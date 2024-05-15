@@ -6,7 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { install, InstalledClock } from '@sinonjs/fake-timers'
+import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
@@ -95,7 +95,7 @@ describe(L2CostsController.name, () => {
 
       expect(
         l2CostsRepository.getByProjectAndTimeRangePaginated,
-      ).toHaveBeenCalledTimes(4)
+      ).toHaveBeenCalledTimes(2)
       expect(
         l2CostsRepository.getByProjectAndTimeRangePaginated,
       ).toHaveBeenNthCalledWith(
@@ -103,19 +103,9 @@ describe(L2CostsController.name, () => {
         MOCK_PROJECTS[1].projectId,
         [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
         0,
-        50000,
+        200000,
       )
-      expect(
-        l2CostsRepository.getByProjectAndTimeRangePaginated,
-      ).toHaveBeenNthCalledWith(
-        2,
-        MOCK_PROJECTS[1].projectId,
-        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
-        50000,
-        50000,
-      )
-      expect(result.type).toEqual('success')
-      expect(result.data.projects).toEqual({
+      expect(result.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),
           daily: mockObject<L2CostsApiChart>({
@@ -140,21 +130,19 @@ describe(L2CostsController.name, () => {
       const controller = getMockL2CostsController({})
 
       const result = await controller.getL2Costs()
-      if (result.type === 'success') {
-        expect(result.data).toEqual({
-          projects: {},
-          combined: {
-            hourly: {
-              types: CHART_TYPES,
-              data: [],
-            },
-            daily: {
-              types: CHART_TYPES,
-              data: [],
-            },
+      expect(result).toEqual({
+        projects: {},
+        combined: {
+          hourly: {
+            types: CHART_TYPES,
+            data: [],
           },
-        })
-      }
+          daily: {
+            types: CHART_TYPES,
+            data: [],
+          },
+        },
+      })
     })
   })
   describe(L2CostsController.prototype.makeTransactionCalculations.name, () => {
@@ -320,7 +308,6 @@ describe(L2CostsController.name, () => {
       ])
 
       expect(result.daily.data).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
 
@@ -333,7 +320,6 @@ describe(L2CostsController.name, () => {
         datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
       ])
       expect(Array.from(combinedDailyMap.values())).toEqual([
-        datapoint(START_OF_DAY, 21, 11),
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
     })

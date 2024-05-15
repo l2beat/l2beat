@@ -1,7 +1,6 @@
-import { SavedConfiguration } from '@l2beat/uif'
-
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
+import { SavedConfiguration } from './multi/types'
 
 export class IndexerService {
   constructor(
@@ -12,12 +11,7 @@ export class IndexerService {
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    const record = await this.indexerStateRepository.findIndexerState(indexerId)
-    if (!record) {
-      await this.indexerStateRepository.add({ indexerId, safeHeight })
-      return
-    }
-    await this.indexerStateRepository.setSafeHeight(indexerId, safeHeight)
+    await this.indexerStateRepository.addOrUpdate({ indexerId, safeHeight })
   }
 
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
@@ -38,7 +32,7 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.indexerConfigurationRepository.addOrUpdateManyConfigurations(
+    await this.indexerConfigurationRepository.addOrUpdateMany(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }
@@ -49,11 +43,13 @@ export class IndexerService {
   ): Promise<SavedConfiguration<T>[]> {
     const configurations: (SavedConfiguration<string> & {
       indexerId?: string
-    })[] = await this.indexerConfigurationRepository.getSavedConfigurations(
-      indexerId,
-    )
+    })[] =
+      await this.indexerConfigurationRepository.getSavedConfigurations(
+        indexerId,
+      )
 
     for (const config of configurations) {
+      // biome-ignore lint/performance/noDelete: not a performance problem
       delete config.indexerId
     }
 

@@ -8,8 +8,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { createFormulaReports } from '../reports/createFormulaReports'
 import { ReportProject } from '../reports/ReportProject'
+import { createFormulaReports } from '../reports/createFormulaReports'
 import { BalanceRecord } from '../repositories/BalanceRepository'
 import { CirculatingSupplyRecord } from '../repositories/CirculatingSupplyRepository'
 import { PriceRecord } from '../repositories/PriceRepository'

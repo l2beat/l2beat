@@ -1,4 +1,4 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
+import { Logger, getEnv } from '@l2beat/backend-tools'
 
 import { DatabaseConfig } from '../config/Config'
 import { Database } from '../peripherals/database/Database'
@@ -51,6 +51,7 @@ export function getTestDatabase(
       },
       freshStart: false,
       enableQueryLogging: false,
+      isReadonly: false,
       ...opts,
     },
     Logger.SILENT,

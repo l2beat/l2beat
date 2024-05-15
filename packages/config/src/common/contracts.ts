@@ -1,8 +1,8 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 
-import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 import { ScalingProjectContracts } from './ScalingProjectContracts'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
+import { DANGER_DELAY_THRESHOLD_SECONDS } from './constants'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'

@@ -1,26 +1,25 @@
 import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
-  LivenessApiProject,
-  notUndefined,
+  TrackedTxsConfigSubtype,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 
-import {
-  LivenessRecordsWithIntervalAndDetails,
-  LivenessRecordWithInterval,
-} from './calculateIntervalWithAverages'
 import { RunningStatistics } from './RollingVariance'
+import {
+  LivenessRecordWithInterval,
+  LivenessRecordsWithIntervalAndDetails,
+} from './calculateIntervalWithAverages'
 
 export function calculateAnomalies({
   batchSubmissions,
   stateUpdates,
   proofSubmissions,
-}: {
-  batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-  stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
-  proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-}): Omit<LivenessApiProject, 'syncedUntil'> {
+}: Record<
+  TrackedTxsConfigSubtype,
+  LivenessRecordsWithIntervalAndDetails | undefined
+>) {
   const lastHour = UnixTime.now().toStartOf('hour')
 
   let batchSubmissionAnomalies: LivenessAnomaly[] | undefined = undefined

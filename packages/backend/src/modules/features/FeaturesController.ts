@@ -5,7 +5,10 @@ export class FeaturesController {
 
   getRecord() {
     return this.flags?.reduce(
-      (acc, flag) => ({ ...acc, [flag.feature]: flag.enabled }),
+      (acc, flag) => {
+        acc[flag.feature] = flag.enabled
+        return acc
+      },
       {} as Record<string, boolean>,
     )
   }

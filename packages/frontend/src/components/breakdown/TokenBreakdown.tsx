@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { WarningBar } from '../WarningBar'
 import { RoundedWarningIcon } from '../icons'
-import { WarningBar } from '../project/WarningBar'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { Breakdown } from './Breakdown'
 

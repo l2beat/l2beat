@@ -1,12 +1,16 @@
-import { Logger, LoggerOptions } from '@l2beat/backend-tools'
-import { ProjectId } from '@l2beat/shared-pure'
-import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
+import {
+  LogFormatterPretty,
+  Logger,
+  LoggerOptions,
+} from '@l2beat/backend-tools'
+import { ProjectId } from '@l2beat/shared-pure'
+import { InstalledClock, install } from '@sinonjs/fake-timers'
+import { MockFunction, expect, mockFn } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
+import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
 describeDatabase(SequenceProcessor.name, (database) => {
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
@@ -34,15 +38,21 @@ describeDatabase(SequenceProcessor.name, (database) => {
   }) {
     const logger = new Logger({
       logLevel: 'ERROR', // tests rely on error being reported -- do not change
-      format: 'pretty',
       reportError,
-      backend: {
-        // we do not want the logs to be printed during tests
-        log: () => void 0,
-        debug: () => void 0,
-        warn: () => void 0,
-        error: () => void 0,
-      },
+      transports: [
+        {
+          transport: {
+            // we do not want the logs to be printed during tests
+            log: () => void 0,
+            debug: () => void 0,
+            warn: () => void 0,
+            error: () => void 0,
+          },
+          formatter: new LogFormatterPretty({
+            colors: false,
+          }),
+        },
+      ],
     })
 
     return new (class extends SequenceProcessor {
@@ -113,6 +123,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
 
@@ -135,6 +146,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
 
@@ -157,6 +169,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 4,
         latest: 4,
+        syncedOnce: true,
       })
     })
 
@@ -190,6 +203,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -219,6 +233,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -284,6 +299,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest,
+        syncedOnce: true,
       }
       await repository.addOrUpdate(initialState)
       sequenceProcessor = createSequenceProcessor({
@@ -334,6 +350,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 7,
         latest: 7,
+        syncedOnce: true,
       })
     })
   })
@@ -374,6 +391,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -421,6 +439,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
   })
@@ -445,6 +464,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest: latest,
+        syncedOnce: true,
       })
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
@@ -456,6 +476,35 @@ describeDatabase(SequenceProcessor.name, (database) => {
       await sequenceProcessor.start()
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+    })
+  })
+
+  describe('syncedOnce flag', () => {
+    it('sets syncedOnce to true after first full sync', async () => {
+      const latest = 5
+      await repository.addOrUpdate({
+        id: PROCESSOR_ID,
+        lastProcessed: 1,
+        latest: latest,
+        syncedOnce: false,
+      })
+
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 0,
+        batchSize: 1,
+        getLatest: mockFn(() => latest),
+        processRange: mockFn(async () => {}),
+      })
+
+      await sequenceProcessor.start()
+      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
+
+      expect(sequenceProcessor.getStatus()).toEqual({
+        isProcessing: true,
+        lastProcessed: 5,
+        latest: 5,
+        syncedOnce: true,
+      })
     })
   })
 })

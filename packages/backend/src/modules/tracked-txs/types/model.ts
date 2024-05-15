@@ -1,8 +1,8 @@
 import {
-  branded,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  branded,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 

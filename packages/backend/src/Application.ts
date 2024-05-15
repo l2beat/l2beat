@@ -3,9 +3,8 @@ import { HttpClient } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
-import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
+import { createActivityModule } from './modules/activity/ActivityModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -15,10 +14,10 @@ import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
-import { createTvl2Module } from './modules/tvl2/Tvl2Module'
+import { createTvl2Module } from './modules/tvl2/modules/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
-import { Database } from './peripherals/database/Database'
 import { Peripherals } from './peripherals/Peripherals'
+import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
@@ -55,9 +54,8 @@ export class Application {
       createTvlModule(config, logger, peripherals, clock),
       createActivityModule(config, logger, peripherals, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
-      createDiffHistoryModule(config, logger, peripherals),
       createImplementationChangeModule(config, logger, peripherals),
-      createStatusModule(config, logger),
+      createStatusModule(config, logger, peripherals),
       trackedTxsModule,
       createFinalityModule(
         config,
@@ -76,6 +74,14 @@ export class Application {
       modules.flatMap((x) => x?.routers ?? []),
       getErrorReportingMiddleware(),
     )
+
+    if (config.isReadonly) {
+      this.start = async () => {
+        logger.for(this).info('Starting in readonly mode')
+        await apiServer.start()
+      }
+      return
+    }
 
     this.start = async () => {
       logger.for(this).info('Starting', { features: config.flags })

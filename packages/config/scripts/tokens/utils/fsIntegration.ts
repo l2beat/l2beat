@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { parse, ParseError } from 'jsonc-parser'
+import { ParseError, parse } from 'jsonc-parser'
 
 import { GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import { ScriptLogger } from './ScriptLogger'
@@ -14,7 +14,7 @@ export function readTokensFile(logger: ScriptLogger) {
     allowTrailingComma: true,
   }) as Record<string, string>
   if (errors.length > 0) console.error(errors)
-  logger.assert(errors.length === 0, 'Cannot parse source.jsonc')
+  logger.assert(errors.length === 0, 'Cannot parse tokens.jsonc')
   const source = Source.parse(parsed)
 
   return source

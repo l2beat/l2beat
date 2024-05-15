@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { RiskCell } from '../../../../components/table/RiskCell'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from '../../../../components/table/props/sorting/getOrderValueBySentiment'
-import { RiskCell } from '../../../../components/table/RiskCell'
 import { ColumnConfig } from '../../../../components/table/types'
 import { ScalingRiskViewEntry } from '../types'
 

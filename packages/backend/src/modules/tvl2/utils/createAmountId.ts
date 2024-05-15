@@ -1,28 +1,33 @@
-import {
-  AmountConfigIdentifiable,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
+import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 
-export function createAmountId(amountConfig: AmountConfigIdentifiable): string {
-  let typeSpecificPart: string
+export function createAmountId(amountConfig: AmountConfigEntry): string {
+  const input = []
+
+  input.push(amountConfig.chain)
+  input.push(amountConfig.project.toString())
+  input.push(amountConfig.type)
+  // sinceTimestamp is not used in the ID calculation.
+  // untilTimestamp is not used in the ID calculation.
+  // includeInTotal is not used in the ID calculation.
+  // decimals is not used in the ID calculation.
+
   switch (amountConfig.type) {
     case 'totalSupply':
-      typeSpecificPart = `totalSupply-${amountConfig.address.toString()}`
+      input.push(amountConfig.address.toString())
       break
     case 'circulatingSupply':
-      typeSpecificPart = `circulatingSupply-${amountConfig.address.toString()}-${amountConfig.coingeckoId.toString()}`
+      input.push(amountConfig.address.toString())
+      input.push(amountConfig.coingeckoId.toString())
       break
     case 'escrow':
-      typeSpecificPart = `escrow-${amountConfig.address.toString()}-${amountConfig.escrowAddress.toString()}`
+      input.push(amountConfig.address.toString())
+      input.push(amountConfig.escrowAddress.toString())
       break
     default:
       assertUnreachable(amountConfig)
   }
 
-  const fullId = `${amountConfig.project.toString()}-${
-    amountConfig.chain
-  }-${typeSpecificPart}`
-  const hash = createHash('sha1').update(fullId).digest('hex')
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
 }

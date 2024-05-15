@@ -4,8 +4,8 @@ import { setTimeout } from 'timers/promises'
 
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { getStatus } from '../reports/getStatus'
 import {
   BalanceRecord,
@@ -119,9 +119,8 @@ export class BalanceUpdater {
     const missing = getMissingData(timestamp, known, this.projects)
 
     if (missing.length > 0) {
-      const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
-        timestamp,
-      )
+      const blockNumber =
+        await this.blockNumberUpdater.getBlockNumberWhenReady(timestamp)
 
       assert(blockNumber, 'No timestamp for this block number')
 

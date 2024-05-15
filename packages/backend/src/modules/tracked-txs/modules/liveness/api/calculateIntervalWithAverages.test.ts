@@ -3,10 +3,10 @@ import { expect } from 'earl'
 import { cloneDeep } from 'lodash'
 
 import {
-  calculateIntervals,
-  calculateIntervalWithAverages,
-  calculateMinMaxAverages,
   LivenessRecordWithInterval,
+  calculateIntervalWithAverages,
+  calculateIntervals,
+  calculateMinMaxAverages,
 } from './calculateIntervalWithAverages'
 
 const NOW = UnixTime.now()
@@ -76,6 +76,7 @@ describe(calculateIntervals.name, () => {
       },
     ]
     const input = cloneDeep(RECORDS).slice(0, 3)
+    // biome-ignore lint/performance/noDelete: this is a test
     delete input[2].previousRecordInterval
     calculateIntervals(input)
 

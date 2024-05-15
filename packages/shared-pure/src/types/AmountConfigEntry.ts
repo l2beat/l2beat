@@ -1,14 +1,14 @@
+/*
+                ====== IMPORTANT NOTICE ======
+DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
+*/
+
 import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
 
-export type AmountConfigEntry = AmountConfigIdentifiable & {
-  source: 'canonical' | 'external' | 'native'
-  sinceTimestamp: UnixTime
-  includeInTotal: boolean
-}
-export type AmountConfigIdentifiable =
+export type AmountConfigEntry =
   | TotalSupplyEntry
   | CirculatingSupplyEntry
   | EscrowEntry
@@ -23,6 +23,7 @@ export interface CirculatingSupplyEntry extends AmountConfigBase {
   address: EthereumAddress | 'native'
   coingeckoId: CoingeckoId
 }
+
 export interface EscrowEntry extends AmountConfigBase {
   type: 'escrow'
   address: EthereumAddress | 'native'
@@ -32,4 +33,10 @@ export interface EscrowEntry extends AmountConfigBase {
 export interface AmountConfigBase {
   chain: string
   project: ProjectId
+  source: 'canonical' | 'external' | 'native'
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  includeInTotal: boolean
+  decimals: number
+  symbol: string
 }

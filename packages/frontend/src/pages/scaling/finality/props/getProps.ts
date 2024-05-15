@@ -1,8 +1,8 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDiagramImageOrThrow } from '../../../../utils/project/getDiagramImage'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
+import { getDefaultPageMetadata } from '../../../metadata'
+import { getDiagramImageOrThrow } from '../../../project/common/getDiagramImage'
 import { FinalityPagesData } from '../types'
 import { ScalingFinalityPageProps } from '../view/ScalingFinalityPage'
 import { getScalingFinalityView } from './getScalingFinalityView'
@@ -20,7 +20,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        image: 'https://l2beat.com/meta-images/pages/og-scaling-finality.png',
         url: 'https://l2beat.com/scaling/finality',
       }),
       banner: config.features.banner,

@@ -169,14 +169,6 @@ The updateMonitor feature is configured via the following environment variables:
 
 - `updateMonitor` - enables the update monitor
 
-### `diffHistory` feature
-
-The diffHistory feature is configured per chain with the same variables as the `updateMonitor` feature.
-
-**Feature flags:**
-
-- `diffHistory` - enables the diff history
-
 ### `tvlCleaner` feature
 
 The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the sixHourly data 93 days to the past and hourly data 10 days to the past.
@@ -209,10 +201,10 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 ## Scripts
 
 - `yarn build` - build
-- `yarn format:fix` - run prettier automatic formatter
-- `yarn format` - check if formatting is correct with prettier
-- `yarn lint:fix` - run eslint automatic fixer
-- `yarn lint` - check if the code satisfies the eslint configuration
+- `yarn format:fix` - run biome automatic formatter
+- `yarn format` - check if formatting is correct with biome
+- `yarn lint:fix` - run biome automatic fixer
+- `yarn lint` - check if the code satisfies the biome configuration
 - `yarn start:dev` - run the backend server from source ts
 - `yarn start` - run the backend server from built js
 - `yarn test` - run tests

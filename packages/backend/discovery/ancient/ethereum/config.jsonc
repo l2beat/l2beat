@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "ancient",
   "initialAddresses": [
@@ -68,7 +68,9 @@
         }
       }
     },
-    "L1ERC721BridgeImplementation": { "ignoreDiscovery": true },
+    "L1ERC721BridgeImplementation": {
+      "ignoreDiscovery": true
+    },
     "Ancient8Multisig": {
       "ignoreInWatchMode": ["nonce"]
     }

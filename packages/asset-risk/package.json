@@ -1,0 +1,48 @@
+{
+  "name": "@l2beat/asset-risk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 8080",
+    "build": "next build",
+    "start": "next start -p 8080",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "format": "biome format .",
+    "format:fix": "biome format --write ."
+  },
+  "dependencies": {
+    "@l2beat/config": "*",
+    "@l2beat/shared-pure": "*",
+    "@t3-oss/env-nextjs": "^0.10.0",
+    "@tanstack/react-query": "^5.32.0",
+    "clsx": "^2.1.0",
+    "connectkit": "^1.7.3",
+    "earl": "^1.1.0",
+    "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
+    "next": "^14.2.2",
+    "next-themes": "^0.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "^2.9.28",
+    "wagmi": "^2.7.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.2",
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.11.16",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.1",
+    "type-fest": "^4.18.1",
+    "typescript": "^5.4.5"
+  }
+}

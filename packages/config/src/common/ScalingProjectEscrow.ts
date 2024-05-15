@@ -18,6 +18,10 @@ interface OldProjectEscrow {
   isUpcoming?: boolean
   /** If project is Layer 3 */
   isLayer3?: boolean
+  chain?: string
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal?: boolean
 }
 
 interface NewProjectEscrow {
@@ -39,4 +43,8 @@ interface NewProjectEscrow {
   isLayer3?: boolean
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
+  chain?: string
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+  includeInTotal?: boolean
 }

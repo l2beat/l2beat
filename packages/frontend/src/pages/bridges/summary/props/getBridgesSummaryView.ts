@@ -5,11 +5,12 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { getDestination } from '../../../../utils/getDestination'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { BridgesPagesData } from '../../types'
 import { BridgesSummaryViewEntry } from '../types'
 import { BridgesSummaryViewProps } from '../view/BridgesSummaryView'
@@ -68,6 +69,11 @@ export function getBridgesSummaryViewEntry(
     isArchived: project.isArchived,
     isVerified,
     hasImplementationChanged,
+    destination: getDestination(
+      project.type === 'bridge'
+        ? project.technology.destination
+        : [project.display.name],
+    ),
     showProjectUnderReview: isAnySectionUnderReview(project),
     tvl: stats
       ? {

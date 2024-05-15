@@ -61,7 +61,6 @@ export class BlockNumberUpdater {
       timestamp.gte(this.minTimestamp),
       'Programmer error: requested timestamp does not exist',
     )
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const blockNumber = this.blocksByTimestamp.get(timestamp.toNumber())
       if (blockNumber !== undefined) {
@@ -98,9 +97,8 @@ export class BlockNumberUpdater {
     )
 
     this.logger.debug('Update started', { timestamp: timestamp.toNumber() })
-    const blockNumber = await this.blockNumberProvider.getBlockNumberAtOrBefore(
-      timestamp,
-    )
+    const blockNumber =
+      await this.blockNumberProvider.getBlockNumberAtOrBefore(timestamp)
     const block = { timestamp, blockNumber, chainId: this.chainId }
     await this.blockNumberRepository.add(block)
     this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)

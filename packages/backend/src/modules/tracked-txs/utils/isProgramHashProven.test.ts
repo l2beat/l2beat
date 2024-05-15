@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
+import { expect } from 'earl'
 
 import { isProgramHashProven } from './isProgramHashProven'
 

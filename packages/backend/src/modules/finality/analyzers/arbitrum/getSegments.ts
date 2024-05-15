@@ -1,7 +1,7 @@
-import { assert } from '@l2beat/shared-pure'
 import zlib from 'zlib'
+import { assert } from '@l2beat/shared-pure'
 
-import { rlpDecode, RlpSerializable } from '../../utils/rlpDecode'
+import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'

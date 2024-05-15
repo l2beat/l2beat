@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   ChainId,
   EthereumAddress,
-  getErrorMessage,
   Hash256,
   RateLimiter,
-  stringAsInt,
   UnixTime,
+  getErrorMessage,
+  stringAsInt,
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
@@ -111,7 +111,13 @@ export class EtherscanClient implements BlockNumberProvider {
       }
     }
 
-    throw new Error('Could not fetch block number')
+    throw new Error('Could not fetch block number', {
+      cause: {
+        current,
+        timestamp,
+        minTimestamp: this.minTimestamp,
+      },
+    })
   }
 
   async getContractSource(address: EthereumAddress) {

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "rss3",
   "initialAddresses": [
@@ -66,10 +66,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar", "overhead"]
     }
-  },
-  "AdminMultisig": {
-    "ignoreInWatchMode": ["nonce"]
   }
 }

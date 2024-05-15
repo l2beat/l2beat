@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "Committee",
@@ -25,6 +25,10 @@
           "type": null
         }
       }
+    },
+    {
+      "name": "DeversiFiTreasuryMultisig",
+      "values": {}
     },
     {
       "name": "GovernanceMultisig",

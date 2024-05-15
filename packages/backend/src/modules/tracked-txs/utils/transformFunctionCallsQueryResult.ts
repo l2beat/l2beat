@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 
 import {
-  BigQueryFunctionCallResult,
-  TrackedTxFunctionCallResult,
-} from '../types/model'
-import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
+import {
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
@@ -52,7 +52,7 @@ export function transformFunctionCallsQueryResult(
               gasPrice: r.gas_price,
               dataLength: r.data_length,
               calldataGasUsed: r.calldata_gas_used,
-            } as const),
+            }) as const,
         ),
     )
 

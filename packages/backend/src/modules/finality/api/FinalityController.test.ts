@@ -1,4 +1,4 @@
-import { FinalityType } from '@l2beat/config'
+import { FinalityType, StateUpdateMode } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
@@ -30,9 +30,7 @@ describe(FinalityController.name, () => {
       )
 
       const result = await finalityController.getFinality()
-      if (result.type === 'success') {
-        expect(result.data).toEqual({ projects: {} })
-      }
+      expect(result).toEqual({ projects: {} })
     })
 
     it('correctly calculate avg, min and max', async () => {
@@ -59,6 +57,9 @@ describe(FinalityController.name, () => {
         minimumTimeToInclusion: 1,
         averageTimeToInclusion: 2,
         maximumTimeToInclusion: 3,
+        minimumStateUpdate: 2,
+        averageStateUpdate: 3,
+        maximumStateUpdate: 4,
       }
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
@@ -73,11 +74,13 @@ describe(FinalityController.name, () => {
             projectId: ProjectId('project1'),
             lag: 0,
             type: 'OPStack',
+            stateUpdate: 'disabled',
           },
           {
             projectId: ProjectId('project2'),
             lag: 0,
             type: 'Linea',
+            stateUpdate: 'analyze',
           },
         ]),
       )
@@ -87,24 +90,29 @@ describe(FinalityController.name, () => {
       const last30Days = calculateDetailsFor(records, '30d')
 
       assert(last30Days, 'last30Days is undefined')
+
       const result = await finalityController.getFinality()
-      if (result.type === 'success') {
-        expect(result.data.projects.project1).toEqual({
-          timeToInclusion: {
-            averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-            maximumInSeconds: last30Days.maximumInSeconds,
-          },
-          syncedUntil: records[0].timestamp,
-        })
-        expect(result.data.projects.project2).toEqual({
-          timeToInclusion: {
-            averageInSeconds: project2Result.averageTimeToInclusion,
-            maximumInSeconds: project2Result.maximumTimeToInclusion,
-            minimumInSeconds: project2Result.minimumTimeToInclusion,
-          },
-          syncedUntil: project2Result.timestamp,
-        })
-      }
+
+      expect(result.projects.project1).toEqual({
+        timeToInclusion: {
+          averageInSeconds: last30Days.averageInSeconds / 2 + 0,
+          maximumInSeconds: last30Days.maximumInSeconds,
+        },
+        stateUpdateDelays: null,
+        syncedUntil: records[0].timestamp,
+      })
+      expect(result.projects.project2).toEqual({
+        timeToInclusion: {
+          averageInSeconds: project2Result.averageTimeToInclusion,
+          maximumInSeconds: project2Result.maximumTimeToInclusion,
+          minimumInSeconds: project2Result.minimumTimeToInclusion,
+        },
+        stateUpdateDelays: {
+          // Respective 1 sec diff
+          averageInSeconds: 1,
+        },
+        syncedUntil: project2Result.timestamp,
+      })
     })
   })
 
@@ -142,7 +150,12 @@ describe(FinalityController.name, () => {
       ]
 
       const projects = mockProjectConfig([
-        { projectId: ProjectId('project1'), lag: 0, type: 'OPStack' },
+        {
+          projectId: ProjectId('project1'),
+          lag: 0,
+          type: 'OPStack',
+          stateUpdate: 'disabled',
+        },
       ])
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
@@ -172,6 +185,7 @@ describe(FinalityController.name, () => {
             averageInSeconds: project1Last30Days.averageInSeconds / 2 + 0,
             maximumInSeconds: project1Last30Days.maximumInSeconds,
           },
+          stateUpdateDelays: null,
           syncedUntil: START,
         },
       })
@@ -181,9 +195,30 @@ describe(FinalityController.name, () => {
   describe(FinalityController.prototype.getProjectsFinality.name, () => {
     it('gets finality records for all projects with one undefined', async () => {
       const projects = mockProjectConfig([
-        { projectId: ProjectId('project1'), lag: 0, type: 'Linea' },
-        { projectId: ProjectId('project2'), lag: 0, type: 'Linea' },
-        { projectId: ProjectId('project3'), lag: 0, type: 'Linea' },
+        {
+          projectId: ProjectId('project1'),
+          lag: 0,
+          type: 'Linea',
+          stateUpdate: 'analyze',
+        },
+        {
+          projectId: ProjectId('project2'),
+          lag: 0,
+          type: 'Linea',
+          stateUpdate: 'zeroed',
+        },
+        {
+          projectId: ProjectId('project3'),
+          lag: 0,
+          type: 'Linea',
+          stateUpdate: 'disabled',
+        },
+        {
+          projectId: ProjectId('project4'),
+          lag: 0,
+          type: 'Linea',
+          stateUpdate: 'analyze',
+        },
       ])
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
@@ -194,13 +229,23 @@ describe(FinalityController.name, () => {
             minimumTimeToInclusion: 1,
             averageTimeToInclusion: 2,
             maximumTimeToInclusion: 3,
+            averageStateUpdate: 3,
+          },
+          {
+            projectId: ProjectId('project2'),
+            timestamp: new UnixTime(1000),
+            minimumTimeToInclusion: 4,
+            averageTimeToInclusion: 5,
+            maximumTimeToInclusion: 6,
+            averageStateUpdate: null,
           },
           {
             projectId: ProjectId('project3'),
             timestamp: new UnixTime(12000),
-            minimumTimeToInclusion: 4,
-            averageTimeToInclusion: 5,
-            maximumTimeToInclusion: 6,
+            minimumTimeToInclusion: 7,
+            averageTimeToInclusion: 8,
+            maximumTimeToInclusion: 9,
+            averageStateUpdate: null,
           },
         ]),
         mockObject<TrackedTxsConfigsRepository>(),
@@ -208,6 +253,7 @@ describe(FinalityController.name, () => {
       )
 
       const result = await finalityController.getProjectsFinality(projects)
+
       expect(result).toEqual({
         project1: {
           timeToInclusion: {
@@ -215,14 +261,30 @@ describe(FinalityController.name, () => {
             averageInSeconds: 2,
             maximumInSeconds: 3,
           },
+          // Respective 1 sec diff
+          stateUpdateDelays: {
+            averageInSeconds: 1,
+          },
           syncedUntil: new UnixTime(1000),
         },
-        project3: {
+        project2: {
           timeToInclusion: {
             minimumInSeconds: 4,
             averageInSeconds: 5,
             maximumInSeconds: 6,
           },
+          stateUpdateDelays: {
+            averageInSeconds: 0,
+          },
+          syncedUntil: new UnixTime(1000),
+        },
+        project3: {
+          timeToInclusion: {
+            minimumInSeconds: 7,
+            averageInSeconds: 8,
+            maximumInSeconds: 9,
+          },
+          stateUpdateDelays: null,
           syncedUntil: new UnixTime(12000),
         },
       })
@@ -269,6 +331,7 @@ function mockProjectConfig(
     projectId: ProjectId
     type: FinalityType
     lag: number
+    stateUpdate: StateUpdateMode
   }[],
 ): FinalityProjectConfig[] {
   return records
@@ -278,6 +341,7 @@ function mockProjectConfig(
         projectId: project.projectId,
         type: project.type,
         lag: project.lag,
+        stateUpdate: project.stateUpdate,
       }),
     )
 }

@@ -2,23 +2,23 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DISCOVERY_LOGIC_VERSION,
-  DiscoveryLogger,
   HttpClient as DiscoveryHttpClient,
+  DiscoveryLogger,
 } from '@l2beat/discovery'
 
 import { Config } from '../../config'
-import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { UpdateMonitor } from './UpdateMonitor'
-import { UpdateNotifier } from './UpdateNotifier'
 
 export function createUpdateMonitorModule(
   config: Config,
@@ -32,11 +32,6 @@ export function createUpdateMonitorModule(
   }
 
   const configReader = new ConfigReader()
-
-  const discoveryLogger =
-    config.name === 'Backend/Local'
-      ? DiscoveryLogger.CLI
-      : DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
@@ -58,7 +53,7 @@ export function createUpdateMonitorModule(
       discoveryHttpClient,
       configReader,
       peripherals,
-      discoveryLogger,
+      DiscoveryLogger.SILENT,
       chainConfig,
     ),
   )

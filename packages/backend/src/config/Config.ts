@@ -13,11 +13,13 @@ import { Knex } from 'knex'
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ChainConverter } from '../tools/ChainConverter'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
+  readonly isReadonly: boolean
   readonly projects: Project[]
   readonly tokens: Token[]
   readonly logger: LoggerConfig
@@ -33,7 +35,6 @@ export interface Config {
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
-  readonly diffHistory: DiffHistoryConfig | false
   readonly implementationChangeReporterEnabled: boolean
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
@@ -42,7 +43,7 @@ export interface Config {
   readonly tvlCleanerEnabled: boolean
 }
 
-export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
+export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
   Partial<LoggerOptions>
 
 export interface LogThrottlerConfig {
@@ -69,6 +70,7 @@ export interface DatabaseConfig {
     min: number
     max: number
   }
+  readonly isReadonly: boolean
 }
 
 export interface ClockConfig {
@@ -89,6 +91,7 @@ export interface Tvl2Config {
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
+  readonly chainConverter: ChainConverter
 }
 
 export interface TrackedTxsConfig {
@@ -104,6 +107,8 @@ export interface TrackedTxsConfig {
       | {
           readonly ethereumProviderUrl: string
           readonly ethereumProviderCallsPerMinute?: number
+          readonly aggregatorEnabled: boolean
+          readonly coingeckoApiKey: string
         }
       | false
   }
@@ -168,10 +173,6 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
-export interface DiffHistoryConfig {
-  readonly chains: DiffHistoryChainConfig[]
-}
-
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -186,5 +187,3 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
-
-export type DiffHistoryChainConfig = UpdateMonitorChainConfig

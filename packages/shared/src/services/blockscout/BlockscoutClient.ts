@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ChainId,
-  getErrorMessage,
   RateLimiter,
   UnixTime,
+  getErrorMessage,
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
@@ -67,7 +67,7 @@ export class BlockscoutClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-10, 'minutes')
+        current = current.add(-1, 'minutes')
       }
     }
 

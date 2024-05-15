@@ -7,7 +7,10 @@ import { SocketVaults } from './schema'
 
 describe('socket', () => {
   it('plugs should be up to date with the discovery output', async () => {
-    const file = await readFile('src/bridges/socket-vaults.json', 'utf-8')
+    const file = await readFile(
+      'src/projects/bridges/socket-vaults.json',
+      'utf-8',
+    )
     const socketData = SocketVaults.parse(JSON.parse(file))
     const discovery = new ProjectDiscovery('socket')
     const plugs = discovery.getContractValue<string[]>('Socket', 'plugs')

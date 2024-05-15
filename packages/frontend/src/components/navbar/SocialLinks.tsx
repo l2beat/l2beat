@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
+import { PlainLink } from '../PlainLink'
 import {
   DiscordIcon,
   GithubIcon,
@@ -9,7 +10,6 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from '../icons'
-import { PlainLink } from '../PlainLink'
 
 export interface SocialLinksProps {
   twitterLink: string

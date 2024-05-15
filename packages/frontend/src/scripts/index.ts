@@ -1,9 +1,9 @@
 import { configureCharts } from './charts'
+import { configureAccordions } from './configureAccordions'
 import { configureAlphabetSelectors } from './configureAlphabetSelectors'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureCopyButtons } from './configureCopyButtons'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
-import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
@@ -20,7 +20,6 @@ import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
-import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
 import { configureSorting } from './table/configureSorting'
@@ -41,14 +40,13 @@ configureTables()
 configureProjectFilters()
 configureSidebarMenu()
 configureTooltips()
-configureDropdowns()
+configureAccordions()
 configureRosetteOverlay()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
 configureUpgradeDescriptions()
-configureTopBars()
 configureMultipleEscrowsButton()
 configureRichSelects()
 configureBridgesAndCombinedOnly()

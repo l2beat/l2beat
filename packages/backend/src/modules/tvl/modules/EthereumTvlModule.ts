@@ -3,18 +3,18 @@ import { EtherscanClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../../tools/Clock'
+import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { PriceUpdater } from '../PriceUpdater'
 import { CBVUpdater } from '../assets'
 import {
   BalanceProvider,
   ETHEREUM_BALANCE_ENCODING,
 } from '../balances/BalanceProvider'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
-import { BlockNumberUpdater } from '../BlockNumberUpdater'
-import { PriceUpdater } from '../PriceUpdater'
 import { BalanceRepository } from '../repositories/BalanceRepository'
 import { BalanceStatusRepository } from '../repositories/BalanceStatusRepository'
 import { BlockNumberRepository } from '../repositories/BlockNumberRepository'

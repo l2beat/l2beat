@@ -1,20 +1,20 @@
 import {
   CoingeckoId,
   EthereumAddress,
-  getHourlyTimestamps,
   UnixTime,
+  getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { HttpClient } from '../HttpClient'
 import { CoingeckoClient } from './CoingeckoClient'
 import {
-  approximateCirculatingSupply,
   CoingeckoQueryService,
-  generateRangesToCallHourly,
   MAX_DAYS_FOR_HOURLY_PRECISION,
-  pickClosestValues,
   QueryResultPoint,
+  approximateCirculatingSupply,
+  generateRangesToCallHourly,
+  pickClosestValues,
 } from './CoingeckoQueryService'
 
 describe(CoingeckoQueryService.name, () => {
@@ -384,6 +384,33 @@ describe(CoingeckoQueryService.name, () => {
     })
   })
 
+  describe(CoingeckoQueryService.getAdjustedTo.name, () => {
+    it('adjust range for coingecko hourly query range', () => {
+      const from = new UnixTime(0)
+      const to = from.add(
+        CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * 2,
+        'days',
+      )
+
+      const result = CoingeckoQueryService.getAdjustedTo(from, to)
+
+      expect(result).toEqual(
+        from.add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days'),
+      )
+    })
+
+    it('does not adjust if the range is smaller than MAX_DAYS_FOR_ONE_CALL', () => {
+      const from = new UnixTime(0)
+      const to = from.add(
+        CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL - 1,
+        'days',
+      )
+
+      const result = CoingeckoQueryService.getAdjustedTo(from, to)
+
+      expect(result).toEqual(to)
+    })
+  })
   describe(
     CoingeckoQueryService.prototype.queryRawHourlyPricesAndMarketCaps.name,
     () => {

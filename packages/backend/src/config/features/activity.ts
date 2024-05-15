@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { layer2s, layer3s, ScalingProjectTransactionApi } from '@l2beat/config'
+import { ScalingProjectTransactionApi, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
@@ -8,6 +8,11 @@ const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7
 
 export function getProjectsWithActivity() {
+  const projects = [
+    ...layer2s.filter((layer2) => !layer2.isArchived),
+    ...layer3s,
+  ]
+
   return [
     {
       id: ProjectId.ETHEREUM,
@@ -17,7 +22,7 @@ export function getProjectsWithActivity() {
         startBlock: 8929324,
       } as ScalingProjectTransactionApi,
     },
-    ...[...layer2s, ...layer3s].flatMap((x) =>
+    ...projects.flatMap((x) =>
       x.config.transactionApi
         ? [{ id: x.id, transactionApi: x.config.transactionApi }]
         : [],

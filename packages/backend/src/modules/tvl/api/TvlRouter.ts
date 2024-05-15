@@ -1,16 +1,16 @@
 import Router from '@koa/router'
-import {
-  AssetId,
-  AssetType,
-  branded,
-  ChainId,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { Context } from 'koa'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { ApiConfig } from '../../../config/Config'
-import { TvlController } from './TvlController'
+import {
+  AggregatedTvlResult,
+  TokenTvlResult,
+  TvlController,
+  TvlResult,
+} from './TvlController'
 
 export function createTvlRouter(
   tvlController: TvlController,
@@ -23,17 +23,8 @@ export function createTvlRouter(
       ? await tvlController.getCachedTvlApiResponse()
       : await tvlController.getTvlApiResponse()
 
-    if (tvlResult.result === 'error') {
-      if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 404
-        ctx.body = tvlResult.error
-      }
-
-      if (tvlResult.error === 'NO_DATA') {
-        ctx.status = 404
-        ctx.body = tvlResult.error
-      }
-
+    if (tvlResult.type === 'error') {
+      handleTvlError(ctx, tvlResult)
       return
     }
 
@@ -57,17 +48,8 @@ export function createTvlRouter(
             projectSlugs.split(',').map((slug) => slug.trim()),
           )
 
-        if (tvlProjectsResponse.result === 'error') {
-          if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
-            ctx.status = 404
-            ctx.body = tvlProjectsResponse.error
-          }
-
-          if (tvlProjectsResponse.error === 'NO_DATA') {
-            ctx.status = 404
-            ctx.body = tvlProjectsResponse.error
-          }
-
+        if (tvlProjectsResponse.type === 'error') {
+          handleTvlError(ctx, tvlProjectsResponse)
           return
         }
 
@@ -78,62 +60,48 @@ export function createTvlRouter(
     ),
   )
 
-  router.get(
-    '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+  // There is currently no use case for this endpoint as we disabled token selector on fronted
+  // Someone is calling this endpoint every 30s and it's causing a lot of load on the server
+  // I am disabling it until the tvl2 rewrite is finished
 
-    withTypedContext(
-      z.object({
-        params: z.object({
-          chainId: z.string(),
-          projectId: branded(z.string(), ProjectId),
-          assetId: branded(z.string(), AssetId),
-          assetType: branded(z.string(), AssetType),
-        }),
-      }),
-      async (ctx) => {
-        const { assetId, chainId, assetType, projectId } = ctx.params
+  // router.get(
+  //   '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
 
-        const assetData = await tvlController.getAssetTvlApiResponse(
-          projectId,
-          ChainId(+chainId),
-          assetId,
-          assetType,
-        )
+  //   withTypedContext(
+  //     z.object({
+  //       params: z.object({
+  //         chainId: z.string(),
+  //         projectId: branded(z.string(), ProjectId),
+  //         assetId: branded(z.string(), AssetId),
+  //         assetType: branded(z.string(), AssetType),
+  //       }),
+  //     }),
+  //     async (ctx) => {
+  //       const { assetId, chainId, assetType, projectId } = ctx.params
 
-        if (assetData.result === 'error') {
-          if (assetData.error === 'NO_DATA') {
-            ctx.status = 404
-            ctx.body = assetData.error
-          }
+  //       const assetData = await tvlController.getAssetTvlApiResponse(
+  //         projectId,
+  //         ChainId(+chainId),
+  //         assetId,
+  //         assetType,
+  //       )
 
-          if (assetData.error === 'INVALID_PROJECT_OR_ASSET') {
-            ctx.status = 400
-            ctx.body = assetData.error
-          }
+  //       if (assetData.type === 'error') {
+  //         handleTvlError(ctx, assetData)
+  //         return
+  //       }
 
-          return
-        }
-
-        ctx.body = assetData.data
-      },
-    ),
-  )
+  //       ctx.body = assetData.data
+  //     },
+  //   ),
+  // )
 
   router.get('/api/project-assets-breakdown', async (ctx) => {
     const projectAssetsBreakdown =
       await tvlController.getProjectTokenBreakdownApiResponse()
 
-    if (projectAssetsBreakdown.result === 'error') {
-      if (projectAssetsBreakdown.error === 'NO_DATA') {
-        ctx.status = 404
-        ctx.body = projectAssetsBreakdown.error
-      }
-
-      if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 404
-        ctx.body = projectAssetsBreakdown.error
-      }
-
+    if (projectAssetsBreakdown.type === 'error') {
+      handleTvlError(ctx, projectAssetsBreakdown)
       return
     }
 
@@ -141,4 +109,27 @@ export function createTvlRouter(
   })
 
   return router
+}
+
+function handleTvlError(
+  ctx: Context,
+  result: Extract<
+    TvlResult | TokenTvlResult | AggregatedTvlResult,
+    { type: 'error' }
+  >,
+) {
+  switch (result.error) {
+    case 'DATA_NOT_FULLY_SYNCED':
+    case 'NO_DATA':
+      ctx.status = 404
+      break
+    case 'EMPTY_SLUG':
+    case 'INVALID_PROJECT_OR_ASSET':
+      ctx.status = 400
+      break
+    default:
+      assertUnreachable(result)
+  }
+
+  ctx.body = result.error
 }

@@ -1,9 +1,9 @@
-import { formatSeconds, ProjectId, Sentiment } from '@l2beat/shared-pure'
+import { ProjectId, Sentiment, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { DATA_AVAILABILITY } from './dataAvailability'
 import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import { DATA_AVAILABILITY } from './dataAvailability'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,
@@ -101,11 +101,11 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
-    'All of the data needed for proof construction is published on chain.',
+    'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
 }
 
-export const DATA_ON_CHAIN_L2: ScalingProjectRiskViewEntry = {
+export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
@@ -127,10 +127,8 @@ export const DATA_MIXED: ScalingProjectRiskViewEntry = {
 }
 
 export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
-  value: 'Optimistic (MEMO)',
-  description:
-    'Transaction data is kept in MEMO decentralized storage. Validators can force Sequencer to make data available on-chain via L1 contract call if they find that Sequencer did not push tx data to MEMO. \
-    Challenge mechanism is not yet fully implemented.',
+  value: 'External (MEMO)',
+  description: 'Transaction data is kept in MEMO decentralized storage.',
   sentiment: 'bad',
 }
 
@@ -417,6 +415,7 @@ export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
   upgradeDelay2?: number,
+  existsBlocklist: boolean = false,
 ): ScalingProjectRiskViewEntry {
   let window: number = upgradeDelay - exitDelay
   const windowText = window <= 0 ? 'None' : formatSeconds(window)
@@ -438,13 +437,17 @@ export function EXIT_WINDOW(
   const instantlyUpgradable =
     upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
-    windowText === 'None'
+    (windowText === 'None'
       ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
       : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
           upgradeDelay,
         )} delay before an upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
-        )} to be processed.`
+        )} to be processed.`) +
+    (existsBlocklist
+      ? ' Users can be explicitly censored from withdrawing (Blocklist on L1).'
+      : '')
+
   return {
     value: windowText,
     description: description,
@@ -485,7 +488,7 @@ export const RISK_VIEW = {
   STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
-  DATA_ON_CHAIN_L2,
+  DATA_ON_CHAIN_L3,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,

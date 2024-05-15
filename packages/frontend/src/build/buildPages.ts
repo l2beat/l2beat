@@ -2,7 +2,6 @@ import Bugsnag from '@bugsnag/js'
 import { getChainNames } from '@l2beat/config'
 import {
   ActivityApiResponse,
-  DiffHistoryApiResponse,
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
@@ -14,7 +13,6 @@ import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
-import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchFeaturesApi } from './api/fetchFeaturesApi'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
@@ -61,7 +59,7 @@ async function main() {
     console.timeEnd('[FEATURES]')
 
     console.time('[TVL]')
-    const tvlApiResponse = await fetchTvlApi(config.backend, http)
+    const tvlApiResponse = await fetchTvlApi(config.backend, http, config.features)
     console.timeEnd('[TVL]')
     tvlSanityCheck(tvlApiResponse)
 
@@ -97,13 +95,6 @@ async function main() {
       console.time('[FINALITY]')
       finalityApiResponse = await fetchFinalityApi(config.backend, http)
       console.timeEnd('[FINALITY]')
-    }
-
-    let diffHistory: DiffHistoryApiResponse | undefined
-    if (config.features.diffHistory) {
-      console.time('[DIFF HISTORY]')
-      diffHistory = await fetchDiffHistory(config.backend, http)
-      console.timeEnd('[DIFF HISTORY]')
     }
 
     let implementationChange: ImplementationChangeReportApiResponse | undefined
@@ -146,7 +137,6 @@ async function main() {
       livenessApiResponse,
       finalityApiResponse,
       l2CostsApiResponse,
-      diffHistory,
       implementationChange,
     }
 
@@ -192,7 +182,6 @@ async function reportError(e: unknown) {
   } else {
     Bugsnag.notify('Unknown error', (event) => {
       event.context = 'Website build'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       event.addMetadata('error', { message: e })
     })
   }

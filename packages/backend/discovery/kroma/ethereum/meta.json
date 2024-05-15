@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "Colosseum",
@@ -50,6 +50,11 @@
           "type": null
         },
         "ZK_VERIFIER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null

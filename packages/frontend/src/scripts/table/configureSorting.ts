@@ -24,7 +24,6 @@ interface SortingArrowsElement {
 }
 
 const SortingRule = z.enum(['numeric', 'alphabetical'])
-type SortingRule = z.infer<typeof SortingRule>
 
 const tabState: Record<string, UrlState['queryParams']> = {}
 

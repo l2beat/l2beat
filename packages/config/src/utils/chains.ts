@@ -1,6 +1,4 @@
-import { Bridge } from '../bridges'
-import { Layer2 } from '../layer2s'
-import { Layer3 } from '../layer3s'
+import { Bridge, Layer2, Layer3 } from '../projects'
 
 export type Project = Layer2 | Layer3 | Bridge
 interface Config {

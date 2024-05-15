@@ -2,14 +2,14 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   AssetId,
-  cacheAsyncFunction,
   L2CostsApiChart,
   L2CostsApiChartPoint,
   L2CostsApiResponse,
   L2CostsProjectApiCharts,
-  notUndefined,
   TrackedTxsConfigSubtype,
   UnixTime,
+  cacheAsyncFunction,
+  notUndefined,
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
@@ -29,11 +29,6 @@ import {
   DetailedTransactionBase,
 } from '../types/DetailedTransaction'
 
-type L2CostsResult = {
-  type: 'success'
-  data: L2CostsApiResponse
-}
-
 export type L2CostsTrackedTxsConfig = {
   entries: L2CostsTrackedTxsConfigEntry[]
 }
@@ -44,7 +39,7 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const MAX_DAYS = 180
-const MAX_RECORDS = 50000
+const MAX_RECORDS = 200000
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -70,7 +65,7 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
 
 export class L2CostsController {
   private readonly taskQueue: TaskQueue<void>
-  getCachedL2CostsApiResponse: () => Promise<L2CostsResult>
+  getCachedL2CostsApiResponse: () => Promise<L2CostsApiResponse>
 
   constructor(
     private readonly l2CostsRepository: L2CostsRepository,
@@ -101,7 +96,7 @@ export class L2CostsController {
     }, thirtyMinutes)
   }
 
-  async getL2Costs(): Promise<L2CostsResult> {
+  async getL2Costs(): Promise<L2CostsApiResponse> {
     const projects: L2CostsApiResponse['projects'] = {}
 
     const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
@@ -187,11 +182,8 @@ export class L2CostsController {
     }
 
     return {
-      type: 'success',
-      data: {
-        projects,
-        combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
-      },
+      projects,
+      combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
     }
   }
 
@@ -238,8 +230,10 @@ export class L2CostsController {
         addToMap(hourlyMap, 'hour', tx)
         addToMap(combinedHourlyMap, 'hour', tx)
       }
-      addToMap(dailyMap, 'day', tx)
-      addToMap(combinedDailyMap, 'day', tx)
+      if (tx.timestamp.lt(nowToFullHour.toStartOf('day'))) {
+        addToMap(dailyMap, 'day', tx)
+        addToMap(combinedDailyMap, 'day', tx)
+      }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {
       types: CHART_TYPES,

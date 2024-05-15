@@ -4,9 +4,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
 import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
-import { TrackedTxResult } from '../../types/model'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
+import { TrackedTxResult } from '../../types/model'
 import { L2CostsUpdater } from './L2CostsUpdater'
 import {
   L2CostsRecord,
@@ -67,9 +67,8 @@ describe(L2CostsUpdater.name, () => {
 
         const transactions = getMockTrackedTxResults()
 
-        const result = await updater.addDetailsTransactionsAndTransform(
-          transactions,
-        )
+        const result =
+          await updater.addDetailsTransactionsAndTransform(transactions)
 
         const expected: L2CostsRecord[] = [
           {

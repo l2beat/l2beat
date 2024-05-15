@@ -1,0 +1,50 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "extends": ["../../biome.json"],
+  "linter": {
+    "rules": {
+      "nursery": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "assert": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "buffer": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "child_process": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "cluster": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "crypto": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "dgram": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "dns": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "domain": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "events": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "freelist": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "fs": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "http": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "https": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "module": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "net": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "os": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "path": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "punycode": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "querystring": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "readline": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "repl": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "smalloc": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "stream": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "string_decoder": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "sys": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "timers": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "tls": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "tracing": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "tty": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "url": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "util": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "vm": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "zlib": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead."
+            }
+          }
+        }
+      }
+    }
+  }
+}

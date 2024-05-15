@@ -11,6 +11,11 @@ export class MulticallClient {
     private readonly config: MulticallConfigEntry[],
   ) {}
 
+  isNativeBalanceSupported(blockNumber: number): boolean {
+    const config = this.config.find((x) => blockNumber > x.sinceBlock)
+    return config?.isNativeBalanceSupported ?? false
+  }
+
   async multicall(requests: MulticallRequest[], blockNumber: number) {
     // We use strictly greater than because contracts are deployed during the block
     const config = this.config.find((x) => blockNumber > x.sinceBlock)
@@ -24,7 +29,7 @@ export class MulticallClient {
         )
         return batchedResults.flat()
       }
-    } catch (e) {
+    } catch {
       throw new Error(
         `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
       )

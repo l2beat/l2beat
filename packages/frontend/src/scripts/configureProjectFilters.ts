@@ -30,6 +30,10 @@ export function configureProjectFilters() {
     if (!slugsWhenChecked && !slugsWhenUnchecked) {
       throw new Error(`No slugs for ${stateId}`)
     }
+    // initialize state
+    if (slugsWhenUnchecked) {
+      states.set(stateId, slugsWhenUnchecked)
+    }
 
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) {

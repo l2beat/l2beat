@@ -52,7 +52,6 @@ export function blobToData(blob: Uint8Array): Uint8Array {
   const encodedByte = new Uint8Array(4) // buffer for the 4 6-bit chunks
   encodedByte[0] = blob[0]
   for (let i = 1; i < 4; i++) {
-    // eslint-disable-next-line no-extra-semi
     ;[encodedByte[i], outputPosition, inputPosition] = decodeFieldElement(
       blob,
       outputPosition,
@@ -66,7 +65,6 @@ export function blobToData(blob: Uint8Array): Uint8Array {
   // of output
   for (let i = 1; i < ROUNDS && outputPosition < outputLen; i++) {
     for (let j = 0; j < 4; j++) {
-      // eslint-disable-next-line no-extra-semi
       ;[encodedByte[j], outputPosition, inputPosition] = decodeFieldElement(
         blob,
         outputPosition,

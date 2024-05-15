@@ -11,6 +11,7 @@ import {
   ProviderWithCache,
   ProxyDetector,
   SourceCodeService,
+  TemplateService,
 } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
@@ -45,11 +46,13 @@ export function createDiscoveryRunner(
     multicallClient,
     discoveryLogger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     discoveryLogger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
@@ -70,6 +73,10 @@ function getDiscoveryProvider(
   chainConfig: UpdateMonitorChainConfig,
 ) {
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const eventProvider =
+    chainConfig.eventRpcUrl === undefined
+      ? provider
+      : new providers.StaticJsonRpcProvider(chainConfig.eventRpcUrl)
   const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
     http,
     chainConfig.etherscanUrl,
@@ -84,6 +91,7 @@ function getDiscoveryProvider(
     const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
     return new ProviderWithCache(
       provider,
+      eventProvider,
       etherscanLikeClient,
       discoveryLogger,
       chainConfig.name,
@@ -95,6 +103,7 @@ function getDiscoveryProvider(
 
   return new DiscoveryProvider(
     provider,
+    eventProvider,
     etherscanLikeClient,
     discoveryLogger,
     chainConfig.rpcGetLogsMaxRange,

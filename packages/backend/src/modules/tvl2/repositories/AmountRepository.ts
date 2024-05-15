@@ -24,11 +24,54 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
+  async getByConfigIdsAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .where('timestamp', timestamp.toDate())
+      .orderBy('configuration_id')
+    return rows.map(toRecord)
+  }
+
+  async getDailyByConfigId(configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
+      .orderBy('timestamp')
+
+    return rows.map(toRecord)
+  }
+
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()
-    await knex.batchInsert('amounts', rows, 10_000)
+    await knex.batchInsert('amounts', rows, 1_000)
     return rows.length
+  }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('amounts')
+      .where('configuration_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .delete()
+  }
+
+  async deleteByConfigAfter(configId: string, fromExclusive: UnixTime) {
+    const knex = await this.knex()
+    return knex('amounts')
+      .where('configuration_id', configId)
+      .where('timestamp', '>', fromExclusive.toDate())
+      .delete()
   }
 
   // #region methods used only in tests

@@ -2,14 +2,14 @@ import React from 'react'
 
 import { ConfigFeatures } from '../../build/config/Config'
 import {
-  getScalingNavigationPages,
   NavigationPage,
+  getScalingNavigationPages,
 } from '../../utils/getNavigationPages'
+import { Logo } from '../Logo'
+import { PlainLink } from '../PlainLink'
 import { NewItemBadge } from '../badge/NewItemBadge'
 import { RiskIcon, SummaryIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
-import { Logo } from '../Logo'
-import { PlainLink } from '../PlainLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'

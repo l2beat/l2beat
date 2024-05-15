@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
       "name": "Bridge",
@@ -55,10 +55,6 @@
           "type": null
         }
       }
-    },
-    {
-      "name": "FflonkVerifier",
-      "values": {}
     },
     {
       "name": "FflonkVerifier",
@@ -268,8 +264,8 @@
           "type": null
         },
         "rollupsData": {
-          "description": null,
-          "severity": null,
+          "description": "Maps rollup contracts and their verifier. Any change either should be picked up also by the specific rollup config, unless it's a new rollup.",
+          "severity": "MEDIUM",
           "type": null
         },
         "totalSequencedBatches": {
@@ -288,16 +284,6 @@
           "type": null
         },
         "verifyBatchTimeTarget": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -358,6 +344,16 @@
           "type": null
         },
         "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SharedProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null

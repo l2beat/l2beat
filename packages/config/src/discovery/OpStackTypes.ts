@@ -6,6 +6,7 @@ export type OpStackContractName =
   | 'SystemConfig'
   | 'L1CrossDomainMessenger'
   | 'L1StandardBridge'
+  | 'L1ERC721Bridge'
 
 export interface OPStackContractTemplate {
   name: OpStackContractName
@@ -37,6 +38,11 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
     name: 'L1StandardBridge',
     coreDescription:
       'The {0} contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
+  },
+  {
+    name: 'L1ERC721Bridge',
+    coreDescription:
+      'The {0} contract is used to bridge ERC-721 tokens from L1 to L2.',
   },
 ]
 

@@ -4,16 +4,14 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config'
 import { ChainTvlConfig } from '../../../config/Config'
-import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { ApplicationModule } from '../../ApplicationModule'
-import { DydxController } from '../api/DydxController'
-import { createDydxRouter } from '../api/DydxRouter'
+import { PriceUpdater } from '../PriceUpdater'
 import { TvlController } from '../api/TvlController'
 import { createTvlRouter } from '../api/TvlRouter'
 import { createTvlStatusRouter } from '../api/TvlStatusRouter'
-import { PriceUpdater } from '../PriceUpdater'
 import { AggregatedReportUpdater } from '../reports/AggregatedReportUpdater'
 import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'
@@ -118,12 +116,7 @@ export function createTvlModule(
     { errorOnUnsyncedTvl: config.tvl.errorOnUnsyncedTvl },
   )
 
-  const dydxController = new DydxController(
-    peripherals.getRepository(AggregatedReportRepository),
-  )
-
   const tvlRouter = createTvlRouter(tvlController, config.api)
-  const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,
     priceUpdater,
@@ -158,7 +151,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [tvlRouter, dydxRouter, tvlStatusRouter],
+    routers: [tvlRouter, tvlStatusRouter],
     start,
   }
 }

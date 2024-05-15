@@ -1,594 +1,229 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "$schema": "../../../../discovery/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
+      "name": ""
     },
     {
       "name": "BondManager",
       "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "libAddressManager": {}
       }
     },
     {
       "name": "CanonicalTransactionChain",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_ROLLUP_TX_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_ROLLUP_TX_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "enqueueGasCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "enqueueL2GasPrepaid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getNextQueueIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getNumPendingQueueElements": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getQueueLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElements": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2GasDiscountDivisor": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTransactionGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "queue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "MAX_ROLLUP_TX_SIZE": {},
+        "MIN_ROLLUP_TX_GAS": {},
+        "batches": {},
+        "enqueueGasCost": {},
+        "enqueueL2GasPrepaid": {},
+        "getLastBlockNumber": {},
+        "getLastTimestamp": {},
+        "getNextQueueIndex": {},
+        "getNumPendingQueueElements": {},
+        "getQueueLength": {},
+        "getTotalBatches": {},
+        "getTotalElements": {},
+        "l2GasDiscountDivisor": {},
+        "libAddressManager": {},
+        "maxTransactionGasLimit": {},
+        "queue": {}
       }
     },
     {
       "name": "ChainStorageContainer",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "get": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getGlobalMetadata": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getGlobalMetadataByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "length": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lengthByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "get": {},
+        "getGlobalMetadata": {},
+        "getGlobalMetadataByChainId": {},
+        "length": {},
+        "lengthByChainId": {},
+        "libAddressManager": {},
+        "owner": {}
       }
     },
     {
       "name": "ChainStorageContainer",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "libAddressManager": {},
+        "owner": {}
       }
     },
     {
       "name": "ChainStorageContainer",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getGlobalMetadata": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getGlobalMetadataByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "length": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lengthByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "getGlobalMetadata": {},
+        "getGlobalMetadataByChainId": {},
+        "length": {},
+        "lengthByChainId": {},
+        "libAddressManager": {},
+        "owner": {}
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {},
+        "domainSeparator": {},
+        "getChainId": {},
+        "getOwners": {},
+        "getThreshold": {},
+        "nonce": {}
       }
     },
     {
       "name": "L1CrossDomainMessenger",
       "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "libAddressManager": {},
+        "owner": {},
+        "paused": {}
       }
     },
     {
       "name": "L1StandardBridge",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "addressmgr": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "metis": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "addressmgr": {},
+        "l2TokenBridge": {},
+        "messenger": {},
+        "metis": {}
       }
     },
     {
       "name": "Lib_AddressManager",
       "values": {
-        "BondManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CanonicalTransactionChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ChainStorageContainer_CTC_queue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2CrossDomainMessenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "METIS_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MVM_DiscountOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "Proxy__MVM_CanonicalTransaction": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "Proxy__MVM_ChainManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "Proxy__MVM_Verifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "Proxy__OVM_L1StandardBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
+        "BondManager": {},
+        "CanonicalTransactionChain": {},
+        "ChainStorageContainer_CTC_queue": {},
+        "L2CrossDomainMessenger": {},
+        "METIS_MANAGER": {},
+        "MVM_DiscountOracle": {},
+        "Proxy__MVM_CanonicalTransaction": {},
+        "Proxy__MVM_ChainManager": {},
+        "Proxy__MVM_Verifier": {},
+        "Proxy__OVM_L1StandardBridge": {},
         "StateCommitmentChain": {
           "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
           "severity": "HIGH",
           "type": "CODE_CHANGE"
         },
-        "_1088_MVM_FraudVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "_1088_MVM_Proposer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "_1088_MVM_Sequencer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "_1088_MVM_Sequencer_Wrapper": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "undefined_MVM_FraudVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "_1088_MVM_FraudVerifier": {},
+        "_1088_MVM_Proposer": {},
+        "_1088_MVM_Sequencer": {},
+        "_1088_MVM_Sequencer_Wrapper": {},
+        "owner": {},
+        "undefined_MVM_FraudVerifier": {}
+      }
+    },
+    {
+      "name": "LockingInfo",
+      "values": {
+        "bridge": {},
+        "l1Token": {},
+        "l2ChainId": {},
+        "l2Token": {},
+        "manager": {},
+        "maxLock": {},
+        "minLock": {},
+        "owner": {},
+        "rewardPayer": {},
+        "totalLocked": {},
+        "totalRewardsLiquidated": {}
+      }
+    },
+    {
+      "name": "LockingPool",
+      "values": {
+        "BLOCK_REWARD": {},
+        "WITHDRAWAL_DELAY": {},
+        "currentBatch": {},
+        "escrow": {},
+        "exitDelayPeriod": {},
+        "mpcAddress": {},
+        "owner": {},
+        "paused": {},
+        "rewardPerBlock": {},
+        "sequencers": {},
+        "signerUpdateThrottle": {},
+        "totalSequencers": {}
       }
     },
     {
       "name": "MToken",
       "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "decimals": {},
+        "name": {},
+        "owner": {},
+        "symbol": {},
+        "totalSupply": {}
       }
     },
     {
       "name": "MVM_CanonicalTransaction",
       "values": {
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TXDATA_SUBMIT_TIMEOUT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getStakeBaseCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getStakeSeqSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getStakeUnitCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTxBatchSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTxDataSliceCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTxDataSliceSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeBaseCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeSeqSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeUnitCost": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "txBatchSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "txDataSliceCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "txDataSliceSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "CONFIG_OWNER_KEY": {},
+        "TXDATA_SUBMIT_TIMEOUT": {},
+        "getStakeBaseCost": {},
+        "getStakeSeqSeconds": {},
+        "getStakeUnitCost": {},
+        "getTxBatchSize": {},
+        "getTxDataSliceCount": {},
+        "getTxDataSliceSize": {},
+        "libAddressManager": {},
+        "stakeBaseCost": {},
+        "stakeSeqSeconds": {},
+        "stakeUnitCost": {},
+        "txBatchSize": {},
+        "txDataSliceCount": {},
+        "txDataSliceSize": {}
       }
     },
     {
       "name": "MVM_DiscountOracle",
       "values": {
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "discount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getDiscount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinL2Gas": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minL2Gas": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "CONFIG_OWNER_KEY": {},
+        "discount": {},
+        "getDiscount": {},
+        "getMinL2Gas": {},
+        "libAddressManager": {},
+        "minL2Gas": {}
       }
     },
     {
       "name": "MVM_L2ChainManagerOnL1",
       "values": {
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "addressmgr": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "CONFIG_OWNER_KEY": {},
+        "addressmgr": {},
+        "messenger": {}
       }
     },
     {
       "name": "MVM_Verifier",
       "values": {
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "activeChallenges": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challenges": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "metis": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minStake": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numQualifiedVerifiers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "seqStake": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifiers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifyWindow": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "CONFIG_OWNER_KEY": {},
+        "activeChallenges": {},
+        "challenges": {},
+        "libAddressManager": {},
+        "metis": {},
+        "minStake": {},
+        "numQualifiedVerifiers": {},
+        "seqStake": {},
+        "verifiers": {},
+        "verifyWindow": {}
       }
     },
     {
       "name": "Metis Multisig",
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
+        "VERSION": {},
+        "domainSeparator": {},
+        "getChainId": {},
         "getOwners": {
           "description": "Metis Multisig signers as array",
           "severity": "LOW",
@@ -599,71 +234,29 @@
           "severity": "HIGH",
           "type": "PERMISSION"
         },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "nonce": {}
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {}
       }
     },
     {
       "name": "StateCommitmentChain",
       "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FRAUD_PROOF_WINDOW": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SEQUENCER_PUBLISH_WINDOW": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastSequencerTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastSequencerTimestampByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalBatchesByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElements": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElementsByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
+        "DEFAULT_CHAINID": {},
+        "FRAUD_PROOF_WINDOW": {},
+        "SEQUENCER_PUBLISH_WINDOW": {},
+        "batches": {},
+        "getLastSequencerTimestamp": {},
+        "getLastSequencerTimestampByChainId": {},
+        "getTotalBatches": {},
+        "getTotalBatchesByChainId": {},
+        "getTotalElements": {},
+        "getTotalElementsByChainId": {},
+        "libAddressManager": {}
       }
     }
   ]

@@ -3,7 +3,7 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
-import { bridges } from '../bridges'
+import { bridges } from '../projects'
 import { config } from '../test/config'
 import { canonicalTokenList, tokenList } from './tokens'
 
@@ -69,16 +69,13 @@ describe('tokens', () => {
         let data: string[] = []
 
         try {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           data = (await contract.functions.aggregate(calls))[1]
         } catch (error) {
           // @ts-expect-error Alchemy error is not typed
           const errorBody = error.error.body
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           const message = JSON.parse(errorBody).error.message
 
           if (message) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             throw new Error('Multicall failed. Alchemy error: ' + message)
           } else {
             throw error

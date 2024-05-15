@@ -22,7 +22,7 @@ function watchScripts() {
 
 function buildStyles() {
   return exec(
-    `tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css`,
+    'tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css --minify',
   )
 }
 
@@ -49,10 +49,6 @@ function watchContent() {
   return gulp.watch(['src/**/*.{ts,tsx,md,json}'], buildContent)
 }
 
-function generateMetaImages() {
-  return exec('node -r esbuild-register src/build/buildMetaImages.ts')
-}
-
 const proxyUrls = [
   '/api/projects',
   '/api/tvl/aggregate',
@@ -62,7 +58,7 @@ const proxyUrls = [
 function serve() {
   const app = express()
   app.use(express.static('build'))
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 
@@ -95,7 +91,6 @@ function serve() {
 const build = gulp.series(
   clean,
   gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
-  ...(process.env.GENERATE_METAIMAGES ? [generateMetaImages] : []),
 )
 
 const watch = gulp.series(
