@@ -1,6 +1,7 @@
 import { FinalityDataPoint } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { Layer2FinalityDisplayWarning } from '@l2beat/config'
 import { SyncStatus } from '../../pages/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { WarningBar } from '../WarningBar'
@@ -8,7 +9,6 @@ import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { DurationCell } from './DurationCell'
 import { GrayedOut } from './GrayedOut'
-import { Layer2FinalityDisplayWarning } from '@l2beat/config'
 
 type BaseProps = {
   syncStatus: SyncStatus
