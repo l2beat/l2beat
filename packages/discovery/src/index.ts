@@ -13,6 +13,7 @@ export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
+export { getContractField } from './discovery/utils/metaGetters'
 export {
   DISCOVERY_LOGIC_VERSION,
   DiscoveryEngine,

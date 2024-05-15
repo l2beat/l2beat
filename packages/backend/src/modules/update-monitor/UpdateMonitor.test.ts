@@ -1,10 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  ConfigReader,
-  DiscoveryConfig,
-  DiscoveryDiff,
-  ValueMeta,
-} from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
@@ -141,10 +136,6 @@ describe(UpdateMonitor.name, () => {
         readAllConfigsForChain: async (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
-
-        readMeta: async () => {
-          return undefined
-        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -218,10 +209,6 @@ describe(UpdateMonitor.name, () => {
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ],
-
-        readMeta: async () => {
-          return undefined
-        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -385,9 +372,6 @@ describe(UpdateMonitor.name, () => {
           contracts: [],
           version: 0,
         }),
-        readMeta: async () => {
-          return undefined
-        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -703,32 +687,33 @@ describe(UpdateMonitor.name, () => {
           return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
         },
 
-        readMeta: async (_: string, chain: string) => {
-          let valueMeta: ValueMeta | undefined = undefined
-          if (chain === 'arbitrum') {
-            valueMeta = {
-              severity: null,
-              description: null,
-              type: null,
-            }
-          } else {
-            valueMeta = {
-              severity: 'MEDIUM',
-              description: null,
-              type: null,
-            }
-          }
+        // readMeta: async (_: string, chain: string) => {
+        //   let valueMeta: ValueMeta | undefined = undefined
+        //   if (chain === 'arbitrum') {
+        //     valueMeta = {
+        //       severity: null,
+        //       description: null,
+        //       type: null,
+        //     }
+        //   } else {
+        //     valueMeta = {
+        //       severity: 'MEDIUM',
+        //       description: null,
+        //       type: null,
+        //     }
+        //   }
 
-          return {
-            contracts: [
-              {
-                name: NAME_A,
-                values: { a: valueMeta },
-              },
-            ],
-          }
-        },
+        //   return {
+        //     contracts: [
+        //       {
+        //         name: NAME_A,
+        //         values: { a: valueMeta },
+        //       },
+        //     ],
+        //   }
+        // },
       })
+
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
@@ -784,10 +769,6 @@ describe(UpdateMonitor.name, () => {
 
         readAllConfigsForChain: async (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
-        },
-
-        readMeta: async () => {
-          return undefined
         },
       })
       const updateMonitor = new UpdateMonitor(

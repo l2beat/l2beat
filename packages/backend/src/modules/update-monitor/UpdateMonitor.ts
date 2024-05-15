@@ -3,7 +3,6 @@ import {
   ConfigReader,
   DiscoveryConfig,
   DiscoveryDiff,
-  DiscoveryMeta,
   diffDiscovery,
   normalizeDiffPath,
 } from '@l2beat/discovery'
@@ -85,10 +84,6 @@ export class UpdateMonitor {
           continue
         }
 
-        const meta = await this.configReader.readMeta(
-          projectConfig.name,
-          runner.chain,
-        )
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
           runner.chain,
@@ -100,7 +95,7 @@ export class UpdateMonitor {
           projectConfig,
         )
 
-        const severityCounts = countSeverities(diff, meta)
+        const severityCounts = countSeverities(diff, projectConfig)
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
@@ -299,7 +294,7 @@ export class UpdateMonitor {
       await this.updateNotifier.handleUpdate(
         projectConfig.name,
         diff,
-        await this.configReader.readMeta(projectConfig.name, chain),
+        await this.configReader.readConfig(projectConfig.name, chain),
         blockNumber,
         this.chainConverter.toChainId(chain),
         dependents,
@@ -325,9 +320,9 @@ const errorCount = new Gauge({
   help: 'Value showing amount of errors in the update cycle',
 })
 
-function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
+function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
   const result = { low: 0, medium: 0, high: 0, unknown: 0 }
-  if (meta === undefined) {
+  if (config === undefined) {
     result.unknown = diffs
       .map((d) => d.diff?.length ?? 0)
       .reduce((a, b) => a + b, 0)
@@ -335,8 +330,9 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
   }
 
   for (const diff of diffs) {
-    const contract = meta.contracts.find((c) => c.name === diff.name)
+    const contract = config.getContract(diff.name)
     if (contract === undefined || diff.diff === undefined) {
+      result.unknown += 1
       continue
     }
 
@@ -354,13 +350,13 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
       }
 
       const key = normalizeDiffPath(field.key)
-      const values = contract.values ?? {}
+      const fields = contract.fields ?? {}
 
-      if (values[key] === undefined) {
+      if (fields[key] === undefined) {
         continue
       }
 
-      const severity = values[key].severity
+      const severity = fields[key].severity
 
       switch (severity) {
         case 'LOW':
