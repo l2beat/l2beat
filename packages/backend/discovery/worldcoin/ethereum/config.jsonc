@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "worldcoin",
   "initialAddresses": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"],
@@ -21,38 +21,50 @@
     "RegisterIdentitiesVerifierLookupTable": {
       "fields": {
         "additionalBatchSizes": {
-          "type": "arrayFromOneEvent",
-          "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
-          "valueKey": "batchSize"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+            "valueKey": "batchSize"
+          }
         },
         "initialVerifiers": {
-          "type": "array",
-          "method": "getVerifierFor",
-          "indices": [10, 100]
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": [10, 100]
+          }
         },
         "additionalVerifiers": {
-          "type": "array",
-          "method": "getVerifierFor",
-          "indices": "{{ additionalBatchSizes }}"
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": "{{ additionalBatchSizes }}"
+          }
         }
       }
     },
     "DeleteIdentitiesVerifierLookupTable": {
       "fields": {
         "additionalBatchSizes": {
-          "type": "arrayFromOneEvent",
-          "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)",
-          "valueKey": "batchSize"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event VerifierDeleted(uint256 indexed batchSize, address indexed verifierAddress)",
+            "valueKey": "batchSize"
+          }
         },
         "initialVerifiers": {
-          "type": "array",
-          "method": "getVerifierFor",
-          "indices": [10, 100]
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": [10, 100]
+          }
         },
         "additionalVerifiers": {
-          "type": "array",
-          "method": "getVerifierFor",
-          "indices": "{{ additionalBatchSizes }}"
+          "handler": {
+            "type": "array",
+            "method": "getVerifierFor",
+            "indices": "{{ additionalBatchSizes }}"
+          }
         }
       }
     }

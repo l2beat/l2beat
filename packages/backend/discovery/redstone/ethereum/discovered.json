@@ -2,7 +2,7 @@
   "name": "redstone",
   "chain": "ethereum",
   "blockNumber": 19831040,
-  "configHash": "0xe3851556c21ed27fa6959859a8e15ac99ff1127ee0eb7ff3da43aa2c1e5b3900",
+  "configHash": "0xf21cabf6fde3846caa3739fbbe003663cfc4f5a273048ba20d6aa18b0042218b",
   "version": 4,
   "contracts": [
     {

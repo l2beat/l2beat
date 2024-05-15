@@ -1,5 +1,5 @@
 {
-  "$id": "https://l2beat.com/config.schema.json",
+  "$id": "https://l2beat.com/configV2.schema.json",
   "title": "Discovery config",
   "description": "A configuration file for smart contract discovery",
   "type": "object",
@@ -61,7 +61,7 @@
       "description": "Specific configuration for discovered contracts",
       "unevaluatedProperties": false,
       "patternProperties": {
-        "^.+$": { "$ref": "contract.schema.json" }
+        "^.+$": { "$ref": "contract.v2.schema.json" }
       }
     },
     "names": {

@@ -2,7 +2,7 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x123b30c187d2be5c7ebf79b61237277f28ba4c4971eee119308728dd28c9c5a8",
+  "configHash": "0x01d5e411c166af7d4073fd2db4280f4e2055a7cf391f26c03b4a089046bf9cbc",
   "version": 4,
   "contracts": [
     {
