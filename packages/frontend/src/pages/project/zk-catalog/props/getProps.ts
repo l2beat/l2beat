@@ -10,6 +10,7 @@ import {
   ZkCatalogProjectPageProps,
 } from '../view/ZkCatalogProjectPage'
 import { getPageMetadata } from './getPageMetadata'
+import { hasTrustedSetup } from './hasTrustedSetup'
 
 export function getProps(
   project: Layer2 | Layer3 | ZkCatalogProject,
@@ -17,7 +18,7 @@ export function getProps(
 ): Wrapped<ZkCatalogProjectPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
+      navbar: getNavbarProps(config, 'zk-catalog'),
       details: getZkCatalogProjectDetails(project),
       footer: getFooterProps(config),
     },
@@ -59,10 +60,4 @@ function getZkCatalogProjectDetails(
     description: descriptionEntry.content,
     ...project.stateValidation.proofVerification,
   }
-}
-
-function hasTrustedSetup(verifiers: ZkCatalogProjectDetails['verifiers']) {
-  return verifiers.some((verifier) =>
-    verifier.subVerifiers.some((subVerifier) => !!subVerifier.trustedSetup),
-  )
 }
