@@ -1,0 +1,5 @@
+{
+    "term": "Optimium",
+    "definition": "An off-chain solution that uses fraud proofs for settlement and publishes the data offchain, therefore requiring an additional trust assumption.",
+    "isSpicy": false
+}

@@ -1,5 +1,5 @@
 {
   "term": "Layer 2",
-  "definition": "Layer 2 (L2) is a category of technical solutions which build upon an L1 with the aim of improving scalability, privacy, or other properties. L2s make use of L1 to bootstrap security and settlement guarantees. The L2 and L1 de-composition represents an example of a modular blockchain framework.",
+  "definition": "Layer 2 (L2) is a category of technical solutions aimed to scale the base layer in a trust minimized way. This category includes solutions like rollups as well as state channels and plasma. Other solutions are able to scale further, but with the introduction of additional trust assumptions, which are therefore not trust minimized. Sometimes the term Layer 2 is used to refer to include these solutions too, like validiums and optimiums, but to distinguish between trust minimized and non trust minimized solutions they are often referred to as \"light\" L2s, opposed to \"strong\" L2s like rollups.",
   "isSpicy": true
 }

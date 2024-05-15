@@ -1,5 +1,5 @@
 {
   "term": "Proposer",
-  "definition": "An entity that creates a block of transactions, and propagates it to the network for inclusion in the blockchain.",
+  "definition": "In the context of L2s, the actor that proposes a claimed state root on L1. The term is also used in the context of Ethereum to refer to the actor that proposes a new block.",
   "isSpicy": false
 }

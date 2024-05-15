@@ -1,5 +1,5 @@
 {
   "term": "Validium",
-  "definition": "An off-chain solution that uses validity proofs to improve transaction throughput. Unlike Zero-knowledge rollups, validium data isn't stored on layer 1 Mainnet.",
+  "definition": "An off-chain solution that uses validity proofs for settlement and publishes the data offchain, therefore requiring an additional trust assumption.",
   "isSpicy": false
 }
