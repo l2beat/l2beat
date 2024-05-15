@@ -1,9 +1,9 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 19639423,
+  "blockNumber": 19875796,
   "configHash": "0x94c89b1619c3a469f160e3e048adcb309ded20aae4b238d8a01ef66df5daea0a",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "L1DAITokenBridge",
@@ -88,7 +88,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292732566",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292732595",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -469,7 +469,7 @@
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Oracle": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19874648],
+        "params": [1000000000, 490798, 19875791],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
@@ -578,10 +578,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 120083263,
-        "latestOutputIndex": 8248,
-        "nextBlockNumber": 120085063,
-        "nextOutputIndex": 8249,
+        "latestBlockNumber": 120088663,
+        "latestOutputIndex": 8251,
+        "nextBlockNumber": 120090463,
+        "nextOutputIndex": 8252,
         "proposer": "0x473300df21D047806A082244b417f96b32f13A33",
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
@@ -620,7 +620,7 @@
           "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
         ],
         "getThreshold": 5,
-        "nonce": 3102,
+        "nonce": 3106,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
