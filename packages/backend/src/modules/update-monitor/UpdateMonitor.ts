@@ -342,7 +342,7 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
         continue
       }
 
-      // NOTE(radomski): upgradeability section is not in the meta.json but
+      // NOTE(radomski): upgradeability section is not in `contract.fields` but
       // changes to it are also in the diff. Changes to the implementation are
       // high severity, so just handle this special edge case here.
       if (field.key === 'upgradeability.implementation') {
