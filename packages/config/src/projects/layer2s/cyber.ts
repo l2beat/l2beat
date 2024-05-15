@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -6,14 +6,18 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cyber')
 
-const daChallengeWindowBlocks = discovery.getContractValue<number>(
-  'DataAvailabilityChallenge',
-  'challengeWindow',
+const daChallengeWindow = formatSeconds(
+  discovery.getContractValue<number>(
+    'DataAvailabilityChallenge',
+    'challengeWindow',
+  ) * 12, // in blocks, to seconds
 )
 
-const daResolveWindowBlocks = discovery.getContractValue<number>(
-  'DataAvailabilityChallenge',
-  'resolveWindow',
+const daResolveWindow = formatSeconds(
+  discovery.getContractValue<number>(
+    'DataAvailabilityChallenge',
+    'resolveWindow',
+  ) * 12, // in blocks, to seconds
 )
 
 export const cyber: Layer2 = opStackL2({
@@ -43,28 +47,13 @@ export const cyber: Layer2 = opStackL2({
     name: 'External',
     riskView: {
       value: 'External',
-      description: (() => {
-        assert(
-          daChallengeWindowBlocks === 1 && daResolveWindowBlocks === 1,
-          'The challenge window in the DataAvailabilityChallenge contract changed, please update the daProvider description',
-        )
-        const description =
-          'Proof construction and state derivation rely on data that is NOT published onchain. Cyber uses a custom data availability system without attestations and no option to challenge DA commitments posted to L1.'
-        return description
-      })(),
+      description:
+        'Proof construction and state derivation rely on data that is NOT published onchain. Cyber uses a custom data availability system without attestations, but allowing data challenges.',
       sentiment: 'bad',
     },
     technology: {
-      name: 'Data is published offchain without a usable challenging mechanism',
-      description: (() => {
-        assert(
-          daChallengeWindowBlocks === 1 && daResolveWindowBlocks === 1,
-          'The challenge window in the DataAvailabilityChallenge contract changed, please update the technology section',
-        )
-        const description =
-          'Cyber uses a minimal data availability system in which the sequencer only publishes data commitments (hashes) to Ethereum L1. These are not attested to nor are users able to challenge them. The data essential for potential fraud- and bridge proofs can thus be withheld by the sequencer at any time.'
-        return description
-      })(),
+      name: 'Data required to compute fraud proof is published offchain without onchain attestations',
+      description: `Cyber relies on DA challenges for data availability. If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}. In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.`,
       references: [
         {
           text: 'OP Plasma specification',
@@ -78,11 +67,15 @@ export const cyber: Layer2 = opStackL2({
       risks: [
         {
           category: 'Funds can be stolen if',
-          text: 'the centralized sequencer is malicious.',
+          text: 'the sequencer is malicious and is able to economically outspend the altruistic challengers.',
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'there is no challenger willing to challenge unavailable data commitments.',
         },
       ],
     },
-    bridge: { type: 'None' },
+    bridge: { type: 'None + DA challenges' },
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
@@ -90,9 +83,20 @@ export const cyber: Layer2 = opStackL2({
       'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
     {
-      name: 'SystemConfig Owner.',
-      description:
-        'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
+      name: 'SystemConfig + DAC Owner',
+      description: (() => {
+        assert(
+          discovery.getPermissionedAccount('SystemConfig', 'owner').address ===
+            discovery.getPermissionedAccount(
+              'DataAvailabilityChallenge',
+              'owner',
+            ).address,
+          'The permissions for the SystemConfig + DAC Owner changed, please change the nonTemplatePermissions entry',
+        )
+        const description =
+          'Account privileged to change System Config parameters such as Sequencer Address and gas limit. It can also upgrade the DataAvailabilityChallenge contract and change its parameters like bondSize.'
+        return description
+      })(),
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
     },
   ],

@@ -1,7 +1,7 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 19875593,
+  "blockNumber": 19875660,
   "configHash": "0x28c81e171f3ba4b900bdc48d52f5c8020f7497b87049c53d47dafc194fa13284",
   "version": 4,
   "contracts": [
@@ -95,7 +95,7 @@
         "L2_ORACLE": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Oracle": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 500000, 19875547],
+        "params": [1000000000, 490798, 19875657],
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "SYSTEM_CONFIG": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
@@ -117,7 +117,7 @@
       "sinceTimestamp": 1713430427,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619904",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619905",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
