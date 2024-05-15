@@ -69,7 +69,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     await repository.addMany(DATA)
   })
 
-  describe.only(L2CostsRepository.prototype.addMany.name, () => {
+  describe(L2CostsRepository.prototype.addMany.name, () => {
     it('should return only new row', async () => {
       const newRow: L2CostsRecord[] = [
         {
