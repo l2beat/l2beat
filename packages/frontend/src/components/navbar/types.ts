@@ -6,4 +6,5 @@ export type NavbarPage =
   | 'definitions'
   | 'multisig-report'
   | 'governance'
+  | 'glossary'
   | 'zk-catalog'

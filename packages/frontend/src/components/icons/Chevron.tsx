@@ -13,6 +13,11 @@ export function ChevronLeftIcon(props: SVGAttributes<SVGElement>) {
   return <ChevronDownIcon className={cn('rotate-90', className)} {...rest} />
 }
 
+export function ChevronUpIcon(props: SVGAttributes<SVGElement>) {
+  const { className, ...rest } = props
+  return <ChevronDownIcon className={cn('rotate-180', className)} {...rest} />
+}
+
 export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
