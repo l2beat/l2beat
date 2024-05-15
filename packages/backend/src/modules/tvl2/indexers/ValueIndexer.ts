@@ -58,8 +58,9 @@ export class ValueIndexer extends ManagedChildIndexer {
       this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= to &&
       timestamps.length < this.$.maxTimestampsToProcessAtOnce
     ) {
-      timestamps.push(this.$.syncOptimizer.getTimestampToSync(current))
-      current += 1
+      const newTimestamp = this.$.syncOptimizer.getTimestampToSync(current)
+      timestamps.push(newTimestamp)
+      current = newTimestamp.toNumber() + 1
     }
 
     const values = await this.$.valueService.getTvlAt(
