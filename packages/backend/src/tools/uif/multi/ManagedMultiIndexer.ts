@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Indexer, IndexerOptions } from '@l2beat/uif'
+import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
@@ -15,6 +15,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   encode: (value: T) => string
   decode: (blob: string) => T
   logger: Logger
+  updateRetryStrategy?: RetryStrategy
 }
 
 export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
