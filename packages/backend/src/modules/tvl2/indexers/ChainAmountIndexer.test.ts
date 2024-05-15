@@ -23,9 +23,9 @@ describe(ChainAmountIndexer.name, () => {
 
   describe(ChainAmountIndexer.prototype.multiUpdate.name, () => {
     it('fetches amounts and saves them to DB', async () => {
-      const from = new UnixTime(100)
-      const to = new UnixTime(1000)
-      const timestampToSync = new UnixTime(100)
+      const from = 100
+      const to = 1000
+      const timestampToSync = new UnixTime(200)
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: () => timestampToSync,
       })
@@ -35,8 +35,8 @@ describe(ChainAmountIndexer.name, () => {
       })
       const amountService = mockObject<AmountService>({
         fetchAmounts: async () => [
-          amount('a', 100, 123),
-          amount('b', 100, 0), // zero value should not be saved in the DB
+          amount('a', 200, 123),
+          amount('b', 200, 0), // zero value should not be saved in the DB
         ],
       })
 
@@ -65,16 +65,9 @@ describe(ChainAmountIndexer.name, () => {
         update('c', 100, null, true), // configuration with data should not be fetched
       ]
 
-      const safeHeight = await indexer.multiUpdate(
-        from.toNumber(),
-        to.toNumber(),
-        toUpdate,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(
-        from.toNumber(),
-        to.toNumber(),
-      )
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
         timestampToSync,
@@ -83,15 +76,15 @@ describe(ChainAmountIndexer.name, () => {
       )
 
       expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
-        amount('a', 100, 123),
+        amount('a', 200, 123),
       ])
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
 
     it('returns if no configurations to sync', async () => {
-      const from = new UnixTime(100)
-      const to = new UnixTime(1000)
+      const from = 100
+      const to = 1000
 
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
@@ -112,13 +105,68 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
-        from.toNumber(),
-        to.toNumber(),
-        toUpdate,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
 
-      expect(safeHeight).toEqual(to.toNumber())
+      expect(safeHeight).toEqual(to)
+    })
+
+    it('returns if optimized timestamp later than to', async () => {
+      const from = 100
+      const to = 1000
+      const timestampToSync = new UnixTime(to + 100)
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampToSync: () => timestampToSync,
+      })
+
+      const indexer = new ChainAmountIndexer({
+        amountService: mockObject<AmountService>({}),
+        amountRepository: mockObject<AmountRepository>({}),
+        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        syncOptimizer,
+        chain: 'chain',
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        encode: () => '',
+        decode: () => mockObject<ChainAmountConfig>({}),
+        configurations: [],
+      })
+
+      const toUpdate = [update('a', 100, null, false)]
+
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
+      expect(safeHeight).toEqual(to)
+    })
+
+    it('returns if optimized timestamp later than to', async () => {
+      const from = 100
+      const to = 1000
+
+      const indexer = new ChainAmountIndexer({
+        amountService: mockObject<AmountService>({}),
+        amountRepository: mockObject<AmountRepository>({}),
+        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        syncOptimizer: mockObject<SyncOptimizer>({}),
+        chain: 'chain',
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+        logger: Logger.SILENT,
+        encode: () => '',
+        decode: () => mockObject<ChainAmountConfig>({}),
+        configurations: [],
+      })
+
+      const toUpdate = [
+        update('a', 100, null, true),
+        update('b', 100, null, true),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+
+      expect(safeHeight).toEqual(to)
     })
   })
 

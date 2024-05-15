@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  AssetId,
   EthereumAddress,
   Hash256,
   ProjectId,
@@ -8,23 +7,26 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Project } from '../../../../model/Project'
-import { IndexerService } from '../../../../tools/uif/IndexerService'
-import { PriceRepository } from '../../../tvl/repositories/PriceRepository'
-import { TrackedTxId } from '../../types/TrackedTxId'
+import { Project } from '../../../../../model/Project'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { TrackedTxId } from '../../../types/TrackedTxId'
+import {
+  AggregatedL2CostsRecord,
+  AggregatedL2CostsRepository,
+} from '../repositories/AggregatedL2CostsRepository'
+import {
+  L2CostsPricesRecord,
+  L2CostsPricesRepository,
+} from '../repositories/L2CostsPricesRepository'
+import {
+  L2CostsRecordWithProjectId,
+  L2CostsRepository,
+} from '../repositories/L2CostsRepository'
 import {
   L2CostsAggregatorIndexer,
   L2CostsAggregatorIndexerDeps,
   TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
-import {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from './repositories/AggregatedL2CostsRepository'
-import {
-  L2CostsRecordWithProjectId,
-  L2CostsRepository,
-} from './repositories/L2CostsRepository'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)
@@ -101,20 +103,22 @@ describe(L2CostsAggregatorIndexer.name, () => {
         }),
       ]
 
-      const ethPrices = new Map([[txTime.toStartOf('hour').toNumber(), 2000]])
+      const ethPrices: L2CostsPricesRecord[] = [
+        { timestamp: txTime.toStartOf('hour'), priceUsd: 2000 },
+      ]
 
       const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
         getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
       })
 
-      const priceRepositoryMock = mockObject<PriceRepository>({
-        findByTimestampRange: mockFn().resolvesTo(ethPrices),
+      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+        getByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
       const indexer = createIndexer({
         tag: 'update-correct',
         l2CostsRepository: l2CostsRepositoryMock,
-        priceRepository: priceRepositoryMock,
+        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
       })
 
       const multipliers: TrackedTxMultiplier[] = [
@@ -138,11 +142,9 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ).toHaveBeenOnlyCalledWith([MIN, endOfFirstDay])
 
       // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
-      expect(priceRepositoryMock.findByTimestampRange).toHaveBeenOnlyCalledWith(
-        AssetId.ETH,
-        MIN,
-        endOfFirstDay,
-      )
+      expect(
+        l2CostsPricesRepositoryMock.getByTimestampRange,
+      ).toHaveBeenOnlyCalledWith(MIN, endOfFirstDay)
 
       // 2023-05-02 00:00:00
       expect(to).toEqual(endOfFirstDay.add(1, 'seconds').toNumber())
@@ -183,6 +185,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 1,
         computeGasEth: 1,
         computeGasUsd: 1,
+        overheadGas: 1,
         overheadGasEth: 1,
         overheadGasUsd: 1,
       })
@@ -209,10 +212,10 @@ describe(L2CostsAggregatorIndexer.name, () => {
         }),
       ]
 
-      const ethPrices = new Map([
-        [NOW.toNumber(), 2000],
-        [NOW.add(1, 'hours').toNumber(), 2100],
-      ])
+      const ethPrices: L2CostsPricesRecord[] = [
+        { timestamp: NOW, priceUsd: 2000 },
+        { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
+      ]
 
       const result = indexer.aggregate(txs, ethPrices)
 
@@ -232,6 +235,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 3,
           computeGasEth: 3,
           computeGasUsd: 3,
+          overheadGas: 3,
           overheadGasEth: 3,
           overheadGasUsd: 3,
         },
@@ -250,6 +254,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 1,
           computeGasEth: 1,
           computeGasUsd: 1,
+          overheadGas: 1,
           overheadGasEth: 1,
           overheadGasUsd: 1,
         },
@@ -268,6 +273,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           computeGas: 1,
           computeGasEth: 1,
           computeGasUsd: 1,
+          overheadGas: 1,
           overheadGasEth: 1,
           overheadGasUsd: 1,
         },
@@ -282,7 +288,9 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       const txs = [tx(trackedTxId)]
 
-      const ethPrices = new Map([[NOW.toNumber(), 2000]])
+      const ethPrices: L2CostsPricesRecord[] = [
+        { timestamp: NOW, priceUsd: 2000 },
+      ]
 
       expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
         `Assertion Error: Multiplier not found for ${trackedTxId}`,
@@ -292,7 +300,10 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('throws if prices not available', async () => {
       const indexer = createIndexer({ tag: 'aggregate-throws-no-price' })
       const txs = [tx(TrackedTxId.random())]
-      const ethPrices = new Map([[NOW.add(1, 'hours').toNumber(), 2100]])
+
+      const ethPrices: L2CostsPricesRecord[] = [
+        { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
+      ]
 
       expect(() => indexer.aggregate(txs, ethPrices)).toThrow(
         `Assertion Error: [${
@@ -336,6 +347,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 129221,
         computeGasEth: 0.00210593570777626,
         computeGasUsd: 4.21187141555252,
+        overheadGas: 21000,
         overheadGasEth: 0.00034224042426,
         overheadGasUsd: 0.68448084852,
       })
@@ -357,6 +369,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 77533,
         computeGasEth: 0.00126356794353098,
         computeGasUsd: 2.5271358870619602,
+        overheadGas: 12600,
         overheadGasEth: 0.00020534425455600002,
         overheadGasUsd: 0.41068850911200006,
       })
@@ -378,6 +391,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         computeGas: 129221,
         computeGasEth: 0.00210593570777626,
         computeGasUsd: 4.21187141555252,
+        overheadGas: 21000,
         overheadGasEth: 0.00034224042426,
         overheadGasUsd: 0.68448084852,
       })
@@ -441,7 +455,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
       addMany: mockFn().resolvesTo(1),
     }),
     l2CostsRepository: mockObject<L2CostsRepository>(),
-    priceRepository: mockObject<PriceRepository>(),
+    l2CostsPricesRepository: mockObject<L2CostsPricesRepository>(),
     projects: MOCK_PROJECTS,
     ...deps,
   })

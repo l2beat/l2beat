@@ -106,6 +106,7 @@ export interface TrackedTxsConfig {
     readonly l2costs:
       | {
           readonly aggregatorEnabled: boolean
+          readonly coingeckoApiKey: string
         }
       | false
   }

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x38c5a821394f48ed951c9646e7a97779799f757b
+
+# Diff at Tue, 14 May 2024 09:35:12 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@c3f1e2e18f153bc7ee23c0dd431182773076cc43 block: 19789584
+- current block number: 19867390
+
+## Description
+
+The challenge period (`confirmPeriodBlocks`) is increased from 30m and now matches the self-propose (`VALIDATOR_AFK_BLOCKS`) delay of 6d 8h.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: None
+      values.confirmPeriodBlocks:
+-        150
++        45818
+    }
+```
+
 Generated with discovered.json: 0x5b3d003cfab482308ba681b8eecea5562a2b9df5
 
 # Diff at Fri, 03 May 2024 12:27:40 GMT:

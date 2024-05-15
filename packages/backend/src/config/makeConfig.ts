@@ -178,6 +178,10 @@ export function makeConfig(
             'l2costs',
             'aggregator',
           ),
+          coingeckoApiKey: env.string([
+            'COINGECKO_API_KEY_FOR_TVL',
+            'COINGECKO_API_KEY',
+          ]),
         },
       },
     },

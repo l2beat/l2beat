@@ -12,7 +12,7 @@ type LivenessTimeRangeControlsValues = z.infer<
 export function configureLivenessTimeRangeControls() {
   const searchParams = new URLSearchParams(window.location.search)
 
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const livenessTimeRangeControls = $$<HTMLInputElement>(
     '[data-role="liveness-time-range-controls"] input',
   )
