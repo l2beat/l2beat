@@ -36,10 +36,6 @@ export class LivenessUpdater implements TxUpdaterInterface {
     await this.livenessRepository.deleteFromById(id, untilTimestamp, knexTrx)
   }
 
-  async deleteAfter(after: UnixTime) {
-    await this.livenessRepository.deleteAfter(after)
-  }
-
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
     return transactions.map((t) => ({
       timestamp: t.blockTimestamp,

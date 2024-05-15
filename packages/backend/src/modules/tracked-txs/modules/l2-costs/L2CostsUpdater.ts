@@ -35,10 +35,6 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     await this.l2CostsRepository.deleteFromById(id, untilTimestamp, knexTrx)
   }
 
-  async deleteAfter(after: UnixTime) {
-    await this.l2CostsRepository.deleteAfter(after)
-  }
-
   async transform(transactions: TrackedTxResult[]): Promise<L2CostsRecord[]> {
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,

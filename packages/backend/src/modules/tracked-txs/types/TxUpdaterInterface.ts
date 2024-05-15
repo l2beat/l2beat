@@ -11,5 +11,4 @@ export interface TxUpdaterInterface {
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,
   ) => Promise<void>
-  deleteAfter: (after: UnixTime) => Promise<void>
 }

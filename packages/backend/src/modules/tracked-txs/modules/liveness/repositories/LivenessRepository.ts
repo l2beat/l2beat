@@ -158,11 +158,6 @@ export class LivenessRepository extends BaseRepository {
       .delete()
   }
 
-  async deleteAfter(after: UnixTime, trx?: Knex.Transaction) {
-    const knex = await this.knex(trx)
-    return knex('liveness').where('timestamp', '>', after.toDate()).delete()
-  }
-
   async deleteAll() {
     const knex = await this.knex()
     return knex('liveness').delete()

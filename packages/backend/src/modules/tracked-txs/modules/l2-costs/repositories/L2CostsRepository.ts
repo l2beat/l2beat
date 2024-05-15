@@ -124,12 +124,6 @@ export class L2CostsRepository extends BaseRepository {
       .delete()
   }
 
-  async deleteAfter(after: UnixTime, trx?: Knex.Transaction) {
-    console.log(after)
-    const knex = await this.knex(trx)
-    return knex('l2_costs').where('timestamp', '>', after.toDate()).delete()
-  }
-
   async deleteAll() {
     const knex = await this.knex()
     return knex('l2_costs').delete()
