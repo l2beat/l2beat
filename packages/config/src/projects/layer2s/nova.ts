@@ -28,7 +28,7 @@ const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil'],
+  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by Security Council`,
@@ -99,6 +99,10 @@ export const nova: Layer2 = orbitStackL2({
       'BatchPosterManagerMultisig',
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('L1ArbitrumTimelock'),
+      'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+    ),
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {
@@ -140,6 +144,11 @@ export const nova: Layer2 = orbitStackL2({
       description: 'Router managing token <--> gateway mapping.',
       ...upgradeExecutorUpgradeability,
     }),
+    discovery.getContractDetails('ChallengeManager', {
+      description:
+        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy.',
+      ...upgradeExecutorUpgradeability,
+    }),
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
@@ -148,6 +157,7 @@ export const nova: Layer2 = orbitStackL2({
       tokens: ['DAI'],
       description:
         'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
+      ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
@@ -155,6 +165,7 @@ export const nova: Layer2 = orbitStackL2({
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
+      ...upgradeExecutorUpgradeability,
     }),
   ],
   nonTemplateRiskView: {
