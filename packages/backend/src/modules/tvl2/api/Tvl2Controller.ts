@@ -389,14 +389,9 @@ export class Tvl2Controller {
     return result
   }
 
-  async getTvlBreakdown(): Promise<ProjectAssetsBreakdownApiResponse> {
-    const timestamp = new UnixTime(
-      Math.min(...this.parents.map((x) => x.safeHeight)),
-    ).toStartOf('hour')
-
-    // TODO: we could check if all the parents have started.
-    assert(timestamp.toNumber() > 0, 'Invalid timestamp')
-
+  async getTvlBreakdown(
+    timestamp: UnixTime,
+  ): Promise<ProjectAssetsBreakdownApiResponse> {
     const breakdowns = await this.getNewBreakdown(timestamp)
     return { dataTimestamp: timestamp, breakdowns }
   }
