@@ -95,6 +95,7 @@ function record(
     computeGas: 1,
     computeGasEth: 1,
     computeGasUsd: 1,
+    overheadGas: 1,
     overheadGasEth: 1,
     overheadGasUsd: 1,
     ...data,
