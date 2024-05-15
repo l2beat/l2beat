@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19859844,
+  "blockNumber": 19875788,
   "configHash": "0x3de20bfd027b7a8b4e9915515c022cb632d5f1269e974711da3ad19132f1c337",
   "version": 4,
   "contracts": [
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x387c160000000000",
-        "get_deposit_root": "0x17d6549d1771075306fb9feba156f5f83353ad9970d5e426b7e07ba8d6b1c851"
+        "get_deposit_count": "0x637e160000000000",
+        "get_deposit_root": "0xa1004dec2c274b7e432ad0d4ca1cc8c13f9906df7fdd40ffac7124d07b36c54d"
       },
       "derivedName": "DepositContract"
     },
@@ -48,7 +48,7 @@
       "sinceTimestamp": 1706811599,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623036",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292623037",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -173,7 +173,7 @@
         "L2_ORACLE": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Oracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [10000000, 490798, 19873672],
+        "params": [10000000, 491822, 19873735],
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "SYSTEM_CONFIG": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
@@ -201,7 +201,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "203664202327922581798827"
+        "totalSupply": "203664490226668286220035"
       },
       "derivedName": "frxETH"
     },
@@ -242,10 +242,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4469400,
-        "latestOutputIndex": 2482,
-        "nextBlockNumber": 4471200,
-        "nextOutputIndex": 2483,
+        "latestBlockNumber": 4483800,
+        "latestOutputIndex": 2490,
+        "nextBlockNumber": 4485600,
+        "nextOutputIndex": 2491,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -347,12 +347,12 @@
         "lastRewardAmount": "93447000000000000000",
         "lastSync": 1715212871,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1086291968869810409",
+        "pricePerShare": "1086318469541267536",
         "rewardsCycleEnd": 1715817600,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "158434165791142557344836",
-        "totalSupply": "145848602706672985802337"
+        "totalAssets": "158157455269739423703127",
+        "totalSupply": "145590321534831705955284"
       },
       "derivedName": "sfrxETH"
     },
@@ -391,7 +391,7 @@
       },
       "sinceTimestamp": 1665022895,
       "values": {
-        "currentWithheldETH": "101489244662077379142",
+        "currentWithheldETH": "101914269954911409270",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
