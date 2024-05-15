@@ -14,8 +14,9 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
+  knex('aggregated_l2_costs').delete()
   await knex.schema.alterTable('aggregated_l2_costs', function (table) {
-    table.integer('overhead_gas').notNullable().defaultTo(0)
+    table.integer('overhead_gas').notNullable()
   })
 }
 
