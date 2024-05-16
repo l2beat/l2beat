@@ -1,5 +1,5 @@
 {
-    "term": "DA Bridge",
-    "definition": "System that verifies that data has been made available. It takes the form of a smart contract verifying a consensus or, if the data is verified directly by either downloading the full data or sampling, of an enshrined bridge.",
-    "isSpicy": false
+  "term": "DA Bridge",
+  "definition": "System that verifies that data has been made available. It takes the form of a smart contract verifying a consensus or, if the data is verified directly by either downloading the full data or sampling, of an enshrined bridge.",
+  "isSpicy": false
 }
