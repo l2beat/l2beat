@@ -184,7 +184,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
   upgradesAndGovernance: [
-    // TODO(radomski): This is false information
     `All main contracts and the verifier are upgradable by the ${shared.getMultisigStats(
       'RollupManagerAdminMultisig',
     )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
