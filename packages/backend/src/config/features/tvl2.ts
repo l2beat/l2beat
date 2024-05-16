@@ -62,8 +62,8 @@ export function getTvl2Config(
       'COINGECKO_API_KEY',
     ]),
     chainConverter,
-    maxTimestampsToProcessAtOnce: env.integer(
-      'MAX_TIMESTAMPS_TO_PROCESS_AT_ONCE',
+    maxTimestampsToAggregateAtOnce: env.integer(
+      'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
       100,
     ),
   }

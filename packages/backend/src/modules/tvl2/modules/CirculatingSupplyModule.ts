@@ -108,7 +108,7 @@ export function createCirculatingSupplyModule(
           amountConfigs[0].sinceTimestamp,
         )
         .toNumber(),
-      maxTimestampsToProcessAtOnce: config.maxTimestampsToProcessAtOnce,
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 
     valueIndexers.push(indexer)
