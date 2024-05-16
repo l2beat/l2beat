@@ -83,7 +83,7 @@ export function createPriceModule(
 
       await descendant.start()
     },
-    descendant: descendant,
+    descendant,
   }
 }
 

@@ -90,7 +90,6 @@ export class Tvl2Controller {
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
     private readonly chainConverter: ChainConverter,
-    private readonly parents: { safeHeight: number }[],
     projects: Project[],
     config: Tvl2Config,
   ) {
@@ -321,10 +320,7 @@ export class Tvl2Controller {
       })
     }
 
-    const lastSafeHour = new UnixTime(
-      Math.min(...this.parents.map((x) => x.safeHeight)),
-    ).toStartOf('hour')
-    const breakdownMap = await this.getBreakdownMap(lastSafeHour)
+    const breakdownMap = await this.getBreakdownMap(lastHour)
 
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
