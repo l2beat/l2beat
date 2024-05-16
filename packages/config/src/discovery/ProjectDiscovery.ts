@@ -61,8 +61,8 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
+    configReader = new ConfigReader('../backend/'),
   ) {
-    const configReader = new ConfigReader('../backend/')
     const config = configReader.readConfig(projectName, chain)
     this.discoveries = [
       configReader.readDiscovery(projectName, chain),
