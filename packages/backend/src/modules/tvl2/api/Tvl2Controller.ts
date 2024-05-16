@@ -42,6 +42,15 @@ type Values = {
 }
 type ValuesMap = Map<number, Values>
 
+interface CanonicalAssetBreakdown {
+  assetId: AssetId
+  chainId: ChainId
+  usdPrice: string
+  usdValue: number
+  amount: number
+  escrows: CanonicalAssetBreakdownData['escrows']
+}
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -53,6 +62,7 @@ export class Tvl2Controller {
     id: ProjectId
     minTimestamp: UnixTime
     type: Project['type']
+    slug: string
   }[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
@@ -74,7 +84,7 @@ export class Tvl2Controller {
         .map((x) => [x.configId, x]),
     )
     this.priceConfigs = getPriceConfigIds(config)
-    this.projects = projects.flatMap(({ projectId: id, type }) => {
+    this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
       const config = this.amountConfig.get(id)
       if (!config) {
         return []
@@ -83,7 +93,7 @@ export class Tvl2Controller {
       const minTimestamp = config
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
-      return { id, minTimestamp, type }
+      return { id, minTimestamp, type, slug }
     })
 
     this.minTimestamp = {
@@ -94,15 +104,7 @@ export class Tvl2Controller {
   }
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPriceId = this.priceConfigs.get(
-      createAssetId({ address: 'native', chain: 'ethereum' }),
-    )?.priceId
-    assert(ethPriceId, 'Eth priceId not found')
-    const ethPriceRecords =
-      await this.priceRepository.getDailyByConfigId(ethPriceId)
-    const ethPrices = new Map(
-      ethPriceRecords.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
-    )
+    const ethPrices = await this.getEthPrices()
 
     const projects = this.projects.map((x) => x.id)
     const values = await this.valueRepository.getForProjects(projects)
@@ -485,6 +487,108 @@ export class Tvl2Controller {
     return result
   }
 
+  async getAggregatedTvl(
+    lastHour: UnixTime,
+    projectSlugs: string[],
+  ): Promise<TvlApiCharts> {
+    const ethPrices = await this.getEthPrices()
+
+    const projects = this.projects
+      .filter((p) => projectSlugs.includes(p.slug))
+      .map((p) => p.id)
+
+    console.time('DB')
+    const values = await this.valueRepository.getForProjects(projects)
+    console.timeEnd('DB')
+
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const hourlyCutOff = getHourlyCutoff(lastHour)
+
+    console.time('groupBy')
+    const valuesByProject = groupBy(values, 'projectId')
+    console.timeEnd('groupBy')
+
+    const aggregate = new Map<number, Values>()
+
+    for (const project of projects) {
+      console.time(project.toString())
+      const projectValues = valuesByProject[project.toString()]
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+
+      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
+        const sum = values.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
+        )
+        const aggregateSum = aggregate.get(Number(timestamp))
+        if (!aggregateSum) {
+          aggregate.set(Number(timestamp), sum)
+        } else {
+          aggregateSum.canonical += sum.canonical
+          aggregateSum.external += sum.external
+          aggregateSum.native += sum.native
+        }
+      }
+      console.timeEnd(project.toString())
+    }
+
+    console.time('Chart conversion')
+
+    const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()))
+    const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()))
+    const projectsMinTimestamp = this.projects
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
+
+    const minTimestamp = UnixTime.max(
+      minValueTimestamp,
+      projectsMinTimestamp,
+    ).toEndOf('day')
+    const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
+
+    const dailyData = getChartData({
+      start: minTimestamp,
+      end: maxTimestamp,
+      step: [1, 'days'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const sixHourlyData = getChartData({
+      start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
+      end: maxTimestamp,
+      step: [6, 'hours'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const hourlyData = getChartData({
+      start: UnixTime.max(hourlyCutOff, minTimestamp),
+      end: maxTimestamp,
+      step: [1, 'hours'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const result: TvlApiCharts = {
+      hourly: getChart(hourlyData),
+      sixHourly: getChart(sixHourlyData),
+      daily: getChart(dailyData),
+    }
+
+    console.timeEnd('Chart conversion')
+
+    return result
+  }
+
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
@@ -543,6 +647,19 @@ export class Tvl2Controller {
         return UnixTime.min(acc, curr)
       })
       .toEndOf('day')
+  }
+
+  private async getEthPrices() {
+    const ethPriceId = this.priceConfigs.get(
+      createAssetId({ address: 'native', chain: 'ethereum' }),
+    )?.priceId
+    assert(ethPriceId, 'Eth priceId not found')
+    const ethPriceRecords =
+      await this.priceRepository.getDailyByConfigId(ethPriceId)
+    const ethPrices = new Map(
+      ethPriceRecords.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+    return ethPrices
   }
 }
 
