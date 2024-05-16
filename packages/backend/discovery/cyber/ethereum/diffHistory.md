@@ -7,7 +7,7 @@ Generated with discovered.json: 0xf826b642d402796210be75a928daf70a983bd0df
 
 ## Description
 
-Initial discovery: Cyber is an OP stack L2 using custom DA (currently not yet EigenDA).
+Initial discovery: Cyber is an OP stack plasma mode L2 using custom DA (currently not yet EigenDA).
 
 ## Initial discovery
 
