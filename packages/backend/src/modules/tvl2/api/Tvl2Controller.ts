@@ -28,35 +28,6 @@ import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 
-export interface Tvl2Project {
-  id: ProjectId
-  indexers: { get safeHeight(): number }[]
-}
-
-interface Tvl2Result {
-  daily: Tvl2TimestampedResult[]
-}
-
-interface Tvl2TimestampedResult {
-  timestamp: number
-  projects: Record<string, Tvl2ProjectResult>
-}
-
-interface Tvl2ProjectResult {
-  canonical: string
-  external: string
-  native: string
-}
-
-interface CanonicalAssetBreakdown {
-  assetId: AssetId
-  chainId: ChainId
-  amount: number
-  usdValue: number
-  usdPrice: string
-  escrows: CanonicalAssetBreakdownData['escrows']
-}
-
 type AmountConfigMap = Map<
   ProjectId,
   (AmountConfigEntry & { configId: string })[]
