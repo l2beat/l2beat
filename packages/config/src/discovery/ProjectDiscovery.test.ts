@@ -1,7 +1,6 @@
 import { ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
-  /*
    const projectName = 'ExampleProject'
    const discovery = new ProjectDiscovery('ExampleProject', 'ethereum')
  
@@ -250,5 +249,4 @@ describe(ProjectDiscovery.name, () => {
  
      expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
    })
-   */
 })
