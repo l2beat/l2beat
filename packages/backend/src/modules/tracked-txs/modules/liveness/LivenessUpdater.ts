@@ -26,6 +26,7 @@ export class LivenessUpdater implements TxUpdaterInterface {
 
     const transformedTransactions = this.transformTransactions(transactions)
     await this.livenessRepository.addMany(transformedTransactions, knexTx)
+    this.logger.info('Updated liveness', { count: transactions.length })
   }
 
   async deleteFromById(
