@@ -3,8 +3,8 @@
   "chain": "ethereum",
   "name": "xlayer",
   "initialAddresses": [
-      "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-      "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
   "names": {
     "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "XLayerValidiumEtrog",
@@ -15,7 +15,7 @@
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "SharedProxyAdmin"
   },
   "sharedModules": {
-      "PolygonRollupManager": "shared-polygon-cdk"
+    "PolygonRollupManager": "shared-polygon-cdk"
   },
   "overrides": {
     "XLayerValidiumDAC": {

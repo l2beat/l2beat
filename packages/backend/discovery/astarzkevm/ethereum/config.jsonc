@@ -3,8 +3,8 @@
   "chain": "ethereum",
   "name": "astarzkevm",
   "initialAddresses": [
-      "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-      "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
   "names": {
     "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
@@ -14,7 +14,7 @@
     "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRootV2"
   },
   "sharedModules": {
-      "PolygonRollupManager": "shared-polygon-cdk"
+    "PolygonRollupManager": "shared-polygon-cdk"
   },
   "overrides": {
     "AstarValidiumDAC": {

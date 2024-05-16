@@ -20,7 +20,7 @@
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
   },
   "sharedModules": {
-      "PolygonRollupManager": "shared-polygon-cdk"
+    "PolygonRollupManager": "shared-polygon-cdk"
   },
   "overrides": {
     "wstETHBridge": {
