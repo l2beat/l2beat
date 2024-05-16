@@ -1,6 +1,5 @@
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import groupBy from 'lodash/groupBy'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
@@ -8,6 +7,7 @@ import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 import { getChain } from '~/utils/chains'
 
 import { ChainAssetRiskCard } from './_components/ChainAssetRiskCard'
+import { DetailsHeader } from './_components/DetailsHeader'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
@@ -178,30 +178,13 @@ export default async function Page({ params: { address } }: Props) {
     <main className="max-w-[1296px] px-4 md:px-12 mx-auto py-10">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-8">
-          <div>
-            <Link href="/">&lt; Back</Link>
-          </div>
-          <div className="flex flex-row gap-16 justify-between">
-            <div>
-              <h1 className="mb-1 text-3xl font-bold">
-                {vanityAddress}&apos;s Asset Risk
-              </h1>
-              <p className="text-gray-500 dark:text-gray-600k">
-                Risk score assessment for {vanityAddress}, based on{' '}
-                {tokens.length} known tokens. We successfully got info for{' '}
-                {successes.length} of them, while {errors.length} errored. Risk
-                is very important lorem ipsum dolor sit amet. Risk is very
-                important lorem ipsum dolor sit amet. Risk is very important
-                lorem ipsum dolor sit amet.
-              </p>
-            </div>
-            <div className="dark:bg-zinc-900 bg-gray-100 h-32 w-32 flex-shrink-0 rounded-lg items-center justify-center flex">
-              risk score?
-            </div>
-          </div>
-          <div className="px-4 py-6 md:p-10 dark:bg-zinc-900 bg-gray-100 rounded-lg">
-            risk breakdown?
-          </div>
+          <DetailsHeader
+            dolarValue={2631773480.22}
+            walletAddress="0x4865A7018c9748f69cDcC76Be1daCD40D1cD685a"
+          />
+          <h1 className="mb-1 text-3xl font-bold">
+            {vanityAddress}&apos;s Asset Risk
+          </h1>
         </div>
         <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t" />
         <div className="flex flex-col gap-8">

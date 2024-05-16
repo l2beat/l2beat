@@ -2,8 +2,6 @@ import { bridges, layer2s } from '@l2beat/config'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { formatUnits } from 'viem'
-
-import { BigRosette } from './Rosette'
 import { StageBadge } from './StageBadge'
 
 export interface ChainAssetRiskCardProps {
@@ -163,7 +161,6 @@ export function ChainAssetRiskCard({
           })}
         </div>
       </div>
-      <div>{chain.riskView && <BigRosette risks={chain.riskView} />}</div>
     </div>
   )
 }
