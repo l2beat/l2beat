@@ -31,7 +31,6 @@ const upgradeDelayString = formatSeconds(
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
-  rollupManagerContract: shared.getContract('PolygonRollupManager'),
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {
