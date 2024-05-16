@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
@@ -30,6 +31,8 @@ export interface ValueRecord {
   native: bigint
   nativeForTotal: bigint
 }
+
+const BATCH_SIZE = 2_000
 
 export class ValueRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -61,11 +64,26 @@ export class ValueRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(records: ValueRecord[]) {
-    //todo: on conflict merge
-    const rows: ValueRow[] = records.map(toRow)
-    const knex = await this.knex()
-    await knex.batchInsert('values', rows, 10_000)
-    return rows.length
+    await this.runInTransaction(async (trx) => {
+      for (let i = 0; i < records.length; i += BATCH_SIZE) {
+        await this._addOrUpdateMany(records.slice(i, i + BATCH_SIZE), trx)
+      }
+    })
+
+    return records.length
+  }
+
+  private async _addOrUpdateMany(
+    records: ValueRecord[],
+    trx: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+    const rows = records.map(toRow)
+
+    await knex('values')
+      .insert(rows)
+      .onConflict(['project_id', 'timestamp', 'data_source'])
+      .merge()
   }
 
   async addOrUpdate(record: ValueRecord) {

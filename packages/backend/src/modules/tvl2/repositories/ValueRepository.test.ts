@@ -26,6 +26,24 @@ describeDatabase(ValueRepository.name, (database) => {
       ])
     })
 
+    it('upserts rows', async () => {
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
+      ])
+
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+    })
+
     it('empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
