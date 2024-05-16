@@ -68,11 +68,11 @@ describe(ProjectDiscovery.name, () => {
 
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
-      const value = discovery.getContractValue<number>(
+      const value = discovery.getContractValue(
         contractStub.name,
         'CHILD_BLOCK_INTERVAL',
       )
-      expect(value).toEqual(contractStub.values.CHILD_BLOCK_INTERVAL)
+      expect(value).toEqual(contractStub.values?.CHILD_BLOCK_INTERVAL as number)
     })
 
     it('should throw an error if given contract value does not exist', () => {

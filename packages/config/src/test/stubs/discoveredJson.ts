@@ -76,6 +76,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
 
 export const discoveredOpStackJsonStub: DiscoveryOutput = {
   name: 'mockedopstackproject',
+  chain: 'optimism',
   blockNumber: 16154924,
   contracts: [
     {
@@ -145,4 +146,7 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
     },
   ],
   eoas: [],
+  abis: {},
+  configHash: Hash256.random(),
+  version: 123,
 }
