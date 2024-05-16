@@ -1,4 +1,57 @@
-Generated with discovered.json: 0x4773e1e206c38d7e9f2b29accba8119c18d72591
+Generated with discovered.json: 0x2f397bd826fe7f9bf02d8d05820501cea74e396d
+
+# Diff at Wed, 15 May 2024 13:52:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@2a68252776877f0b82e9f7cf6261b744952be771 block: 19639423
+- current block number: 19875796
+
+## Description
+
+One signer of the SynthetixMultisig (governing the SNX escrow) has been replaced: `0xEde8a407913A874Dd7e3d5B731AFcA135D30375E` replaced by `0xe2163dd599067919d1e9108929b568Bf41D3A420`.
+
+## Watched changes
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      values.getOwners.10:
+-        "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
++        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
+      values.getOwners.9:
+-        "0x562948111d50BF039A39Eea48D127f2Ae51ddF02"
++        "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB"
+      values.getOwners.8:
+-        "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB"
++        "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd"
+      values.getOwners.7:
+-        "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd"
++        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
+      values.getOwners.6:
+-        "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE"
++        "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211"
+      values.getOwners.5:
+-        "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211"
++        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
+      values.getOwners.4:
+-        "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8"
++        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
+      values.getOwners.3:
+-        "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC"
++        "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0"
+      values.getOwners.2:
+-        "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0"
++        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
+      values.getOwners.1:
+-        "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a"
++        "0x26E10fF641839cA457695CE955Cb90657D6E3F53"
+      values.getOwners.0:
+-        "0x26E10fF641839cA457695CE955Cb90657D6E3F53"
++        "0xe2163dd599067919d1e9108929b568Bf41D3A420"
+    }
+```
+
+Generated with discovered.json: 0xd4cc5d9bc127f06ecb0a0d9f2bf520df2ffc72d5
 
 # Diff at Fri, 12 Apr 2024 12:08:01 GMT:
 
