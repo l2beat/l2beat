@@ -46,11 +46,11 @@ yarn start
 
 If you want to add a new Layer 2 project you can do that by opening a PR. To do this you need to:
 
-1. Read the specification in `/packages/config/src/projects/layer2s/types/Layer2.ts`. It contains an annotated
+1. Read the specification in `packages/config/src/projects/layer2s/types/Layer2.ts`. It contains an annotated
    data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/layer2s`. You can use the
+2. Add a .ts file to describe your project inside `packages/config/src/projects/layer2s`. You can use the
    existing projects as reference.
-3. Add your project into `packages/config/src/layer2s/index.ts`. The order of the projects should be
+3. Add your project into `packages/config/src/projects/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into
    packages/frontend/src/static/icons. From the `packages/frontend` directory
@@ -62,7 +62,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
      already) and set the technology provider your project is based on.
    - If the technology provider in which your project is based on is not defined in L2BEAT yet, you
      will need to:
-     - Add the new provider in the file `packages/config/src/layer2s/types/Layer2.ts` (find the
+     - Add the new provider in the file `packages/config/src/projects/layer2s/types/Layer2.ts` (find the
        optional property `provider`).
      - Create a simple React component to render the technology provider Icon (SVG format required)
        inside `packages/frontend/src/components/icons/providers`.
@@ -84,12 +84,12 @@ the frontend.
 
 If you want to add a new Layer 3 project you can do that by opening a PR. To do this you need to:
 
-1. Read the specification in `packages/config/src/layer3s/types/Layer3.ts`. It contains an annotated
+1. Read the specification in `packages/config/src/projects/layer3s/types/Layer3.ts`. It contains an annotated
    data format for the project definition.
-2. Add a .ts file to describe your project inside `packages/config/src/layer3s`. You can use the
+2. Add a .ts file to describe your project inside `packages/config/src/projects/layer3s`. You can use the
    existing projects as reference. Remember to specify host chain on which your project is based on.
    Take `projectId` of host chian and add it to `hostChain` property.
-3. Add your project into `packages/config/src/layer3s/index.ts`. The order of the projects should be
+3. Add your project into `packages/config/src/projects/layer3s/index.ts`. The order of the projects should be
    kept alphabetical.
 4. Add a square PNG project icon with a minimum size of 128x128 pixels into
    packages/frontend/src/static/icons. From the `packages/frontend` directory
