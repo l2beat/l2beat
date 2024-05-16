@@ -105,6 +105,9 @@ jobs:
     name: Biome
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
         with:
