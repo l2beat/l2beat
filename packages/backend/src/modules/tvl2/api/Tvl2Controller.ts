@@ -530,10 +530,19 @@ export class Tvl2Controller {
       const projectValues = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
-      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
+      const timestamps: UnixTime[] = this.getTimestampsForProject(
+        project,
+        sixHourlyCutOff,
+        hourlyCutOff,
+        lastHour,
+      )
+
+      for (const timestamp of timestamps) {
+        const values = valuesByTimestamp[timestamp.toString()] ?? []
+
         const valuesSources = values.map((x) => x.dataSource)
         const configuredSources = Array.from(project.sources.values())
-          .filter((s) => s.minTimestamp.lte(new UnixTime(+timestamp)))
+          .filter((s) => s.minTimestamp.lte(timestamp))
           .map((s) => s.name)
 
         const missingSources = configuredSources.filter(
@@ -544,7 +553,7 @@ export class Tvl2Controller {
           missingSources.length === 0,
           `Missing data sources [${missingSources.join(
             ', ',
-          )}] for ${project.id.toString()} at ${timestamp}`,
+          )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
         )
 
         const sum = values
@@ -558,9 +567,9 @@ export class Tvl2Controller {
             },
             { canonical: 0n, external: 0n, native: 0n },
           )
-        const aggregateSum = aggregate.get(Number(timestamp))
+        const aggregateSum = aggregate.get(timestamp.toNumber())
         if (!aggregateSum) {
-          aggregate.set(Number(timestamp), sum)
+          aggregate.set(timestamp.toNumber(), sum)
         } else {
           aggregateSum.canonical += sum.canonical
           aggregateSum.external += sum.external
@@ -620,6 +629,40 @@ export class Tvl2Controller {
     console.timeEnd('Chart conversion')
 
     return result
+  }
+
+  private getTimestampsForProject(
+    project: {
+      id: ProjectId
+      minTimestamp: UnixTime
+      type: Project['type']
+      slug: string
+      sources: Map<string, { name: string; minTimestamp: UnixTime }>
+    },
+    sixHourlyCutOff: UnixTime,
+    hourlyCutOff: UnixTime,
+    lastHour: UnixTime,
+  ) {
+    const timestamps: UnixTime[] = []
+
+    let t = project.minTimestamp.toStartOf('day')
+    timestamps.push(t)
+
+    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
+      t = t.add(1, 'days')
+      timestamps.push(t)
+    }
+
+    while (t.add(6, 'hours').lte(hourlyCutOff)) {
+      t = t.add(6, 'hours')
+      timestamps.push(t)
+    }
+
+    while (t.add(1, 'hours').lte(lastHour)) {
+      t = t.add(1, 'hours')
+      timestamps.push(t)
+    }
+    return timestamps
   }
 
   async getTokenChart(
