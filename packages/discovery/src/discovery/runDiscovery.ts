@@ -1,6 +1,7 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
+import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
 import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
@@ -59,6 +60,10 @@ export async function runDiscovery(
     discoveryFilename: config.discoveryFilename,
     skipHints: config.skipHints,
   })
+
+  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+  const backrefConfigs = allConfigs.filter((c) => c.sharedModules.includes(config.project))
+  printSharedModuleInfo(backrefConfigs)
 }
 
 export async function dryRunDiscovery(
