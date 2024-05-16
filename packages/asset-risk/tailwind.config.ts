@@ -48,6 +48,7 @@ const config: Config = {
         700: '#D70000',
       },
       pink: {
+        200: '#DB8BF7',
         900: '#AB3BD2',
       },
       zinc: {
