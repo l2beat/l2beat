@@ -101,45 +101,14 @@ jobs:
       - name: Test
         run: yarn test --reporter min
 
-  lint:
-    name: Lint
+  biome:
+    name: Biome
     runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
         with:
-          node-version: 18.x
-          cache: "yarn"
+          version: 1.7.3
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Lint
-        run: yarn lint
-  format:
-    name: Format
-    runs-on: ubuntu-latest
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Format
-        run: yarn format
+      - name: Run Biome
+        run: biome ci .
