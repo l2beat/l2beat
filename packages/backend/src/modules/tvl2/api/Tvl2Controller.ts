@@ -23,7 +23,7 @@ import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
+import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
@@ -121,8 +121,8 @@ export class Tvl2Controller {
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects.map((x) => x.id)
-    const values = await this.valueRepository.getForProjects(projects)
+    const projectIds = this.projects.map((x) => x.id)
+    const values = await this.valueRepository.getForProjects(projectIds)
 
     const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
     const hourlyCutOff = getHourlyCutoff(lastHour)
@@ -137,23 +137,40 @@ export class Tvl2Controller {
 
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      const values = valuesByProject[project.id.toString()]
-      const valuesByTimestamp = groupBy(values, 'timestamp')
+      const projectValues = valuesByProject[project.id.toString()]
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+
+      const timestamps: UnixTime[] = this.getTimestampsForProject(
+        project,
+        sixHourlyCutOff,
+        hourlyCutOff,
+        lastHour,
+      )
 
       const valueSums = new Map<number, Values>()
-      for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
-        const sum = value.reduce(
-          (acc, curr) => {
-            acc.canonical += curr.canonical
-            acc.external += curr.external
-            acc.native += curr.native
-            return acc
-          },
-          { canonical: 0n, external: 0n, native: 0n },
-        )
-        valueSums.set(Number(timestamp), sum)
+      for (const timestamp of timestamps) {
+        const values = valuesByTimestamp[timestamp.toString()] ?? []
 
-        const resultForTotal = value.reduce(
+        const configuredSources = this.getConfiguredSources(
+          values,
+          project,
+          timestamp,
+        )
+
+        const sum = values
+          .filter((v) => configuredSources.includes(v.dataSource))
+          .reduce(
+            (acc, curr) => {
+              acc.canonical += curr.canonical
+              acc.external += curr.external
+              acc.native += curr.native
+              return acc
+            },
+            { canonical: 0n, external: 0n, native: 0n },
+          )
+        valueSums.set(timestamp.toNumber(), sum)
+
+        const resultForTotal = values.reduce(
           (acc, curr) => {
             acc.canonical += curr.canonicalForTotal
             acc.external += curr.externalForTotal
@@ -164,9 +181,9 @@ export class Tvl2Controller {
         )
 
         const aggregateSums = aggregates[project.type]
-        const aggregateSum = aggregateSums.get(Number(timestamp))
+        const aggregateSum = aggregateSums.get(timestamp.toNumber())
         if (!aggregateSum) {
-          aggregateSums.set(Number(timestamp), resultForTotal)
+          aggregateSums.set(timestamp.toNumber(), resultForTotal)
         } else {
           aggregateSum.canonical += resultForTotal.canonical
           aggregateSum.external += resultForTotal.external
@@ -540,20 +557,10 @@ export class Tvl2Controller {
       for (const timestamp of timestamps) {
         const values = valuesByTimestamp[timestamp.toString()] ?? []
 
-        const valuesSources = values.map((x) => x.dataSource)
-        const configuredSources = Array.from(project.sources.values())
-          .filter((s) => s.minTimestamp.lte(timestamp))
-          .map((s) => s.name)
-
-        const missingSources = configuredSources.filter(
-          (s) => !valuesSources.includes(s),
-        )
-
-        assert(
-          missingSources.length === 0,
-          `Missing data sources [${missingSources.join(
-            ', ',
-          )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
+        const configuredSources = this.getConfiguredSources(
+          values,
+          project,
+          timestamp,
         )
 
         const sum = values
@@ -629,6 +636,36 @@ export class Tvl2Controller {
     console.timeEnd('Chart conversion')
 
     return result
+  }
+
+  // TODO: instead of assert we should interpolate values so the page builds even with unsynced sources
+  private getConfiguredSources(
+    values: ValueRecord[],
+    project: {
+      id: ProjectId
+      minTimestamp: UnixTime
+      type: Project['type']
+      slug: string
+      sources: Map<string, { name: string; minTimestamp: UnixTime }>
+    },
+    timestamp: UnixTime,
+  ) {
+    const valuesSources = values.map((x) => x.dataSource)
+    const configuredSources = Array.from(project.sources.values())
+      .filter((s) => s.minTimestamp.lte(timestamp))
+      .map((s) => s.name)
+
+    const missingSources = configuredSources.filter(
+      (s) => !valuesSources.includes(s),
+    )
+
+    assert(
+      missingSources.length === 0,
+      `Missing data sources [${missingSources.join(
+        ', ',
+      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
+    )
+    return configuredSources
   }
 
   private getTimestampsForProject(
