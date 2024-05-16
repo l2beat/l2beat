@@ -1,5 +1,5 @@
 {
-    "term": "Layer 3",
-    "definition": "Intuitively, L3s are projects that follow a similar structure to the L2 <> L1 structure but with an L2 underneath. It's not entirely defined yet if this implies that the token escrow must be on the L2, or the proof system. Also, certain cases like projects using aggregation layers make the distinction between L2 and L3 fuzzy as certain components start to look less like a traditional blockchain. How to properly define what is a layer in the first place is still an open question.",
-    "isSpicy": true
+  "term": "Layer 3",
+  "definition": "Intuitively, L3s are projects that follow a similar structure to the L2 <> L1 structure but with an L2 underneath. It's not entirely defined yet if this implies that the token escrow must be on the L2, or the proof system. Also, certain cases like projects using aggregation layers make the distinction between L2 and L3 fuzzy as certain components start to look less like a traditional blockchain. How to properly define what is a layer in the first place is still an open question.",
+  "isSpicy": true
 }

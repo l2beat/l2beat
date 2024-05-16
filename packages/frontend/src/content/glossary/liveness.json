@@ -1,5 +1,5 @@
 {
-    "term": "Liveness",
-    "definition": "Liveness refers to the ability of a system to respond to requests and to process them in a timely manner. In the context of L2s, it refers to the ability of settling transactions, proofs and state roots to the base layer.",
-    "isSpicy": false
+  "term": "Liveness",
+  "definition": "Liveness refers to the ability of a system to respond to requests and to process them in a timely manner. In the context of L2s, it refers to the ability of settling transactions, proofs and state roots to the base layer.",
+  "isSpicy": false
 }

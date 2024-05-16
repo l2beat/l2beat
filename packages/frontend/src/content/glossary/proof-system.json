@@ -1,5 +1,5 @@
 {
-    "term": "Proof system",
-    "description": "The infrastructure that allows projects to verify their state transitions. It is composed by onchain verifiers and offchain provers. The main two flavors are optimistic and ZK proof systems, but they can be combined in a hybrid model. In general though, if a system is able to accept state roots optimistically, even if it has a ZK component, it is considered an optimistic proof system.",
-    "isSpicy": false
+  "term": "Proof system",
+  "description": "The infrastructure that allows projects to verify their state transitions. It is composed by onchain verifiers and offchain provers. The main two flavors are optimistic and ZK proof systems, but they can be combined in a hybrid model. In general though, if a system is able to accept state roots optimistically, even if it has a ZK component, it is considered an optimistic proof system.",
+  "isSpicy": false
 }
