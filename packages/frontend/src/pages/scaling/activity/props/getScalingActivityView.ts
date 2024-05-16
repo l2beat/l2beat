@@ -132,6 +132,6 @@ function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
 }
 
 function isSynced(timestamp: UnixTime) {
-  const threshold = UnixTime.now().add(-1, 'days').add(-1, 'hours')
-  return timestamp.gt(threshold)
+  const threshold = UnixTime.now().add(-1, 'days').toStartOf('day')
+  return timestamp.gte(threshold)
 }
