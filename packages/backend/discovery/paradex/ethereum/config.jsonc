@@ -13,7 +13,7 @@
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": "ParadexImplementationGovernorMultisig"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "Paradex": {

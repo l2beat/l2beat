@@ -10,7 +10,7 @@
     "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91": "ProxyGovernanceMultisig"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
