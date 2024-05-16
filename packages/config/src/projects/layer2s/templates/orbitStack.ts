@@ -404,11 +404,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-  const challengeWindow = templateVars.discovery.getContractValue<number>(
+
+  const challengeWindowBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
-  const challengeWindowSeconds = challengeWindow * assumedBlockTime
+  const challengeWindowSeconds = challengeWindowBlocks * assumedBlockTime
 
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -503,7 +504,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     riskView: makeBridgeCompatible({
       stateValidation:
         templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+          nOfChallengers,
+          challengeWindowSeconds,
+        ),
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
           ? (() => {

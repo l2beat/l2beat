@@ -49,7 +49,6 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "SynapseBridge": {
-      "description": "accessControl roles described in meta.json",
       "fields": {
         "accessControl": {
           "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
