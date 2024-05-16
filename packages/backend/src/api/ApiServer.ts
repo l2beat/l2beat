@@ -42,15 +42,17 @@ export class ApiServer {
       router.use(childRouter.routes(), childRouter.allowedMethods())
     }
 
-    this.app.use(compress({
+    this.app.use(
+      compress({
         threshold: 2048,
         gzip: {
-            flush: require('zlib').constants.Z_SYNC_FLUSH
+          flush: require('zlib').constants.Z_SYNC_FLUSH,
         },
         deflate: {
-            flush: require('zlib').constants.Z_SYNC_FLUSH,
+          flush: require('zlib').constants.Z_SYNC_FLUSH,
         },
-    }))
+      }),
+    )
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
   }
