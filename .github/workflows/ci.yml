@@ -110,8 +110,6 @@ jobs:
 
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
-        with:
-          version: 1.7.3
 
       - name: Run Biome
-        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome check --config-path=packages/{} packages/{}'
+        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
