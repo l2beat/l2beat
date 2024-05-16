@@ -38,6 +38,7 @@ const MAIN_LAYER_SENTIMENT: Record<DataAvailabilityLayer, Sentiment> = {
   MantleDA: 'warning',
   FraxtalDA: 'warning',
   RedstoneDA: 'warning',
+  EigenDA: 'warning',
 }
 
 const LAYER_DESCRIPTION: Record<
@@ -73,6 +74,10 @@ const LAYER_DESCRIPTION: Record<
   ],
   RedstoneDA: [
     'The data is posted to RedstoneDA which is a separate data availability module developed by the Redstone team. Data is posted off chain, and only hashes of data is published on an on chain inbox.',
+    null,
+  ],
+  EigenDA: [
+    'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an on chain inbox.',
     null,
   ],
 }
