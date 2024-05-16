@@ -4,7 +4,7 @@ import { reorderIndexes } from './reorderIndexes'
 type TableState = 'empty' | null
 
 export function configureTables() {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const tablesToRerenderOnLoad = $$('[data-role=table][data-rerender-on-load]')
   tablesToRerenderOnLoad.forEach((table) => onLoad(table))
 }

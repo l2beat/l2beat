@@ -1,8 +1,8 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 19859664,
-  "configHash": "0x33b1bb0d723da919d358f8fbb089205b47e92fe6e3596b6f158b6eb862ecc6c9",
+  "blockNumber": 19873897,
+  "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
   "version": 4,
   "contracts": [
     {
@@ -28,7 +28,7 @@
           "0x5b27b9279251904AaF2127463eeFf91E0037F725"
         ],
         "getThreshold": 4,
-        "nonce": 108,
+        "nonce": 109,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

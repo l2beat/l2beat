@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "arbitrum",
   "blockNumber": 197126643,
-  "configHash": "0x06cd600f8deaf37b56eec659f0d629230546a5a14e527a5d9e681ec67bcdb389",
+  "configHash": "0x51c4d28874a4f92a6034c70434a46d3a11cdd7188e9e8204e8ecaa69889977fe",
   "version": 3,
   "contracts": [
     {

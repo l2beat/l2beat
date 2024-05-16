@@ -7,6 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
+import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
 import { cn } from '../../../../utils/cn'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
@@ -65,6 +66,7 @@ export function ProjectPage(props: ProjectPageProps) {
           </div>
         )}
       </PageContent>
+      <ScrollToTopButton />
       <Footer
         className={cn(isNavigationEmpty && 'mt-0 md:mt-20')}
         narrow

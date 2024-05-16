@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "layer2financezk",
   "initialAddresses": ["0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5"],
@@ -30,18 +30,22 @@
       ],
       "fields": {
         "GOVERNORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
-          "addKey": "acceptedGovernor",
-          "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
-          "removeKey": "removedGovernor"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogNewGovernorAccepted(address acceptedGovernor)",
+            "addKey": "acceptedGovernor",
+            "removeEvent": "event LogRemovedGovernor(address removedGovernor)",
+            "removeKey": "removedGovernor"
+          }
         },
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         }
       }
     }

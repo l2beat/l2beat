@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "swell",
   "initialAddresses": [
@@ -13,6 +13,15 @@
   "overrides": {
     "Zap": {
       "ignoreRelatives": ["eETH", "stETH", "weETH", "weth", "wstETH"]
+    },
+    "SwellMultisig": {
+      "description": "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem",
+      "fields": {
+        "nonce": {
+          "description": "Watch out for txs concerning the prelaunch vault and swell L2 launch",
+          "severity": "MEDIUM"
+        }
+      }
     }
   }
 }

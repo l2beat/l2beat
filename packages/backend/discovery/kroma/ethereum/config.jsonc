@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "kroma",
   "initialAddresses": [
@@ -43,7 +43,14 @@
         "latestOutputIndex",
         "nextBlockNumber",
         "nextOutputIndex"
-      ]
+      ],
+      "fields": {
+        "COLOSSEUM": {
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
+        }
+      }
     },
     "KromaPortal": {
       "ignoreMethods": ["isOutputFinalized"],
@@ -59,7 +66,19 @@
         "transactions",
         "getOwners", // already read from owners array,
         "clock"
-      ]
+      ],
+      "fields": {
+        "COLOSSEUM": {
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
+        },
+        "transactionCount": {
+          "description": "Increases with each Security Council action.",
+          "severity": "HIGH",
+          "type": "L2"
+        }
+      }
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
@@ -69,13 +88,19 @@
       "ignoreMethods": ["isInCreationPeriod"],
       "fields": {
         "challengedRoots": {
-          "type": "arrayFromOneEvent",
-          "event": "ChallengeCreated",
-          "valueKey": "outputIndex",
-          "ignoreRelative": true
+          "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ChallengeCreated",
+            "valueKey": "outputIndex",
+            "ignoreRelative": true
+          }
         },
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -84,10 +109,12 @@
       "ignoreInWatchMode": ["nextValidator", "validatorCount", "validators"],
       "fields": {
         "validators": {
-          "type": "dynamicArray",
-          "slot": 54,
-          "returnType": "address",
-          "ignoreRelative": true
+          "handler": {
+            "type": "dynamicArray",
+            "slot": 54,
+            "returnType": "address",
+            "ignoreRelative": true
+          }
         }
       }
     },
@@ -107,20 +134,26 @@
       "ignoreInWatchMode": ["clock", "ownerOf"],
       "fields": {
         "tokens": {
-          "type": "array",
-          "method": "tokenByIndex"
+          "handler": {
+            "type": "array",
+            "method": "tokenByIndex"
+          }
         },
         "tokenOwners": {
-          "type": "array",
-          "method": "ownerOf",
-          "indices": "{{ tokens }}"
+          "handler": {
+            "type": "array",
+            "method": "ownerOf",
+            "indices": "{{ tokens }}"
+          }
         }
       }
     },
     "Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -128,17 +161,27 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["scalar"]

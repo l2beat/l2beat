@@ -41,6 +41,7 @@ export interface ConfigFeatures {
   costsPage: boolean
   zkCatalog: boolean
   tvl2: boolean
+  glossary: boolean
 }
 
 export interface ConfigBackend {

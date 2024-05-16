@@ -16,7 +16,7 @@ export const CallHandlerDefinition = z.strictObject({
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
   ignoreRelative: z.optional(z.boolean()),
-  pickFields: z.optional(z.array(z.union([z.string(), z.number()]))),
+  pickFields: z.optional(z.array(z.string())),
   expectRevert: z.optional(z.boolean()),
 })
 

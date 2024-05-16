@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "amarok",
   "names": {
@@ -38,25 +38,35 @@
     "ConnextBridge": {
       "fields": {
         "SEQUENCERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event SequencerAdded(address sequencer, address caller)",
-          "addKey": "sequencer",
-          "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
-          "removeKey": "sequencer"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event SequencerAdded(address sequencer, address caller)",
+            "addKey": "sequencer",
+            "removeEvent": "event SequencerRemoved(address sequencer, address caller)",
+            "removeKey": "sequencer"
+          }
         },
         "RELAYERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event RelayerAdded(address relayer, address caller)",
-          "addKey": "relayer",
-          "removeEvent": "event RelayerRemoved(address relayer, address caller)",
-          "removeKey": "relayer"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event RelayerAdded(address relayer, address caller)",
+            "addKey": "relayer",
+            "removeEvent": "event RelayerRemoved(address relayer, address caller)",
+            "removeKey": "relayer"
+          }
         },
         "ROUTERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event RouterAdded(address indexed router, address caller)",
-          "addKey": "router",
-          "removeEvent": "event RouterRemoved(address indexed router, address caller)",
-          "removeKey": "router"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event RouterAdded(address indexed router, address caller)",
+            "addKey": "router",
+            "removeEvent": "event RouterRemoved(address indexed router, address caller)",
+            "removeKey": "router"
+          }
+        },
+        "relayerFeeVault": {
+          "description": "This address receives the bridge fees",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
@@ -79,11 +89,16 @@
     "WatcherManager": {
       "fields": {
         "WATCHERS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event WatcherAdded(address watcher)",
-          "addKey": "watcher",
-          "removeEvent": "event WatcherRemoved(address watcher)",
-          "removeKey": "watcher"
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event WatcherAdded(address watcher)",
+            "addKey": "watcher",
+            "removeEvent": "event WatcherRemoved(address watcher)",
+            "removeKey": "watcher"
+          }
         }
       },
       "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
@@ -91,14 +106,27 @@
     "RootManager": {
       "fields": {
         "connectors": {
-          "type": "array",
-          "method": "connectors",
-          "maxLength": 14
+          "handler": {
+            "type": "array",
+            "method": "connectors",
+            "maxLength": 14
+          }
         },
         "domains": {
-          "type": "array",
-          "method": "domains",
-          "maxLength": 14
+          "handler": {
+            "type": "array",
+            "method": "domains",
+            "maxLength": 14
+          }
+        },
+        "connectorsHash": {
+          "description": "Hash of all connectors' addresses. Changes when a connector is added or removed.",
+          "severity": "LOW"
+        },
+        "watcherManager": {
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
         }
       },
       "ignoreMethods": ["validAggregateRoots"],
