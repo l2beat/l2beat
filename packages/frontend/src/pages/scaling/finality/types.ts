@@ -12,8 +12,8 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { SyncStatus } from '../../types'
 import { WarningValueWithSentiment } from '@l2beat/shared-pure'
+import { SyncStatus } from '../../types'
 
 export interface FinalityPagesData {
   finalityApiResponse: FinalityApiResponse
