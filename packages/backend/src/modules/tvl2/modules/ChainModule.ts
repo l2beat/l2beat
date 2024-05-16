@@ -53,6 +53,7 @@ export function createChainModules(
   return config.chains
     .map((chain) =>
       createChainModule(
+        config,
         chain,
         config.amounts,
         peripherals,
@@ -69,6 +70,7 @@ export function createChainModules(
 }
 
 function createChainModule(
+  config: Tvl2Config,
   chainConfig: ChainTvlConfig,
   amounts: AmountConfigEntry[],
   peripherals: Peripherals,
@@ -197,7 +199,7 @@ function createChainModule(
           amountConfigs[0].sinceTimestamp,
         )
         .toNumber(),
-      maxTimestampsToProcessAtOnce: 48,
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToProcessAtOnce,
     })
 
     valueIndexers.push(indexer)

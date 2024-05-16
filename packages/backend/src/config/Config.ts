@@ -92,6 +92,8 @@ export interface Tvl2Config {
   readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
   readonly chainConverter: ChainConverter
+  // used by value indexer
+  readonly maxTimestampsToProcessAtOnce: number
 }
 
 export interface TrackedTxsConfig {
