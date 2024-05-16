@@ -1,6 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
+import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
@@ -119,10 +120,13 @@ export function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
-      addresses: [
-        ...resolvedTemplates.contracts,
-        ...(templateVars.nonTemplateContracts ?? []),
-      ],
+      addresses: unionBy(
+        [
+          ...(templateVars.nonTemplateContracts ?? []),
+          ...resolvedTemplates.contracts,
+        ],
+        'address',
+      ),
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     technology: {
@@ -368,23 +372,26 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }),
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: [
-        {
-          chain: templateVars.hostChain.toString(),
-          includeInTotal: false,
-          ...templateVars.discovery.getEscrowDetails({
-            address: templateVars.bridge.address,
-            tokens: templateVars.nativeToken
-              ? [templateVars.nativeToken]
-              : ['ETH'],
-            description: templateVars.nativeToken
-              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-            ...upgradeability,
-          }),
-        },
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
+      escrows: unionBy(
+        [
+          ...(templateVars.nonTemplateEscrows ?? []),
+          {
+            chain: templateVars.hostChain.toString(),
+            includeInTotal: false,
+            ...templateVars.discovery.getEscrowDetails({
+              address: templateVars.bridge.address,
+              tokens: templateVars.nativeToken
+                ? [templateVars.nativeToken]
+                : ['ETH'],
+              description: templateVars.nativeToken
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          },
+        ],
+        'address',
+      ),
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
