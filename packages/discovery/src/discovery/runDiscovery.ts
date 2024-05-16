@@ -38,7 +38,7 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (configReader.readDiscovery(config.project, config.chain.name))
+      ? configReader.readDiscovery(config.project, config.chain.name)
           .blockNumber
       : await getBlockNumberTwoProviders(provider, eventProvider))
 
@@ -62,7 +62,9 @@ export async function runDiscovery(
   })
 
   const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
-  const backrefConfigs = allConfigs.filter((c) => c.sharedModules.includes(config.project))
+  const backrefConfigs = allConfigs.filter((c) =>
+    c.sharedModules.includes(config.project),
+  )
   printSharedModuleInfo(backrefConfigs)
 }
 
