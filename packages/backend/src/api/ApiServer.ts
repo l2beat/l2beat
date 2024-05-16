@@ -1,6 +1,7 @@
 import Router from '@koa/router'
 import { Logger } from '@l2beat/backend-tools'
 import Koa from 'koa'
+import compress from 'koa-compress'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
@@ -41,6 +42,15 @@ export class ApiServer {
       router.use(childRouter.routes(), childRouter.allowedMethods())
     }
 
+    this.app.use(compress({
+        threshold: 2048,
+        gzip: {
+            flush: require('zlib').constants.Z_SYNC_FLUSH
+        },
+        deflate: {
+            flush: require('zlib').constants.Z_SYNC_FLUSH,
+        },
+    }))
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
   }
