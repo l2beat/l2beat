@@ -29,7 +29,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -37,7 +37,7 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chain.name))
+      ? (configReader.readDiscovery(config.project, config.chain.name))
           .blockNumber
       : await getBlockNumberTwoProviders(provider, eventProvider))
 
@@ -73,7 +73,7 @@ export async function dryRunDiscovery(
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
