@@ -48,7 +48,7 @@ export function getTvl2Config(
     }),
   )
 
-  const tvl2Config = {
+  const tvl2Config: Tvl2Config = {
     amounts: getAmountsConfig(
       projects,
       tokenList,
@@ -62,6 +62,10 @@ export function getTvl2Config(
       'COINGECKO_API_KEY',
     ]),
     chainConverter,
+    maxTimestampsToAggregateAtOnce: env.integer(
+      'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
+      100,
+    ),
   }
 
   return tvl2Config
