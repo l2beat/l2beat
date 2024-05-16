@@ -63,6 +63,7 @@ export class Tvl2Controller {
     minTimestamp: UnixTime
     type: Project['type']
     slug: string
+    sources: Map<string, { name: string; minTimestamp: UnixTime }>
   }[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
@@ -93,7 +94,21 @@ export class Tvl2Controller {
       const minTimestamp = config
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
-      return { id, minTimestamp, type, slug }
+
+      const sources = new Map<
+        string,
+        { name: string; minTimestamp: UnixTime }
+      >()
+      for (const amount of config) {
+        const name =
+          amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
+
+        const source = sources.get(name)
+        if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+          sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
+        }
+      }
+      return { id, minTimestamp, type, slug, sources }
     })
 
     this.minTimestamp = {
@@ -493,12 +508,12 @@ export class Tvl2Controller {
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects
-      .filter((p) => projectSlugs.includes(p.slug))
-      .map((p) => p.id)
+    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
+
+    const projectIds = projects.map((x) => x.id)
 
     console.time('DB')
-    const values = await this.valueRepository.getForProjects(projects)
+    const values = await this.valueRepository.getForProjects(projectIds)
     console.timeEnd('DB')
 
     const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
@@ -512,19 +527,37 @@ export class Tvl2Controller {
 
     for (const project of projects) {
       console.time(project.toString())
-      const projectValues = valuesByProject[project.toString()]
+      const projectValues = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
       for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
-        const sum = values.reduce(
-          (acc, curr) => {
-            acc.canonical += curr.canonical
-            acc.external += curr.external
-            acc.native += curr.native
-            return acc
-          },
-          { canonical: 0n, external: 0n, native: 0n },
+        const valuesSources = values.map((x) => x.dataSource)
+        const configuredSources = Array.from(project.sources.values())
+          .filter((s) => s.minTimestamp.lte(new UnixTime(+timestamp)))
+          .map((s) => s.name)
+
+        const missingSources = configuredSources.filter(
+          (s) => !valuesSources.includes(s),
         )
+
+        assert(
+          missingSources.length === 0,
+          `Missing data sources [${missingSources.join(
+            ', ',
+          )}] for ${project.id.toString()} at ${timestamp}`,
+        )
+
+        const sum = values
+          .filter((v) => configuredSources.includes(v.dataSource))
+          .reduce(
+            (acc, curr) => {
+              acc.canonical += curr.canonical
+              acc.external += curr.external
+              acc.native += curr.native
+              return acc
+            },
+            { canonical: 0n, external: 0n, native: 0n },
+          )
         const aggregateSum = aggregate.get(Number(timestamp))
         if (!aggregateSum) {
           aggregate.set(Number(timestamp), sum)
