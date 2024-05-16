@@ -400,8 +400,11 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
           ? undefined
           : {
               warnings: {
-                timeToInclusion:
-                  "It's assumed that transaction data batches are submitted sequentially.",
+                timeToInclusion: {
+                  sentiment: 'neutral',
+                  value:
+                    "It's assumed that transaction data batches are submitted sequentially.",
+                },
               },
               finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
             },

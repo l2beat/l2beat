@@ -12,6 +12,7 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
+import { WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { SyncStatus } from '../../types'
 
 export interface FinalityPagesData {
@@ -38,10 +39,10 @@ export interface ScalingFinalityViewEntry {
 
 export interface ScalingFinalityViewEntryData {
   timeToInclusion: {
-    warning?: string
+    warning?: WarningValueWithSentiment
   } & FinalityDataPoint
   stateUpdateDelay?: {
-    warning?: string
+    warning?: WarningValueWithSentiment
     averageInSeconds: number
   }
   syncStatus: SyncStatus
