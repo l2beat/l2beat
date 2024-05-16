@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 19731428,
+  "blockNumber": 19882097,
   "configHash": "0x5c2e13725be665937c712e81a269b21125759be2198f03a5b419fed3924fecc0",
   "version": 4,
   "contracts": [
@@ -84,7 +84,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x8b00ca5accd2bdc13c420af3dd55bdf799295d54360a91b45bdc88ae542ae1ec",
+        "lastAccInputHash": "0xffc9ae1e7894026765ca2f46a04d7d4ff761eccc812675b0202b89ce77615b14",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",

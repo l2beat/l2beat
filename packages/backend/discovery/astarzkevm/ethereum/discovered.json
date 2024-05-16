@@ -1,7 +1,7 @@
 {
   "name": "astarzkevm",
   "chain": "ethereum",
-  "blockNumber": 19718007,
+  "blockNumber": 19882099,
   "configHash": "0xf2b3d10827c63ab3d798f45bfb9f8ad5fffc5af1f77d50b964917975d3627e7c",
   "version": 4,
   "contracts": [
@@ -55,7 +55,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xe79db9ca4430e4dee89bcf14a8a7442436a3ccfaa1b4cae9f65ce88b7b37f1ad",
+        "lastAccInputHash": "0xef280ac8e2e3ef3971e1ed0fc4f8bbbe578952e4ec5e4521d8d051c7a19b6c22",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",

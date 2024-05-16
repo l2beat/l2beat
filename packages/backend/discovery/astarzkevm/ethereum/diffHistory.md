@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xfe0c1f2fa55904471b8e9a7721cdbf214755a8e6
+
+# Diff at Thu, 16 May 2024 11:00:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@59d36171ee3aaf27d6db0c75fdfba523d2dad686 block: 19718007
+- current block number: 19882099
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718007 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x6b156f3b83e9f164bbf59aa3a65eb2ffd4236b9f
 
 # Diff at Tue, 23 Apr 2024 12:11:08 GMT:

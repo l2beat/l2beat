@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19718019,
+  "blockNumber": 19882098,
   "configHash": "0x9f5c5f686ed4bfe982a25f00bc50d2b5a0513d1ce029759e7ae55b43c207b658",
   "version": 4,
   "contracts": [
@@ -41,7 +41,7 @@
         ],
         "pendingDefaultAdminDelay": [0, 0],
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "252816805626934742210448",
+        "totalBridgedDAI": "254032905626934742210448",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
@@ -75,7 +75,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xb0b17cab55845f0bb41afe659ad15f4bcab5df8650291ad6823ee2045c290d9d",
+        "lastAccInputHash": "0x5446fbee745cbe2acd03a67b77899a34124657a4b34f03db69dc5d93c83ba4af",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
