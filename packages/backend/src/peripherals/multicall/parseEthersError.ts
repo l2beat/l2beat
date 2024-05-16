@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
 export function parseEthersError(e: unknown): Error | undefined {
-  const parsed =  ethersError.safeParse(e)
+  const parsed = ethersError.safeParse(e)
 
   if (parsed.success) {
     return new Error(JSON.stringify(parsed.data))
   }
-  
+
   return undefined
 }
 
