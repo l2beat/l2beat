@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "blockNumber": 19531962,
-  "configHash": "0x01068392ea8f8fbda1752af503075266be7520bc8821e1280729ba7ed2eb77b9",
+  "configHash": "0x3acba36ec36bb1a8435ea26dbb32a6e52a5e89364c9f592577ebd4e34516a3c1",
   "version": 3,
   "contracts": [
     {

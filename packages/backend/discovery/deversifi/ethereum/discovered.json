@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 19825372,
-  "configHash": "0x723db9e8dd44ccaa5d41a141f978914ff36d64b3bb104fc2475a7dfdda760353",
+  "configHash": "0xc6212e9453b93635b4265f7ea460cce8be6d09fb6476e768592d18f8999f35df",
   "version": 4,
   "contracts": [
     {

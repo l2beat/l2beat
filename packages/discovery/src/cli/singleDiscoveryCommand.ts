@@ -63,7 +63,6 @@ export async function singleDiscoveryCommand(
   await saveDiscoveryResult(
     results,
     projectConfig,
-    undefined,
     blockNumber,
     DiscoveryLogger.CLI,
     {

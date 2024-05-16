@@ -139,8 +139,8 @@ describe(getHandlers.name, () => {
       {
         address: EthereumAddress.random(),
         fields: {
-          foo: { type: 'storage', slot: 1 },
-          bar: { type: 'storage', slot: 2 },
+          foo: { handler: { type: 'storage', slot: 1 } },
+          bar: { handler: { type: 'storage', slot: 2 } },
         },
       },
       DiscoveryLogger.SILENT,
@@ -168,8 +168,8 @@ describe(getHandlers.name, () => {
       {
         address: EthereumAddress.random(),
         fields: {
-          foo: { type: 'storage', slot: 1 },
-          bar: { type: 'storage', slot: 2 },
+          foo: { handler: { type: 'storage', slot: 1 } },
+          bar: { handler: { type: 'storage', slot: 2 } },
         },
       },
       DiscoveryLogger.SILENT,
@@ -198,7 +198,12 @@ describe(getHandlers.name, () => {
       {
         address: EthereumAddress.random(),
         fields: {
-          foo: { type: 'call', args: [] },
+          foo: {
+            handler: {
+              type: 'call',
+              args: [],
+            },
+          },
         },
       },
       DiscoveryLogger.SILENT,

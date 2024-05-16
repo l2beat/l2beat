@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polygonzkevm",
   "initialAddresses": [
@@ -47,17 +47,32 @@
       "ignoreInWatchMode": ["rollupCount"],
       "fields": {
         "rollupData": {
-          "type": "call",
-          "method": "rollupIDToRollupData",
-          "args": [1], // polygon zkEVM ID
-          "pickFields": [
-            "rollupContract",
-            "chainID",
-            "verifier",
-            "forkID",
-            "rollupTypeID",
-            "rollupCompatibilityID"
-          ]
+          "description": "Contains important info such as the etrog and verifier address, the rollup type and chain id",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "call",
+            "method": "rollupIDToRollupData",
+            "args": [1], // polygon zkEVM ID
+            "pickFields": [
+              "rollupContract",
+              "chainID",
+              "verifier",
+              "forkID",
+              "rollupTypeID",
+              "rollupCompatibilityID"
+            ]
+          }
+        },
+        "rollupCount": {
+          "description": "The number of rollups that the manager can use.",
+          "severity": "LOW",
+          "type": "CODE_CHANGE"
+        },
+        "rollupTypeCount": {
+          "description": "The number of unique rollup types that the manager can use.",
+          "severity": "MEDIUM",
+          "type": "CODE_CHANGE"
         }
       }
     },

@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 19718019,
-  "configHash": "0x95f355ee2e511b80871cc5e4c336130dfbd33bfce4d31eae4168b708196e76d2",
+  "configHash": "0x571484c371f52bc5639c308e1e1c08f6988093d089e6cc9c25a36cb3e9d77693",
   "version": 3,
   "contracts": [
     {

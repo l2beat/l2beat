@@ -1,4 +1,7 @@
-import { FinalityDataPoint } from '@l2beat/shared-pure'
+import {
+  FinalityDataPoint,
+  WarningValueWithSentiment,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
 import { SyncStatus } from '../../pages/types'
@@ -11,7 +14,7 @@ import { GrayedOut } from './GrayedOut'
 
 type BaseProps = {
   syncStatus: SyncStatus
-  warning?: string
+  warning?: WarningValueWithSentiment
 }
 
 type Props =
@@ -37,7 +40,10 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
         </GrayedOut>
         {props.warning && (
-          <RoundedWarningIcon className="size-5" sentiment="warning" />
+          <RoundedWarningIcon
+            className="size-5"
+            sentiment={props.warning.sentiment}
+          />
         )}
       </TooltipTrigger>
       <TooltipContent>
@@ -88,8 +94,16 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <WarningBar
             className="mt-2"
             icon={RoundedWarningIcon}
-            color="yellow"
-            text={props.warning}
+            color={
+              (
+                {
+                  bad: 'red',
+                  neutral: 'gray',
+                  warning: 'yellow',
+                } as const
+              )[props.warning.sentiment]
+            }
+            text={props.warning.value}
           />
         )}
       </TooltipContent>

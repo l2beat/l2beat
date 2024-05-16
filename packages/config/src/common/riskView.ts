@@ -74,25 +74,38 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
   nOfChallengers: number,
+  challengeWindowSeconds?: number,
 ): ScalingProjectRiskViewEntry {
+  const challengePeriod = challengeWindowSeconds
+    ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
+    : ''
+
+  let descriptionBase: string
+  let sentiment: 'bad' | 'warning'
+
   if (nOfChallengers === 1) {
-    return {
-      value: 'Fraud proofs (INT)',
-      description: `No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
-      sentiment: 'bad',
-    }
+    descriptionBase =
+      'No actor outside of the single Proposer can submit fraud proofs. ' +
+      'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
+      'The challenge protocol can be subject to delay attacks.'
+    sentiment = 'bad'
+  } else if (nOfChallengers < 5) {
+    descriptionBase =
+      `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
+      'The challenge protocol can be subject to delay attacks.'
+    sentiment = 'bad'
+  } else {
+    descriptionBase =
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve.'
+    sentiment = 'warning'
   }
-  if (nOfChallengers < 5) {
-    return {
-      value: 'Fraud proofs (INT)',
-      description: `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
-      sentiment: 'bad',
-    }
-  }
+
   return {
     value: 'Fraud proofs (INT)',
-    description: `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.`,
-    sentiment: 'warning',
+    description: descriptionBase + challengePeriod,
+    sentiment: sentiment,
   }
 }
 
