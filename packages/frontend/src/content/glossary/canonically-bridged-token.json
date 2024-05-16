@@ -1,5 +1,5 @@
 {
-    "term": "Canonically bridged token",
-    "definition": "Asset bridged from Ethereum L1 via a canonical (enshrined into the L2) bridge. These assets are originally minted on Ethereum, they are using Ethereum as a canonical source ledger and they are bridged using a lock-mint canonical bridge.",
-    "isSpicy": false
+  "term": "Canonically bridged token",
+  "definition": "Asset bridged from Ethereum L1 via a canonical (enshrined into the L2) bridge. These assets are originally minted on Ethereum, they are using Ethereum as a canonical source ledger and they are bridged using a lock-mint canonical bridge.",
+  "isSpicy": false
 }
