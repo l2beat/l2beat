@@ -5,6 +5,7 @@ import {
 } from '@l2beat/config'
 import {
   ActivityApiCharts,
+  ActivityApiChartsWithEstimation,
   ActivityApiResponse,
   ProjectId,
   TvlApiCharts,
@@ -130,7 +131,7 @@ export function activitySanityCheck(activityApiResponse: ActivityApiResponse) {
 
   checkIfEmptyActivityCharts(allProjectsData)
   checkIfZeroTpsProjects(allProjectsData, importantProjects)
-  checkIfDelayedActivity(activityApiResponse, UnixTime.now())
+  checkIfDelayedActivity(activityApiResponse.combined, UnixTime.now())
 }
 
 export function checkIfEmptyActivityCharts(allProjects: ActivityProjectData[]) {
@@ -188,10 +189,10 @@ export function checkIfZeroTpsProjects(
 const ACTIVITY_ACCEPTABLE_DELAY = UnixTime.DAY * 2 + 2 * UnixTime.HOUR
 
 export function checkIfDelayedActivity(
-  response: ActivityApiResponse,
+  response: ActivityApiChartsWithEstimation,
   now: UnixTime,
 ) {
-  const lastValue = response.combined.daily.data.at(-1)!
+  const lastValue = response.daily.data.at(-1)!
   const lastTimestamp = lastValue[0]
   const delay = now.toNumber() - lastTimestamp.toNumber()
 

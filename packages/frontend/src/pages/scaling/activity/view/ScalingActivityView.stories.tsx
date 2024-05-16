@@ -104,6 +104,10 @@ export const Primary: Story = {
           transactionsMonthlyCount: 40218354,
           maxTps: 62.070844907407405,
           maxTpsDate: '2023 Dec 16',
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: 'Some random date',
+          },
         },
       },
       {
@@ -126,6 +130,10 @@ export const Primary: Story = {
           transactionsMonthlyCount: 34834145,
           maxTps: 22.698425925925925,
           maxTpsDate: '2024 Jan 14',
+          syncStatus: {
+            isSynced: false,
+            displaySyncedUntil: 'Some random date',
+          },
         },
       },
       {
@@ -149,6 +157,10 @@ export const Primary: Story = {
           transactionsMonthlyCount: 20485442,
           maxTps: 25.47474537037037,
           maxTpsDate: '2023 Dec 27',
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: 'Some random date',
+          },
         },
       },
       {
@@ -257,6 +269,10 @@ export const Primary: Story = {
           transactionsMonthlyCount: 30307132,
           maxTps: 58.97100694444445,
           maxTpsDate: '2023 Dec 16',
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: 'Some random date',
+          },
         },
       },
 
