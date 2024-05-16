@@ -1224,7 +1224,7 @@
     {
       "symbol": "BTC.b",
       "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1314,7 +1314,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1496,7 +1496,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1573,7 +1573,7 @@
     {
       "symbol": "rsETH",
       "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1647,7 +1647,7 @@
     {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1670,7 +1670,7 @@
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1681,7 +1681,7 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1704,7 +1704,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1715,7 +1715,7 @@
     {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1820,7 +1820,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1861,7 +1861,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1873,7 +1873,7 @@
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
       "coingeckoId": "stakestone-ether",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -1899,7 +1899,7 @@
     {
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "wrapped-eeth",
       "bridgedUsing": {
@@ -1912,7 +1912,7 @@
     {
       "symbol": "rsETH",
       "address": "0x65421ba909200b81640d98B979d07487C9781B66",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
@@ -1923,7 +1923,7 @@
     {
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "coingeckoId": "stakestone-ether",
       "bridgedUsing": {
