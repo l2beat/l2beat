@@ -1,13 +1,13 @@
+import { mkdir } from 'node:fs/promises'
 import path from 'path'
-import fsx from 'fs-extra'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { Page } from './Page'
 
-export function outputPages(pages: Page[]) {
+export async function outputPages(pages: Page[]) {
   for (const { slug, page } of pages) {
-    fsx.mkdirpSync(path.join('build', slug))
+    await mkdir(path.join('build', slug), { recursive: true })
     const html = `<!DOCTYPE html>${renderToStaticMarkup(page)}`
-    fsx.writeFileSync(path.join('build', slug, 'index.html'), html)
+    await Bun.write(path.join('build', slug, 'index.html'), html)
   }
 }

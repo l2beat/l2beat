@@ -126,5 +126,5 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getZkCatalogProjectPages(config))
   }
 
-  outputPages(pages)
+  await outputPages(pages)
 }
