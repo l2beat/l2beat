@@ -2,8 +2,8 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 19531641,
-  "configHash": "0xd0898098968383304fb64372a123bec3b27bc6cf0d23f1949468de8538e0ce5f",
-  "version": 3,
+  "configHash": "0x446f481375f24a1ebdb62c00d34185db930f81f5886f322ea3526361b22ab3b1",
+  "version": 4,
   "contracts": [
     {
       "name": "CpuConstraintPoly",
