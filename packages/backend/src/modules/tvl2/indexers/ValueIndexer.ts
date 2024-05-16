@@ -31,6 +31,8 @@ export interface ValueIndexerDeps
 export class ValueIndexer extends ManagedChildIndexer {
   private readonly amountConfigs: Map<AmountId, AmountConfigEntry>
   private readonly priceConfigIds: Map<AssetId, PriceId>
+  private readonly minHeight: number
+  private readonly maxHeight: number
 
   constructor(private readonly $: ValueIndexerDeps) {
     const logger = $.logger.tag($.tag)
@@ -39,14 +41,30 @@ export class ValueIndexer extends ManagedChildIndexer {
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
+    this.minHeight = Math.min(
+      $.minHeight,
+      ...$.amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+    )
+    this.maxHeight = Math.max(
+      ...$.amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
-    if (this.$.minHeight > to) {
+    if (this.minHeight > to) {
       this.logger.info('Skipping update due to minHeight', {
         from,
         to,
-        minHeight: this.$.minHeight,
+        minHeight: this.minHeight,
+      })
+      return to
+    }
+
+    if (this.maxHeight < from) {
+      this.logger.info('Skipping update due to maxHeight', {
+        from,
+        to,
+        maxHeight: this.maxHeight,
       })
       return to
     }
@@ -55,18 +73,6 @@ export class ValueIndexer extends ManagedChildIndexer {
 
     if (timestamps.length === 0) {
       this.logger.info('Skipping update due to sync optimization', {
-        from,
-        to,
-      })
-      return to
-    }
-
-    const isAnythingToCalculate = Array.from(this.amountConfigs.values()).some(
-      (config) => config.sinceTimestamp.toNumber() <= timestamps[0].toNumber(),
-    )
-
-    if (!isAnythingToCalculate) {
-      this.logger.info('Skipping update due to no configs in range', {
         from,
         to,
       })
@@ -89,9 +95,10 @@ export class ValueIndexer extends ManagedChildIndexer {
   private getTimestampsToSync(from: number, to: number) {
     const timestamps: UnixTime[] = []
 
-    let current = Math.max(from, this.$.minHeight)
+    let current = Math.max(from, this.minHeight)
+    const last = Math.min(to, this.maxHeight)
     while (
-      this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= to &&
+      this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= last &&
       timestamps.length < this.$.maxTimestampsToProcessAtOnce
     ) {
       const newTimestamp = this.$.syncOptimizer.getTimestampToSync(current)
