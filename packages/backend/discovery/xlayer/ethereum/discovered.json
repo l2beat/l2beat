@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 19731428,
-  "configHash": "0xac53bccd030e96720d132672fd1bf978f4d951f3e8bcc092fd40dbd2b16fb71d",
+  "configHash": "0x3d4042701d2d24dd6dff7e3174241b4db991eb0e2c04a6b9270759da0aaa8536",
   "version": 3,
   "contracts": [
     {

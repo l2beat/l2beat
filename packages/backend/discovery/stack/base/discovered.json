@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "blockNumber": 12893975,
-  "configHash": "0xf5de0f6f18d0cbc5d201683794acbb8b226f064a4477c767cf7b75a18b67ae6d",
+  "configHash": "0x0c0d0bcd179872a8706b012c4ecadd3454541847850f80a127ceaea39a281aea",
   "version": 3,
   "contracts": [
     {

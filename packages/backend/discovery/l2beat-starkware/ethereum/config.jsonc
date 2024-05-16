@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "l2beat-starkware",
   "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
@@ -38,75 +38,97 @@
     "SHARPVerifier": {
       "fields": {
         "bootloaderProgramContractAddress": {
-          "type": "storage",
-          "slot": 3,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 3,
+            "returnType": "address"
+          }
         },
         "memoryPageFactRegistry": {
-          "type": "storage",
-          "slot": 4,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
         },
         "cpuFrilessVerifiers": {
-          "type": "dynamicArray",
-          "slot": 5,
-          "returnType": "address"
+          "handler": {
+            "type": "dynamicArray",
+            "slot": 5,
+            "returnType": "address"
+          }
         }
       }
     },
     "CpuFrilessVerifier1": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier2": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier3": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier4": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier5": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier6": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier7": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier8": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
@@ -155,9 +177,11 @@
     "OldSHARPVerifier": {
       "fields": {
         "memoryPageFactRegistry": {
-          "type": "storage",
-          "slot": 2,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 2,
+            "returnType": "address"
+          }
         }
       }
     },

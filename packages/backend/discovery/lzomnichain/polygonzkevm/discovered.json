@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "polygonzkevm",
   "blockNumber": 11870389,
-  "configHash": "0x9ee5d18520bdef0bd3a57cebfb66432dbdaa00201552564d115761c44cf0f581",
+  "configHash": "0x6199e9f38fd8ba664c7bfe20360c950a4287789fe1c13a4073cee7013ab7db89",
   "version": 3,
   "contracts": [
     {

@@ -1,4 +1,41 @@
-Generated with discovered.json: 0xa78ed74c87eef55839623ea4373878af98307bd2
+Generated with discovered.json: 0x0ad58a920cf7d070a26174dfbc252b662330c7a1
+
+# Diff at Thu, 16 May 2024 06:39:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@814c482c2be2428b2782bc85afecccac8c999b5e block: 19830808
+- current block number: 19880804
+
+## Description
+
+New signer added to the ExecutorMultisig (Rollup owner): `0x08E674c4538caE03B6c05405881dDCd95DcaF5a8`
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+      values.getOwners.4:
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.getOwners.3:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.getOwners.2:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.getOwners.1:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.getOwners.0:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    }
+```
+
+Generated with discovered.json: 0x7b73332ba44977745e2bfdaabbe0a1aaf9f426ed
 
 # Diff at Thu, 09 May 2024 06:51:41 GMT:
 

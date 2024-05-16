@@ -11,15 +11,18 @@ export function getHandlers(
   logger: DiscoveryLogger,
 ): (Handler | ErrorHandler)[] {
   const systemHandlers = getSystemHandlers(abi, overrides, logger)
-  const userHandlers = Object.entries(overrides?.fields ?? {}).map(
-    ([field, definition]) => {
+  const userHandlers: (Handler | ErrorHandler)[] = []
+  for (const [field, definition] of Object.entries(overrides?.fields ?? {})) {
+    if (definition.handler !== undefined) {
       try {
-        return getUserHandler(field, definition, abi, logger)
+        userHandlers.push(
+          getUserHandler(field, definition.handler ?? {}, abi, logger),
+        )
       } catch (error) {
-        return new ErrorHandler(field, error)
+        userHandlers.push(new ErrorHandler(field, error))
       }
-    },
-  )
+    }
+  }
 
   const handlers = userHandlers
     .concat(systemHandlers)

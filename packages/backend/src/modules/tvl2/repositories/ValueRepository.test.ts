@@ -12,9 +12,9 @@ describeDatabase(ValueRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  describe(ValueRepository.prototype.addMany.name, () => {
+  describe(ValueRepository.prototype.addOrUpdateMany.name, () => {
     it('adds new rows', async () => {
-      await repository.addMany([
+      await repository.addOrUpdateMany([
         saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
         saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
       ])
@@ -26,8 +26,26 @@ describeDatabase(ValueRepository.name, (database) => {
       ])
     })
 
+    it('upserts rows', async () => {
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
+      ])
+
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+    })
+
     it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
 
     it('performs batch insert with many records', async () => {
@@ -35,7 +53,7 @@ describeDatabase(ValueRepository.name, (database) => {
       for (let i = 5; i < 5_000; i++) {
         records.push(saved('a', new UnixTime(i), 'data_src', i, i * 2, i + 1))
       }
-      await expect(repository.addMany(records)).not.toBeRejected()
+      await expect(repository.addOrUpdateMany(records)).not.toBeRejected()
     })
   })
 
@@ -64,7 +82,9 @@ describeDatabase(ValueRepository.name, (database) => {
   })
 
   it(ValueRepository.prototype.deleteAll.name, async () => {
-    await repository.addMany([saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3)])
+    await repository.addOrUpdateMany([
+      saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+    ])
 
     await repository.deleteAll()
 
