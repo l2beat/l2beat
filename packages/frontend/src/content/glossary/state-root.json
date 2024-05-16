@@ -1,5 +1,6 @@
 {
   "term": "State root",
-  "description": "A cryptographic hash succinctly representing a state using a Merkle tree.",
+  "definition": "A cryptographic hash succinctly representing a state using a Merkle tree.",
   "isSpicy": false
+}alse
 }

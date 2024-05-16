@@ -1,5 +1,5 @@
 {
   "term": "Plasma",
-  "description": "Plasma is an offchain scaling solution that is able to support offchain data availability by allowing users to exit even when the data is unavailable. Usually, though, Plasma projects require users to frequently monitor the chain (e.g. at least once per week) to ensure that they can exit in time if necessary. There are attempts to support general smart contracts, but the exit mechanism is often limited to simpler applications.",
+  "definition": "Plasma is an offchain scaling solution that is able to support offchain data availability by allowing users to exit even when the data is unavailable. Usually, though, Plasma projects require users to frequently monitor the chain (e.g. at least once per week) to ensure that they can exit in time if necessary. There are attempts to support general smart contracts, but the exit mechanism is often limited to simpler applications.",
   "isSpicy": false
 }
