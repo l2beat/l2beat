@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x551bc104d7e81e99b9c9db7673d3a3a7f3592504
+
+# Diff at Tue, 14 May 2024 07:19:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 203714971
+- current block number: 211101547
+
+## Description
+
+
+This update extends the sequencer-only window for Proof of Play Apex chain by 1000x to 1000d. (MaxTimeVariation.delayBlocks, maxTimeVariation.delaySeconds)
+Context: [Reorg on popapex](https://twitter.com/conduitxyz/status/1790065376975552549). No batches posted for the last ~35h, similar problem to Degen chain.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: None
+      values.maxTimeVariation.2:
+-        86400
++        86400000
+      values.maxTimeVariation.0:
+-        5760
++        3456000
+    }
+```
+
 Generated with discovered.json: 0xf50c4fdab7cd8deba39e9b78f4634254f949bf52
 
 # Diff at Thu, 11 Apr 2024 14:11:27 GMT:

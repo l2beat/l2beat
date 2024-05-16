@@ -68,10 +68,28 @@ export class ValueIndexer extends ManagedChildIndexer {
     // YES - skip update
     // NO - continue update
 
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from, to)
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+    if (timestamp.toNumber() > to) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+        optimizedTimestamp: timestamp.toNumber(),
+      })
+      return to
+    }
+    const configIds = this.amountConfigs
+      .filter((x) => x.sinceTimestamp.lte(timestamp))
+      .map((x) => x.configId)
+    if (configIds.length === 0) {
+      this.logger.info('Skipping update due to no configs', {
+        from,
+        to,
+        timestamp: timestamp.toNumber(),
+      })
+      return timestamp.toNumber()
+    }
 
-    const value = await this.getTvlAt(timestamp)
-
+    const value = await this.getTvlAt(timestamp, configIds)
     await this.$.valueRepo.addOrUpdate({
       projectId: this.$.project,
       timestamp,
@@ -82,8 +100,7 @@ export class ValueIndexer extends ManagedChildIndexer {
     return timestamp.toNumber()
   }
 
-  async getTvlAt(timestamp: UnixTime): Promise<Values> {
-    const configIds = this.amountConfigs.map((x) => x.configId)
+  async getTvlAt(timestamp: UnixTime, configIds: string[]): Promise<Values> {
     const records = await this.$.amountRepo.getByConfigIdsAndTimestamp(
       configIds,
       timestamp,

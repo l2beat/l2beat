@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "mantle",
   "initialAddresses": [
@@ -51,94 +51,128 @@
     "AddressManager": {
       "fields": {
         "CanonicalTransactionChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["CanonicalTransactionChain"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["CanonicalTransactionChain"]
+          }
         },
         "ChainStorageContainerCTC": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["ChainStorageContainer-CTC-batches"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["ChainStorageContainer-CTC-batches"]
+          }
         },
         "sequencer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BVM_Sequencer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BVM_Sequencer"]
+          }
         },
         "proposer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BVM_Proposer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BVM_Proposer"]
+          }
         },
         "rolluper": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BVM_Rolluper"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BVM_Rolluper"]
+          }
         },
         "StateCommitmentChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["StateCommitmentChain"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["StateCommitmentChain"]
+          }
         },
         "ChainStorageContainerSCC": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["ChainStorageContainer-SCC-batches"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["ChainStorageContainer-SCC-batches"]
+          }
         },
         "FraudVerifier": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BVM_FraudVerifier"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BVM_FraudVerifier"]
+          }
         },
         "TssGroupManagerProxy": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__TSS_GroupManager"],
-          "ignoreRelative": true
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__TSS_GroupManager"],
+            "ignoreRelative": true
+          }
         },
         "TssGroupManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["TssGroupManager"],
-          "ignoreRelative": true
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["TssGroupManager"],
+            "ignoreRelative": true
+          }
         },
         "TssStakingSlashing": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["TssStakingSlashing"],
-          "ignoreRelative": true
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["TssStakingSlashing"],
+            "ignoreRelative": true
+          }
         },
         "TssStakingSlashingProxy": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__TSS_StakingSlashing"],
-          "ignoreRelative": true
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__TSS_StakingSlashing"],
+            "ignoreRelative": true
+          }
         },
         "L1StandardBridgeProxy": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__L1StandardBridge"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__L1StandardBridge"]
+          }
         },
         "BondManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BondManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BondManager"]
+          }
         },
         "L1CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BVM_L1CrossDomainMessenger"],
-          "ignoreRelative": true
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BVM_L1CrossDomainMessenger"],
+            "ignoreRelative": true
+          }
         },
         "L1CrossDomainMessengerProxy": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__BVM_L1CrossDomainMessenger"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__BVM_L1CrossDomainMessenger"]
+          }
         },
         "L1MantleAddress": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L1_MantleAddress"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["L1_MantleAddress"]
+          }
         }
       }
     },
@@ -202,9 +236,11 @@
       ],
       "fields": {
         "operatorList": {
-          "type": "array",
-          "method": "operatorList",
-          "length": "{{ numOperators }}"
+          "handler": {
+            "type": "array",
+            "method": "operatorList",
+            "length": "{{ numOperators }}"
+          }
         }
       }
     },
@@ -279,9 +315,11 @@
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
         }
       }
     },
@@ -293,17 +331,23 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         }
       }
     }

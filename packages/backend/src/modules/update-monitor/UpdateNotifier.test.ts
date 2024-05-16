@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
+import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainId,
   EthereumAddress,
@@ -136,11 +136,16 @@ describe(UpdateNotifier.name, () => {
           diff: [{ key: 'A', before: '1', after: '2' }],
         },
       ]
-      const meta: DiscoveryMeta = {
-        contracts: [
-          {
-            name: 'Contract',
-            values: {
+      const config = new DiscoveryConfig({
+        name: 'test',
+        chain: 'ethereum',
+        initialAddresses: [],
+        names: {
+          '0x0000000000000000000000000000000000000001': 'Contract',
+        },
+        overrides: {
+          Contract: {
+            fields: {
               A: {
                 type: null,
                 severity: 'MEDIUM',
@@ -148,13 +153,13 @@ describe(UpdateNotifier.name, () => {
               },
             },
           },
-        ],
-      }
+        },
+      })
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        meta,
+        config,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,

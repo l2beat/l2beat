@@ -121,6 +121,11 @@ function AdditionalSections(props: AdditionalSectionProps) {
       <li>
         <PlainLink href={props.forumLink}>Forum</PlainLink>
       </li>
+      {props.features.zkCatalog ? (
+        <li>
+          <PlainLink href="/zk-catalog">ZK Catalog</PlainLink>
+        </li>
+      ) : null}
       <li>
         <PlainLink href="/donate">Donate</PlainLink>
       </li>
@@ -133,6 +138,11 @@ function AdditionalSections(props: AdditionalSectionProps) {
           </PlainLink>
         )}
       </li>
+      {props.features.glossary ? (
+        <li>
+          <PlainLink href="/glossary">Glossary</PlainLink>
+        </li>
+      ) : null}
       <li>
         <PlainLink href="/faq">FAQ</PlainLink>
       </li>

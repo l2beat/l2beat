@@ -1,9 +1,9 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19810457,
-  "configHash": "0x139658b72a028f83a09cd75cd305694f4c2da1dacc2a40e9ac3eb4e2cc7dfc55",
-  "version": 3,
+  "blockNumber": 19866806,
+  "configHash": "0x4719aabda9fee0334d594061b41b502a7b6480450cec77413b1b2fee4adfc676",
+  "version": 4,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -20,21 +20,6 @@
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
         "paused": false
-      }
-    },
-    {
-      "name": "EqbToken",
-      "address": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1685675723,
-      "values": {
-        "decimals": 18,
-        "name": "",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "symbol": "",
-        "totalSupply": 0
       }
     },
     {
@@ -57,8 +42,8 @@
         "minLock": "20000000000000000000000",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "180000000000000000000000",
-        "totalRewardsLiquidated": "154792633228205000000"
+        "totalLocked": "275617453718176015967910",
+        "totalRewardsLiquidated": "377395372951205000000"
       },
       "derivedName": "LockingInfo"
     },
@@ -71,10 +56,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006638a6ef00010270a9",
-        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006638a6ef00010270a9",
-        "length": 23643,
-        "lengthByChainId": 23643,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000066430de7000103f235",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000066430de7000103f235",
+        "length": 23729,
+        "lengthByChainId": 23729,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -136,7 +121,7 @@
           "0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "getThreshold": 4,
-        "nonce": 15,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -156,8 +141,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 1394,
-        "getQueueLength": 37678,
+        "getNumPendingQueueElements": 1607,
+        "getQueueLength": 37891,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -210,14 +195,6 @@
         "nonce": 2,
         "VERSION": "1.3.0"
       }
-    },
-    {
-      "name": "BeaconProxy",
-      "address": "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1714705619
     },
     {
       "name": "MVM_CanonicalTransaction",
@@ -332,12 +309,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1714988783,
-        "getLastSequencerTimestampByChainId": 1714988783,
-        "getTotalBatches": 23643,
-        "getTotalBatchesByChainId": 23643,
-        "getTotalElements": 16937129,
-        "getTotalElementsByChainId": 16937129,
+        "getLastSequencerTimestamp": 1715670503,
+        "getLastSequencerTimestampByChainId": 1715670503,
+        "getTotalBatches": 23729,
+        "getTotalBatchesByChainId": 23729,
+        "getTotalElements": 17035829,
+        "getTotalElementsByChainId": 17035829,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -372,14 +349,14 @@
       "implementations": ["0xd87Da73F82abe83915d61342199A4690cfdf4718"],
       "sinceTimestamp": 1710314939,
       "values": {
-        "BLOCK_REWARD": 2245402873000000,
-        "currentBatch": 4,
+        "BLOCK_REWARD": 5707762557000000,
+        "currentBatch": 6,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
-        "rewardPerBlock": 2245402873000000,
+        "rewardPerBlock": 5707762557000000,
         "sequencers": [
           [
             "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
@@ -410,10 +387,16 @@
             "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
             "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
             2
+          ],
+          [
+            "0x490e02f5D3c88Cf3A16d5f265378Af962a5A999E",
+            "0xEc05be638D1941c788244603AEbB5B937cD72C21",
+            "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            2
           ]
         ],
         "signerUpdateThrottle": 1,
-        "totalSequencers": 5,
+        "totalSequencers": 6,
         "WITHDRAWAL_DELAY": 1814400
       },
       "derivedName": "LockingPool"
@@ -461,55 +444,24 @@
   "eoas": [
     "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
     "0x02058Bb1d98D88087008F2ac1273584591380e3F",
-    "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
     "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
-    "0x24194DFB135B33507a8F05C3F9Ada922F40CE3Ff",
     "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
-    "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
     "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
-    "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x7a9059F4A6e50090e4f55994d465918200AB4454",
-    "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
-    "0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
     "0xa6D8941F935932a531A856C2e48046DA73a1098E",
-    "0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
     "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
     "0xB961047013F974C5b6B6F8dA4402379525316550",
     "0xcDf02971871B7736874E20B8487c019D28090019",
     "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
     "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
     "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
-    "0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5",
-    "0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D",
     "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
   ],
   "abis": {
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": [
       "constructor(address _libAddressManager, string _implementationName)"
-    ],
-    "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(address _incentivesAddr, address _othersAddr)",
-      "function name() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
     ],
     "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -695,12 +647,6 @@
     ],
     "0x62478E4eeb4070fE399866aB05e821AB97200947": [
       "constructor(address _singleton)"
-    ],
-    "0x66c7674732357b01B3E9a8F94A05C411BeA1767A": [
-      "constructor(address beacon, bytes data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": [
       "constructor(address _owner)",

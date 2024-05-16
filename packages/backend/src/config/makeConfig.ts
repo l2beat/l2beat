@@ -189,6 +189,10 @@ export function makeConfig(
             ],
             600,
           ),
+          coingeckoApiKey: env.string([
+            'COINGECKO_API_KEY_FOR_TVL',
+            'COINGECKO_API_KEY',
+          ]),
         },
       },
     },

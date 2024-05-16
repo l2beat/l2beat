@@ -146,3 +146,16 @@ jobs:
 
       - name: Format
         run: yarn format
+
+  biome:
+    name: Biome
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Biome CLI
+        uses: biomejs/setup-biome@v2
+
+      - name: Run Biome
+        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'

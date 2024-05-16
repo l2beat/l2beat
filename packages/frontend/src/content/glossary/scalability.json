@@ -1,0 +1,5 @@
+{
+  "term": "Scalability",
+  "definition": "Scalability refers to the ability of a system to handle a growing amount of transactions or its potential to accommodate them. In the context of decentralized blockchains like Ethereum, scalability solutions only make sense when they are able to do so in a trust minimized manner and while maintaining decentralization.",
+  "isSpicy": true
+}

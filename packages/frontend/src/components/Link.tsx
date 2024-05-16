@@ -4,7 +4,7 @@ import { cn } from '../utils/cn'
 import { isOutLink } from '../utils/isOutLink'
 import { ArrowRightIcon } from './icons'
 
-type LinkProps<T extends React.ElementType> = {
+type LinkProps<T extends React.ElementType = 'a'> = {
   type?: LinkType
   className?: string
   textClassName?: string
@@ -21,7 +21,7 @@ const textClassesByType: Record<LinkType, string> = {
   plain: 'text-black dark:text-white',
 }
 
-export function Link<T extends React.ElementType>({
+export function Link<T extends React.ElementType = 'a'>({
   type = 'primary',
   className,
   textClassName,
@@ -36,7 +36,7 @@ export function Link<T extends React.ElementType>({
   return (
     <Comp
       className={cn(
-        'group cursor-pointer data-[state=highlighted]:relative data-[state=highlighted]:z-10',
+        'group w-max cursor-pointer data-[state=highlighted]:relative data-[state=highlighted]:z-10',
         'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
         'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',

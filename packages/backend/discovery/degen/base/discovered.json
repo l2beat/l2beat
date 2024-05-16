@@ -1,9 +1,9 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 12908240,
-  "configHash": "0x1c08a73d3f459da05a4c82334d4043f6c79a31afe8470e0c2dd85a11534fb0b5",
-  "version": 3,
+  "blockNumber": 14440563,
+  "configHash": "0x297fa23c652ce0107223f326069e9a2e19a54c988ef8dad4f26cc61ddd92f6d2",
+  "version": 4,
   "contracts": [
     {
       "name": "Inbox",
@@ -84,7 +84,7 @@
       "implementations": ["0x5ad3e9141D0EAd2132afFF0CD74487964cE9135A"],
       "sinceTimestamp": 1710087441,
       "values": {
-        "batchCount": 18310,
+        "batchCount": 29211,
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "dacKeyset": {
@@ -96,11 +96,11 @@
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": [3456000, 48, 86400000, 3600],
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 94990
+        "totalDelayedMessagesRead": 118683
       },
       "derivedName": "SequencerInbox"
     },
@@ -160,7 +160,7 @@
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
         ],
         "getThreshold": 3,
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -264,12 +264,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 110,
+        "firstUnresolvedNode": 952,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
-        "latestConfirmed": 109,
-        "latestNodeCreated": 242,
+        "latestConfirmed": 951,
+        "latestNodeCreated": 1000,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -335,12 +335,12 @@
           "0x766DD3A13d17C6D175975C89225bde89F052dBc4"
         ],
         "allowedOutboxList": ["0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"],
-        "delayedMessageCount": 94998,
+        "delayedMessageCount": 118688,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 18310,
-        "sequencerReportedSubMessageCount": 3872031
+        "sequencerMessageCount": 29211,
+        "sequencerReportedSubMessageCount": 15044161
       },
       "derivedName": "ERC20Bridge"
     },
