@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
-
 import { AmountConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord } from '../repositories/ValueRepository'
@@ -47,39 +47,49 @@ export class ValueService {
 
     const results = new Map<number, Values>()
 
+    const amountsByTimestamp = groupBy(
+      amounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      'timestamp',
+    )
+    const pricesByTimestamp = groupBy(
+      prices.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      'timestamp',
+    )
+
     for (const timestamp of timestamps) {
-      results.set(timestamp.toNumber(), {
+      const amounts = amountsByTimestamp[timestamp.toNumber()] ?? []
+      const prices = pricesByTimestamp[timestamp.toNumber()]
+      const result = {
         canonical: 0n,
         canonicalForTotal: 0n,
         external: 0n,
         externalForTotal: 0n,
         native: 0n,
         nativeForTotal: 0n,
-      })
-    }
-
-    for (const amount of amounts) {
-      const amountConfig = amountConfigs.get(amount.configId)
-      assert(amountConfig, 'Config not found')
-
-      const priceId = priceConfigIds.get(createAssetId(amountConfig))
-      const price = prices.find((x) => x.configId === priceId)
-      assert(price, 'Price not found')
-
-      const value = calculateValue({
-        amount: amount.amount,
-        priceUsd: price.priceUsd,
-        decimals: amountConfig.decimals,
-      })
-
-      const result = results.get(amount.timestamp.toNumber())
-      assert(result, 'Programmer error: result should be defined')
-      result[amountConfig.source] += value
-
-      if (amountConfig.includeInTotal) {
-        const forTotalKey = `${amountConfig.source}ForTotal` as const
-        result[forTotalKey] += value
       }
+      for (const amount of amounts) {
+        const amountConfig = amountConfigs.get(amount.configId)
+        assert(amountConfig, 'Config not found')
+
+        const priceId = priceConfigIds.get(createAssetId(amountConfig))
+        const price = prices.find((x) => x.configId === priceId)
+        assert(price, 'Price not found')
+
+        const value = calculateValue({
+          amount: amount.amount,
+          priceUsd: price.priceUsd,
+          decimals: amountConfig.decimals,
+        })
+
+        result[amountConfig.source] += value
+
+        if (amountConfig.includeInTotal) {
+          const forTotalKey = `${amountConfig.source}ForTotal` as const
+          result[forTotalKey] += value
+        }
+      }
+
+      results.set(timestamp.toNumber(), result)
     }
 
     return Array.from(results.entries()).map(([timestamp, value]) => ({
