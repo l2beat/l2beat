@@ -31,8 +31,8 @@ export function GlossaryPage(props: GlossaryPageProps) {
               </p>{' '}
               <p className="font-light">
                 Designed for everyone from developers to enthusiasts, this
-                resource simplifies the complexities of L2, helping you navigate
-                Ethereum's advanced landscape with ease.
+                resource simplifies the complexities of L2s, helping you
+                navigate Ethereum's advanced landscape with ease.
               </p>
             </div>
           </div>
