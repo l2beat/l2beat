@@ -21,7 +21,7 @@
     "0x29528780E29abb8Af95a5e5a125b94766987543F": "Arbitrum_Adapter",
     "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E": "Base_Adapter",
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
-    "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A": "Polygon_Adapter"
+    "0xB130E3056D5C692300d66c12C10ffA2073d9424D": "Polygon_Adapter"
   },
   "overrides": {
     "HubPool": {
@@ -129,12 +129,14 @@
     },
     "Polygon_Adapter": {
       "ignoreRelatives": [
-        "depositManager",
-        "erc20Predicate",
-        "fxStateSender",
-        "l1Matic",
-        "l1Weth",
-        "rootChainManager"
+        "cctpTokenMessenger",
+        "DEPOSIT_MANAGER",
+        "ERC20_PREDICATE",
+        "FX_STATE_SENDER",
+        "L1_MATIC",
+        "L1_WETH",
+        "ROOT_CHAIN_MANAGER",
+        "usdcToken"
       ]
     },
     "OptimisticOracleV3": {

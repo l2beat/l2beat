@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8a464ddaf440584334240a95d697da48e216b8b8
+Generated with discovered.json: 0x332c47eec8138e5452b4c31ddec3f26db512f04c
 
-# Diff at Wed, 15 May 2024 15:09:01 GMT:
+# Diff at Thu, 16 May 2024 09:42:08 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@0d6c5ce44d2c78d977717b47e9bcb2a855c13149 block: 19718050
-- current block number: 19876175
+- comparing to: main@814c482c2be2428b2782bc85afecccac8c999b5e block: 19718050
+- current block number: 19881699
 
 ## Description
 
@@ -14,28 +14,658 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 -   Status: DELETED
+    contract  (0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (0x158d5fa3Ef8e4dDA8a5367deCF76b94E7efFCe95)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Arbitrum_Adapter (0x29528780E29abb8Af95a5e5a125b94766987543F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Base_Adapter (0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
     contract Polygon_Adapter (0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A)
     +++ description: None
 ```
 
 ```diff
-    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+-   Status: DELETED
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b)
     +++ description: None
-      values.CrossChainContracts.137.adapter:
--        "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A"
-+        "0xB130E3056D5C692300d66c12C10ffA2073d9424D"
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721PredicateBurnOnly (0x54150f44c785D412Ec262fe895Cc3B689c72F49B)
+    +++ description: None
+```
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
++        "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"
+      implementations.0:
+-        "0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
++        "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"
+      values.fillDeadlineBuffer:
+-        28800
++        21600
     }
 ```
 
 ```diff
+-   Status: DELETED
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0x83e978eb20852BDB47dfa3aFE60a917b1CDA1715)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0x85ED9d45b276AA69176D4A4e3e8Af6985BfD1fD4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism_Adapter (0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0xAF643dFB0445Fb7E8053b2e6c2200C8bfcbE8880)
+    +++ description: None
+```
+
+```diff
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "3050433190985079045923682"
++        "3015719760175554629989681"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.CrossChainContracts.10.adapter:
+-        "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F"
++        "0xb3a4e39F0CD9aBAc5d866f023C18e73224667Fee"
+      values.CrossChainContracts.137.adapter:
+-        "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A"
++        "0xB130E3056D5C692300d66c12C10ffA2073d9424D"
+      values.CrossChainContracts.8453.adapter:
+-        "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E"
++        "0xD9948AE3405FE03A52A18F119EF72221DCdCc4df"
+      values.CrossChainContracts.42161.adapter:
+-        "0x29528780E29abb8Af95a5e5a125b94766987543F"
++        "0xd881A21F17B83AefFd11cc2e7363740449eb8069"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0xc1D2e4487FF42A5971a9F4C47914D1Ac0Cb16617)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FxRoot (0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2)
+    +++ description: None
+```
+
+```diff
 +   Status: CREATED
-    contract  (0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A)
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DAITokenBridge (0x10E6593CDda8c58a1d0f14C5164B376352a55f2F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SynthetixBridgeToOptimism (0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1Escrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadProxy (0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OldOutbox (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Dai (0x6B175474E89094C44Da98b954EedeAC495271d0F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressResolver (0x823bE81bbF96BEc0e25CA13170F5AaCb5B79ba83)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FiatTokenV2_2 (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Polygon_Adapter (0xB130E3056D5C692300d66c12C10ffA2073d9424D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Optimism_Adapter (0xb3a4e39F0CD9aBAc5d866f023C18e73224667Fee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyERC20 (0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Synthetix (0xd711709eFc452152B7ad11DbD01ed4B69c9421B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (0xd881A21F17B83AefFd11cc2e7363740449eb8069)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Base_Adapter (0xD9948AE3405FE03A52A18F119EF72221DCdCc4df)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0xdfe97868233d1aa22e815a266982f2cf17685a27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xEb3107117FEAd7de89Cd14D463D340A2E6917769)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/AddressManager.sol    |  128 +
+ .../across-v3/ethereum/.flat/AddressResolver.sol   |  102 +
+ .../{.flat@19718050 => .flat}/Arbitrum_Adapter.sol |  405 ++-
+ .../{.flat@19718050 => .flat}/Base_Adapter.sol     |  139 +-
+ .../across-v3/ethereum/.flat/Bridge/Bridge.sol     |  664 ++++
+ .../.flat/Bridge/TransparentUpgradeableProxy.p.sol |  628 ++++
+ .../across-v3/ethereum/.flat/Dai.sol               |  153 +
+ .../DepositManager/DepositManager.sol => /dev/null |  473 ---
+ .../DepositManagerProxy.p.sol => /dev/null         |  220 --
+ .../ERC20Predicate/ERC20Predicate.sol => /dev/null | 1137 -------
+ .../ERC20PredicateProxy.p.sol => /dev/null         |  151 -
+ .../ERC20PredicateBurnOnly.sol => /dev/null        | 1115 -------
+ .../ERC721PredicateBurnOnly.sol => /dev/null       | 1120 -------
+ .../Ethereum_SpokePool/Ethereum_SpokePool.sol      |   86 +-
+ .../EventsHub/EventsHub.sol => /dev/null           |  115 -
+ .../EventsHub/EventsHubProxy.p.sol => /dev/null    |  147 -
+ .../.flat@19718050/ExitNFT.sol => /dev/null        |  477 ---
+ .../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  267 ++
+ .../ethereum/.flat/FiatTokenV2_2/FiatTokenV2_2.sol | 2356 ++++++++++++++
+ .../.flat@19718050/FxRoot.sol => /dev/null         |   24 -
+ .../GnosisSafe.sol                                 |    0
+ .../Proxy.p.sol                                    |    0
+ .../GnosisSafe.sol                                 |  952 ++++++
+ .../Proxy.p.sol                                    |   38 +
+ .../GnosisSafe.sol                                 |  952 ++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
+ .../Governance/Governance.sol => /dev/null         |   83 -
+ .../Governance/GovernanceProxy.p.sol => /dev/null  |  156 -
+ .../across-v3/ethereum/.flat/Inbox/Inbox.sol       | 1181 +++++++
+ .../.flat/Inbox/TransparentUpgradeableProxy.p.sol  |  442 +++
+ .../L1CrossDomainMessenger.sol                     | 1513 +++++++++
+ .../Lib_ResolvedDelegateProxy.p.sol                |   67 +
+ .../L1CrossDomainMessenger.sol                     | 1727 ++++++++++
+ .../ResolvedDelegateProxy.p.sol                    |   54 +
+ .../across-v3/ethereum/.flat/L1DAITokenBridge.sol  |  482 +++
+ .../.flat/L1ERC20Gateway/L1ERC20Gateway.sol        | 1381 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  442 +++
+ .../across-v3/ethereum/.flat/L1Escrow.sol          |   39 +
+ .../.flat/L1GatewayRouter/L1GatewayRouter.sol      |  991 ++++++
+ .../TransparentUpgradeableProxy.p.sol              |  442 +++
+ .../L1ChugSplashProxy.p.sol                        |  268 ++
+ .../L1StandardBridge.sol                           | 1586 +++++++++
+ .../L1ChugSplashProxy.p.sol                        |  343 ++
+ .../L1StandardBridge.sol                           | 1537 +++++++++
+ .../.flat/L2OutputOracle/L2OutputOracle.sol        |  678 ++++
+ .../ethereum/.flat/L2OutputOracle/Proxy.p.sol      |  210 ++
+ .../ethereum/.flat/Lib_AddressManager.sol          |  151 +
+ .../across-v3/ethereum/.flat/MasterMinter.sol      |  371 +++
+ .../.flat@19718050/MaticToken.sol => /dev/null     |  438 ---
+ .../.flat@19718050/MaticWETH.sol => /dev/null      |  289 --
+ .../MerklePatriciaProof.sol => /dev/null           |  413 ---
+ .../ethereum/.flat/MessageTransmitter.sol          | 3080 ++++++++++++++++++
+ .../ethereum/.flat/OldOutbox/OldOutbox.sol         |  394 +++
+ .../OldOutbox/TransparentUpgradeableProxy.p.sol    |  442 +++
+ .../OptimismPortal.sol                             | 3425 ++++++++++++++++++++
+ .../Proxy.p.sol                                    |  210 ++
+ .../OptimismPortal.sol                             | 2881 ++++++++++++++++
+ .../Proxy.p.sol                                    |  210 ++
+ .../{.flat@19718050 => .flat}/Optimism_Adapter.sol |  156 +-
+ .../Outbox.sol                                     |  451 +++
+ .../TransparentUpgradeableProxy.p.sol              |  628 ++++
+ .../Outbox.sol                                     |  409 +++
+ .../TransparentUpgradeableProxy.p.sol              |  442 +++
+ .../{.flat@19718050 => .flat}/Polygon_Adapter.sol  |  342 +-
+ ...-0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E.sol |  297 ++
+ ...-0x543bA4AADBAb8f9025686Bd03993043599c6fB04.sol |  297 ++
+ ...-0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD.sol |  139 +
+ ...-0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa.sol |  131 +
+ .../across-v3/ethereum/.flat/ProxyERC20.sol        |  305 ++
+ .../across-v3/ethereum/.flat/ReadProxy.sol         |   62 +
+ .../dev/null                                       |  150 -
+ .../Registry.sol => /dev/null                      |  150 -
+ .../ValidatorShareProxy.p.sol => /dev/null         |  149 -
+ .../Registry.sol => /dev/null                      |  150 -
+ .../ValidatorShareProxy.p.sol => /dev/null         |  149 -
+ .../Registry.sol => /dev/null                      |  150 -
+ .../ValidatorShareProxy.p.sol => /dev/null         |  149 -
+ .../Registry.sol => /dev/null                      |  150 -
+ .../ValidatorShareProxy.p.sol => /dev/null         |  149 -
+ .../.flat/RollupEventInbox/RollupEventInbox.sol    |   82 +
+ .../TransparentUpgradeableProxy.p.sol              |  628 ++++
+ .../.flat/RollupProxy/RollupAdminLogic.1.sol       | 2926 +++++++++++++++++
+ .../ethereum/.flat/RollupProxy/RollupProxy.p.sol   |  689 ++++
+ .../.flat/RollupProxy/RollupUserLogic.2.sol        | 3065 ++++++++++++++++++
+ .../RootChain/RootChain.sol => /dev/null           |  608 ----
+ .../RootChain/RootChainProxy.p.sol => /dev/null    |  193 --
+ .../RootChainManager.sol => /dev/null              | 2087 ------------
+ .../RootChainManagerProxy.p.sol => /dev/null       |  151 -
+ .../.flat/SequencerInbox/SequencerInbox.sol        | 1086 +++++++
+ .../TransparentUpgradeableProxy.p.sol              |  628 ++++
+ .../StakeManager/StakeManager.sol => /dev/null     | 2112 ------------
+ .../StakeManagerProxy.p.sol => /dev/null           |  145 -
+ .../StakeManagerExtension.sol => /dev/null         |  515 ---
+ .../.flat@19718050/StakingInfo.sol => /dev/null    |  600 ----
+ .../.flat@19718050/StakingNFT.sol => /dev/null     |  833 -----
+ .../.flat@19718050/StateSender.sol => /dev/null    |  178 -
+ .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  199 ++
+ .../.flat/SuperchainConfig/SuperchainConfig.sol    |  476 +++
+ .../across-v3/ethereum/.flat/Synthetix.sol         | 1662 ++++++++++
+ .../ethereum/.flat/SynthetixBridgeToOptimism.sol   | 1284 ++++++++
+ .../ethereum/.flat/SystemConfig/Proxy.p.sol        |  210 ++
+ .../ethereum/.flat/SystemConfig/SystemConfig.sol   |  817 +++++
+ .../.flat@19718050/Timelock.sol => /dev/null       |  675 ----
+ .../across-v3/ethereum/.flat/TokenMessenger.sol    | 2591 +++++++++++++++
+ .../across-v3/ethereum/.flat/TokenMinter.sol       | 1270 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  630 ++++
+ .../.flat/UpgradeExecutor/UpgradeExecutor.sol      |  995 ++++++
+ .../.flat@19718050/ValidatorShare.sol => /dev/null |  802 -----
+ .../ValidatorShareFactory.sol => /dev/null         |   25 -
+ .../WithdrawManager.sol => /dev/null               | 1267 --------
+ .../WithdrawManagerProxy.p.sol => /dev/null        |  222 --
+ 111 files changed, 54048 insertions(+), 18417 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718050 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract  (0x01F645DcD6C796F6BC6C982159B32fAaaebdC96A)
     +++ description: None
 ```
 
@@ -131,12 +761,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract FiatTokenV2_2 (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77)
     +++ description: None
 ```
@@ -167,18 +791,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Polygon_Adapter (0xB130E3056D5C692300d66c12C10ffA2073d9424D)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
     +++ description: None
 ```
@@ -186,12 +798,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Registry (0xc1D2e4487FF42A5971a9F4C47914D1Ac0Cb16617)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
     +++ description: None
 ```
 
@@ -221,12 +827,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166)
     +++ description: None
 ```
@@ -247,61 +847,6 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract FxRoot (0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2)
     +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../.flat/DepositManager/DepositManager.sol        |  473 +++
- .../.flat/DepositManager/DepositManagerProxy.p.sol |  220 ++
- .../.flat/ERC20Predicate/ERC20Predicate.sol        | 1137 ++++++++
- .../.flat/ERC20Predicate/ERC20PredicateProxy.p.sol |  151 +
- .../ethereum/.flat/ERC20PredicateBurnOnly.sol      | 1115 +++++++
- .../ethereum/.flat/ERC721PredicateBurnOnly.sol     | 1120 +++++++
- .../ethereum/.flat/EventsHub/EventsHub.sol         |  115 +
- .../ethereum/.flat/EventsHub/EventsHubProxy.p.sol  |  147 +
- .../across-v3/ethereum/.flat/ExitNFT.sol           |  477 +++
- .../.flat/FiatTokenV2_2/FiatTokenProxy.p.sol       |  267 ++
- .../ethereum/.flat/FiatTokenV2_2/FiatTokenV2_2.sol | 2356 +++++++++++++++
- .../across-v3/ethereum/.flat/FxRoot.sol            |   24 +
- .../GnosisSafe.sol                                 |  958 ++++++
- .../Proxy.p.sol                                    |   38 +
- .../ethereum/.flat/Governance/Governance.sol       |   83 +
- .../.flat/Governance/GovernanceProxy.p.sol         |  156 +
- .../across-v3/ethereum/.flat/MasterMinter.sol      |  371 +++
- .../across-v3/ethereum/.flat/MaticToken.sol        |  438 +++
- .../across-v3/ethereum/.flat/MaticWETH.sol         |  289 ++
- .../ethereum/.flat/MerklePatriciaProof.sol         |  413 +++
- .../ethereum/.flat/MessageTransmitter.sol          | 3080 ++++++++++++++++++++
- .../{.flat@19718050 => .flat}/Polygon_Adapter.sol  |  342 ++-
- ...-0x33a02E6cC863D393d6Bf231B697b82F6e499cA71.sol |  150 +
- .../Registry.sol                                   |  150 +
- .../ValidatorShareProxy.p.sol                      |  149 +
- .../Registry.sol                                   |  150 +
- .../ValidatorShareProxy.p.sol                      |  149 +
- .../Registry.sol                                   |  150 +
- .../ValidatorShareProxy.p.sol                      |  149 +
- .../Registry.sol                                   |  150 +
- .../ValidatorShareProxy.p.sol                      |  149 +
- .../ethereum/.flat/RootChain/RootChain.sol         |  608 ++++
- .../ethereum/.flat/RootChain/RootChainProxy.p.sol  |  193 ++
- .../.flat/RootChainManager/RootChainManager.sol    | 2087 +++++++++++++
- .../RootChainManager/RootChainManagerProxy.p.sol   |  151 +
- .../ethereum/.flat/StakeManager/StakeManager.sol   | 2112 ++++++++++++++
- .../.flat/StakeManager/StakeManagerProxy.p.sol     |  145 +
- .../ethereum/.flat/StakeManagerExtension.sol       |  515 ++++
- .../across-v3/ethereum/.flat/StakingInfo.sol       |  600 ++++
- .../across-v3/ethereum/.flat/StakingNFT.sol        |  833 ++++++
- .../across-v3/ethereum/.flat/StateSender.sol       |  178 ++
- .../across-v3/ethereum/.flat/Timelock.sol          |  675 +++++
- .../across-v3/ethereum/.flat/TokenMessenger.sol    | 2591 ++++++++++++++++
- .../across-v3/ethereum/.flat/TokenMinter.sol       | 1270 ++++++++
- .../across-v3/ethereum/.flat/ValidatorShare.sol    |  802 +++++
- .../ethereum/.flat/ValidatorShareFactory.sol       |   25 +
- .../across-v3/ethereum/.flat/WETH9.sol             |   62 +
- .../.flat/WithdrawManager/WithdrawManager.sol      | 1267 ++++++++
- .../WithdrawManager/WithdrawManagerProxy.p.sol     |  222 ++
- 49 files changed, 29363 insertions(+), 89 deletions(-)
 ```
 
 Generated with discovered.json: 0xb4bd133d76516e18e5f01eab8e4bd307d27863c2
