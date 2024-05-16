@@ -18,7 +18,7 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
-    configReader: ConfigReader,
+    configReader: ConfigReader = new ConfigReader(),
   ) {
     this.overrides = new DiscoveryOverrides(config)
     this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(

@@ -210,7 +210,7 @@ describe(UpdateMonitor.name, () => {
           ...mockProject,
           contracts: COMMITTED,
         }),
-        readConfig: async () => config,
+        readConfig: () => config,
 
         readAllConfigsForChain: () => [
           mockConfig(PROJECT_A),
@@ -372,9 +372,9 @@ describe(UpdateMonitor.name, () => {
       const config = mockConfig(PROJECT_A)
 
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [config],
-        readConfig: async () => config,
-        readDiscovery: async () => ({
+        readAllConfigsForChain: () => [config],
+        readConfig: () => config,
+        readDiscovery: () => ({
           ...mockProject,
           blockNumber: BLOCK_NUMBER - 1,
           contracts: [],
