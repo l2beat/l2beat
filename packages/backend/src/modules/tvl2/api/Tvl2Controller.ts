@@ -51,6 +51,20 @@ interface CanonicalAssetBreakdown {
   escrows: CanonicalAssetBreakdownData['escrows']
 }
 
+type ApiProject = {
+  id: ProjectId
+  minTimestamp: UnixTime
+  type: Project['type']
+  slug: string
+  sources: Map<
+    string,
+    {
+      name: string
+      minTimestamp: UnixTime
+    }
+  >
+}
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -58,13 +72,7 @@ export class Tvl2Controller {
     AmountConfigEntry & { configId: string }
   >
   private readonly priceConfigs: PriceConfigIdMap
-  private readonly projects: {
-    id: ProjectId
-    minTimestamp: UnixTime
-    type: Project['type']
-    slug: string
-    sources: Map<string, { name: string; minTimestamp: UnixTime }>
-  }[]
+  private readonly projects: ApiProject[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
@@ -137,40 +145,23 @@ export class Tvl2Controller {
 
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      const projectValues = valuesByProject[project.id.toString()]
-      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
-
-      const timestamps: UnixTime[] = this.getTimestampsForProject(
-        project,
-        sixHourlyCutOff,
-        hourlyCutOff,
-        lastHour,
-      )
+      const values = valuesByProject[project.id.toString()]
+      const valuesByTimestamp = groupBy(values, 'timestamp')
 
       const valueSums = new Map<number, Values>()
-      for (const timestamp of timestamps) {
-        const values = valuesByTimestamp[timestamp.toString()] ?? []
-
-        const configuredSources = this.getConfiguredSources(
-          values,
-          project,
-          timestamp,
+      for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
+        const sum = value.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
         )
+        valueSums.set(Number(timestamp), sum)
 
-        const sum = values
-          .filter((v) => configuredSources.includes(v.dataSource))
-          .reduce(
-            (acc, curr) => {
-              acc.canonical += curr.canonical
-              acc.external += curr.external
-              acc.native += curr.native
-              return acc
-            },
-            { canonical: 0n, external: 0n, native: 0n },
-          )
-        valueSums.set(timestamp.toNumber(), sum)
-
-        const resultForTotal = values.reduce(
+        const resultForTotal = value.reduce(
           (acc, curr) => {
             acc.canonical += curr.canonicalForTotal
             acc.external += curr.externalForTotal
@@ -181,9 +172,9 @@ export class Tvl2Controller {
         )
 
         const aggregateSums = aggregates[project.type]
-        const aggregateSum = aggregateSums.get(timestamp.toNumber())
+        const aggregateSum = aggregateSums.get(Number(timestamp))
         if (!aggregateSum) {
-          aggregateSums.set(timestamp.toNumber(), resultForTotal)
+          aggregateSums.set(Number(timestamp), resultForTotal)
         } else {
           aggregateSum.canonical += resultForTotal.canonical
           aggregateSum.external += resultForTotal.external
@@ -515,22 +506,20 @@ export class Tvl2Controller {
         native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
       }
     }
-
-    return result
   }
-
+  
   async getAggregatedTvl(
     lastHour: UnixTime,
     projectSlugs: string[],
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
-
-    const projectIds = projects.map((x) => x.id)
+    const projects = this.projects
+      .filter((p) => projectSlugs.includes(p.slug))
+      .map((p) => p.id)
 
     console.time('DB')
-    const values = await this.valueRepository.getForProjects(projectIds)
+    const values = await this.valueRepository.getForProjects(projects)
     console.timeEnd('DB')
 
     const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
@@ -544,39 +533,22 @@ export class Tvl2Controller {
 
     for (const project of projects) {
       console.time(project.toString())
-      const projectValues = valuesByProject[project.id.toString()]
+      const projectValues = valuesByProject[project.toString()]
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
-      const timestamps: UnixTime[] = this.getTimestampsForProject(
-        project,
-        sixHourlyCutOff,
-        hourlyCutOff,
-        lastHour,
-      )
-
-      for (const timestamp of timestamps) {
-        const values = valuesByTimestamp[timestamp.toString()] ?? []
-
-        const configuredSources = this.getConfiguredSources(
-          values,
-          project,
-          timestamp,
+      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
+        const sum = values.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
         )
-
-        const sum = values
-          .filter((v) => configuredSources.includes(v.dataSource))
-          .reduce(
-            (acc, curr) => {
-              acc.canonical += curr.canonical
-              acc.external += curr.external
-              acc.native += curr.native
-              return acc
-            },
-            { canonical: 0n, external: 0n, native: 0n },
-          )
-        const aggregateSum = aggregate.get(timestamp.toNumber())
+        const aggregateSum = aggregate.get(Number(timestamp))
         if (!aggregateSum) {
-          aggregate.set(timestamp.toNumber(), sum)
+          aggregate.set(Number(timestamp), sum)
         } else {
           aggregateSum.canonical += sum.canonical
           aggregateSum.external += sum.external
@@ -636,70 +608,6 @@ export class Tvl2Controller {
     console.timeEnd('Chart conversion')
 
     return result
-  }
-
-  // TODO: instead of assert we should interpolate values so the page builds even with unsynced sources
-  private getConfiguredSources(
-    values: ValueRecord[],
-    project: {
-      id: ProjectId
-      minTimestamp: UnixTime
-      type: Project['type']
-      slug: string
-      sources: Map<string, { name: string; minTimestamp: UnixTime }>
-    },
-    timestamp: UnixTime,
-  ) {
-    const valuesSources = values.map((x) => x.dataSource)
-    const configuredSources = Array.from(project.sources.values())
-      .filter((s) => s.minTimestamp.lte(timestamp))
-      .map((s) => s.name)
-
-    const missingSources = configuredSources.filter(
-      (s) => !valuesSources.includes(s),
-    )
-
-    assert(
-      missingSources.length === 0,
-      `Missing data sources [${missingSources.join(
-        ', ',
-      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
-    )
-    return configuredSources
-  }
-
-  private getTimestampsForProject(
-    project: {
-      id: ProjectId
-      minTimestamp: UnixTime
-      type: Project['type']
-      slug: string
-      sources: Map<string, { name: string; minTimestamp: UnixTime }>
-    },
-    sixHourlyCutOff: UnixTime,
-    hourlyCutOff: UnixTime,
-    lastHour: UnixTime,
-  ) {
-    const timestamps: UnixTime[] = []
-
-    let t = project.minTimestamp.toStartOf('day')
-    timestamps.push(t)
-
-    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
-      t = t.add(1, 'days')
-      timestamps.push(t)
-    }
-
-    while (t.add(6, 'hours').lte(hourlyCutOff)) {
-      t = t.add(6, 'hours')
-      timestamps.push(t)
-    }
-
-    while (t.add(1, 'hours').lte(lastHour)) {
-      t = t.add(1, 'hours')
-      timestamps.push(t)
-    }
-    return timestamps
   }
 
   async getTokenChart(
