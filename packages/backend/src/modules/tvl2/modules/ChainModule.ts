@@ -167,14 +167,11 @@ function createChainModule(
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
-
+  const parents = [priceModule.descendant, chainAmountIndexer]
   for (const [project, amountConfigs] of Object.entries(perProject)) {
     const priceConfigs = new Set(
       amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
     )
-
-    const parents = [priceModule.indexer, chainAmountIndexer]
-
     const indexer = new ValueIndexer({
       priceRepo: peripherals.getRepository(PriceRepository),
       amountRepo: peripherals.getRepository(AmountRepository),
