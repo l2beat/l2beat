@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { assert } from '@l2beat/backend-tools'
+import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -27,7 +28,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     const logger = $.logger.tag($.chain)
     const name = 'chain_amount_indexer'
-    super({ ...$, name, logger })
+    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
   override async multiUpdate(
