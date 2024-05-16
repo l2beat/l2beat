@@ -103,8 +103,8 @@ export const zksyncera: Layer2 = {
       finalizationPeriod: executionDelay,
       warnings: {
         timeToInclusion: {
-          type: 'project',
-          content:
+          sentiment: 'warning',
+          value:
             'Proven but not executed batches can be reverted by the validator.',
         },
       },

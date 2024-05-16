@@ -1,7 +1,9 @@
-import { FinalityDataPoint } from '@l2beat/shared-pure'
+import {
+  FinalityDataPoint,
+  WarningValueWithSentiment,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
-import { Layer2FinalityDisplayWarning } from '@l2beat/config'
 import { SyncStatus } from '../../pages/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { WarningBar } from '../WarningBar'
@@ -12,7 +14,7 @@ import { GrayedOut } from './GrayedOut'
 
 type BaseProps = {
   syncStatus: SyncStatus
-  warning?: Layer2FinalityDisplayWarning
+  warning?: WarningValueWithSentiment
 }
 
 type Props =
@@ -40,7 +42,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
         {props.warning && (
           <RoundedWarningIcon
             className="size-5"
-            sentiment={props.warning.type === 'project' ? 'warning' : 'neutral'}
+            sentiment={props.warning.sentiment}
           />
         )}
       </TooltipTrigger>
@@ -92,8 +94,16 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           <WarningBar
             className="mt-2"
             icon={RoundedWarningIcon}
-            color={props.warning.type === 'project' ? 'yellow' : 'gray'}
-            text={props.warning.content}
+            color={
+              (
+                {
+                  bad: 'red',
+                  neutral: 'gray',
+                  warning: 'yellow',
+                } as const
+              )[props.warning.sentiment]
+            }
+            text={props.warning.value}
           />
         )}
       </TooltipContent>

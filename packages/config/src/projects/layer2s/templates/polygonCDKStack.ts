@@ -143,8 +143,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         finalizationPeriod: 0,
         warnings: {
           timeToInclusion: {
-            type: 'project',
-            content: 'Uniform block distribution is assumed for calculations.',
+            sentiment: 'warning',
+            value: 'Uniform block distribution is assumed for calculations.',
           },
         },
       },

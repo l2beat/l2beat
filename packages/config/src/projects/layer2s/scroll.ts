@@ -101,8 +101,8 @@ export const scroll: Layer2 = {
     finality: {
       warnings: {
         timeToInclusion: {
-          type: 'project',
-          content:
+          sentiment: 'warning',
+          value:
             'Transaction data batches that have not yet been proven can be reverted.',
         },
       },

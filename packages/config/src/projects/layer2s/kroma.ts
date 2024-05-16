@@ -110,8 +110,8 @@ export const kroma: Layer2 = {
     finality: {
       warnings: {
         timeToInclusion: {
-          type: 'l2beat',
-          content:
+          sentiment: 'neutral',
+          value:
             "It's assumed that transaction data batches are submitted sequentially.",
         },
       },
