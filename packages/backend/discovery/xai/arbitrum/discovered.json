@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 211891109,
-  "configHash": "0x3dd0c84d31ebaf4df807b87200d4ea9f38443f74998b60c4dddac2e1bba02892",
+  "blockNumber": 211899322,
+  "configHash": "0x9c0c9ee7d581f6f8367151bd04af514841ab93212660e4f3ee520be2246e87f1",
   "version": 4,
   "contracts": [
     {
@@ -319,12 +319,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 22310,
+        "delayedMessageCount": 22313,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 12340,
-        "sequencerReportedSubMessageCount": 6235831
+        "sequencerMessageCount": 12343,
+        "sequencerReportedSubMessageCount": 6236354
       },
       "derivedName": "ERC20Bridge"
     },
@@ -371,7 +371,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 12340,
+        "batchCount": 12343,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -387,7 +387,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 22309
+        "totalDelayedMessagesRead": 22312
       },
       "derivedName": "SequencerInbox"
     },
@@ -516,11 +516,11 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2920,
+        "firstUnresolvedNode": 2921,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 2919,
+        "latestConfirmed": 2920,
         "latestNodeCreated": 3072,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
@@ -645,7 +645,7 @@
           "71347031963470319634703",
           "1250000000000000000000000000"
         ],
-        "challengeCounter": 3814,
+        "challengeCounter": 3815,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",

@@ -34,47 +34,7 @@
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
     "RollupProxy": {
-      "ignoreMethods": [
-        // Execution reverted
-        "proxiableUUID"
-      ],
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
-      "fields": {
-        // when this changes, it means the validators have changed
-        "setValidatorCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000006"
-            ]
-          }
-        },
-        "challenges": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "RollupChallengeStarted",
-            "returnParams": [
-              "challengeIndex",
-              "asserter",
-              "challenger",
-              "challengedNode"
-            ]
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "validator"
-          }
-        }
-      }
+      "extends": "orbitstack/RollupProxy"
     },
     "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
