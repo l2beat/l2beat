@@ -114,4 +114,4 @@ jobs:
           version: 1.7.3
 
       - name: Run Biome
-        run: biome ci .
+        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'bunx biome check --config-path=packages/{} packages/{}'
