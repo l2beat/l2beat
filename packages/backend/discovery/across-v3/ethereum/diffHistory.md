@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3e3fd6c9e2acae69648c6262f29166e98add6f44
+Generated with discovered.json: 0x55d0510f7032eff3f615bdae368015f76f42ff06
 
-# Diff at Fri, 17 May 2024 16:18:53 GMT:
+# Diff at Fri, 17 May 2024 16:59:08 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@814c482c2be2428b2782bc85afecccac8c999b5e block: 19718050
-- current block number: 19890832
+- comparing to: main@7634eb7892129fd76fa0bce18d68181ba69b99db block: 19718050
+- current block number: 19891034
 
 ## Description
 
@@ -181,12 +181,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 ```
 
 ```diff
--   Status: DELETED
-    contract TokenState (0x5b1b5fEa1b99D83aD479dF0C222F0492385381dD)
-    +++ description: None
-```
-
-```diff
     contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
     +++ description: None
       upgradeability.implementation:
@@ -234,12 +228,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 ```diff
 -   Status: DELETED
     contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract AddressResolver (0x823bE81bbF96BEc0e25CA13170F5AaCb5B79ba83)
     +++ description: None
 ```
 
@@ -365,6 +353,12 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 
 ```diff
 -   Status: DELETED
+    contract Whitelist (0xD485e5c28AA4985b23f6DF13dA03caa766dcd459)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
     contract Synthetix (0xd711709eFc452152B7ad11DbD01ed4B69c9421B3)
     +++ description: None
 ```
@@ -425,12 +419,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 
 ```diff
 +   Status: CREATED
-    contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Polygon_Adapter (0xB130E3056D5C692300d66c12C10ffA2073d9424D)
     +++ description: None
 ```
@@ -438,18 +426,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 ```diff
 +   Status: CREATED
     contract Optimism_Adapter (0xb3a4e39F0CD9aBAc5d866f023C18e73224667Fee)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
     +++ description: None
 ```
 
@@ -469,7 +445,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
 
 ```diff
 .../.flat@19718050/AddressManager.sol => /dev/null |  128 -
- .../AddressResolver.sol => /dev/null               |  102 -
  .../{.flat@19718050 => .flat}/Arbitrum_Adapter.sol |  405 ++-
  .../Arbitrum_Bridge/Bridge.sol => /dev/null        |  664 ----
  .../TransparentUpgradeableProxy.p.sol => /dev/null |  628 ----
@@ -513,7 +488,6 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
  .../.flat@19718050/MaticToken.sol => /dev/null     |  438 ---
  .../.flat@19718050/MaticWETH.sol => /dev/null      |  289 --
  .../MerklePatriciaProof.sol => /dev/null           |  413 ---
- .../ethereum/.flat/MessageTransmitter.sol          | 3080 ++++++++++++++++++
  .../dev/null                                       | 1057 ------
  .../dev/null                                       | 1057 ------
  .../dev/null                                       | 1057 ------
@@ -547,16 +521,14 @@ Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Ad
  .../.flat@19718050/Synthetix.sol => /dev/null      | 1662 ----------
  .../SynthetixBridgeToOptimism.sol => /dev/null     | 1284 --------
  .../.flat@19718050/Timelock.sol => /dev/null       |  675 ----
- .../across-v3/ethereum/.flat/TokenMessenger.sol    | 2591 +++++++++++++++
- .../across-v3/ethereum/.flat/TokenMinter.sol       | 1270 ++++++++
- .../.flat@19718050/TokenState.sol => /dev/null     |   95 -
  .../TransparentUpgradeableProxy.p.sol => /dev/null |  630 ----
  .../UpgradeExecutor.sol => /dev/null               |  995 ------
  .../.flat@19718050/ValidatorShare.sol => /dev/null |  802 -----
  .../ethereum/.flat@19718050/WETH9.sol => /dev/null |   62 -
+ .../.flat@19718050/Whitelist.sol => /dev/null      |   39 -
  .../WithdrawManager.sol => /dev/null               | 1267 --------
  .../WithdrawManagerProxy.p.sol => /dev/null        |  222 --
- 88 files changed, 7769 insertions(+), 53293 deletions(-)
+ 84 files changed, 828 insertions(+), 53135 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -711,12 +683,6 @@ discovery. Values are for block 19718050 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract TokenState (0x5b1b5fEa1b99D83aD479dF0C222F0492385381dD)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908)
     +++ description: None
 ```
@@ -748,12 +714,6 @@ discovery. Values are for block 19718050 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract MaticToken (0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AddressResolver (0x823bE81bbF96BEc0e25CA13170F5AaCb5B79ba83)
     +++ description: None
 ```
 
@@ -850,6 +810,12 @@ discovery. Values are for block 19718050 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Whitelist (0xD485e5c28AA4985b23f6DF13dA03caa766dcd459)
     +++ description: None
 ```
 

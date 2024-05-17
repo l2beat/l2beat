@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 19890832,
-  "configHash": "0xc5a5af63842e544c4ef5ad92a43e08a22eb9ef3322c9e0fcf94a30c2291f9d9c",
+  "blockNumber": 19891034,
+  "configHash": "0xee6343bb6a9148536587868e52997c480b2836897ecfc2af8ed923ce4ca4890c",
   "version": 4,
   "contracts": [
     {
@@ -21,32 +21,6 @@
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
-    },
-    {
-      "name": "MessageTransmitter",
-      "address": "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1677628247,
-      "values": {
-        "attesterManager": "0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
-        "getEnabledAttester": [
-          "0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
-          "0xE2fEfe09E74b921CbbFF229E7cD40009231501CA"
-        ],
-        "getNumEnabledAttesters": 2,
-        "localDomain": 0,
-        "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 59338,
-        "owner": "0x4aA5bF962852DcC59695F600d346D3F751B0D920",
-        "paused": false,
-        "pauser": "0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "rescuer": "0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
-        "signatureThreshold": 2,
-        "version": 0
-      }
     },
     {
       "name": "Boba_Adapter",
@@ -85,7 +59,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1715962703,
+        "getCurrentTime": 1715965127,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -117,11 +91,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1715962703,
+        "getCurrentTime": 1715965127,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1324616,
+        "numberOfDeposits": 1324674,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -140,7 +114,7 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1715962703,
+        "getCurrentTime": 1715965127,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -194,7 +168,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 621,
+        "nonce": 622,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -240,7 +214,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1715962703,
+        "getCurrentTime": 1715965127,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -327,22 +301,6 @@
       "sinceTimestamp": 1618347170
     },
     {
-      "name": "TokenMessenger",
-      "address": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1677628295,
-      "values": {
-        "localMessageTransmitter": "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-        "localMinter": "0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-        "messageBodyVersion": 0,
-        "owner": "0x6b0b72E63764101Fc4d5BD914B107987041578C4",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "rescuer": "0x65cBcdbE95567A8F9519242f9C52F65E8067021B"
-      }
-    },
-    {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
       "upgradeability": {
@@ -404,35 +362,18 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0x840af44c776fcbf428096d8a56d4d130a6caa5515963d44b85c112fe45eca6c1",
-          "0xa088cce72d4a7ca4b8f135b23949a027f4cd8bd618eae62a600f45ac48ac15ff",
-          "0x2fc41e43a830fe9cd710e2085ba6900098e1a9619647cb488a172ebc2b73f374",
+          "0x6817f93dbe4f0d8b8df6f2f8d74d3a6515427c43d9f78cb9fedb562281d9160a",
+          "0x8316f801cd26dffd32de177de4c3a2e7dcd7a0defd8bf1c9f5f564e5fc8feb4e",
+          "0x449f035c85d929232f5e82f38ab22d52a414235f76894cb83e2b26b08b00b062",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           7,
-          1715962235
+          1715966903
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "HubPool"
-    },
-    {
-      "name": "TokenMinter",
-      "address": "0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1677628319,
-      "values": {
-        "localTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-        "owner": "0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
-        "paused": false,
-        "pauser": "0x817ae4109dC0f21E437b94c899962690514Ba09f",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "rescuer": "0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
-        "tokenController": "0x8a9A13A106cB89E15410B2AB4488135155032169"
-      }
     },
     {
       "name": "Arbitrum_Adapter",
@@ -533,31 +474,19 @@
     }
   ],
   "eoas": [
-    "0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
     "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
     "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-    "0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
     "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
     "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
-    "0x4aA5bF962852DcC59695F600d346D3F751B0D920",
-    "0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
-    "0x6b0b72E63764101Fc4d5BD914B107987041578C4",
     "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-    "0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
     "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
-    "0x817ae4109dC0f21E437b94c899962690514Ba09f",
     "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
     "0x868CF19464e17F76D6419ACC802B122c22D2FD34",
-    "0x8a9A13A106cB89E15410B2AB4488135155032169",
     "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
-    "0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
     "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
     "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
-    "0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
-    "0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
     "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
     "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
-    "0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
     "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
     "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
   ],
@@ -680,53 +609,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function wrappedNativeToken() view returns (address)"
-    ],
-    "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": [
-      "constructor(uint32 _localDomain, address _attester, uint32 _maxMessageBodySize, uint32 _version)",
-      "event AttesterDisabled(address indexed attester)",
-      "event AttesterEnabled(address indexed attester)",
-      "event AttesterManagerUpdated(address indexed previousAttesterManager, address indexed newAttesterManager)",
-      "event MaxMessageBodySizeUpdated(uint256 newMaxMessageBodySize)",
-      "event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)",
-      "event MessageSent(bytes message)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Pause()",
-      "event PauserChanged(address indexed newAddress)",
-      "event RescuerChanged(address indexed newRescuer)",
-      "event SignatureThresholdUpdated(uint256 oldSignatureThreshold, uint256 newSignatureThreshold)",
-      "event Unpause()",
-      "function acceptOwnership()",
-      "function attesterManager() view returns (address)",
-      "function disableAttester(address attester)",
-      "function enableAttester(address newAttester)",
-      "function getEnabledAttester(uint256 index) view returns (address)",
-      "function getNumEnabledAttesters() view returns (uint256)",
-      "function isEnabledAttester(address attester) view returns (bool)",
-      "function localDomain() view returns (uint32)",
-      "function maxMessageBodySize() view returns (uint256)",
-      "function nextAvailableNonce() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pauser() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function receiveMessage(bytes message, bytes attestation) returns (bool success)",
-      "function replaceMessage(bytes originalMessage, bytes originalAttestation, bytes newMessageBody, bytes32 newDestinationCaller)",
-      "function rescueERC20(address tokenContract, address to, uint256 amount)",
-      "function rescuer() view returns (address)",
-      "function sendMessage(uint32 destinationDomain, bytes32 recipient, bytes messageBody) returns (uint64)",
-      "function sendMessageWithCaller(uint32 destinationDomain, bytes32 recipient, bytes32 destinationCaller, bytes messageBody) returns (uint64)",
-      "function setMaxMessageBodySize(uint256 newMaxMessageBodySize)",
-      "function setSignatureThreshold(uint256 newSignatureThreshold)",
-      "function signatureThreshold() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function updateAttesterManager(address newAttesterManager)",
-      "function updatePauser(address _newPauser)",
-      "function updateRescuer(address newRescuer)",
-      "function usedNonces(bytes32) view returns (uint256)",
-      "function version() view returns (uint32)"
     ],
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge)",
@@ -952,37 +834,6 @@
       "function transformPrice(tuple(uint256 rawValue) oraclePrice, uint256 requestTime) view returns (tuple(uint256 rawValue))",
       "function transformPriceIdentifier(bytes32 priceIdentifier, uint256 requestTime) view returns (bytes32)"
     ],
-    "0xBd3fa81B58Ba92a82136038B25aDec7066af3155": [
-      "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
-      "event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)",
-      "event LocalMinterAdded(address localMinter)",
-      "event LocalMinterRemoved(address localMinter)",
-      "event MintAndWithdraw(address indexed mintRecipient, uint256 amount, address indexed mintToken)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RemoteTokenMessengerAdded(uint32 domain, bytes32 tokenMessenger)",
-      "event RemoteTokenMessengerRemoved(uint32 domain, bytes32 tokenMessenger)",
-      "event RescuerChanged(address indexed newRescuer)",
-      "function acceptOwnership()",
-      "function addLocalMinter(address newLocalMinter)",
-      "function addRemoteTokenMessenger(uint32 domain, bytes32 tokenMessenger)",
-      "function depositForBurn(uint256 amount, uint32 destinationDomain, bytes32 mintRecipient, address burnToken) returns (uint64 _nonce)",
-      "function depositForBurnWithCaller(uint256 amount, uint32 destinationDomain, bytes32 mintRecipient, address burnToken, bytes32 destinationCaller) returns (uint64 nonce)",
-      "function handleReceiveMessage(uint32 remoteDomain, bytes32 sender, bytes messageBody) returns (bool)",
-      "function localMessageTransmitter() view returns (address)",
-      "function localMinter() view returns (address)",
-      "function messageBodyVersion() view returns (uint32)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function remoteTokenMessengers(uint32) view returns (bytes32)",
-      "function removeLocalMinter()",
-      "function removeRemoteTokenMessenger(uint32 domain)",
-      "function replaceDepositForBurn(bytes originalMessage, bytes originalAttestation, bytes32 newDestinationCaller, bytes32 newMintRecipient)",
-      "function rescueERC20(address tokenContract, address to, uint256 amount)",
-      "function rescuer() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateRescuer(address newRescuer)"
-    ],
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda": [
       "constructor(address _lpTokenFactory, address _finder, address _weth, address _timer)",
       "event BondSet(address indexed newBondToken, uint256 newBondAmount)",
@@ -1052,46 +903,6 @@
       "function transferOwnership(address newOwner)",
       "function unclaimedAccumulatedProtocolFees(address) view returns (uint256)",
       "function weth() view returns (address)"
-    ],
-    "0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": [
-      "constructor(address _tokenController)",
-      "event LocalTokenMessengerAdded(address localTokenMessenger)",
-      "event LocalTokenMessengerRemoved(address localTokenMessenger)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Pause()",
-      "event PauserChanged(address indexed newAddress)",
-      "event RescuerChanged(address indexed newRescuer)",
-      "event SetBurnLimitPerMessage(address indexed token, uint256 burnLimitPerMessage)",
-      "event SetTokenController(address tokenController)",
-      "event TokenPairLinked(address localToken, uint32 remoteDomain, bytes32 remoteToken)",
-      "event TokenPairUnlinked(address localToken, uint32 remoteDomain, bytes32 remoteToken)",
-      "event Unpause()",
-      "function acceptOwnership()",
-      "function addLocalTokenMessenger(address newLocalTokenMessenger)",
-      "function burn(address burnToken, uint256 burnAmount)",
-      "function burnLimitsPerMessage(address) view returns (uint256)",
-      "function getLocalToken(uint32 remoteDomain, bytes32 remoteToken) view returns (address)",
-      "function linkTokenPair(address localToken, uint32 remoteDomain, bytes32 remoteToken)",
-      "function localTokenMessenger() view returns (address)",
-      "function mint(uint32 sourceDomain, bytes32 burnToken, address to, uint256 amount) returns (address mintToken)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pauser() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function remoteTokensToLocalTokens(bytes32) view returns (address)",
-      "function removeLocalTokenMessenger()",
-      "function rescueERC20(address tokenContract, address to, uint256 amount)",
-      "function rescuer() view returns (address)",
-      "function setMaxBurnAmountPerMessage(address localToken, uint256 burnLimitPerMessage)",
-      "function setTokenController(address newTokenController)",
-      "function tokenController() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unlinkTokenPair(address localToken, uint32 remoteDomain, bytes32 remoteToken)",
-      "function unpause()",
-      "function updatePauser(address _newPauser)",
-      "function updateRescuer(address newRescuer)"
     ],
     "0xd881A21F17B83AefFd11cc2e7363740449eb8069": [
       "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter, address _l2RefundL2Address, address _l1Usdc, address _cctpTokenMessenger)",
