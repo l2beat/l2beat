@@ -6,7 +6,7 @@ import { describe } from 'mocha'
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../../../types/TrackedTxId'
-import { L2CostsRecord, L2CostsRepository, L2CostsRepository } from './L2CostsRepository'
+import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (database) => {
   const repository = new L2CostsRepository(database, Logger.SILENT)
@@ -160,7 +160,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
         },
         {
           timestamp: START.add(1, 'hours'),
-          txHash: '0x4',
+          txHash: '0x45',
           trackedTxId,
           gasUsed: 150,
           gasPrice: 2n,

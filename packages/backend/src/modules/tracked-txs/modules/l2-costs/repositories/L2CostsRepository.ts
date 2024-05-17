@@ -62,8 +62,9 @@ export class L2CostsRepository extends BaseRepository {
         'tracked_txs_configs.id',
       )
       .distinct('tx_hash')
-      .select('project_id', 'tracked_tx_id', 'tx_hash', 'timestamp', 'data')
+      .select('tracked_txs_configs.project_id', 'l2_costs.*')
       .orderBy('timestamp', 'asc')
+
     return rows.map(toRecordWithProjectId)
   }
 
