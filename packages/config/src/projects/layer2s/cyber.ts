@@ -27,8 +27,6 @@ export const cyber: Layer2 = opStackL2({
     slug: 'cyber',
     description:
       'Cyber is a chain designed for social applications using an implementation of OP Plasma with DA challenges.',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result with the loss of all funds.',
     purposes: ['Universal', 'Social'],
     links: {
       websites: ['https://cyber.co/'],

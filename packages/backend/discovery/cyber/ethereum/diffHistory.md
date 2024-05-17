@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x97e1f05644a07a906b0c40d7e6979a3d9279b28e
+
+# Diff at Fri, 17 May 2024 09:35:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 19875660
+- current block number: 19888830
+
+## Description
+
+Signers added to Owner Multisig, threshold changed to 3/4. EOA warning is removed.
+
+The DAChallenge contract has resolverRefundPercentage set to 100%. A successful resolve now gets `( fixedResolutionCost + preImageLength * variableResolutionCost / variableResolutionCostPrecision ) * block.basefee` as a refund. Depending on the other variables, a malicious Sequencer can now challenge itself infinitely without cost.
+
+## Watched changes
+
+```diff
+    contract DataAvailabilityChallenge (0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49) {
+    +++ description: None
+      values.resolverRefundPercentage:
+-        0
++        100
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      upgradeability.threshold:
+-        "1 of 1 (100%)"
++        "3 of 4 (75%)"
+      values.getOwners.3:
++        "0x1a76Ed328600489811F819959a74043f106CF0f9"
+      values.getOwners.2:
++        "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7"
+      values.getOwners.1:
++        "0xaC79765A73eB9dcBd3c427181E6819902AE25b48"
+      values.getOwners.0:
+-        "0x1a76Ed328600489811F819959a74043f106CF0f9"
++        "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
 Generated with discovered.json: 0xf826b642d402796210be75a928daf70a983bd0df
 
 # Diff at Wed, 15 May 2024 13:24:31 GMT:

@@ -6,7 +6,7 @@ import { TrackedTxResult } from './model'
 
 export interface TxUpdaterInterface {
   update: (txs: TrackedTxResult[], knexTx?: Knex.Transaction) => Promise<void>
-  deleteFrom: (
+  deleteFromById: (
     id: TrackedTxId,
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,

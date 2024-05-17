@@ -117,7 +117,7 @@ describeDatabase(LivenessRepository.name, (database) => {
     })
   })
 
-  describe(LivenessRepository.prototype.deleteFrom.name, () => {
+  describe(LivenessRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
       await repository.deleteAll()
 
@@ -150,7 +150,7 @@ describeDatabase(LivenessRepository.name, (database) => {
       ]
       await repository.addMany(records)
 
-      await repository.deleteFrom(configurationId, START.add(1, 'hours'))
+      await repository.deleteFromById(configurationId, START.add(1, 'hours'))
 
       const result = await repository.getAll()
 
