@@ -191,11 +191,9 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     ethUsdPrice: number,
     factor: number,
   ): Omit<AggregatedL2CostsRecord, 'timestamp' | 'projectId'> {
-    const gasPriceGwei = Number.parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
-    const gasPriceETH = Number.parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-
-    const totalGas = Math.round(tx.data.gasUsed * factor)
-    const calldataGas = Math.round(tx.data.calldataGasUsed * factor)
+    const gasPriceETH = this.weiToEth(tx.gasPrice)
+    const totalGas = Math.round(tx.gasUsed * factor)
+    const calldataGas = Math.round(tx.calldataGasUsed * factor)
     const overheadGas = Math.round(OVERHEAD * factor)
     const computeGas = totalGas - calldataGas - overheadGas
     const totalGasEth = totalGas * gasPriceETH
@@ -225,17 +223,12 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       overheadGasUsd,
     }
 
-    if (tx.data.type !== 3) {
+    if (!tx.blobGasUsed || !tx.blobGasPrice) {
       return base
     }
 
-    const blobsGasPriceGwei = Number.parseFloat(
-      (tx.data.blobGasPrice * 1e-9).toFixed(9),
-    )
-    const blobsGasPriceETH = Number.parseFloat(
-      (blobsGasPriceGwei * 1e-9).toFixed(18),
-    )
-    const blobsGas = Math.round(tx.data.blobGasUsed * factor)
+    const blobsGasPriceETH = this.weiToEth(tx.blobGasPrice)
+    const blobsGas = Math.round(tx.blobGasUsed * factor)
     const blobsGasEth = blobsGas * blobsGasPriceETH
     const blobsGasUsd = blobsGasEth * ethUsdPrice
 
@@ -273,5 +266,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     }
 
     return multipliers
+  }
+
+  private weiToEth(wei: bigint): number {
+    // Biggest wei we can get from DB is 2^63-1 which divided by 1e9 is safe to parse to Number
+    const integerPartGwei = Number(wei / 1_000_000_000n)
+    const fractionPartGwei = Number(wei % 1_000_000_000n)
+    const gwei = integerPartGwei + fractionPartGwei / 1_000_000_000
+
+    return gwei / 1_000_000_000
   }
 }

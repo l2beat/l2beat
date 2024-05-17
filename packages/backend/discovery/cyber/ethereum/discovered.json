@@ -1,7 +1,7 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 19875660,
+  "blockNumber": 19888830,
   "configHash": "0x28c81e171f3ba4b900bdc48d52f5c8020f7497b87049c53d47dafc194fa13284",
   "version": 4,
   "contracts": [
@@ -20,7 +20,7 @@
         "challengeWindow": 3600,
         "fixedResolutionCost": 72925,
         "owner": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
-        "resolverRefundPercentage": 0,
+        "resolverRefundPercentage": 100,
         "resolveWindow": 3600,
         "variableResolutionCost": 16640,
         "variableResolutionCostPrecision": 1000,
@@ -95,7 +95,7 @@
         "L2_ORACLE": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Oracle": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19875657],
+        "params": [1000000000, 500000, 19888749],
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "SYSTEM_CONFIG": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
@@ -117,7 +117,7 @@
       "sinceTimestamp": 1713430427,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619905",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619968",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -255,10 +255,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1152000,
-        "latestOutputIndex": 639,
-        "nextBlockNumber": 1153800,
-        "nextOutputIndex": 640,
+        "latestBlockNumber": 1233000,
+        "latestOutputIndex": 684,
+        "nextBlockNumber": 1234800,
+        "nextOutputIndex": 685,
         "proposer": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "PROPOSER": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "startingBlockNumber": 0,
@@ -276,16 +276,21 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "1 of 1 (100%)"
+        "threshold": "3 of 4 (75%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1713430223,
       "values": {
         "domainSeparator": "0x7cd8c30797ef3a14364cd47f3fbcd50b6f8b42a7a9b4d0f1e3200ac80755e056",
         "getChainId": 1,
-        "getOwners": ["0x1a76Ed328600489811F819959a74043f106CF0f9"],
-        "getThreshold": 1,
-        "nonce": 17,
+        "getOwners": [
+          "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
+          "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
+          "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
+          "0x1a76Ed328600489811F819959a74043f106CF0f9"
+        ],
+        "getThreshold": 3,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -300,6 +305,9 @@
     "0x4200000000000000000000000000000000000014",
     "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752",
     "0xa7A4D6d5920b93D0FE590f9524Ef17f24EE1F5B8",
+    "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
+    "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
+    "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
     "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
     "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
     "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",

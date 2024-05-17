@@ -146,7 +146,7 @@ export class LivenessRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteFrom(
+  async deleteFromById(
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
     trx?: Knex.Transaction,

@@ -115,6 +115,8 @@ const TRANSFERS_RESPONSE = [
     transaction_type: 2,
     calldata_gas_used: 100,
     data_length: 100,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
   },
 ]
 
@@ -136,6 +138,8 @@ const FUNCTIONS_RESPONSE = [
     transaction_type: 2,
     calldata_gas_used: 100,
     data_length: 100,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
   },
   {
     hash: TX_HASH,
@@ -148,6 +152,8 @@ const FUNCTIONS_RESPONSE = [
     transaction_type: 3,
     calldata_gas_used: 0,
     data_length: 0,
+    receipt_blob_gas_used: 300,
+    receipt_blob_gas_price: 3,
   },
 ]
 

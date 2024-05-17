@@ -108,8 +108,6 @@ export interface TrackedTxsConfig {
     readonly liveness: boolean
     readonly l2costs:
       | {
-          readonly ethereumProviderUrl: string
-          readonly ethereumProviderCallsPerMinute?: number
           readonly aggregatorEnabled: boolean
           readonly coingeckoApiKey: string
         }

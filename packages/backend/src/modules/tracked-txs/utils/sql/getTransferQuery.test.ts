@@ -25,7 +25,7 @@ describe(getTransferQuery.name, () => {
     LANGUAGE js AS """
       var nonZeroBytes = 0;
       var zeroBytes = 0;
-  
+
       for (var i = 2; i < hexString.length; i += 2) {
         if(hexString.substr(i, 2)==='00') {
           zeroBytes++;
@@ -33,7 +33,7 @@ describe(getTransferQuery.name, () => {
           nonZeroBytes++;
         }
       }
-    
+
       return 16 * nonZeroBytes + 4 * zeroBytes;
     """;
 
@@ -43,9 +43,10 @@ describe(getTransferQuery.name, () => {
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
-      txs.transaction_type,
       txs.receipt_gas_used,
       txs.gas_price,
+      txs.receipt_blob_gas_used,
+      txs.receipt_blob_gas_price,
       CalculateCalldataGasUsed(txs.input) AS calldata_gas_used,
       (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
     FROM

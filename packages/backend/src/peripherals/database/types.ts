@@ -1,4 +1,3 @@
-import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
 import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 
 export {}
@@ -187,7 +186,12 @@ declare module 'knex/types/tables' {
     tracked_tx_id: string
     tx_hash: string
     timestamp: Date
-    data: TransactionData
+    gas_used: number
+    gas_price: string
+    calldata_length: number
+    calldata_gas_used: number
+    blob_gas_used: number | null
+    blob_gas_price: string | null
   }
 
   interface AggregatedL2CostsRow {
