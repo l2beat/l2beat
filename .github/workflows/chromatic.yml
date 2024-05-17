@@ -30,16 +30,19 @@ jobs:
       - name: Build Storybook
         run: yarn storybook:build
 
-      - name: Publish to Chromatic
-        run: >
-          npx chromatic
-          --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          --storybook-build-dir ./storybook-static
-          --only-changed
-          --exit-once-uploaded
-          --exit-zero-on-changes
-          --externals packages/frontend/tailwind.config.js
-          --externals *.css
-          --externals packages/frontend/src/static/fonts/**/*
-          --untraced packages/backend/package.json
-          --untraced packages/shared/package.json
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          buildScriptName: storybook:build
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          onlyChanged: true # 👈 Required option to enable TurboSnap
+          storybookBuildDir: ./storybook-static
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
+          externals: |
+            packages/frontend/tailwind.config.js
+            *.css
+            packages/frontend/src/static/fonts/**/*
+          untraced: |
+            packages/backend/package.json
+            packages/shared/package.json
