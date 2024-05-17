@@ -58,6 +58,9 @@ export function getScalingActivityViewEntry(
   const isVerified = verificationStatus.projects[project.id.toString()]
   const hasImplementationChanged =
     !!implementationChange?.projects[project.id.toString()]
+  const combinedSyncedUntil =
+    activityApiResponse.combined.daily.data.at(-1)?.[0]
+  assert(combinedSyncedUntil !== undefined, 'combinedSyncedUntil is undefined')
 
   return {
     name: project.display.name,
@@ -74,7 +77,7 @@ export function getScalingActivityViewEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
     stage: project.type === 'layer2' ? project.stage : undefined,
-    data: getActivityViewEntryDetails(data, 'project'),
+    data: getActivityViewEntryDetails(data, 'project', combinedSyncedUntil),
   }
 }
 
@@ -82,6 +85,10 @@ function getEthereumActivityViewEntry(
   activityApiResponse: ActivityApiResponse,
 ): ActivityViewEntry {
   const data = activityApiResponse.combined.daily.data
+  const combinedSyncedUntil =
+    activityApiResponse.combined.daily.data.at(-1)?.[0]
+  assert(combinedSyncedUntil !== undefined, 'combinedSyncedUntil is undefined')
+
   return {
     name: 'Ethereum',
     shortName: undefined,
@@ -96,13 +103,14 @@ function getEthereumActivityViewEntry(
     isVerified: undefined,
     showProjectUnderReview: undefined,
     stage: undefined,
-    data: getActivityViewEntryDetails(data, 'ethereum'),
+    data: getActivityViewEntryDetails(data, 'ethereum', combinedSyncedUntil),
   }
 }
 
 function getActivityViewEntryDetails(
   data: ActivityApiChart['data'] | undefined,
   type: 'project' | 'ethereum',
+  combinedSyncedUntil: UnixTime,
 ): ActivityViewEntryData | undefined {
   if (!data || data.length === 0) {
     return undefined
@@ -115,7 +123,7 @@ function getActivityViewEntryDetails(
     tpsWeeklyChange: getTpsWeeklyChange(data, type),
     transactionsMonthlyCount: getTransactionCount(data, type, 30),
     syncStatus: {
-      isSynced: isSynced(syncedUntil),
+      isSynced: syncedUntil.gte(combinedSyncedUntil),
       displaySyncedUntil: formatTimestamp(syncedUntil.toNumber(), {
         mode: 'datetime',
         longMonthName: true,
@@ -129,9 +137,4 @@ function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
   return projects.filter(
     (x) => (x.type === 'layer2' ? !x.isArchived : true) && !x.isUpcoming,
   )
-}
-
-function isSynced(timestamp: UnixTime) {
-  const threshold = UnixTime.now().add(-1, 'days').toStartOf('day')
-  return timestamp.gte(threshold)
 }
