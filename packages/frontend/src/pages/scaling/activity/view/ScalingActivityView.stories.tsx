@@ -131,7 +131,7 @@ export const Primary: Story = {
           maxTps: 22.698425925925925,
           maxTpsDate: '2024 Jan 14',
           syncStatus: {
-            isSynced: false,
+            isSynced: true,
             displaySyncedUntil: 'Some random date',
           },
         },
@@ -158,7 +158,7 @@ export const Primary: Story = {
           maxTps: 25.47474537037037,
           maxTpsDate: '2023 Dec 27',
           syncStatus: {
-            isSynced: true,
+            isSynced: false,
             displaySyncedUntil: 'Some random date',
           },
         },
