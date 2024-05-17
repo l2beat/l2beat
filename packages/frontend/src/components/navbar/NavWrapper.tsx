@@ -2,6 +2,7 @@ import React, { ReactNode, SVGAttributes } from 'react'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { Icon } from '../icons/Icon'
 import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
@@ -104,6 +105,22 @@ function NavSmallLink({
   )
 }
 
+function NavCollapseIcon() {
+  return (
+    <Icon
+      className="stroke-[#525C6A] dark:stroke-[#D3D5D9]"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    >
+      <path d="M16.5 8L12.0633 12.4367C12.0284 12.4716 12.0284 12.5284 12.0633 12.5633L16.5 17" />
+      <path d="M8 22L8 2" />
+    </Icon>
+  )
+}
+
 export function NavWrapper({ children }: { children: ReactNode }) {
   const { config } = usePageBuildContext()
 
@@ -119,100 +136,109 @@ export function NavWrapper({ children }: { children: ReactNode }) {
       >
         <div
           className={cn(
-            'bg-[#E6E7EC] dark:bg-[#131215] px-6 py-[1.125rem] flex flex-col gap-8 xl:h-screen xl:fixed overflow-y-auto',
+            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col xl:h-screen xl:fixed',
             sharedSizeClasses,
           )}
         >
-          <div className="flex flex-row justify-between items-center">
-            <Logo className="h-8 w-auto" />
-            <DarkThemeToggle />
-          </div>
-          <nav className="flex flex-col gap-6">
-            <NavLinkGroup title="Scaling">
-              <NavLink
-                title="Summary"
-                icon={SummaryIcon}
-                href="/scaling/summary"
-              />
-              <NavLink
-                title="Value Locked"
-                icon={TvlIcon}
-                href="/scaling/tvl"
-              />
-              <NavLink
-                title="Risk Analysis"
-                icon={RiskIcon}
-                href="/scaling/risk"
-              />
-              <NavLink
-                title="Data Availability"
-                icon={DataAvailabilityIcon}
-                href="/scaling/data-availability"
-              />
-              {config.features.liveness && (
+          <div className="px-6 py-[1.125rem] overflow-y-auto flex-1 flex flex-col gap-8">
+            <div className="flex flex-row justify-between items-center">
+              <Logo className="h-8 w-auto" />
+              <DarkThemeToggle />
+            </div>
+            <nav className="flex flex-col gap-6 flex-1">
+              <NavLinkGroup title="Scaling">
                 <NavLink
-                  title="Liveness"
-                  icon={LivenessIcon}
-                  href="/scaling/liveness"
+                  title="Summary"
+                  icon={SummaryIcon}
+                  href="/scaling/summary"
                 />
-              )}
-              {config.features.finality && (
                 <NavLink
-                  title="Finality"
-                  icon={FinalityIcon}
-                  href="/scaling/finality"
+                  title="Value Locked"
+                  icon={TvlIcon}
+                  href="/scaling/tvl"
                 />
-              )}
-              {config.features.activity && (
                 <NavLink
-                  title="Activity"
-                  icon={ActivityIcon}
-                  href="/scaling/activity"
+                  title="Risk Analysis"
+                  icon={RiskIcon}
+                  href="/scaling/risk"
                 />
-              )}
-              {config.features.costsPage && (
-                <NavLink title="Costs" icon={CostsIcon} href="/scaling/costs" />
-              )}
-            </NavLinkGroup>
-            <NavLinkGroup title="Bridges">
-              <NavLink
-                title="Summary"
-                icon={SummaryIcon}
-                href="/bridges/summary"
-              />
-              <NavLink
-                title="Risk Analysis"
-                icon={RiskIcon}
-                href="/bridges/risk"
-              />
-            </NavLinkGroup>
-            <div className="h-px w-full bg-gray-300 dark:bg-gray-850" />
-            <NavSmallLinkGroup>
-              <NavSmallLink title="Forum" href={config.links.forum} />
-              {config.features.zkCatalog && (
-                <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
-              )}
-              <NavSmallLink title="Donate" href={'/donate'} />
-              {config.features.governancePage ? (
-                <NavSmallLink title="Governance" href={'/governance'} />
-              ) : (
-                <NavSmallLink
-                  title="Governance"
-                  href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
+                <NavLink
+                  title="Data Availability"
+                  icon={DataAvailabilityIcon}
+                  href="/scaling/data-availability"
                 />
-              )}
-              {config.features.glossary && (
-                <NavSmallLink title="Glossary" href="/glossary" />
-              )}
-              <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
-                Jobs
-                {config.features.hiringBadge && (
-                  <HiringBadge className="ml-1 py-0.5 rounded-sm" />
+                {config.features.liveness && (
+                  <NavLink
+                    title="Liveness"
+                    icon={LivenessIcon}
+                    href="/scaling/liveness"
+                  />
                 )}
-              </NavSmallLink>
-              <NavSmallLink title="FAQ" href="/faq" />
-            </NavSmallLinkGroup>
-          </nav>
+                {config.features.finality && (
+                  <NavLink
+                    title="Finality"
+                    icon={FinalityIcon}
+                    href="/scaling/finality"
+                  />
+                )}
+                {config.features.activity && (
+                  <NavLink
+                    title="Activity"
+                    icon={ActivityIcon}
+                    href="/scaling/activity"
+                  />
+                )}
+                {config.features.costsPage && (
+                  <NavLink
+                    title="Costs"
+                    icon={CostsIcon}
+                    href="/scaling/costs"
+                  />
+                )}
+              </NavLinkGroup>
+              <NavLinkGroup title="Bridges">
+                <NavLink
+                  title="Summary"
+                  icon={SummaryIcon}
+                  href="/bridges/summary"
+                />
+                <NavLink
+                  title="Risk Analysis"
+                  icon={RiskIcon}
+                  href="/bridges/risk"
+                />
+              </NavLinkGroup>
+              <div className="h-px w-full bg-gray-300 dark:bg-gray-850" />
+              <NavSmallLinkGroup>
+                <NavSmallLink title="Forum" href={config.links.forum} />
+                {config.features.zkCatalog && (
+                  <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
+                )}
+                <NavSmallLink title="Donate" href={'/donate'} />
+                {config.features.governancePage ? (
+                  <NavSmallLink title="Governance" href={'/governance'} />
+                ) : (
+                  <NavSmallLink
+                    title="Governance"
+                    href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
+                  />
+                )}
+                {config.features.glossary && (
+                  <NavSmallLink title="Glossary" href="/glossary" />
+                )}
+                <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
+                  Jobs
+                  {config.features.hiringBadge && (
+                    <HiringBadge className="ml-1 py-0.5 rounded-sm" />
+                  )}
+                </NavSmallLink>
+                <NavSmallLink title="FAQ" href="/faq" />
+              </NavSmallLinkGroup>
+            </nav>
+          </div>
+          <div className="p-6 border-t border-gray-300 dark:border-gray-850">
+            <NavCollapseIcon />
+          </div>
         </div>
       </div>
       <div className="flex-1">{children}</div>
