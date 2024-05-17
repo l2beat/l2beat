@@ -6,7 +6,7 @@ export function About() {
   return (
     <section className="mt-8 text-base">
       <h2
-        id="about"
+        id="aboutxx"
         className="text-2xl font-bold md:text-3xl md:leading-normal"
       >
         <a href="#about">About L2BEAT</a>
