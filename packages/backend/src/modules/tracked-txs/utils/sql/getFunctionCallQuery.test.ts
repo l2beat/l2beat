@@ -50,7 +50,7 @@ describe(getFunctionCallQuery.name, () => {
       return 16 * nonZeroBytes + 4 * zeroBytes;
     """;
 
-    SELECT
+    SELECT DISTINCT
       txs.hash,
       traces.to_address,
       txs.block_number,
