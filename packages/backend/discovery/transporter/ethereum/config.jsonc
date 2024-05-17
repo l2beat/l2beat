@@ -1,10 +1,10 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "transporter",
   "initialAddresses": [
     "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
-    "0x66598216D8E4d9AFE0F06d525B335b762229842f", // EtherSenderReceiver
+    "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
   "names": {
     "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
@@ -25,94 +25,94 @@
     "0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76": "CommitStore7",
     "0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "OffRamp8",
     "0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": "CommitStore8",
-    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM",
+    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
   },
   "overrides": {
     "EVM2EVMMainWhatever": {
-      "ignoreMethods": ["getNops"],
+      "ignoreMethods": ["getNops"]
     },
     "OffRamp1": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp2": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp3": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp4": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp5": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp6": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp7": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "OffRamp8": {
       "ignoreMethods": [
         "getTransmitters",
         "getSupportedTokens",
-        "getDestinationTokens",
-      ],
+        "getDestinationTokens"
+      ]
     },
     "CommitStore1": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore2": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore3": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore4": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore5": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore6": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore7": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "CommitStore8": {
-      "ignoreMethods": ["getTransmitters"],
+      "ignoreMethods": ["getTransmitters"]
     },
     "ARM": {
-      "ignoreMethods": ["getConfigDetails"], // information about voters - bless, curse, curseUnvote
-    },
-  },
+      "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
+    }
+  }
 }

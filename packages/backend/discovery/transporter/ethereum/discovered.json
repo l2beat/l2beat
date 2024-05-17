@@ -60,7 +60,7 @@
       },
       "sinceTimestamp": 1710865403,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 5,
         "getLatestPriceEpochAndRound": 3069186,
         "getStaticConfig": [
@@ -95,7 +95,7 @@
       },
       "sinceTimestamp": 1701286199,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 1262,
         "getLatestPriceEpochAndRound": 126978,
         "getStaticConfig": [
@@ -177,7 +177,7 @@
       },
       "sinceTimestamp": 1701802727,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 570,
         "getLatestPriceEpochAndRound": 3032833,
         "getStaticConfig": [
@@ -336,7 +336,7 @@
       },
       "sinceTimestamp": 1701285563,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 924,
         "getLatestPriceEpochAndRound": 128002,
         "getStaticConfig": [
@@ -524,7 +524,7 @@
       },
       "sinceTimestamp": 1701457415,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 1182,
         "getLatestPriceEpochAndRound": 128515,
         "getStaticConfig": [
@@ -601,7 +601,7 @@
       },
       "sinceTimestamp": 1701287747,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 1837,
         "getLatestPriceEpochAndRound": 127489,
         "getStaticConfig": [
@@ -636,7 +636,7 @@
       },
       "sinceTimestamp": 1701287831,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 1298,
         "getLatestPriceEpochAndRound": 128513,
         "getStaticConfig": [
@@ -732,7 +732,7 @@
       },
       "sinceTimestamp": 1701286319,
       "values": {
-        "getDynamicConfig": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+        "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 530,
         "getLatestPriceEpochAndRound": 128003,
         "getStaticConfig": [
