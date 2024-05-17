@@ -28,6 +28,15 @@ import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
 
+interface CanonicalAssetBreakdown {
+  assetId: AssetId
+  chainId: ChainId
+  amount: number
+  usdValue: number
+  usdPrice: string
+  escrows: CanonicalAssetBreakdownData['escrows']
+}
+
 type AmountConfigMap = Map<
   ProjectId,
   (AmountConfigEntry & { configId: string })[]
@@ -41,15 +50,6 @@ type Values = {
   native: bigint
 }
 type ValuesMap = Map<number, Values>
-
-interface CanonicalAssetBreakdown {
-  assetId: AssetId
-  chainId: ChainId
-  usdPrice: string
-  usdValue: number
-  amount: number
-  escrows: CanonicalAssetBreakdownData['escrows']
-}
 
 type ApiProject = {
   id: ProjectId
@@ -506,46 +506,58 @@ export class Tvl2Controller {
         native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
       }
     }
+
+    return result
   }
-  
+
   async getAggregatedTvl(
     lastHour: UnixTime,
     projectSlugs: string[],
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects
-      .filter((p) => projectSlugs.includes(p.slug))
-      .map((p) => p.id)
+    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
+    const projectIds = projects.map((x) => x.id)
 
-    console.time('DB')
-    const values = await this.valueRepository.getForProjects(projects)
-    console.timeEnd('DB')
+    const values = await this.valueRepository.getForProjects(projectIds)
 
     const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
     const hourlyCutOff = getHourlyCutoff(lastHour)
 
-    console.time('groupBy')
     const valuesByProject = groupBy(values, 'projectId')
-    console.timeEnd('groupBy')
 
     const aggregate = new Map<number, Values>()
-
     for (const project of projects) {
-      console.time(project.toString())
-      const projectValues = valuesByProject[project.toString()]
+      const projectValues = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
-      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
-        const sum = values.reduce(
-          (acc, curr) => {
-            acc.canonical += curr.canonical
-            acc.external += curr.external
-            acc.native += curr.native
-            return acc
-          },
-          { canonical: 0n, external: 0n, native: 0n },
+      const timestamps = this.getTimestampsForProject(
+        project,
+        sixHourlyCutOff,
+        hourlyCutOff,
+        lastHour,
+      )
+
+      for (const timestamp of timestamps) {
+        const values = valuesByTimestamp[timestamp.toString()] ?? []
+        const configuredSources = this.getConfiguredSources(
+          values,
+          project,
+          timestamp,
         )
+
+        const sum = values
+          .filter((x) => configuredSources.includes(x.dataSource))
+          .reduce(
+            (acc, curr) => {
+              acc.canonical += curr.canonical
+              acc.external += curr.external
+              acc.native += curr.native
+              return acc
+            },
+            { canonical: 0n, external: 0n, native: 0n },
+          )
+
         const aggregateSum = aggregate.get(Number(timestamp))
         if (!aggregateSum) {
           aggregate.set(Number(timestamp), sum)
@@ -555,10 +567,7 @@ export class Tvl2Controller {
           aggregateSum.native += sum.native
         }
       }
-      console.timeEnd(project.toString())
     }
-
-    console.time('Chart conversion')
 
     const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()))
     const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()))
@@ -605,9 +614,59 @@ export class Tvl2Controller {
       daily: getChart(dailyData),
     }
 
-    console.timeEnd('Chart conversion')
-
     return result
+  }
+
+  // TODO: instead of assert we should interpolate values so the page builds even with unsynced sources
+  private getConfiguredSources(
+    values: ValueRecord[],
+    project: ApiProject,
+    timestamp: UnixTime,
+  ) {
+    const valuesSources = values.map((x) => x.dataSource)
+    const configuredSources = Array.from(project.sources.values())
+      .filter((s) => s.minTimestamp.lte(timestamp))
+      .map((s) => s.name)
+
+    const missingSources = configuredSources.filter(
+      (s) => !valuesSources.includes(s),
+    )
+
+    assert(
+      missingSources.length === 0,
+      `Missing data sources [${missingSources.join(
+        ', ',
+      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
+    )
+    return configuredSources
+  }
+
+  private getTimestampsForProject(
+    project: ApiProject,
+    sixHourlyCutOff: UnixTime,
+    hourlyCutOff: UnixTime,
+    lastHour: UnixTime,
+  ): UnixTime[] {
+    const timestamps: UnixTime[] = []
+
+    let t = project.minTimestamp.toEndOf('day')
+    timestamps.push(t)
+
+    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
+      t = t.add(1, 'days')
+      timestamps.push(t)
+    }
+
+    while (t.add(6, 'hours').lte(hourlyCutOff)) {
+      t = t.add(6, 'hours')
+      timestamps.push(t)
+    }
+
+    while (t.add(1, 'hours').lte(lastHour)) {
+      t = t.add(1, 'hours')
+      timestamps.push(t)
+    }
+    return timestamps
   }
 
   async getTokenChart(
@@ -671,14 +730,12 @@ export class Tvl2Controller {
   }
 
   private async getEthPrices() {
-    const ethPriceId = this.priceConfigs.get(
-      createAssetId({ address: 'native', chain: 'ethereum' }),
-    )?.priceId
+    const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
+    const ethPriceId = this.priceConfigs.get(ethAssetId)?.priceId
     assert(ethPriceId, 'Eth priceId not found')
-    const ethPriceRecords =
-      await this.priceRepository.getDailyByConfigId(ethPriceId)
+    const records = await this.priceRepository.getDailyByConfigId(ethPriceId)
     const ethPrices = new Map(
-      ethPriceRecords.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+      records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
     return ethPrices
   }
