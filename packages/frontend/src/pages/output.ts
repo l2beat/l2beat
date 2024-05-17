@@ -2,9 +2,9 @@ import path from 'path'
 import fsx from 'fs-extra'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import { Page } from './Page'
-import { withPageBuildContext } from '../components/navbar/navigationContext'
 import { Config } from '../build/config'
+import { withPageBuildContext } from '../components/navbar/navigationContext'
+import { Page } from './Page'
 
 export function outputPages(config: Config, pages: Page[]) {
   for (const { slug, page } of pages) {

@@ -4,11 +4,11 @@ import { FullPageHeader } from '../../../components/FullPageHeader'
 import { Link } from '../../../components/Link'
 import { PageContent } from '../../../components/PageContent'
 import { OutLinkIcon } from '../../../components/icons'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 import {
   DonateFundingSources,
   DonateFundingSourcesProps,
 } from './DonateFundingSources'
-import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface DonatePageProps {
   header: HeaderProps

@@ -1,14 +1,12 @@
 import React from 'react'
-
-import { Footer, Navbar } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { TvlBreakdownViewProps } from '../props/getTvlBreakdownView'
 import {
   TvlBreakdownHeader,
   TvlBreakdownHeaderProps,
 } from './TvlBreakdownHeader'
 import { TvlBreakdownView } from './TvlBreakdownView'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface TvlBreakdownPageProps {
   tvlBreakdownHeader: TvlBreakdownHeaderProps

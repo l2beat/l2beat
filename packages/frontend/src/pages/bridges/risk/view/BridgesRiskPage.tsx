@@ -1,9 +1,6 @@
 import React from 'react'
-
-import { FooterProps, NavbarProps } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
-import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 

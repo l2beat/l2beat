@@ -1,14 +1,14 @@
 import React, { ReactNode, SVGAttributes } from 'react'
-import { Logo } from '../Logo'
-import { DarkThemeToggle } from './DarkThemeToggle'
-import { usePageBuildContext } from './navigationContext'
 import { cn } from '../../utils/cn'
+import { Logo } from '../Logo'
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
 import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
+import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
+import { usePageBuildContext } from './navigationContext'
 
 function NavLinkGroup({
   title,

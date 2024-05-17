@@ -3,8 +3,8 @@ import React from 'react'
 import { Article } from '../../../../components/Article'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { PageContent } from '../../../../components/PageContent'
-import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
+import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationPageProps {
   publication: GovernancePublicationEntry

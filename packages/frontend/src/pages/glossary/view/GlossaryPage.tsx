@@ -1,14 +1,12 @@
 import React from 'react'
-
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
 import { PageContent } from '../../../components/PageContent'
 import { ScrollToTopButton } from '../../../components/ScrollToTopButton'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 import { GlossaryEntry } from '../props/getGlossaryEntry'
 import { AlphabetSelector } from './AlphabetSelector'
 import { GlossaryItem } from './GlossaryItem'
 import { GlossarySideNavigation } from './GlossarySideNavigation'
-import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface GlossaryPageProps {
   entries: GlossaryEntry[]

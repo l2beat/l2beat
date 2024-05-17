@@ -1,13 +1,7 @@
 import React from 'react'
-
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
 import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { cn } from '../../../../utils/cn'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
@@ -19,7 +13,6 @@ import {
   ScalingProjectHeader,
   ScalingProjectHeaderProps,
 } from '../../components/ScalingProjectHeader'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface ProjectPageProps {
   projectHeader: ScalingProjectHeaderProps

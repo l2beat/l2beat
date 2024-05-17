@@ -2,7 +2,6 @@ import { Layer2, Layer3, ZkCatalogProject } from '@l2beat/config'
 
 import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getCollectionEntry } from '../../../../content/getCollection'
 import { Wrapped } from '../../../Page'
 import {

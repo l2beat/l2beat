@@ -2,8 +2,8 @@ import React from 'react'
 
 import { HorizontalSeparator } from '../../components/HorizontalSeparator'
 import { PageContent } from '../../components/PageContent'
-import { FaqItem } from './getFaqItems'
 import { DashboardLayout } from '../../layouts/DashboardLayout'
+import { FaqItem } from './getFaqItems'
 
 export interface FaqPageProps {
   title: string

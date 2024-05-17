@@ -5,11 +5,11 @@ import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
 import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
 import { Verifiers } from './Verifiers'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails

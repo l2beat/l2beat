@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Chart, FooterProps, NavbarProps } from '../../../../components'
-import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
+import { Chart, } from '../../../../components'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 

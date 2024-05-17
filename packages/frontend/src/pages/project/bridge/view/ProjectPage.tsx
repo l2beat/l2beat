@@ -1,15 +1,8 @@
 import React from 'react'
-
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
 import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
-import { cn } from '../../../../utils/cn'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -20,7 +13,6 @@ import {
   BridgeProjectHeader,
   BridgeProjectHeaderProps,
 } from './BridgeProjectHeader'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface ProjectPageProps {
   projectHeader: BridgeProjectHeaderProps

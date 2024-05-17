@@ -3,8 +3,8 @@ import React, { ReactNode } from 'react'
 import { Footer } from '../components'
 import { About } from '../components/About'
 import { PageContent } from '../components/PageContent'
-import { OtherSites } from '../components/other-sites/OtherSites'
 import { NavWrapper } from '../components/navbar/NavWrapper'
+import { OtherSites } from '../components/other-sites/OtherSites'
 
 export interface DashboardLayoutProps {
   hideOtherSites?: boolean

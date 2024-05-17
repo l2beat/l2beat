@@ -2,8 +2,8 @@ import React from 'react'
 
 import { cn } from '../utils/cn'
 import { Link } from './Link'
+import { SocialLinks, getSocialLinksProps } from './navbar/SocialLinks'
 import { usePageBuildContext } from './navbar/navigationContext'
-import { getSocialLinksProps, SocialLinks } from './navbar/SocialLinks'
 export function Footer() {
   const { config } = usePageBuildContext()
   return (

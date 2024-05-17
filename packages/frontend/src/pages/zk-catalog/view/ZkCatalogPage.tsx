@@ -1,7 +1,7 @@
 import React from 'react'
 import { PageContent } from '../../../components/PageContent'
-import { ZkCatalogView, ZkCatalogViewProps } from './ZkCatalogView'
 import { DashboardLayout } from '../../../layouts/DashboardLayout'
+import { ZkCatalogView, ZkCatalogViewProps } from './ZkCatalogView'
 
 export interface ZkCatalogPageProps {
   view: ZkCatalogViewProps

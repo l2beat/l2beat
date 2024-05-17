@@ -57,14 +57,34 @@ async function main() {
     const backendFeatures = await fetchFeaturesApi(config.backend, http)
     config.features = getCommonFeatures(config.features, backendFeatures)
 
-    const [tvlApiResponse, activityApiResponse, tvlBreakdownApiResponse, livenessApiResponse, finalityApiResponse, implementationChange, l2CostsApiResponse] = await Promise.all([
+    const [
+      tvlApiResponse,
+      activityApiResponse,
+      tvlBreakdownApiResponse,
+      livenessApiResponse,
+      finalityApiResponse,
+      implementationChange,
+      l2CostsApiResponse,
+    ] = await Promise.all([
       fetchTvlApi(config.backend, http, config.features),
-      config.features.activity ? fetchActivityApi(config.backend, http) : undefined,
-      config.features.tvlBreakdown ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http) : undefined,
-      config.features.liveness ? fetchLivenessApi(config.backend, http) : undefined,
-      config.features.finality ? fetchFinalityApi(config.backend, http) : undefined,
-      config.features.implementationChange ? fetchImplementationChangeReport(config.backend, http) : undefined,
-      config.features.costsPage ? fetchL2CostsApi(config.backend, http) : undefined
+      config.features.activity
+        ? fetchActivityApi(config.backend, http)
+        : undefined,
+      config.features.tvlBreakdown
+        ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http)
+        : undefined,
+      config.features.liveness
+        ? fetchLivenessApi(config.backend, http)
+        : undefined,
+      config.features.finality
+        ? fetchFinalityApi(config.backend, http)
+        : undefined,
+      config.features.implementationChange
+        ? fetchImplementationChangeReport(config.backend, http)
+        : undefined,
+      config.features.costsPage
+        ? fetchL2CostsApi(config.backend, http)
+        : undefined,
     ])
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)
@@ -73,8 +93,8 @@ async function main() {
     console.timeEnd('[FETCHING DATA]')
 
     console.time('[SANITY CHECKS]')
-    if(tvlApiResponse) tvlSanityCheck(tvlApiResponse)
-    if(activityApiResponse) activitySanityCheck(activityApiResponse)
+    if (tvlApiResponse) tvlSanityCheck(tvlApiResponse)
+    if (activityApiResponse) activitySanityCheck(activityApiResponse)
     console.timeEnd('[SANITY CHECKS]')
 
     console.time('[BUILDING PAGES]')

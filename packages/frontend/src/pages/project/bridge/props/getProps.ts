@@ -2,7 +2,6 @@ import { Bridge } from '@l2beat/config'
 import compact from 'lodash/compact'
 
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { PagesData, Wrapped } from '../../../Page'
 import { getCharts } from '../../common/getCharts'

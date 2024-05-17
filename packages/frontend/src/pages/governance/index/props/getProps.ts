@@ -1,5 +1,4 @@
-import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
+
 import {
   CollectionEntry,
   getCollection,

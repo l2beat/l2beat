@@ -2,6 +2,7 @@ import React from 'react'
 
 import { PageContent } from '../../../../components/PageContent'
 import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -12,7 +13,6 @@ import {
   ScalingProjectHeader,
   ScalingProjectHeaderProps,
 } from '../../components/ScalingProjectHeader'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface ProjectPageProps {
   projectHeader: ScalingProjectHeaderProps

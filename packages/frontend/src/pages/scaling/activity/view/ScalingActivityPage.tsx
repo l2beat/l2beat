@@ -2,7 +2,6 @@ import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import { Chart } from '../../../../components'
-import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import {
   ScalingActivityView,
