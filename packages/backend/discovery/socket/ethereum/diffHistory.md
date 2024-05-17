@@ -9,7 +9,7 @@ Generated with discovered.json: 0x4bd5593e7b5d34a2700f86bac590a29180eb78e9
 ## Description
 
 New plugs connected to vaults associated with Lyra are added.
-5 plugs, 1 has no vaults (but Controller.sol), 4 are vaults with the tokens:
+5 plugs, 1 has the same vault, 4 have vaults with the tokens:
 - weETH (supported already)
 - rswETH (restaked Swell ETH, added)
 - weETHC (Lyra wrapped eETH covered call, ignored for now)
