@@ -92,7 +92,8 @@
             "method": "rollupIDToRollupData",
             "startIndex": 1,
             "pickFields": ["rollupContract", "verifier"],
-            "length": "{{ rollupCount }}"
+            "length": "{{ rollupCount }}",
+            "ignoreRelative": true
           }
         },
         "rollupTypes": {

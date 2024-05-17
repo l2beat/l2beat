@@ -21,47 +21,7 @@
       "ignoreInWatchMode": ["template"]
     },
     "RollupProxy": {
-      "ignoreMethods": [
-        // Execution reverted
-        "proxiableUUID"
-      ],
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
-      "fields": {
-        // when this changes, it means the validators have changed
-        "setValidatorCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000006"
-            ]
-          }
-        },
-        "challenges": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "RollupChallengeStarted",
-            "returnParams": [
-              "challengeIndex",
-              "asserter",
-              "challenger",
-              "challengedNode"
-            ]
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "validator"
-          }
-        }
-      }
+      "extends": "orbitstack/RollupProxy"
     },
     "UpgradeExecutor": {
       "fields": {
@@ -85,57 +45,7 @@
       "ignoreRelatives": ["nativeToken"]
     },
     "SequencerInbox": {
-      "ignoreMethods": ["inboxAccs"],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "fields": {
-        // getting sequencers from the contract is too complex at the moment
-        // so we hardcode it in config .ts
-        // this field will notify us in case of changes
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "handler": {
-            "type": "call",
-            "method": "function isBatchPoster(address) external view returns (bool)",
-            "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
-          }
-        },
-        "sequencerVersion": {
-          "handler": {
-            "type": "arbitrumSequencerVersion"
-          }
-        },
-        "dacKeyset": {
-          "handler": {
-            "type": "arbitrumDACKeyset"
-          }
-        },
-        // when this changes, it means the sequencers have changed
-        "setIsBatchPosterCount": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // event OwnerFunctionCalled(uint256 indexed id);
-              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-              // id == 6 is emitted inside setValidator()
-              "0x0000000000000000000000000000000000000000000000000000000000000001"
-            ]
-          }
-        },
-        "batchPosters": {
-          "handler": {
-            "type": "arbitrumActors",
-            "actorType": "batchPoster"
-          }
-        },
-        "keySetUpdates": {
-          "handler": {
-            "type": "eventCount",
-            "topics": [
-              // SetValidKeyset(bytes32,bytes)
-              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-            ]
-          }
-        }
-      }
+      "extends": "orbitstack/SequencerInbox"
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]

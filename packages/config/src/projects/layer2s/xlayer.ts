@@ -96,7 +96,6 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupManagerContract: discovery.getContract('PolygonRollupManager'),
   rollupModuleContract: discovery.getContract('XLayerValidiumEtrog'),
   rollupVerifierContract: discovery.getContract('XLayerVerifier'),
   rpcUrl: 'https://rpc.xlayer.tech',

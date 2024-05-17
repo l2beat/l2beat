@@ -12,6 +12,39 @@ describeDatabase(AmountRepository.name, (database) => {
     await amountRepository.deleteAll()
   })
 
+  describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
+    it('gets by ids in inclusive range', async () => {
+      await amountRepository.addMany([
+        amount('a', new UnixTime(50), 100n),
+        amount('a', new UnixTime(100), 100n),
+        amount('b', new UnixTime(100), 100n),
+        amount('c', new UnixTime(100), 100n),
+        amount('a', new UnixTime(200), 100n),
+        amount('b', new UnixTime(200), 100n),
+        amount('c', new UnixTime(200), 100n),
+        amount('a', new UnixTime(300), 100n),
+        amount('b', new UnixTime(300), 100n),
+        amount('c', new UnixTime(300), 100n),
+        amount('a', new UnixTime(400), 100n),
+      ])
+
+      const result = await amountRepository.getByConfigIdsInRange(
+        ['a'.repeat(12), 'b'.repeat(12)],
+        new UnixTime(100),
+        new UnixTime(300),
+      )
+
+      expect(result).toEqual([
+        amount('a', new UnixTime(100), 100n),
+        amount('b', new UnixTime(100), 100n),
+        amount('a', new UnixTime(200), 100n),
+        amount('b', new UnixTime(200), 100n),
+        amount('a', new UnixTime(300), 100n),
+        amount('b', new UnixTime(300), 100n),
+      ])
+    })
+  })
+
   describe(AmountRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       await amountRepository.addMany([

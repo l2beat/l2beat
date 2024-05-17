@@ -6,6 +6,7 @@ import { rimraf } from 'rimraf'
 
 import { DiscoveryCliConfig } from '../config/types'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
+import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
 import { getBlockNumberTwoProviders } from '../discovery/provider/DiscoveryProvider'
@@ -21,11 +22,15 @@ export async function singleDiscoveryCommand(
     return
   }
 
-  const projectConfig = new DiscoveryConfig({
-    name: singleDiscovery.address.toString(),
-    chain: singleDiscovery.chain.name,
-    initialAddresses: [singleDiscovery.address],
-  })
+  const configReader = new ConfigReader()
+  const projectConfig = new DiscoveryConfig(
+    {
+      name: singleDiscovery.address.toString(),
+      chain: singleDiscovery.chain.name,
+      initialAddresses: [singleDiscovery.address],
+    },
+    configReader,
+  )
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(

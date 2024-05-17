@@ -21,6 +21,39 @@ describeDatabase(PriceRepository.name, (database) => {
     })
   })
 
+  describe(PriceRepository.prototype.getByConfigIdsInRange.name, () => {
+    it('gets by ids in inclusive range', async () => {
+      await repository.addMany([
+        saved('a', new UnixTime(50), 100),
+        saved('a', new UnixTime(100), 100),
+        saved('b', new UnixTime(100), 100),
+        saved('c', new UnixTime(100), 100),
+        saved('a', new UnixTime(200), 100),
+        saved('b', new UnixTime(200), 100),
+        saved('c', new UnixTime(200), 100),
+        saved('a', new UnixTime(300), 100),
+        saved('b', new UnixTime(300), 100),
+        saved('c', new UnixTime(300), 100),
+        saved('a', new UnixTime(400), 100),
+      ])
+
+      const result = await repository.getByConfigIdsInRange(
+        ['a'.repeat(12), 'b'.repeat(12)],
+        new UnixTime(100),
+        new UnixTime(300),
+      )
+
+      expect(result).toEqual([
+        saved('a', new UnixTime(100), 100),
+        saved('b', new UnixTime(100), 100),
+        saved('a', new UnixTime(200), 100),
+        saved('b', new UnixTime(200), 100),
+        saved('a', new UnixTime(300), 100),
+        saved('b', new UnixTime(300), 100),
+      ])
+    })
+  })
+
   describe(PriceRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       await repository.addMany([

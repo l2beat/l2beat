@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { DiscoveryProvider } from '../DiscoveryProvider'
 import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
 
@@ -47,10 +48,13 @@ export class MulticallClient {
         )
         return batchedResults.flat()
       }
-    } catch {
-      throw new Error(
-        `Ethereum multicall failed for block number:  ${blockNumber}. Call size was ${requests.length}.`,
-      )
+    } catch (e) {
+      const ethersError = parseEthersError(e)
+
+      if (ethersError) {
+        throw ethersError
+      }
+      throw e
     }
   }
 
@@ -92,3 +96,22 @@ export function toBatches<T>(items: T[], batchSize: number): T[][] {
   }
   return batches
 }
+
+export function parseEthersError(e: unknown): Error | undefined {
+  const parsed = ethersError.safeParse(e)
+
+  if (parsed.success) {
+    return new Error(JSON.stringify(parsed.data))
+  }
+
+  return undefined
+}
+
+const ethersError = z.object({
+  error: z.object({
+    code: z.string().optional(),
+    reason: z.string().optional(),
+    requestMethod: z.string().optional(),
+    timeout: z.number().optional(),
+  }),
+})

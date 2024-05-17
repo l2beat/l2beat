@@ -42,7 +42,7 @@
     "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "STRKBridge"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "Starknet": {

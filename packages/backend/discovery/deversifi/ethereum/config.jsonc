@@ -15,7 +15,7 @@
     "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a": "DeversiFiTreasuryMultisig"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
