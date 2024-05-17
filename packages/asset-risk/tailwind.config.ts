@@ -30,6 +30,7 @@ const config: Config = {
       white: '#FAFAFA',
       gray: {
         100: '#E6E7EC',
+        200: '#DFDFDF',
         400: '#D0CED1',
         500: '#737373',
       },

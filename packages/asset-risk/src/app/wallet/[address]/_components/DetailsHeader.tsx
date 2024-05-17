@@ -10,9 +10,9 @@ interface DetailsHeaderProps {
 
 export function DetailsHeader(props: DetailsHeaderProps) {
   return (
-    <Card className="flex flex-col gap-4">
+    <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
       <h1 className="font-bold text-3xl">Assets&apos; Risks</h1>
-      <div className="grid grid-cols-1 md:gap-0 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-1 md:gap-2 gap-3 md:grid-cols-4">
         <div className="flex flex-col gap-[5px] col-span-2">
           <span className="text-zinc-500 font-bold text-xs">Value</span>
           <span className=" text-pink-900 dark:text-pink-200 font-extrabold text-xl">

@@ -1,25 +1,12 @@
 import { type Stage } from '@l2beat/config'
 import React from 'react'
-
-import { UnderReviewIcon } from '~/components/icons/stages/UnderReviewIcon'
-import { RoundedWarningIcon } from '~/components/icons/symbols/RoundedWarningIcon'
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {
   stage: Stage | 'UnderReview' | 'NotApplicable'
-  icon?: 'warning' | 'underReview'
-  oneSize?: boolean
-  big?: boolean
-  className?: string
 }
 
-export function StageBadge({
-  stage,
-  icon,
-  oneSize,
-  big,
-  className,
-}: StageBadgeProps) {
+export function StageBadge({ stage }: StageBadgeProps) {
   const value =
     stage === 'UnderReview'
       ? 'In review'
@@ -27,23 +14,14 @@ export function StageBadge({
         ? undefined
         : stage
   return (
-    <div className={cn('inline-flex items-center gap-1.5', className)}>
-      <span
-        className={cn(
-          getColorClassName(stage),
-          'inline-block h-min rounded px-1.5 text-center font-medium !leading-none',
-          oneSize && 'w-20',
-          big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
-          value && 'uppercase',
-        )}
-      >
-        <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
-      </span>
-      {icon === 'warning' && (
-        <RoundedWarningIcon className="size-5" sentiment="warning" />
+    <span
+      className={cn(
+        getColorClassName(stage),
+        'inline-block h-4 rounded uppercase px-1 py-[1px] text-2xs text-center font-medium !leading-none',
       )}
-      {icon === 'underReview' && <UnderReviewIcon className="size-5" />}
-    </div>
+    >
+      <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
+    </span>
   )
 }
 
@@ -54,13 +32,13 @@ function getColorClassName(
     case 'Stage 2':
       return 'bg-green-800 text-white'
     case 'Stage 1':
-      return 'bg-yellow-250 text-black'
+      return 'bg-[#FFC61B] text-[#684E00] border border-[#D9AA1E]'
     case 'Stage 0':
-      return 'bg-orange-400 text-black'
+      return 'bg-orange-600 text-white border border-[#F98A24]'
     case 'UnderReview':
       return 'bg-zinc-700 text-yellow-200'
     case 'NotApplicable':
-      return 'bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400 !font-normal'
+      return 'bg-[#B4C7D5] text-black border border-[#D1E1EC]'
     default:
       return ''
   }

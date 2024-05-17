@@ -1,3 +1,4 @@
+import { layer2s } from '@l2beat/config'
 import 'server-only'
 
 import { type Hex } from 'viem'
@@ -106,4 +107,16 @@ export function getChain(chainId: number) {
     throw new Error(`Chain with id ${chainId} is not supported.`)
   }
   return chain
+}
+
+export function getChainStage(chainId: number) {
+  const chain =
+    chainId === 1
+      ? {
+          stage: null,
+          technology: null,
+          riskView: null,
+        }
+      : layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
+  return chain?.stage?.stage
 }
