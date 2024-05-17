@@ -3196,6 +3196,21 @@
       "formula": "locked"
     },
     {
+      "id": "speth-spectrum-staked-eth",
+      "name": "Spectrum Staked ETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "symbol": "spETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715574719,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "spell-spell-token",
       "name": "Spell Token",
       "coingeckoId": "spell-token",
