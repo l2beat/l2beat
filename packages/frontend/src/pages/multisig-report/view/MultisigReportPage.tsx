@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Logo, } from '../../../components'
+import { Logo } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { PolygonLogo } from '../../../components/report/PolygonLogo'
 import { ReportBanner } from '../../../components/report/ReportBanner'

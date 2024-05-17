@@ -1,4 +1,3 @@
-
 import {
   CollectionEntry,
   getCollection,

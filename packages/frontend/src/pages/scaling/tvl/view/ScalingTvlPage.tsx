@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Chart, } from '../../../../components'
+import { Chart } from '../../../../components'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 

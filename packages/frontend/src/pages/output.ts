@@ -9,7 +9,10 @@ import { Page } from './Page'
 export function outputPages(config: Config, pages: Page[]) {
   for (const { slug, page } of pages) {
     fsx.mkdirpSync(path.join('build', slug))
-    const html = `<!DOCTYPE html>${withPageBuildContext({ config, path: slug }, () => renderToStaticMarkup(page))}`
+    const html = `<!DOCTYPE html>${withPageBuildContext(
+      { config, path: slug },
+      () => renderToStaticMarkup(page),
+    )}`
     fsx.writeFileSync(path.join('build', slug, 'index.html'), html)
   }
 }
