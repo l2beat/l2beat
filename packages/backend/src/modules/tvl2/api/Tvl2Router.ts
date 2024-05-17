@@ -10,9 +10,31 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
   router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getOldTvl(clock.getLastHour())
+    const tvl = await controller.getTvl(clock.getLastHour())
     ctx.body = tvl
   })
+
+  router.get(
+    '/api/tvl2/aggregate',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          projectSlugs: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        const projectSlugs = ctx.query.projectSlugs
+          .split(',')
+          .map((slug) => slug.trim())
+
+        const tvl = await controller.getAggregatedTvl(
+          clock.getLastHour(),
+          projectSlugs,
+        )
+        ctx.body = tvl
+      },
+    ),
+  )
 
   router.get(
     '/api/tvl2/token',

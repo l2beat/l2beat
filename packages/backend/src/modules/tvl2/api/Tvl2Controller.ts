@@ -23,30 +23,10 @@ import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
+import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-
-export interface Tvl2Project {
-  id: ProjectId
-  indexers: { get safeHeight(): number }[]
-}
-
-interface Tvl2Result {
-  daily: Tvl2TimestampedResult[]
-}
-
-interface Tvl2TimestampedResult {
-  timestamp: number
-  projects: Record<string, Tvl2ProjectResult>
-}
-
-interface Tvl2ProjectResult {
-  canonical: string
-  external: string
-  native: string
-}
 
 interface CanonicalAssetBreakdown {
   assetId: AssetId
@@ -71,6 +51,20 @@ type Values = {
 }
 type ValuesMap = Map<number, Values>
 
+type ApiProject = {
+  id: ProjectId
+  minTimestamp: UnixTime
+  type: Project['type']
+  slug: string
+  sources: Map<
+    string,
+    {
+      name: string
+      minTimestamp: UnixTime
+    }
+  >
+}
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -78,12 +72,8 @@ export class Tvl2Controller {
     AmountConfigEntry & { configId: string }
   >
   private readonly priceConfigs: PriceConfigIdMap
-  private readonly projects: {
-    id: ProjectId
-    minTimestamp: UnixTime
-    type: Project['type']
-  }[]
-  private minTimestamp: Record<'layer2' | 'bridge', UnixTime>
+  private readonly projects: ApiProject[]
+  private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
     private readonly amountRepository: AmountRepository,
@@ -103,7 +93,7 @@ export class Tvl2Controller {
         .map((x) => [x.configId, x]),
     )
     this.priceConfigs = getPriceConfigIds(config)
-    this.projects = projects.flatMap(({ projectId: id, type }) => {
+    this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
       const config = this.amountConfig.get(id)
       if (!config) {
         return []
@@ -112,78 +102,35 @@ export class Tvl2Controller {
       const minTimestamp = config
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
-      return { id, minTimestamp, type }
+
+      const sources = new Map<
+        string,
+        { name: string; minTimestamp: UnixTime }
+      >()
+      for (const amount of config) {
+        const name =
+          amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
+
+        const source = sources.get(name)
+        if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
+          sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
+        }
+      }
+      return { id, minTimestamp, type, slug, sources }
     })
 
     this.minTimestamp = {
-      layer2: this.projects
-        .filter((x) => x.type === 'layer2')
-        .map((x) => x.minTimestamp)
-        .reduce((acc, curr) => {
-          return UnixTime.min(acc, curr)
-        })
-        .toEndOf('day'),
-      bridge: this.projects
-        .filter((x) => x.type === 'bridge')
-        .map((x) => x.minTimestamp)
-        .reduce((acc, curr) => {
-          return UnixTime.min(acc, curr)
-        })
-        .toEndOf('day'),
+      layer2: this.getMinTimestamp('layer2'),
+      bridge: this.getMinTimestamp('bridge'),
+      layer3: this.getMinTimestamp('layer3'),
     }
   }
 
-  async getTvl(): Promise<Tvl2Result> {
-    // TODO: we should return daily, sixHourly and hourly results.
-    const result: Tvl2Result = {
-      daily: [],
-    }
+  async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+    const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects.map((x) => x.id)
-    const dailyValues = await this.valueRepository.getForProjects(projects)
-    const dailyValuesByTimestamp = groupBy(dailyValues, 'timestamp')
-    for (const [timestamp, values] of Object.entries(dailyValuesByTimestamp)) {
-      const valuesByProject = groupBy(values, 'projectId')
-      const projects: Record<string, Tvl2ProjectResult> = {}
-      for (const [projectId, values] of Object.entries(valuesByProject)) {
-        const result = values.reduce(
-          (acc, curr) => {
-            acc.canonical += curr.canonical
-            acc.external += curr.external
-            acc.native += curr.native
-            return acc
-          },
-          { canonical: 0n, external: 0n, native: 0n },
-        )
-        projects[projectId] = {
-          canonical: result.canonical.toString(),
-          external: result.external.toString(),
-          native: result.native.toString(),
-        }
-      }
-      result.daily.push({
-        timestamp: Number(timestamp),
-        projects,
-      })
-    }
-
-    return result
-  }
-
-  // TODO: Remove lastHour
-  async getOldTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPriceId = this.priceConfigs.get(
-      createAssetId({ address: 'native', chain: 'ethereum' }),
-    )?.priceId
-    assert(ethPriceId, 'Eth priceId not found')
-    const ethPriceRecords =
-      await this.priceRepository.getDailyByConfigId(ethPriceId)
-    const ethPrices = new Map(
-      ethPriceRecords.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
-    )
-
-    const projects = this.projects.map((x) => x.id)
-    const values = await this.valueRepository.getForProjects(projects)
+    const projectIds = this.projects.map((x) => x.id)
+    const values = await this.valueRepository.getForProjects(projectIds)
 
     const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
     const hourlyCutOff = getHourlyCutoff(lastHour)
@@ -191,17 +138,13 @@ export class Tvl2Controller {
     const valuesByProject = groupBy(values, 'projectId')
 
     const aggregates = {
+      layer3: new Map<number, Values>(),
       layer2: new Map<number, Values>(),
       bridge: new Map<number, Values>(),
     }
 
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      if (project.type === 'layer3') {
-        console.log('Layer3s unsupported')
-        break
-      }
-
       const values = valuesByProject[project.id.toString()]
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
@@ -282,11 +225,8 @@ export class Tvl2Controller {
       })
     }
 
-    for (const [type, value] of Object.entries(aggregates)) {
-      if (!(type === 'layer2' || type === 'bridge')) {
-        console.log('Invalid type ' + type)
-        continue
-      }
+    for (const type of ['layer2', 'layer3', 'bridge'] as const) {
+      const value = aggregates[type]
       const minTimestamp = this.minTimestamp[type]
       const dailyData = getChartData({
         start: minTimestamp,
@@ -368,16 +308,24 @@ export class Tvl2Controller {
     assert(bridges, 'Bridges not found')
     const layers2s = chartsMap.get('layer2')
     assert(layers2s, 'Layer2s not found')
+    const layer3s = chartsMap.get('layer3')
+    assert(layer3s, 'Layer3s not found')
+
+    const layer2sTotal = {
+      hourly: sumCharts(layers2s.hourly, layer3s.hourly),
+      sixHourly: sumCharts(layers2s.sixHourly, layer3s.sixHourly),
+      daily: sumCharts(layers2s.daily, layer3s.daily),
+    }
 
     const combined = {
-      hourly: sumCharts(bridges.hourly, layers2s.hourly),
-      sixHourly: sumCharts(bridges.sixHourly, layers2s.sixHourly),
-      daily: sumCharts(bridges.daily, layers2s.daily),
+      hourly: sumCharts(bridges.hourly, layer2sTotal.hourly),
+      sixHourly: sumCharts(bridges.sixHourly, layer2sTotal.sixHourly),
+      daily: sumCharts(bridges.daily, layer2sTotal.daily),
     }
 
     const result: TvlApiResponse = {
       bridges,
-      layers2s,
+      layers2s: layer2sTotal,
       combined,
       projects: projectData,
     }
@@ -562,6 +510,165 @@ export class Tvl2Controller {
     return result
   }
 
+  async getAggregatedTvl(
+    lastHour: UnixTime,
+    projectSlugs: string[],
+  ): Promise<TvlApiCharts> {
+    const ethPrices = await this.getEthPrices()
+
+    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
+    const projectIds = projects.map((x) => x.id)
+
+    const values = await this.valueRepository.getForProjects(projectIds)
+
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const hourlyCutOff = getHourlyCutoff(lastHour)
+
+    const valuesByProject = groupBy(values, 'projectId')
+
+    const aggregate = new Map<number, Values>()
+    for (const project of projects) {
+      const projectValues = valuesByProject[project.id.toString()]
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+
+      const timestamps = this.getTimestampsForProject(
+        project,
+        sixHourlyCutOff,
+        hourlyCutOff,
+        lastHour,
+      )
+
+      for (const timestamp of timestamps) {
+        const values = valuesByTimestamp[timestamp.toString()] ?? []
+        const configuredSources = this.getConfiguredSources(
+          values,
+          project,
+          timestamp,
+        )
+
+        const sum = values
+          .filter((x) => configuredSources.includes(x.dataSource))
+          .reduce(
+            (acc, curr) => {
+              acc.canonical += curr.canonical
+              acc.external += curr.external
+              acc.native += curr.native
+              return acc
+            },
+            { canonical: 0n, external: 0n, native: 0n },
+          )
+
+        const aggregateSum = aggregate.get(Number(timestamp))
+        if (!aggregateSum) {
+          aggregate.set(Number(timestamp), sum)
+        } else {
+          aggregateSum.canonical += sum.canonical
+          aggregateSum.external += sum.external
+          aggregateSum.native += sum.native
+        }
+      }
+    }
+
+    const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()))
+    const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()))
+    const projectsMinTimestamp = this.projects
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
+
+    const minTimestamp = UnixTime.max(
+      minValueTimestamp,
+      projectsMinTimestamp,
+    ).toEndOf('day')
+    const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
+
+    const dailyData = getChartData({
+      start: minTimestamp,
+      end: maxTimestamp,
+      step: [1, 'days'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const sixHourlyData = getChartData({
+      start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
+      end: maxTimestamp,
+      step: [6, 'hours'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const hourlyData = getChartData({
+      start: UnixTime.max(hourlyCutOff, minTimestamp),
+      end: maxTimestamp,
+      step: [1, 'hours'],
+      aggregatedValues: aggregate,
+      ethPrices,
+      chartId: '/tvl/aggregate',
+    })
+
+    const result: TvlApiCharts = {
+      hourly: getChart(hourlyData),
+      sixHourly: getChart(sixHourlyData),
+      daily: getChart(dailyData),
+    }
+
+    return result
+  }
+
+  // TODO: instead of assert we should interpolate values so the page builds even with unsynced sources
+  private getConfiguredSources(
+    values: ValueRecord[],
+    project: ApiProject,
+    timestamp: UnixTime,
+  ) {
+    const valuesSources = values.map((x) => x.dataSource)
+    const configuredSources = Array.from(project.sources.values())
+      .filter((s) => s.minTimestamp.lte(timestamp))
+      .map((s) => s.name)
+
+    const missingSources = configuredSources.filter(
+      (s) => !valuesSources.includes(s),
+    )
+
+    assert(
+      missingSources.length === 0,
+      `Missing data sources [${missingSources.join(
+        ', ',
+      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
+    )
+    return configuredSources
+  }
+
+  private getTimestampsForProject(
+    project: ApiProject,
+    sixHourlyCutOff: UnixTime,
+    hourlyCutOff: UnixTime,
+    lastHour: UnixTime,
+  ): UnixTime[] {
+    const timestamps: UnixTime[] = []
+
+    let t = project.minTimestamp.toEndOf('day')
+    timestamps.push(t)
+
+    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
+      t = t.add(1, 'days')
+      timestamps.push(t)
+    }
+
+    while (t.add(6, 'hours').lte(hourlyCutOff)) {
+      t = t.add(6, 'hours')
+      timestamps.push(t)
+    }
+
+    while (t.add(1, 'hours').lte(lastHour)) {
+      t = t.add(1, 'hours')
+      timestamps.push(t)
+    }
+    return timestamps
+  }
+
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
@@ -610,6 +717,27 @@ export class Tvl2Controller {
     }
 
     return values
+  }
+
+  private getMinTimestamp(type: Project['type']) {
+    return this.projects
+      .filter((x) => x.type === type)
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => {
+        return UnixTime.min(acc, curr)
+      })
+      .toEndOf('day')
+  }
+
+  private async getEthPrices() {
+    const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
+    const ethPriceId = this.priceConfigs.get(ethAssetId)?.priceId
+    assert(ethPriceId, 'Eth priceId not found')
+    const records = await this.priceRepository.getDailyByConfigId(ethPriceId)
+    const ethPrices = new Map(
+      records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+    return ethPrices
   }
 }
 
