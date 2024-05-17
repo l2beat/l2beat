@@ -11,6 +11,7 @@ import { configureGlossarySideNav } from './configureGlossarySideNav'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureNavWrapper } from './configureNavWrapper'
 import { configureOverflowWrappers } from './configureOverflowWrappers'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
@@ -58,3 +59,4 @@ configureAlphabetSelectors()
 configureScrollToTopButton()
 configureGlossarySideNav()
 configureCopyButtons()
+configureNavWrapper()

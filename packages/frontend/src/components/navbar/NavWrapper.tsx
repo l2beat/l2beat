@@ -20,7 +20,7 @@ function NavLinkGroup({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="ml-1 text-slate-600 dark:text-zinc-500 text-[0.8125rem] leading-[0.8125rem] uppercase font-medium">
+      <div className="ml-1 text-slate-600 dark:text-zinc-500 text-[0.8125rem] leading-[0.8125rem] uppercase font-medium group-data-[state=collapsed]:xl:hidden">
         {title}
       </div>
       <ul className="flex flex-col gap-0.5">{children}</ul>
@@ -54,20 +54,26 @@ function NavLink({
     <a href={href}>
       <li
         className={cn(
-          'flex items-center gap-[0.625rem] p-2 rounded-[0.25rem] group-hover:bg-transparent hover:bg-[#F1D6FF] dark:hover:bg-[#1D1E22] transition-colors',
+          'flex items-center gap-[0.625rem] p-2 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#1D1E22] transition-colors',
           active &&
             'bg-[#d3d5d9] dark:bg-[#272A2F] hover:bg-[#d3d5d9] dark:hover:bg-[#272A2F]',
         )}
       >
         <Icon />
-        <span className="font-semibold text-base leading-none">{title}</span>
+        <span className="font-semibold text-base leading-none group-data-[state=collapsed]:xl:hidden">
+          {title}
+        </span>
       </li>
     </a>
   )
 }
 
 function NavSmallLinkGroup({ children }: { children: ReactNode }) {
-  return <ul className="ml-1 flex flex-col gap-2">{children}</ul>
+  return (
+    <ul className="ml-1 flex flex-col gap-2 group-data-[state=collapsed]:xl:hidden">
+      {children}
+    </ul>
+  )
 }
 
 function NavSmallLink({
@@ -105,15 +111,16 @@ function NavSmallLink({
   )
 }
 
-function NavCollapseIcon() {
+function NavCollapseIcon({ className, ...props }: SVGAttributes<SVGElement>) {
   return (
     <Icon
-      className="stroke-[#525C6A] dark:stroke-[#D3D5D9]"
+      className={cn('stroke-[#525C6A] dark:stroke-[#D3D5D9]', className)}
       width="24"
       height="24"
       viewBox="0 0 24 24"
       strokeWidth="1.8"
       strokeLinecap="round"
+      {...props}
     >
       <path d="M16.5 8L12.0633 12.4367C12.0284 12.4716 12.0284 12.5284 12.0633 12.5633L16.5 17" />
       <path d="M8 22L8 2" />
@@ -130,13 +137,14 @@ export function NavWrapper({ children }: { children: ReactNode }) {
     <div className="flex flex-col xl:flex-row">
       <div
         className={cn(
-          'flex-shrink-0 relative flex flex-col items-stretch',
+          'flex-shrink-0 relative flex flex-col items-stretch group data-[state=collapsed]:xl:w-20',
           sharedSizeClasses,
         )}
+        data-role="sidenav"
       >
         <div
           className={cn(
-            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col xl:h-screen xl:fixed',
+            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col xl:h-screen xl:fixed group-data-[state=collapsed]:xl:w-20',
             sharedSizeClasses,
           )}
         >
@@ -208,7 +216,7 @@ export function NavWrapper({ children }: { children: ReactNode }) {
                   href="/bridges/risk"
                 />
               </NavLinkGroup>
-              <div className="h-px w-full bg-gray-300 dark:bg-gray-850" />
+              <div className="h-px w-full bg-gray-300 dark:bg-gray-850 group-data-[state=collapsed]:xl:hidden" />
               <NavSmallLinkGroup>
                 <NavSmallLink title="Forum" href={config.links.forum} />
                 {config.features.zkCatalog && (
@@ -236,8 +244,13 @@ export function NavWrapper({ children }: { children: ReactNode }) {
               </NavSmallLinkGroup>
             </nav>
           </div>
-          <div className="p-6 border-t border-gray-300 dark:border-gray-850">
-            <NavCollapseIcon />
+          <div className="p-6 border-t border-gray-300 dark:border-gray-850 group-data-[state=collapsed]:ml-1">
+            <button
+              className="select-none cursor-pointer"
+              data-role="sidenav-collapse-toggle"
+            >
+              <NavCollapseIcon className="group-data-[state=collapsed]:rotate-180" />
+            </button>
           </div>
         </div>
       </div>
