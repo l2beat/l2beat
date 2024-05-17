@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x76f1e50a00a33e6f1eb3cc4ddf6d1768e457194b
+
+# Diff at Fri, 17 May 2024 09:28:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 19883606
+- current block number: 19888796
+
+## Description
+
+The wasmModuleRoot changes to a new value (which is not known in our ArbOS history). Looking at the Kinto Github repo, this is the [Hardfork #4 upgrade](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/4).
+Changes are mainly related to the integration of the Socket bridge contracts in preparation for the May 22nd 'full mainnet launch'.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169"
++        "0x6948185c62070f9523a93664e8d064627f65830fd308af5e82f21292a2060fb8"
+    }
+```
+
 Generated with discovered.json: 0xd5b099929f8b81f2ec7e02982922564807216015
 
 # Diff at Thu, 16 May 2024 06:39:47 GMT:
