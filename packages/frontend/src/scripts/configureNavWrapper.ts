@@ -1,35 +1,35 @@
 import { LocalStorage } from './local-storage/LocalStorage'
 import { makeQuery } from './query'
 
+const localStorageKey = 'sidenav-collapsed'
+
 export function configureNavWrapper() {
-  const sidenavCollapsed = LocalStorage.getItem('sidenav-collapsed')
+  const sidenavCollapsed = LocalStorage.getItem(localStorageKey)
   const { $ } = makeQuery()
-  const sidenav = $('[data-role=sidenav]')
+
+  const setState = (state: boolean) => {
+    if (!state) {
+      document.documentElement.classList.remove(localStorageKey)
+      LocalStorage.setItem(localStorageKey, false)
+      return
+    }
+    document.documentElement.classList.add(localStorageKey)
+    LocalStorage.setItem(localStorageKey, true)
+  }
+
+  setState(sidenavCollapsed ?? false)
+
   const sidenavToggle = $('[data-role=sidenav-collapse-toggle]')
 
-  if (!sidenav || !sidenavToggle) {
+  if (!sidenavToggle) {
     return
   }
 
-  const setState = (state: 'collapsed' | 'expanded' | null) => {
-    if (!state) {
-      delete sidenav.dataset.state
-      return
-    }
-    sidenav.dataset.state = state
-  }
-
-  if (sidenavCollapsed) {
-    setState('collapsed')
-  }
-
   sidenavToggle.addEventListener('click', () => {
-    if (sidenav.dataset.state === 'collapsed') {
-      setState('expanded')
-      LocalStorage.setItem('sidenav-collapsed', false)
+    if (document.documentElement.classList.contains(localStorageKey)) {
+      setState(false)
     } else {
-      setState('collapsed')
-      LocalStorage.setItem('sidenav-collapsed', true)
+      setState(true)
     }
   })
 }
