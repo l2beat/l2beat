@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { userEvent, within } from '@storybook/testing-library'
+import { userEvent, within } from '@storybook/test'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../.storybook/modes'
@@ -139,6 +139,7 @@ const tokens = [
     ({
       address: '0xabac',
       name: x,
+
       info: {
         type: 'EBV',
         assetId: '0xabac',
@@ -146,6 +147,7 @@ const tokens = [
         projectId: 'arbitrum',
         symbol: x,
       },
+
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     }) as const,

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { userEvent, waitFor } from '@storybook/testing-library'
+import { userEvent, waitFor } from '@storybook/test'
 import range from 'lodash/range'
 import React, { useEffect } from 'react'
 

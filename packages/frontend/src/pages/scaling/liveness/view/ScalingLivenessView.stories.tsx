@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Meta, StoryObj } from '@storybook/react'
-import { userEvent, waitFor, within } from '@storybook/testing-library'
+import { userEvent, waitFor, within } from '@storybook/test'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../../.storybook/modes'
