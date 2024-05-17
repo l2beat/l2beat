@@ -30,10 +30,10 @@ export class L2CostsUpdater implements TxUpdaterInterface {
 
   async deleteFromById(
     id: TrackedTxId,
-    untilTimestamp: UnixTime,
+    fromInclusive: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.l2CostsRepository.deleteFromById(id, untilTimestamp, knexTrx)
+    await this.l2CostsRepository.deleteFromById(id, fromInclusive, knexTrx)
   }
 
   async transform(transactions: TrackedTxResult[]): Promise<L2CostsRecord[]> {

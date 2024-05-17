@@ -31,10 +31,10 @@ export class LivenessUpdater implements TxUpdaterInterface {
 
   async deleteFromById(
     id: TrackedTxId,
-    untilTimestamp: UnixTime,
+    fromInclusive: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.livenessRepository.deleteFromById(id, untilTimestamp, knexTrx)
+    await this.livenessRepository.deleteFromById(id, fromInclusive, knexTrx)
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {

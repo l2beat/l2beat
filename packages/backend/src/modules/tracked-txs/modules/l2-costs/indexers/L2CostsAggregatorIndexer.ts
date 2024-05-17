@@ -269,7 +269,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   private weiToEth(wei: bigint): number {
-    // Biggest wei we can get from DB is 2^63-1 which divided by 1e18 is safe to parse to Number
+    // Biggest wei we can get from DB is 2^63-1 which divided by 1e9 is safe to parse to Number
     const integerPartGwei = Number(wei / 1_000_000_000n)
     const fractionPartGwei = Number(wei % 1_000_000_000n)
     const gwei = integerPartGwei + fractionPartGwei / 1_000_000_000

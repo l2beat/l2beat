@@ -44,7 +44,7 @@ export class L2CostsRepository extends BaseRepository {
   ): Promise<number> {
     const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await knex.batchInsert('l2_costs', rows, 1000)
+    await knex.batchInsert('l2_costs', rows, 10_000)
     return rows.length
   }
 
