@@ -175,7 +175,8 @@ module.exports = {
       sm: '550px',
       md: '750px',
       lg: '1120px',
-      xl: '1256px',
+      xl: '1280px',
+      '2xl': '1920px',
     },
     zIndex: {
       1: '1',
