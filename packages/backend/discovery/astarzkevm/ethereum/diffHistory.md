@@ -8,7 +8,7 @@ Generated with discovered.json: 0xfe0c1f2fa55904471b8e9a7721cdbf214755a8e6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Changes related to merging with shared-polygon-cdk module.
 
 ## Config/verification related changes
 
