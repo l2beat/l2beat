@@ -66,6 +66,7 @@
     "@storybook/react": "^8.1.1",
     "@storybook/react-vite": "^8.1.1",
     "@storybook/test": "^8.1.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.13",
     "chromatic": "^11.3.5",
     "del": "^6.1.1",
