@@ -23,7 +23,7 @@
     "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515": "Arbitrum_Old_Bridge",
     "0xD9948AE3405FE03A52A18F119EF72221DCdCc4df": "Base_Adapter",
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
-    "0xB130E3056D5C692300d66c12C10ffA2073d9424D": "Polygon_Adapter",
+    "0xB130E3056D5C692300d66c12C10ffA2073d9424D": "Polygon_Adapter"
   },
   "overrides": {
     "HubPool": {
@@ -129,7 +129,12 @@
       ]
     },
     "Base_Adapter": {
-      "ignoreRelatives": ["L1_STANDARD_BRIDGE", "L1_WETH", "MESSENGER", "usdcToken"]
+      "ignoreRelatives": [
+        "L1_STANDARD_BRIDGE",
+        "L1_WETH",
+        "MESSENGER",
+        "usdcToken"
+      ]
     },
     "Boba_Adapter": {
       "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
@@ -158,8 +163,8 @@
       "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
       "ignoreRelatives": ["allowedOutboxList", "rollup", "sequencerInbox"]
     },
-    "Arbitrum_Old_Bridge":{
-      "ignoreMethods": ["inboxAccs"],
+    "Arbitrum_Old_Bridge": {
+      "ignoreMethods": ["inboxAccs"]
     }
   }
 }
