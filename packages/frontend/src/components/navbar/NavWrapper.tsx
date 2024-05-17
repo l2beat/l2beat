@@ -106,10 +106,23 @@ function NavSmallLink({
 
 export function NavWrapper({ children }: { children: ReactNode }) {
   const { config } = usePageBuildContext()
+
+  const sharedSizeClasses = 'w-full xl:w-[240px] 2xl:w-[280px] transition-all'
+
   return (
     <div className="flex flex-col xl:flex-row">
-      <div className="flex-shrink-0 w-full xl:w-[240px] 2xl:w-[280px] transition-all relative flex flex-col items-stretch">
-        <div className="bg-[#E6E7EC] dark:bg-[#131215] px-6 py-[1.125rem] flex flex-col gap-8 xl:h-screen xl:fixed w-full xl:w-[240px] 2xl:w-[280px] overflow-y-auto transition-all">
+      <div
+        className={cn(
+          'flex-shrink-0 relative flex flex-col items-stretch',
+          sharedSizeClasses,
+        )}
+      >
+        <div
+          className={cn(
+            'bg-[#E6E7EC] dark:bg-[#131215] px-6 py-[1.125rem] flex flex-col gap-8 xl:h-screen xl:fixed overflow-y-auto',
+            sharedSizeClasses,
+          )}
+        >
           <div className="flex flex-row justify-between items-center">
             <Logo className="h-8 w-auto" />
             <DarkThemeToggle />
