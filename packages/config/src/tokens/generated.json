@@ -3076,6 +3076,21 @@
       "formula": "locked"
     },
     {
+      "id": "rsweth-rsweth",
+      "name": "rswETH",
+      "coingeckoId": "restaked-swell-eth",
+      "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+      "symbol": "rswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706241095,
+      "coingeckoListingTimestamp": 1706572800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "sand-sand",
       "name": "SAND",
       "coingeckoId": "the-sandbox",

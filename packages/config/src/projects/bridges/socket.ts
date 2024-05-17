@@ -124,6 +124,18 @@ export const socket: Bridge = {
         tokens: ['wstETH'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x8180EcCC825b692ef65FF099a0A387743788bf78'),
+        name: 'weETH Vault Lyra',
+        description: 'Socket Vault associated with Lyra.',
+        tokens: ['weETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
+        name: 'rswETH Vault Lyra',
+        description: 'Socket Vault associated with Lyra.',
+        tokens: ['rswETH'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
         name: 'USDC Vault Reya',
         description: 'Socket Vault associated with Reya.',
