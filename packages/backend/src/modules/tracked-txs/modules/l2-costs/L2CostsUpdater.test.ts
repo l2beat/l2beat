@@ -2,8 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
-
-import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
 import { TrackedTxResult } from '../../types/model'
@@ -19,11 +17,7 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.update.name, () => {
     it('skips if no transactions', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(
-        repository,
-        getMockViemRpcClient(),
-        Logger.SILENT,
-      )
+      const updater = new L2CostsUpdater(repository, Logger.SILENT)
 
       await updater.update([], TRX)
 
@@ -32,11 +26,7 @@ describe(L2CostsUpdater.name, () => {
 
     it('transforms and saves to db ', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(
-        repository,
-        getMockViemRpcClient(),
-        Logger.SILENT,
-      )
+      const updater = new L2CostsUpdater(repository, Logger.SILENT)
       const transactions = getMockTrackedTxResults()
 
       const mockRecord: L2CostsRecord[] = [
@@ -45,8 +35,7 @@ describe(L2CostsUpdater.name, () => {
         }),
       ]
 
-      updater.addDetailsTransactionsAndTransform =
-        mockFn().resolvesTo(mockRecord)
+      updater.transform = mockFn().resolvesTo(mockRecord)
 
       await updater.update(transactions, TRX)
 
@@ -54,71 +43,55 @@ describe(L2CostsUpdater.name, () => {
     })
   })
 
-  describe(
-    L2CostsUpdater.prototype.addDetailsTransactionsAndTransform.name,
-    () => {
-      it('transforms transactions and adds details', async () => {
-        const repository = getMockL2CostsRepository()
-        const updater = new L2CostsUpdater(
-          repository,
-          getMockViemRpcClient(),
-          Logger.SILENT,
-        )
+  describe(L2CostsUpdater.prototype.transform.name, () => {
+    it('transforms transactions and adds details', async () => {
+      const repository = getMockL2CostsRepository()
+      const updater = new L2CostsUpdater(repository, Logger.SILENT)
 
-        const transactions = getMockTrackedTxResults()
+      const transactions = getMockTrackedTxResults()
 
-        const result =
-          await updater.addDetailsTransactionsAndTransform(transactions)
+      const result = await updater.transform(transactions)
 
-        const expected: L2CostsRecord[] = [
-          {
-            txHash: transactions[0].hash,
-            timestamp: transactions[0].blockTimestamp,
-            trackedTxId: transactions[0].use.id,
-            data: {
-              type: 2,
-              gasUsed: transactions[0].receiptGasUsed,
-              gasPrice: transactions[0].gasPrice,
-              //  input: 0x00aa00bbff
-              calldataLength: 5,
-              calldataGasUsed: 4 * 2 + 3 * 16,
-            },
-          },
-          {
-            txHash: transactions[1].hash,
-            timestamp: transactions[1].blockTimestamp,
-            trackedTxId: transactions[1].use.id,
-            data: {
-              type: 3,
-              gasUsed: transactions[1].receiptGasUsed,
-              gasPrice: transactions[1].gasPrice,
-              //  input: 0x
-              calldataLength: 0,
-              calldataGasUsed: 0,
-              blobGasPrice: 10,
-              blobGasUsed: 100,
-            },
-          },
-        ]
+      const expected: L2CostsRecord[] = [
+        {
+          txHash: transactions[0].hash,
+          timestamp: transactions[0].blockTimestamp,
+          trackedTxId: transactions[0].use.id,
+          gasUsed: transactions[0].receiptGasUsed,
+          gasPrice: transactions[0].gasPrice,
+          //  input: 0x00aa00bbff
+          calldataLength: 5,
+          calldataGasUsed: 4 * 2 + 3 * 16,
+          blobGasPrice: null,
+          blobGasUsed: null,
+        },
+        {
+          txHash: transactions[1].hash,
+          timestamp: transactions[1].blockTimestamp,
+          trackedTxId: transactions[1].use.id,
+          gasUsed: transactions[1].receiptGasUsed,
+          gasPrice: transactions[1].gasPrice,
+          //  input: 0x
+          calldataLength: 0,
+          calldataGasUsed: 0,
+          blobGasPrice: 10n,
+          blobGasUsed: 100,
+        },
+      ]
 
-        expect(result).toEqualUnsorted(expected)
-      })
-    },
-  )
+      expect(result).toEqualUnsorted(expected)
+    })
+  })
 
-  describe(L2CostsUpdater.prototype.deleteFrom.name, () => {
+  describe(L2CostsUpdater.prototype.deleteFromById.name, () => {
     it('calls repository deleteAfter', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(
-        repository,
-        getMockViemRpcClient(),
-        Logger.SILENT,
-      )
+      const updater = new L2CostsUpdater(repository, Logger.SILENT)
 
       const id = TrackedTxId.random()
-      await updater.deleteFrom(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
 
-      expect(repository.deleteFrom).toHaveBeenNthCalledWith(
+      expect(repository.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
@@ -130,19 +103,9 @@ describe(L2CostsUpdater.name, () => {
 
 const TRX = mockObject<Knex.Transaction>({})
 
-function getMockViemRpcClient() {
-  return mockObject<ViemRpcClient>({
-    getTransaction: mockFn().resolvesTo({ input: '0x00aa00bbff' }),
-    getTransactionReceipt: mockFn().resolvesTo({
-      blobGasPrice: BigInt(10),
-      blobGasUsed: BigInt(100),
-    }),
-  })
-}
-
 function getMockL2CostsRepository() {
   return mockObject<L2CostsRepository>({
-    deleteFrom: async () => 0,
+    deleteFromById: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })
@@ -197,10 +160,11 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
       receiptGasUsed: 100,
-      gasPrice: 10,
-      transactionType: 2,
+      gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 56,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -216,10 +180,11 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
       receiptGasUsed: 200,
-      gasPrice: 20,
-      transactionType: 3,
+      gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
+      receiptBlobGasPrice: 10n,
+      receiptBlobGasUsed: 100,
     },
   ]
 }

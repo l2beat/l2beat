@@ -4,6 +4,7 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
+import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -23,7 +24,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     const logger = $.logger.tag($.configuration.coingeckoId.toString())
     const name = 'circulating_supply_indexer'
-    super({ ...$, name, logger })
+    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
     this.configurationId = createAmountId($.configuration)
   }
 

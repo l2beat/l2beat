@@ -27,11 +27,10 @@ const shared = new ProjectDiscovery('shared-polygon-cdk')
 const bridge = shared.getContract('Bridge')
 
 const upgradeDelayString = formatSeconds(
-  discovery.getContractValue<number>('PolygonZkEVMTimelock', 'getMinDelay'),
+  shared.getContractValue<number>('Timelock', 'getMinDelay'),
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
-  rollupManagerContract: discovery.getContract('PolygonRollupManager'),
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {
@@ -185,8 +184,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
   upgradesAndGovernance: [
-    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
-      'ProxyAdminOwner',
+    `All main contracts and the verifier are upgradable by the ${shared.getMultisigStats(
+      'RollupManagerAdminMultisig',
     )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
       'EscrowsAdmin',
     )} multisig.`,

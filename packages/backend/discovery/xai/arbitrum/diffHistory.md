@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xa844958819dcfced90e12dd460ba914565500e9a
+Generated with discovered.json: 0x16c0c8361e689f691c372c496d5413eabe5cb54c
+
+# Diff at Fri, 17 May 2024 08:40:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 211899322
+- current block number: 212134037
+
+## Description
+
+Minor changes in the SentryReferee contract:
+- Expire challenge rewards after 270 instead of 180 days
+- 'stakeAmountTierThresholds[]' values deleted from initializer, but can be set anytime by admin with updateStakingTier()
+
+## Watched changes
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"
++        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
+      implementations.0:
+-        "0x680F4a9f47E4Cfea124a5654E759cB3b0a0C837c"
++        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
+      derivedName:
+-        "Referee6"
++        "Referee7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SentryReferee/Referee7.sol}                    | 53 +++++++++-------------
+ 1 file changed, 21 insertions(+), 32 deletions(-)
+```
+
+Generated with discovered.json: 0x897a47e36aae203ad1b76427051d8c24b7bc8dfe
 
 # Diff at Fri, 26 Apr 2024 14:19:34 GMT:
 

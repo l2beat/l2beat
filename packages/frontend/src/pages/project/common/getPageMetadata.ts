@@ -7,7 +7,7 @@ export function getPageMetadata(
 ): PageMetadata {
   const scalingOrBridges = project.type === 'bridge' ? 'bridges' : 'scaling'
   return {
-    title: `${project.display.name} – L2BEAT`,
+    title: `${project.display.name} - L2BEAT`,
     description: `${project.display.name} project overview on L2BEAT. ${project.display.description}`,
     image: `https://l2beat.com/meta-images/projects/${project.display.slug}.png`,
     url: `https://l2beat.com/${scalingOrBridges}/projects/${project.display.slug}/`,

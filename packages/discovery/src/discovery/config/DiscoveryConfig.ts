@@ -1,6 +1,8 @@
 import { hashJson } from '@l2beat/shared'
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ConfigReader } from './ConfigReader'
 import { DiscoveryOverrides } from './DiscoveryOverrides'
 import type {
   DiscoveryContract,
@@ -12,9 +14,18 @@ import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 // this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {
   readonly overrides: DiscoveryOverrides
+  readonly sharedModuleDiscovery: DiscoveryOutput[]
 
-  constructor(private readonly config: RawDiscoveryConfig) {
+  constructor(
+    private readonly config: RawDiscoveryConfig,
+    configReader: ConfigReader = new ConfigReader(),
+  ) {
     this.overrides = new DiscoveryOverrides(config)
+    this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
+      (projectName) => {
+        return configReader.readDiscovery(projectName, config.chain)
+      },
+    )
   }
 
   get raw(): RawDiscoveryConfig {
@@ -55,12 +66,11 @@ export class DiscoveryConfig {
     return hashJson(getDiscoveryConfigEntries(this.config))
   }
 
-  getSharedModule(address: EthereumAddress): string | undefined {
-    const name = this.getName(address)
-    if (!name) {
-      return
-    }
-    return this.config.sharedModules?.[name]
+  isInSharedModules(address: EthereumAddress): boolean {
+    return this.sharedModuleDiscovery.some((d) => {
+      const addresses = d.contracts.map((c) => c.address)
+      return addresses.includes(address)
+    })
   }
 
   getContract(name: string): DiscoveryContract | undefined {

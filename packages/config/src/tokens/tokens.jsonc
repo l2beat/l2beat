@@ -885,6 +885,11 @@
       "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6"
     },
     {
+      "symbol": "spETH",
+      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "coingeckoId": "wrapped-eeth" // 1:1 backed by it, spETH currently not on CG
+    },
+    {
       "symbol": "SRM",
       "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
     },

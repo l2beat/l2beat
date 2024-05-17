@@ -60,6 +60,20 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     const knex = await this.knex()
     return await knex(this.TABLE_NAME).delete()
   }
+
+  async getByProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<AggregatedL2CostsRecord[]> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const rows = await knex(this.TABLE_NAME)
+      .where('project_id', projectId)
+      .andWhere('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<', to.toDate())
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {

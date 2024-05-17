@@ -3,6 +3,7 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
@@ -27,7 +28,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   constructor(private readonly $: PriceIndexerDeps) {
     const logger = $.logger.tag($.coingeckoId.toString())
     const name = 'price_indexer'
-    super({ ...$, name, logger })
+    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
   override async multiUpdate(

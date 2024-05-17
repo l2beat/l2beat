@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import { cn } from '../utils/cn'
 
 export interface CalloutProps {
-  color?: 'red' | 'yellow' | 'blue'
+  color?: 'red' | 'yellow' | 'blue' | 'gray'
   icon: ReactNode
   body: ReactNode
   message?: ReactNode
@@ -32,6 +32,8 @@ export function Callout({
     background = 'bg-yellow-700/20'
   } else if (color === 'blue') {
     background = 'bg-blue-700/20'
+  } else if (color === 'gray') {
+    background = 'bg-gray-500/20'
   } else {
     background = ''
   }

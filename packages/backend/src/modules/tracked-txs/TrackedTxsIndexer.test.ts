@@ -191,10 +191,10 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteFrom: mockFn(async () => {}),
+        deleteFromById: mockFn(async () => {}),
       })
       const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
-        deleteFrom: mockFn(async () => {}),
+        deleteFromById: mockFn(async () => {}),
       })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
@@ -233,7 +233,7 @@ describe(TrackedTxsIndexer.name, () => {
         toChangeUntilTimestamp[1].untilTimestampExclusive,
         TRX,
       )
-      expect(mockedLivenessUpdater.deleteFrom).toHaveBeenOnlyCalledWith(
+      expect(mockedLivenessUpdater.deleteFromById).toHaveBeenOnlyCalledWith(
         toChangeUntilTimestamp[1].id,
         toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
@@ -489,11 +489,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         subtype: 'batchSubmissions',
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
-      gasPrice: 10,
+      gasPrice: 10n,
       receiptGasUsed: 100,
-      transactionType: 2,
       calldataGasUsed: 10,
       dataLength: 5,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -508,11 +509,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      gasPrice: 20,
+      gasPrice: 20n,
       receiptGasUsed: 200,
-      transactionType: 3,
       calldataGasUsed: 0,
       dataLength: 0,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -527,11 +529,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      gasPrice: 20,
+      gasPrice: 20n,
       receiptGasUsed: 200,
-      transactionType: 3,
       calldataGasUsed: 0,
       dataLength: 0,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
   ]
 }

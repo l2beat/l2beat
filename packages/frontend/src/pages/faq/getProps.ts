@@ -14,9 +14,9 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
     },
     wrapper: {
       metadata: {
-        title: 'L2BEAT – Frequently Asked Questions',
+        title: 'FAQ - L2BEAT',
         description:
-          'Frequently Asked Questions about L2BEAT – an analytics and research website about Ethereum layer 2 scaling.',
+          'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
         image: 'https://l2beat.com/meta-images/pages/og-faq.png',
         url: 'https://l2beat.com/faq/',
       },
