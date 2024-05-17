@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 19867390,
-  "configHash": "0xa889465dbffc66d1a3bb3a9a521d3608fac6a0a81d02d476a0377206df20ee5e",
+  "blockNumber": 19883593,
+  "configHash": "0x3976d1b800702a9c65f0ea9ec5577fdc6f3e986b6a82ddc18e5a33b2bbdda96f",
   "version": 4,
   "contracts": [
     {
@@ -88,11 +88,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 2150,
+        "delayedMessageCount": 2732,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 1690,
-        "sequencerReportedSubMessageCount": 260205
+        "sequencerMessageCount": 2255,
+        "sequencerReportedSubMessageCount": 468860
       },
       "derivedName": "Bridge"
     },
@@ -147,7 +147,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
         "latestConfirmed": 726,
-        "latestNodeCreated": 742,
+        "latestNodeCreated": 796,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -210,7 +210,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1709380607,
       "values": {
-        "batchCount": 1690,
+        "batchCount": 2255,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -226,7 +226,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2147
+        "totalDelayedMessagesRead": 2728
       },
       "derivedName": "SequencerInbox"
     },

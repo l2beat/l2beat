@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 19875341,
-  "configHash": "0x1b3e1e2cc755aa35116e4017e734ac3a8546f9182a2d40153933348ab6897514",
+  "blockNumber": 19883604,
+  "configHash": "0xe27dc5e636140b87e6b0c4623dfc6041a1c19e57b81e140940037e119f711cf4",
   "version": 4,
   "contracts": [
     {
@@ -30,7 +30,7 @@
       "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 61105,
+        "batchCount": 61637,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -53,7 +53,7 @@
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 305334,
+        "totalDelayedMessagesRead": 305900,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -405,11 +405,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 305338,
+        "delayedMessageCount": 305904,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 61105,
-        "sequencerReportedSubMessageCount": 69950306
+        "sequencerMessageCount": 61637,
+        "sequencerReportedSubMessageCount": 70122287
       }
     },
     {
@@ -697,12 +697,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 16030,
+        "firstUnresolvedNode": 16057,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 16029,
-        "latestNodeCreated": 16177,
+        "latestConfirmed": 16056,
+        "latestNodeCreated": 16205,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
