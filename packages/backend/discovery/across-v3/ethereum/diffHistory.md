@@ -8,7 +8,13 @@ Generated with discovered.json: 0x3e3fd6c9e2acae69648c6262f29166e98add6f44
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ethereum_SpokePool.sol
+- Added events FundsDeposited, RequestedSpeedUpDeposit, FilledRelay
+
+HubPool changes: added CircleCCTPAdapter. 
+- The Cross-Chain Transfer Protocol (CCTP) is now used to bridge USDC on Arbitrum, Base, Optimism, and Polygon. 
+- Change of adapters interface format (e.g., messenger -> MESSENGER, l1Weth -> L1_WETH) that impacted ignoreRelatives discovery. Now restored to ignore relatives of updated methods. 
+Impacted adapters contracts: Arbitrum_Adapter.sol, Base_Adapter.sol, Optimism_Adapter.sol, Polygon_Adapter.sol.
 
 ## Watched changes
 
