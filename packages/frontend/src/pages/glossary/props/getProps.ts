@@ -4,6 +4,7 @@ import { getCollection } from '../../../content/getCollection'
 import { Wrapped } from '../../Page'
 import { GlossaryPageProps } from '../view/GlossaryPage'
 import { getGlossaryEntry } from './getGlossaryEntry'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(config: Config): Wrapped<GlossaryPageProps> {
   const glossaryEntries = getCollection('glossary')
@@ -16,13 +17,7 @@ export function getProps(config: Config): Wrapped<GlossaryPageProps> {
     },
     wrapper: {
       banner: config.features.banner,
-      metadata: {
-        title: 'Glossary',
-        description: 'A glossary of terms related to Layer2s of Ethereum.',
-        // TODO: (glossary) Add a proper image
-        image: 'https://l2beat.com/meta-images/glossary.png',
-        url: 'https://l2beat.com/glossary',
-      },
+      metadata: getPageMetadata(),
     },
   }
 }
