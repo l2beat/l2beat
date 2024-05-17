@@ -39,14 +39,14 @@ describe(ImplementationChangeController.name, () => {
         if (chian === 'arbitrum') return ['arbitrum']
         return []
       },
-      readConfig: async (name: string, chain: string) => {
+      readConfig: (name: string, chain: string) => {
         return new DiscoveryConfig({
           name,
           chain,
           initialAddresses: [],
         })
       },
-      readDiscovery: async (name: string, chain: string) => {
+      readDiscovery: (name: string, chain: string) => {
         const result = {
           contracts: [
             {
@@ -104,10 +104,10 @@ describe(ImplementationChangeController.name, () => {
         if (chian === 'arbitrum') return ['arbitrum']
         return []
       },
-      readConfig: async () => {
+      readConfig: () => {
         return {} as DiscoveryConfig
       },
-      readDiscovery: async () => {
+      readDiscovery: () => {
         return {} as DiscoveryOutput
       },
     })

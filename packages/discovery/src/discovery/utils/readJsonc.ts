@@ -1,8 +1,8 @@
-import { readFile } from 'fs/promises'
+import { readFileSync } from 'fs'
 import { ParseError, parse } from 'jsonc-parser'
 
-export async function readJsonc(path: string): Promise<JSON> {
-  const contents = await readFile(path, 'utf-8')
+export function readJsonc(path: string): JSON {
+  const contents = readFileSync(path, 'utf-8')
   const errors: ParseError[] = []
   const parsed = parse(contents, errors, {
     allowTrailingComma: true,

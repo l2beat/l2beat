@@ -1,6 +1,7 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
+import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
 import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
@@ -29,7 +30,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -37,7 +38,7 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chain.name))
+      ? configReader.readDiscovery(config.project, config.chain.name)
           .blockNumber
       : await getBlockNumberTwoProviders(provider, eventProvider))
 
@@ -59,6 +60,12 @@ export async function runDiscovery(
     discoveryFilename: config.discoveryFilename,
     skipHints: config.skipHints,
   })
+
+  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+  const backrefConfigs = allConfigs.filter((c) =>
+    c.sharedModules.includes(config.project),
+  )
+  printSharedModuleInfo(backrefConfigs)
 }
 
 export async function dryRunDiscovery(
@@ -73,7 +80,7 @@ export async function dryRunDiscovery(
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )

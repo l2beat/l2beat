@@ -78,20 +78,20 @@ export class TemplateService {
     return result
   }
 
-  async readContractTemplate(template: string): Promise<DiscoveryContract> {
-    const templateJsonc = await readJsonc(
+  readContractTemplate(template: string): DiscoveryContract {
+    const templateJsonc = readJsonc(
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
     return DiscoveryContract.parse(templateJsonc)
   }
 
-  async inlineTemplates(rawConfig: RawDiscoveryConfig): Promise<void> {
+  inlineTemplates(rawConfig: RawDiscoveryConfig): void {
     if (rawConfig.overrides === undefined) {
       return
     }
     for (const [name, contract] of Object.entries(rawConfig.overrides)) {
       if (contract.extends !== undefined) {
-        const templateJson = await this.readContractTemplate(contract.extends)
+        const templateJson = this.readContractTemplate(contract.extends)
         const updatedContract = DiscoveryContract.parse({
           ...templateJson,
           ...contract,
