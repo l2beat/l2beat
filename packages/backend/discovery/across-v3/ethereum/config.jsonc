@@ -130,6 +130,7 @@
     },
     "Base_Adapter": {
       "ignoreRelatives": [
+        "cctpTokenMessenger",
         "L1_STANDARD_BRIDGE",
         "L1_WETH",
         "MESSENGER",
