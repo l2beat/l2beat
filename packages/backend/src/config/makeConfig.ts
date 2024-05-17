@@ -178,17 +178,6 @@ export function makeConfig(
             'l2costs',
             'aggregator',
           ),
-          ethereumProviderUrl: env.string([
-            'ETHEREUM_RPC_URL_FOR_L2COSTS',
-            'ETHEREUM_RPC_URL',
-          ]),
-          ethereumProviderCallsPerMinute: env.integer(
-            [
-              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
-              'ETHEREUM_RPC_CALLS_PER_MINUTE',
-            ],
-            600,
-          ),
           coingeckoApiKey: env.string([
             'COINGECKO_API_KEY_FOR_TVL',
             'COINGECKO_API_KEY',
