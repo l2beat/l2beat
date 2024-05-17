@@ -1,22 +1,24 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
+import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
 import { DiscoveryModuleConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
+import { DiscoveryLogger } from './DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
+import { TemplateService } from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryLogger } from './DiscoveryLogger'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { getBlockNumberTwoProviders } from './provider/DiscoveryProvider'
-import { MulticallClient } from './provider/multicall/MulticallClient'
-import { MulticallConfig } from './provider/multicall/types'
 import { ProviderWithCache } from './provider/ProviderWithCache'
 import { SQLiteCache } from './provider/SQLiteCache'
+import { MulticallClient } from './provider/multicall/MulticallClient'
+import { MulticallConfig } from './provider/multicall/types'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
@@ -28,11 +30,7 @@ export async function runDiscovery(
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
 ): Promise<void> {
-  const projectConfig = await configReader.readConfig(
-    config.project,
-    config.chain.name,
-  )
-  const projectMeta = await configReader.readMeta(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -40,7 +38,7 @@ export async function runDiscovery(
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chain.name))
+      ? configReader.readDiscovery(config.project, config.chain.name)
           .blockNumber
       : await getBlockNumberTwoProviders(provider, eventProvider))
 
@@ -55,18 +53,19 @@ export async function runDiscovery(
     blockNumber,
     config.chain.rpcGetLogsMaxRange,
   )
-  await saveDiscoveryResult(
-    result,
-    projectConfig,
-    projectMeta,
-    blockNumber,
-    logger,
-    {
-      sourcesFolder: config.sourcesFolder,
-      flatSourcesFolder: config.flatSourcesFolder,
-      discoveryFilename: config.discoveryFilename,
-    },
+
+  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+    sourcesFolder: config.sourcesFolder,
+    flatSourcesFolder: config.flatSourcesFolder,
+    discoveryFilename: config.discoveryFilename,
+    skipHints: config.skipHints,
+  })
+
+  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+  const backrefConfigs = allConfigs.filter((c) =>
+    c.sharedModules.includes(config.project),
   )
+  printSharedModuleInfo(backrefConfigs)
 }
 
 export async function dryRunDiscovery(
@@ -81,7 +80,7 @@ export async function dryRunDiscovery(
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
 
-  const projectConfig = await configReader.readConfig(
+  const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
@@ -185,11 +184,13 @@ export async function discover(
     multicallClient,
     logger,
   )
+  const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     discoveryProvider,
     proxyDetector,
     sourceCodeService,
     handlerExecutor,
+    templateService,
     logger,
   )
   const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)

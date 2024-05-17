@@ -12,8 +12,8 @@ import {
   TokenBreakdownProps,
 } from '../../../components/breakdown/TokenBreakdown'
 import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
-import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { TvlStats } from '../../../components/header/TvlSummary'
+import { StatWithChange } from '../../../components/header/stats/StatWithChange'
 import { InfoIcon } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'

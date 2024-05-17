@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polynetwork",
   "initialAddresses": ["0x81910675dbaf69dee0fd77570bfd07f8e436386a"],
@@ -20,17 +20,27 @@
     "PolyWrapper": {
       "fields": {
         "lockProxyIndexMap": {
-          "type": "array",
-          "length": "{{ maxLockProxyIndex }}"
+          "description": "These addresses can escrow funds for the bridge.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "array",
+            "length": "{{ maxLockProxyIndex }}"
+          }
+        },
+        "maxLockProxyIndex": {
+          "description": "This is the number of lockProxy escrows registered in the bridge.",
+          "severity": "LOW"
         }
       }
     },
     "EthCrossChainManagerProxy": {
       "fields": {
         "getEthCrossChainManager": {
-          "type": "storage",
-          "slot": 1,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 1,
+            "returnType": "address"
+          }
         }
       }
     },
@@ -48,14 +58,18 @@
     "Lock Proxy 3": {
       "fields": {
         "managerProxyContract": {
-          "type": "call",
-          "method": "function managerProxyContract() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function managerProxyContract() view returns (address)",
+            "args": []
+          }
         },
         "owner": {
-          "type": "call",
-          "method": "function owner() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
         }
       }
     }

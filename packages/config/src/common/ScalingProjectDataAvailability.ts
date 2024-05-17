@@ -20,9 +20,12 @@ export type DataAvailabilityLayer =
   | 'External'
   | 'MantleDA'
   | 'FraxtalDA'
+  | 'RedstoneDA'
+  | 'EigenDA'
 
 export type DataAvailabilityBridge =
   | { type: 'None' }
+  | { type: 'None + DA challenges' }
   | { type: 'Enshrined' }
   | { type: 'Optimistic' }
   | { type: 'DAC Members'; requiredSignatures?: number; membersCount?: number }

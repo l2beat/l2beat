@@ -2,7 +2,7 @@
   "name": "ancient",
   "chain": "ethereum",
   "blockNumber": 19531414,
-  "configHash": "0xacfe9b012275919161908fc6f01d38fccca41ebc0afe9370b9c275d921a2c618",
+  "configHash": "0x33e80cd7fbafa542cd5d9b8726d5347fd2c8a6fe1f60b24b94e7468c4edc325c",
   "version": 3,
   "contracts": [
     {

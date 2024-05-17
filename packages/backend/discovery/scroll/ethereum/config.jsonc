@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "scroll",
   "initialAddresses": [
@@ -80,21 +80,27 @@
       "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
       "fields": {
         "sequencers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateSequencer",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateSequencer",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "provers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateProver",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateProver",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "revertedBatches": {
-          "type": "stateFromEvent",
-          "event": "RevertBatch",
-          "returnParams": ["batchIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RevertBatch",
+            "returnParams": ["batchIndex"]
+          }
         }
       }
     },
@@ -102,25 +108,31 @@
       "ignoreMethods": ["getVerifier"],
       "fields": {
         "latestVerifier": {
-          "type": "array",
-          "length": 5
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
         },
         "legacyVerifiersLength": {
-          "type": "array",
-          "length": 5
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
         }
       }
     },
     "ScrollOwner": {
       "fields": {
         "accessControl": {
-          "type": "scrollAccessControl",
-          "roleNames": {
-            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
-            "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
-            "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
-            "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
-            "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+          "handler": {
+            "type": "scrollAccessControl",
+            "roleNames": {
+              "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
+              "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
+              "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
+              "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
+              "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+            }
           }
         }
       }
@@ -128,21 +140,27 @@
     "TimelockSlow": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockFast": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockMid": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -168,10 +186,20 @@
     "Whitelist": {
       "fields": {
         "whitelisted": {
-          "type": "arrayFromOneEvent",
-          "event": "WhitelistStatusChanged",
-          "valueKey": "_account",
-          "flagKey": "_status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "WhitelistStatusChanged",
+            "valueKey": "_account",
+            "flagKey": "_status"
+          }
+        }
+      }
+    },
+    "EnforcedTxGateway": {
+      "fields": {
+        "paused": {
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
+          "severity": "HIGH"
         }
       }
     }

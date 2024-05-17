@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
-import { getProps, LivenessPagesData } from './props/getProps'
+import { LivenessPagesData, getProps } from './props/getProps'
 import { ScalingLivenessPage } from './view/ScalingLivenessPage'
 
 export function getLivenessPage(config: Config, pagesData: LivenessPagesData) {

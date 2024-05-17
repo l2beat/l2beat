@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import {
-  trackedTxConfigEntryToRecord,
   TrackedTxsConfigRecord,
+  trackedTxConfigEntryToRecord,
 } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'

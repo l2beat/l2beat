@@ -4,12 +4,11 @@ import {
   ContractValue,
   UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { UnixTime } from '../../utils/UnixTime'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryLogger } from '../DiscoveryLogger'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -17,6 +16,7 @@ import {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
+import { TemplateService } from './TemplateService'
 import { getRelatives } from './getRelatives'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
@@ -35,6 +35,8 @@ export interface AnalyzedContract {
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
+  matchingTemplates: Record<string, number>
+  extendedTemplate?: string
 }
 
 export interface AnalyzedEOA {
@@ -48,6 +50,7 @@ export class AddressAnalyzer {
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
+    private readonly templateService: TemplateService,
     private readonly logger: DiscoveryLogger,
   ) {}
 
@@ -76,8 +79,13 @@ export class AddressAnalyzer {
       address,
       proxy?.implementations,
     )
-
     logger.logName(sources.name)
+
+    // Match templates only if there are no explicitly set
+    const matchingTemplates =
+      overrides?.extends === undefined
+        ? this.templateService.findMatchingTemplates(sources)
+        : {}
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
@@ -102,6 +110,8 @@ export class AddressAnalyzer {
         errors: errors ?? {},
         abis: sources.abis,
         sourceBundles: sources.sources,
+        matchingTemplates,
+        extendedTemplate: overrides?.extends,
       },
       relatives: getRelatives(
         results,

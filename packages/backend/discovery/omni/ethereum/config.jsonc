@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "omni",
   "initialAddresses": [
@@ -26,7 +26,14 @@
       "proxyType": "Eternal Storage proxy"
     },
     "BridgeValidators": {
-      "proxyType": "Eternal Storage proxy"
+      "proxyType": "Eternal Storage proxy",
+      "fields": {
+        "validatorList": {
+          "description": "Array of the signers in the validator multisig",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        }
+      }
     },
     "BridgeGovernance": {
       "ignoreInWatchMode": ["nonce"]

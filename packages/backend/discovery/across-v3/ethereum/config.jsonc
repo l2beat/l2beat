@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "across-v3",
   "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
@@ -28,10 +28,12 @@
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
         "CrossChainContracts": {
-          "type": "stateFromEvent",
-          "event": "CrossChainContractsSet",
-          "returnParams": ["l2ChainId", "adapter", "spokePool"],
-          "groupBy": "l2ChainId"
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "CrossChainContractsSet",
+            "returnParams": ["l2ChainId", "adapter", "spokePool"],
+            "groupBy": "l2ChainId"
+          }
         }
       },
       "ignoreRelatives": ["weth"],
@@ -40,10 +42,12 @@
     "BondToken": {
       "fields": {
         "proposers": {
-          "type": "arrayFromOneEvent",
-          "event": "ProposerModified",
-          "valueKey": "proposer",
-          "flagKey": "enabled"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ProposerModified",
+            "valueKey": "proposer",
+            "flagKey": "enabled"
+          }
         }
       }
     },
@@ -69,10 +73,12 @@
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "fields": {
         "proxiableUUID": {
-          "type": "call",
-          "method": "function proxiableUUID() view returns (bytes32)",
-          "args": [],
-          "expectRevert": true
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
         }
       },
       "ignoreRelatives": ["wrappedNativeToken"]

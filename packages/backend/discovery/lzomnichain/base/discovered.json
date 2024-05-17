@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "base",
   "blockNumber": 12418351,
-  "configHash": "0xba7ada491838394e3aedc1cb91f588df392763653c03e34258a77e0f21502cec",
+  "configHash": "0x00284b78b20ddd982c3a90512dff10354fc287a6d2347492f1e2d3b215d2a814",
   "version": 3,
   "contracts": [
     {

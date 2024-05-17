@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
+import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -82,11 +82,12 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[0],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 10,
+        gas_price: 10n,
         receipt_gas_used: 100,
-        transaction_type: 2,
         calldata_gas_used: 100,
         data_length: 100,
+        receipt_blob_gas_price: 1n,
+        receipt_blob_gas_used: 123,
       },
       {
         from_address: ADDRESS_3,
@@ -94,11 +95,12 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[1],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 20,
+        gas_price: 20n,
         receipt_gas_used: 200,
-        transaction_type: 2,
         calldata_gas_used: 200,
         data_length: 200,
+        receipt_blob_gas_price: null,
+        receipt_blob_gas_used: null,
       },
       {
         from_address: ADDRESS_5,
@@ -106,11 +108,12 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[2],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 30,
+        gas_price: 30n,
         receipt_gas_used: 300,
-        transaction_type: 3,
         calldata_gas_used: 300,
         data_length: 300,
+        receipt_blob_gas_price: 1324n,
+        receipt_blob_gas_used: 123,
       },
     ]
     const expected: TrackedTxTransferResult[] = [
@@ -123,11 +126,12 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_1,
         toAddress: ADDRESS_2,
-        transactionType: 2,
         receiptGasUsed: 100,
-        gasPrice: 10,
+        gasPrice: 10n,
         calldataGasUsed: 100,
         dataLength: 100,
+        receiptBlobGasPrice: 1n,
+        receiptBlobGasUsed: 123,
       },
       {
         type: 'transfer',
@@ -138,11 +142,12 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_1,
         toAddress: ADDRESS_2,
-        transactionType: 2,
         receiptGasUsed: 100,
-        gasPrice: 10,
+        gasPrice: 10n,
         calldataGasUsed: 100,
         dataLength: 100,
+        receiptBlobGasPrice: 1n,
+        receiptBlobGasUsed: 123,
       },
       {
         type: 'transfer',
@@ -153,11 +158,12 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_3,
         toAddress: ADDRESS_4,
-        transactionType: 2,
         receiptGasUsed: 200,
-        gasPrice: 20,
+        gasPrice: 20n,
         calldataGasUsed: 200,
         dataLength: 200,
+        receiptBlobGasPrice: null,
+        receiptBlobGasUsed: null,
       },
       {
         type: 'transfer',
@@ -168,11 +174,12 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_5,
         toAddress: ADDRESS_6,
-        transactionType: 3,
         receiptGasUsed: 300,
-        gasPrice: 30,
+        gasPrice: 30n,
         calldataGasUsed: 300,
         dataLength: 300,
+        receiptBlobGasPrice: 1324n,
+        receiptBlobGasUsed: 123,
       },
     ]
 
@@ -200,11 +207,12 @@ describe(transformTransfersQueryResult.name, () => {
         block_timestamp: RESULT_TIMESTAMP,
         from_address: EthereumAddress.random(),
         to_address: EthereumAddress.random(),
-        gas_price: 10,
+        gas_price: 10n,
         receipt_gas_used: 100,
-        transaction_type: 2,
         calldata_gas_used: 100,
         data_length: 100,
+        receipt_blob_gas_price: 1n,
+        receipt_blob_gas_used: 123,
       },
     ]
 

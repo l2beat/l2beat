@@ -33,7 +33,7 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
     return 'stateUpdates'
   }
 
-  async getFinality(transaction: {
+  async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
   }): Promise<number[]> {
@@ -58,10 +58,8 @@ function decodeTransaction(data: string) {
   const decodedInput = iface.decodeFunctionData(signature, data)
 
   return StarknetStateUpdate.parse({
-    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     programOutput: decodedInput.programOutput,
     kzgProof: decodedInput.kzgProof,
-    /* eslint-enable @typescript-eslint/no-unsafe-assignment */
   })
 }
 

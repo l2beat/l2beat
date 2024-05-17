@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
@@ -24,14 +24,18 @@ describe(getDiscoveryConfigEntries.name, () => {
           proxyType: 'call implementation proxy',
           fields: {
             B: {
-              type: 'call',
-              method: 'crossChainContracts',
-              args: [1],
+              handler: {
+                type: 'call',
+                method: 'crossChainContracts',
+                args: [1],
+              },
             },
             A: {
-              type: 'call',
-              method: 'crossChainContracts',
-              args: [10],
+              handler: {
+                type: 'call',
+                method: 'crossChainContracts',
+                args: [10],
+              },
             },
           },
         },
@@ -67,14 +71,18 @@ describe(getDiscoveryConfigEntries.name, () => {
           fields: {
             // do not sort this (nest level = 3)
             B: {
-              type: 'call',
-              method: 'crossChainContracts',
-              args: [1],
+              handler: {
+                type: 'call',
+                method: 'crossChainContracts',
+                args: [1],
+              },
             },
             A: {
-              type: 'call',
-              method: 'crossChainContracts',
-              args: [10],
+              handler: {
+                type: 'call',
+                method: 'crossChainContracts',
+                args: [10],
+              },
             },
           },
           ignoreDiscovery: false,

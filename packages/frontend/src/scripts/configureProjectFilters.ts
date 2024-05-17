@@ -7,7 +7,7 @@ import { rerenderTable } from './table/configureTables'
 const states = new Map<string, string[]>()
 
 export function configureProjectFilters() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
   const projectFilters = $.maybe('#project-filters')
   if (!projectFilters) {
     return
@@ -29,6 +29,10 @@ export function configureProjectFilters() {
 
     if (!slugsWhenChecked && !slugsWhenUnchecked) {
       throw new Error(`No slugs for ${stateId}`)
+    }
+    // initialize state
+    if (slugsWhenUnchecked) {
+      states.set(stateId, slugsWhenUnchecked)
     }
 
     checkbox.addEventListener('change', () => {

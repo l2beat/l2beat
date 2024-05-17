@@ -2,14 +2,14 @@ import React from 'react'
 
 import { StageCell } from '../../../../components/stages/StageCell'
 import { NumberCell } from '../../../../components/table/NumberCell'
-import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
-import { getStageOrderValue } from '../../../../components/table/props/sorting/getStageOrderValue'
 import { RosetteCell } from '../../../../components/table/RosetteCell'
 import { TotalCell } from '../../../../components/table/TotalCell'
 import {
   TypeCell,
   TypeColumnTooltip,
 } from '../../../../components/table/TypeCell'
+import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
+import { getStageOrderValue } from '../../../../components/table/props/sorting/getStageOrderValue'
 import { ColumnConfig } from '../../../../components/table/types'
 import {
   ScalingL2SummaryViewEntry,

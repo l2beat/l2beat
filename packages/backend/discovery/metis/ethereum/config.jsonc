@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "metis",
   "initialAddresses": [
@@ -27,116 +27,168 @@
     "LockingPool": {
       "fields": {
         "sequencers": {
-          // each sequencer entry has: amount uint256, reward uint256, activationBatch uint256, updatedBatch uint256, deactivationBatch uint256, deactivationTime uint256, unlockClaimTime uint256, nonce uint256, owner address, signer address, pubkey bytes, rewardRecipient address, status uint8
-          "startIndex": 1,
-          "type": "array",
-          "length": "{{ totalSequencers }}"
+          "handler": {
+            // each sequencer entry has: amount uint256, reward uint256, activationBatch uint256, updatedBatch uint256, deactivationBatch uint256, deactivationTime uint256, unlockClaimTime uint256, nonce uint256, owner address, signer address, pubkey bytes, rewardRecipient address, status uint8
+            "startIndex": 1,
+            "type": "array",
+            // status: Unavailabe, Inactive, Active, Unlocked (Exited, the sequencer has no locked tokens, and it's no longer produce blocks on L2)
+            "pickFields": ["owner", "signer", "rewardRecipient", "status"],
+            "length": "{{ totalSequencers }}",
+            "ignoreRelative": true
+          }
         }
       },
       "ignoreMethods": ["curBatchState"], // interesting for finality?
-      "ignoreInWatchMode": ["currentBatch", "totalSequencers", "sequencers"],
+      "ignoreInWatchMode": [
+        "currentBatch",
+        "totalSequencers",
+        "sequencers",
+        "BLOCK_REWARD",
+        "rewardPerBlock"
+      ],
       "ignoreRelatives": ["rewardRecipient"]
     },
     "Lib_AddressManager": {
       "fields": {
         "BondManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BondManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BondManager"]
+          }
         },
         "CanonicalTransactionChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["CanonicalTransactionChain"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["CanonicalTransactionChain"]
+          }
         },
         "MVM_DiscountOracle": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["MVM_DiscountOracle"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["MVM_DiscountOracle"]
+          }
         },
         "METIS_MANAGER": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["METIS_MANAGER"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["METIS_MANAGER"]
+          }
         },
         "_1088_MVM_Sequencer_Wrapper": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["1088_MVM_Sequencer_Wrapper"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["1088_MVM_Sequencer_Wrapper"]
+          }
         },
         "Proxy__MVM_CanonicalTransaction": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__MVM_CanonicalTransaction"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__MVM_CanonicalTransaction"]
+          }
         },
         "_1088_MVM_FraudVerifier": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["1088_MVM_FraudVerifier"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["1088_MVM_FraudVerifier"]
+          }
         },
         "Proxy__MVM_Verifier": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__MVM_Verifier"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__MVM_Verifier"]
+          }
         },
         "ChainStorageContainer_CTC_queue": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["ChainStorageContainer-CTC-queue"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["ChainStorageContainer-CTC-queue"]
+          }
         },
         "StateCommitmentChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["StateCommitmentChain"]
+          "description": "Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["StateCommitmentChain"]
+          }
         },
         "Proxy__MVM_ChainManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__MVM_ChainManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__MVM_ChainManager"]
+          }
         },
         "_1088_MVM_Proposer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["1088_MVM_Proposer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["1088_MVM_Proposer"]
+          }
         },
         "_1088_MVM_Sequencer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["1088_MVM_Sequencer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["1088_MVM_Sequencer"]
+          }
         },
         "L2CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["L2CrossDomainMessenger"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["L2CrossDomainMessenger"]
+          }
         },
         "undefined_MVM_FraudVerifier": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["undefined_MVM_FraudVerifier"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["undefined_MVM_FraudVerifier"]
+          }
         },
         "Proxy__OVM_L1StandardBridge": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__OVM_L1StandardBridge"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__OVM_L1StandardBridge"]
+          }
         }
       }
     },
     "StateCommitmentChain": {
       "fields": {
         "getLastSequencerTimestampByChainId": {
-          "type": "call",
-          "method": "getLastSequencerTimestampByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "getLastSequencerTimestampByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         },
         "getTotalBatchesByChainId": {
-          "type": "call",
-          "method": "getTotalBatchesByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "getTotalBatchesByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         },
         "getTotalElementsByChainId": {
-          "type": "call",
-          "method": "getTotalElementsByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "getTotalElementsByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         }
       },
       "ignoreInWatchMode": [
@@ -152,14 +204,18 @@
       "ignoreMethods": ["get"],
       "fields": {
         "getGlobalMetadataByChainId": {
-          "type": "call",
-          "method": "getGlobalMetadataByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "getGlobalMetadataByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         },
         "lengthByChainId": {
-          "type": "call",
-          "method": "lengthByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "lengthByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         }
       },
       "ignoreInWatchMode": [
@@ -213,14 +269,18 @@
     "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": {
       "fields": {
         "getGlobalMetadataByChainId": {
-          "type": "call",
-          "method": "getGlobalMetadataByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "getGlobalMetadataByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         },
         "lengthByChainId": {
-          "type": "call",
-          "method": "lengthByChainId",
-          "args": ["{{ DEFAULT_CHAINID }}"]
+          "handler": {
+            "type": "call",
+            "method": "lengthByChainId",
+            "args": ["{{ DEFAULT_CHAINID }}"]
+          }
         }
       }
     },
@@ -228,7 +288,20 @@
       "ignoreMethods": ["chain_under_challenge"]
     },
     "Metis Multisig": {
-      "ignoreInWatchMode": ["nonce"]
+      "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
+      "ignoreInWatchMode": ["nonce"],
+      "fields": {
+        "getOwners": {
+          "description": "Metis Multisig signers as array",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "description": "Multisig threshold",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        }
+      }
     },
     "MToken": {
       // isOwner() compares caller to 0x00.. which gives true for call()

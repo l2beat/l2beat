@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Badge } from '../../../../components/badge/Badge'
 import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
+import { Badge } from '../../../../components/badge/Badge'
 import { EM_DASH } from '../../../../utils/constants'
 import { ValueWithDisplayValue } from '../../../types'
 import { CostsData, CostsDataDetails } from '../types'

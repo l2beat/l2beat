@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x3b120cac1a28d7482c4e8b3ba5529e19f2b58652
+
+# Diff at Sun, 05 May 2024 12:28:41 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@306760396dc5133ea2ec932bf81b9f36e88dbdd3 block: 197829534
+- current block number: 208089280
+
+## Description
+
+A prover / relayer is added to the Succictgateway. It is whitelisted for both functionIds (headerRange and nextHeader) of BlobstreamX.
+Same change as on Base.
+
+## Watched changes
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: None
++++ description: List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.
++++ type: PERMISSION
++++ severity: LOW
+      values.headerRangeProvers.1:
++        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
++++ description: List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.
++++ type: PERMISSION
++++ severity: LOW
+      values.nextHeaderProvers.1:
++        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+    }
+```
+
+```diff
+    contract BlobstreamXMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: Admin of the BlobstreamX contract. VerifierOwner of the BlobstreamX functionIDs in the SuccinctGateway.
+      values.nonce:
+-        6
++        7
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 197829534 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: None
++++ description: List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.
++++ type: PERMISSION
++++ severity: LOW
+      values.headerRangeProvers:
++        ["0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"]
+      values.headerRangeVerifierOwner:
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
++++ description: List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.
++++ type: PERMISSION
++++ severity: LOW
+      values.nextHeaderProvers:
++        ["0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"]
+      values.nextHeaderVerifierOwner:
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "BlobstreamXMultisig"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "SuccinctMultisig"
+    }
+```
+
 Generated with discovered.json: 0xa83178f53f6a63952fe8b5488d76a52bd121cead
 
 # Diff at Fri, 05 Apr 2024 11:41:00 GMT:

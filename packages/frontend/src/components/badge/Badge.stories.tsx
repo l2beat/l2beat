@@ -11,6 +11,7 @@ const meta: Meta<typeof Badge> = {
 export default meta
 type Story = StoryObj<typeof Badge>
 
+// biome-ignore lint/suspicious/noShadowRestrictedNames: This is a storybook convention
 export const Error: Story = {
   args: {
     type: 'error',

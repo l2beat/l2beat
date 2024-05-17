@@ -1,5 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { MulticallConfig } from '../discovery/provider/multicall/types'
-import { EthereumAddress } from '../utils/EthereumAddress'
 import { EtherscanUnsupportedMethods } from '../utils/EtherscanLikeClient'
 
 export interface DiscoveryCliConfig {
@@ -18,6 +19,7 @@ export interface DiscoveryModuleConfig {
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
+  readonly skipHints?: boolean
 }
 
 export interface SingleDiscoveryModuleConfig {

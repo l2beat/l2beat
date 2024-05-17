@@ -3,9 +3,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { TrackedTxResult } from '../../types/model'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
+import { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
 import {
   LivenessRecord,
@@ -56,15 +56,15 @@ describe(LivenessUpdater.name, () => {
     })
   })
 
-  describe(LivenessUpdater.prototype.deleteFrom.name, () => {
+  describe(LivenessUpdater.prototype.deleteFromById.name, () => {
     it('calls liveness repo with correct parameters', async () => {
       const livenessRepo = getMockLivenessRepository()
       const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
 
       const id = TrackedTxId.random()
-      await updater.deleteFrom(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
 
-      expect(livenessRepo.deleteFrom).toHaveBeenNthCalledWith(
+      expect(livenessRepo.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
@@ -104,7 +104,7 @@ describe(LivenessUpdater.name, () => {
 
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
-    deleteFrom: async () => 0,
+    deleteFromById: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })
@@ -126,10 +126,11 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
       receiptGasUsed: 100,
-      gasPrice: 10,
-      transactionType: 2,
+      gasPrice: 10n,
       dataLength: 5,
       calldataGasUsed: 10,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -145,10 +146,11 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
       receiptGasUsed: 200,
-      gasPrice: 20,
-      transactionType: 3,
+      gasPrice: 20n,
       dataLength: 0,
       calldataGasUsed: 0,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
   ]
 }

@@ -1,4 +1,4 @@
-import { BigNumber, constants } from 'ethers'
+import { constants, BigNumber } from 'ethers'
 
 export function divOrZero(value: BigNumber, by: BigNumber) {
   if (by.eq(0)) {

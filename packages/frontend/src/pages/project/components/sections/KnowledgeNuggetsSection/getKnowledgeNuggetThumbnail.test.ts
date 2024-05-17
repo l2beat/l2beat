@@ -1,11 +1,11 @@
-import { expect } from 'earl'
 import { readFileSync } from 'fs'
+import { expect } from 'earl'
 import { readdirSync } from 'fs-extra'
 
 import {
   DEFAULT_THUMBNAIL,
-  getKnowledgeNuggetThumbnail,
   THUMBNAILS_FOLDER,
+  getKnowledgeNuggetThumbnail,
 } from './getKnowledgeNuggetThumbnail'
 
 describe('getThumbnail', () => {

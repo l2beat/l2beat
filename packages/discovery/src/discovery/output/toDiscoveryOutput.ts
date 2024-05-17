@@ -1,6 +1,6 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { Hash256 } from '@l2beat/shared-pure'
 
-import { Hash256 } from '../../utils/Hash256'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 

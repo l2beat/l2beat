@@ -1,6 +1,5 @@
 import { ContractValue } from '@l2beat/discovery-types'
-
-import { EthereumAddress } from '../../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 export function valueToAddress(
   value: EthereumAddress | ContractValue,
@@ -16,7 +15,7 @@ export function valueToAddress(
 
   try {
     return EthereumAddress(value)
-  } catch (e) {
+  } catch {
     throw new Error('Cannot convert value to address, invalid value')
   }
 }

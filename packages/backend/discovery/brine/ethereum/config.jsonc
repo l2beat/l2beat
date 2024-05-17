@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "brine",
   "initialAddresses": ["0x1390f521A79BaBE99b69B37154D63D431da27A07"],
@@ -12,7 +12,7 @@
     "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25": "Operator"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
@@ -32,18 +32,22 @@
       ],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         }
       }
     },
     "Committee": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     }

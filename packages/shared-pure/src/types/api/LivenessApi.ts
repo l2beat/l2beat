@@ -1,8 +1,8 @@
 import z from 'zod'
 
-import { branded } from '../branded'
 import { TrackedTxsConfigSubtype } from '../TrackedTxsConfigSubtype'
 import { UnixTime } from '../UnixTime'
+import { branded } from '../branded'
 
 export const LivenessDataPoint = z
   .object({

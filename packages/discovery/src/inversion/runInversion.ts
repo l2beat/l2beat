@@ -1,13 +1,13 @@
-import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
-import chalk from 'chalk'
 import { execSync } from 'child_process'
+import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { constants, utils } from 'ethers'
 import { mkdir, writeFile } from 'fs/promises'
 import { isObject } from 'lodash'
 
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
-import { EthereumAddress } from '../utils/EthereumAddress'
 
 export interface InvertedAddressDetails {
   name?: string

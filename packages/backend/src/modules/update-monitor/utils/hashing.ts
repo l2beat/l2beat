@@ -1,7 +1,7 @@
-import { ConfigReader } from '@l2beat/discovery'
-import { Hash160 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
+import { ConfigReader } from '@l2beat/discovery'
+import { Hash160 } from '@l2beat/shared-pure'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 

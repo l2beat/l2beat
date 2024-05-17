@@ -1,9 +1,8 @@
 import { assert } from '@l2beat/backend-tools'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
@@ -86,7 +85,6 @@ export class DynamicArrayHandler implements ClassicHandler {
 
 function getDependencies(definition: DynamicArrayHandlerDefinition): string[] {
   const dependencies: string[] = []
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const add = (value: string | undefined) => value && dependencies.push(value)
 
   add(getReferencedName(definition.slot))
@@ -105,7 +103,6 @@ function resolveDependencies(
   slot: bigint
   returnType: 'number' | 'address' | 'bytes'
 } {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const resolved = resolveReference(definition.slot, previousResults)
   const slot = valueToBigInt(resolved)
 

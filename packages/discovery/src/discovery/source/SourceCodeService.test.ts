@@ -1,12 +1,12 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import {
   ContractMetadata,
   DiscoveryProvider,
 } from '../provider/DiscoveryProvider'
-import { processSources } from './processSources'
 import { SourceCodeService } from './SourceCodeService'
+import { processSources } from './processSources'
 
 describe(SourceCodeService.name, () => {
   const FOO_ADDRESS = EthereumAddress.random()

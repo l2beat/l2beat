@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "portal",
   "initialAddresses": [
@@ -16,14 +16,18 @@
       "ignoreMethods": ["quorum"],
       "fields": {
         "guardianSet": {
-          "type": "call",
-          "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
-          "args": ["{{ getCurrentGuardianSetIndex }}"]
+          "handler": {
+            "type": "call",
+            "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
+            "args": ["{{ getCurrentGuardianSetIndex }}"]
+          }
         },
         "quorum": {
-          "type": "array",
-          "method": "quorum",
-          "length": 30
+          "handler": {
+            "type": "array",
+            "method": "quorum",
+            "length": 30
+          }
         }
       }
     },

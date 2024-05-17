@@ -1,8 +1,7 @@
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { Bytes } from '../../../utils/Bytes'
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { HandlerResult } from '../Handler'
@@ -205,7 +204,7 @@ describe(StorageHandler.name, () => {
       )
       let slot: bigint | number | Bytes | undefined
       const provider = mockObject<DiscoveryProvider>({
-        async getStorage(passedAddress, receivedSlot) {
+        async getStorage(_passedAddress, receivedSlot) {
           slot = receivedSlot
           return Bytes.fromHex('0'.repeat(64))
         },

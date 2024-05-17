@@ -2,22 +2,35 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
+  ConfigReader,
+  DiscoveryConfig,
+  RawDiscoveryConfig,
+} from '@l2beat/discovery'
+import {
   contractStub,
   discoveredJsonStub,
   discoveredOpStackJsonStub,
 } from '../test/stubs/discoveredJson'
-import { Filesystem, ProjectDiscovery } from './ProjectDiscovery'
+import { ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
-  const fsMock = mockObject<Filesystem>({
-    readFileSync: () => JSON.stringify(discoveredJsonStub),
-  })
   const projectName = 'ExampleProject'
-  const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
+  const configReader = mockObject<ConfigReader>({
+    readConfig: (projectName: string, chain: string) =>
+      mockConfig(projectName, chain),
+    readDiscovery: () => discoveredJsonStub,
+  })
+
+  const opConfigReader = mockObject<ConfigReader>({
+    readConfig: (projectName: string, chain: string) =>
+      mockConfig(projectName, chain),
+    readDiscovery: () => discoveredOpStackJsonStub,
+  })
+  const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
-      const contract = discovery.getContract(contractStub.address)
+      const contract = discovery.getContract(contractStub.address.toString())
 
       expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
     })
@@ -55,11 +68,11 @@ describe(ProjectDiscovery.name, () => {
 
   describe(ProjectDiscovery.prototype.getContractValue.name, () => {
     it('should return given contract value', () => {
-      const value = discovery.getContractValue<number>(
+      const value = discovery.getContractValue(
         contractStub.name,
         'CHILD_BLOCK_INTERVAL',
       )
-      expect(value).toEqual(contractStub.values.CHILD_BLOCK_INTERVAL)
+      expect(value).toEqual(contractStub.values?.CHILD_BLOCK_INTERVAL as number)
     })
 
     it('should throw an error if given contract value does not exist', () => {
@@ -79,7 +92,7 @@ describe(ProjectDiscovery.name, () => {
           'type',
         )
 
-        expect(upgradeabilityParam).toEqual('immutable')
+        expect(upgradeabilityParam).toEqual('StarkWare diamond')
       })
       it('should throw an error if upgradeability param does not exist', () => {
         const key = 'randomParam'
@@ -96,11 +109,10 @@ describe(ProjectDiscovery.name, () => {
       })
 
       it('should not throw an error if upgradeability param is 0', () => {
-        const key = 'zeroUpgradeabilityParam'
+        const key = 'upgradeDelay'
 
         const upgradeabilityParam = discovery.getContractUpgradeabilityParam(
           contractStub.name,
-          //@ts-expect-error key does not exist on UpgradeabilityParams type
           key,
         )
 
@@ -110,10 +122,11 @@ describe(ProjectDiscovery.name, () => {
   )
 
   describe(ProjectDiscovery.prototype.getOpStackContractDetails.name, () => {
-    const fsMock = mockObject<Filesystem>({
-      readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
-    })
-    const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      'ethereum',
+      opConfigReader,
+    )
 
     const upgradesProxy = {
       upgradableBy: ['MockAdmin'],
@@ -233,10 +246,11 @@ describe(ProjectDiscovery.name, () => {
   })
 
   describe(ProjectDiscovery.prototype.getOpStackPermissions.name, () => {
-    const fsMock = mockObject<Filesystem>({
-      readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
-    })
-    const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      'ethereum',
+      opConfigReader,
+    )
 
     it('should return all op stack permissions with correct overrides', () => {
       const permissions = discovery.getOpStackPermissions()
@@ -261,16 +275,26 @@ describe(ProjectDiscovery.name, () => {
   })
 
   it('reads configurations for different chainIds', () => {
-    const fsMock = mockObject<Filesystem>({
-      readFileSync: () => JSON.stringify(discoveredJsonStub),
-    })
-    const discovery = new ProjectDiscovery('ExampleProject', 'arbitrum', fsMock)
-    const contract = discovery.getContract(contractStub.address)
+    const discovery = new ProjectDiscovery(
+      'ExampleProject',
+      'arbitrum',
+      configReader,
+    )
+    const contract = discovery.getContract(contractStub.address.toString())
 
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
-    expect(fsMock.readFileSync).toHaveBeenNthCalledWith(
-      1,
-      expect.includes('/ExampleProject/arbitrum/'),
-    )
   })
 })
+
+function mockConfig(
+  name: string,
+  chain = 'ethereum',
+  innerConfig: Partial<RawDiscoveryConfig> = {},
+): DiscoveryConfig {
+  return new DiscoveryConfig({
+    name,
+    chain,
+    initialAddresses: [],
+    ...innerConfig,
+  })
+}

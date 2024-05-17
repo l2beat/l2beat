@@ -1,8 +1,8 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
+import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryStack } from './DiscoveryStack'
 import { shouldSkip } from './shouldSkip'
 
@@ -10,7 +10,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 3
+export const DISCOVERY_LOGIC_VERSION = 4
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,

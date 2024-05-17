@@ -5,13 +5,13 @@ import {
 import React from 'react'
 
 import { Callout, CalloutProps } from '../../../../../components/Callout'
-import { ShieldIcon } from '../../../../../components/icons'
-import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
+import { ShieldIcon } from '../../../../../components/icons'
+import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
+import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
-import { UnverifiedContractsWarning } from '../ContractsSection/UnverifiedContractsWarning'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 
 export interface TechnologyContract {
@@ -75,12 +75,7 @@ export function ContractEntry({
     icon = <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
   }
   if (areAddressesUnverified || areLinksUnverified) {
-    icon = (
-      <UnverifiedContractsWarning
-        className="mt-[3px]"
-        tooltip="Source code is not verified"
-      />
-    )
+    icon = <UnverifiedIcon className="fill-red-300" />
   }
 
   addresses.forEach((address) => {
@@ -101,7 +96,7 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2">
-            <strong>{contract.name}</strong>{' '}
+            <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
@@ -139,7 +134,9 @@ export function ContractEntry({
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>{' '}
-              {contract.upgradeableBy}
+              <Link href={`#${contract.upgradeableBy}`}>
+                {contract.upgradeableBy}
+              </Link>
             </p>
           )}
           {contract.upgradeDelay && (

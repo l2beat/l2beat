@@ -1,13 +1,13 @@
 import { ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
-import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
-import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
+import { EXEC_REVERT_MSG, callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = z.infer<typeof CallHandlerDefinition>
@@ -16,7 +16,7 @@ export const CallHandlerDefinition = z.strictObject({
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
   ignoreRelative: z.optional(z.boolean()),
-  pickFields: z.optional(z.array(z.union([z.string(), z.number()]))),
+  pickFields: z.optional(z.array(z.string())),
   expectRevert: z.optional(z.boolean()),
 })
 
@@ -58,7 +58,6 @@ export class CallHandler implements ClassicHandler {
     this.logger.logExecution(this.field, [
       'Calling ',
       `${this.fragment.name}(${resolved.args
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         .map((x) => x.toString())
         .join(', ')})`,
     ])

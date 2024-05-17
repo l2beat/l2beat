@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../components'
 import { About } from '../components/About'
-import { OtherSites } from '../components/other-sites/OtherSites'
 import { PageContent } from '../components/PageContent'
+import { OtherSites } from '../components/other-sites/OtherSites'
 
 export interface DashboardLayoutProps {
   navbar: NavbarProps

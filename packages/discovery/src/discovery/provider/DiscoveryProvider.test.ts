@@ -1,9 +1,8 @@
-import { expect, mockFn, MockObject, mockObject } from 'earl'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { MockObject, expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
-import { Hash256 } from '../../utils/Hash256'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from './DiscoveryProvider'
 

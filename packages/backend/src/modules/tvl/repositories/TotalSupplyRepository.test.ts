@@ -3,11 +3,11 @@ import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
 } from './TotalSupplyRepository'
+import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockTotalSupply = (

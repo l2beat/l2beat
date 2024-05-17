@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { Config } from '../../../config'
+import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
@@ -13,6 +13,8 @@ import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRepository } from '../repositories/ValueRepository'
+import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
@@ -45,39 +47,47 @@ export function createTvl2Module(
     removeSixHourlyAfterDays: 93,
   })
 
+  const idConverter = new IdConverter(config.tvl2.prices)
+
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const modules = [
-    createPriceModule(
-      config.tvl2,
-      logger,
-      peripherals,
-      hourlyIndexer,
-      syncOptimizer,
-      indexerService,
-    ),
-    ...createChainModules(
-      config.tvl2,
-      peripherals,
-      logger,
-      hourlyIndexer,
-      syncOptimizer,
-      indexerService,
-    ),
-    createCirculatingSupplyModule(
-      config.tvl2,
-      logger,
-      peripherals,
-      hourlyIndexer,
-      syncOptimizer,
-      indexerService,
-    ),
-  ]
+  const priceModule = createPriceModule(
+    config.tvl2,
+    logger,
+    peripherals,
+    hourlyIndexer,
+    syncOptimizer,
+    indexerService,
+  )
+
+  const chainModules = createChainModules(
+    config.tvl2,
+    peripherals,
+    logger,
+    hourlyIndexer,
+    syncOptimizer,
+    indexerService,
+    priceModule,
+    idConverter,
+  )
+
+  const circulatingSuppliesModule = createCirculatingSupplyModule(
+    config.tvl2,
+    logger,
+    peripherals,
+    hourlyIndexer,
+    syncOptimizer,
+    indexerService,
+    priceModule,
+    idConverter,
+  )
 
   const tvlController = new Tvl2Controller(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
-    config.projects.map((p) => p.projectId),
+    peripherals.getRepository(ValueRepository),
+    config.tvl2.chainConverter,
+    config.tvl2.projects,
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
@@ -86,9 +96,13 @@ export function createTvl2Module(
   const start = async () => {
     await hourlyIndexer.start()
 
-    for (const module of modules) {
+    await priceModule.start()
+
+    for (const module of chainModules) {
       await module.start()
     }
+
+    await circulatingSuppliesModule.start()
   }
 
   return {

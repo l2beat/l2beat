@@ -1,12 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryProvider,
+  diffDiscovery,
   toDiscoveryOutput,
-  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -34,12 +33,12 @@ export class DiscoveryRunner {
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return this.discoveryProvider.getBlockNumber()
+    return await this.discoveryProvider.getBlockNumber()
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.discoveryProvider.getBlockNumberAt(
-      new DiscoveryUnixTime(timestamp.toNumber()),
+    return await this.discoveryProvider.getBlockNumberAt(
+      new UnixTime(timestamp.toNumber()),
     )
   }
 
@@ -173,10 +172,7 @@ export class DiscoveryRunner {
   // this function ensures that initial addresses are taken from discovered.json
   // so this way we will always discover "known" contracts
   async updateInitialAddresses(config: DiscoveryConfig) {
-    const discovery = await this.configReader.readDiscovery(
-      config.name,
-      this.chain,
-    )
+    const discovery = this.configReader.readDiscovery(config.name, this.chain)
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({
       ...config.raw,

@@ -1,6 +1,6 @@
 import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
@@ -16,12 +16,12 @@ import { detectStarkWareProxy } from './auto/StarkWareProxy'
 import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
-import { getImmutableProxy } from './manual/immutableProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
+import { getImmutableProxy } from './manual/immutableProxy'
 
 export type Detector = (
   provider: DiscoveryProvider,
@@ -100,9 +100,8 @@ export class ProxyDetector {
     blockNumber: number,
   ): Promise<ProxyDetails | undefined> {
     const detector = this.manualDetectors[manualProxyType]
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (detector) {
-      return detector(this.provider, address, blockNumber)
+      return await detector(this.provider, address, blockNumber)
     }
   }
 }

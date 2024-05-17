@@ -1,4 +1,5 @@
-import { EthereumAddress } from '../../utils/EthereumAddress'
+import { EthereumAddress } from '@l2beat/shared-pure'
+
 import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export type ContractOverrides = DiscoveryContract & {
@@ -43,7 +44,6 @@ export class DiscoveryOverrides {
 
   *[Symbol.iterator](): IterableIterator<ContractOverrides> {
     for (const key of Object.keys(this.config.overrides ?? {})) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       yield this.get(key)
     }
   }

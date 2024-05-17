@@ -1,5 +1,5 @@
-import fsx from 'fs-extra'
 import path from 'path'
+import fsx from 'fs-extra'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { Page } from './Page'

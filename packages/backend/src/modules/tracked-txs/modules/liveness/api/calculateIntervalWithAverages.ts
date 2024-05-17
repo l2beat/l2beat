@@ -140,21 +140,20 @@ export function calculateDetailsFor(
     }
     const result = {
       averageInSeconds: 0,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       minimumInSeconds: Infinity,
       maximumInSeconds: 0,
     }
     for (const record of records.slice(0, records.length - 1)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
       result.averageInSeconds += record.previousRecordInterval!
       result.minimumInSeconds = Math.min(
         result.minimumInSeconds,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         record.previousRecordInterval!,
       )
       result.maximumInSeconds = Math.max(
         result.maximumInSeconds,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         record.previousRecordInterval!,
       )
     }
@@ -189,21 +188,20 @@ export function calculateDetailsFor(
     }
     const result = {
       averageInSeconds: 0,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       minimumInSeconds: Infinity,
       maximumInSeconds: 0,
     }
     for (const record of filtered) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
       result.averageInSeconds += record.previousRecordInterval!
       result.minimumInSeconds = Math.min(
         result.minimumInSeconds,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         record.previousRecordInterval!,
       )
       result.maximumInSeconds = Math.max(
         result.maximumInSeconds,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        // biome-ignore lint/style/noNonNullAssertion: we know it's there
         record.previousRecordInterval!,
       )
     }

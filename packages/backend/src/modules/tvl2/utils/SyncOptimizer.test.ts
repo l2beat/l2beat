@@ -26,7 +26,9 @@ describe(SyncOptimizer.name, () => {
         1,
         'hours',
       )
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case daily should be returned
       const expected = hourlyTimestamp.toEndOf('day')
 
@@ -42,7 +44,9 @@ describe(SyncOptimizer.name, () => {
         'days',
       ).add(1, 'hours')
 
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case sixHourly should be returned
       const expected = hourlyTimestamp.toEndOf('six hours')
 
@@ -54,7 +58,9 @@ describe(SyncOptimizer.name, () => {
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
-      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
+      const timestampToSync = syncOptimizer.getTimestampToSync(
+        hourlyTimestamp.toNumber(),
+      )
       // in this case daily should be returned
       const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
 

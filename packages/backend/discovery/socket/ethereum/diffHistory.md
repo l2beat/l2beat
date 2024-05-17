@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x24bfd7f6c3a89e63c879a013490d80256ff8a746
+
+# Diff at Sun, 05 May 2024 17:46:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@91ddfe46c9a8cff7aff522924d50fd166a15932b block: 19609491
+- current block number: 19805467
+
+## Description
+
+4 Plugs are added to the socket main contract. New vaults are discovered by the socket-update script and added to the escrows in socket.ts.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.23:
++        "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.22:
++        "0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.21:
++        "0x998d7C2257591cC38383B4F91474c5346111f2E6"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.20:
++        "0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19609491 (main branch discovery), not current.
+
+```diff
+    contract USDCVaultOwner (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      name:
+-        "USDCVaultOwner"
++        "LyraMultisig"
+    }
+```
+
+```diff
+    contract WBTC Vault (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      name:
+-        "WBTC Vault"
++        "WBTC Vault Lyra"
+    }
+```
+
+```diff
+    contract USDC Vault (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      name:
+-        "USDC Vault"
++        "USDC Vault Lyra"
+    }
+```
+
+```diff
+    contract SNX Vault (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      name:
+-        "SNX Vault"
++        "SNX Vault Lyra"
+    }
+```
+
+```diff
+    contract WETH Vault 2 (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa) {
+    +++ description: None
+      name:
+-        "WETH Vault 2"
++        "WETH Vault Hook"
+    }
+```
+
+```diff
+    contract WETH Vault (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      name:
+-        "WETH Vault"
++        "WETH Vault Lyra"
+    }
+```
+
+```diff
+    contract wstETH Vault (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      name:
+-        "wstETH Vault"
++        "wstETH Vault Lyra"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault Lyra (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfb0b61de4c8e0445a4631e0fabe790a63dede53e
 
 # Diff at Mon, 08 Apr 2024 07:34:22 GMT:

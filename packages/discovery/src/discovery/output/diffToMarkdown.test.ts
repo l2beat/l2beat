@@ -1,7 +1,12 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { EthereumAddress } from '../../utils/EthereumAddress'
-import { ContractMeta, DiscoveryMeta, ValueMeta } from '../config/DiscoveryMeta'
+import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import {
+  DiscoveryContract,
+  DiscoveryContractField,
+  RawDiscoveryConfig,
+} from '../config/RawDiscoveryConfig'
 import { DiscoveryDiff } from './diffDiscovery'
 import {
   contractDiffToMarkdown,
@@ -25,15 +30,13 @@ describe(discoveryDiffToMarkdown.name, () => {
     type: 'deleted',
   }
 
-  const BAR_CONTRACT_META: ContractMeta = {
-    name: 'bar',
+  const BAR_CONTRACT_CONFIG: DiscoveryContract = {
     description: 'The contract getting deleted',
-    values: {},
+    fields: {},
   }
-  const FOO_CONTRACT_META: ContractMeta = {
-    name: 'foo',
+  const FOO_CONTRACT_CONFIG: DiscoveryContract = {
     description: undefined,
-    values: {
+    fields: {
       baz: {
         type: 'L2',
         description: 'The foo value',
@@ -41,14 +44,24 @@ describe(discoveryDiffToMarkdown.name, () => {
       },
     },
   }
-  const DISCOVERY_META: DiscoveryMeta = {
-    contracts: [BAR_CONTRACT_META, FOO_CONTRACT_META],
-  }
+  const DISCOVERY_CONFIG = new DiscoveryConfig({
+    name: 'test',
+    chain: 'ethereum',
+    initialAddresses: [],
+    names: {
+      '0x0000000000000000000000000000000000000001': 'foo',
+      '0x0000000000000000000000000000000000000002': 'bar',
+    },
+    overrides: {
+      bar: BAR_CONTRACT_CONFIG,
+      foo: FOO_CONTRACT_CONFIG,
+    },
+  } as RawDiscoveryConfig)
 
   it('multi contract diff, meta', () => {
     const result = discoveryDiffToMarkdown(
       [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
-      DISCOVERY_META,
+      DISCOVERY_CONFIG,
     )
 
     expect(result).toEqual(
@@ -78,7 +91,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     const maxLength = 128
     const result = discoveryDiffToMarkdown(
       [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
-      DISCOVERY_META,
+      DISCOVERY_CONFIG,
       maxLength,
     )
 
@@ -98,7 +111,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     const maxLength = 48
     const result = discoveryDiffToMarkdown(
       [FOO_CONTRACT_DIFF],
-      DISCOVERY_META,
+      DISCOVERY_CONFIG,
       maxLength,
     )
 
@@ -252,10 +265,9 @@ describe(contractDiffToMarkdown.name, () => {
   })
 
   it('contract with a known diff, meta', () => {
-    const meta: ContractMeta = {
-      name: 'foo',
+    const contract: DiscoveryContract = {
       description: 'The foo contract',
-      values: {
+      fields: {
         baz: {
           type: 'L2',
           description: 'The baz value',
@@ -273,7 +285,7 @@ describe(contractDiffToMarkdown.name, () => {
           { key: 'values.baz', before: 'bad', after: 'good' },
         ],
       },
-      meta,
+      contract,
     )
 
     expect(result).toEqual(
@@ -363,13 +375,13 @@ describe(fieldDiffToMarkdown.name, () => {
       after: 'newValue',
     }
 
-    const meta: ValueMeta = {
+    const field: DiscoveryContractField = {
       type: 'L2',
       description: 'The bar value',
       severity: 'LOW',
     }
 
-    expect(fieldDiffToMarkdown(diff, meta)).toEqual(
+    expect(fieldDiffToMarkdown(diff, field)).toEqual(
       [
         '+++ description: The bar value', // prettier hack
         '+++ type: L2',
@@ -388,13 +400,13 @@ describe(fieldDiffToMarkdown.name, () => {
       after: 'newValue',
     }
 
-    const meta: ValueMeta = {
+    const field: DiscoveryContractField = {
       type: 'L2',
       description: null,
       severity: 'LOW',
     }
 
-    expect(fieldDiffToMarkdown(diff, meta)).toEqual(
+    expect(fieldDiffToMarkdown(diff, field)).toEqual(
       [
         '+++ type: L2', // prettier hack
         '+++ severity: LOW',
@@ -412,14 +424,14 @@ describe(fieldDiffToMarkdown.name, () => {
       after: 'newValue',
     }
 
-    const meta: ValueMeta = {
+    const field: DiscoveryContractField = {
       type: 'L2',
       description: 'The bar value',
       severity: 'LOW',
     }
 
     const maxLength = 48
-    const result = fieldDiffToMarkdown(diff, meta, maxLength)
+    const result = fieldDiffToMarkdown(diff, field, maxLength)
     expect(result.length).toBeLessThanOrEqual(maxLength)
     expect(result).toEqual('+++ description: The bar v... (message too long)')
   })

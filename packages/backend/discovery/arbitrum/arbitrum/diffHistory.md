@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xe5a979cc7f1e23c4acc6a3510dc4a992f0ff176a
+
+# Diff at Mon, 06 May 2024 09:22:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@22b41765601210ab9db53f4371a852edbfa067ea block: 195078255
+- current block number: 208388457
+
+## Description
+
+The biannual security council elections are executed with a familiar figure (`0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae`) having been re-elected.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.11:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.10:
+-        "0xf6B6F07862A02C85628B3A9688beae07fEA9C863"
++        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.9:
+-        "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF"
++        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.8:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.7:
+-        "0x5280406912EB8Ec677Df66C326BE48f938DC2e44"
++        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.6:
+-        "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710"
++        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
+      values.getSecondCohort.5:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.4:
+-        "0xf6B6F07862A02C85628B3A9688beae07fEA9C863"
++        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
+      values.getSecondCohort.3:
+-        "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF"
++        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+      values.getSecondCohort.2:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
+      values.getSecondCohort.1:
+-        "0x5280406912EB8Ec677Df66C326BE48f938DC2e44"
++        "0xB3b60932E598fe946169EC209A197184Bad760B7"
+      values.getSecondCohort.0:
+-        "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710"
++        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
+      values.updateNonce:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x719eea4074a6b7d15e0c5fa005f4a80d040398ef
 
 # Diff at Thu, 28 Mar 2024 11:36:42 GMT:

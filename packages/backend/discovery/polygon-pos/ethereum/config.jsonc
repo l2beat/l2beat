@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polygon-pos",
   "initialAddresses": [
@@ -77,32 +77,40 @@
     "RootChainManager": {
       "fields": {
         "PREDICATES": {
-          "type": "arrayFromOneEvent",
-          "event": "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
-          "valueKey": "predicateAddress"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
+            "valueKey": "predicateAddress"
+          }
         }
       }
     },
     "Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "ERC20Predicate": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "StateSender": {
       "fields": {
         "REGISTRATIONS": {
-          "type": "arrayFromOneEvent",
-          "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
-          "valueKey": "sender"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
+            "valueKey": "sender"
+          }
         }
       },
       "ignoreInWatchMode": ["counter"]

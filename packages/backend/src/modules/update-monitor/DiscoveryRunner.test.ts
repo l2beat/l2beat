@@ -60,7 +60,7 @@ describe(DiscoveryRunner.name, () => {
     it('injects initial addresses', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().resolvesTo({
+        readDiscovery: mockFn().returns({
           contracts: [{ address: ADDRESS }],
         }),
       })
@@ -93,7 +93,7 @@ describe(DiscoveryRunner.name, () => {
         ...getMockConfig().raw,
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: mockFn().resolvesTo({
+        readDiscovery: mockFn().returns({
           contracts: [{ address: ADDRESS }],
         }),
       })
