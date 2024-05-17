@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { CostsPagesData } from '../types'
@@ -13,8 +12,6 @@ export function getProps(
   return {
     props: {
       costsView: getScalingCostsView(config.layer2s, pagesData),
-      navbar: getNavbarProps(config, 'scaling'),
-      footer: getFooterProps(config),
       milestones: config.milestones,
     },
     wrapper: {

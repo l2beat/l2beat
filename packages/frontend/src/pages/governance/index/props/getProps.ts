@@ -15,7 +15,7 @@ const INDEX_PAGE_PUBLICATIONS_COUNT = 4
 const INDEX_PAGE_EVENTS_COUNT = 8
 const INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS = 4
 
-export function getProps(config: Config): Wrapped<GovernancePageProps> {
+export function getProps(): Wrapped<GovernancePageProps> {
   const publications = getCollection('publications')
   const events = getCollection('events')
   const delegatedProjects = getCollection('delegatedProjects')
@@ -27,8 +27,6 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
       delegatedProjects: delegatedProjects.map(
         getGovernanceDelegatedProjectEntry,
       ),
-      navbar: getNavbarProps(config, 'governance'),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getPageMetadata(),

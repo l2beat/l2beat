@@ -27,7 +27,6 @@ export function getProps(
   const charts = getCharts(project, tvlApiResponse, config, activityApiResponse)
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
       projectHeader: getProjectHeader(
         project,
         config,
@@ -42,7 +41,6 @@ export function getProps(
         implementationChange,
         charts,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApis: compact([

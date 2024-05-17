@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
 import { Link } from '../../../components/Link'
 import { PageContent } from '../../../components/PageContent'
@@ -9,24 +8,21 @@ import {
   DonateFundingSources,
   DonateFundingSourcesProps,
 } from './DonateFundingSources'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface DonatePageProps {
-  navbar: NavbarProps
   header: HeaderProps
   fundingSources: DonateFundingSourcesProps
-  footer: FooterProps
 }
 
 export function DonatePage(props: DonatePageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <Header {...props.header} />
       <PageContent>
         <DonateFundingSources {...props.fundingSources} />
       </PageContent>
-      <Footer narrow {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }
 

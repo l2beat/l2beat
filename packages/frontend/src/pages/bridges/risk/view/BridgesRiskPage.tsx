@@ -9,18 +9,11 @@ import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
 
 export interface BridgesRiskPageProps {
   riskView: BridgesRiskViewProps
-  footer: FooterProps
-  navbar: NavbarProps
 }
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <DashboardLayout
-      navbar={props.navbar}
-      footer={props.footer}
-      hideOtherSites
-      tabs={<BridgesNavigationTabs selected="risk" />}
-    >
+    <DashboardLayout hideOtherSites>
       <SimplePageHeader>Risk Analysis</SimplePageHeader>
       <BridgesMvpWarning />
       <BridgesRiskView {...props.riskView} />

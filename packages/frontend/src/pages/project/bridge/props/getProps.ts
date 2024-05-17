@@ -27,7 +27,6 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config, 'bridges'),
       projectHeader: getProjectHeader(
         bridge,
         tvlApiResponse,
@@ -42,7 +41,6 @@ export function getProps(
           charts,
         ),
       },
-      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApis: compact([

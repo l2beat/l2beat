@@ -1,5 +1,4 @@
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { Wrapped } from '../../Page'
 import { getDefaultPageMetadata } from '../../metadata'
 import { ZkCatalogPageProps } from '../view/ZkCatalogPage'
@@ -14,9 +13,7 @@ export function getProps(config: Config): Wrapped<ZkCatalogPageProps> {
 
   return {
     props: {
-      navbar: getNavbarProps(config, 'zk-catalog'),
       view: getZkCatalogView(projects),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

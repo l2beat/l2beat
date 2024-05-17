@@ -6,23 +6,12 @@ import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 
 export interface ScalingTvlPageProps {
-  navbar: NavbarProps
-  footer: FooterProps
   tvlView: ScalingTvlViewProps
 }
 
 export function ScalingTvlPage(props: ScalingTvlPageProps) {
   return (
-    <DashboardLayout
-      navbar={props.navbar}
-      footer={props.footer}
-      tabs={
-        <ScalingNavigationTabs
-          features={props.navbar.features}
-          selected="detailed"
-        />
-      }
-    >
+    <DashboardLayout>
       <Chart
         settingsId="scaling-tvl"
         initialType={{ type: 'scaling-detailed-tvl' }}

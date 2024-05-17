@@ -1,18 +1,15 @@
 import React from 'react'
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { ZkCatalogView, ZkCatalogViewProps } from './ZkCatalogView'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface ZkCatalogPageProps {
-  navbar: NavbarProps
   view: ZkCatalogViewProps
-  footer: FooterProps
 }
 
 export function ZkCatalogPage(props: ZkCatalogPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <PageContent>
         <header className="text-left md:text-center mt-[72px]">
           <h1 className="text-6xl font-extrabold">ZK Catalog</h1>
@@ -27,7 +24,6 @@ export function ZkCatalogPage(props: ZkCatalogPageProps) {
           <ZkCatalogView {...props.view} />
         </main>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

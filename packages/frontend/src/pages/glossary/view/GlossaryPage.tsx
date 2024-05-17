@@ -8,17 +8,15 @@ import { GlossaryEntry } from '../props/getGlossaryEntry'
 import { AlphabetSelector } from './AlphabetSelector'
 import { GlossaryItem } from './GlossaryItem'
 import { GlossarySideNavigation } from './GlossarySideNavigation'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface GlossaryPageProps {
   entries: GlossaryEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GlossaryPage(props: GlossaryPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <FullPageHeader className="pb-0">
         <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
@@ -54,7 +52,6 @@ export function GlossaryPage(props: GlossaryPageProps) {
         </main>
       </PageContent>
       <ScrollToTopButton />
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

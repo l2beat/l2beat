@@ -35,7 +35,6 @@ export function getProps(
   )
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
       projectHeader: getProjectHeader(
         project,
         config,
@@ -51,7 +50,6 @@ export function getProps(
         implementationChange,
         charts,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApis: compact([

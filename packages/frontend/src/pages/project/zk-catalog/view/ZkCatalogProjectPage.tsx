@@ -1,12 +1,6 @@
 import { ProofVerification } from '@l2beat/config'
 import React, { ReactNode } from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
@@ -15,11 +9,10 @@ import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
 import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
 import { Verifiers } from './Verifiers'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface ZkCatalogProjectPageProps {
-  navbar: NavbarProps
   details: ZkCatalogProjectDetails
-  footer: FooterProps
 }
 
 export interface ZkCatalogProjectDetails extends ProofVerification {
@@ -32,8 +25,7 @@ export interface ZkCatalogProjectDetails extends ProofVerification {
 
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout hideOtherSites>
       <PageContent mobileFull>
         <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
           <Breadcrumbs icon={props.details.icon} title={props.details.title} />
@@ -51,8 +43,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           </Section>
         </div>
       </PageContent>
-      <Footer narrow {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }
 
@@ -109,7 +100,10 @@ function Header(props: ZkCatalogProjectPageProps) {
 function HeaderItem({
   title,
   children,
-}: { title: string; children: ReactNode }) {
+}: {
+  title: string
+  children: ReactNode
+}) {
   return (
     <div className="flex justify-between md:block items-baseline">
       <h3 className="md:mb-2 text-xs text-gray-600 dark:text-gray-50">

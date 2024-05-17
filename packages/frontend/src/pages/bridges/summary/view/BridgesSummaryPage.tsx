@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Chart, FooterProps, NavbarProps } from '../../../../components'
+import { Chart } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
@@ -11,15 +11,11 @@ import {
 
 export interface BridgesSummaryPageProps {
   tvlView: BridgesSummaryViewProps
-  footer: FooterProps
-  navbar: NavbarProps
 }
 
 export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
   return (
     <DashboardLayout
-      navbar={props.navbar}
-      footer={props.footer}
       hideOtherSites
       tabs={<BridgesNavigationTabs selected="summary" />}
     >

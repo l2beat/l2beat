@@ -20,19 +20,17 @@ import { OutLinkIcon } from '../../../../components/icons'
 import { GovernanceDelegatedProjectEntry } from '../props/getGovernanceDelegatedProjectEntry'
 import { GovernanceEventEntry } from '../props/getGovernanceEventEntries'
 import { GovernancePublicationEntry } from '../props/getGovernancePublicationEntry'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface GovernancePageProps {
   publications: GovernancePublicationEntry[]
   events: GovernanceEventEntry[]
   delegatedProjects: GovernanceDelegatedProjectEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GovernancePage(props: GovernancePageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout footer={props.footer}>
       <Header
         delegatedProjects={props.delegatedProjects}
         pageContentClassName="md:px-6 lg:px-12 justify-start"
@@ -52,8 +50,7 @@ export function GovernancePage(props: GovernancePageProps) {
           <OurMissionSection className="lg:col-span-4" />
         </main>
       </PageContent>
-      <Footer {...props.footer} className="mt-0 md:mt-20" />
-    </>
+    </DashboardLayout>
   )
 }
 

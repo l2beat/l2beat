@@ -1,28 +1,20 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { Article } from '../../../../components/Article'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { PageContent } from '../../../../components/PageContent'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 
 export interface GovernancePublicationPageProps {
   publication: GovernancePublicationEntry
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GovernancePublicationPage(
   props: GovernancePublicationPageProps,
 ) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <Header publication={props.publication} />
       <PageContent type="article" className="mt-12 md:mt-16 lg:mt-20">
         {props.publication.description && (
@@ -37,8 +29,7 @@ export function GovernancePublicationPage(
         />
         <Article>{props.publication.content}</Article>
       </PageContent>
-      <Footer {...props.footer} className="mt-0 md:mt-20" />
-    </>
+    </DashboardLayout>
   )
 }
 
