@@ -39,6 +39,9 @@ const config: Config = {
         'red-dark': '#BD114F',
         black: '#222222',
       },
+      blue: {
+        700: '#005DD7',
+      },
       neutral: {
         700: '#323539',
         800: '#222125',

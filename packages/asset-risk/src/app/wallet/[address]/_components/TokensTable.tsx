@@ -47,7 +47,10 @@ export function TokensTable(props: TokensTableProps) {
           </thead>
           <tbody>
             {props.tokens.map((token) => (
-              <TableRow token={token} />
+              <TableRow
+                token={token}
+                key={`${token.chain.id}-${token.token.id}`}
+              />
             ))}
           </tbody>
         </table>

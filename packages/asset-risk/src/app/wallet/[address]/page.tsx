@@ -173,7 +173,7 @@ export default async function Page({ params: { address } }: Props) {
       <div className="flex flex-col gap-6">
         <DetailsHeader
           // TODO: Replace with real data when we have it
-          dolarValue={2631773480.22}
+          dolarValue={0}
           walletAddress={vanityAddress}
         />
         <TokensTable tokens={tokensToDisplay} />
