@@ -90,8 +90,11 @@ export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
+  readonly projects: Project[]
   readonly coingeckoApiKey: string | undefined
   readonly chainConverter: ChainConverter
+  // used by value indexer
+  readonly maxTimestampsToAggregateAtOnce: number
 }
 
 export interface TrackedTxsConfig {

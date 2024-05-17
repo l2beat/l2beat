@@ -21,7 +21,7 @@ import { createPriceId } from '../utils/createPriceId'
 
 export interface PriceModule {
   start: () => Promise<void> | void
-  indexer: DescendantIndexer
+  descendant: DescendantIndexer
 }
 
 export function createPriceModule(
@@ -83,7 +83,7 @@ export function createPriceModule(
 
       await descendant.start()
     },
-    indexer: descendant,
+    descendant,
   }
 }
 

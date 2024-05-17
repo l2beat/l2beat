@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "sygma",
   "initialAddresses": [
@@ -20,7 +20,9 @@
     "FeeHandlerRouter": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -28,88 +30,120 @@
       // TODO: query all handlers
       "fields": {
         "handler1": {
-          "type": "storage",
-          "slot": "0xabd6e7cb50984ff9c2f3e18a2660c3353dadf4e3291deeb275dae2cd1e44fe05",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xabd6e7cb50984ff9c2f3e18a2660c3353dadf4e3291deeb275dae2cd1e44fe05",
+            "returnType": "address"
+          }
         },
         "handler2": {
-          "type": "storage",
-          "slot": "0x17ef568e3e12ab5b9c7254a8d58478811de00f9e6eb34345acd53bf8fd09d3ec",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x17ef568e3e12ab5b9c7254a8d58478811de00f9e6eb34345acd53bf8fd09d3ec",
+            "returnType": "address"
+          }
         }
       }
     },
     "AccessControlSegregator": {
       "fields": {
         "role_pauseTransfers": {
-          "type": "storage",
-          "slot": "0xbbaf89ae0a065842f3c160f42e2e74efcf4235e4811562e654698575ecbc49db",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xbbaf89ae0a065842f3c160f42e2e74efcf4235e4811562e654698575ecbc49db",
+            "returnType": "address"
+          }
         },
         "role_unpauseTransfers": {
-          "type": "storage",
-          "slot": "0x77c5f5e17b8ac58cbf856a799633c99cc04b61d5e21a6f46477dea0fc6da1984",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x77c5f5e17b8ac58cbf856a799633c99cc04b61d5e21a6f46477dea0fc6da1984",
+            "returnType": "address"
+          }
         },
         "role_changeAccessControl": {
-          "type": "storage",
-          "slot": "0xaa4d86368e42ee9fd4d3131912f7448169d594ca8698ee0cca973dfb336df1aa",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xaa4d86368e42ee9fd4d3131912f7448169d594ca8698ee0cca973dfb336df1aa",
+            "returnType": "address"
+          }
         },
         "role_changeFeeHandler": {
-          "type": "storage",
-          "slot": "0x8dceb9a03224c2f4bf778f59d66d562f0c1b5c33073ebf7ce47494e8e69d65e0",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x8dceb9a03224c2f4bf778f59d66d562f0c1b5c33073ebf7ce47494e8e69d65e0",
+            "returnType": "address"
+          }
         },
         "role_setBurnable": {
-          "type": "storage",
-          "slot": "0xad941346ac5b9e8a08897105fa77b67eeec5f3f2656ac2027a2736c979b48b02",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xad941346ac5b9e8a08897105fa77b67eeec5f3f2656ac2027a2736c979b48b02",
+            "returnType": "address"
+          }
         },
         "role_setDepositNonce": {
-          "type": "storage",
-          "slot": "0x6646cc3fbe17a35e1e357b267c1cfc8f0adcc9a4e489ec2aae567d5a181dc354",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x6646cc3fbe17a35e1e357b267c1cfc8f0adcc9a4e489ec2aae567d5a181dc354",
+            "returnType": "address"
+          }
         },
         "role_setForwarder": {
-          "type": "storage",
-          "slot": "0x7d6bd0be7b20cb404c5830dfc5df0601dde8f59c473a37d9659e3c29ad0102d4",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x7d6bd0be7b20cb404c5830dfc5df0601dde8f59c473a37d9659e3c29ad0102d4",
+            "returnType": "address"
+          }
         },
         "role_setResource": {
-          "type": "storage",
-          "slot": "0xab098ab9b878c655634f7c7563ab4e1755f48ecdb95343ed53a01d71fb4db62b",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xab098ab9b878c655634f7c7563ab4e1755f48ecdb95343ed53a01d71fb4db62b",
+            "returnType": "address"
+          }
         },
         "role_Withdraw": {
-          "type": "storage",
-          "slot": "0xc4cba4c52cc2732e6d455f3a60d2c6c7a8889b0f87f5b539c4acb58c2819a9fc",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xc4cba4c52cc2732e6d455f3a60d2c6c7a8889b0f87f5b539c4acb58c2819a9fc",
+            "returnType": "address"
+          }
         },
         "role_endKeyGen": {
-          "type": "storage",
-          "slot": "0x48db447ccbdcd4626ad19e30eec7b4072b22f6f2bcd9c6de1518b849f51bc75d",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0x48db447ccbdcd4626ad19e30eec7b4072b22f6f2bcd9c6de1518b849f51bc75d",
+            "returnType": "address"
+          }
         },
         "role_refreshKey": {
-          "type": "storage",
-          "slot": "0xba2bf6a2fff9823467606ae3a63eaf9b170cb9bbdde7dfe38d7ba72cce67caff",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xba2bf6a2fff9823467606ae3a63eaf9b170cb9bbdde7dfe38d7ba72cce67caff",
+            "returnType": "address"
+          }
         },
         "role_retry": {
-          "type": "storage",
-          "slot": "0xc0bf71b1e7cd95f8ce5619edb49dea1f2b3de35e85168201b14351d39d7b7377",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xc0bf71b1e7cd95f8ce5619edb49dea1f2b3de35e85168201b14351d39d7b7377",
+            "returnType": "address"
+          }
         },
         "role_startKeyGen": {
-          "type": "storage",
-          "slot": "0xff2192d9780ed3833009189336fc62955588bc311c05fb4d1780faeb3ab1f36a",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xff2192d9780ed3833009189336fc62955588bc311c05fb4d1780faeb3ab1f36a",
+            "returnType": "address"
+          }
         },
         "role_grantAccess": {
-          "type": "storage",
-          "slot": "0xd777efdeb12ce631e4e7bb4096e8e44d294f90a879efcd2b8ba060ee12cec7fc",
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": "0xd777efdeb12ce631e4e7bb4096e8e44d294f90a879efcd2b8ba060ee12cec7fc",
+            "returnType": "address"
+          }
         }
       }
     }

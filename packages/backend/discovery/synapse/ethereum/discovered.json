@@ -1,9 +1,9 @@
 {
   "name": "synapse",
   "chain": "ethereum",
-  "blockNumber": 19532299,
-  "configHash": "0xf9095692a7adaa54b66d921fdf4d38dd052b4b9e06323a767734c08937ed6079",
-  "version": 3,
+  "blockNumber": 19876012,
+  "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
+  "version": 4,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -38,7 +38,8 @@
         "paused": false,
         "startBlockNumber": 0,
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "SynapseBridge"
     },
     {
       "name": "TimelockController",
@@ -92,7 +93,7 @@
           "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
         ],
         "getThreshold": 2,
-        "nonce": 804,
+        "nonce": 814,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

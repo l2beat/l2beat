@@ -61,55 +61,10 @@ export class L2CostsRepository extends BaseRepository {
         'l2_costs.tracked_tx_id',
         'tracked_txs_configs.id',
       )
+      .distinct('tx_hash')
+      .select('project_id', 'tracked_tx_id', 'tx_hash', 'timestamp', 'data')
       .orderBy('timestamp', 'asc')
     return rows.map(toRecordWithProjectId)
-  }
-
-  async findCountByProjectAndTimeRange(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<{ count: number }> {
-    const [from, to] = timeRange
-    const knex = await this.knex()
-    const count = await knex('l2_costs as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .where('c.project_id', projectId)
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .count('* as count')
-
-    if (count.length === 0) {
-      return { count: 0 }
-    }
-    if (count.length > 1) {
-      throw new Error('Expected exactly one row')
-    }
-    if (typeof count[0].count !== 'string') {
-      throw new Error('Expected count to be a string')
-    }
-
-    return { count: parseInt(count[0].count) }
-  }
-
-  async getByProjectAndTimeRangePaginated(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-    start: number,
-    limit: number,
-  ): Promise<L2CostsRecord[]> {
-    const [from, to] = timeRange
-    const knex = await this.knex()
-    const rows = await knex('l2_costs as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .where('c.project_id', projectId)
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .distinct('l.tx_hash')
-      .select('l.*')
-      .orderBy('l.timestamp', 'asc')
-      .offset(start)
-      .limit(limit)
-    return rows.map(toRecord)
   }
 
   async deleteFromById(

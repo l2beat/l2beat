@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "reya",
   "initialAddresses": [
@@ -21,9 +21,11 @@
     "ValidatorUtils": {
       "fields": {
         "REYA_STAKERS": {
-          "type": "call",
-          "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
-          "args": ["0x448Bbd134dE1B23976073aB4F2915849b2dcD73A", 0, 10] // args are RollupProxy address, startIndex, max no. of stakers returned
+          "handler": {
+            "type": "call",
+            "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+            "args": ["0x448Bbd134dE1B23976073aB4F2915849b2dcD73A", 0, 10] // args are RollupProxy address, startIndex, max no. of stakers returned
+          }
         }
       },
       "ignoreRelatives": ["REYA_STAKERS"]
@@ -35,41 +37,7 @@
       "ignoreMethods": ["challenges"]
     },
     "RollupProxy": {
-      "ignoreMethods": [
-        // Execution reverted
-        "proxiableUUID"
-      ],
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
-      "fields": {
-        // when this changes, it means the validators have changed
-        "setValidatorCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000006"
-          ]
-        },
-        "challenges": {
-          "type": "stateFromEvent",
-          "event": "RollupChallengeStarted",
-          "returnParams": [
-            "challengeIndex",
-            "asserter",
-            "challenger",
-            "challengedNode"
-          ]
-        },
-        "validators": {
-          "type": "arbitrumActors",
-          "actorType": "validator"
-        }
-      }
+      "extends": "orbitstack/RollupProxy"
     },
     "Outbox": {
       "ignoreMethods": ["spent", "isSpent"]
@@ -90,43 +58,57 @@
         // so we hardcode it in config .ts
         // this field will notify us in case of changes
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "type": "call",
-          "method": "function isBatchPoster(address) external view returns (bool)",
-          "args": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"]
+          "handler": {
+            "type": "call",
+            "method": "function isBatchPoster(address) external view returns (bool)",
+            "args": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"]
+          }
         },
         "sequencerVersion": {
-          "type": "arbitrumSequencerVersion"
+          "handler": {
+            "type": "arbitrumSequencerVersion"
+          }
         },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
-          "type": "eventCount",
-          "topics": [
-            // event OwnerFunctionCalled(uint256 indexed id);
-            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-            // id == 6 is emitted inside setValidator()
-            "0x0000000000000000000000000000000000000000000000000000000000000001"
-          ]
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              // event OwnerFunctionCalled(uint256 indexed id);
+              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+              // id == 6 is emitted inside setValidator()
+              "0x0000000000000000000000000000000000000000000000000000000000000001"
+            ]
+          }
         },
         "batchPosters": {
-          "type": "arbitrumActors",
-          "actorType": "batchPoster"
+          "handler": {
+            "type": "arbitrumActors",
+            "actorType": "batchPoster"
+          }
         },
         "dacKeyset": {
-          "type": "arbitrumDACKeyset"
+          "handler": {
+            "type": "arbitrumDACKeyset"
+          }
         },
         "keySetUpdates": {
-          "type": "eventCount",
-          "topics": [
-            // SetValidKeyset(bytes32,bytes)
-            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
-          ]
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              // SetValidKeyset(bytes32,bytes)
+              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+            ]
+          }
         }
       }
     },
     "UpgradeExecutor": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     }

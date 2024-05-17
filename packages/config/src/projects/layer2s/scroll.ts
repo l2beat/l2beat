@@ -100,8 +100,11 @@ export const scroll: Layer2 = {
     },
     finality: {
       warnings: {
-        timeToInclusion:
-          'Transaction data batches that have not yet been proven can be reverted.',
+        timeToInclusion: {
+          sentiment: 'warning',
+          value:
+            'Transaction data batches that have not yet been proven can be reverted.',
+        },
       },
 
       finalizationPeriod: 0,

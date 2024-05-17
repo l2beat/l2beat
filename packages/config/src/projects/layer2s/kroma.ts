@@ -109,8 +109,11 @@ export const kroma: Layer2 = {
     },
     finality: {
       warnings: {
-        timeToInclusion:
-          "It's assumed that transaction data batches are submitted sequentially.",
+        timeToInclusion: {
+          sentiment: 'neutral',
+          value:
+            "It's assumed that transaction data batches are submitted sequentially.",
+        },
       },
       finalizationPeriod,
     },

@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 19283248,
-  "configHash": "0x97f11aa9d2828bf122272ed384eca8c8eb308aa5ea8844bf19fb36cd950ef011",
+  "configHash": "0x4eaf473ec4829f729e46281e9380868bd675148f18bc11243c7918b04b02c147",
   "version": 3,
   "contracts": [
     {

@@ -28,7 +28,6 @@ describe('discovery config.jsonc', () => {
     const notCorresponding =
       chainConfigs
         ?.flat()
-        ?.filter((c) => !c.name.startsWith('l2beat-'))
         ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
@@ -204,7 +203,7 @@ describe('discovery config.jsonc', () => {
             }
 
             for (const [key, value] of Object.entries(override.fields)) {
-              if (value.type === 'accessControl') {
+              if (value.handler?.type === 'accessControl') {
                 assert(
                   key === 'accessControl',
                   `${
@@ -253,16 +252,6 @@ describe('discovery config.jsonc', () => {
             } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
           )
         }
-      }
-    }
-  })
-
-  it('meta.json is of correct schema', async () => {
-    for (const configs of chainConfigs ?? []) {
-      for (const c of configs) {
-        await expect(
-          async () => await configReader.readMeta(c.name, c.chain),
-        ).not.toBeRejected()
       }
     }
   })

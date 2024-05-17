@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 19831219,
-  "configHash": "0x6141ddab816e6b1daf5eedaf99bf6d473baca989772cddffa441d4f9b138acce",
+  "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
   "version": 4,
   "contracts": [
     {

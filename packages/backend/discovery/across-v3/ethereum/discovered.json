@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 19718050,
-  "configHash": "0x0ee5cb37c1f58ca91082b84945a04a7c665961ea2b3e26242bdf237a7b956b56",
+  "configHash": "0xcfc579c386528d4e21ffb5a4eed0dd76772686d610f54a5e9570f84c77efb8ca",
   "version": 3,
   "contracts": [
     {

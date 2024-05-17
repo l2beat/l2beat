@@ -21,7 +21,7 @@ export function PageWrapper(props: PageWrapperProps) {
       )}
     >
       <Head {...props.metadata} preloadApis={props.preloadApis} />
-      <body className="flex flex-col min-h-screen">
+      <body>
         <script src="/scripts/prerender.js" />
         {props.children}
         <TooltipProvider />
