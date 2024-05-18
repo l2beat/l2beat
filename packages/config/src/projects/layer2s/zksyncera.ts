@@ -19,6 +19,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { example } from '../other/zk-catalog/example'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -101,8 +102,11 @@ export const zksyncera: Layer2 = {
     finality: {
       finalizationPeriod: executionDelay,
       warnings: {
-        timeToInclusion:
-          'Proven but not executed batches can be reverted by the validator.',
+        timeToInclusion: {
+          sentiment: 'warning',
+          value:
+            'Proven but not executed batches can be reverted by the validator.',
+        },
       },
     },
   },
@@ -549,6 +553,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
           'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
       },
     ],
+    proofVerification: example.proofVerification,
   },
   permissions: [
     ...discovery.getMultisigPermission(

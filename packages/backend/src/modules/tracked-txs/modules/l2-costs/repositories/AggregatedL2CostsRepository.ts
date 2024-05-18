@@ -23,6 +23,7 @@ export interface AggregatedL2CostsRecord {
   computeGas: number
   computeGasEth: number
   computeGasUsd: number
+  overheadGas: number
   overheadGasEth: number
   overheadGasUsd: number
 }
@@ -59,6 +60,20 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     const knex = await this.knex()
     return await knex(this.TABLE_NAME).delete()
   }
+
+  async getByProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<AggregatedL2CostsRecord[]> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const rows = await knex(this.TABLE_NAME)
+      .where('project_id', projectId)
+      .andWhere('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<', to.toDate())
+      .orderBy('timestamp', 'asc')
+    return rows.map(toRecord)
+  }
 }
 
 function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {
@@ -77,6 +92,7 @@ function toRow(record: AggregatedL2CostsRecord): AggregatedL2CostsRow {
     compute_gas: record.computeGas,
     compute_gas_eth: record.computeGasEth,
     compute_gas_usd: record.computeGasUsd,
+    overhead_gas: record.overheadGas,
     overhead_gas_eth: record.overheadGasEth,
     overhead_gas_usd: record.overheadGasUsd,
   }
@@ -98,6 +114,7 @@ function toRecord(row: AggregatedL2CostsRow): AggregatedL2CostsRecord {
     computeGas: row.compute_gas,
     computeGasEth: row.compute_gas_eth,
     computeGasUsd: row.compute_gas_usd,
+    overheadGas: row.overhead_gas,
     overheadGasEth: row.overhead_gas_eth,
     overheadGasUsd: row.overhead_gas_usd,
   }

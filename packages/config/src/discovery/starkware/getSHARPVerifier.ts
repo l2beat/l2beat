@@ -36,7 +36,7 @@ import { getProxyGovernance } from './getProxyGovernance'
 // └──────────────────────────────────────────────────────────────────────────────┘
 //
 
-const discovery = new ProjectDiscovery('l2beat-starkware')
+const discovery = new ProjectDiscovery('shared-sharp-verifier')
 
 const SHARP_VERIFIER_PROXY = discovery.getContractDetails(
   'SHARPVerifierProxy',

@@ -1,11 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "redstone",
   "initialAddresses": [
     "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
     "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80",
-    "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98",
+    "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98"
   ],
   "names": {
     "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D": "SystemConfig",
@@ -15,75 +15,87 @@
     "0x592C1299e0F8331D81A28C0FC7352Da24eDB444a": "L1CrossDomainMessenger",
     "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80": "DataAvailabilityChallenge",
     "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98": "DisputeGameFactory",
-    "0xE7d0fE72637B3C949cd81c63A4Ff1fb23feeF3b2": "PreimageOracle",
+    "0xE7d0fE72637B3C949cd81c63A4Ff1fb23feeF3b2": "PreimageOracle"
   },
   "overrides": {
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"],
+      "ignoreInWatchMode": ["params"]
     },
     "L2OutputOracle": {
       "ignoreMethods": [
         "getL2OutputAfter",
         "getL2OutputIndexAfter",
         "getL2Output",
-        "computeL2Timestamp",
+        "computeL2Timestamp"
       ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
-        "latestOutputIndex",
+        "latestOutputIndex"
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"],
-        },
-      },
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
+        }
+      }
     },
     "ProxyAdminOwner": {
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"],
+      "ignoreInWatchMode": ["messageNonce"]
     },
     "SystemConfig": {
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": [],
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}",
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}",
-        },
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        }
       },
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar"]
     },
     "DisputeGameFactory": {
       "ignoreMethods": ["gameAtIndex"],
       "fields": {
         "gameImpls": {
-          "type": "array",
-          "length": 5,
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
         },
         "initBonds": {
-          "type": "array",
-          "length": 5,
-        },
-      },
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        }
+      }
     },
     "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"],
-    },
-  },
+      "ignoreMethods": ["zeroHashes"]
+    }
+  }
 }

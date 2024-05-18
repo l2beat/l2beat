@@ -3,15 +3,38 @@ import { EthereumAddress, ProjectId, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
+import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
 
-export function createTvl2Router(controller: Tvl2Controller) {
+export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
   router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getTvl()
+    const tvl = await controller.getTvl(clock.getLastHour())
     ctx.body = tvl
   })
+
+  router.get(
+    '/api/tvl2/aggregate',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          projectSlugs: z.string(),
+        }),
+      }),
+      async (ctx) => {
+        const projectSlugs = ctx.query.projectSlugs
+          .split(',')
+          .map((slug) => slug.trim())
+
+        const tvl = await controller.getAggregatedTvl(
+          clock.getLastHour(),
+          projectSlugs,
+        )
+        ctx.body = tvl
+      },
+    ),
+  )
 
   router.get(
     '/api/tvl2/token',
@@ -34,5 +57,12 @@ export function createTvl2Router(controller: Tvl2Controller) {
       },
     ),
   )
+
+  router.get('/api/tvl2/breakdown', async (ctx) => {
+    const breakdown = await controller.getTvlBreakdown(clock.getLastHour())
+
+    ctx.body = breakdown
+  })
+
   return router
 }

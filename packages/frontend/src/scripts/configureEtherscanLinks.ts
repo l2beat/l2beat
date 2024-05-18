@@ -1,7 +1,7 @@
 import { makeQuery } from './query'
 
 export function configureEtherscanLinks() {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const etherscanLinks = $$<HTMLAnchorElement>('[data-role=etherscan-link]')
 
   etherscanLinks.forEach((etherscanLink) => {

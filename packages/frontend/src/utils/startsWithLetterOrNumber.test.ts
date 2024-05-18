@@ -1,6 +1,9 @@
 import { expect } from 'earl'
 
-import { startsWithLetterOrNumber } from './startsWithLetterOrNumber'
+import {
+  startsWithLetterOrNumber,
+  startsWithNumber,
+} from './startsWithLetterOrNumber'
 
 describe(startsWithLetterOrNumber.name, () => {
   it('should return true for a string that starts with a letter', () => {
@@ -29,5 +32,32 @@ describe(startsWithLetterOrNumber.name, () => {
     expect(startsWithLetterOrNumber(' a')).toEqual(false)
     expect(startsWithLetterOrNumber('!1')).toEqual(false)
     expect(startsWithLetterOrNumber('!a')).toEqual(false)
+  })
+})
+
+describe(startsWithNumber.name, () => {
+  it('should return true for a string that starts with a number', () => {
+    expect(startsWithNumber('1')).toEqual(true)
+    expect(startsWithNumber('123')).toEqual(true)
+    expect(startsWithNumber('1a')).toEqual(true)
+    expect(startsWithNumber('123a')).toEqual(true)
+  })
+
+  it('should return false for a string that starts with a non-number', () => {
+    expect(startsWithNumber('a')).toEqual(false)
+    expect(startsWithNumber('A')).toEqual(false)
+    expect(startsWithNumber('abc')).toEqual(false)
+    expect(startsWithNumber('ABC')).toEqual(false)
+    expect(startsWithNumber('a1')).toEqual(false)
+    expect(startsWithNumber('A1')).toEqual(false)
+    expect(startsWithNumber('abc1')).toEqual(false)
+    expect(startsWithNumber('ABC1')).toEqual(false)
+    expect(startsWithNumber('#')).toEqual(false)
+    expect(startsWithNumber('!')).toEqual(false)
+    expect(startsWithNumber(' ')).toEqual(false)
+    expect(startsWithNumber(' 1')).toEqual(false)
+    expect(startsWithNumber(' a')).toEqual(false)
+    expect(startsWithNumber('!1')).toEqual(false)
+    expect(startsWithNumber('!a')).toEqual(false)
   })
 })

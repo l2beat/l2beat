@@ -15,11 +15,9 @@ import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryMeta } from '../config/DiscoveryMeta'
 import { PerContractSource } from '../source/SourceCodeService'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
-import { toMetaOutput } from './toMetaOutput'
 import { toPrettyJson } from './toPrettyJson'
 
 export interface SaveDiscoveryResultOptions {
@@ -78,7 +76,6 @@ export async function saveConfigHints(
 export async function saveDiscoveryResult(
   results: Analysis[],
   config: DiscoveryConfig,
-  meta: DiscoveryMeta | undefined,
   blockNumber: number,
   logger: DiscoveryLogger,
   options: SaveDiscoveryResultOptions,
@@ -88,7 +85,6 @@ export async function saveDiscoveryResult(
   await mkdirp(root)
 
   await saveDiscoveredJson(root, results, config, blockNumber, options)
-  await saveMetaJson(root, results, meta, options)
   await saveSources(root, results, options)
   await saveFlatSources(root, results, logger, options)
   await saveConfigHints(root, results, options)
@@ -111,18 +107,6 @@ async function saveDiscoveredJson(
   const json = await toPrettyJson(project)
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, discoveryFilename), json)
-}
-
-async function saveMetaJson(
-  rootPath: string,
-  results: Analysis[],
-  meta: DiscoveryMeta | undefined,
-  options: SaveDiscoveryResultOptions,
-): Promise<void> {
-  const project = toMetaOutput(results, meta)
-  const json = await toPrettyJson(project)
-  const metaFilename = options.metaFilename ?? 'meta.json'
-  await writeFile(posix.join(rootPath, metaFilename), json)
 }
 
 async function saveSources(

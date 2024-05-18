@@ -1,33 +1,39 @@
 import { readdirSync } from 'fs'
-import path, { posix } from 'path'
+import { readFileSync } from 'fs'
+import path from 'path'
 import { assert } from '@l2beat/backend-tools'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { readFile } from 'fs/promises'
-import { ParseError, parse } from 'jsonc-parser'
 
 import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import { TemplateService } from '../analysis/TemplateService'
+import { readJsonc } from '../utils/readJsonc'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { DiscoveryMeta } from './DiscoveryMeta'
-import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
-
-export const TEMPLATES_PATH = path.join('discovery', '_templates')
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
-  async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
+  public templateService: TemplateService
+
+  constructor(private readonly rootPath: string = '') {
+    this.templateService = new TemplateService(rootPath)
+  }
+
+  readConfig(name: string, chain: string): DiscoveryConfig {
     assert(
-      fileExistsCaseSensitive(`discovery/${name}`),
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
       'Chain not found in project, check if case matches',
     )
 
-    const contents = await this.readJsonc(
-      `discovery/${name}/${chain}/config.jsonc`,
+    const contents = readJsonc(
+      path.join(this.rootPath, 'discovery', name, chain, 'config.jsonc'),
     )
     const rawConfig = RawDiscoveryConfig.safeParse(contents)
     if (!rawConfig.success) {
@@ -37,83 +43,28 @@ export class ConfigReader {
       throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
     }
 
-    await this.inlineTemplates(rawConfig.data)
-    const config = new DiscoveryConfig(rawConfig.data)
+    this.templateService.inlineTemplates(rawConfig.data)
+    const config = new DiscoveryConfig(rawConfig.data, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }
 
-  async readJsonc(path: string): Promise<JSON> {
-    const contents = await readFile(path, 'utf-8')
-    const errors: ParseError[] = []
-    const parsed = parse(contents, errors, {
-      allowTrailingComma: true,
-    }) as JSON
-    if (errors.length !== 0) {
-      throw new Error(`Cannot parse file ${path}`)
-    }
-    return parsed
-  }
-
-  async inlineTemplates(rawConfig: RawDiscoveryConfig): Promise<void> {
-    if (rawConfig.overrides === undefined) {
-      return
-    }
-    for (const [name, contract] of Object.entries(rawConfig.overrides)) {
-      if (contract.extends !== undefined) {
-        const templateJson = await this.readJsonc(
-          path.join(TEMPLATES_PATH, contract.extends, 'template.jsonc'),
-        )
-        const updatedContract = DiscoveryContract.parse({
-          ...templateJson,
-          ...contract,
-        })
-        rawConfig.overrides[name] = updatedContract
-      }
-    }
-  }
-
-  async readMeta(
-    name: string,
-    chain: string,
-  ): Promise<DiscoveryMeta | undefined> {
-    const projectPath = posix.join('discovery', name)
-    const chainPath = posix.join(projectPath, chain)
-    const metaPath = posix.join(chainPath, 'meta.json')
-
+  readDiscovery(name: string, chain: string): DiscoveryOutput {
     assert(
-      fileExistsCaseSensitive(projectPath),
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
     )
     assert(
-      fileExistsCaseSensitive(chainPath),
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
       'Chain not found in project, check if case matches',
     )
 
-    if (!fileExistsCaseSensitive(metaPath)) {
-      return undefined
-    }
-
-    const contents = await readFile(metaPath, 'utf-8')
-
-    const meta = DiscoveryMeta.parse(JSON.parse(contents))
-    return meta
-  }
-
-  async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
-    assert(
-      fileExistsCaseSensitive(`discovery/${name}`),
-      'Project not found, check if case matches',
-    )
-    assert(
-      fileExistsCaseSensitive(`discovery/${name}/${chain}`),
-      'Chain not found in project, check if case matches',
-    )
-
-    const contents = await readFile(
-      `discovery/${name}/${chain}/discovered.json`,
+    const contents = readFileSync(
+      path.join(this.rootPath, 'discovery', name, chain, 'discovered.json'),
       'utf-8',
     )
 
@@ -123,12 +74,14 @@ export class ConfigReader {
   }
 
   readAllChains(): string[] {
-    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
-      (x) => x.isDirectory() && !x.name.startsWith('_'),
-    )
+    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+      withFileTypes: true,
+    }).filter((x) => x.isDirectory() && !x.name.startsWith('_'))
     const chains = new Set<string>()
     for (const folder of folders) {
-      readdirSync(`discovery/${folder.name}`, { withFileTypes: true })
+      readdirSync(path.join(this.rootPath, 'discovery', folder.name), {
+        withFileTypes: true,
+      })
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
         .forEach((x) => chains.add(x))
@@ -136,12 +89,12 @@ export class ConfigReader {
     return [...chains]
   }
 
-  async readAllConfigsForChain(chain: string): Promise<DiscoveryConfig[]> {
+  readAllConfigsForChain(chain: string): DiscoveryConfig[] {
     const result: DiscoveryConfig[] = []
     const projects = this.readAllProjectsForChain(chain)
 
     for (const project of projects) {
-      const contents = await this.readConfig(project, chain)
+      const contents = this.readConfig(project, chain)
       result.push(contents)
     }
 
@@ -149,16 +102,19 @@ export class ConfigReader {
   }
 
   readAllProjectsForChain(chain: string): string[] {
-    const folders = readdirSync('discovery', { withFileTypes: true }).filter(
-      (x) => x.isDirectory(),
-    )
+    const folders = readdirSync(path.join(this.rootPath, 'discovery'), {
+      withFileTypes: true,
+    }).filter((x) => x.isDirectory())
 
     const projects = []
 
     for (const folder of folders) {
-      const contents = readdirSync(`discovery/${folder.name}`, {
-        withFileTypes: true,
-      })
+      const contents = readdirSync(
+        path.join(this.rootPath, 'discovery', folder.name),
+        {
+          withFileTypes: true,
+        },
+      )
         .filter((x) => x.isDirectory())
         .map((x) => x.name)
 
@@ -166,9 +122,12 @@ export class ConfigReader {
         continue
       }
 
-      const chainFiles = readdirSync(`discovery/${folder.name}/${chain}`, {
-        withFileTypes: true,
-      })
+      const chainFiles = readdirSync(
+        path.join(this.rootPath, 'discovery', folder.name, chain),
+        {
+          withFileTypes: true,
+        },
+      )
         .filter((x) => x.isFile())
         .map((x) => x.name)
 

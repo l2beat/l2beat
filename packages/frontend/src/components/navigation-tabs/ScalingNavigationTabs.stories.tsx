@@ -16,6 +16,8 @@ export const ScalingNavigationTabs: Story = {
       finality: true,
       activity: true,
       costsPage: true,
+      zkCatalog: true,
+      glossary: true,
       banner: false,
       tvlBreakdown: false,
       implementationChange: false,
@@ -23,6 +25,7 @@ export const ScalingNavigationTabs: Story = {
       hiringBadge: false,
       buildAllProjectPages: false,
       governancePage: false,
+      tvl2: false,
     },
   },
   argTypes: {

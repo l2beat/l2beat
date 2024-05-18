@@ -9,7 +9,7 @@ export function shouldSkip(
     return 'Address ignored'
   }
 
-  if (config.getSharedModule(item.address)) {
+  if (config.isInSharedModules(item.address)) {
     return 'Part of a shared module'
   }
 

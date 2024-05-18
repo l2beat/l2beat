@@ -1,3 +1,6 @@
+import { example } from './example'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
-export const zkCatalogProjects: ZkCatalogProject[] = []
+export * from './types'
+
+export const zkCatalogProjects: ZkCatalogProject[] = [example]

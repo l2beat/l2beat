@@ -13,6 +13,11 @@ export function ChevronLeftIcon(props: SVGAttributes<SVGElement>) {
   return <ChevronDownIcon className={cn('rotate-90', className)} {...rest} />
 }
 
+export function ChevronUpIcon(props: SVGAttributes<SVGElement>) {
+  const { className, ...rest } = props
+  return <ChevronDownIcon className={cn('rotate-180', className)} {...rest} />
+}
+
 export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
   const { className, ...rest } = props
   return (
@@ -20,7 +25,7 @@ export function ChevronDownIcon(props: SVGAttributes<SVGElement>) {
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      aria-label="Dropdown arrow icon"
+      aria-label="Chevron icon"
       className={cn('my-auto', className)}
       {...rest}
     >

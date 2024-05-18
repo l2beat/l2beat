@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "socket",
   "initialAddresses": [
@@ -11,7 +11,7 @@
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
-    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
   ],
   // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
   "names": {
@@ -36,20 +36,29 @@
       "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
         "plugs": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "plug",
-          "ignoreRelative": true
+          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
+          "severity": "LOW",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "plug",
+            "ignoreRelative": true
+          }
         },
         "inboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "inboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "inboundSwitchboard"
+          }
         },
         "outboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "outboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "outboundSwitchboard"
+          }
         }
       }
     },
@@ -59,7 +68,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "OptimismSwitchboard2": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -67,7 +86,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "PolygonL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -76,7 +105,17 @@
         "checkpointManager",
         "fxRoot",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "ArbitrumL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -86,14 +125,26 @@
         "inbox__",
         "outbox__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "FastSwitchboard": {
       "fields": {
         "accessControl": {
-          "type": "accessControl",
-          "roleNames": {
-            "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
           }
         }
       }

@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 19805467,
-  "configHash": "0x05e78ec6d623049f50b05b04b93ab4c771e54c5fe6d94d120e5cc34ee4285fe0",
+  "configHash": "0x26f881d10a38f11c58d52c84deac595be9ee9ffc801a9bd676f14faf6534a160",
   "version": 3,
   "contracts": [
     {

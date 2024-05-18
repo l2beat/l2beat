@@ -1,6 +1,7 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
+import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
@@ -13,7 +14,9 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRiskView,
   ScalingProjectTechnology,
+  ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
@@ -27,6 +30,25 @@ import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
+export const DEFAULT_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+  {
+    name: 'EVM compatible smart contracts are supported',
+    description:
+      'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+      },
+    ],
+    references: [
+      {
+        text: 'Inside Arbitrum Nitro',
+        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+      },
+    ],
+  },
+]
 
 export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
@@ -42,7 +64,9 @@ export interface OrbitStackConfigCommon {
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  additiveConsiderations?: ScalingProjectTechnologyChoice[]
   nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   milestones?: Milestone[]
@@ -54,6 +78,7 @@ export interface OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  stackedRiskView?: ScalingProjectRiskView
   hostChain: ProjectId
   nativeToken?: string
 }
@@ -86,18 +111,22 @@ export function orbitStackCommon(
     'sequencerVersion',
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
-  }
+
+  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates({
+    'validators.0': 'Validators/Proposers',
+    'batchPosters.0': 'Sequencers',
+  })
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
-      addresses: [
-        ...templateVars.discovery.getOrbitStackContractDetails(upgradeability),
-        ...(templateVars.nonTemplateContracts ?? []),
-      ],
+      addresses: unionBy(
+        [
+          ...(templateVars.nonTemplateContracts ?? []),
+          ...resolvedTemplates.contracts,
+        ],
+        'address',
+      ),
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     technology: {
@@ -225,32 +254,12 @@ export function orbitStackCommon(
         },
         EXITS.AUTONOMOUS,
       ],
-      otherConsiderations: templateVars.nonTemplateTechnology
-        ?.otherConsiderations ?? [
-        {
-          name: 'EVM compatible smart contracts are supported',
-          description:
-            'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-          risks: [
-            {
-              category: 'Funds can be lost if',
-              text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-            },
-          ],
-          references: [
-            {
-              text: 'Inside Arbitrum Nitro',
-              href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
-            },
-          ],
-        },
-      ],
+      otherConsiderations:
+        templateVars.nonTemplateTechnology?.otherConsiderations ??
+        DEFAULT_OTHER_CONSIDERATIONS,
     },
     permissions: [
-      ...templateVars.discovery.getOrbitStackPermissions({
-        'validators.0': 'Validators/Proposers',
-        'batchPosters.0': 'Sequencers',
-      }),
+      ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
     milestones: templateVars.milestones,
@@ -326,47 +335,63 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
+    stackedRiskView: templateVars.stackedRiskView,
     riskView: makeBridgeCompatible({
-      stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-      dataAvailability: postsToExternalDA
-        ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-            return RISK_VIEW.DATA_EXTERNAL_DAC({
-              membersCount,
-              requiredSignatures,
-            })
-          })()
-        : RISK_VIEW.DATA_ON_CHAIN_L3,
-      exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
-      sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+      stateValidation:
+        templateVars.nonTemplateRiskView?.stateValidation ??
+        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+      dataAvailability:
+        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+          ? (() => {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            })()
+          : RISK_VIEW.DATA_ON_CHAIN_L3,
+      exitWindow:
+        templateVars.nonTemplateRiskView?.exitWindow ??
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+      sequencerFailure:
+        templateVars.nonTemplateRiskView?.sequencerFailure ??
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
+        templateVars.nonTemplateRiskView?.proposerFailure ??
         RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
-      validatedBy: RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+      validatedBy:
+        templateVars.nonTemplateRiskView?.validatedBy ??
+        RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
+      destinationToken:
+        templateVars.nonTemplateRiskView?.destinationToken ??
+        RISK_VIEW.NATIVE_AND_CANONICAL(),
     }),
     config: {
       associatedTokens: templateVars.associatedTokens,
-      escrows: [
-        {
-          chain: templateVars.hostChain.toString(),
-          includeInTotal: false,
-          ...templateVars.discovery.getEscrowDetails({
-            address: templateVars.bridge.address,
-            tokens: templateVars.nativeToken
-              ? [templateVars.nativeToken]
-              : ['ETH'],
-            description: templateVars.nativeToken
-              ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
-              : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-            ...upgradeability,
-          }),
-        },
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
+      escrows: unionBy(
+        [
+          ...(templateVars.nonTemplateEscrows ?? []),
+          {
+            chain: templateVars.hostChain.toString(),
+            includeInTotal: false,
+            ...templateVars.discovery.getEscrowDetails({
+              address: templateVars.bridge.address,
+              tokens: templateVars.nativeToken
+                ? [templateVars.nativeToken]
+                : ['ETH'],
+              description: templateVars.nativeToken
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          },
+        ],
+        'address',
+      ),
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
@@ -386,11 +411,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-  const challengeWindow = templateVars.discovery.getContractValue<number>(
+
+  const challengeWindowBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
-  const challengeWindowSeconds = challengeWindow * assumedBlockTime
+  const challengeWindowSeconds = challengeWindowBlocks * assumedBlockTime
 
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -483,26 +509,41 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         }),
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
-      stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-      dataAvailability: postsToExternalDA
-        ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-            return RISK_VIEW.DATA_EXTERNAL_DAC({
-              membersCount,
-              requiredSignatures,
-            })
-          })()
-        : RISK_VIEW.DATA_ON_CHAIN,
-      exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
-      sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+      stateValidation:
+        templateVars.nonTemplateRiskView?.stateValidation ??
+        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+          nOfChallengers,
+          challengeWindowSeconds,
+        ),
+      dataAvailability:
+        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+          ? (() => {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            })()
+          : RISK_VIEW.DATA_ON_CHAIN,
+      exitWindow:
+        templateVars.nonTemplateRiskView?.exitWindow ??
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+      sequencerFailure:
+        templateVars.nonTemplateRiskView?.sequencerFailure ??
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
+        templateVars.nonTemplateRiskView?.proposerFailure ??
         RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+      validatedBy:
+        templateVars.nonTemplateRiskView?.validatedBy ??
+        RISK_VIEW.VALIDATED_BY_ETHEREUM,
+      destinationToken:
+        templateVars.nonTemplateRiskView?.destinationToken ??
+        RISK_VIEW.NATIVE_AND_CANONICAL(),
     }),
     config: {
       associatedTokens: templateVars.associatedTokens,
