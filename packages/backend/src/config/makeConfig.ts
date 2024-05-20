@@ -129,6 +129,7 @@ export function makeConfig(
         tvl: flags.isEnabled('cache', 'tvl'),
         liveness: flags.isEnabled('cache', 'liveness'),
         l2costs: flags.isEnabled('cache', 'l2costs'),
+        verifiers: flags.isEnabled('cache', 'verifiers'),
       },
     },
     health: {
@@ -235,6 +236,9 @@ export function makeConfig(
       projects: getProjectsWithActivity()
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
+    },
+    verifiers: flags.isEnabled('verifiers') && {
+      blockscoutApiUrl: env.string('BLOCKSCOUT_API_URL'),
     },
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),

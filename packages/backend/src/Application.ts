@@ -20,6 +20,7 @@ import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
+import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 
 export class Application {
   start: () => Promise<void>
@@ -65,6 +66,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvl2Module(config, logger, peripherals, clock),
+      createVerifiersModule(config, logger, peripherals),
       createFeaturesModule(config),
     ]
 

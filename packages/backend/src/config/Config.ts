@@ -41,6 +41,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
+  readonly verifiers: VerifiersConfig | false
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
@@ -58,6 +59,7 @@ export interface ApiConfig {
     readonly tvl: boolean
     readonly liveness: boolean
     readonly l2costs: boolean
+    readonly verifiers: boolean
   }
 }
 
@@ -188,3 +190,7 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
+
+export interface VerifiersConfig {
+  readonly blockscoutApiUrl: string
+}
