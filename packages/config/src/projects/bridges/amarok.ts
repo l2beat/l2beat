@@ -79,29 +79,21 @@ export const amarok: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
-      the messages are sent through the Connext Sequencer. In this mode the Connext sequencer or any permissioned actor periodically submits an\
-      aggregate root. This triggers a ${discovery.getContractValue<number>(
-        'MainnetSpokeConnector',
-        'disputeBlocks',
-      )} blocks window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
-      Only the owner can set the system back into Optimistic Mode. In Slow Mode messages from various domains are aggregated into one message\
-      root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
-      the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
-      subsequently aggregated again into a root-of-root of messages before being delivered to their destination domains. Each message can be optimistically fast-forwarded by a network of Routers that will\
-      front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext bridge will\
-      reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
-      receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.`,
+      description: `
+      The bridge can operate in one of two modes, optimistic or native. In both modes, so-called routers can accelerate the bridging by providing liquidity (for token transfers) or a bond (for a crosschain contract call) at the destination.
+      
+      In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences and calculates an aggregate root from them offchain. This aggregate root can be submitted by a relayer at the destination triggering a 120 blocks window where any watcher can turn the system back into native mode thus invalidating the proposed root. Only the owner can set the system back into optimistic Mode. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
+      
+      In native mode messages from various spoke domains are aggregated and periodically sent to Ethereum (hub domain) using the native (non-Connext) AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism) the AMB is only used as a transport layer, and the 7-day delay is ignored. When delivered to the hub domain, these message roots are aggregated again into a root-of-root of messages before being delivered to their destination (spoke domains). A custom \`delayBlocks\` value can be set individually in message-receiving Connext contracts to grant a time delay in which Connext-permissioned watchers could invalidate a potentially fraudulent message from the AMBs before it is considered verified.
+
+      In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. This is either the time it takes to pass the message via AMBs (in native mode) and then verify / invalidate it during the \`delayBlocks\` period or pass it via the offchain sequencer (in optimistic mode) and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging from the point of view of the user, while native mode has the longest delay for reconciliation.`,
       references: [],
       risks: [],
     },
     validation: {
       name: 'Validation via Native AMBs',
-      description:
-        'Messages on the source chain are sent periodically to the Ethereum chain via native AMB. Once they arrive on Etherum, they can be sent from Ethereum, again\
-        via native AMB, to the destination chain. Token transfers can be fronted by Routers providing liquidity. Similarly arbitrary messages can be sped up. Watchers provide\
-        additional protection in case native AMB gets compromised and forges the message. For optimistic rollups (Optimism, Arbitrum) their native AMB is used but\
-        7-day dispute window is ignored. For BSC (Binance Chain) MultiChain AMB is used.',
+      description: `
+      `,
       references: [],
       risks: [
         {
