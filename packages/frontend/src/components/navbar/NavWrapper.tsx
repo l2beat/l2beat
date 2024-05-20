@@ -63,7 +63,7 @@ function NavLink({
     <a href={href}>
       <li
         className={cn(
-          'flex items-center gap-[0.625rem] p-1.5 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#1D1E22] transition-colors sidenav-collapsed:w-8 sidenav-collapsed:h-8 sidenav-collapsed:p-0 sidenav-collapsed:justify-center',
+          'flex items-center gap-[0.625rem] p-1.5 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#1D1E22] transition-colors xl:sidenav-collapsed:w-8 xl:sidenav-collapsed:h-8 xl:sidenav-collapsed:p-0 xl:sidenav-collapsed:justify-center',
           active &&
             'bg-[#d3d5d9] dark:bg-[#272A2F] hover:bg-[#d3d5d9] dark:hover:bg-[#272A2F]',
         )}
@@ -346,7 +346,7 @@ export function NavWrapper({ children }: { children: ReactNode }) {
             </nav>
           </div>
           <div
-            className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block sidenav-collapsed:ml-1"
+            className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block xl:sidenav-collapsed:ml-1"
             data-role="sidenav-collapse-toggle-container"
           >
             <button
