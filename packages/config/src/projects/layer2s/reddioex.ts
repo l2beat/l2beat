@@ -61,7 +61,7 @@ export const reddioex: Layer2 = {
     links: {
       websites: ['https://reddio.com/'],
       apps: [
-        'https://reddio.com/explore', 
+        'https://reddio.com/explore',
         'https://dashboard.reddio.com',
         'https://bridge.reddio.com',
         'https://reddio.com/redSonic',
