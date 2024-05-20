@@ -31,24 +31,14 @@ export function createL2CostsModule(
     logger,
   })
 
-  const l2CostsRouter = createL2CostsRouter(l2CostsController, config.api)
+  const l2CostsRouter = createL2CostsRouter(l2CostsController)
 
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.getRepository(L2CostsRepository),
     logger,
   )
 
-  const start = () => {
-    logger = logger.for('L2CostsModule')
-    logger.info('Starting...')
-
-    if (config.api.cache.l2costs) {
-      l2CostsController.start()
-    }
-  }
-
   return {
-    start,
     routers: [l2CostsRouter],
     updater: l2CostsUpdater,
   }
