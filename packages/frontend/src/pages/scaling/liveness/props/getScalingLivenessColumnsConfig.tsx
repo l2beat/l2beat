@@ -64,7 +64,7 @@ export function getScalingLivenessColumnsConfig() {
               dataType="proofSubmissions"
             />
           ),
-          removeCellOnFalsyValue: true,
+          removeCellOnFalsyValue: () => true,
           sorting: {
             getOrderValue: (project) => {
               return {
@@ -89,7 +89,7 @@ export function getScalingLivenessColumnsConfig() {
               dataType="stateUpdates"
             />
           ),
-          removeCellOnFalsyValue: true,
+          removeCellOnFalsyValue: () => true,
           sorting: {
             getOrderValue: (project) => {
               return {
