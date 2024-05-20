@@ -26,9 +26,6 @@ const TABLE_COLUMNS: {
   {
     name: '',
   },
-  {
-    name: '',
-  },
 ]
 
 export type Token = {

@@ -59,15 +59,17 @@ export function TableRow({
       >
         {children}
         <Cell>
-          <div className={cn('flex items-center gap-3')}>
-            {!!criticalWarningsCount && (
-              <CriticalWarning count={criticalWarningsCount} />
-            )}
-            {!!warningsCount && <Warning count={warningsCount} />}
+          <div className={cn('flex items-center justify-between gap-3')}>
+            <div className="flex items-center gap-3">
+              {!!criticalWarningsCount && (
+                <CriticalWarning count={criticalWarningsCount} />
+              )}
+              {!!warningsCount && <Warning count={warningsCount} />}
+            </div>
+            <div className={cn(!isOpen && 'rotate-180')}>
+              <ArrowIcon />
+            </div>
           </div>
-        </Cell>
-        <Cell className={cn(!isOpen && 'rotate-180')}>
-          <ArrowIcon />
         </Cell>
       </tr>
       {isOpen && (
