@@ -35,6 +35,9 @@
         "getVaultRoot"
       ],
       "fields": {
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+        },
         "OPERATORS": {
           "handler": {
             "type": "arrayFromTwoEvents",
