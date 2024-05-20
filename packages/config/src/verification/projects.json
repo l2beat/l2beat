@@ -148,6 +148,7 @@
   "ten": true,
   "termstructure": true,
   "tradable": true,
+  "transporter": true,
   "world": true,
   "wormholeV1": true,
   "xai": true,

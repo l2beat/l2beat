@@ -7,7 +7,7 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('transporter')
 
-export const socket: Bridge = {
+export const transporter: Bridge = {
   type: 'bridge',
   id: ProjectId('transporter'),
   display: {
@@ -97,19 +97,17 @@ export const socket: Bridge = {
         'Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.',
       ),
       discovery.getContractDetails(
-        'OnRamp',
-        'OnRamp for outgoing messages to Arbitrum',
+        'OnRamp1',
+        'OnRamp for outgoing messages to Arbitrum.',
       ),
       discovery.getContractDetails(
-        'OffRamp',
+        'OffRamp1',
         'OffRamp for incoming messages from Arbitrum.',
       ),
       discovery.getContractDetails(
-        'CommitStore',
+        'CommitStore1',
         'CommitStore for storing incoming message roots from Arbitrum.',
       ),
-      discovery.getContractDetails('ExecutionManager', ''),
-      discovery.getContractDetails('TransmitManager', ''),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
@@ -119,12 +117,8 @@ export const socket: Bridge = {
       name: 'Teleport Owner',
       description:
         'Account privileged to set up different roles in the main Socket contract and owner of the Socket USDC vault associated with Reya.',
-      accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
+      accounts: [discovery.getPermissionedAccount('Router', 'owner')],
     },
-    ...discovery.getMultisigPermission(
-      'LyraMultisig',
-      'Multisig that owns the Socket Vaults associated with Lyra.',
-    ),
   ],
   knowledgeNuggets: [],
 }
