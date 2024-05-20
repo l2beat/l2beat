@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -16,9 +16,7 @@ export const socket: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://app.transporter.io/'],
-      repositories: [
-        'https://docs.chain.link/ccip/architecture',
-      ],
+      repositories: ['https://docs.chain.link/ccip/architecture'],
       documentation: ['https://docs.chain.link/ccip'],
       socialMedia: ['https://x.com/transporter_io'],
     },
@@ -26,14 +24,14 @@ export const socket: Bridge = {
       'This page gathers Socket vaults built on top of Socket Data Layer cross chain messaging protocol.',
     detailedDescription:
       'Transporter is a hybrid bridge that can work either as a Token Bridge or Liqudity Network depending on the requirements of tokens.\
-      It is using Chainlink CCIP standard for cross-chain communication.\',
+      It is using Chainlink CCIP standard for cross-chain communication.',
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
       description:
         'Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.\
-        These validators are tasked with montioring anomalous behavior and can halt the network if necessary.\',
+        These validators are tasked with montioring anomalous behavior and can halt the network if necessary.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -91,14 +89,16 @@ export const socket: Bridge = {
   config: {
     escrows: [], // a long list of escrows from Discovery
   },
-  contracts: {   // this is not a full list of contracts - there would be too many. There should be a comment saying that example Line is listed here.
+  contracts: {
+    // this is not a full list of contracts - there would be too many. There should be a comment saying that example Line is listed here.
     addresses: [
       discovery.getContractDetails(
         'Router',
         'Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.',
       ),
       discovery.getContractDetails(
-        'OnRamp','OnRamp for outgoing messages to Arbitrum'
+        'OnRamp',
+        'OnRamp for outgoing messages to Arbitrum',
       ),
       discovery.getContractDetails(
         'OffRamp',
