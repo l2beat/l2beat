@@ -9,9 +9,6 @@ import { Tvl2Controller } from './Tvl2Controller'
 export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
-  
-
-
   router.get('/api/tvl2', async (ctx) => {
     const tvl = await controller.getTvl(clock.getLastHour().add(-1, 'hours'))
     ctx.body = tvl
@@ -66,7 +63,9 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
       // TODO: This is a temporary solution. We should use the last hour
       // instead of the hour before the last hour.
       // This should be fixed by interpolating the data for the last hour when not every project has data for it.
-      clock.getLastHour().add(-1, 'hours'),
+      clock
+        .getLastHour()
+        .add(-1, 'hours'),
     )
 
     ctx.body = breakdown
