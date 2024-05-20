@@ -154,18 +154,28 @@ export const scroll: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
         tokens: '*',
+        ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
         tokens: ['ETH'],
+        ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'),
         tokens: '*',
+        ...upgradesScrollMultisig,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
         tokens: ['USDC'],
+        ...upgradesScrollMultisig,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
+        tokens: ['wstETH'],
+        upgradableBy: ['Lido (Lido Agent)'],
+        upgradeDelay: 'No delay',
       }),
     ],
     transactionApi: {
