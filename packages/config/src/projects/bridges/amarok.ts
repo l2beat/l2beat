@@ -93,7 +93,7 @@ export const amarok: Bridge = {
     validation: {
       name: 'Validation via Native AMBs',
       description: `
-      `,
+      .`,
       references: [],
       risks: [
         {
