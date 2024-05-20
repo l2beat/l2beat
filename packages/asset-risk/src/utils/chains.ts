@@ -1,10 +1,12 @@
+import 'server-only'
+
 import { type Hex } from 'viem'
 import {
+  type Chain,
   arbitrum, // 42161
   base, // 8453
   blast, // 81457
   boba, // 288
-  type Chain,
   fraxtal, // 252
   kroma, // 255
   linea, // 59144
@@ -14,10 +16,13 @@ import {
   mode, // 34443
   optimism, // 10
   polygonZkEvm, // 1101
+  reyaNetwork, // 1729
   scroll, // 534352
   zkFair, // 42766
   zkSync, // 324
 } from 'viem/chains'
+
+import { env } from '~/env'
 
 function createCustomChain({
   id,
@@ -54,6 +59,14 @@ function createCustomChain({
 }
 
 const supportedChains = [
+  {
+    ...mainnet,
+    rpcUrls: {
+      default: {
+        http: [env.ETHEREUM_RPC_URL],
+      },
+    },
+  },
   arbitrum,
   base,
   blast,
@@ -61,12 +74,12 @@ const supportedChains = [
   fraxtal,
   kroma,
   linea,
-  mainnet,
   manta,
   mantle,
   mode,
   optimism,
   polygonZkEvm,
+  reyaNetwork,
   scroll,
   zkFair,
   zkSync,

@@ -54,7 +54,6 @@ export async function getLZ(
 
   console.log('fetching rest of the data... (this may take a while)')
   let index = 0
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
   for (const [address, count] of interactionsCount.entries()) {
     await avoidRateLimiting()
     console.log('processing address', index, 'of', interactionsCount.size)

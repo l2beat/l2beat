@@ -1,4 +1,8 @@
-import { calculateInversion, InvertedAddresses } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  InvertedAddresses,
+  calculateInversion,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
@@ -7,14 +11,12 @@ import type {
 import {
   assert,
   EthereumAddress,
+  UnixTime,
   gatherAddressesFromUpgradeability,
   notUndefined,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import fs from 'fs'
 import { isArray, isString } from 'lodash'
-import path from 'path'
 
 import {
   ScalingProjectEscrow,
@@ -35,10 +37,13 @@ import {
 import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
-  OrbitStackContractName,
+  OrbitStackContractTemplate,
 } from './OrbitStackTypes'
 import { PermissionedContract } from './PermissionedContract'
-import { StackPermissionTemplate } from './StackTemplateTypes'
+import {
+  StackPermissionTemplate,
+  StackPermissionsTag,
+} from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
@@ -51,31 +56,20 @@ type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
   ? T[K]
   : undefined
 
-export type Filesystem = typeof filesystem
-const filesystem = {
-  readFileSync: (path: string) => {
-    return fs.readFileSync(path, 'utf-8')
-  },
-}
-
 export class ProjectDiscovery {
-  private readonly discovery: DiscoveryOutput
+  private readonly discoveries: DiscoveryOutput[]
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    private readonly fs: Filesystem = filesystem,
+    configReader = new ConfigReader('../backend/'),
   ) {
-    this.discovery = this.getDiscoveryJson(projectName)
-  }
-
-  private getDiscoveryJson(project: string): DiscoveryOutput {
-    const discoveryFile = this.fs.readFileSync(
-      path.resolve(
-        `../backend/discovery/${project}/${this.chain}/discovered.json`,
+    const config = configReader.readConfig(projectName, chain)
+    this.discoveries = [
+      configReader.readDiscovery(projectName, chain),
+      ...config.sharedModules.map((module) =>
+        configReader.readDiscovery(module, chain),
       ),
-    )
-
-    return JSON.parse(discoveryFile) as DiscoveryOutput
+    ]
   }
 
   getContractDetails(
@@ -157,40 +151,114 @@ export class ProjectDiscovery {
   }
 
   isEOA(address: EthereumAddress): boolean {
-    return this.discovery.eoas.includes(address)
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.includes(address)
   }
 
   getInversion(): InvertedAddresses {
-    return calculateInversion(this.discovery)
+    return calculateInversion(this.discoveries[0])
+  }
+
+  transformToPermissions(resolved: Record<string, PermissionedContract>) {
+    return Object.values(resolved)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description,
+            chain: this.chain,
+          }
+        }
+      })
+      .filter(notUndefined)
   }
 
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(
+    const resolved = this.computeStackContractPermissions(
       OP_STACK_PERMISSION_TEMPLATES,
       overrides,
       contractOverrides,
     )
+    return this.transformToPermissions(resolved)
   }
 
-  getOrbitStackPermissions(
+  resolveOrbitStackTemplates(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
-    return this.getStackTemplatePermissions(
+  ): {
+    permissions: ScalingProjectPermission[]
+    contracts: ScalingProjectContractSingleAddress[]
+  } {
+    return this.resolveStackTemplates(
       ORBIT_STACK_PERMISSION_TEMPLATES,
+      ORBIT_STACK_CONTRACT_DESCRIPTION,
       overrides,
       contractOverrides,
     )
   }
 
-  getStackTemplatePermissions(
+  invertByTag(
+    resolved: Record<string, PermissionedContract>,
+    tag: StackPermissionsTag,
+  ): Record<string, string> {
+    const result: Record<string, string> = {}
+
+    for (const [contractName, contract] of Object.entries(resolved)) {
+      const tagged = contract.getByTag(tag)
+      for (const contractTag of tagged) {
+        result[contractTag] = contractName
+      }
+    }
+
+    return result
+  }
+
+  resolveStackTemplates(
+    permissionTemplates: StackPermissionTemplate[],
+    contractTemplates: OrbitStackContractTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): {
+    permissions: ScalingProjectPermission[]
+    contracts: ScalingProjectContractSingleAddress[]
+  } {
+    const resolved = this.computeStackContractPermissions(
+      permissionTemplates,
+      overrides,
+      contractOverrides,
+    )
+
+    const adminOf = this.invertByTag(resolved, 'admin')
+
+    const contracts = contractTemplates.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
+        ...(adminOf[d.name] && {
+          upgradableBy: [adminOf[d.name]],
+          upgradeDelay: 'No delay',
+        }),
+      }),
+    )
+
+    return {
+      permissions: this.transformToPermissions(resolved),
+      contracts,
+    }
+  }
+
+  computeStackContractPermissions(
     templates: StackPermissionTemplate[],
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
+  ): Record<string, PermissionedContract> {
     const inversion = this.getInversion()
 
     const contracts: Record<string, PermissionedContract> = {}
@@ -232,19 +300,7 @@ export class ProjectDiscovery {
       }
     }
 
-    return Object.values(contracts)
-      .map((contract) => {
-        const description = contract.generateDescription()
-        if (description !== '') {
-          return {
-            name: contract.name,
-            accounts: [this.formatPermissionedAccount(contract.address)],
-            description,
-            chain: this.chain,
-          }
-        }
-      })
-      .filter(notUndefined)
+    return contracts
   }
 
   getMultisigPermission(
@@ -366,9 +422,10 @@ export class ProjectDiscovery {
     )
     const address = EthereumAddress(account)
     const isEOA = this.isEOA(address)
-    const contract = this.discovery.contracts.find(
-      (contract) => contract.address === address,
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
     )
+    const contract = contracts.find((contract) => contract.address === address)
     const isMultisig = contract?.upgradeability.type === 'gnosis safe'
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
@@ -540,15 +597,21 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
-      (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const addressesWithinUpgradeability = contracts.flatMap((contract) =>
+      gatherAddressesFromUpgradeability(contract.upgradeability),
     )
 
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
   getContractByAddress(address: string): ContractParameters | undefined {
-    return this.discovery.contracts.find(
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    return contracts.find(
       (contract) => contract.address === EthereumAddress(address),
     )
   }
@@ -570,21 +633,11 @@ export class ProjectDiscovery {
     )
   }
 
-  getOrbitStackContractDetails(
-    overrides?: Partial<Record<OrbitStackContractName, string>>,
-  ): ScalingProjectContractSingleAddress[] {
-    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-      }),
-    )
-  }
-
   private getContractByName(name: string): ContractParameters[] {
-    return this.discovery.contracts.filter((contract) => contract.name === name)
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    return contracts.filter((contract) => contract.name === name)
   }
 }
 

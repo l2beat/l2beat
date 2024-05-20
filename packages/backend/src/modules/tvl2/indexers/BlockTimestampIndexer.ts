@@ -5,6 +5,7 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
+import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
@@ -20,17 +21,19 @@ export interface BlockTimestampIndexerDeps
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
-    const logger = $.logger.tag($.chain)
+    const logger = $.logger.tag($.tag)
     const name = 'block_timestamp_indexer'
-    super({ ...$, name, logger })
+    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(
-      new UnixTime(from),
-    )
-
-    if (timestamp.gt(new UnixTime(to))) {
+    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+    if (timestamp.toNumber() > to) {
+      this.logger.info('Skipping update due to sync optimization', {
+        from,
+        to,
+        optimizedTimestamp: timestamp.toNumber(),
+      })
       return to
     }
 

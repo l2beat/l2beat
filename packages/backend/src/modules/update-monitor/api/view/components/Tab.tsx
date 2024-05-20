@@ -25,8 +25,8 @@ export function Tab(props: TabProps) {
           color: props.contract.isInitial
             ? DASHBOARD_COLORS.INITIAL
             : props.contract.isUnverified
-            ? DASHBOARD_COLORS.UNVERIFIED
-            : '',
+              ? DASHBOARD_COLORS.UNVERIFIED
+              : '',
         }}
       >
         <ContractName contract={props.contract} />

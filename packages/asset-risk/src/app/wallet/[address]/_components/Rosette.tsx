@@ -5,7 +5,7 @@ import { Icon } from '~/components/icons/Icon'
 import { cn } from '~/utils/cn'
 
 type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
-type WarningSentiment = 'bad' | 'warning'
+type WarningSentiment = 'bad' | 'warning' | 'neutral'
 export type WarningValueWithSentiment = ValueWithSentiment<
   string,
   WarningSentiment

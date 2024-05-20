@@ -9,13 +9,7 @@ export function getDestination(
   if (destinations.length === 1) {
     return { value: destinations[0], description: '', sentiment: 'neutral' }
   }
-  if (destinations.length === 2) {
-    return {
-      value: destinations.join(', '),
-      description: '',
-      sentiment: 'neutral',
-    }
-  }
+
   return {
     value: 'Various',
     description: destinations.join(',\n'),

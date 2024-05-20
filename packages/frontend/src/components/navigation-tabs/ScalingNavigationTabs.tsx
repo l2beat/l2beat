@@ -2,8 +2,8 @@ import React from 'react'
 
 import { ConfigFeatures } from '../../build/config/Config'
 import {
-  getScalingNavigationPages,
   ScalingPage,
+  getScalingNavigationPages,
 } from '../../utils/getNavigationPages'
 import { NavigationTabs } from './NavigationTabs'
 

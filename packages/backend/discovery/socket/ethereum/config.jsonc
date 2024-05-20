@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "socket",
   "initialAddresses": [
@@ -9,8 +9,11 @@
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3"
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
   ],
+  // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
     "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": "OptimismSwitchboard",
@@ -18,33 +21,44 @@
     "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
     "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
     "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault",
-    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "USDCVaultOwner",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault",
-    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault",
-    "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault 2",
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault"
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault Lyra",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Lyra",
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault Lyra",
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": "USDT Vault Lyra",
+    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "LyraMultisig",
+    "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault Hook", // hook.xyz, hook eoa admin
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya" // socket admin
   },
   "overrides": {
     "Socket": {
       "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
         "plugs": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "plug",
-          "ignoreRelative": true
+          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
+          "severity": "LOW",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "plug",
+            "ignoreRelative": true
+          }
         },
         "inboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "inboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "inboundSwitchboard"
+          }
         },
         "outboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "outboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "outboundSwitchboard"
+          }
         }
       }
     },
@@ -54,7 +68,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "OptimismSwitchboard2": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -62,7 +86,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "PolygonL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -71,7 +105,17 @@
         "checkpointManager",
         "fxRoot",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "ArbitrumL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -81,38 +125,56 @@
         "inbox__",
         "outbox__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "FastSwitchboard": {
       "fields": {
         "accessControl": {
-          "type": "accessControl",
-          "roleNames": {
-            "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
           }
         }
       }
     },
-    "USDC Vault": {
+    "USDC Vault Lyra": {
       "ignoreMethods": ["token__"]
     },
-    "USDCVaultOwner": {
+    "LyraMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "WBTC Vault": {
+    "WBTC Vault Lyra": {
       "ignoreMethods": ["token__"]
     },
-    "WETH Vault": {
+    "WETH Vault Lyra": {
       "ignoreMethods": ["token__"]
     },
-    "SNX Vault": {
+    "SNX Vault Lyra": {
       "ignoreMethods": ["token__"]
     },
-    "wstETH Vault": {
+    "wstETH Vault Lyra": {
       "ignoreMethods": ["token__"]
     },
-    "WETH Vault 2": {
+    "WETH Vault Hook": {
       "ignoreMethods": ["token__"]
+    },
+    "USDC Vault Reya": {
+      "ignoreRelatives": ["token", "hook__"]
+    },
+    "USDT Vault Lyra": {
+      "ignoreRelatives": ["token__"]
     }
   }
 }

@@ -1,7 +1,7 @@
 import {
+  DiscoveryConfig,
   DiscoveryDiff,
   discoveryDiffToMarkdown,
-  DiscoveryMeta,
 } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
@@ -9,7 +9,7 @@ import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 export function diffToMessage(
   name: string,
   diffs: DiscoveryDiff[],
-  meta: DiscoveryMeta | undefined,
+  config: DiscoveryConfig | undefined,
   blockNumber: number,
   chain: string,
   dependents: string[],
@@ -21,7 +21,7 @@ export function diffToMessage(
   const overheadLength = header.length + dependentsMessage.length
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
 
-  const message = discoveryDiffToMarkdown(diffs, meta, maxLength)
+  const message = discoveryDiffToMarkdown(diffs, config, maxLength)
 
   return `${header}${dependentsMessage}${message}`
 }

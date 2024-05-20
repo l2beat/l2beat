@@ -28,7 +28,6 @@ export function fieldThrottleDiff(
           return field
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const count = counts[getFieldKey(d.address, field.key)] ?? 0
         return count < occurrenceLimit
       }),

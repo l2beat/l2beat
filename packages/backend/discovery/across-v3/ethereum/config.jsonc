@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "across-v3",
   "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
@@ -17,21 +17,25 @@
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
     "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
     "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter",
-    "0xAd1b0a86c98703fd5F4E56fff04F6b2D9b9f246F": "Optimism_Adapter",
-    "0x29528780E29abb8Af95a5e5a125b94766987543F": "Arbitrum_Adapter",
-    "0x2d8B1e2B0Dff62DF132d23BEa68a6D2c4D20046E": "Base_Adapter",
+    "0xb3a4e39F0CD9aBAc5d866f023C18e73224667Fee": "Optimism_Adapter",
+    "0xd881A21F17B83AefFd11cc2e7363740449eb8069": "Arbitrum_Adapter",
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Arbitrum_Bridge",
+    "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515": "Arbitrum_Old_Bridge",
+    "0xD9948AE3405FE03A52A18F119EF72221DCdCc4df": "Base_Adapter",
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
-    "0x3E94e8d4316a1eBfb2245E45E6F0B8724094CE1A": "Polygon_Adapter"
+    "0xB130E3056D5C692300d66c12C10ffA2073d9424D": "Polygon_Adapter"
   },
   "overrides": {
     "HubPool": {
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
         "CrossChainContracts": {
-          "type": "stateFromEvent",
-          "event": "CrossChainContractsSet",
-          "returnParams": ["l2ChainId", "adapter", "spokePool"],
-          "groupBy": "l2ChainId"
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "CrossChainContractsSet",
+            "returnParams": ["l2ChainId", "adapter", "spokePool"],
+            "groupBy": "l2ChainId"
+          }
         }
       },
       "ignoreRelatives": ["weth"],
@@ -40,10 +44,12 @@
     "BondToken": {
       "fields": {
         "proposers": {
-          "type": "arrayFromOneEvent",
-          "event": "ProposerModified",
-          "valueKey": "proposer",
-          "flagKey": "enabled"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ProposerModified",
+            "valueKey": "proposer",
+            "flagKey": "enabled"
+          }
         }
       }
     },
@@ -69,10 +75,12 @@
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "fields": {
         "proxiableUUID": {
-          "type": "call",
-          "method": "function proxiableUUID() view returns (bytes32)",
-          "args": [],
-          "expectRevert": true
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
         }
       },
       "ignoreRelatives": ["wrappedNativeToken"]
@@ -99,36 +107,49 @@
     },
     "Optimism_Adapter": {
       "ignoreRelatives": [
-        "dai",
-        "daiOptimismBridge",
-        "l1StandardBridge",
-        "l1Weth",
-        "messenger",
-        "snx",
-        "snxOptimismBridge"
+        "cctpTokenMessenger",
+        "DAI",
+        "DAI_OPTIMISM_BRIDGE",
+        "L1_STANDARD_BRIDGE",
+        "L1_WETH",
+        "MESSENGER",
+        "SNX",
+        "SNX_OPTIMISM_BRIDGE",
+        "usdcToken"
       ]
     },
     "Arbitrum_Adapter": {
       "ignoreRelatives": [
-        "l1ERC20GatewayRouter",
-        "l1Inbox",
-        "l2RefundL2Address"
+        "cctpTokenMessenger",
+        "L1_DAI",
+        "L1_ERC20_GATEWAY_ROUTER",
+        "L1_INBOX",
+        "L2_REFUND_L2_ADDRESS",
+        "usdcToken"
       ]
     },
     "Base_Adapter": {
-      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
+      "ignoreRelatives": [
+        "cctpTokenMessenger",
+        "L1_STANDARD_BRIDGE",
+        "L1_WETH",
+        "MESSENGER",
+        "usdcToken"
+      ]
     },
     "Boba_Adapter": {
       "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
     },
     "Polygon_Adapter": {
       "ignoreRelatives": [
-        "depositManager",
-        "erc20Predicate",
-        "fxStateSender",
-        "l1Matic",
-        "l1Weth",
-        "rootChainManager"
+        "cctpTokenMessenger",
+        "DEPOSIT_MANAGER",
+        "ERC20_PREDICATE",
+        "FX_STATE_SENDER",
+        "L1_MATIC",
+        "L1_WETH",
+        "ROOT_CHAIN_MANAGER",
+        "usdcToken"
       ]
     },
     "OptimisticOracleV3": {
@@ -138,6 +159,13 @@
     "OptimisticGovernor": {
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["collateral"]
+    },
+    "Arbitrum_Bridge": {
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
+      "ignoreRelatives": ["allowedOutboxList", "rollup", "sequencerInbox"]
+    },
+    "Arbitrum_Old_Bridge": {
+      "ignoreMethods": ["inboxAccs"]
     }
   }
 }

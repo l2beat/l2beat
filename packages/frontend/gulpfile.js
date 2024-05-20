@@ -22,7 +22,7 @@ function watchScripts() {
 
 function buildStyles() {
   return exec(
-    `tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css`,
+    'tailwindcss -i ./src/styles/style.css -o ./build/styles/style.css --minify',
   )
 }
 
@@ -58,7 +58,7 @@ const proxyUrls = [
 function serve() {
   const app = express()
   app.use(express.static('build'))
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 

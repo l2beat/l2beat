@@ -1,4 +1,4 @@
-import { cva, VariantProps } from 'class-variance-authority'
+import { VariantProps, cva } from 'class-variance-authority'
 import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
@@ -12,6 +12,7 @@ const iconVariants = cva(undefined, {
     sentiment: {
       warning: 'fill-yellow-700 dark:fill-yellow-300',
       bad: 'fill-red-700 dark:fill-red-300',
+      neutral: 'fill-gray-700 dark:fill-gray-300',
     },
   },
 })

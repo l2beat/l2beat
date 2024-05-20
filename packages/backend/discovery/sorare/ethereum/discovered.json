@@ -1,9 +1,9 @@
 {
   "name": "sorare",
   "chain": "ethereum",
-  "blockNumber": 19624875,
-  "configHash": "0xd7e9ba5f9afb09b0a7c2b79d1326e716b0fb15a3ead88bd1136424837109448f",
-  "version": 3,
+  "blockNumber": 19825381,
+  "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
+  "version": 4,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -114,17 +114,21 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 13013,
-        "getOrderRoot": "2119282667505570624526051711113166619880264988056839570554846930048454582124",
+        "getLastBatchId": 13443,
+        "getOrderRoot": "2314051147021469751700296469087117689824920789971041555717713041834505107771",
         "getOrderTreeHeight": 251,
-        "getRegisteredAvailabilityVerifiers": "0x879cD57975d596004863D30c59d579ef78BBbe32",
-        "getRegisteredVerifiers": "0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1",
+        "getRegisteredAvailabilityVerifiers": [
+          "0x879cD57975d596004863D30c59d579ef78BBbe32"
+        ],
+        "getRegisteredVerifiers": [
+          "0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1"
+        ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 12893,
+        "getSequenceNumber": 13323,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "418584303622927014408959883624601063995042426010741987271789440482602613805",
+        "getValidiumVaultRoot": "3369409202545931018097496435040635381661477656263023196893215129027950270278",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,

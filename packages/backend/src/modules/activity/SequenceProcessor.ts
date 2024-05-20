@@ -1,6 +1,6 @@
+import { EventEmitter } from 'events'
 import { Logger } from '@l2beat/backend-tools'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { EventEmitter } from 'events'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 
@@ -129,7 +129,6 @@ export abstract class SequenceProcessor extends EventEmitter {
     this.logger.info('Processing started')
 
     let firstRun = true
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     processing: while (true) {
       let lastProcessed = this.state?.lastProcessed
       // we need to adjust starting block if its first run and uncertaintyBuffer is set

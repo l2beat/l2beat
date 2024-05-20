@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "apex",
   "initialAddresses": [
@@ -26,7 +26,7 @@
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchangeUSDC": {
@@ -54,16 +54,20 @@
       ],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         },
         "escapeVerifier": {
-          "type": "storage",
-          "slot": 4,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
         }
       }
     },
@@ -92,30 +96,38 @@
       ],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         },
         "escapeVerifier": {
-          "type": "storage",
-          "slot": 4,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
         }
       }
     },
     "CommitteeUSDC": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CommitteeUSDT": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },

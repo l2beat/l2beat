@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x3f44ffdd887fd2e4ec8c223bb75407a8a548e320
+
+# Diff at Wed, 08 May 2024 12:30:13 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eb116053a3dfe1dcff4cde0b8b45a07198fbab8 block: 19624842
+- current block number: 19825348
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19624842 (main branch discovery), not current.
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      values.getRegisteredAvailabilityVerifiers:
+-        "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4"
++        ["0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4"]
+      values.getRegisteredVerifiers:
+-        "0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953"
++        ["0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953"]
+    }
+```
+
+```diff
+    contract StarkExchangeUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: None
+      values.getRegisteredAvailabilityVerifiers:
+-        "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800"
++        ["0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800"]
+      values.getRegisteredVerifiers:
+-        "0x40e1e5Ece49A878062fA9F87eA6dc81281098B22"
++        ["0x40e1e5Ece49A878062fA9F87eA6dc81281098B22"]
+    }
+```
+
 Generated with discovered.json: 0xe502ced95cc56e356340ce6c4f72089b3662254c
 
 # Diff at Wed, 10 Apr 2024 11:10:55 GMT:

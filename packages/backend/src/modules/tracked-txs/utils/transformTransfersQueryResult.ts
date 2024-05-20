@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
+import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 
 export function transformTransfersQueryResult(
   configs: TrackedTxTransferConfig[],
@@ -29,12 +29,13 @@ export function transformTransfersQueryResult(
             blockTimestamp: r.block_timestamp,
             fromAddress: r.from_address,
             toAddress: r.to_address,
-            transactionType: r.transaction_type,
             receiptGasUsed: r.receipt_gas_used,
             gasPrice: r.gas_price,
             dataLength: r.data_length,
             calldataGasUsed: r.calldata_gas_used,
-          } as const),
+            receiptBlobGasUsed: r.receipt_blob_gas_used,
+            receiptBlobGasPrice: r.receipt_blob_gas_price,
+          }) as const,
       ),
     )
   })

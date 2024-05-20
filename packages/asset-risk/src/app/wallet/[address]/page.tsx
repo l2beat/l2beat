@@ -2,14 +2,15 @@ import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import groupBy from 'lodash/groupBy'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { createPublicClient, type Hex, http, isAddress, parseAbi } from 'viem'
+import type { SetRequired } from 'type-fest'
+import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
 import { getChain } from '~/utils/chains'
 
 import { ChainAssetRiskCard } from './_components/ChainAssetRiskCard'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
-  address: Hex
+  address?: Hex
 }
 
 interface Props {
@@ -32,7 +33,9 @@ async function getAddressDisplayName(address: Hex) {
 export async function generateMetadata({ params: { address } }: Props) {
   if (!isAddress(address)) return {}
   return {
-    title: `${await getAddressDisplayName(address)}'s Asset Risk Report – L2BEAT`,
+    title: `${await getAddressDisplayName(
+      address,
+    )}'s Asset Risk Report – L2BEAT`,
     description: 'Detailed risk assessment for your L2 assets.',
   }
 }
@@ -45,11 +48,6 @@ export default async function Page({ params: { address } }: Props) {
   const groupedTokens = Object.entries(
     generatedJson.tokens.reduce<Record<number, Token[]>>((acc, token) => {
       const { chainId, address } = token
-      // Skip mainnet tokens
-      if (chainId === 1) return acc
-
-      // Skip tokens without address
-      if (!address || !isAddress(address)) return acc
 
       if (!acc[chainId]) {
         acc[chainId] = []
@@ -57,7 +55,7 @@ export default async function Page({ params: { address } }: Props) {
       acc[chainId]?.push({
         ...token,
         // To make TypeScript happy
-        address,
+        address: address && isAddress(address) ? address : undefined,
       })
 
       return acc
@@ -79,10 +77,19 @@ export default async function Page({ params: { address } }: Props) {
 
         if (arr.length < 1) return []
 
+        const nativeToken: Omit<Token, 'address'> | undefined = arr.find(
+          (token) => !token.address,
+        )
+
+        const tokenAddresses = arr.filter(
+          (token): token is SetRequired<Token, 'address'> =>
+            Boolean(token.address),
+        )
+
         const results = await (chain.contracts?.multicall3
           ? // Use multicall if available
             publicClient.multicall({
-              contracts: (arr ?? []).map((token) => ({
+              contracts: tokenAddresses.map((token) => ({
                 address: token.address,
                 abi: erc20Abi,
                 functionName: 'balanceOf',
@@ -91,7 +98,7 @@ export default async function Page({ params: { address } }: Props) {
             })
           : // Otherwise, call each contract individually in parallel
             Promise.all(
-              arr.map(async (token) => {
+              tokenAddresses.map(async (token) => {
                 try {
                   const result = await publicClient.readContract({
                     address: token.address,
@@ -106,25 +113,50 @@ export default async function Page({ params: { address } }: Props) {
               }),
             ))
 
-        return results.map((data, i) => {
-          const token = arr[i]
-          if (!token) throw new Error('Token not found')
-          return {
-            token: {
-              id: token.id,
-              name: token.name,
-              decimals: token.decimals,
-              symbol: token.symbol,
-              iconUrl: token.iconUrl,
-              bridge: token.bridgedUsing?.slug,
-            },
-            chain: {
-              id: chainId,
-              name: chain.name,
-            },
-            balance: data.status === 'success' ? data.result : null,
-          }
-        })
+        const nativeTokenBalance =
+          nativeToken &&
+          (await publicClient.getBalance({ address }).catch(() => null))
+
+        return [
+          ...(nativeToken
+            ? [
+                {
+                  token: {
+                    id: nativeToken.id,
+                    name: nativeToken.name,
+                    decimals: nativeToken.decimals,
+                    symbol: nativeToken.symbol,
+                    iconUrl: nativeToken.iconUrl,
+                    bridge: null,
+                  },
+                  chain: {
+                    id: chainId,
+                    name: chain.name,
+                  },
+                  balance: nativeTokenBalance ?? null,
+                },
+              ]
+            : []),
+          ...results.map((data, i) => {
+            const token = tokenAddresses[i]
+            if (!token) throw new Error('Token not found')
+            return {
+              token: {
+                id: token.id,
+                name: token.name,
+                decimals: token.decimals,
+                symbol: token.symbol,
+                iconUrl: token.iconUrl,
+                bridge: token.bridgedUsing?.slug,
+              },
+              chain: {
+                id: chainId,
+                name: chain.name,
+              },
+              balance: data.status === 'success' ? data.result : null,
+            }
+          }),
+        ]
       }),
     )
   ).flat()

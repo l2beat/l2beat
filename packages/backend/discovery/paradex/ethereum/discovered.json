@@ -2,8 +2,8 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 19532051,
-  "configHash": "0x45fe09b6af4ffb8a3b90809a336dd483fcd07cdf025d2d8e927393cb46ffe5b3",
-  "version": 3,
+  "configHash": "0xa4445adce03eab1c846bf27fd9fdac6949e54027f96cc6a2ac65de88a9c7677a",
+  "version": 4,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",

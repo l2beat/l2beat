@@ -12,13 +12,16 @@ import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { createPriceId } from '../utils/createPriceId'
+import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { createPriceId } from '../utils/createPriceId'
 
-interface PriceModule {
+export interface PriceModule {
   start: () => Promise<void> | void
+  descendant: DescendantIndexer
 }
 
 export function createPriceModule(
@@ -33,6 +36,10 @@ export function createPriceModule(
     apiKey: config.coingeckoApiKey,
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+  const priceService = new PriceService({
+    coingeckoQueryService,
+  })
 
   const byCoingeckoId = groupBy(config.prices, (price) => price.coingeckoId)
 
@@ -50,7 +57,7 @@ export function createPriceModule(
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
           id: createPriceId(price),
         })),
-        coingeckoQueryService,
+        priceService,
         priceRepository: peripherals.getRepository(PriceRepository),
         encode,
         decode,
@@ -58,12 +65,25 @@ export function createPriceModule(
       }),
   )
 
+  const descendant = new DescendantIndexer({
+    logger,
+    tag: 'price',
+    parents: indexers,
+    indexerService,
+    minHeight: Math.min(
+      ...config.prices.map((price) => price.sinceTimestamp.toNumber()),
+    ),
+  })
+
   return {
     start: async () => {
       for (const indexer of indexers) {
         await indexer.start()
       }
+
+      await descendant.start()
     },
+    descendant,
   }
 }
 

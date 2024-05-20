@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zora",
   "initialAddresses": [
@@ -20,59 +20,26 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner"
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner" // Conduit Multisig
   },
   "overrides": {
+    "ProxyAdminOwner": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "OptimismPortal": {
-      "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+      "extends": "opstack/OptimismPortal"
     },
     "L2OutputOracle": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "fields": {
-        "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
-        }
-      }
+      "extends": "opstack/L2OutputOracle"
     },
     "ZoraMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "extends": "opstack/L1CrossDomainMessenger"
     },
     "SystemConfig": {
-      "fields": {
-        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
-        "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
-        },
-        "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
-        },
-        "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
-        }
-      },
-      "ignoreInWatchMode": ["scalar"]
+      "extends": "opstack/SystemConfig"
     }
   }
 }

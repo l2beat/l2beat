@@ -1,9 +1,9 @@
-import { formatSeconds, ProjectId, Sentiment } from '@l2beat/shared-pure'
+import { ProjectId, Sentiment, formatSeconds } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { DATA_AVAILABILITY } from './dataAvailability'
 import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import { DATA_AVAILABILITY } from './dataAvailability'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,
@@ -74,25 +74,38 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
   nOfChallengers: number,
+  challengeWindowSeconds?: number,
 ): ScalingProjectRiskViewEntry {
+  const challengePeriod = challengeWindowSeconds
+    ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
+    : ''
+
+  let descriptionBase: string
+  let sentiment: 'bad' | 'warning'
+
   if (nOfChallengers === 1) {
-    return {
-      value: 'Fraud proofs (INT)',
-      description: `No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
-      sentiment: 'bad',
-    }
+    descriptionBase =
+      'No actor outside of the single Proposer can submit fraud proofs. ' +
+      'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
+      'The challenge protocol can be subject to delay attacks.'
+    sentiment = 'bad'
+  } else if (nOfChallengers < 5) {
+    descriptionBase =
+      `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve. ' +
+      'The challenge protocol can be subject to delay attacks.'
+    sentiment = 'bad'
+  } else {
+    descriptionBase =
+      `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. ` +
+      'Interactive proofs (INT) require multiple transactions over time to resolve.'
+    sentiment = 'warning'
   }
-  if (nOfChallengers < 5) {
-    return {
-      value: 'Fraud proofs (INT)',
-      description: `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
-      sentiment: 'bad',
-    }
-  }
+
   return {
     value: 'Fraud proofs (INT)',
-    description: `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.`,
-    sentiment: 'warning',
+    description: descriptionBase + challengePeriod,
+    sentiment: sentiment,
   }
 }
 
@@ -101,11 +114,11 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
-    'All of the data needed for proof construction is published on chain.',
+    'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
 }
 
-export const DATA_ON_CHAIN_L2: ScalingProjectRiskViewEntry = {
+export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
   value: 'On chain',
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
@@ -488,7 +501,7 @@ export const RISK_VIEW = {
   STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
-  DATA_ON_CHAIN_L2,
+  DATA_ON_CHAIN_L3,
   DATA_MIXED,
   DATA_EXTERNAL_DAC,
   DATA_EXTERNAL_MEMO,

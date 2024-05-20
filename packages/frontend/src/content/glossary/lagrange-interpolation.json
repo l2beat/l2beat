@@ -1,0 +1,5 @@
+{
+  "term": "Lagrange Interpolation",
+  "definition": "A formula that helps to find a polynomial which takes on certain values at arbitrary points. Thanks to Lagrange Interpolation the time for a prover to commit to a polynomial in KZG is linear in the degree of the polynomial.",
+  "isSpicy": false
+}

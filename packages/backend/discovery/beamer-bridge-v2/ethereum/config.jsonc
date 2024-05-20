@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "beamer-bridge-v2",
   "initialAddresses": [
@@ -26,15 +26,17 @@
       "ignoreMethods": ["protocolFee"],
       "fields": {
         "chains": {
-          "type": "stateFromEvent",
-          "event": "ChainUpdated",
-          "returnParams": [
-            "chainId",
-            "finalityPeriod",
-            "transferCost",
-            "targetWeightPPM"
-          ],
-          "groupBy": "chainId"
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "ChainUpdated",
+            "returnParams": [
+              "chainId",
+              "finalityPeriod",
+              "transferCost",
+              "targetWeightPPM"
+            ],
+            "groupBy": "chainId"
+          }
         }
       },
       "ignoreInWatchMode": ["chains", "currentNonce"]
@@ -42,12 +44,14 @@
     "EthereumFillManager": {
       "fields": {
         "liquidityProviders": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "LpAdded",
-          "addKey": "lp",
-          "removeEvent": "LpRemoved",
-          "removeKey": "lp",
-          "ignoreRelative": true
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "LpAdded",
+            "addKey": "lp",
+            "removeEvent": "LpRemoved",
+            "removeKey": "lp",
+            "ignoreRelative": true
+          }
         }
       }
     },

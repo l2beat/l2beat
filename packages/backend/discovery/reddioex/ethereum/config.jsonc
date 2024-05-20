@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "reddioex",
   "initialAddresses": ["0xB62BcD40A24985f560b5a9745d478791d8F1945C"],
@@ -9,7 +9,7 @@
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
@@ -36,18 +36,22 @@
       ],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         }
       }
     },
     "Committee": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     }

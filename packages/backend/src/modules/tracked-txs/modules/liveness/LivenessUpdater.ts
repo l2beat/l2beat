@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { TrackedTxResult } from '../../types/model'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
+import { TrackedTxResult } from '../../types/model'
 import {
   LivenessRecord,
   LivenessRepository,
@@ -26,14 +26,15 @@ export class LivenessUpdater implements TxUpdaterInterface {
 
     const transformedTransactions = this.transformTransactions(transactions)
     await this.livenessRepository.addMany(transformedTransactions, knexTx)
+    this.logger.info('Updated liveness', { count: transactions.length })
   }
 
-  async deleteFrom(
+  async deleteFromById(
     id: TrackedTxId,
-    untilTimestamp: UnixTime,
+    fromInclusive: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.livenessRepository.deleteFrom(id, untilTimestamp, knexTrx)
+    await this.livenessRepository.deleteFromById(id, fromInclusive, knexTrx)
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {

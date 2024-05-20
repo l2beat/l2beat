@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "cbridge",
   "initialAddresses": [
@@ -22,18 +22,22 @@
     "Liquidity Network": {
       "fields": {
         "pausers": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "PauserAdded",
-          "addKey": "account",
-          "removeEvent": "PauserRemoved",
-          "removeKey": "account"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "PauserAdded",
+            "addKey": "account",
+            "removeEvent": "PauserRemoved",
+            "removeKey": "account"
+          }
         },
         "governors": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "GovernorAdded",
-          "addKey": "account",
-          "removeEvent": "GovernorRemoved",
-          "removeKey": "account"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "GovernorAdded",
+            "addKey": "account",
+            "removeEvent": "GovernorRemoved",
+            "removeKey": "account"
+          }
         }
       },
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"]
@@ -41,18 +45,22 @@
     "OriginalTokenVault": {
       "fields": {
         "pausers": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "PauserAdded",
-          "addKey": "account",
-          "removeEvent": "PauserRemoved",
-          "removeKey": "account"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "PauserAdded",
+            "addKey": "account",
+            "removeEvent": "PauserRemoved",
+            "removeKey": "account"
+          }
         },
         "governors": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "GovernorAdded",
-          "addKey": "account",
-          "removeEvent": "GovernorRemoved",
-          "removeKey": "account"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "GovernorAdded",
+            "addKey": "account",
+            "removeEvent": "GovernorRemoved",
+            "removeKey": "account"
+          }
         }
       }
     },
@@ -65,28 +73,46 @@
       "ignoreDiscovery": true
     },
     "Sentinel": {
+      "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
       "fields": {
         "governors": {
-          "type": "arrayFromOneEvent",
-          "event": "event GovernorUpdated(address account, bool added)",
-          "valueKey": "account",
-          "flagKey": "added"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event GovernorUpdated(address account, bool added)",
+            "valueKey": "account",
+            "flagKey": "added"
+          }
         },
         "pausersPauseOnly": {
-          "type": "arrayFromOneEvent",
-          "event": "event PauserUpdated(address account, uint8 role)",
-          "valueKey": "account",
-          "flagKey": "role",
-          "flagTrueValues": ["1"],
-          "flagFalseValues": ["0", "2"]
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event PauserUpdated(address account, uint8 role)",
+            "valueKey": "account",
+            "flagKey": "role",
+            "flagTrueValues": ["1"],
+            "flagFalseValues": ["0", "2"]
+          }
         },
         "pausersFull": {
-          "type": "arrayFromOneEvent",
-          "event": "event PauserUpdated(address account, uint8 role)",
-          "valueKey": "account",
-          "flagKey": "role",
-          "flagTrueValues": ["2"],
-          "flagFalseValues": ["0", "1"]
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event PauserUpdated(address account, uint8 role)",
+            "valueKey": "account",
+            "flagKey": "role",
+            "flagTrueValues": ["2"],
+            "flagFalseValues": ["0", "1"]
+          }
+        },
+        "numRelaxedGuards": {
+          "description": "Number of relaxed guards in the Sentinel."
+        },
+        "relaxThreshold": {
+          "description": "Threshold of relaxed Guards needed to relax the Sentinel",
+          "severity": "MEDIUM"
+        },
+        "relaxed": {
+          "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)",
+          "severity": "MEDIUM"
         }
       }
     }

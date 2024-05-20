@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "deversifi",
   "initialAddresses": [
@@ -15,7 +15,7 @@
     "0x520Cf70a2D0B3dfB7386A2Bc9F800321F62a5c3a": "DeversiFiTreasuryMultisig"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {
@@ -42,23 +42,40 @@
       ],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         }
       }
     },
     "Committee": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "GovernanceMultisig": {
-      "ignoreInWatchMode": ["nonce"]
+      "description": "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.",
+      "ignoreInWatchMode": ["nonce"],
+      "fields": {
+        "getOwners": {
+          "description": "Signers of the Multisig",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "description": "Threshold of the Multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        }
+      }
     }
   }
 }

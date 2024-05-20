@@ -6,9 +6,9 @@ import { Clock } from '../../../../tools/Clock'
 import { IndexerStateRepository } from '../../../../tools/uif/IndexerStateRepository'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
+import { LivenessUpdater } from './LivenessUpdater'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
-import { LivenessUpdater } from './LivenessUpdater'
 import { LivenessRepository } from './repositories/LivenessRepository'
 
 export function createLivenessModule(

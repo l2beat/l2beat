@@ -4,6 +4,7 @@ import {
   ProjectId,
   TrackedTxsConfigType,
   UnixTime,
+  clampRangeToDay,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
@@ -11,19 +12,16 @@ import { Knex } from 'knex'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
-import {
-  adjustRangeForBigQueryCall,
-  findConfigurationsToSync,
-} from '../tracked-txs/utils'
+import { findConfigurationsToSync } from '../tracked-txs/utils'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
 } from './repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { TrackedTxResult } from './types/model'
 import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { TrackedTxResult } from './types/model'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
@@ -104,7 +102,7 @@ describe(TrackedTxsIndexer.name, () => {
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => [],
       })
-      const { from: _, to: unixTo } = adjustRangeForBigQueryCall(
+      const { from: _, to: unixTo } = clampRangeToDay(
         from.toNumber(),
         to.toNumber(),
       )
@@ -193,10 +191,10 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteFrom: mockFn(async () => {}),
+        deleteFromById: mockFn(async () => {}),
       })
       const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
-        deleteFrom: mockFn(async () => {}),
+        deleteFromById: mockFn(async () => {}),
       })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
@@ -235,7 +233,7 @@ describe(TrackedTxsIndexer.name, () => {
         toChangeUntilTimestamp[1].untilTimestampExclusive,
         TRX,
       )
-      expect(mockedLivenessUpdater.deleteFrom).toHaveBeenOnlyCalledWith(
+      expect(mockedLivenessUpdater.deleteFromById).toHaveBeenOnlyCalledWith(
         toChangeUntilTimestamp[1].id,
         toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
@@ -266,7 +264,7 @@ describe(TrackedTxsIndexer.name, () => {
       const configurationRepository = getMockConfigRepository([])
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
-        add: async () => '',
+        addOrUpdate: async () => '',
         setSafeHeight: async () => 0,
         runInTransaction: async (fn) => fn(TRX),
       })
@@ -278,7 +276,7 @@ describe(TrackedTxsIndexer.name, () => {
 
       await livenessIndexer.start()
 
-      expect(stateRepository.add).toHaveBeenOnlyCalledWith(
+      expect(stateRepository.addOrUpdate).toHaveBeenOnlyCalledWith(
         {
           indexerId: livenessIndexer.indexerId,
           safeHeight: MIN_TIMESTAMP.toNumber(),
@@ -422,7 +420,7 @@ function getMockStateRepository(
 ) {
   const stateRepository = mockObject<IndexerStateRepository>({
     findIndexerState: async () => indexerState,
-    add: async () => '',
+    addOrUpdate: async () => '',
     setSafeHeight: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
   })
@@ -491,11 +489,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         subtype: 'batchSubmissions',
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
-      gasPrice: 10,
+      gasPrice: 10n,
       receiptGasUsed: 100,
-      transactionType: 2,
       calldataGasUsed: 10,
       dataLength: 5,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -510,11 +509,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      gasPrice: 20,
+      gasPrice: 20n,
       receiptGasUsed: 200,
-      transactionType: 3,
       calldataGasUsed: 0,
       dataLength: 0,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
     {
       type: 'transfer',
@@ -529,11 +529,12 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
-      gasPrice: 20,
+      gasPrice: 20n,
       receiptGasUsed: 200,
-      transactionType: 3,
       calldataGasUsed: 0,
       dataLength: 0,
+      receiptBlobGasPrice: null,
+      receiptBlobGasUsed: null,
     },
   ]
 }

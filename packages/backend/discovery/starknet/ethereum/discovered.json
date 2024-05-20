@@ -2,8 +2,8 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 19718686,
-  "configHash": "0x8cb3a86b27be7e3a694da30e1fbd03b5382e6ebd1db238d8da305db5f629dc1b",
-  "version": 3,
+  "configHash": "0x98da4e6c31fa9b40de07cce9402d0fad27eb9676dd9d2fc8b34cdc07ec023f67",
+  "version": 4,
   "contracts": [
     {
       "name": "BridgeMultisig",

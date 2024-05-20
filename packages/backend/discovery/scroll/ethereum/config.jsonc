@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "scroll",
   "initialAddresses": [
@@ -17,7 +17,7 @@
     "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": "L1ScrollMessenger",
     "0x987e300fDfb06093859358522a79098848C33852": "OLD_L2GasPriceOracle",
     "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "ScrollChain",
-    "0xA2Ab526e5C5491F10FC05A55F064BF9F7CEf32a0": "MultipleVersionRollupVerifier",
+    "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6": "MultipleVersionRollupVerifier",
     "0x798576400F7D662961BA15C6b3F3d813447a26a6": "ScrollOwner",
     "0x1A658B88fD0a3c82fa1a0609fCDbD32e7dd4aB9C": "TimelockSlow",
     "0xDC1d1189Da69Ae2016E4976A43De20972D349B1b": "TimelockMid",
@@ -43,7 +43,10 @@
     "0x64CCBE37c9A82D85A1F2E74649b7A42923067988": "L2CustomERC20GatewayFallback",
     "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582": "L2ERC721GatewayFallback",
     "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": "L2USDCGatewayFallback",
-    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifier"
+    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifierV0",
+    "0x2293cd12e8564e8219d314b075867c2f66ac6941": "PlonkVerifierV1",
+    "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV0",
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
   },
   "overrides": {
     "L1MessageQueue": {
@@ -77,37 +80,59 @@
       "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
       "fields": {
         "sequencers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateSequencer",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateSequencer",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "provers": {
-          "type": "arrayFromOneEvent",
-          "event": "UpdateProver",
-          "valueKey": "account",
-          "flagKey": "status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "UpdateProver",
+            "valueKey": "account",
+            "flagKey": "status"
+          }
         },
         "revertedBatches": {
-          "type": "stateFromEvent",
-          "event": "RevertBatch",
-          "returnParams": ["batchIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "RevertBatch",
+            "returnParams": ["batchIndex"]
+          }
         }
       }
     },
     "MultipleVersionRollupVerifier": {
-      "ignoreMethods": ["getVerifier"]
+      "ignoreMethods": ["getVerifier"],
+      "fields": {
+        "latestVerifier": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        },
+        "legacyVerifiersLength": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        }
+      }
     },
     "ScrollOwner": {
       "fields": {
         "accessControl": {
-          "type": "scrollAccessControl",
-          "roleNames": {
-            "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
-            "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
-            "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
-            "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
-            "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+          "handler": {
+            "type": "scrollAccessControl",
+            "roleNames": {
+              "0xa35737ada2a80e3013b3b2c3a23e5f55c43393a64348742b3518ec0eff3de8e6": "SECURITY_COUNCIL_NO_DELAY_ROLE",
+              "0x357f58d6582a9aad552073fb90e586033d651a1117d026182f09ca03868d3e85": "SCROLL_MULTISIG_NO_DELAY_ROLE",
+              "0x640b21f88436d06e77efa2750ca42147d57f927008d06e80d75923e2e22cf761": "EMERGENCY_MULTISIG_NO_DELAY_ROLE",
+              "0x7073af4b167920283f68deceb22f52cc6f5d834eeb5d5ba612c774b2bcfa0d79": "TIMELOCK_1DAY_DELAY_TOLE",
+              "0x7101c64e1cfe9c2a867a931776e9ff5db14162149d7281b6372f94dcc3fcef35": "TIMELOCK_7DAY_DELAY_ROLE"
+            }
           }
         }
       }
@@ -115,21 +140,27 @@
     "TimelockSlow": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockFast": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "TimelockMid": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -155,10 +186,20 @@
     "Whitelist": {
       "fields": {
         "whitelisted": {
-          "type": "arrayFromOneEvent",
-          "event": "WhitelistStatusChanged",
-          "valueKey": "_account",
-          "flagKey": "_status"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "WhitelistStatusChanged",
+            "valueKey": "_account",
+            "flagKey": "_status"
+          }
+        }
+      }
+    },
+    "EnforcedTxGateway": {
+      "fields": {
+        "paused": {
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
+          "severity": "HIGH"
         }
       }
     }

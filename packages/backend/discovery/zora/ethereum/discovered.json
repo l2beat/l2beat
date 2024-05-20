@@ -1,9 +1,9 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19711603,
-  "configHash": "0xf11bf6d003d8906acebd0e6bad7e47d65136d4462fa703a0d4eb7b8599de58ab",
-  "version": 3,
+  "blockNumber": 19899230,
+  "configHash": "0x9e0f0fcb5305963b72dd03dac6e5e6631837b512c7141f1c25256a782339c08f",
+  "version": 4,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -21,7 +21,7 @@
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Oracle": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19711599],
+        "params": [1000000000, 100000, 19899230],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
@@ -97,7 +97,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 28,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -255,10 +255,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13550580,
-        "latestOutputIndex": 7752,
-        "nextBlockNumber": 13552380,
-        "nextOutputIndex": 7753,
+        "latestBlockNumber": 14682780,
+        "latestOutputIndex": 8381,
+        "nextBlockNumber": 14684580,
+        "nextOutputIndex": 8382,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -457,7 +457,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621475",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621822",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

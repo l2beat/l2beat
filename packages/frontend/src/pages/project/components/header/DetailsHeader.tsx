@@ -1,6 +1,7 @@
 import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
-
+import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
+import { WarningBar } from '../../../../components/WarningBar'
 import { DesktopProjectLinks } from '../../../../components/header/DesktopProjectLinks'
 import { MobileProjectLinks } from '../../../../components/header/MobileProjectLinks'
 import {
@@ -8,14 +9,13 @@ import {
   ProjectSummaryStat,
 } from '../../../../components/header/ProjectSummary'
 import { TvlStats, TvlSummary } from '../../../../components/header/TvlSummary'
-import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { BigRosette } from '../../../../components/rosette'
-import { WarningBar } from '../../../../components/WarningBar'
 import { cn } from '../../../../utils/cn'
 import { RiskValues } from '../../../../utils/risks/types'
 import { ProjectLink } from '../../types'
 import { ArchivedBar } from './ArchivedBar'
 import { ImplementationUnderReviewBar } from './ImplementationUnderReviewBar'
+import { ProjectHeader } from './ProjectHeader'
 import { UnderReviewBar } from './UnderReviewBar'
 import { UpcomingBar } from './UpcomingBar'
 
@@ -58,16 +58,7 @@ export function DetailsHeader(props: HeaderProps) {
       <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
-            <h1 className="relative mb-0 flex items-center justify-start gap-3 whitespace-pre text-3xl font-bold md:text-4xl">
-              {props.icon && (
-                <img
-                  className="size-8 md:size-10"
-                  src={props.icon}
-                  alt={`${props.title} logo`}
-                />
-              )}
-              {props.title}
-            </h1>
+            <ProjectHeader title={props.title} icon={props.icon} />
             {props.description && (
               <div className="mt-4 text-base">{props.description}</div>
             )}

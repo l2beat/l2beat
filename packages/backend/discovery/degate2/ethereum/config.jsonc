@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "degate2",
   "initialAddresses": ["0xF13e21653AEB763595D5E4baA1dC115689Da49b9"],
@@ -23,14 +23,18 @@
       ],
       "fields": {
         "loopringV3": {
-          "type": "storage",
-          "slot": 5,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
         },
         "shutdownTriggered": {
-          "type": "stateFromEvent",
-          "event": "Shutdown",
-          "returnParams": ["timestamp"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "Shutdown",
+            "returnParams": ["timestamp"]
+          }
         }
       }
     },
@@ -47,12 +51,14 @@
     "LoopringIOExchangeOwner": {
       "fields": {
         "blockSubmitters": {
-          "type": "arrayFromOneEventWithArg",
-          "event": "PermissionUpdate",
-          "valueKey": "user",
-          "flagKey": "allowed",
-          "arg": "selector",
-          "argValue": "0x53228430"
+          "handler": {
+            "type": "arrayFromOneEventWithArg",
+            "event": "PermissionUpdate",
+            "valueKey": "user",
+            "flagKey": "allowed",
+            "arg": "selector",
+            "argValue": "0x53228430"
+          }
         }
       }
     },

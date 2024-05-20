@@ -1,4 +1,3 @@
-export * from './adjustRangeForBigQueryCall'
 export * from './findConfigurationsToSync'
 export * from './isConfigToSync'
 export * from './sql/index'

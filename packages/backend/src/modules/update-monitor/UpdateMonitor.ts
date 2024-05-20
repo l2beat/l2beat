@@ -1,23 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
-  diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
-  DiscoveryMeta,
+  diffDiscovery,
   normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { Gauge, Histogram } from 'prom-client'
+import { Gauge } from 'prom-client'
 
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
-import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
 
@@ -85,10 +84,6 @@ export class UpdateMonitor {
           continue
         }
 
-        const meta = await this.configReader.readMeta(
-          projectConfig.name,
-          runner.chain,
-        )
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
           runner.chain,
@@ -100,7 +95,7 @@ export class UpdateMonitor {
           projectConfig,
         )
 
-        const severityCounts = countSeverities(diff, meta)
+        const severityCounts = countSeverities(diff, projectConfig)
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
@@ -116,10 +111,12 @@ export class UpdateMonitor {
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
+    // #region metrics
+    errorCount.set(0)
+    // #endregion
+
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
-
-    const metricsDone = this.initMetrics(blockNumber)
 
     const projectConfigs = await this.configReader.readAllConfigsForChain(
       runner.chain,
@@ -143,6 +140,9 @@ export class UpdateMonitor {
         project: projectConfig.name,
       })
 
+      const projectFinished = projectGauge.startTimer({
+        project: `${runner.chain}:${projectConfig.name}`,
+      })
       try {
         await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
@@ -150,8 +150,9 @@ export class UpdateMonitor {
           `[chain: ${runner.chain}] Failed to update project [${projectConfig.name}]`,
           error,
         )
-        errorsCount.inc()
+        errorCount.inc()
       }
+      projectFinished()
 
       this.logger.info('Project update finished', {
         chain: runner.chain,
@@ -159,7 +160,6 @@ export class UpdateMonitor {
       })
     }
 
-    metricsDone()
     this.logger.info('Update finished', {
       chain: runner.chain,
       blockNumber,
@@ -294,24 +294,12 @@ export class UpdateMonitor {
       await this.updateNotifier.handleUpdate(
         projectConfig.name,
         diff,
-        await this.configReader.readMeta(projectConfig.name, chain),
+        await this.configReader.readConfig(projectConfig.name, chain),
         blockNumber,
         this.chainConverter.toChainId(chain),
         dependents,
         unknownContracts,
       )
-      changesDetected.inc()
-    }
-  }
-
-  initMetrics(blockNumber: number): () => void {
-    const histogramDone = syncHistogram.startTimer()
-    changesDetected.set(0)
-    errorsCount.set(0)
-
-    return () => {
-      histogramDone()
-      latestBlock.set(blockNumber)
     }
   }
 
@@ -320,30 +308,21 @@ export class UpdateMonitor {
   }
 }
 
-const latestBlock = new Gauge({
-  name: 'discovery_watcher_last_synced',
-  help: 'Value showing latest block number with which UpdateMonitor was run',
+type ProjectGauge = Gauge<'project'>
+const projectGauge: ProjectGauge = new Gauge({
+  name: 'update_monitor_project_discovery_duration_seconds',
+  help: 'Duration gauge of discovering a project',
+  labelNames: ['project'],
 })
 
-const changesDetected = new Gauge({
-  name: 'discovery_watcher_changes_detected',
-  help: 'Value showing the amount of changes detected by UpdateMonitor',
-})
-
-const syncHistogram = new Histogram({
-  name: 'discovery_watcher_sync_duration_histogram',
-  help: 'Histogram showing UpdateMonitor sync duration',
-  buckets: [1, 2, 4, 6, 8, 10, 12, 15].map((x) => x * 60),
-})
-
-const errorsCount = new Gauge({
-  name: 'discovery_watcher_errors',
+const errorCount = new Gauge({
+  name: 'update_monitor_error_count',
   help: 'Value showing amount of errors in the update cycle',
 })
 
-function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
+function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
   const result = { low: 0, medium: 0, high: 0, unknown: 0 }
-  if (meta === undefined) {
+  if (config === undefined) {
     result.unknown = diffs
       .map((d) => d.diff?.length ?? 0)
       .reduce((a, b) => a + b, 0)
@@ -351,22 +330,35 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
   }
 
   for (const diff of diffs) {
-    const contract = meta.contracts.find((c) => c.name === diff.name)
+    const contract = config.getContract(diff.name)
     if (contract === undefined || diff.diff === undefined) {
+      result.unknown += 1
       continue
     }
 
     for (const field of diff.diff) {
       if (field.key === undefined) {
+        result.unknown += 1
         continue
       }
+
+      // NOTE(radomski): upgradeability section is not in `contract.fields` but
+      // changes to it are also in the diff. Changes to the implementation are
+      // high severity, so just handle this special edge case here.
+      if (field.key === 'upgradeability.implementation') {
+        result.high += 1
+        continue
+      }
+
       const key = normalizeDiffPath(field.key)
+      const fields = contract.fields ?? {}
 
-      if (contract.values[key] === undefined) {
+      if (fields[key] === undefined) {
+        result.unknown += 1
         continue
       }
 
-      const severity = contract.values[key].severity
+      const severity = fields[key].severity
 
       switch (severity) {
         case 'LOW':

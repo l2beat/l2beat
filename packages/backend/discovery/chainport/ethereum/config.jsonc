@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "chainport",
   "initialAddresses": [
@@ -20,7 +20,13 @@
   },
   "overrides": {
     "ChainportCongress": {
-      "ignoreMethods": ["getActions", "proposals"]
+      "ignoreMethods": ["getActions", "proposals"],
+      "fields": {
+        "proposalCount": {
+          "description": "The amount of proposals ever created. Goes up by 1 for each proposal.",
+          "severity": "MEDIUM"
+        }
+      }
     },
     "MultisigVault1": {
       "ignoreInWatchMode": ["nonce"]

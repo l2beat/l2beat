@@ -1,6 +1,11 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
 import {
@@ -9,7 +14,6 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { diffToMessage } from './utils/diffToMessage'
@@ -42,21 +46,12 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    meta: DiscoveryMeta | undefined,
+    config: DiscoveryConfig | undefined,
     blockNumber: number,
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
   ) {
-    // TODO(radomski): Discord notifications for chains different than
-    // Ethereum are for now disabled. We still want to update the database
-    // with the newest discovery but we don't want to notify about changes on
-    // for example Arbitrum chain since there are a lot of changes that we
-    // have not yet looked at.
-    if (chainId !== ChainId.ETHEREUM) {
-      return
-    }
-
     const nonce = await this.getInternalMessageNonce()
     await this.updateNotifierRepository.add({
       projectName: name,
@@ -86,7 +81,7 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      meta,
+      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -106,7 +101,7 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      meta,
+      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -222,7 +217,7 @@ function formatRemindersAsTable(
     ]
   })
 
-  return printAsciiTable(headers, rows)
+  return formatAsAsciiTable(headers, rows)
 }
 
 function flattenReminders(

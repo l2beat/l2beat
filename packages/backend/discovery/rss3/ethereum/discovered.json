@@ -1,9 +1,9 @@
 {
   "name": "rss3",
   "chain": "ethereum",
-  "blockNumber": 19574205,
-  "configHash": "0x8cbc24cf9bece8b1e27682ca0ca243990f55311bff72cc7993469663b894897e",
-  "version": 3,
+  "blockNumber": 19826030,
+  "configHash": "0x851dcefde7568133fa263a9fffe22037cc44668d4ad094c716282c29d4b5ba2a",
+  "version": 4,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -91,7 +91,7 @@
         "L2_ORACLE": "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10",
         "l2Oracle": "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491822, 19573955],
+        "params": [1000000000, 491822, 19825733],
         "paused": false,
         "superchainConfig": "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
         "SYSTEM_CONFIG": "0x80e73D6BfC73c567032304C3891a06c2d9954d09",
@@ -129,7 +129,7 @@
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false
         },
-        "overhead": 188,
+        "overhead": 100,
         "owner": "0xC4878516C198a919566773797e24af20DfdE6272",
         "resourceConfig": [
           20000000,
@@ -139,7 +139,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 7000000000,
+        "scalar": 800000000,
         "sequencerInbox": "0xfFFF000000000000000000000000000000012553",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x6FD177Da12124769677C41AA83944f6efAfc7cd1",
@@ -161,7 +161,7 @@
       "sinceTimestamp": 1709859947,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620373",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620709",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -244,10 +244,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1137600,
-        "latestOutputIndex": 631,
-        "nextBlockNumber": 1139400,
-        "nextOutputIndex": 632,
+        "latestBlockNumber": 2658600,
+        "latestOutputIndex": 1476,
+        "nextBlockNumber": 2660400,
+        "nextOutputIndex": 1477,
         "proposer": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "PROPOSER": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "startingBlockNumber": 0,

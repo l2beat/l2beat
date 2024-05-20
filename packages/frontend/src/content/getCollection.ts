@@ -1,8 +1,8 @@
+import { readFileSync, readdirSync } from 'fs'
+import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { readdirSync, readFileSync } from 'fs'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
-import path from 'path'
 import { z } from 'zod'
 
 import { startsWithLetterOrNumber } from '../utils/startsWithLetterOrNumber'

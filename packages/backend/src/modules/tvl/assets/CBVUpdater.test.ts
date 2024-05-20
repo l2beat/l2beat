@@ -11,16 +11,16 @@ import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
 import { Clock } from '../../../tools/Clock'
-import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { PriceUpdater } from '../PriceUpdater'
-import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { ReportProject } from '../reports/ReportProject'
+import { getReportConfigHash } from '../reports/getReportConfigHash'
 import {
   ReportRecord,
   ReportRepository,
 } from '../repositories/ReportRepository'
 import { ReportStatusRepository } from '../repositories/ReportStatusRepository'
-import { fakeToken, REPORTS_MOCK as MOCK } from '../test/mockReports'
+import { REPORTS_MOCK as MOCK, fakeToken } from '../test/mockReports'
 import { CBVUpdater } from './CBVUpdater'
 
 describe(CBVUpdater.name, () => {

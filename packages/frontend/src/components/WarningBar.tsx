@@ -2,12 +2,12 @@ import React from 'react'
 
 import { cn } from '../utils/cn'
 import { Callout } from './Callout'
-import { OutLinkIcon, ShieldIcon } from './icons'
 import { Markdown } from './Markdown'
 import { PlainLink } from './PlainLink'
+import { OutLinkIcon, ShieldIcon } from './icons'
 
 export interface WarningBarProps {
-  color: 'red' | 'yellow'
+  color: 'red' | 'yellow' | 'gray'
   text: string
   href?: string
   icon?: (props: { className?: string }) => JSX.Element
@@ -24,7 +24,11 @@ export function WarningBar({
   className,
 }: WarningBarProps) {
   const iconFill =
-    color === 'red' ? 'fill-red-300' : 'fill-yellow-700 dark:fill-yellow-300'
+    color === 'red'
+      ? 'fill-red-300'
+      : color === 'yellow'
+        ? 'fill-yellow-700 dark:fill-yellow-300'
+        : 'fill-gray-700 dark:fill-gray-300'
 
   const textElement = (
     <>

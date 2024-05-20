@@ -1,22 +1,30 @@
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Clock } from '../../tools/Clock'
+import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
-import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { HourlyIndexer } from './HourlyIndexer'
-import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
-import { createLivenessModule } from './modules/liveness/LivenessModule'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
+import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
+import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
+import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
+import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/AggregatedL2CostsRepository'
+import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
+import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -29,8 +37,12 @@ export function createTrackedTxsModule(
     return
   }
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const indexerService = new IndexerService(
+    peripherals.getRepository(IndexerStateRepository),
+    peripherals.getRepository(IndexerConfigurationRepository),
+  )
 
+  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,
@@ -75,6 +87,46 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.minTimestamp,
   )
 
+  let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
+  let l2CostsAggregatorIndexer: L2CostsAggregatorIndexer | undefined
+
+  if (
+    config.trackedTxsConfig.uses.l2costs &&
+    config.trackedTxsConfig.uses.l2costs.aggregatorEnabled
+  ) {
+    const coingeckoClient = peripherals.getClient(CoingeckoClient, {
+      apiKey: config.trackedTxsConfig.uses.l2costs.coingeckoApiKey,
+    })
+
+    const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+    l2CostPricesIndexer = new L2CostsPricesIndexer({
+      coingeckoQueryService,
+      l2CostsPricesRepository: peripherals.getRepository(
+        L2CostsPricesRepository,
+      ),
+      parents: [hourlyIndexer],
+      indexerService,
+      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      logger,
+    })
+
+    l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
+      l2CostsRepository: peripherals.getRepository(L2CostsRepository),
+      aggregatedL2CostsRepository: peripherals.getRepository(
+        AggregatedL2CostsRepository,
+      ),
+      l2CostsPricesRepository: peripherals.getRepository(
+        L2CostsPricesRepository,
+      ),
+      parents: [trackedTxsIndexer, l2CostPricesIndexer],
+      indexerService,
+      minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+      logger,
+      projects: config.projects,
+    })
+  }
+
   const start = async () => {
     logger = logger.for('TrackedTxsModule')
     logger.info('Starting...')
@@ -84,6 +136,8 @@ export function createTrackedTxsModule(
       await subModule?.start?.()
     }
     await trackedTxsIndexer.start()
+    await l2CostPricesIndexer?.start()
+    await l2CostsAggregatorIndexer?.start()
   }
 
   return {

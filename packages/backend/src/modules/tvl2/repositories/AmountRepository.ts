@@ -33,7 +33,32 @@ export class AmountRepository extends BaseRepository {
       .whereIn('configuration_id', configIds)
       .where('timestamp', timestamp.toDate())
       .orderBy('configuration_id')
-    return rows.map((row) => toRecord(row))
+    return rows.map(toRecord)
+  }
+
+  async getByConfigIdsInRange(
+    configIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<AmountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .andWhere('timestamp', '>=', fromInclusive.toDate())
+      .andWhere('timestamp', '<=', toInclusive.toDate())
+      .orderBy('timestamp')
+
+    return rows.map(toRecord)
+  }
+
+  async getDailyByConfigId(configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
+      .orderBy('timestamp')
+
+    return rows.map(toRecord)
   }
 
   async addMany(records: AmountRecord[]) {

@@ -4,12 +4,12 @@ import { TVLProjectBreakdown } from '../../../../pages/scaling/projects-tvl-brea
 import { formatNumberWithCommas } from '../../../../utils'
 import { BridgedUsingCell } from '../BridgedUsingCell'
 import { EscrowsCell } from '../EscrowsCell'
+import { ColumnConfig } from '../TVLBreakdownTableView'
 import { TokenAddressCell } from '../TokenAddressCell'
 import { TokenAmountCell } from '../TokenAmountCell'
 import { TokenNameCell } from '../TokenNameCell'
 import { TokenTypeCell } from '../TokenTypeCell'
 import { TokenValueCell } from '../TokenValueCell'
-import { ColumnConfig } from '../TVLBreakdownTableView'
 
 // ! Now cell width are set to 20% in TVLBreakdownTableView.tsx so adding new columns will break the layout
 

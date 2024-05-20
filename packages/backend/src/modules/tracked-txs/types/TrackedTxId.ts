@@ -1,4 +1,5 @@
-import { Branded, hashJson } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
+import { Branded } from '@l2beat/shared-pure'
 
 export type TrackedTxId = Branded<string, 'TrackedTxId'>
 

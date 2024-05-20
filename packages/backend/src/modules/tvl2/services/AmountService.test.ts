@@ -40,7 +40,7 @@ describe(AmountService.name, () => {
       mockUifConfig(escrowNativeConfig),
     ]
 
-    await service.fetchAmounts(configurations, blockNumber, timestamp)
+    await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockRpc.getBalance).toHaveBeenOnlyCalledWith(
       escrowNativeConfig.escrowAddress,
@@ -71,7 +71,7 @@ describe(AmountService.name, () => {
       escrowNativeConfig,
     ]
 
-    await service.fetchAmounts(configurations, blockNumber, timestamp)
+    await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
     expect(mockEncode).toHaveBeenOnlyCalledWith(escrowNativeConfig)
@@ -95,7 +95,7 @@ describe(AmountService.name, () => {
       mockUifConfig(erc20BalanceConfig),
     ]
 
-    await service.fetchAmounts(configurations, blockNumber, timestamp)
+    await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
   })
@@ -142,6 +142,7 @@ function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
     sinceTimestamp: new UnixTime(123),
     includeInTotal: true,
     decimals: 18,
+    symbol: 'SYMBOL',
     ...base,
   }
 }

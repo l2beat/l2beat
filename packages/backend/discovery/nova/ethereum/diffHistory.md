@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x14d481f36a76e3853d048fce96b26891fb8f5ce4
+
+# Diff at Wed, 15 May 2024 12:20:50 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@2a68252776877f0b82e9f7cf6261b744952be771 block: 19532012
+- current block number: 19875341
+
+## Description
+
+Config related: Renamed two contracts to make them more descriptive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532012 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin 1 (0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      name:
+-        "ProxyAdmin 1"
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "SecurityCouncil"
+    }
+```
+
 Generated with discovered.json: 0xf7fb7f83bf7de129d4215d9d4d56037bafd44bf7
 
 # Diff at Thu, 28 Mar 2024 10:28:23 GMT:

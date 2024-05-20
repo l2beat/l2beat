@@ -10,14 +10,13 @@ const ScrollBatchCommit = z.object({
   chunks: z.array(z.string()),
   skippedL1MessageBitmap: z.string(),
 })
-type ScrollBatchCommit = z.infer<typeof ScrollBatchCommit>
 
 export class ScrollFinalityAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'batchSubmissions'
   }
 
-  async getFinality(transaction: {
+  async analyze(transaction: {
     txHash: string
     timestamp: UnixTime
   }): Promise<number[]> {
@@ -46,12 +45,10 @@ function decodeTransaction(data: string) {
   const decodedInput = iface.decodeFunctionData(signature, data)
 
   return ScrollBatchCommit.parse({
-    /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     version: decodedInput._version,
     parentBatchHeader: decodedInput._parentBatchHeader,
     chunks: decodedInput._chunks,
     skippedL1MessageBitmap: decodedInput._skippedL1MessageBitmap,
-    /* eslint-enable @typescript-eslint/no-unsafe-assignment */
   })
 }
 

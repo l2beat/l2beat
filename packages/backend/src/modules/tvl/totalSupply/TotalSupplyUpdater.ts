@@ -11,16 +11,16 @@ import { setTimeout } from 'timers/promises'
 
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
+import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { getStatus } from '../reports/getStatus'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
 } from '../repositories/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../repositories/TotalSupplyStatusRepository'
-import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
+import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 
 export class TotalSupplyUpdater {
   private readonly configHash: Hash256
@@ -145,9 +145,8 @@ export class TotalSupplyUpdater {
     )
 
     if (missingTotalSupplies.length > 0) {
-      const blockNumber = await this.blockNumberUpdater.getBlockNumberWhenReady(
-        timestamp,
-      )
+      const blockNumber =
+        await this.blockNumberUpdater.getBlockNumberWhenReady(timestamp)
 
       assert(blockNumber, 'No timestamp for this block number')
 

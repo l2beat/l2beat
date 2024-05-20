@@ -28,8 +28,8 @@ import {
   ReportRecord,
   ReportRepository,
 } from '../repositories/ReportRepository'
-import { getProjectAssetChartData } from './charts'
 import { TvlController } from './TvlController'
+import { getProjectAssetChartData } from './charts'
 
 describe(TvlController.name, () => {
   const START = UnixTime.fromDate(new Date('2022-05-31'))

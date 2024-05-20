@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "kroma",
   "initialAddresses": [
@@ -7,7 +7,8 @@
     "0x827962404D7104202C5aaa6b929115C8211d9596",
     "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
     "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
-    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
+    "0x88b6bBb148748C18B377A57c9d4E6c714AF28078"
   ],
   "names": {
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
@@ -25,9 +26,45 @@
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
     "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig",
     "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2",
-    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge"
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge",
+    "0x88b6bBb148748C18B377A57c9d4E6c714AF28078": "SpectrumCore", // weETH Escrow
+    "0xd26F4195B147b988E7497779f7DED22ba130204d": "SC_ProxyAdmin",
+    "0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5": "SpectrumHub", // spETH custom GW
+    "0x9841bC06C8284095824e9397AC818aD1114C444C": "SH_ProxyAdmin",
+    "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474": "spETH",
+    "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4": "spETH_ProxyAdmin"
   },
   "overrides": {
+    "spETH": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    "SpectrumHub": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
+      "ignoreRelatives": ["getHubStakeAssetLists", "getHubUnstakeAssetLists"]
+    },
+    "SpectrumCore": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      },
+      "ignoreMethods": ["evalSpectrum", "getSpectrumFromETH"],
+      "ignoreRelatives": ["getCoreSupportAssetLists", "getGlobalSnap"]
+    },
     "L2OutputOracle": {
       "ignoreMethods": [
         "computeL2Timestamp",
@@ -43,7 +80,14 @@
         "latestOutputIndex",
         "nextBlockNumber",
         "nextOutputIndex"
-      ]
+      ],
+      "fields": {
+        "COLOSSEUM": {
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
+        }
+      }
     },
     "KromaPortal": {
       "ignoreMethods": ["isOutputFinalized"],
@@ -59,7 +103,19 @@
         "transactions",
         "getOwners", // already read from owners array,
         "clock"
-      ]
+      ],
+      "fields": {
+        "COLOSSEUM": {
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
+        },
+        "transactionCount": {
+          "description": "Increases with each Security Council action.",
+          "severity": "HIGH",
+          "type": "L2"
+        }
+      }
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
@@ -69,27 +125,36 @@
       "ignoreMethods": ["isInCreationPeriod"],
       "fields": {
         "challengedRoots": {
-          "type": "arrayFromOneEvent",
-          "event": "ChallengeCreated",
-          "valueKey": "outputIndex",
-          "ignoreRelative": true
+          "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ChallengeCreated",
+            "valueKey": "outputIndex",
+            "ignoreRelative": true
+          }
         },
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "ValidatorPool": {
       "ignoreMethods": ["getBond"],
-      "ignoreInWatchMode": ["nextValidator", "validatorCount", "validators"],
-      "fields": {
-        "validators": {
-          "type": "dynamicArray",
-          "slot": 54,
-          "returnType": "address",
-          "ignoreRelative": true
-        }
-      }
+      "ignoreInWatchMode": ["nextValidator", "validatorCount"]
+      // discovers all 300+ validator addresses:
+      // "fields": {
+      //   "validators": {
+      //     "handler": {
+      //       "type": "dynamicArray",
+      //       "slot": 54,
+      //       "returnType": "address",
+      //       "ignoreRelative": true
+      //     }
+      //   }
+      // }
     },
     "UpgradeGovernor": {
       "ignoreMethods": [
@@ -107,20 +172,26 @@
       "ignoreInWatchMode": ["clock", "ownerOf"],
       "fields": {
         "tokens": {
-          "type": "array",
-          "method": "tokenByIndex"
+          "handler": {
+            "type": "array",
+            "method": "tokenByIndex"
+          }
         },
         "tokenOwners": {
-          "type": "array",
-          "method": "ownerOf",
-          "indices": "{{ tokens }}"
+          "handler": {
+            "type": "array",
+            "method": "ownerOf",
+            "indices": "{{ tokens }}"
+          }
         }
       }
     },
     "Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -128,17 +199,27 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["scalar"]

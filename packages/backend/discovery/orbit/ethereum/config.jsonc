@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "orbit",
   "initialAddresses": ["0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"],
@@ -22,24 +22,42 @@
       ],
       "fields": {
         "usdtFarm": {
-          "type": "call",
-          "method": "function farms(address token) view returns (address)",
-          "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+          }
         },
         "daiFarm": {
-          "type": "call",
-          "method": "function farms(address token) view returns (address)",
-          "args": ["0x6B175474E89094C44Da98b954EedeAC495271d0F"]
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0x6B175474E89094C44Da98b954EedeAC495271d0F"]
+          }
         },
         "usdcFarm": {
-          "type": "call",
-          "method": "function farms(address token) view returns (address)",
-          "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+          }
         },
         "wbtcFarm": {
-          "type": "call",
-          "method": "function farms(address token) view returns (address)",
-          "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+          }
+        },
+        "policyAdmin": {
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        },
+        "required": {
+          "description": "Threshold of the bridge governance admin multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
         }
       },
       "ignoreInWatchMode": ["depositCount", "transactionCount"]

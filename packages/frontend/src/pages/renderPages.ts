@@ -1,17 +1,19 @@
 import { Config } from '../build/config'
+import { Page, PagesData } from './Page'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
+import { getGlossaryPage } from './glossary'
 import { getGovernancePage } from './governance/index'
 import { getGovernancePublicationPages } from './governance/publication'
 import { getGovernancePublicationsPage } from './governance/publications'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
-import { Page, PagesData } from './Page'
 import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
+import { getZkCatalogProjectPages } from './project/zk-catalog'
 import { getActivityPage } from './scaling/activity'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
@@ -21,6 +23,7 @@ import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getRiskPage } from './scaling/risk'
 import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
+import { getZkCatalogPage } from './zk-catalog'
 
 export async function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -96,6 +99,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getGovernancePublicationPages(config))
   }
 
+  if (config.features.glossary) {
+    pages.push(getGlossaryPage(config))
+  }
+
   pages.push(
     getScalingDataAvailabilityPage(config, {
       tvlApiResponse,
@@ -112,6 +119,11 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  }
+
+  if (config.features.zkCatalog) {
+    pages.push(getZkCatalogPage(config))
+    pages.push(...getZkCatalogProjectPages(config))
   }
 
   outputPages(pages)

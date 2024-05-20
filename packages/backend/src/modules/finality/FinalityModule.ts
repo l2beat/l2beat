@@ -3,29 +3,29 @@ import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
+import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
-import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
-import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
+import { FinalityIndexer } from './FinalityIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
-import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
-import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
-import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
+import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
+import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
+import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
-import { FinalityIndexer } from './FinalityIndexer'
 import { FinalityRepository } from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
 
@@ -114,117 +114,147 @@ function initializeConfigurations(
         case 'Linea':
           return {
             projectId: configuration.projectId,
-            analyzer: new LineaFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, RpcClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LineaFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, RpcClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'zkSyncEra':
           return {
             projectId: configuration.projectId,
-            analyzer: new zkSyncEraFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new zkSyncEraFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'OPStack-blob':
           return {
             projectId: configuration.projectId,
-            analyzer: new OpStackFinalityAnalyzer(
-              blobClient,
-              logger,
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              {
-                l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
-                genesisTimestamp: configuration.genesisTimestamp,
-              },
-            ),
+            analyzers: {
+              timeToInclusion: new OpStackFinalityAnalyzer(
+                blobClient,
+                logger,
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                {
+                  l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
+                  genesisTimestamp: configuration.genesisTimestamp,
+                },
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Arbitrum':
           return {
             projectId: configuration.projectId,
-            analyzer: new ArbitrumFinalityAnalyzer(
-              blobClient,
-              logger,
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ArbitrumFinalityAnalyzer(
+                blobClient,
+                logger,
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Scroll':
           return {
             projectId: configuration.projectId,
-            analyzer: new ScrollFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ScrollFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'zkSyncLite':
           return {
             projectId: configuration.projectId,
-            analyzer: new ZkSyncLiteFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-            ),
+            analyzers: {
+              timeToInclusion: new ZkSyncLiteFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Starknet':
           return {
             projectId: configuration.projectId,
-            analyzer: new StarknetFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, StarknetClient),
-            ),
+            analyzers: {
+              timeToInclusion: new StarknetFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, StarknetClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'OPStack':
           return
         case 'Loopring':
           return {
             projectId: configuration.projectId,
-            analyzer: new LoopringFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, LoopringClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LoopringFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, LoopringClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'Degate':
           return {
             projectId: configuration.projectId,
-            analyzer: new LoopringFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, DegateClient),
-            ),
+            analyzers: {
+              timeToInclusion: new LoopringFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, DegateClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         case 'PolygonZkEvm':
           return {
             projectId: configuration.projectId,
-            analyzer: new PolygonZkEvmFinalityAnalyzer(
-              ethereumRPC,
-              livenessRepository,
-              configuration.projectId,
-              getL2Rpc(configuration, peripherals, RpcClient),
-            ),
+            analyzers: {
+              timeToInclusion: new PolygonZkEvmFinalityAnalyzer(
+                ethereumRPC,
+                livenessRepository,
+                configuration.projectId,
+                getL2Rpc(configuration, peripherals, RpcClient),
+              ),
+            },
             minTimestamp: configuration.minTimestamp,
+            stateUpdateMode: configuration.stateUpdate,
           }
         default:
           assertUnreachable(configuration)

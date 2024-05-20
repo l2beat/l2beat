@@ -1,8 +1,9 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import {
-  notUndefined,
   TrackedTxsConfigType,
   UnixTime,
+  clampRangeToDay,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
@@ -10,17 +11,14 @@ import { pickBy } from 'lodash'
 
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { findConfigurationsToSync } from './utils'
 import {
-  adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
-  findConfigurationsToSync,
-} from './utils'
-import {
-  diffTrackedTxConfigurations,
   ToChangeUntilTimestamp,
+  diffTrackedTxConfigurations,
 } from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
 
@@ -54,7 +52,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     from -= 1 // TODO: refactor logic after uif update
-    const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
+    const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
     const [configurations, syncTo] = await this.getConfigurationsToSync(
       unixFrom,
@@ -166,7 +164,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
         )
 
         for (const updater of Object.values(this.enabledUpdaters)) {
-          await updater?.deleteFrom(c.id, c.untilTimestampExclusive, trx)
+          await updater?.deleteFromById(c.id, c.untilTimestampExclusive, trx)
         }
         await this.configRepository.setLastSyncedTimestamp(
           c.id,
@@ -189,7 +187,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
 
     if (indexerState === undefined) {
-      await this.stateRepository.add(
+      await this.stateRepository.addOrUpdate(
         {
           indexerId: this.indexerId,
           safeHeight,
@@ -243,6 +241,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
     and the data will not be fetched again
   **/
   override async invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+    return await Promise.resolve(targetHeight)
   }
 }

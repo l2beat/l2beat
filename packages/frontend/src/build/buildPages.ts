@@ -53,81 +53,32 @@ async function main() {
 
     const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
-    console.time('[FEATURES]')
+    console.time('[FETCHING DATA]')
     const backendFeatures = await fetchFeaturesApi(config.backend, http)
     config.features = getCommonFeatures(config.features, backendFeatures)
-    console.timeEnd('[FEATURES]')
 
-    console.time('[TVL]')
-    const tvlApiResponse = await fetchTvlApi(config.backend, http)
-    console.timeEnd('[TVL]')
-    tvlSanityCheck(tvlApiResponse)
-
-    let activityApiResponse: ActivityApiResponse | undefined
-    if (config.features.activity) {
-      console.time('[ACTIVITY]')
-      activityApiResponse = await fetchActivityApi(config.backend, http)
-      console.timeEnd('[ACTIVITY]')
-      activitySanityCheck(activityApiResponse)
-    }
-
-    let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
-      undefined
-    if (config.features.tvlBreakdown) {
-      console.time('[TVL BREAKDOWN]')
-      tvlBreakdownApiResponse = await fetchTvlBreakdownApi(
-        config.backend,
-        config.backend.apiUrl,
-        http,
-      )
-      console.timeEnd('[TVL BREAKDOWN]')
-      // TODO: (maciekzygmunt) Sanity check?
-    }
-
-    let livenessApiResponse: LivenessApiResponse | undefined
-    if (config.features.liveness) {
-      console.time('[LIVENESS]')
-      livenessApiResponse = await fetchLivenessApi(config.backend, http)
-      console.timeEnd('[LIVENESS]')
-    }
-    let finalityApiResponse: FinalityApiResponse | undefined
-    if (config.features.finality) {
-      console.time('[FINALITY]')
-      finalityApiResponse = await fetchFinalityApi(config.backend, http)
-      console.timeEnd('[FINALITY]')
-    }
-
-    let implementationChange: ImplementationChangeReportApiResponse | undefined
-    if (config.features.implementationChange) {
-      console.time('[IMPLEMENTATION CHANGE]')
-      try {
-        implementationChange = await fetchImplementationChangeReport(
-          config.backend,
-          http,
-        )
-      } catch (e) {
-        console.log(
-          '[IMPLEMENTATION CHANGE] Failed to fetch implementation change report, this feature will be disabled in this build',
-          e,
-        )
-      }
-      console.timeEnd('[IMPLEMENTATION CHANGE]')
-    }
-
-    let l2CostsApiResponse: L2CostsApiResponse | undefined
-    if (config.features.costsPage) {
-      console.time('[L2 COSTS]')
-      l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
-      console.timeEnd('[L2 COSTS]')
-    }
-
-    createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
-
+    const [tvlApiResponse, activityApiResponse, tvlBreakdownApiResponse, livenessApiResponse, finalityApiResponse, implementationChange, l2CostsApiResponse] = await Promise.all([
+      fetchTvlApi(config.backend, http, config.features),
+      config.features.activity ? fetchActivityApi(config.backend, http) : undefined,
+      config.features.tvlBreakdown ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http, config.features) : undefined,
+      config.features.liveness ? fetchLivenessApi(config.backend, http) : undefined,
+      config.features.finality ? fetchFinalityApi(config.backend, http) : undefined,
+      config.features.implementationChange ? fetchImplementationChangeReport(config.backend, http) : undefined,
+      config.features.costsPage ? fetchL2CostsApi(config.backend, http) : undefined
+    ])
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)
     const manuallyVerifiedContracts =
       getManuallyVerifiedContracts(supportedChains)
+    console.timeEnd('[FETCHING DATA]')
 
+    console.time('[SANITY CHECKS]')
+    if(tvlApiResponse) tvlSanityCheck(tvlApiResponse)
+    if(activityApiResponse) activitySanityCheck(activityApiResponse)
+    console.timeEnd('[SANITY CHECKS]')
+
+    console.time('[BUILDING PAGES]')
+    createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
     const pagesData = {
       tvlApiResponse,
       activityApiResponse,
@@ -139,8 +90,8 @@ async function main() {
       l2CostsApiResponse,
       implementationChange,
     }
-
     await renderPages(config, pagesData)
+    console.timeEnd('[BUILDING PAGES]')
   } catch (e) {
     console.error(e)
 
@@ -182,7 +133,6 @@ async function reportError(e: unknown) {
   } else {
     Bugsnag.notify('Unknown error', (event) => {
       event.context = 'Website build'
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       event.addMetadata('error', { message: e })
     })
   }

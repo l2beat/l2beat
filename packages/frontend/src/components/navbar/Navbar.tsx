@@ -2,21 +2,21 @@ import React from 'react'
 
 import { Config } from '../../build/config'
 import { ConfigFeatures } from '../../build/config/Config'
-import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { PlainLink } from '../PlainLink'
+import { MenuOpenIcon } from '../icons'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { PageLink } from './PageLink'
 import { SidebarMenu } from './SidebarMenu'
 import {
-  getSocialLinksProps,
   SocialLinks,
   SocialLinksProps,
+  getSocialLinksProps,
 } from './SocialLinks'
-import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
+import { NavbarPage } from './types'
 
 export interface NavbarProps {
   features: ConfigFeatures
@@ -82,10 +82,10 @@ export function Navbar(props: NavbarProps) {
             <MenuOpenIcon className="block" aria-label="Open menu" />
           </button>
           <div className="hidden h-full items-center gap-5 lg:flex">
-            <ul className="flex items-center gap-4">
+            <ul className="items-center gap-4 hidden xl:flex">
               <SocialLinks {...props.socialLinks} />
             </ul>
-            <VerticalBar />
+            <VerticalBar className="hidden xl:block" />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
                 <PlainLink
@@ -95,6 +95,16 @@ export function Navbar(props: NavbarProps) {
                   Forum
                 </PlainLink>
               </li>
+              {props.features.zkCatalog ? (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'zk-catalog'}
+                    href="/zk-catalog"
+                  >
+                    ZK Catalog
+                  </PageLink>
+                </li>
+              ) : null}
               <li className="h-full">
                 <PageLink
                   selected={props.selectedPage === 'donate'}
@@ -117,6 +127,16 @@ export function Navbar(props: NavbarProps) {
                   </PageLink>
                 )}
               </li>
+              {props.features.glossary ? (
+                <li className="h-full">
+                  <PageLink
+                    selected={props.selectedPage === 'glossary'}
+                    href="/glossary"
+                  >
+                    Glossary
+                  </PageLink>
+                </li>
+              ) : null}
               <li className="h-full">
                 <PageLink selected={props.selectedPage === 'faq'} href="/faq">
                   FAQ

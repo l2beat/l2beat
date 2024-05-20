@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zkswap",
   "initialAddresses": ["0x714B2D10210f2A3a7AA614F949259C87613689aB"],
@@ -14,41 +14,53 @@
       "ignoreMethods": ["nextTargets"],
       "fields": {
         "managedContracts": {
-          "type": "array"
+          "handler": {
+            "type": "array"
+          }
         }
       }
     },
     "0x02ecef526f806f06357659fFD14834fe82Ef4B04": {
       "fields": {
         "validators": {
-          "type": "arrayFromOneEvent",
-          "event": "ValidatorStatusUpdate",
-          "valueKey": "validatorAddress",
-          "flagKey": "isActive"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ValidatorStatusUpdate",
+            "valueKey": "validatorAddress",
+            "flagKey": "isActive"
+          }
         }
       }
     },
     "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": {
       "fields": {
         "verifier": {
-          "type": "storage",
-          "slot": 5,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          }
         },
         "verifierExit": {
-          "type": "storage",
-          "slot": 6,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 6,
+            "returnType": "address"
+          }
         },
         "governance": {
-          "type": "storage",
-          "slot": 7,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 7,
+            "returnType": "address"
+          }
         },
         "pairManager": {
-          "type": "storage",
-          "slot": 8,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 8,
+            "returnType": "address"
+          }
         }
       },
       "ignoreInWatchMode": [

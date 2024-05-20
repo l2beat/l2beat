@@ -1,3 +1,183 @@
+Generated with discovered.json: 0x76f1e50a00a33e6f1eb3cc4ddf6d1768e457194b
+
+# Diff at Fri, 17 May 2024 09:28:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 19883606
+- current block number: 19888796
+
+## Description
+
+The wasmModuleRoot changes to a new value (which is not known in our ArbOS history). Looking at the Kinto Github repo, this is the [Hardfork #4 upgrade](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/4).
+Changes are mainly related to the integration of the Socket bridge contracts in preparation for the May 22nd 'full mainnet launch'.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169"
++        "0x6948185c62070f9523a93664e8d064627f65830fd308af5e82f21292a2060fb8"
+    }
+```
+
+Generated with discovered.json: 0xd5b099929f8b81f2ec7e02982922564807216015
+
+# Diff at Thu, 16 May 2024 06:39:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@814c482c2be2428b2782bc85afecccac8c999b5e block: 19830808
+- current block number: 19880804
+
+## Description
+
+New signer added to the ExecutorMultisig (Rollup owner): `0x08E674c4538caE03B6c05405881dDCd95DcaF5a8`
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+      values.getOwners.4:
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.getOwners.3:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.getOwners.2:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.getOwners.1:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.getOwners.0:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    }
+```
+
+Generated with discovered.json: 0x7b73332ba44977745e2bfdaabbe0a1aaf9f426ed
+
+# Diff at Thu, 09 May 2024 06:51:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d3bba0812727b9105a3f44fe55a68572c804b992 block: 19809397
+- current block number: 19830808
+
+## Description
+
+The Inbox contract is upgraded with a minor change:
+
+The l2AllowList that gets checked by the `whenRefundAddressAllowed` modifier is now settable by the owner or rollup contract whereas it was hardcoded before.
+
+## Watched changes
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
++        "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
+      implementations.0:
+-        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
++        "0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Inbox/implementation/meta.txt                       |  2 +-
+ .../src/nitro-contracts/bridge/AbsInbox.sol             | 17 +++++++++--------
+ .../implementation/src/nitro-contracts/bridge/Inbox.sol |  1 -
+ 3 files changed, 10 insertions(+), 10 deletions(-)
+```
+
+Generated with discovered.json: 0x94bafe549ae45883fd41860a1577ce9a7ed8a42c
+
+# Diff at Mon, 06 May 2024 06:56:42 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@91ddfe46c9a8cff7aff522924d50fd166a15932b block: 19776768
+- current block number: 19809397
+
+## Description
+
+The Inbox implementation is upgraded with very minor changes:
+- Modifier `whenRefundAddressAllowed` added (ensures that both `excessFeeRefundAddress` and `callValueRefundAddress` match the msg.sender unless they are whitelisted in `isAllowed`)
+- `whenRefundAddressAllowed` is used by `createRetryableTicket()` and `createUnsafeRetryableTicket()`
+- Formatting and import folder structure
+
+## Watched changes
+
+```diff
+    contract Inbox (0xBFfaA85c1756472fFC37e6D172A7eC0538C14474) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
+      implementations.0:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"
+    }
+```
+
+## Source code changes
+
+```diff
+.../proxy/utils/Initializable.sol => /dev/null     |  80 ------
+ .../lib/nitro-contracts}/src/bridge/IBridge.sol    |  22 ++
+ .../src/bridge/IDelayedMessageProvider.sol         |   0
+ .../lib/nitro-contracts}/src/bridge/IEthBridge.sol |   0
+ .../lib/nitro-contracts}/src/bridge/IInbox.sol     |   0
+ .../lib/nitro-contracts}/src/bridge/IInboxBase.sol |   0
+ .../lib/nitro-contracts}/src/bridge/IOwnable.sol   |   0
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++++--
+ .../src/libraries/AddressAliasHelper.sol           |   0
+ .../src/libraries/DelegateCallAware.sol            |   0
+ .../lib/nitro-contracts}/src/libraries/Error.sol   |  27 +-
+ .../nitro-contracts/src/libraries/IGasRefunder.sol |  14 +
+ .../src/libraries/MessageTypes.sol                 |   0
+ .../nitro-contracts}/src/precompiles/ArbSys.sol    |   0
+ .../contracts/proxy/utils/Initializable.sol        | 166 ++++++++++++
+ .../contracts}/security/PausableUpgradeable.sol    |  34 ++-
+ .../contracts}/utils/AddressUpgradeable.sol        |  74 ++++--
+ .../contracts}/utils/ContextUpgradeable.sol        |   0
+ .../contracts}/utils/StorageSlotUpgradeable.sol    |  60 ++++-
+ .../Inbox/implementation/meta.txt                  |   2 +-
+ .../src/libraries/IGasRefunder.sol => /dev/null    |  39 ---
+ .../src/nitro-contracts}/bridge/AbsInbox.sol       | 199 +++++++--------
+ .../src/nitro-contracts}/bridge/Inbox.sol          | 281 ++++++++++-----------
+ 23 files changed, 651 insertions(+), 438 deletions(-)
+```
+
+Generated with discovered.json: 0x4c11e99e03b2ae08fd367a9e6d1d673f2cfe3fff
+
+# Diff at Wed, 01 May 2024 17:27:29 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7dc564dd4cc2215657e1e7bd8648e6b99a23a992 block: 19624549
+- current block number: 19776768
+
+## Description
+
+One signer of the BridgerOwnerMultisig is replaced.
+
+## Watched changes
+
+```diff
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.getOwners.2:
+-        "0xA20684BE1d0f5Ef96F8771A747fe5861D3F0FA07"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    }
+```
+
 Generated with discovered.json: 0x68af6aeb80b2dc820bf7190868730a2f8750fb79
 
 # Diff at Wed, 03 Apr 2024 14:05:05 GMT:

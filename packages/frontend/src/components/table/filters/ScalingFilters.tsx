@@ -6,8 +6,8 @@ import { ScalingL2SummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect, RichSelectProps } from '../../RichSelect'
-import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
+import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 
 interface Props {
   children?: ReactElement<RichSelectProps>

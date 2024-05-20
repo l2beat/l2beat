@@ -1,7 +1,7 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { getDiagramImageOrThrow } from '../../../project/common/getDiagramImage'
 import { FinalityPagesData } from '../types'
 import { ScalingFinalityPageProps } from '../view/ScalingFinalityPage'
