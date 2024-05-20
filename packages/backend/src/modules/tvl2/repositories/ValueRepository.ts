@@ -47,19 +47,6 @@ export class ValueRepository extends BaseRepository {
         'project_id',
         projectIds.map((id) => id.toString()),
       )
-      .orderBy('timestamp', 'asc')
-    return rows.map(toRecord)
-  }
-
-  async getDailyForProjects(projectIds: ProjectId[]) {
-    const knex = await this.knex()
-    const rows = await knex('values')
-      .whereIn(
-        'project_id',
-        projectIds.map((id) => id.toString()),
-      )
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
-      .orderBy('timestamp', 'asc')
     return rows.map(toRecord)
   }
 
