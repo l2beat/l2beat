@@ -104,7 +104,9 @@ function RowContent({ token }: { token: Token }) {
     <>
       <Cell>
         {/* TODO: add dolar value */}
-        <div className="text-black font-bold text-lg">$0.00</div>
+        <div className="text-black dark:text-white font-bold text-lg">
+          $0.00
+        </div>
         <div className="text-gray-500 font-medium text-sm">
           {token.balance && formatUnits(token.balance, token.token.decimals)}
           &nbsp;
