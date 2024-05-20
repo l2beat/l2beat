@@ -20,9 +20,7 @@ export const amarok: Bridge = {
       apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
       websites: ['https://blog.connext.network/'],
       documentation: ['https://docs.connext.network/'],
-      repositories: [
-        'https://github.com/connext/monorepo'
-      ],
+      repositories: ['https://github.com/connext/monorepo'],
       socialMedia: [
         'https://twitter.com/ConnextNetwork',
         'https://discord.gg/connext',
