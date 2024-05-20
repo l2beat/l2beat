@@ -1,7 +1,14 @@
 import React, { ReactNode, SVGAttributes } from 'react'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
-import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import {
+  ActivityIcon,
+  MenuCloseIcon,
+  MenuOpenIcon,
+  RiskIcon,
+  SummaryIcon,
+  TvlIcon,
+} from '../icons'
 import { Icon } from '../icons/Icon'
 import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
@@ -130,37 +137,121 @@ function NavCollapseIcon({ className, ...props }: SVGAttributes<SVGElement>) {
   )
 }
 
+function NewItemBadge() {
+  return (
+    <span className="text-[#AB3BD2] dark:text-[#AB3BD2] text-xs font-semibold">
+      New
+    </span>
+  )
+}
+
+function MobileNavBarLink({
+  title,
+  href,
+  activeBehavior = 'exact',
+}: {
+  href: string
+  activeBehavior?: 'exact' | 'prefix' | ((path: string) => boolean)
+} & (
+  | { title: string; children?: undefined }
+  | { children: ReactNode; title?: undefined }
+)) {
+  const { path } = usePageBuildContext()
+
+  const active =
+    activeBehavior === 'exact'
+      ? path === href
+      : activeBehavior === 'prefix'
+        ? path.startsWith(href)
+        : activeBehavior(path)
+
+  return (
+    <a href={href}>
+      <li
+        className={cn(
+          'flex flex-col justify-center h-full relative px-2 font-medium text-base md:px-4 md:text-lg',
+          active && 'text-pink-900 dark:text-pink-200',
+        )}
+      >
+        {title}
+        {active && (
+          <div className="absolute bottom-0 w-full h-[3px] left-0 bg-pink-900" />
+        )}
+      </li>
+    </a>
+  )
+}
+
+/**
+ * Mobile navigation bar that is shown on the very top on small screens.
+ */
+function MobileNavBar() {
+  return (
+    <div className="xl:hidden h-16 px-3.5 relative flex justify-between flex-row gap-8 border-b border-gray-200 dark:border-gray-850 items-stretch">
+      {/* Left side */}
+      <div className="flex flex-row gap-4">
+        <div className="py-4">
+          <Logo className="h-8 w-auto" />
+        </div>
+        <ul className="flex flex-row">
+          <MobileNavBarLink
+            title="Scaling"
+            href="/scaling/summary"
+            activeBehavior={(path) => path.startsWith('/scaling')}
+          />
+          <MobileNavBarLink
+            title="Bridges"
+            href="/bridges/summary"
+            activeBehavior={(path) => path.startsWith('/bridges')}
+          />
+        </ul>
+      </div>
+      {/* Right side */}
+      <div className="flex flex-row items-center">
+        <button data-role="sidenav-mobile-toggle">
+          <MenuOpenIcon className="h-6 w-6" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function NavWrapper({ children }: { children: ReactNode }) {
   const { config } = usePageBuildContext()
 
-  const sharedSizeClasses = 'w-full xl:w-[240px] 2xl:w-[280px] transition-all'
+  const sharedSizeClasses = 'w-full xl:w-[240px] 2xl:w-[280px]'
 
   return (
-    <div className="flex flex-col xl:flex-row">
+    <div className="flex flex-col xl:flex-row relative overflow-x-hidden">
+      <MobileNavBar />
       <div
         className={cn(
-          'flex-shrink-0 relative flex flex-col items-stretch group xl:sidenav-collapsed:w-20',
+          'flex-shrink-0 xl:relative absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:translate-x-0 xl:sidenav-collapsed:w-20 z-100',
           sharedSizeClasses,
         )}
+        data-role="sidenav"
       >
         <div
           className={cn(
-            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col xl:h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden',
+            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden',
             sharedSizeClasses,
           )}
         >
           <div
             className={cn(
-              'px-6 py-[1.125rem] overflow-y-auto overflow-x-hidden flex-1 flex flex-col gap-8',
+              'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-hidden flex-1 flex flex-col gap-8',
               sharedSizeClasses,
             )}
             data-role="sidenav-collapse-content"
           >
             <div className="flex flex-row justify-between items-center">
-              <Logo className="h-8 w-auto block sidenav-collapsed:hidden" />
-              <LogoSmall className="h-8 w-auto hidden sidenav-collapsed:block" />
-              <div className="sidenav-collapsed:hidden">
+              <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
+              <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
+              <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4">
                 <DarkThemeToggle />
+                <button data-role="sidenav-mobile-toggle">
+                  <MenuCloseIcon className="h-6 w-6" />
+                </button>
               </div>
             </div>
             <nav className="flex flex-col gap-6 flex-1">
@@ -255,7 +346,7 @@ export function NavWrapper({ children }: { children: ReactNode }) {
             </nav>
           </div>
           <div
-            className="p-6 border-t border-gray-300 dark:border-gray-850 sidenav-collapsed:ml-1"
+            className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block sidenav-collapsed:ml-1"
             data-role="sidenav-collapse-toggle-container"
           >
             <button
