@@ -154,6 +154,7 @@ export function NavWrapper({ children }: { children: ReactNode }) {
               'px-6 py-[1.125rem] overflow-y-auto overflow-x-hidden flex-1 flex flex-col gap-8',
               sharedSizeClasses,
             )}
+            data-role="sidenav-collapse-content"
           >
             <div className="flex flex-row justify-between items-center">
               <Logo className="h-8 w-auto block sidenav-collapsed:hidden" />
@@ -253,7 +254,10 @@ export function NavWrapper({ children }: { children: ReactNode }) {
               </NavSmallLinkGroup>
             </nav>
           </div>
-          <div className="p-6 border-t border-gray-300 dark:border-gray-850 sidenav-collapsed:ml-1">
+          <div
+            className="p-6 border-t border-gray-300 dark:border-gray-850 sidenav-collapsed:ml-1"
+            data-role="sidenav-collapse-toggle-container"
+          >
             <button
               className="select-none cursor-pointer"
               data-role="sidenav-collapse-toggle"

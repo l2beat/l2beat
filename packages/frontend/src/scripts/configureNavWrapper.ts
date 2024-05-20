@@ -3,33 +3,56 @@ import { makeQuery } from './query'
 
 const localStorageKey = 'sidenav-collapsed'
 
-export function configureNavWrapper() {
-  const sidenavCollapsed = LocalStorage.getItem(localStorageKey)
-  const { $ } = makeQuery()
+const { $ } = makeQuery()
 
-  const setState = (state: boolean) => {
-    if (!state) {
-      document.documentElement.classList.remove(localStorageKey)
-      LocalStorage.setItem(localStorageKey, false)
-      return
-    }
-    document.documentElement.classList.add(localStorageKey)
-    LocalStorage.setItem(localStorageKey, true)
+function setNavState(state: boolean) {
+  if (!state) {
+    document.documentElement.classList.remove(localStorageKey)
+    LocalStorage.setItem(localStorageKey, false)
+    return
   }
+  document.documentElement.classList.add(localStorageKey)
+  LocalStorage.setItem(localStorageKey, true)
+}
 
-  setState(sidenavCollapsed ?? false)
-
+export function configureNavWrapper() {
   const sidenavToggle = $('[data-role=sidenav-collapse-toggle]')
+  const sidenavCollapseContent = $('[data-role=sidenav-collapse-content]')
+  const sidenavToggleContainer = $(
+    '[data-role=sidenav-collapse-toggle-container]',
+  )
 
   if (!sidenavToggle) {
+    console.error('No sidenav toggle found')
     return
   }
 
-  sidenavToggle.addEventListener('click', () => {
-    if (document.documentElement.classList.contains(localStorageKey)) {
-      setState(false)
+  if (!sidenavCollapseContent || !sidenavToggleContainer) {
+    console.error('No sidenav collapse content or toggle container found')
+    return
+  }
+
+  const onResize = () => {
+    const elementHeight = sidenavCollapseContent.clientHeight
+    const scrollHeight = sidenavCollapseContent.scrollHeight
+
+    if (elementHeight >= scrollHeight) {
+      sidenavToggleContainer.style.borderTop = 'none'
     } else {
-      setState(true)
+      sidenavToggleContainer.style.borderTop = ''
     }
+  }
+
+  // Configure sidenav collapse toggle
+
+  sidenavToggle.addEventListener('click', () => {
+    setNavState(!document.documentElement.classList.contains(localStorageKey))
+    onResize()
   })
+
+  // Configure sidenav collapse content container
+
+  window.addEventListener('resize', onResize)
+
+  onResize()
 }
