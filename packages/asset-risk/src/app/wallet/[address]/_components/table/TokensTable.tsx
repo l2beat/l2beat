@@ -102,10 +102,14 @@ function RowContent({ token }: { token: Token }) {
   const stage = getChainStage(token.chain.id)
   return (
     <>
-      <Cell className="text-gray-500 font-medium text-sm">
-        {token.balance && formatUnits(token.balance, token.token.decimals)}
-        &nbsp;
-        {token.token.symbol}
+      <Cell>
+        {/* TODO: add dolar value */}
+        <div className="text-black font-bold text-lg">$0.00</div>
+        <div className="text-gray-500 font-medium text-sm">
+          {token.balance && formatUnits(token.balance, token.token.decimals)}
+          &nbsp;
+          {token.token.symbol}
+        </div>
       </Cell>
       <Cell className="flex items-center gap-2">
         {token.token.iconUrl && (
