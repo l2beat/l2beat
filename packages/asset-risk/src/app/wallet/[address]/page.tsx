@@ -6,7 +6,7 @@ import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 import { getChain } from '~/utils/chains'
 import { DetailsHeader } from './_components/DetailsHeader'
 import { Disclaimer } from './_components/Disclaimer'
-import { TokensTable } from './_components/TokensTable'
+import { TokensTable } from './_components/table/TokensTable'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex

@@ -1,13 +1,36 @@
 import Image from 'next/image'
+import { ClassNameValue } from 'tailwind-merge'
 import { formatUnits } from 'viem'
 import { Card } from '~/components/Card'
 import { getChainStage } from '~/utils/chains'
 import { cn } from '~/utils/cn'
 import { StageBadge } from './StageBadge'
+import { Cell, TableRow } from './TableRow'
+import { CriticalWarning, Warning } from './Warning'
 
-const TABLE_COLUMNS = ['VALUE', 'NAME', 'TYPE']
+const TABLE_COLUMNS: {
+  name: string
+  className?: ClassNameValue
+}[] = [
+  {
+    name: 'VALUE',
+  },
+  {
+    name: 'NAME',
+    className: 'pl-12',
+  },
+  {
+    name: 'TYPE',
+  },
+  {
+    name: '',
+  },
+  {
+    name: '',
+  },
+]
 
-type Token = {
+export type Token = {
   token: {
     id: string
     name: string
@@ -29,7 +52,7 @@ interface TokensTableProps {
 
 export function TokensTable(props: TokensTableProps) {
   return (
-    <Card className="rounded-none sm:rounded-xl">
+    <Card className="rounded-none sm:rounded-xl overflow-x-auto">
       <h2 className="text-xl font-bold">Assets</h2>
       <div
         className={cn(
@@ -41,16 +64,19 @@ export function TokensTable(props: TokensTableProps) {
           <thead className="border-b border-b-gray-200 dark:border-b-zinc-700">
             <tr>
               {TABLE_COLUMNS.map((column) => (
-                <TableColumnHeader key={column} column={column} />
+                <TableColumnHeader
+                  key={column.name}
+                  column={column.name}
+                  className={column.className}
+                />
               ))}
             </tr>
           </thead>
           <tbody>
             {props.tokens.map((token) => (
-              <TableRow
-                token={token}
-                key={`${token.chain.id}-${token.token.id}`}
-              />
+              <TableRow key={`${token.chain.id}-${token.token.id}`}>
+                <RowContent token={token} />
+              </TableRow>
             ))}
           </tbody>
         </table>
@@ -59,21 +85,16 @@ export function TokensTable(props: TokensTableProps) {
   )
 }
 
-function TableRow({ token }: { token: Token }) {
+function RowContent({ token }: { token: Token }) {
   const stage = getChainStage(token.chain.id)
   return (
-    <tr
-      className={cn(
-        'cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
-        'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
-      )}
-    >
-      <td className={cn('h-16 text-gray-500 font-medium text-sm')}>
+    <>
+      <Cell className="text-gray-500 font-medium text-sm">
         {token.balance && formatUnits(token.balance, token.token.decimals)}
         &nbsp;
         {token.token.symbol}
-      </td>
-      <td className={cn('h-16 flex items-center gap-2 py-2')}>
+      </Cell>
+      <Cell className="flex items-center gap-2">
         {token.token.iconUrl && (
           <Image
             src={token.token.iconUrl}
@@ -86,25 +107,36 @@ function TableRow({ token }: { token: Token }) {
         <div className="flex flex-col">
           <span className="font-bold text-lg">{token.token.name}</span>
           <div className="font-normal flex items-center text-sm text-gray-500">
-            on <span className="font-medium">{token.chain.name}</span>&nbsp;
+            on <span className="font-medium">{token.chain.name}</span>
+            &nbsp;
             {stage && <StageBadge stage={stage} />}&nbsp;
             {token.token.bridge && `bridged via ${token.token.bridge}`}
           </div>
         </div>
-      </td>
-      <td className={cn('h-16')}>TYPE</td>
-    </tr>
+      </Cell>
+      <Cell>TYPE</Cell>
+      <Cell>
+        <div className={cn('flex items-center gap-3')}>
+          <CriticalWarning count={2} />
+          <Warning count={7} />
+        </div>
+      </Cell>
+    </>
   )
 }
 
-function TableColumnHeader({ column }: { column: string }) {
+function TableColumnHeader({
+  column,
+  className,
+}: { column: string; className?: ClassNameValue }) {
   return (
     <th
       className={cn(
-        'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
+        'whitespace-pre py-2 pl-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
         'pr-3 last:pr-0 md:pr-4',
         'rounded-tl-lg',
         'rounded-tr-lg',
+        className,
       )}
     >
       <div className={cn('flex flex-row items-end gap-1.5')}>{column}</div>
