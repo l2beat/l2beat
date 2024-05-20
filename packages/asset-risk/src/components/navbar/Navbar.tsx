@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Logo } from '../Logo'
 import { DarkThemeToggle } from './DarkThemeToggle'
+import { InputWallet } from './InputWallet'
 import { ScannerName } from './ScannerName'
 
 export function Navbar() {
@@ -20,7 +21,10 @@ export function Navbar() {
               </Link>
             </li>
           </ul>
-          <DarkThemeToggle />
+          <div className="flex items-center gap-3">
+            <InputWallet />
+            <DarkThemeToggle />
+          </div>
         </nav>
       </div>
     </>
