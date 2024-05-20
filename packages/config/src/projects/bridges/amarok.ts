@@ -6,7 +6,10 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
 
-const delayBlocks =  discovery.getContractValue<number>('MainnetSpokeConnector', 'delayBlocks')
+const delayBlocks = discovery.getContractValue<number>(
+  'MainnetSpokeConnector',
+  'delayBlocks',
+)
 
 export const amarok: Bridge = {
   type: 'bridge',
