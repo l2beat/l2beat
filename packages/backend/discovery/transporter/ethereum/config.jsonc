@@ -2,117 +2,168 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "transporter",
+  "maxAddresses": 450,
+  "maxDepth": 8,
   "initialAddresses": [
     "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
     "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
   "names": {
     "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
-    "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B": "EVM2EVMMainWhatever",
     "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5": "OffRamp1",
-    "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
     "0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4": "OffRamp2",
-    "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC": "CommitStore2",
     "0x7Afe7088aff57173565F4b034167643AA8b9171c": "OffRamp3",
-    "0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75": "CommitStore3",
     "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7": "OffRamp4",
-    "0x4af4B497c998007eF83ad130318eB2b925a79dc8": "CommitStore4",
     "0x569940e02D4425eac61A7601632eC00d69f75c17": "OffRamp5",
-    "0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE": "CommitStore5",
     "0xdf85c8381954694E74abD07488f452b4c2Cddfb3": "OffRamp6",
-    "0x8DC27D621c41a32140e22E2a4dAf1259639BAe04": "CommitStore6",
     "0x0af338F0E314c7551bcE0EF516d46d855b0Ee395": "OffRamp7",
-    "0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76": "CommitStore7",
     "0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "OffRamp8",
+    "0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5": "OffRamp9",
+    "0x1C207dabc46902dF9028b27D6d301c3849b2D12c": "OffRamp10",
+    "0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72": "OffRamp11",
+    "0x61135E701a2214C170c5F596D0067798FEfbaaE4": "OffRamp12",
+    "0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94": "OffRamp13",
+    "0xfF51C00546AA3d9051a4B96Ae81346E14709CD24": "OffRamp14",
+
+    "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
+    "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC": "CommitStore2",
+    "0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75": "CommitStore3",
+    "0x4af4B497c998007eF83ad130318eB2b925a79dc8": "CommitStore4",
+    "0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE": "CommitStore5",
+    "0x8DC27D621c41a32140e22E2a4dAf1259639BAe04": "CommitStore6",
+    "0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76": "CommitStore7",
     "0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": "CommitStore8",
-    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
+    "0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0": "CommitStore9",
+    "0x40c558575093eC1099CC21B020d9b8D13c74417F": "CommitStore10",
+    "0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D": "CommitStore11",
+    "0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C": "CommitStore12",
+    "0x7986C9892389854cAAbAC785ff18123B0070a5Fd": "CommitStore13",
+    "0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77": "CommitStore14",
+
+    "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1": "OnRamp1",
+    "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B": "OnRamp2",
+    "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C": "OnRamp3",
+    "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630": "OnRamp4",
+    "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69": "OnRamp5",
+    "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7": "OnRamp6",
+    "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4": "OnRamp7",
+    "0xF538dA6c673A30338269655f4e019B71ba58CFd4": "OnRamp8",
+    "0xCC19bC4D43d17eB6859F0d22BA300967C97780b0": "OnRamp9",
+    "0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2": "OnRamp10",
+    "0x0f27c8532457b66D6037141DEB0ed479Dad04B3c": "OnRamp11",
+    "0x333f976915195ba9044fD0cd603cEcE936f6264e": "OnRamp12",
+    "0xdF1d7FD22aC3aB5171E275796f123224039f3b24": "OnRamp13",
+    "0xe2Eb229e88F56691e96bb98256707Bc62160FE73": "OnRamp14",
+    "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM",
+    "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "Router2"
   },
   "overrides": {
-    "EVM2EVMMainWhatever": {
-      "ignoreMethods": ["getNops"]
-    },
-    "OffRamp1": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp2": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp3": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp4": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp5": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp6": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp7": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "OffRamp8": {
-      "ignoreMethods": [
-        "getTransmitters",
-        "getSupportedTokens",
-        "getDestinationTokens"
-      ]
-    },
-    "CommitStore1": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore2": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore3": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore4": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore5": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore6": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore7": {
-      "ignoreMethods": ["getTransmitters"]
-    },
-    "CommitStore8": {
-      "ignoreMethods": ["getTransmitters"]
-    },
+    "OffRamp1": { "extends": "transporter/OffRamp" },
+    "OffRamp2": { "extends": "transporter/OffRamp" },
+    "OffRamp3": { "extends": "transporter/OffRamp" },
+    "OffRamp4": { "extends": "transporter/OffRamp" },
+    "OffRamp5": { "extends": "transporter/OffRamp" },
+    "OffRamp6": { "extends": "transporter/OffRamp" },
+    "OffRamp7": { "extends": "transporter/OffRamp" },
+    "OffRamp8": { "extends": "transporter/OffRamp" },
+    "OffRamp9": { "extends": "transporter/OffRamp" },
+    "OffRamp10": { "extends": "transporter/OffRamp" },
+    "OffRamp11": { "extends": "transporter/OffRamp" },
+    "OffRamp12": { "extends": "transporter/OffRamp" },
+    "OffRamp13": { "extends": "transporter/OffRamp" },
+    "OffRamp14": { "extends": "transporter/OffRamp" },
+    "CommitStore1": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore2": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore3": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore4": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore5": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore6": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore7": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore8": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore9": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore10": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore11": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore12": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore13": { "ignoreMethods": ["getTransmitters"] },
+    "CommitStore14": { "ignoreMethods": ["getTransmitters"] },
+    "OnRamp1": { "extends": "transporter/OnRamp" },
+    "OnRamp2": { "extends": "transporter/OnRamp" },
+    "OnRamp3": { "extends": "transporter/OnRamp" },
+    "OnRamp4": { "extends": "transporter/OnRamp" },
+    "OnRamp5": { "extends": "transporter/OnRamp" },
+    "OnRamp6": { "extends": "transporter/OnRamp" },
+    "OnRamp7": { "extends": "transporter/OnRamp" },
+    "OnRamp8": { "extends": "transporter/OnRamp" },
+    "OnRamp9": { "extends": "transporter/OnRampV2" },
+    "OnRamp10": { "extends": "transporter/OnRampV2" },
+    "OnRamp11": { "extends": "transporter/OnRampV2" },
+    "OnRamp12": { "extends": "transporter/OnRampV2" },
+    "OnRamp13": { "extends": "transporter/OnRampV2" },
+    "OnRamp14": { "extends": "transporter/OnRampV2" },
     "ARM": {
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
-    }
+    },
+    "Router": {
+      "fields": {
+        "onRamps": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OnRampSet",
+            "returnParams": ["destChainSelector", "onRamp"],
+            "groupBy": "destChainSelector",
+            "onlyValue": true
+          }
+        }
+      }
+    },
+    "Router2": {
+      "fields": {
+        "onRamps": {
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OnRampSet",
+            "returnParams": ["destChainSelector", "onRamp"],
+            "groupBy": "destChainSelector",
+            "onlyValue": true
+          }
+        }
+      }
+    },
+    "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6": { "ignoreDiscovery": true },
+    "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b": { "ignoreDiscovery": true },
+    "0x1a2EB478FA07125C9935A77b3C03a82470801E30": { "ignoreDiscovery": true },
+    "0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0": { "ignoreDiscovery": true },
+    "0x2624Bd0094f474713AC9c634b37A5ebef4e0b1FE": { "ignoreDiscovery": true },
+    "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678": { "ignoreDiscovery": true },
+    "0x38C2a4a7330b22788374B8Ff70BBa513C8D848cA": { "ignoreDiscovery": true },
+    "0x49446A0874197839D15395B908328a74ccc96Bc0": { "ignoreDiscovery": true },
+    "0x514910771AF9Ca656af840dff83E8264EcF986CA": { "ignoreDiscovery": true },
+    "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0": { "ignoreDiscovery": true },
+    "0x66cC3FD40612F9c591F977ce026Ef1C79520C472": { "ignoreDiscovery": true },
+    "0x72e364F2ABdC788b7E918bc238B21f109Cd634D7": { "ignoreDiscovery": true },
+    "0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F": { "ignoreDiscovery": true },
+    "0x85225Ed797fd4128Ac45A992C46eA4681a7A15dA": { "ignoreDiscovery": true },
+    "0x888888435FDe8e7d4c54cAb67f206e4199454c60": { "ignoreDiscovery": true },
+    "0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8": { "ignoreDiscovery": true },
+    "0x8a053350ca5F9352a16deD26ab333e2D251DAd7c": { "ignoreDiscovery": true },
+    "0x911D86C72155c33993d594B0Ec7E6206B4C803da": { "ignoreDiscovery": true },
+    "0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5": { "ignoreDiscovery": true },
+    "0x98C6616F1CC0D3E938A16200830DD55663dd7DD3": { "ignoreDiscovery": true },
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": { "ignoreDiscovery": true },
+    "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": { "ignoreDiscovery": true },
+    "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": { "ignoreDiscovery": true },
+    "0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23": { "ignoreDiscovery": true },
+    "0xB60acD2057067DC9ed8c083f5aa227a244044fD6": { "ignoreDiscovery": true },
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": { "ignoreDiscovery": true },
+    "0xCA160D11087E03fd398d40f561cd4768825f4958": { "ignoreDiscovery": true },
+    "0xDBB5Cf12408a3Ac17d668037Ce289f9eA75439D7": { "ignoreDiscovery": true },
+    "0xDcEe70654261AF21C44c093C300eD3Bb97b78192": { "ignoreDiscovery": true },
+    "0xE46a5E19B19711332e33F33c2DB3eA143e86Bc10": { "ignoreDiscovery": true },
+    "0xb2F30A7C980f052f02563fb518dcc39e6bf38175": { "ignoreDiscovery": true },
+    "0xc719d010B63E5bbF2C0551872CD5316ED26AcD83": { "ignoreDiscovery": true },
+    "0xd2a530170D71a9Cfe1651Fb468E2B98F7Ed7456b": { "ignoreDiscovery": true },
+    "0xe85411C030fB32A9D8b14Bbbc6CB19417391F711": { "ignoreDiscovery": true },
+    "0xa19f5264F7D7Be11c451C093D8f92592820Bea86": { "ignoreDiscovery": true }
   }
 }

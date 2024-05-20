@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getNops", "getAllowList"],
+  "fields": {
+    "tokenPools": {
+      "handler": {
+        "type": "arrayFromTwoEvents",
+        "addEvent": "PoolAdded",
+        "addKey": "pool",
+        "removeEvent": "PoolRemoved",
+        "removeKey": "pool"
+      }
+    },
+    "tokenAddresses": {
+      "handler": {
+        "type": "call",
+        "method": "getSupportedTokens",
+        "args": [0],
+        "ignoreRelative": true
+      }
+    }
+  }
+}
