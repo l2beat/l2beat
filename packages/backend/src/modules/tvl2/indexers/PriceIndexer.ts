@@ -92,11 +92,22 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<void> {
     for (const configuration of configurations) {
-      await this.$.priceRepository.deleteByConfigInTimeRange(
-        configuration.id,
-        new UnixTime(configuration.from),
-        new UnixTime(configuration.to),
-      )
+      const deletedRecords =
+        await this.$.priceRepository.deleteByConfigInTimeRange(
+          configuration.id,
+          new UnixTime(configuration.from),
+          new UnixTime(configuration.to),
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          coingeckoId: configuration.properties.coingeckoId,
+          deletedRecords,
+        })
+      }
     }
   }
 }
