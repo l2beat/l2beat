@@ -1,11 +1,53 @@
 'use client'
-import { DOMAttributes, TdHTMLAttributes, useState } from 'react'
+import { ScalingProjectTechnology } from '@l2beat/config'
+import { TdHTMLAttributes, useState } from 'react'
 import { ClassNameValue } from 'tailwind-merge'
 import { ArrowIcon } from '~/app/assets/ArrowIcon'
 import { cn } from '~/utils/cn'
+import { groupRisks } from '~/utils/groupRisks'
+import { CriticalWarning, Warning } from './Warning'
 
-export function TableRow({ children }: { children: React.ReactNode }) {
+export function TableRow({
+  children,
+  chain,
+}: {
+  children: React.ReactNode
+  chain: ScalingProjectTechnology | null | undefined
+}) {
   const [isOpen, setIsOpen] = useState(false)
+
+  const risks = chain
+    ? [
+        chain.stateCorrectness,
+        chain.newCryptography,
+        chain.dataAvailability,
+        chain.operator,
+        chain.forceTransactions,
+        ...chain.exitMechanisms,
+        chain.massExit,
+        ...(chain.otherConsiderations ?? []),
+      ].flatMap((choice) => choice?.risks ?? [])
+    : []
+
+  const groupedRisks = groupRisks(risks)
+
+  const criticalWarnings = groupedRisks.flatMap((r) => ({
+    name: r.name,
+    items: r.items.filter((i) => i.isCritical),
+  }))
+
+  const warnings = groupedRisks.flatMap((r) => ({
+    name: r.name,
+    items: r.items.filter((i) => !i.isCritical),
+  }))
+
+  const criticalWarningsCount = criticalWarnings.reduce(
+    (acc, r) => acc + r.items.length,
+    0,
+  )
+
+  const warningsCount = warnings.reduce((acc, r) => acc + r.items.length, 0)
+
   return (
     <>
       <tr
@@ -16,6 +58,14 @@ export function TableRow({ children }: { children: React.ReactNode }) {
         onClick={() => setIsOpen((s) => !s)}
       >
         {children}
+        <Cell>
+          <div className={cn('flex items-center gap-3')}>
+            {!!criticalWarningsCount && (
+              <CriticalWarning count={criticalWarningsCount} />
+            )}
+            {!!warningsCount && <Warning count={warningsCount} />}
+          </div>
+        </Cell>
         <Cell className={cn(!isOpen && 'rotate-180')}>
           <ArrowIcon />
         </Cell>
@@ -39,20 +89,13 @@ export function TableRow({ children }: { children: React.ReactNode }) {
 export function Cell({
   children,
   className,
-  colSpan,
-  onClick,
+  ...rest
 }: {
   children: React.ReactNode
   className?: ClassNameValue
-  colSpan?: TdHTMLAttributes<HTMLTableDataCellElement>['colSpan']
-  onClick?: DOMAttributes<HTMLTableDataCellElement>['onClick']
-}) {
+} & TdHTMLAttributes<HTMLTableCellElement>) {
   return (
-    <td
-      className={cn('h-16 min-w-max p-2', className)}
-      onClick={onClick}
-      colSpan={colSpan}
-    >
+    <td className={cn('h-16 min-w-max p-2', className)} {...rest}>
       {children}
     </td>
   )

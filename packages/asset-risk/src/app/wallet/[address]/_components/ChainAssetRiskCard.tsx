@@ -2,7 +2,7 @@ import { bridges, layer2s } from '@l2beat/config'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { formatUnits } from 'viem'
-import { StageBadge } from './StageBadge'
+import { StageBadge } from './table/StageBadge'
 
 export interface ChainAssetRiskCardProps {
   id: number

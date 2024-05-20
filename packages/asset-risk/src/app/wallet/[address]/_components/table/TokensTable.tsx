@@ -1,3 +1,4 @@
+import { layer2s } from '@l2beat/config'
 import Image from 'next/image'
 import { ClassNameValue } from 'tailwind-merge'
 import { formatUnits } from 'viem'
@@ -6,7 +7,7 @@ import { getChainStage } from '~/utils/chains'
 import { cn } from '~/utils/cn'
 import { StageBadge } from './StageBadge'
 import { Cell, TableRow } from './TableRow'
-import { CriticalWarning, Warning } from './Warning'
+import {} from './Warning'
 
 const TABLE_COLUMNS: {
   name: string
@@ -73,11 +74,26 @@ export function TokensTable(props: TokensTableProps) {
             </tr>
           </thead>
           <tbody>
-            {props.tokens.map((token) => (
-              <TableRow key={`${token.chain.id}-${token.token.id}`}>
-                <RowContent token={token} />
-              </TableRow>
-            ))}
+            {props.tokens.map((token) => {
+              const chain =
+                token.chain.id === 1
+                  ? {
+                      stage: null,
+                      technology: null,
+                      riskView: null,
+                    }
+                  : layer2s.find(
+                      (l2) => l2.chainConfig?.chainId === token.chain.id,
+                    )
+              return (
+                <TableRow
+                  chain={chain?.technology}
+                  key={`${token.chain.id}-${token.token.id}`}
+                >
+                  <RowContent token={token} />
+                </TableRow>
+              )
+            })}
           </tbody>
         </table>
       </div>
@@ -115,12 +131,6 @@ function RowContent({ token }: { token: Token }) {
         </div>
       </Cell>
       <Cell>TYPE</Cell>
-      <Cell>
-        <div className={cn('flex items-center gap-3')}>
-          <CriticalWarning count={2} />
-          <Warning count={7} />
-        </div>
-      </Cell>
     </>
   )
 }
