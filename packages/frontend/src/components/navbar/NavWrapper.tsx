@@ -226,14 +226,14 @@ export function NavWrapper({ children }: { children: ReactNode }) {
       <MobileNavBar />
       <div
         className={cn(
-          'flex-shrink-0 xl:relative absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:translate-x-0 xl:sidenav-collapsed:w-20 z-100',
+          'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-100',
           sharedSizeClasses,
         )}
         data-role="sidenav"
       >
         <div
           className={cn(
-            'bg-[#E6E7EC] dark:bg-[#131215] flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden',
+            'bg-[#E6E7EC] dark:bg-[#1E1C21] dark:border-r dark:border-gray-850 xl:dark:border-none flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden',
             sharedSizeClasses,
           )}
         >
@@ -249,7 +249,7 @@ export function NavWrapper({ children }: { children: ReactNode }) {
               <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
               <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4">
                 <DarkThemeToggle />
-                <button data-role="sidenav-mobile-toggle">
+                <button className="xl:hidden" data-role="sidenav-mobile-toggle">
                   <MenuCloseIcon className="h-6 w-6" />
                 </button>
               </div>
