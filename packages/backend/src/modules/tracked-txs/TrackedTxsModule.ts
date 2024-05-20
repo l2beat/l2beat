@@ -42,7 +42,7 @@ export function createTrackedTxsModule(
     peripherals.getRepository(IndexerConfigurationRepository),
   )
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,

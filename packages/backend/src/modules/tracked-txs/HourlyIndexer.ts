@@ -8,6 +8,7 @@ export class HourlyIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
+    private readonly module?: string,
   ) {
     super(logger)
   }
@@ -21,7 +22,8 @@ export class HourlyIndexer extends RootIndexer {
 
   tick(): Promise<number> {
     const time = this.clock.getLastHour().toNumber()
-    targetTimestamp.set(time)
+    targetTimestamp.labels({ module: this.module ?? 'undefined' }).set(time)
+
     return Promise.resolve(time)
   }
 }
@@ -29,4 +31,5 @@ export class HourlyIndexer extends RootIndexer {
 const targetTimestamp = new Gauge({
   name: 'target_timestamp',
   help: 'Value showing the target timestamp of the system',
+  labelNames: ['module'],
 })
