@@ -110,13 +110,13 @@ export function getChain(chainId: number) {
 }
 
 export function getChainStage(chainId: number) {
-  const chain =
-    chainId === 1
-      ? {
-          stage: null,
-          technology: null,
-          riskView: null,
-        }
-      : layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
+  const chain = layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
+  if (chainId === 1 || !chain) return null
+  if (
+    chain.display.category === 'Validium' ||
+    chain.display.category === 'Optimium'
+  )
+    return chain.display.category
+
   return chain?.stage?.stage
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import { cn } from '~/utils/cn'
 
 export interface StageBadgeProps {
-  stage: Stage | 'UnderReview' | 'NotApplicable'
+  stage: 'Validium' | 'Optimium' | 'NotApplicable' | 'UnderReview' | Stage
 }
 
 export function StageBadge({ stage }: StageBadgeProps) {
@@ -26,7 +26,7 @@ export function StageBadge({ stage }: StageBadgeProps) {
 }
 
 function getColorClassName(
-  stage: Stage | 'UnderReview' | 'NotApplicable',
+  stage: 'Validium' | 'Optimium' | 'NotApplicable' | 'UnderReview' | Stage,
 ): string {
   switch (stage) {
     case 'Stage 2':
@@ -38,6 +38,8 @@ function getColorClassName(
     case 'UnderReview':
       return 'bg-zinc-700 text-yellow-200'
     case 'NotApplicable':
+    case 'Optimium':
+    case 'Validium':
       return 'bg-[#B4C7D5] text-black border border-[#D1E1EC]'
     default:
       return ''

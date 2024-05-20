@@ -20,6 +20,7 @@ export function InputWallet() {
     })
     if (ensAddress) {
       router.push(`/wallet/${ensAddress}`)
+      setAddress('')
     } else if (!isAddress(address)) {
       return
     } else {
