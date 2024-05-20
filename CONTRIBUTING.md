@@ -76,6 +76,9 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D
+8. If your changes contain any errors we might want to fix them ourselves. To
+   make this as easy as possible please enable **"Allow edits by maintainers"**.
+   Otherwise the latency before we can merge a PR greatly increases.
 
 Adding a new project in this way will automatically update both the data fetching logic as well as
 the frontend.
@@ -104,6 +107,9 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
    respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D
+8. If your changes contain any errors we might want to fix them ourselves. To
+   make this as easy as possible please enable **"Allow edits by maintainers"**.
+   Otherwise the latency before we can merge a PR greatly increases.
 
 ### Add missing tokens
 
