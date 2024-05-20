@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9a89eb138b2eaf335da3542e3c1ceadeff6652f1
+Generated with discovered.json: 0xc22730c77acab6c4f78ebd589f671e0ed63e7898
 
-# Diff at Mon, 20 May 2024 10:48:59 GMT:
+# Diff at Mon, 20 May 2024 12:12:41 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@477e1ce9602e5cbd6b592ca2ad6cfcdb8e416b72 block: 19624596
-- current block number: 19910639
+- current block number: 19911056
 
 ## Description
 
@@ -35,7 +35,7 @@ A new router and a new hub are added.
 
 ```diff
 +   Status: CREATED
-    contract NewPolygonZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625)
+    contract xLayerZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625)
     +++ description: None
 ```
 
