@@ -42,11 +42,10 @@ export class ValueRepository extends BaseRepository {
 
   async getForProjects(projectIds: ProjectId[]) {
     const knex = await this.knex()
-    const rows = await knex('values')
-      .whereIn(
-        'project_id',
-        projectIds.map((id) => id.toString()),
-      )
+    const rows = await knex('values').whereIn(
+      'project_id',
+      projectIds.map((id) => id.toString()),
+    )
     return rows.map(toRecord)
   }
 
