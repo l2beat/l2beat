@@ -18,7 +18,7 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 export interface VerifiersControllerDeps {
   blockscoutClient: BlockscoutClient
   projects: Project[]
-  logger?: Logger
+  logger: Logger
 }
 
 export class VerifiersController {
@@ -53,28 +53,28 @@ export class VerifiersController {
     const addresses = this.getVerifierAddresses()
     assert(addresses.length > 0, 'No verifier addresses found')
 
-    return await Promise.all(
-      addresses.map(async (address) => {
-        try {
-          const txs =
-            await this.$.blockscoutClient.getInternalTransactions(address)
-          txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
-          return {
-            address: address.toString(),
-            timestamp: txs[0].timestamp,
-          }
-        } catch (error) {
-          this.logger.warn(
-            `Failed to get internal transactions for verifier contract ${address}`,
-            error,
-          )
-          return {
-            address: address.toString(),
-            timestamp: null,
-          }
+    const fetchOperations = addresses.map(async (address) => {
+      try {
+        const txs =
+          await this.$.blockscoutClient.getInternalTransactions(address)
+        txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
+        return {
+          address: address.toString(),
+          timestamp: txs[0].timestamp,
         }
-      }),
-    )
+      } catch (error) {
+        this.logger.warn(
+          `Failed to get internal transactions for verifier contract ${address}`,
+          error,
+        )
+        return {
+          address: address.toString(),
+          timestamp: null,
+        }
+      }
+    })
+
+    return await Promise.all(fetchOperations)
   }
 
   getVerifierAddresses(

@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   Layer2,
   Layer2Config,
@@ -150,6 +151,7 @@ function createVeririferController(deps?: Partial<VerifiersControllerDeps>) {
   return new VerifiersController({
     blockscoutClient: mockObject<BlockscoutClient>(),
     projects: [],
+    logger: Logger.SILENT,
     ...deps,
   })
 }

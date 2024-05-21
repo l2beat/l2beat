@@ -26,7 +26,7 @@ export function createVerifiersModule(
     logger,
   })
 
-  const l2CostsRouter = createVerifiersRouter(verifiersController, config.api)
+  const verifiersRouter = createVerifiersRouter(verifiersController, config.api)
 
   const start = () => {
     logger = logger.for('VerifiersModule')
@@ -39,6 +39,6 @@ export function createVerifiersModule(
 
   return {
     start,
-    routers: [l2CostsRouter],
+    routers: [verifiersRouter],
   }
 }
