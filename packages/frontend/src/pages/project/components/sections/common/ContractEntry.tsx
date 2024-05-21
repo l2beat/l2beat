@@ -23,6 +23,7 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 export interface UsedInProject {
   id: ProjectId
   name: string
+  slug: string
   iconPath: string
 }
 
@@ -171,12 +172,14 @@ export function ContractEntry({
                 {contract.usedInProjects.map((project, i) => (
                   <Tooltip key={i}>
                     <TooltipTrigger>
+                    <a href={`/scaling/projects/${project.slug}/#${contract.name}`}>
                       <img
                         key={i}
                         src={project.iconPath}
                         alt="Project icon"
                         className="h-5 w-5 mx-1 inline"
                       />
+                      </a>
                     </TooltipTrigger>
                     <TooltipContent>
                       <div>{project.name}</div>
