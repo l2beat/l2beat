@@ -2,10 +2,11 @@
 
 import { ConnectKitButton, useModal } from 'connectkit'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { http, createPublicClient, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
+import { useDisconnect } from 'wagmi'
 import { LensIcon } from '~/app/assets/LensIcon'
 import { cn } from '~/utils/cn'
 
@@ -17,6 +18,12 @@ export function AddressBar() {
     chain: mainnet,
     transport: http(),
   })
+
+  const { disconnect } = useDisconnect()
+
+  useEffect(() => {
+    disconnect()
+  }, [])
 
   useModal({
     onConnect: ({ address }) => {
