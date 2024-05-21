@@ -50,7 +50,12 @@ type SortingState = {
 } & Sorting
 
 export function TokensTable(props: TokensTableProps) {
-  const [sorting, setSorting] = useState<Partial<SortingState>>({})
+  const [sorting, setSorting] = useState<Partial<SortingState>>({
+    selected: 'VALUE',
+    rule: 'numeric',
+    getOrderValue: ({ balance }) => Number(balance),
+    type: 'desc',
+  })
   const [filter, setFilter] = useState<string>('')
 
   let tokens = props.tokens
