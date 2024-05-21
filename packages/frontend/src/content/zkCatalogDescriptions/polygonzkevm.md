@@ -1,5 +1,3 @@
-# Polygon zkEVM
-
 Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol designed specifically to prove PIL specifications. eSTARK extends the STARK proof system to support eAIR, an intermediate representation that allows to succinctly express non-equality constraints. The circuits and the computations are represented using the PIL and zkASM custom languages. The scheme makes use of the Goldilocks field, which is much smaller than alt_bn128’s field.
 
 The protocol makes use of recursive proof aggregation. Extensive documentation can be found [here](https://github.com/0xPolygonHermez/zkevm-techdocs/blob/a6d46da98ad32ace544e5dbc31d34831f9cc1bdd/docs/proof-recursion/proof-recursion.pdf). The system doesn’t implement transaction data compression yet.
