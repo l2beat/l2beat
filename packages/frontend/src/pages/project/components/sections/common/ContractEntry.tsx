@@ -23,6 +23,7 @@ export interface TechnologyContract {
   links: TechnologyContractLinks[]
   upgradeableBy?: string
   upgradeDelay?: string
+  usedInProjectIcons?: string[]
   upgradeConsiderations?: string
   references?: TechnologyReference[]
   implementationHasChanged?: boolean
@@ -145,6 +146,21 @@ export function ContractEntry({
                 Upgrade delay:
               </strong>{' '}
               {contract.upgradeDelay}
+            </p>
+          )}
+          {contract.usedInProjectIcons && (
+            <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <strong className="text-black dark:text-white">
+                Used in projects:
+              </strong>{' '}
+              {contract.usedInProjectIcons.map((icon, i) => (
+                <img
+                  key={i}
+                  src={icon}
+                  alt="Project icon"
+                  className="h-5 w-5 mx-1 inline"
+                />
+              ))}
             </p>
           )}
           {contract.upgradeConsiderations && (
