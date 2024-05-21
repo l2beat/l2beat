@@ -6,9 +6,14 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
 
-const delayBlocks = discovery.getContractValue<number>(
+const mainnetSpokedelayBlocks = discovery.getContractValue<number>(
   'MainnetSpokeConnector',
   'delayBlocks',
+)
+
+const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
+  'MainnetSpokeConnector',
+  'disputeBlocks',
 )
 
 export const amarok: Bridge = {
@@ -89,11 +94,13 @@ export const amarok: Bridge = {
       description: `
       The bridge can operate in one of two modes: Optimistic or Native. In both modes, so-called routers can accelerate the bridging by fronting liquidity (for token transfers) or a bond (for a crosschain contract calls) at the destination.
       
-      In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences and calculates an aggregate root from them offchain. This aggregate root can be submitted by a relayer at the destination triggering a ${delayBlocks} blocks window where any watcher can turn the system back into native mode thus invalidating the proposed root. Only the owner can set the system back into optimistic mode. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
+      In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences and calculates an aggregate root from them offchain. This aggregate root can be submitted by a relayer at the destination triggering a \`delayBlocks\` window where any watcher can turn the system back into native mode thus invalidating the proposed root. Only the owner can set the system back into optimistic mode. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
       
       In native mode, messages from various spoke domains are aggregated and periodically sent to Ethereum (hub domain) using the native (non-Connext) AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism) the AMB is only used as a transport layer, and the 7-day delay is ignored. When delivered to the hub domain, these message roots are aggregated again into a root-of-root of messages before being delivered to their destination (spoke domains). A custom \`delayBlocks\` value can be set individually in message-receiving Connext contracts to grant a time delay in which Connext-permissioned watchers could invalidate a potentially fraudulent message from the AMBs.
 
-      In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. This is either the time it takes to pass the message via AMBs (in native mode) and then verify / invalidate it during the \`delayBlocks\` period or pass it via the offchain sequencer (in optimistic mode) and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging from the point of view of the user, while native mode has the longest delay for reconciliation.`,
+      In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. In native mode, this the time it takes to pass the message via AMBs and then verify / invalidate it during the \`delayBlocks\` period. In optimistic mode, it is the time to pass it via the offchain sequencer and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging for the user, while native mode has the longest delay for reconciliation.
+      
+      Although the values can be different for every message-receiving contract on each chain, current examples are ${mainnetSpokedelayBlocks} blocks for \`delayBlocks\` and ${mainnetSpokedisputeBlocks} blocks for \`disputeBlocks\` on the MainnetSpokeConnector on Ethereum.`,
       references: [],
       risks: [],
     },
