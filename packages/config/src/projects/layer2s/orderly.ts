@@ -24,7 +24,7 @@ export const orderly: Layer2 = opStackL2({
     purposes: ['DeFi'],
     links: {
       websites: ['https://orderly.network/'],
-      apps: [],
+      apps: ['https://app.orderly.network/'],
       documentation: [
         'https://orderly.network/docs/build-on-evm/building-on-evm',
       ],
