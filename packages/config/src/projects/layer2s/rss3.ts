@@ -23,11 +23,15 @@ export const rss3: Layer2 = opStackL2({
     technology: {
       name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
       description:
-        'Only hashes of blob data is published on an on chain inbox.',
+        'Transaction data is submitted to a NearDA submission contract. Only hashes of blob data is published on an onchain inbox.',
       references: [
         {
           text: 'REP-20 - Data Availability Layer Integration',
           href: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
+        },
+        {
+          text: 'RSS3 NearDA submissions contract',
+          href: 'https://nearblocks.io/address/vsl-da.near',
         },
         {
           text: 'On-Chain Inbox',
@@ -132,6 +136,12 @@ export const rss3: Layer2 = opStackL2({
       link: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
       description: 'RSS3 Network Mainnet Alpha is live.',
+    },
+    {
+      name: 'RSS3 starts using NearDA',
+      link: 'https://x.com/rss3_/status/1788183577219436985',
+      date: '2024-05-07T00:00:00Z',
+      description: 'RSS3 Network starts publishing data to NearDA.',
     },
   ],
 })
