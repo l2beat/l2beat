@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xf2254f994a91843c64f39ce340c39e50f4f34ec5
+
+# Diff at Tue, 21 May 2024 13:31:56 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19840826
+- current block number: 19918595
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      values.implementation:
+-        "0x8bA40dA60f0827d027F029aCEE62609F0527a255"
++        "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x8bA40dA60f0827d027F029aCEE62609F0527a255)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@19840826 => .flat}/EigenPod.sol | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x6189cb1db1c4577bb39dda1ac4b6ae7b87d6dcbe
 
 # Diff at Tue, 30 Apr 2024 08:41:32 GMT:

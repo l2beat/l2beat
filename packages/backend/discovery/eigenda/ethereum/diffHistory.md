@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x977898c669d6ee8cc18229f977ad402dc09b23d6
+
+# Diff at Tue, 21 May 2024 13:31:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19840892
+- current block number: 19918593
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19840892 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4e479e1b2a0b36502a85f604c53bafd929ceeeb2
 
 # Diff at Fri, 10 May 2024 16:41:41 GMT:
