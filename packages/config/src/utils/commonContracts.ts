@@ -2,19 +2,21 @@ import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { layer2s, bridges, Project } from '..'
+import { Project, bridges, layer2s } from '..'
 
 export const l2CommonContracts = findCommonContracts(layer2s.map((l2) => l2.id))
-export const bridgeCommonContracts = findCommonContracts(bridges.map((b) => b.id))
+export const bridgeCommonContracts = findCommonContracts(
+  bridges.map((b) => b.id),
+)
 
 export function getCommonContractsIn(projectType: Project['type']) {
-    if(projectType === 'layer2') {
-        return l2CommonContracts
-    } else if(projectType === 'bridge') {
-        return bridgeCommonContracts
-    } else {
-        return {}
-    }
+  if (projectType === 'layer2') {
+    return l2CommonContracts
+  } else if (projectType === 'bridge') {
+    return bridgeCommonContracts
+  } else {
+    return {}
+  }
 }
 
 function findCommonContracts(projects: string[]) {
