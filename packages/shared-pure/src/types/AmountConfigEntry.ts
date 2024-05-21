@@ -4,37 +4,21 @@ DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
 */
 
 import { z } from 'zod'
+import { CoingeckoId } from './CoingeckoId'
+import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
-import { branded } from './branded'
-import { EthereumAddress } from './EthereumAddress'
-import { CoingeckoId } from './CoingeckoId'
+import { branded, stringAs } from './branded'
 
 export type AmountConfigEntry =
   | TotalSupplyEntry
   | CirculatingSupplyEntry
   | EscrowEntry
 
-export interface TotalSupplyEntry extends AmountConfigBase {
-  type: 'totalSupply'
-  address: EthereumAddress
-}
-
-export interface CirculatingSupplyEntry extends AmountConfigBase {
-  type: 'circulatingSupply'
-  address: EthereumAddress | 'native'
-  coingeckoId: CoingeckoId
-}
-
-export interface EscrowEntry extends AmountConfigBase {
-  type: 'escrow'
-  address: EthereumAddress | 'native'
-  escrowAddress: EthereumAddress
-}
-
 export const AmountConfigBase = z.object({
   chain: z.string(),
-  project: branded(z.string(), ProjectId),
+  // TODO: resolve issue with type while using stringAs()
+  project: z.string().refine((s) => ProjectId(s)),
   source: z.enum(['canonical', 'external', 'native']),
   sinceTimestamp: branded(z.number(), (n) => new UnixTime(n)),
   untilTimestamp: branded(z.number().optional(), (n) =>
@@ -45,3 +29,23 @@ export const AmountConfigBase = z.object({
   symbol: z.string(),
 })
 export type AmountConfigBase = z.infer<typeof AmountConfigBase>
+
+export const TotalSupplyEntry = AmountConfigBase.extend({
+  type: z.literal('totalSupply'),
+  address: stringAs(EthereumAddress),
+})
+export type TotalSupplyEntry = z.infer<typeof TotalSupplyEntry>
+
+export const CirculatingSupplyEntry = AmountConfigBase.extend({
+  type: z.literal('circulatingSupply'),
+  address: z.union([stringAs(EthereumAddress), z.literal('native')]),
+  coingeckoId: stringAs(CoingeckoId),
+})
+export type CirculatingSupplyEntry = z.infer<typeof CirculatingSupplyEntry>
+
+export const EscrowEntry = AmountConfigBase.extend({
+  type: z.literal('escrow'),
+  address: z.union([stringAs(EthereumAddress), z.literal('native')]),
+  escrowAddress: stringAs(EthereumAddress),
+})
+export type EscrowEntry = z.infer<typeof EscrowEntry>
