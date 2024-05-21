@@ -166,11 +166,18 @@ export default async function Page({ params: { address } }: Props) {
   ): token is T & { balance: bigint } => !!token.balance
 
   const tokensToDisplay = tokens.filter(hasPositiveBalance).map((token) => {
-    if (token.chain.id === 1) return token
     const chain = layer2s.find(
       (l2) => l2.chainConfig?.chainId === token.chain.id,
     )
-    if (!chain) return token
+    if (!chain)
+      return {
+        ...token,
+        chain: {
+          ...token.chain,
+          risks: [],
+          stage: undefined,
+        },
+      }
 
     let risks: ScalingProjectRisk[] = []
     risks = chain.technology
@@ -206,6 +213,7 @@ export default async function Page({ params: { address } }: Props) {
         <DetailsHeader
           // TODO: Replace with real data when we have it
           dolarValue={0}
+          tokens={tokensToDisplay}
           walletAddress={vanityAddress}
         />
         <TokensTable tokens={tokensToDisplay} />

@@ -27,8 +27,14 @@ export type Token = {
   chain: {
     id: number
     name: string
-    risks?: ScalingProjectRisk[]
-    stage?: 'Validium' | 'Optimium' | 'NotApplicable' | 'UnderReview' | Stage
+    risks: ScalingProjectRisk[]
+    stage:
+      | 'Validium'
+      | 'Optimium'
+      | 'NotApplicable'
+      | 'UnderReview'
+      | Stage
+      | undefined
   }
   balance: bigint | null
 }
