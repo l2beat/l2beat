@@ -98,8 +98,8 @@ function DetailsItem({
   children: React.ReactNode
 }) {
   return (
-    <div className={cn('flex gap-1 flex-col', className)}>
-      <p className="text-gray-500 text-2xs uppercase">{title}</p>
+    <div className={cn('flex gap-0.5 flex-col', className)}>
+      <p className="text-gray-500 text-2xs uppercase font-semibold">{title}</p>
       <div className="text-lg font-bold">{children}</div>
     </div>
   )
@@ -109,7 +109,7 @@ function VerifierCard({
   verifier,
 }: { verifier: ZkCatalogViewEntry['verifiers'][number] }) {
   return (
-    <div className="space-y-5 md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
+    <div className="md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
       <div className="grid lg:grid-cols-3 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
@@ -122,7 +122,7 @@ function VerifierCard({
           <VerifiedCell verified={verifier.verified} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
+      <div className="overflow-x-auto mt-7 whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
         <table className="w-full border-collapse">
           <thead>
             <tr className="*:pr-4 text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
