@@ -15,7 +15,7 @@ export interface TvlBreakdownPageProps {
 
 export function ProjectTvlBreakdownPage(props: TvlBreakdownPageProps) {
   return (
-    <DashboardLayout hideOtherSites>
+    <DashboardLayout>
       <PageContent mobileFull className="max-w-[928px]">
         <TvlBreakdownHeader {...props.tvlBreakdownHeader} />
         <TvlBreakdownView {...props.tvlBreakdownView} />

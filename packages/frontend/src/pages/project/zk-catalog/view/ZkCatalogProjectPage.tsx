@@ -25,7 +25,7 @@ export interface ZkCatalogProjectDetails extends ProofVerification {
 
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
-    <DashboardLayout hideOtherSites>
+    <DashboardLayout>
       <PageContent mobileFull>
         <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
           <Breadcrumbs icon={props.details.icon} title={props.details.title} />

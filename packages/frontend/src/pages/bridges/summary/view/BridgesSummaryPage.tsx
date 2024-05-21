@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Chart } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
-import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import {
   BridgesSummaryView,
   BridgesSummaryViewProps,
 } from './BridgesSummaryView'
+import { OtherSites } from '../../../../components/other-sites/OtherSites'
 
 export interface BridgesSummaryPageProps {
   tvlView: BridgesSummaryViewProps
@@ -15,10 +15,7 @@ export interface BridgesSummaryPageProps {
 
 export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
   return (
-    <DashboardLayout
-      hideOtherSites
-      tabs={<BridgesNavigationTabs selected="summary" />}
-    >
+    <DashboardLayout>
       <BridgesMvpWarning />
       <Chart
         settingsId="bridges-tvl"
@@ -26,6 +23,7 @@ export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
         header="tvl"
       />
       <BridgesSummaryView {...props.tvlView} />
+      <OtherSites />
     </DashboardLayout>
   )
 }

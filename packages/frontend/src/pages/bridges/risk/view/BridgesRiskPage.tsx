@@ -10,7 +10,7 @@ export interface BridgesRiskPageProps {
 
 export function BridgesRiskPage(props: BridgesRiskPageProps) {
   return (
-    <DashboardLayout hideOtherSites>
+    <DashboardLayout>
       <SimplePageHeader>Risk Analysis</SimplePageHeader>
       <BridgesMvpWarning />
       <BridgesRiskView {...props.riskView} />
