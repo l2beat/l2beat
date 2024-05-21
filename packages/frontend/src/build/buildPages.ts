@@ -66,7 +66,7 @@ async function main() {
       implementationChange,
       l2CostsApiResponse,
     ] = await Promise.all([
-      fetchTvlApi(config.backend, http, config.features
+      fetchTvlApi(config.backend, http, config.features),
       config.features.activity ? fetchActivityApi(config.backend, http) : undefined,
       config.features.tvlBreakdown ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http, config.features) : undefined,
       config.features.liveness ? fetchLivenessApi(config.backend, http) : undefined,
