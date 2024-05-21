@@ -11,7 +11,9 @@
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
-    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4"
   ],
   // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
   "names": {
@@ -29,7 +31,9 @@
     "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": "USDT Vault Lyra",
     "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "LyraMultisig",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault Hook", // hook.xyz, hook eoa admin
-    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya" // socket admin
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya", // socket admin
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78": "weETH Vault Lyra",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra"
   },
   "overrides": {
     "Socket": {
@@ -175,6 +179,12 @@
     },
     "USDT Vault Lyra": {
       "ignoreRelatives": ["token__"]
+    },
+    "weETH Vault Lyra": {
+      "ignoreRelatives": ["token", "hook__"]
+    },
+    "rswETH Vault Lyra": {
+      "ignoreRelatives": ["token", "hook__"]
     }
   }
 }

@@ -3,45 +3,57 @@
   "significantVaults": [
     {
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "tvl": "10,611,398.08",
+      "tvl": "12,010,385.34",
       "ethValue": "0.00",
       "token": "USDC"
     },
     {
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "tvl": "118,320.09",
+      "tvl": "151,106.72",
       "ethValue": "0.00",
       "token": "WBTC"
     },
     {
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
-      "tvl": "187,325.55",
+      "tvl": "354,683.45",
       "ethValue": "0.00",
       "token": "WETH"
     },
     {
       "address": "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
-      "tvl": "1,450,145.00",
+      "tvl": "157.22",
       "ethValue": "0.00",
       "token": "SNX"
     },
     {
       "address": "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
-      "tvl": "19,699.00",
+      "tvl": "97,532.73",
       "ethValue": "0.00",
       "token": "WETH"
     },
     {
       "address": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-      "tvl": "4,181.02",
+      "tvl": "291,520.55",
       "ethValue": "0.00",
       "token": "wstETH"
     },
     {
       "address": "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
-      "tvl": "29,490,418.42",
+      "tvl": "38,656,056.64",
       "ethValue": "0.00",
       "token": "USDC"
+    },
+    {
+      "address": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "tvl": "18.46",
+      "ethValue": "0.00",
+      "token": "weETH"
+    },
+    {
+      "address": "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+      "tvl": "0.00",
+      "ethValue": "0.00",
+      "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0"
     }
   ],
   "vaults": [
@@ -58,24 +70,28 @@
     "0x79823110827d38Ac7cE63C23a486b9708247CC6a",
     "0x4229c4550045AA0d7534aa72c91EfFCA5824acd4",
     "0xcA253a468B1Baf6b52a41bC3ac2fd5cCb3889aa2",
-    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6",
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+    "0xe7cD9370CdE6C9b5eAbCe8f86d01822d3de205A0",
+    "0x96E47fC9c701E8EEF22Fa53e62dc3eBBDcCAEa73"
   ],
   "vaultsData": [
     {
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "tvl": "10,611,398.08",
+      "tvl": "12,010,385.34",
       "ethValue": "0.00",
       "token": "USDC"
     },
     {
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-      "tvl": "118,320.09",
+      "tvl": "151,106.72",
       "ethValue": "0.00",
       "token": "WBTC"
     },
     {
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
-      "tvl": "187,325.55",
+      "tvl": "354,683.45",
       "ethValue": "0.00",
       "token": "WETH"
     },
@@ -93,19 +109,19 @@
     },
     {
       "address": "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
-      "tvl": "1,450,145.00",
+      "tvl": "157.22",
       "ethValue": "0.00",
       "token": "SNX"
     },
     {
       "address": "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
-      "tvl": "19,699.00",
+      "tvl": "97,532.73",
       "ethValue": "0.00",
       "token": "WETH"
     },
     {
       "address": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-      "tvl": "4,181.02",
+      "tvl": "291,520.55",
       "ethValue": "0.00",
       "token": "wstETH"
     },
@@ -117,7 +133,7 @@
     },
     {
       "address": "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
-      "tvl": "29,490,418.42",
+      "tvl": "38,656,056.64",
       "ethValue": "0.00",
       "token": "USDC"
     },
@@ -136,13 +152,38 @@
     {
       "address": "0xcA253a468B1Baf6b52a41bC3ac2fd5cCb3889aa2",
       "tvl": "0",
-      "ethValue": "0.00"
+      "ethValue": "0.00",
+      "token": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
     },
     {
       "address": "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6",
       "tvl": "0",
       "ethValue": "0.00",
       "token": "WBTC"
+    },
+    {
+      "address": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "tvl": "18.46",
+      "ethValue": "0.00",
+      "token": "weETH"
+    },
+    {
+      "address": "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+      "tvl": "0.00",
+      "ethValue": "0.00",
+      "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0"
+    },
+    {
+      "address": "0xe7cD9370CdE6C9b5eAbCe8f86d01822d3de205A0",
+      "tvl": "0",
+      "ethValue": "0.00",
+      "token": "0xcAe44C93f7B3b519Fc28f9d4F7Ae22dE770a907b"
+    },
+    {
+      "address": "0x96E47fC9c701E8EEF22Fa53e62dc3eBBDcCAEa73",
+      "tvl": "0",
+      "ethValue": "0.00",
+      "token": "0xE9A12fB15cC00b59867E4E2f0aCbdCebfd32b3d7"
     }
   ],
   "plugs": [
@@ -169,6 +210,11 @@
     "0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF",
     "0x998d7C2257591cC38383B4F91474c5346111f2E6",
     "0x223033E1F905eEd161a7B2EBeb786a158156fb8D",
-    "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
+    "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D",
+    "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3",
+    "0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508",
+    "0x3f66F272d33B764960779a301c4183306ae50e10",
+    "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D",
+    "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
   ]
 }
