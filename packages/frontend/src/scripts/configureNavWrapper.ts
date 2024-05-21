@@ -24,19 +24,7 @@ export function configureNavWrapper() {
     '[data-role=sidenav-collapse-toggle-container]',
   )
   const sidenavMobileToggles = $$('[data-role=sidenav-mobile-toggle]')
-  const sidenavMobileTabsContainer = $('[data-role=sidenav-mobile-tabs]')
-
-  if (
-    !sidenav ||
-    !sidenavInner ||
-    !sidenavToggle ||
-    !sidenavCollapseContent ||
-    !sidenavToggleContainer ||
-    !sidenavMobileToggles
-  ) {
-    console.error('Missing sidenav elements')
-    return
-  }
+  const sidenavMobileTabsContainer = $$('[data-role=sidenav-mobile-tabs]')
 
   const onResize = () => {
     const elementHeight = sidenavCollapseContent.clientHeight
@@ -96,6 +84,8 @@ export function configureNavWrapper() {
   const sidenavLinks = $$('[data-sidenav-mobile-tabs-active=true]')
 
   for (const link of sidenavLinks) {
-    sidenavMobileTabsContainer.scrollLeft = link.offsetLeft - 16 /* px gap */
+    for (const container of sidenavMobileTabsContainer) {
+      container.scrollLeft = link.offsetLeft - 16 /* px gap */
+    }
   }
 }
