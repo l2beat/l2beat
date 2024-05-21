@@ -1,8 +1,9 @@
 'use client'
 
 import { ConnectKitButton, useModal } from 'connectkit'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { http, createPublicClient, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
@@ -20,10 +21,6 @@ export function AddressBar() {
   })
 
   const { disconnect } = useDisconnect()
-
-  useEffect(() => {
-    disconnect()
-  }, [])
 
   useModal({
     onConnect: ({ address }) => {
@@ -48,8 +45,23 @@ export function AddressBar() {
   return (
     <div className="flex flex-col w-[min(60vw,320px)] gap-2 max-w-[488px]">
       <ConnectKitButton.Custom>
-        {({ show }) => {
-          return (
+        {({ isConnected, show, truncatedAddress, address, ensName }) => {
+          return isConnected ? (
+            <div className="w-full flex flex-row gap-2">
+              <Link
+                href={`/wallet/${address}`}
+                className="w-3/4 bg-pink-900 text-white font-medium text-base h-14 px-4 rounded-lg transition-colors flex items-center justify-center text-center"
+              >
+                View report for {ensName ?? truncatedAddress}
+              </Link>
+              <button
+                onClick={() => disconnect()}
+                className="w-1/4 bg-pink-900 text-white font-medium text-2xs h-14 px-4 rounded-lg transition-colors flex items-center justify-center text-center"
+              >
+                Disconnect
+              </button>
+            </div>
+          ) : (
             <button
               onClick={show}
               className="w-full bg-pink-900 text-white font-medium text-base h-14 px-4 rounded-lg transition-colors"
