@@ -108,7 +108,7 @@ function NavSmallLink({
         : activeBehavior(path)
 
   return (
-    <a href={href}>
+    <a href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
         className={cn(
           'font-medium text-xs leading-none hover:text-blue-700',
