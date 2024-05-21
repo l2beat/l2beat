@@ -78,7 +78,11 @@
         "assignedKeyToPool",
         "getBoostFactorForKeyId"
       ],
-      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"],
+      "ignoreInWatchMode": [
+        "challengeCounter",
+        "getKycWalletCount",
+        "calculateChallengeEmissionAndTier"
+      ],
       "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {
