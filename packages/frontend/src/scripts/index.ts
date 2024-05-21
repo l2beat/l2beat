@@ -17,7 +17,6 @@ import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureScrollToTopButton } from './configureScrollToTopButton'
-import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
@@ -39,7 +38,6 @@ configureThemeToggle()
 configureFloatingBanner()
 configureTables()
 configureProjectFilters()
-configureSidebarMenu()
 configureTooltips()
 configureAccordions()
 configureRosetteOverlay()

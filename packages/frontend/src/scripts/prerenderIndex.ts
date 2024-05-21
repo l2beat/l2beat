@@ -1,5 +1,5 @@
-import { initializeSidenav } from './initializeSidenav'
+import { initializeNavWrapper } from './initializeNavWrapper'
 import { initializeTheme } from './initializeTheme'
 
 initializeTheme()
-initializeSidenav()
+initializeNavWrapper()
