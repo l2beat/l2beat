@@ -1,32 +1,19 @@
-import { layer2s } from '@l2beat/config'
-import Image from 'next/image'
-import { ClassNameValue } from 'tailwind-merge'
-import { formatUnits } from 'viem'
-import { Card } from '~/components/Card'
-import { getChainStage } from '~/utils/chains'
-import { cn } from '~/utils/cn'
-import { StageBadge } from './StageBadge'
-import { Cell, TableRow } from './TableRow'
-import {} from './Warning'
+'use client'
 
-const TABLE_COLUMNS: {
-  name: string
-  className?: ClassNameValue
-}[] = [
-  {
-    name: 'VALUE',
-  },
-  {
-    name: 'NAME',
-    className: 'pl-12',
-  },
-  {
-    name: 'TYPE',
-  },
-  {
-    name: '',
-  },
-]
+import { ScalingProjectRisk, Stage } from '@l2beat/config'
+import { Dispatch, SetStateAction, useState } from 'react'
+import {
+  SortingArrowDownIcon,
+  SortingArrowUpIcon,
+} from '~/app/assets/SortingArrows'
+import { Card } from '~/components/Card'
+import { cn } from '~/utils/cn'
+import { TableRow } from './TableRow'
+import {
+  SingleColumnConfig,
+  Sorting,
+  columnsConfig,
+} from './utils/columnsConfig'
 
 export type Token = {
   token: {
@@ -40,6 +27,8 @@ export type Token = {
   chain: {
     id: number
     name: string
+    risks?: ScalingProjectRisk[]
+    stage?: 'Validium' | 'Optimium' | 'NotApplicable' | 'UnderReview' | Stage
   }
   balance: bigint | null
 }
@@ -48,49 +37,63 @@ interface TokensTableProps {
   tokens: Token[]
 }
 
+type SortingState = {
+  selected: string
+  type: 'asc' | 'desc'
+} & Sorting
+
 export function TokensTable(props: TokensTableProps) {
+  const [sorting, setSorting] = useState<Partial<SortingState>>({})
+
+  let tokens = props.tokens
+  if (sorting.selected) {
+    tokens = tokens.sort((a, b) => {
+      if (!sorting.getOrderValue) return 0
+      const valueA = sorting.getOrderValue(a, 0)
+      const valueB = sorting.getOrderValue(b, 0)
+      if (sorting.rule === 'numeric') {
+        if (typeof valueA !== 'number' || typeof valueB !== 'number') return 0
+        return sorting.type === 'asc'
+          ? Number(valueA) - Number(valueB)
+          : Number(valueB) - Number(valueA)
+      } else {
+        if (typeof valueA !== 'string' || typeof valueB !== 'string') return 0
+        return sorting.type === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA)
+      }
+    })
+  }
+
   return (
     <Card className="rounded-none sm:rounded-xl overflow-x-auto">
       <h2 className="text-xl font-bold">Assets</h2>
       <div
         className={cn(
           'mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
-          '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
+          '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-6 md:w-[calc(100%_+_48px)] md:px-6',
         )}
       >
         <table className="w-full border-collapse text-left">
           <thead className="border-b border-b-gray-200 dark:border-b-zinc-700">
             <tr>
-              {TABLE_COLUMNS.map((column) => (
+              {columnsConfig.map((column) => (
                 <TableColumnHeader
                   key={column.name}
-                  column={column.name}
-                  className={column.className}
+                  column={column}
+                  sorting={sorting}
+                  setSorting={setSorting}
                 />
               ))}
             </tr>
           </thead>
           <tbody>
-            {props.tokens.map((token) => {
-              const chain =
-                token.chain.id === 1
-                  ? {
-                      stage: null,
-                      technology: null,
-                      riskView: null,
-                    }
-                  : layer2s.find(
-                      (l2) => l2.chainConfig?.chainId === token.chain.id,
-                    )
-              return (
-                <TableRow
-                  chain={chain?.technology}
-                  key={`${token.chain.id}-${token.token.id}`}
-                >
-                  <RowContent token={token} />
-                </TableRow>
-              )
-            })}
+            {props.tokens.map((token) => (
+              <TableRow
+                token={token}
+                key={`${token.chain.id}-${token.token.id}`}
+              />
+            ))}
           </tbody>
         </table>
       </div>
@@ -98,50 +101,35 @@ export function TokensTable(props: TokensTableProps) {
   )
 }
 
-function RowContent({ token }: { token: Token }) {
-  const stage = getChainStage(token.chain.id)
-  return (
-    <>
-      <Cell>
-        {/* TODO: add dolar value */}
-        <div className="text-black dark:text-white font-bold text-lg">
-          $0.00
-        </div>
-        <div className="text-gray-500 font-medium text-sm">
-          {token.balance && formatUnits(token.balance, token.token.decimals)}
-          &nbsp;
-          {token.token.symbol}
-        </div>
-      </Cell>
-      <Cell className="flex items-center gap-2">
-        {token.token.iconUrl && (
-          <Image
-            src={token.token.iconUrl}
-            alt={`${token.token.name} icon`}
-            width={32}
-            height={32}
-            className="size-8"
-          />
-        )}
-        <div className="flex flex-col">
-          <span className="font-bold text-lg">{token.token.name}</span>
-          <div className="font-normal flex items-center text-sm text-gray-500">
-            on <span className="font-medium">{token.chain.name}</span>
-            &nbsp;
-            {stage && <StageBadge stage={stage} />}&nbsp;
-            {token.token.bridge && `bridged via ${token.token.bridge}`}
-          </div>
-        </div>
-      </Cell>
-      <Cell>TYPE</Cell>
-    </>
-  )
-}
-
 function TableColumnHeader({
   column,
-  className,
-}: { column: string; className?: ClassNameValue }) {
+  sorting,
+  setSorting,
+}: {
+  column: SingleColumnConfig
+  sorting: Partial<SortingState>
+  setSorting: Dispatch<SetStateAction<Partial<SortingState>>>
+}) {
+  const state = sorting.selected === column.name ? sorting.type : undefined
+
+  const handleSort = () => {
+    if (column.sorting) {
+      if (sorting.selected === column.name) {
+        setSorting({
+          selected: column.name,
+          type: sorting.type === 'asc' ? 'desc' : 'asc',
+          ...column.sorting,
+        })
+      } else {
+        setSorting({
+          selected: column.name,
+          type: 'asc',
+          ...column.sorting,
+        })
+      }
+    }
+  }
+
   return (
     <th
       className={cn(
@@ -149,10 +137,39 @@ function TableColumnHeader({
         'pr-3 last:pr-0 md:pr-4',
         'rounded-tl-lg',
         'rounded-tr-lg',
-        className,
+        column.className,
       )}
     >
-      <div className={cn('flex flex-row items-end gap-1.5')}>{column}</div>
+      <div
+        className={cn(
+          'group/sorting-arrows flex select-none items-end gap-1.5',
+          column.sorting && 'cursor-pointer',
+        )}
+        data-state={state}
+        onClick={handleSort}
+      >
+        {column.sorting && (
+          <div className="flex translate-y-[-4.5px] flex-col">
+            <SortingArrowUpIcon
+              className={cn(
+                'mb-0.5 fill-gray-500 transition-all',
+                'group-data-[state=asc]/sorting-arrows:fill-black dark:group-data-[state=asc]/sorting-arrows:fill-white',
+                'group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-black group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
+              )}
+            />
+            <SortingArrowDownIcon
+              className={cn(
+                'fill-gray-500 transition-all',
+                'group-data-[state=desc]/sorting-arrows:fill-black dark:group-data-[state=desc]/sorting-arrows:fill-white',
+                'group-hover/sorting-arrows:fill-black group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-hover/sorting-arrows:fill-white dark:group-data-[state=asc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
+              )}
+            />
+          </div>
+        )}
+        <div className={cn('flex flex-row items-end gap-1.5')}>
+          {column.name}
+        </div>
+      </div>
     </th>
   )
 }

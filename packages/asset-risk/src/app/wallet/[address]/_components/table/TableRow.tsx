@@ -1,35 +1,23 @@
 'use client'
-import { ScalingProjectTechnology } from '@l2beat/config'
+import Image from 'next/image'
 import { TdHTMLAttributes, useState } from 'react'
 import { ClassNameValue } from 'tailwind-merge'
+import { formatUnits } from 'viem'
 import { ArrowIcon } from '~/app/assets/ArrowIcon'
 import { cn } from '~/utils/cn'
 import { groupRisks } from '~/utils/groupRisks'
+import { StageBadge } from './StageBadge'
+import { Token } from './TokensTable'
 import { CriticalWarning, Warning } from './Warning'
 
 export function TableRow({
-  children,
-  chain,
+  token,
 }: {
-  children: React.ReactNode
-  chain: ScalingProjectTechnology | null | undefined
+  token: Token
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const risks = chain
-    ? [
-        chain.stateCorrectness,
-        chain.newCryptography,
-        chain.dataAvailability,
-        chain.operator,
-        chain.forceTransactions,
-        ...chain.exitMechanisms,
-        chain.massExit,
-        ...(chain.otherConsiderations ?? []),
-      ].flatMap((choice) => choice?.risks ?? [])
-    : []
-
-  const groupedRisks = groupRisks(risks)
+  const groupedRisks = groupRisks(token.chain.risks ?? [])
 
   const criticalWarnings = groupedRisks.flatMap((r) => ({
     name: r.name,
@@ -57,7 +45,39 @@ export function TableRow({
         )}
         onClick={() => setIsOpen((s) => !s)}
       >
-        {children}
+        <Cell>
+          {/* TODO: add dolar value */}
+          <div className="text-black dark:text-white font-bold text-lg">
+            $0.00
+          </div>
+          <div className="text-gray-500 font-medium text-sm">
+            {token.balance && formatUnits(token.balance, token.token.decimals)}
+            &nbsp;
+            {token.token.symbol}
+          </div>
+        </Cell>
+        <Cell className="flex items-center gap-2">
+          {token.token.iconUrl && (
+            <Image
+              src={token.token.iconUrl}
+              alt={`${token.token.name} icon`}
+              width={32}
+              height={32}
+              className="size-8"
+            />
+          )}
+          <div className="flex flex-col">
+            <span className="font-bold text-lg">{token.token.name}</span>
+            <div className="font-normal flex items-center text-sm text-gray-500">
+              on <span className="font-medium">{token.chain.name}</span>
+              &nbsp;
+              {token.chain.stage && <StageBadge stage={token.chain.stage} />}
+              &nbsp;
+              {token.token.bridge && `bridged via ${token.token.bridge}`}
+            </div>
+          </div>
+        </Cell>
+        <Cell>TYPE</Cell>
         <Cell>
           <div className={cn('flex items-center justify-between gap-3')}>
             <div className="flex items-center gap-3">

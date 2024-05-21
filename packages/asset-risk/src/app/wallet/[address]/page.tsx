@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation'
 import type { SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
-import { getChain } from '~/utils/chains'
+import { ScalingProjectRisk, layer2s } from '@l2beat/config'
+import { getChain, getChainStage } from '~/utils/chains'
 import { DetailsHeader } from './_components/DetailsHeader'
 import { Disclaimer } from './_components/Disclaimer'
 import { TokensTable } from './_components/table/TokensTable'
@@ -164,7 +165,38 @@ export default async function Page({ params: { address } }: Props) {
     token: T,
   ): token is T & { balance: bigint } => !!token.balance
 
-  const tokensToDisplay = tokens.filter(hasPositiveBalance)
+  const tokensToDisplay = tokens.filter(hasPositiveBalance).map((token) => {
+    if (token.chain.id === 1) return token
+    const chain = layer2s.find(
+      (l2) => l2.chainConfig?.chainId === token.chain.id,
+    )
+    if (!chain) return token
+
+    let risks: ScalingProjectRisk[] = []
+    risks = chain.technology
+      ? [
+          chain.technology.stateCorrectness,
+          chain.technology.newCryptography,
+          chain.technology.dataAvailability,
+          chain.technology.operator,
+          chain.technology.forceTransactions,
+          ...chain.technology.exitMechanisms,
+          chain.technology.massExit,
+          ...(chain.technology.otherConsiderations ?? []),
+        ].flatMap((choice) => choice?.risks ?? [])
+      : []
+
+    const stage = getChainStage(token.chain.id)
+
+    return {
+      ...token,
+      chain: {
+        ...token.chain,
+        risks,
+        stage,
+      },
+    }
+  })
 
   const vanityAddress = await getAddressDisplayName(address)
 
@@ -178,22 +210,6 @@ export default async function Page({ params: { address } }: Props) {
         />
         <TokensTable tokens={tokensToDisplay} />
         <Disclaimer />
-        {/* <div className="flex flex-col gap-8">
-          {Object.keys(grouped).length === 0 && (
-            <p>You don&apos;t have any known tokens</p>
-          )}
-          {grouped.map(([chainIdString, tokens]) => {
-            const chainId = Number(chainIdString)
-            return (
-              <ChainAssetRiskCard
-                key={chainId}
-                id={chainId}
-                name={tokens[0]?.chain.name ?? ''}
-                tokens={tokens}
-              />
-            )
-          })}
-        </div> */}
       </div>
     </main>
   )

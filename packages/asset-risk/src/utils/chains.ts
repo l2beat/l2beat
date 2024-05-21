@@ -111,7 +111,7 @@ export function getChain(chainId: number) {
 
 export function getChainStage(chainId: number) {
   const chain = layer2s.find((l2) => l2.chainConfig?.chainId === chainId)
-  if (chainId === 1 || !chain) return null
+  if (chainId === 1 || !chain) return
   if (
     chain.display.category === 'Validium' ||
     chain.display.category === 'Optimium'
