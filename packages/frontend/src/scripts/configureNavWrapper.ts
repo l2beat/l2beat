@@ -17,6 +17,7 @@ function setNavState(state: boolean) {
 
 export function configureNavWrapper() {
   const sidenav = $('[data-role=sidenav]')
+  const sidenavInner = $('[data-role=sidenav-inner]')
   const sidenavToggle = $('[data-role=sidenav-collapse-toggle]')
   const sidenavCollapseContent = $('[data-role=sidenav-collapse-content]')
   const sidenavToggleContainer = $(
@@ -26,6 +27,7 @@ export function configureNavWrapper() {
 
   if (
     !sidenav ||
+    !sidenavInner ||
     !sidenavToggle ||
     !sidenavCollapseContent ||
     !sidenavToggleContainer ||
@@ -68,4 +70,23 @@ export function configureNavWrapper() {
         sidenav.dataset.open === 'true' ? 'hidden' : ''
     })
   }
+
+  // Fix navbar animations when resizing
+
+  let resizeTimer: NodeJS.Timeout | null = null
+
+  window.addEventListener('resize', () => {
+    if (resizeTimer) {
+      clearTimeout(resizeTimer)
+    }
+    for (const elem of [sidenav, sidenavInner]) {
+      elem.style.transition = 'none'
+    }
+    resizeTimer = setTimeout(() => {
+      resizeTimer = null
+      for (const elem of [sidenav, sidenavInner]) {
+        elem.style.transition = ''
+      }
+    }, 100)
+  })
 }

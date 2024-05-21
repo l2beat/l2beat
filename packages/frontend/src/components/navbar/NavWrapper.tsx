@@ -248,6 +248,17 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
   )
 }
 
+function Divider({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn(
+        'h-px w-full bg-gray-300 dark:bg-gray-850 xl:sidenav-collapsed:hidden',
+        className,
+      )}
+    />
+  )
+}
+
 export function Sidenav({ links }: { links: NavbarLinkGroups }) {
   const { config } = usePageBuildContext()
   const sharedSizeClasses = 'w-full xl:w-[240px] 2xl:w-[280px]'
@@ -255,16 +266,17 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
   return (
     <div
       className={cn(
-        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-100',
+        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-100 transition-all',
         sharedSizeClasses,
       )}
       data-role="sidenav"
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] dark:border-r dark:border-gray-850 xl:dark:border-none flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden',
+          'bg-[#E6E7EC] dark:bg-[#1E1C21] dark:border-r dark:border-gray-850 xl:dark:border-none flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
           sharedSizeClasses,
         )}
+        data-role="sidenav-inner"
       >
         <div
           className={cn(
@@ -300,7 +312,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
               </NavLinkGroup>
             ))}
 
-            <div className="h-px w-full bg-gray-300 dark:bg-gray-850 xl:sidenav-collapsed:hidden" />
+            <Divider />
             <NavSmallLinkGroup>
               <NavSmallLink title="Forum" href={config.links.forum} />
               {config.features.zkCatalog && (
@@ -326,10 +338,11 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
               </NavSmallLink>
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
+            <Divider className="xl:hidden" />
+            <ul className="xl:hidden flex flex-row gap-4">
+              <SocialLinks />
+            </ul>
           </nav>
-          <ul className="xl:hidden flex flex-row gap-4">
-            <SocialLinks />
-          </ul>
         </div>
         <div
           className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block xl:sidenav-collapsed:ml-1"
