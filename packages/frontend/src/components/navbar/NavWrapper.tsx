@@ -278,7 +278,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
   return (
     <div
       className={cn(
-        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-100 transition-all',
+        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-999 transition-all',
         sharedSizeClasses,
       )}
       data-role="sidenav"
