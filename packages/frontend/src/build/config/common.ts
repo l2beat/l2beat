@@ -35,7 +35,7 @@ export const common: Omit<Config, 'backend'> = {
     governancePage: true,
     costsPage: true,
     zkCatalog: true,
-    tvl2: false,
+    tvl2: true,
     glossary: true,
   },
   layer2s,
