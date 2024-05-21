@@ -6,6 +6,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   isSingleAddress,
+  l2CommonContracts,
 } from '@l2beat/config'
 import {
   assert,
@@ -309,6 +310,7 @@ function makeTechnologyContract(
       }
     }
   }
+  const implementationAddresses = links.filter((c) => !c.isAdmin).map((c) => c.address)
 
   let description = item.description
 
@@ -378,29 +380,24 @@ function makeTechnologyContract(
     addresses.includes(ca.containingContract.toString()),
   )
 
+  if(project.id.toString() === 'zora') {
+      debugger
+  }
+  const allAddresses = addresses.concat(implementationAddresses)
+  const usedInProjects = [...new Set(allAddresses.flatMap((address) =>
+    (l2CommonContracts[address] ?? []).filter((name) => project.id !== name),
+  ))]
+  const usedInProjectIcons =
+    usedInProjects.length > 0
+      ? usedInProjects.map((name) => `/icons/${name}.png`)
+      : undefined
+
   const result: TechnologyContract = {
     name: item.name,
     addresses,
     description,
     links,
-    usedInProjectIcons: [
-      '/icons/arbitrum.png',
-      '/icons/avalanche.png',
-      '/icons/optimism.png',
-      '/icons/lightlink.png',
-      '/icons/uniswap.png',
-      '/icons/connext-legacy.png',
-      '/icons/polygon-pos.png',
-      '/icons/omni.png',
-      '/icons/kroma.png',
-      '/icons/frame.png',
-      '/icons/popapex.png',
-      '/icons/tanx.png',
-      '/icons/kinto.png',
-      '/icons/syndicateframe.png',
-      '/icons/ancient.png',
-      '/icons/orderly.png',
-    ],
+    usedInProjectIcons,
     etherscanUrl,
     chain,
     implementationHasChanged,
