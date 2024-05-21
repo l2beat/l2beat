@@ -7,7 +7,6 @@ import {
   BridgesSummaryView,
   BridgesSummaryViewProps,
 } from './BridgesSummaryView'
-import { OtherSites } from '../../../../components/other-sites/OtherSites'
 
 export interface BridgesSummaryPageProps {
   tvlView: BridgesSummaryViewProps
@@ -23,7 +22,6 @@ export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
         header="tvl"
       />
       <BridgesSummaryView {...props.tvlView} />
-      <OtherSites />
     </DashboardLayout>
   )
 }

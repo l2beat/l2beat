@@ -25,7 +25,6 @@ export function ScalingSummaryPage(props: SummaryPageProps) {
         header="tvl"
       />
       <ScalingSummaryView {...props.tvlView} />
-      <OtherSites />
     </DashboardLayout>
   )
 }
