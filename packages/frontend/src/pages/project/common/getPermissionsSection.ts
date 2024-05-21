@@ -72,6 +72,12 @@ function toTechnologyContract(
   let usedInProjects: UsedInProject[] | undefined
   if (permission.accounts.length === 1) {
     usedInProjects = getUsedInProjects(project, [], addresses)
+    if (usedInProjects !== undefined) {
+      usedInProjects = usedInProjects.map((p) => ({
+        ...p,
+        type: 'permission',
+      }))
+    }
   }
 
   return {

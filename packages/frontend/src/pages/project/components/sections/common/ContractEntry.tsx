@@ -26,7 +26,7 @@ export interface UsedInProject {
   slug: string
   iconPath: string
   targetName: string
-  type: 'implementation' | 'proxy'
+  type: 'implementation' | 'proxy' | 'permission'
 }
 
 export interface TechnologyContract {
@@ -110,11 +110,9 @@ export function ContractEntry({
   const sharedImplementations = (contract.usedInProjects ?? [])
     .filter((c) => c.type === 'implementation')
     .filter((c) => !sharedProxies.map((k) => k.id).includes(c.id))
-
-  const implementationLabel =
-    sharedProxies.length === 0
-      ? 'Used in projects'
-      : 'Used in projects (implementations)'
+  const sharedPermissions = (contract.usedInProjects ?? []).filter(
+    (c) => c.type === 'permission',
+  )
 
   return (
     <Callout
@@ -177,14 +175,20 @@ export function ContractEntry({
           )}
           {sharedProxies.length !== 0 && (
             <UsedInProjectEntry
-              label="Used in projects (proxies)"
+              label="Proxy used in"
               implementations={sharedProxies}
             />
           )}
           {sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
-              label={implementationLabel}
+              label={'Implementation used in'}
               implementations={sharedImplementations}
+            />
+          )}
+          {sharedPermissions.length !== 0 && (
+            <UsedInProjectEntry
+              label={'Used in'}
+              implementations={sharedPermissions}
             />
           )}
           {contract.upgradeConsiderations && (
