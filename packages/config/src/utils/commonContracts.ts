@@ -81,8 +81,6 @@ function findCommonContracts(
 
   const merged = merge(commonContracts, commonEOAs)
   const referenced = dropNonusedAddresses(projects, merged)
-
-  console.log(referenced)
   return referenced
 }
 
