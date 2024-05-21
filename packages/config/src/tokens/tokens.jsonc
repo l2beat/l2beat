@@ -318,6 +318,10 @@
       "category": "ether"
     },
     {
+      "symbol": "ETHFI",
+      "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -1006,6 +1010,11 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "USDe",
+      "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "USDM",
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
       "category": "stablecoin"
@@ -1644,6 +1653,61 @@
         "slug": "socket"
       },
       "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "rswETH",
+      "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "restaked-swell-eth"
+    },
+    {
+      "symbol": "weETH",
+      "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-eeth"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x9b80ab732a6F1030326Af0014f106E12C4Db18EC",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-bitcoin"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-steth"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "tether"
     }
   ],
   "mantapacific": [
