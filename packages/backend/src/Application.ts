@@ -16,11 +16,11 @@ import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createTvl2Module } from './modules/tvl2/modules/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
+import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
-import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 
 export class Application {
   start: () => Promise<void>

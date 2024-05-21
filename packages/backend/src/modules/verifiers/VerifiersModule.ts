@@ -1,13 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Config } from '../../config'
-import { ApplicationModule } from '../ApplicationModule'
 import { Peripherals } from '../../peripherals/Peripherals'
-import { createVerifiersRouter } from './VerifiersRouter'
-import { VerifiersController } from './VerifiersController'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
-
-const MAX_DAYS = 365
+import { ApplicationModule } from '../ApplicationModule'
+import { VerifiersController } from './VerifiersController'
+import { createVerifiersRouter } from './VerifiersRouter'
 
 export function createVerifiersModule(
   config: Config,

@@ -1,15 +1,4 @@
 import {
-  ChainId,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
-import {
-  VerifiersController,
-  VerifiersControllerDeps,
-  testAddresses,
-} from './VerifiersController'
-import {
   Layer2,
   Layer2Config,
   Layer2Display,
@@ -21,9 +10,20 @@ import {
   StageConfig,
   ZkCatalogProject,
 } from '@l2beat/config'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
 import { BlockscoutInternalTransaction } from '../../peripherals/blockscout/schemas'
+import {
+  VerifiersController,
+  VerifiersControllerDeps,
+  testAddresses,
+} from './VerifiersController'
 
 const zkVerfifierAddress = EthereumAddress.random()
 const zksMock: ZkCatalogProject[] = [
@@ -120,7 +120,6 @@ describe(VerifiersController.name, () => {
     })
 
     it('return null if status fetch fails', async () => {
-      const timestamp = UnixTime.now()
       const controller = createVeririferController({
         blockscoutClient: mockObject<BlockscoutClient>({
           getInternalTransactions: mockFn().throws(

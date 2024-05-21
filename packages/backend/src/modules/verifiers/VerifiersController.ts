@@ -1,20 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Project } from '../../model/Project'
-import { TaskQueue } from '../../tools/queue/TaskQueue'
-import {
-  assert,
-  cacheAsyncFunction,
-  EthereumAddress,
-  VerifiersApiResponse,
-  VerifierStatus,
-} from '@l2beat/shared-pure'
-import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
 import {
   Layer2,
-  layer2s,
   ZkCatalogProject,
+  layer2s,
   zkCatalogProjects,
 } from '@l2beat/config'
+import {
+  assert,
+  EthereumAddress,
+  VerifiersApiResponse,
+  cacheAsyncFunction,
+} from '@l2beat/shared-pure'
+import { Project } from '../../model/Project'
+import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export interface VerifiersControllerDeps {
   blockscoutClient: BlockscoutClient
@@ -71,8 +70,6 @@ export class VerifiersController {
   async getVerifierStatuses(): Promise<VerifiersApiResponse> {
     const addresses = this.getVerifierAddresses()
     assert(addresses.length > 0, 'No verifier addresses found')
-
-    const response: VerifierStatus[] = []
 
     return await Promise.all(
       addresses.map(async (address) => {
