@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { Config } from '../../build/config'
 import { PlainLink } from '../PlainLink'
 import {
   DiscordIcon,
@@ -10,57 +9,39 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from '../icons'
+import { usePageBuildContext } from './navigationContext'
 
-export interface SocialLinksProps {
-  twitterLink: string
-  discordLink: string
-  githubLink: string
-  linkedinLink: string
-  youTubeLink: string
-  mediumLink: string
-}
-
-export function getSocialLinksProps(config: Config) {
-  return {
-    twitterLink: config.links.twitter,
-    discordLink: config.links.discord,
-    githubLink: config.links.github,
-    linkedinLink: config.links.linkedin,
-    youTubeLink: config.links.youTube,
-    mediumLink: config.links.medium,
-  }
-}
-
-export function SocialLinks(props: SocialLinksProps) {
+export function SocialLinks() {
+  const { config } = usePageBuildContext()
   return (
     <>
       <li>
-        <PlainLink href={props.twitterLink} title="Twitter">
+        <PlainLink href={config.links.twitter} title="Twitter">
           <TwitterIcon />
         </PlainLink>
       </li>
       <li>
-        <PlainLink href={props.discordLink} title="Discord">
+        <PlainLink href={config.links.discord} title="Discord">
           <DiscordIcon />
         </PlainLink>
       </li>
       <li>
-        <PlainLink href={props.githubLink} title="Github">
+        <PlainLink href={config.links.github} title="Github">
           <GithubIcon />
         </PlainLink>
       </li>
       <li>
-        <PlainLink href={props.linkedinLink} title="LinkedIn">
+        <PlainLink href={config.links.linkedin} title="LinkedIn">
           <LinkedInIcon />
         </PlainLink>
       </li>
       <li>
-        <PlainLink href={props.youTubeLink} title="YouTube">
+        <PlainLink href={config.links.youTube} title="YouTube">
           <YouTubeIcon />
         </PlainLink>
       </li>
       <li>
-        <PlainLink href={props.mediumLink} title="Medium">
+        <PlainLink href={config.links.medium} title="Medium">
           <MediumIcon />
         </PlainLink>
       </li>

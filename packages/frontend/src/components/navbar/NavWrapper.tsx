@@ -18,6 +18,7 @@ import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { usePageBuildContext } from './navigationContext'
 import { LogoSmall } from '../LogoSmall'
+import { SocialLinks } from './SocialLinks'
 
 function NavLinkGroup({
   title,
@@ -234,7 +235,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
-                <a href={link.href}>
+                <a href={link.href} key={link.href}>
                   <div className="rounded-[4px] border border-[#AB3BD2] text-xs font-semibold px-4 py-2.5 text-nowrap m-auto">
                     {link.title}
                   </div>
@@ -289,6 +290,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
                   (link) =>
                     link.enabled && (
                       <NavLink
+                        key={link.href}
                         title={link.title}
                         icon={link.icon}
                         href={link.href}
@@ -325,6 +327,9 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
           </nav>
+          <ul className="xl:hidden flex flex-row gap-4">
+            <SocialLinks />
+          </ul>
         </div>
         <div
           className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block xl:sidenav-collapsed:ml-1"

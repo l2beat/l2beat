@@ -2,7 +2,7 @@ import React from 'react'
 
 import { cn } from '../utils/cn'
 import { Link } from './Link'
-import { SocialLinks, getSocialLinksProps } from './navbar/SocialLinks'
+import { SocialLinks } from './navbar/SocialLinks'
 import { usePageBuildContext } from './navbar/navigationContext'
 export function Footer() {
   const { config } = usePageBuildContext()
@@ -24,7 +24,7 @@ export function Footer() {
             Support us by <Link href="/donate">donating</Link>.
           </p>
           <ul className="flex w-full justify-center gap-4">
-            <SocialLinks {...getSocialLinksProps(config)} />
+            <SocialLinks />
           </ul>
           <p className="text-center text-sm font-medium md:text-right">
             Copyright {new Date().getFullYear()} L2BEAT
