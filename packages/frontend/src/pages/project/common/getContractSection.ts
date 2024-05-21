@@ -504,7 +504,7 @@ function getUsedInProjects(
 
       return {
         id: id,
-        name: refProject.display.name ?? 'Unknown',
+        name: refProject.display.name,
         iconPath: `/icons/${refProject.display.slug}.png`,
       }
     })
