@@ -5106,6 +5106,139 @@
       }
     },
     {
+      "id": "kinto:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884930,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:ena-ena",
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0xE040001C257237839a69E9683349C173297876F0",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884952,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:ethfi-ether.fi-governance-token",
+      "name": "ether.fi governance token",
+      "coingeckoId": "ether-fi",
+      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
+      "symbol": "ETHFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1716212866,
+      "coingeckoListingTimestamp": 1710720000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:sdai-savings-dai",
+      "name": "Savings Dai",
+      "coingeckoId": "savings-dai",
+      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
+      "symbol": "sDAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884933,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884939,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884946,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:wsteth-wrapped-liquid-staked-ether-2.0",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "coingeckoId": "wrapped-steth",
+      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
+      "symbol": "wstETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884943,
+      "coingeckoListingTimestamp": 1633564800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "base:aero-aerodrome",
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",

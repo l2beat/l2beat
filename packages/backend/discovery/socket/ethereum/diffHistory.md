@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc0d91e6ad3bf1a06f997281de2fbb65363e747c7
+Generated with discovered.json: 0xcaeb1c446a3f5c31fd87a9bd4a84fbc98f2e9f5b
 
-# Diff at Tue, 21 May 2024 10:07:15 GMT:
+# Diff at Tue, 21 May 2024 15:12:04 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@0e87a2a5d476463099a2e213ea4637037934712a block: 19888244
-- current block number: 19917579
+- comparing to: main@d10db8000986dcc20fb2efb94c0e0636ac38fa21 block: 19888244
+- current block number: 19919092
 
 ## Description
 
@@ -109,6 +109,12 @@ The recently added Lyra vaults are now governed by the Lyra multisig.
 
 ```diff
 +   Status: CREATED
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5)
     +++ description: None
 ```
@@ -133,6 +139,18 @@ The recently added Lyra vaults are now governed by the Lyra multisig.
 
 ```diff
 +   Status: CREATED
+    contract DAI Vault 2 Kinto (0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5)
     +++ description: None
 ```
@@ -145,6 +163,24 @@ The recently added Lyra vaults are now governed by the Lyra multisig.
 
 ```diff
 +   Status: CREATED
+    contract eETH Vault Kinto (0xc7a542f73049C11f9719Be6Ff701fCA882D60020)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wUSDM Vault Kinto (0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397)
     +++ description: None
 ```
@@ -152,14 +188,20 @@ The recently added Lyra vaults are now governed by the Lyra multisig.
 ## Source code changes
 
 ```diff
-...-0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5.sol | 886 +++++++++++++++++++++
+...-0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94.sol | 886 +++++++++++++++++++++
+ ...-0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5.sol | 886 +++++++++++++++++++++
  ...-0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd.sol | 886 +++++++++++++++++++++
  ...-0x43b718Aa5e678b08615CA984cbe25f690B085b32.sol | 886 +++++++++++++++++++++
  ...-0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85.sol | 886 +++++++++++++++++++++
+ ...-0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58.sol | 886 +++++++++++++++++++++
+ ...-0x755cD5d147036E11c76F1EeffDd94794fC265f0d.sol | 886 +++++++++++++++++++++
  ...-0x95d60E34aB2E626407d98dF8C240e6174e5D37E5.sol | 886 +++++++++++++++++++++
+ ...-0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc.sol | 886 +++++++++++++++++++++
  ...-0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc.sol | 886 +++++++++++++++++++++
+ ...-0xc7a542f73049C11f9719Be6Ff701fCA882D60020.sol | 886 +++++++++++++++++++++
+ ...-0xdf34E61B6e7B9e348713d528fEB019d504d38c1e.sol | 886 +++++++++++++++++++++
  ...-0xeB66259d2eBC3ed1d3a98148f6298927d8A36397.sol | 886 +++++++++++++++++++++
- 7 files changed, 6202 insertions(+)
+ 13 files changed, 11518 insertions(+)
 ```
 
 Generated with discovered.json: 0x4bd5593e7b5d34a2700f86bac590a29180eb78e9

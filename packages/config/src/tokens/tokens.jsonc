@@ -1842,6 +1842,85 @@
       "formula": "circulatingSupply"
     }
   ],
+  "kinto": [
+    {
+      "symbol": "weETH",
+      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-eeth"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-steth"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "dai"
+    },
+    {
+      "symbol": "ENA",
+      "address": "0xE040001C257237839a69E9683349C173297876F0",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena"
+    },
+    {
+      "symbol": "ETHFI",
+      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ether-fi"
+    },
+    {
+      "symbol": "sDAI",
+      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "savings-dai"
+    },
+    {
+      "symbol": "sUSDe",
+      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena-staked-usde"
+    }
+  ],
   "kroma": [
     {
       "symbol": "WEMIX.e",
