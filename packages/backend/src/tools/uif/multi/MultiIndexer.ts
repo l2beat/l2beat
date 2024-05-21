@@ -163,12 +163,27 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       to: adjustedTo,
       configurations: configurations.length,
     })
-    const newHeight = await this.multiUpdate(from, adjustedTo, configurations)
+
+    const middleware = {
+      saveToDB: async () => {},
+    }
+
+    const newHeight = await this.multiUpdate(
+      from,
+      adjustedTo,
+      configurations,
+      middleware,
+    )
     if (newHeight < from || newHeight > adjustedTo) {
       throw new Error(
         'Programmer error, returned height must be between from and to (both inclusive).',
       )
     }
+
+    // runInTransaction
+    // {
+
+    await middleware.saveToDB()
 
     if (newHeight > from) {
       const updatedIds = this.updateSavedConfigurations(
@@ -179,6 +194,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
         await this.updateCurrentHeight(updatedIds, newHeight)
       }
     }
+    // }
 
     return newHeight
   }
