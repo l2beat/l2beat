@@ -3,8 +3,8 @@ import { LensIcon } from '~/app/assets/LensIcon'
 import { cn } from '~/utils/cn'
 
 interface FilterInputProps {
-  filter: string
-  setFilter: Dispatch<SetStateAction<string>>
+  filter?: string
+  setFilter?: Dispatch<SetStateAction<string>>
 }
 
 export function FilterInput(props: FilterInputProps) {
@@ -12,7 +12,11 @@ export function FilterInput(props: FilterInputProps) {
     <div className="relative">
       <input
         value={props.filter}
-        onChange={(e) => props.setFilter(e.currentTarget.value)}
+        onChange={
+          props.setFilter
+            ? (e) => props.setFilter && props.setFilter(e.currentTarget.value)
+            : undefined
+        }
         placeholder="Search for asset"
         className={cn(
           'text-xs text-zinc-500 bg-white placeholder:text-zinc-500',

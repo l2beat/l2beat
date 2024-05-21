@@ -123,7 +123,7 @@ export function TokensTable(props: TokensTableProps) {
   )
 }
 
-function TableColumnHeader({
+export function TableColumnHeader({
   column,
   sorting,
   setSorting,
