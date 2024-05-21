@@ -6,6 +6,7 @@ import { PageContent } from '../components/PageContent'
 import { NavWrapper } from '../components/navbar/NavWrapper'
 import { usePageBuildContext } from '../components/navbar/navigationContext'
 import { OtherSites } from '../components/other-sites/OtherSites'
+import { cn } from '../utils/cn'
 
 export interface DashboardLayoutProps {
   children: ReactNode
@@ -18,8 +19,10 @@ export function DashboardLayout(props: DashboardLayoutProps) {
   )
   return (
     <NavWrapper legacyNav={!scalingOrBridges}>
-      <PageContent>
-        <main className="mt-4 md:mt-12">
+      <PageContent
+        className={cn(!scalingOrBridges && 'max-w-none px-0 md:px-0')}
+      >
+        <main className={cn(!!scalingOrBridges && 'mt-4 md:mt-12 relative')}>
           {props.children}
           {scalingOrBridges && (
             <>

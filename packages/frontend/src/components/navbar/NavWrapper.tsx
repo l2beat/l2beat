@@ -287,21 +287,21 @@ export function Sidenav({
   return (
     <div
       className={cn(
-        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 xl:transform-none xl:sidenav-collapsed:w-20 z-999 transition-all',
+        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 duration-300 xl:transform-none xl:sidenav-collapsed:w-20 z-999 transition-all',
         sharedSizeClasses,
       )}
       data-role="sidenav"
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
+          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-clip transition-all',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
       >
         <div
           className={cn(
-            'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-hidden flex-1 flex flex-col gap-8',
+            'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-clip flex-1 flex flex-col gap-8',
             sharedSizeClasses,
           )}
           data-role="sidenav-collapse-content"
@@ -552,7 +552,7 @@ export function NavWrapper({
   return (
     <div
       className={cn(
-        'flex flex-col xl:flex-row relative overflow-x-hidden',
+        'flex flex-col xl:flex-row relative overflow-x-clip',
         legacyNav && 'xl:flex-col',
       )}
     >
