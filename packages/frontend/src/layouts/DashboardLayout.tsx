@@ -19,9 +19,11 @@ export function DashboardLayout(props: DashboardLayoutProps) {
         <main className="mt-4 md:mt-12">
           {props.children}
           {['/scaling', '/bridges'].some((p) => path.startsWith(p)) && (
-            <OtherSites />
+            <>
+              <OtherSites />
+              <About />
+            </>
           )}
-          <About />
         </main>
       </PageContent>
       <Footer />
