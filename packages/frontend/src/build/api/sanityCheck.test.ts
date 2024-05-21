@@ -1,6 +1,8 @@
 import {
   ActivityApiChartPoint,
   ActivityApiCharts,
+  ActivityApiChartsWithEstimation,
+  ActivityApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -196,6 +198,15 @@ describe(tvlSanityCheck.name, () => {
 })
 
 describe(activitySanityCheck.name, () => {
+  const combined: ActivityApiResponse['combined'] = {
+    daily: dataToChart([
+      [today.add(-1, 'days'), 1, 5],
+      [today, 2, 3],
+    ]).daily,
+    estimatedImpact: 0,
+    estimatedSince: UnixTime.now(),
+  }
+
   const allProjects: ActivityProjectData[] = [
     [
       'projectA',
@@ -289,17 +300,21 @@ describe(activitySanityCheck.name, () => {
 
   describe(checkIfDelayedActivity.name, () => {
     it('data fully synced', () => {
-      expect(() => checkIfDelayedActivity(allProjects, today)).not.toThrow()
+      expect(() => checkIfDelayedActivity(combined, today)).not.toThrow()
     })
 
     it('throws if delayed activity', () => {
       const now = today.add(3, 'hours')
-      const allProjects: ActivityProjectData[] = [
-        ['projectA', dataToChart([[today.add(-2, 'days'), 1, 5]])],
-      ]
-
+      const allProjects: ActivityApiChartsWithEstimation = {
+        daily: dataToChart([
+          [today.add(-3, 'days'), 1, 5],
+          [today.add(-2, 'days'), 2, 3],
+        ]).daily,
+        estimatedImpact: 0,
+        estimatedSince: now,
+      }
       expect(() => checkIfDelayedActivity(allProjects, now)).toThrow(
-        /Some projects activity data is delayed! projectA/,
+        'Combined activity data is delayed! 183600 seconds. Acceptable delay is 180000 seconds.'
       )
     })
   })

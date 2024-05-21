@@ -133,12 +133,12 @@ describe(UpdateMonitor.name, () => {
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
 
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
@@ -206,13 +206,13 @@ describe(UpdateMonitor.name, () => {
     it('iterates over projects and finds diff', async () => {
       const config = mockConfig(PROJECT_A)
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
-        readConfig: async () => config,
+        readConfig: () => config,
 
-        readAllConfigsForChain: async () => [
+        readAllConfigsForChain: () => [
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ],
@@ -287,8 +287,8 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification about the same change', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -331,8 +331,8 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification if discovery throws', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -372,9 +372,9 @@ describe(UpdateMonitor.name, () => {
       const config = mockConfig(PROJECT_A)
 
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [config],
-        readConfig: async () => config,
-        readDiscovery: async () => ({
+        readAllConfigsForChain: () => [config],
+        readConfig: () => config,
+        readDiscovery: () => ({
           ...mockProject,
           blockNumber: BLOCK_NUMBER - 1,
           contracts: [],
@@ -443,8 +443,8 @@ describe(UpdateMonitor.name, () => {
 
     it('handles error', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -494,7 +494,7 @@ describe(UpdateMonitor.name, () => {
         contracts: COMMITTED,
       }
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => committed,
+        readDiscovery: () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -569,7 +569,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => committed,
+        readDiscovery: () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -673,7 +673,7 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async (name: string, chain: string) => {
+        readDiscovery: (name: string, chain: string) => {
           if (name === PROJECT_B && chain === 'ethereum') {
             return DISCOVERY_RESULT_ETH_2
           }
@@ -687,7 +687,7 @@ describe(UpdateMonitor.name, () => {
           }
         },
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           if (chain === 'arbitrum') {
             return [mockConfig(PROJECT_B, chain)]
           }
@@ -758,12 +758,12 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
@@ -805,12 +805,12 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })

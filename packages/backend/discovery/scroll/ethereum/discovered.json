@@ -1,9 +1,9 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 19760239,
-  "configHash": "0x434d2a76c4efa80a56b39131498e197cd58441c9ac0aa6d2fd9cab2a75a83cca",
-  "version": 3,
+  "blockNumber": 19911646,
+  "configHash": "0xf110ed7a968c90f877571bac82c833f5a7c0657a12f5280d4c248f0fef065c10",
+  "version": 4,
   "contracts": [
     {
       "name": "L1MessageQueue",
@@ -18,12 +18,12 @@
       "values": {
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 400000000,
+        "l2BaseFee": 220000000,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 612808,
+        "nextCrossDomainMessageIndex": 824487,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 611937,
+        "pendingQueueIndex": 824153,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -259,6 +259,30 @@
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
       },
       "derivedName": "Fallback"
+    },
+    {
+      "name": "wstETHescrowLido",
+      "address": "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xF4f2066EE72D62e3caF9678459149BA7FCf2262F",
+        "admin": "0xCC2C53556Bc75217cf698721b29071d6f12628A9"
+      },
+      "implementations": ["0xF4f2066EE72D62e3caF9678459149BA7FCf2262F"],
+      "sinceTimestamp": 1696920503,
+      "values": {
+        "counterpart": "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
+        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
+        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
+        "isDepositsEnabled": true,
+        "isWithdrawalsEnabled": true,
+        "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
+        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
+        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
+      },
+      "derivedName": "L1LidoGateway"
     },
     {
       "name": "L2TokenFactoryFallback",
@@ -595,7 +619,7 @@
       "implementations": ["0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"],
       "sinceTimestamp": 1696782323,
       "values": {
-        "lastFinalizedBatchIndex": 171520,
+        "lastFinalizedBatchIndex": 208355,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -672,7 +696,7 @@
           "0xdA66Df3920091eF4B54782B9463587c314DAdD41"
         ],
         "getThreshold": 2,
-        "nonce": 117,
+        "nonce": 120,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -688,6 +712,18 @@
         "owner": "0xF9062b8a30e0d7722960e305049FA50b86ba6253"
       },
       "derivedName": "Fallback"
+    },
+    {
+      "name": "wstETHescrowLidoProxyAdmin",
+      "address": "0xCC2C53556Bc75217cf698721b29071d6f12628A9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1708226927,
+      "values": {
+        "owner": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -818,7 +854,7 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 31394805914225,
+        "totalBridgedUSDC": 34031661061729,
         "withdrawPaused": false
       },
       "derivedName": "L1USDCGateway"
@@ -852,6 +888,7 @@
     "0x356483dC32B004f32Ea0Ce58F7F88879886e9074",
     "0x5300000000000000000000000000000000000004",
     "0x69d79Fc4Ae89E4DA80D719e26a435621F75B7f06",
+    "0x8aE8f22226B9d789A36AC81474e633f8bE2856c9",
     "0x9337B41709c1C2B938Cb460ea3fA9DB586B172E0",
     "0xcF2898225ED05Be911D3709d9417e86E0b4Cfc8f",
     "0xd7bC70ecf344C279eB78C8899Ba5538e2e3A0632",
@@ -1158,6 +1195,12 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
+    ],
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x66e5312EDeEAef6e80759A0F789e7914Fb401484": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1486,6 +1529,17 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address _token, uint256 _amount, address _recipient)"
     ],
+    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0xd1841c5756428812233eEA78afC17cb2D3e392bb": [
       "constructor(address _counterpart, address _messenger)",
       "error ErrorCallerIsNotCounterpartGateway()",
@@ -1683,6 +1737,69 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xF4f2066EE72D62e3caF9678459149BA7FCf2262F": [
+      "constructor(address _l1Token, address _l2Token, address _counterpart, address _router, address _messenger)",
+      "error DepositAndCallIsNotAllowed()",
+      "error ErrorAccountIsZeroAddress()",
+      "error ErrorCallerIsNotCounterpartGateway()",
+      "error ErrorCallerIsNotDepositsDisabler()",
+      "error ErrorCallerIsNotDepositsEnabler()",
+      "error ErrorCallerIsNotMessenger()",
+      "error ErrorCallerIsNotWithdrawalsDisabler()",
+      "error ErrorCallerIsNotWithdrawalsEnabler()",
+      "error ErrorDepositZeroAmount()",
+      "error ErrorDepositsDisabled()",
+      "error ErrorDepositsEnabled()",
+      "error ErrorNonZeroMsgValue()",
+      "error ErrorNotInDropMessageContext()",
+      "error ErrorUnsupportedL1Token()",
+      "error ErrorUnsupportedL2Token()",
+      "error ErrorWithdrawalsDisabled()",
+      "error ErrorWithdrawalsEnabled()",
+      "error ErrorZeroAddress()",
+      "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event DepositsDisabled(address indexed disabler)",
+      "event DepositsEnabled(address indexed enabler)",
+      "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RefundERC20(address indexed token, address indexed recipient, uint256 amount)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WithdrawalsDisabled(address indexed disabler)",
+      "event WithdrawalsEnabled(address indexed enabler)",
+      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
+      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
+      "function counterpart() view returns (address)",
+      "function depositERC20(address _token, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) payable",
+      "function depositERC20AndCall(address _token, address _to, uint256 _amount, bytes _data, uint256 _gasLimit) payable",
+      "function disableDeposits()",
+      "function disableWithdrawals()",
+      "function enableDeposits()",
+      "function enableWithdrawals()",
+      "function finalizeWithdrawERC20(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getL2ERC20Address(address _l1Token) view returns (address)",
+      "function getRoleMember(bytes32 _role, uint256 _index) view returns (address)",
+      "function getRoleMemberCount(bytes32 _role) view returns (uint256)",
+      "function grantRole(bytes32 _role, address _account)",
+      "function hasRole(bytes32 _role, address _account) view returns (bool)",
+      "function initialize(address _counterpart, address _router, address _messenger)",
+      "function initializeV2(address _depositsEnabler, address _depositsDisabler, address _withdrawalsEnabler, address _withdrawalsDisabler)",
+      "function isDepositsEnabled() view returns (bool)",
+      "function isWithdrawalsEnabled() view returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Token() view returns (address)",
+      "function messenger() view returns (address)",
+      "function onDropMessage(bytes _message) payable",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function revokeRole(bytes32 _role, address _account)",
+      "function router() view returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": [
       "constructor(address _logic, address admin_, bytes _data) payable",

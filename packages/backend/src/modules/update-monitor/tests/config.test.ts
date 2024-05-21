@@ -28,7 +28,6 @@ describe('discovery config.jsonc', () => {
     const notCorresponding =
       chainConfigs
         ?.flat()
-        ?.filter((c) => !c.name.startsWith('l2beat-'))
         ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []

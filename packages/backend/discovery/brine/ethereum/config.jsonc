@@ -12,7 +12,7 @@
     "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25": "Operator"
   },
   "sharedModules": {
-    "SHARPVerifierProxy": "l2beat-starkware"
+    "SHARPVerifierProxy": "shared-sharp-verifier"
   },
   "overrides": {
     "StarkExchange": {

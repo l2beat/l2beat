@@ -1,4 +1,57 @@
-Generated with discovered.json: 0xc6a26c1ecfbbb9c703b744e7a38a06686a8022d2
+Generated with discovered.json: 0x4b975724e28c77ca0fe734713bfa73c77675f538
+
+# Diff at Tue, 21 May 2024 06:35:33 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@fb4c64221d00d53ed6ec1609ef10dc99f1842087 block: 19883604
+- current block number: 19916529
+
+## Description
+
+Scheduled transactions for the new SecurityCouncil cohort are executed.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.getOwners.10:
+-        "0xf6B6F07862A02C85628B3A9688beae07fEA9C863"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getOwners.9:
+-        "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF"
++        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
+      values.getOwners.8:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
+      values.getOwners.7:
+-        "0x5280406912EB8Ec677Df66C326BE48f938DC2e44"
++        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
+      values.getOwners.6:
+-        "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710"
++        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
+      values.getOwners.5:
+-        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
++        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
+      values.getOwners.4:
+-        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
++        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
+      values.getOwners.3:
+-        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
++        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
+      values.getOwners.2:
+-        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
++        "0xB3b60932E598fe946169EC209A197184Bad760B7"
+      values.getOwners.1:
+-        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
++        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
+      values.getOwners.0:
+-        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
++        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
+    }
+```
+
+Generated with discovered.json: 0x14d481f36a76e3853d048fce96b26891fb8f5ce4
 
 # Diff at Wed, 15 May 2024 12:20:50 GMT:
 

@@ -9,20 +9,20 @@ import {
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
 import { TrackedTxId } from '../../../types/TrackedTxId'
-import { TransactionData } from '../types/TransactionData'
 
-export interface L2CostsRecord<
-  T extends TransactionData['type'] = TransactionData['type'],
-> {
+export interface L2CostsRecord {
   timestamp: UnixTime
   txHash: string
   trackedTxId: TrackedTxId
-  data: Extract<TransactionData, { type: T }>
+  gasUsed: number
+  gasPrice: bigint
+  calldataLength: number
+  calldataGasUsed: number
+  blobGasUsed: number | null
+  blobGasPrice: bigint | null
 }
 
-export interface L2CostsRecordWithProjectId<
-  T extends TransactionData['type'] = TransactionData['type'],
-> extends L2CostsRecord<T> {
+export interface L2CostsRecordWithProjectId extends L2CostsRecord {
   projectId: ProjectId
 }
 
@@ -44,19 +44,8 @@ export class L2CostsRepository extends BaseRepository {
   ): Promise<number> {
     const knex = await this.knex(trx)
     const rows = records.map(toRow)
-    await knex.batchInsert('l2_costs', rows, 10_000)
+    await knex.batchInsert('l2_costs', rows, 1_000)
     return rows.length
-  }
-
-  async getByType<T extends TransactionData['type']>(
-    type: T,
-  ): Promise<L2CostsRecord<T>[]> {
-    const knex = await this.knex()
-    const rows = await knex('l2_costs')
-      .whereRaw("data->>'type' = ?", [type])
-      .orderBy('timestamp', 'desc')
-      .select()
-    return rows.map((r) => toRecord(r))
   }
 
   async getWithProjectIdByTimeRange(
@@ -73,59 +62,13 @@ export class L2CostsRepository extends BaseRepository {
         'tracked_txs_configs.id',
       )
       .distinct('tx_hash')
-      .select('project_id', 'tracked_tx_id', 'tx_hash', 'timestamp', 'data')
+      .select('tracked_txs_configs.project_id', 'l2_costs.*')
       .orderBy('timestamp', 'asc')
+
     return rows.map(toRecordWithProjectId)
   }
 
-  async findCountByProjectAndTimeRange(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<{ count: number }> {
-    const [from, to] = timeRange
-    const knex = await this.knex()
-    const count = await knex('l2_costs as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .where('c.project_id', projectId)
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .count('* as count')
-
-    if (count.length === 0) {
-      return { count: 0 }
-    }
-    if (count.length > 1) {
-      throw new Error('Expected exactly one row')
-    }
-    if (typeof count[0].count !== 'string') {
-      throw new Error('Expected count to be a string')
-    }
-
-    return { count: parseInt(count[0].count) }
-  }
-
-  async getByProjectAndTimeRangePaginated(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-    start: number,
-    limit: number,
-  ): Promise<L2CostsRecord[]> {
-    const [from, to] = timeRange
-    const knex = await this.knex()
-    const rows = await knex('l2_costs as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .where('c.project_id', projectId)
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .distinct('l.tx_hash')
-      .select('l.timestamp', 'l.tx_hash', 'l.tracked_tx_id', 'l.data')
-      .orderBy('l.timestamp', 'asc')
-      .offset(start)
-      .limit(limit)
-    return rows.map(toRecord)
-  }
-
-  async deleteFrom(
+  async deleteFromById(
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
     trx?: Knex.Transaction,
@@ -148,18 +91,26 @@ function toRow(record: L2CostsRecord): L2CostsRow {
     timestamp: record.timestamp.toDate(),
     tx_hash: record.txHash,
     tracked_tx_id: record.trackedTxId.toString(),
-    data: record.data,
+    gas_used: record.gasUsed,
+    gas_price: record.gasPrice.toString(),
+    calldata_gas_used: record.calldataGasUsed,
+    calldata_length: record.calldataLength,
+    blob_gas_used: record.blobGasUsed,
+    blob_gas_price: record.blobGasPrice?.toString() ?? null,
   }
 }
 
-function toRecord<T extends TransactionData['type']>(
-  row: L2CostsRow,
-): L2CostsRecord<T> {
+function toRecord(row: L2CostsRow): L2CostsRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
     trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
-    data: row.data as L2CostsRecord<T>['data'],
+    gasUsed: row.gas_used,
+    gasPrice: BigInt(row.gas_price),
+    calldataGasUsed: row.calldata_gas_used,
+    calldataLength: row.calldata_length,
+    blobGasUsed: row.blob_gas_used,
+    blobGasPrice: row.blob_gas_price ? BigInt(row.blob_gas_price) : null,
   }
 }
 
@@ -167,10 +118,7 @@ function toRecordWithProjectId(
   row: L2CostsRow & { project_id: string },
 ): L2CostsRecord & { projectId: ProjectId } {
   return {
-    timestamp: UnixTime.fromDate(row.timestamp),
-    txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
-    data: row.data,
+    ...toRecord(row),
     projectId: ProjectId(row.project_id),
   }
 }

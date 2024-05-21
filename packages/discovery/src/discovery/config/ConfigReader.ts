@@ -1,8 +1,8 @@
 import { readdirSync } from 'fs'
+import { readFileSync } from 'fs'
 import path from 'path'
 import { assert } from '@l2beat/backend-tools'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { readFile } from 'fs/promises'
 
 import { stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -17,10 +17,10 @@ export class ConfigReader {
   public templateService: TemplateService
 
   constructor(private readonly rootPath: string = '') {
-    this.templateService = new TemplateService()
+    this.templateService = new TemplateService(rootPath)
   }
 
-  async readConfig(name: string, chain: string): Promise<DiscoveryConfig> {
+  readConfig(name: string, chain: string): DiscoveryConfig {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
@@ -32,7 +32,7 @@ export class ConfigReader {
       'Chain not found in project, check if case matches',
     )
 
-    const contents = await readJsonc(
+    const contents = readJsonc(
       path.join(this.rootPath, 'discovery', name, chain, 'config.jsonc'),
     )
     const rawConfig = RawDiscoveryConfig.safeParse(contents)
@@ -43,15 +43,15 @@ export class ConfigReader {
       throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
     }
 
-    await this.templateService.inlineTemplates(rawConfig.data)
-    const config = new DiscoveryConfig(rawConfig.data)
+    this.templateService.inlineTemplates(rawConfig.data)
+    const config = new DiscoveryConfig(rawConfig.data, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }
 
-  async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
+  readDiscovery(name: string, chain: string): DiscoveryOutput {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
       'Project not found, check if case matches',
@@ -63,7 +63,7 @@ export class ConfigReader {
       'Chain not found in project, check if case matches',
     )
 
-    const contents = await readFile(
+    const contents = readFileSync(
       path.join(this.rootPath, 'discovery', name, chain, 'discovered.json'),
       'utf-8',
     )
@@ -89,12 +89,12 @@ export class ConfigReader {
     return [...chains]
   }
 
-  async readAllConfigsForChain(chain: string): Promise<DiscoveryConfig[]> {
+  readAllConfigsForChain(chain: string): DiscoveryConfig[] {
     const result: DiscoveryConfig[] = []
     const projects = this.readAllProjectsForChain(chain)
 
     for (const project of projects) {
-      const contents = await this.readConfig(project, chain)
+      const contents = this.readConfig(project, chain)
       result.push(contents)
     }
 

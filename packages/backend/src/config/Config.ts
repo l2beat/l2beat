@@ -57,7 +57,6 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
-    readonly l2costs: boolean
   }
 }
 
@@ -90,6 +89,7 @@ export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
+  readonly projects: Project[]
   readonly coingeckoApiKey: string | undefined
   readonly chainConverter: ChainConverter
   // used by value indexer
@@ -107,8 +107,6 @@ export interface TrackedTxsConfig {
     readonly liveness: boolean
     readonly l2costs:
       | {
-          readonly ethereumProviderUrl: string
-          readonly ethereumProviderCallsPerMinute?: number
           readonly aggregatorEnabled: boolean
           readonly coingeckoApiKey: string
         }
