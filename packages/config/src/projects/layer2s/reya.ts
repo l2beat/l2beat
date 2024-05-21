@@ -42,7 +42,7 @@ export const reya: Layer2 = orbitStackL2({
       type: 'blockscout',
     },
     multicallContracts: [],
-    minTimestampForTvl: new UnixTime(1709380607),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
   },
   trackedTxs: [
     {

@@ -9,7 +9,8 @@
     "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
     "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
     "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B"
+    "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504"
   ],
   "names": {
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
@@ -46,9 +47,18 @@
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "PlonkVerifierV0",
     "0x2293cd12e8564e8219d314b075867c2f66ac6941": "PlonkVerifierV1",
     "0x585DfaD7bF4099E011D185E266907A8ab60DAD2D": "ZkEvmVerifierV0",
-    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1"
+    "0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247": "ZkEvmVerifierV1",
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
+    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin"
   },
   "overrides": {
+    "wstETHescrowLidoProxyAdmin": {
+      "ignoreRelatives": ["owner"]
+    },
+    "wstETHescrowLido": {
+      "ignoreMethods": ["l1Token", "l2Token"],
+      "ignoreRelatives": ["owner"]
+    },
     "L1MessageQueue": {
       "ignoreMethods": [
         "estimateCrossDomainMessageFee",

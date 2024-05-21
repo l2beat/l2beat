@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -149,6 +150,14 @@ export const kroma: Layer2 = {
         sinceTimestamp: new UnixTime(1700122827),
         tokens: ['USDC'],
         description: 'Main entry point for users depositing USDC.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x88b6bBb148748C18B377A57c9d4E6c714AF28078'),
+        sinceTimestamp: new UnixTime(1715953739),
+        tokens: ['spETH'],
+        description: 'Escrow for the spETH custom gateway.',
+        upgradableBy: ['Spectrum EOA Admin'],
+        upgradeDelay: 'No delay',
       }),
     ],
     transactionApi: {
@@ -406,6 +415,31 @@ export const kroma: Layer2 = {
       'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://specs.kroma.network/protocol/rollup-node.html#derivation).',
   },
   permissions: [
+    {
+      name: 'Spectrum EOA Admin',
+      accounts: [discovery.getPermissionedAccount('SC_ProxyAdmin', 'owner')],
+      description: (() => {
+        const scPA = discovery.getPermissionedAccount(
+          'SC_ProxyAdmin',
+          'owner',
+        ).address
+        const shPA = discovery.getPermissionedAccount(
+          'SH_ProxyAdmin',
+          'owner',
+        ).address
+        const spETHPA = discovery.getPermissionedAccount(
+          'spETH_ProxyAdmin',
+          'owner',
+        ).address
+        assert(
+          scPA === shPA && shPA === spETHPA,
+          'Spectrum EOA Admin permission changed, please update the .ts file.',
+        )
+        const description =
+          'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.'
+        return description
+      })(),
+    },
     {
       name: 'SecurityCouncil',
       accounts: [

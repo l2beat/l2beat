@@ -10,6 +10,7 @@ import {
   ImplementationChangeReportApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
+import { SyncStatus } from '../../types'
 
 export interface ActivityPagesData {
   activityApiResponse: ActivityApiResponse
@@ -41,6 +42,5 @@ export interface ActivityViewEntryData {
   transactionsMonthlyCount: number
   maxTps: number
   maxTpsDate: string
-  // TODO: This is fixing typescript error although we will add this field in the future after the backend is ready
-  syncStatus?: never
+  syncStatus: SyncStatus
 }

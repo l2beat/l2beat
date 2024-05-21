@@ -66,25 +66,13 @@ async function main() {
       implementationChange,
       l2CostsApiResponse,
     ] = await Promise.all([
-      fetchTvlApi(config.backend, http, config.features),
-      config.features.activity
-        ? fetchActivityApi(config.backend, http)
-        : undefined,
-      config.features.tvlBreakdown
-        ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http)
-        : undefined,
-      config.features.liveness
-        ? fetchLivenessApi(config.backend, http)
-        : undefined,
-      config.features.finality
-        ? fetchFinalityApi(config.backend, http)
-        : undefined,
-      config.features.implementationChange
-        ? fetchImplementationChangeReport(config.backend, http)
-        : undefined,
-      config.features.costsPage
-        ? fetchL2CostsApi(config.backend, http)
-        : undefined,
+      fetchTvlApi(config.backend, http, config.features
+      config.features.activity ? fetchActivityApi(config.backend, http) : undefined,
+      config.features.tvlBreakdown ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http, config.features) : undefined,
+      config.features.liveness ? fetchLivenessApi(config.backend, http) : undefined,
+      config.features.finality ? fetchFinalityApi(config.backend, http) : undefined,
+      config.features.implementationChange ? fetchImplementationChangeReport(config.backend, http) : undefined,
+      config.features.costsPage ? fetchL2CostsApi(config.backend, http) : undefined
     ])
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)
