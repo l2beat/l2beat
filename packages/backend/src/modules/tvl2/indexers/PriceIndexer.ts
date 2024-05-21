@@ -104,7 +104,6 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
           from: configuration.from,
           to: configuration.to,
           id: configuration.id,
-          coingeckoId: configuration.properties.coingeckoId,
           deletedRecords,
         })
       }
