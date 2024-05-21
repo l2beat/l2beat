@@ -2,12 +2,17 @@ import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { Project, bridges, layer2s } from '..'
+import {
+  Project,
+  ScalingProjectContract,
+  ScalingProjectPermission,
+  bridges,
+  layer2s,
+} from '..'
+import { gatherAddressesFromUpgradeability } from '../../scripts/checkVerifiedContracts/addresses'
 
-export const l2CommonContracts = findCommonContracts(layer2s.map((l2) => l2.id))
-export const bridgeCommonContracts = findCommonContracts(
-  bridges.map((b) => b.id),
-)
+export const l2CommonContracts = findCommonContracts(layer2s)
+export const bridgeCommonContracts = findCommonContracts(bridges)
 
 export function getCommonContractsIn(projectType: Project['type']) {
   if (projectType === 'layer2') {
@@ -19,7 +24,9 @@ export function getCommonContractsIn(projectType: Project['type']) {
   }
 }
 
-function findCommonContracts(projects: string[]) {
+function findCommonContracts(
+  projects: Pick<Project, 'id' | 'contracts' | 'permissions'>[],
+) {
   const configReader = new ConfigReader('../backend')
   // TODO(radomski): Handling L3s
   const configs = configReader.readAllConfigsForChain('ethereum')
@@ -72,14 +79,118 @@ function findCommonContracts(projects: string[]) {
     }
   })
 
-  return merge(commonContracts, commonEOAs)
+  const merged = merge(commonContracts, commonEOAs)
+  const referenced = dropNonusedAddresses(projects, merged)
+
+  console.log(referenced)
+  return referenced
+}
+
+type ReferenceInfo = {
+  id: ProjectId
+  usedAs: 'contract' | 'permission'
+  targetName: string
+}
+
+function dropNonusedAddresses(
+  projects: Pick<Project, 'id' | 'contracts' | 'permissions'>[],
+  commonContracts: Record<string, ProjectId[]>,
+): Record<string, ReferenceInfo[]> {
+  const result: Record<string, ReferenceInfo[]> = {}
+
+  Object.entries(commonContracts).forEach(([address, projectIds]) => {
+    projectIds.forEach((id) => {
+      const project = projects.find((p) => p.id === id)
+      if (!project) {
+        throw new Error('Invalid project type')
+      }
+
+      const contract = projectContainsAddressAsContract(project, address)
+      const permission = getPermissionContainingAddress(project, address)
+      if (contract !== undefined) {
+        result[address] ??= []
+        result[address].push({
+          id,
+          usedAs: 'contract',
+          targetName: contract.name,
+        })
+      } else if (permission !== undefined) {
+        result[address] ??= []
+        result[address].push({
+          id,
+          usedAs: 'permission',
+          targetName: permission.name,
+        })
+      }
+    })
+  })
+
+  return result
+}
+
+function projectContainsAddressAsContract(
+  project: Pick<Project, 'contracts'>,
+  address: string,
+): ScalingProjectContract | undefined {
+  if (project.contracts === undefined) {
+    return undefined
+  }
+
+  for (const contract of project.contracts.addresses) {
+    if (
+      'address' in contract &&
+      (contract.address.toString() === address ||
+        (contract.upgradeability !== undefined &&
+          gatherAddressesFromUpgradeability(contract.upgradeability)
+            .map((a) => a.toString())
+            .includes(address)))
+    ) {
+      return contract
+    }
+    if (
+      'multipleAddresses' in contract &&
+      contract.multipleAddresses.map((a) => a.toString()).includes(address)
+    ) {
+      return contract
+    }
+  }
+
+  return undefined
+}
+
+function getPermissionContainingAddress(
+  project: Pick<Project, 'permissions'>,
+  address: string,
+): ScalingProjectPermission | undefined {
+  if (
+    project.permissions === undefined ||
+    project.permissions === 'UnderReview'
+  ) {
+    return undefined
+  }
+
+  for (const permission of project.permissions) {
+    if (permission.accounts.length > 1) {
+      continue
+    }
+
+    if (
+      permission.accounts.map((a) => a.address.toString()).includes(address)
+    ) {
+      return permission
+    }
+  }
+
+  return undefined
 }
 
 function getFilteredDiscoveries(
-  projects: string[],
+  projects: Pick<Project, 'id'>[],
   discoveriesFull: DiscoveryOutput[],
 ) {
-  return discoveriesFull.filter((d) => projects.includes(d.name))
+  return discoveriesFull.filter((d) =>
+    projects.map((p) => p.id.toString()).includes(d.name),
+  )
 }
 
 function getProjectAddresses(project: DiscoveryOutput) {

@@ -22,8 +22,8 @@ export function getUsedInProjects(
     const usedIn = [
       ...new Set(
         addresses.flatMap((address) => {
-          const addressInProjects = commonContracts[address] ?? []
-          return addressInProjects.filter((id) => project.id !== id)
+          const references = commonContracts[address] ?? []
+          return references.filter((ref) => project.id !== ref.id)
         }),
       ),
     ]
@@ -31,17 +31,18 @@ export function getUsedInProjects(
     let usedInProjects: UsedInProject[] | undefined
 
     if (usedIn.length > 0) {
-      usedInProjects = usedIn.map((id) => {
-        const refProject = projects.find((p) => p.id === id)
+      usedInProjects = usedIn.map((ref) => {
+        const refProject = projects.find((p) => p.id === ref.id)
         if (!refProject) {
           throw new Error('Invalid project type')
         }
 
         return {
           type,
-          id,
+          id: ref.id,
           name: refProject.display.name,
           slug: refProject.display.slug,
+          targetName: ref.targetName,
           iconPath: `/icons/${refProject.display.slug}.png`,
         }
       })

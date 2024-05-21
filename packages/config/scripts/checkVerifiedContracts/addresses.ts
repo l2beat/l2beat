@@ -58,7 +58,7 @@ function isContractOnChain(contract: ScalingProjectContract, chain: string) {
   return contract.chain === chain
 }
 
-function gatherAddressesFromUpgradeability(
+export function gatherAddressesFromUpgradeability(
   item: ScalingProjectUpgradeability,
 ): EthereumAddress[] {
   const result: EthereumAddress[] = []

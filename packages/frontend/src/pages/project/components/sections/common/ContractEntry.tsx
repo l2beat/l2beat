@@ -25,6 +25,7 @@ export interface UsedInProject {
   name: string
   slug: string
   iconPath: string
+  targetName: string
   type: 'implementation' | 'proxy'
 }
 
@@ -178,14 +179,12 @@ export function ContractEntry({
             <UsedInProjectEntry
               label="Used in projects (proxies)"
               implementations={sharedProxies}
-              contractName={contract.name}
             />
           )}
           {sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
               label={implementationLabel}
               implementations={sharedImplementations}
-              contractName={contract.name}
             />
           )}
           {contract.upgradeConsiderations && (
@@ -214,8 +213,7 @@ export function ContractEntry({
 function UsedInProjectEntry({
   label,
   implementations,
-  contractName,
-}: { label: string; implementations: UsedInProject[]; contractName: string }) {
+}: { label: string; implementations: UsedInProject[] }) {
   return (
     <div className="mt-2 flex flex-row items-center">
       <p className="text-gray-850 dark:text-gray-400">
@@ -226,7 +224,9 @@ function UsedInProjectEntry({
         {implementations.map((project, i) => (
           <Tooltip key={i}>
             <TooltipTrigger>
-              <a href={`/scaling/projects/${project.slug}/#${contractName}`}>
+              <a
+                href={`/scaling/projects/${project.slug}/#${project.targetName}`}
+              >
                 <img
                   key={i}
                   src={project.iconPath}
