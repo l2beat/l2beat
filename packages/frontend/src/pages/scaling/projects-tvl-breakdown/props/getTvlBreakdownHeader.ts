@@ -1,11 +1,11 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import { ProjectAssetsBreakdownApiResponse } from '@l2beat/shared-pure'
 
 import { formatTimestampToDateWithHour } from '../../../../utils'
 import { TvlBreakdownHeaderProps } from '../view/TvlBreakdownHeader'
 
 export function getTvlBreakdownHeader(
-  project: Layer2,
+  project: Layer2 | Layer3,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ): TvlBreakdownHeaderProps {
   return {
