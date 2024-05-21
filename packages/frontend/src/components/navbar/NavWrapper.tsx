@@ -234,7 +234,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
           className="overflow-x-scroll w-full border-b border-gray-200 dark:border-gray-850 text-center"
           data-role="sidenav-mobile-tabs"
         >
-          <div className="inline-flex flex-row gap-2 px-4 py-2 m-auto">
+          <div className="inline-flex flex-row gap-2 px-4 py-2 m-auto text-nowrap">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
