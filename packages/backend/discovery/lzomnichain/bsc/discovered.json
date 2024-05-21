@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "bsc",
   "blockNumber": 37363085,
-  "configHash": "0x31a90e21170b899e7187928b99964de81a8cfb8e4f190116b88262b5ca80976f",
+  "configHash": "0xa5396a1a2e11aeb0f8e7ef582ed4a209f01b734e71667872e6bdebda305a75c3",
   "version": 3,
   "contracts": [
     {

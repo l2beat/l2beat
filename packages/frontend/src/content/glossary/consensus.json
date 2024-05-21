@@ -1,0 +1,5 @@
+{
+  "term": "Consensus",
+  "definition": "An agreement on the latest and correct state of a blockchain. Unlike L1 blockchains which coordinate participating nodes with consensus rules, rollups rely on L1s for reaching consensus by checking the state of the rollup smart contract deployed thereon.",
+  "isSpicy": false
+}

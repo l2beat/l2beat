@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 19866806,
-  "configHash": "0xb191923fb60aea088300b7a2fb97163d54c669093cc857e24d031bb03ab98122",
+  "configHash": "0x4719aabda9fee0334d594061b41b502a7b6480450cec77413b1b2fee4adfc676",
   "version": 4,
   "contracts": [
     {

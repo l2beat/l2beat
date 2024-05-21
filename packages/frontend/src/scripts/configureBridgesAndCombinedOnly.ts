@@ -1,7 +1,7 @@
 import { makeQuery } from './query'
 
 export function configureBridgesAndCombinedOnly() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
 
   const includeCanonicalCheckbox = $.maybe<HTMLInputElement>(
     '[data-role=chart-combined]',

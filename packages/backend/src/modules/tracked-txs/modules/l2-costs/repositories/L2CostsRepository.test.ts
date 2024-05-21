@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { range } from 'lodash'
 import { describe } from 'mocha'
 
 import { describeDatabase } from '../../../../../test/database'
@@ -22,39 +21,34 @@ describeDatabase(L2CostsRepository.name, (database) => {
       timestamp: START,
       txHash: '0x1',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 2,
-        gasUsed: 100,
-        gasPrice: 1,
-        calldataLength: 100,
-        calldataGasUsed: 100,
-      },
+      gasUsed: 100,
+      gasPrice: 1n,
+      calldataLength: 100,
+      calldataGasUsed: 100,
+      blobGasPrice: null,
+      blobGasUsed: null,
     },
     {
       timestamp: START.add(-1, 'hours'),
       txHash: '0x2',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 3,
-        gasUsed: 200,
-        gasPrice: 2,
-        calldataLength: 200,
-        calldataGasUsed: 200,
-        blobGasPrice: 3,
-        blobGasUsed: 300,
-      },
+      gasUsed: 200,
+      gasPrice: 2n,
+      calldataLength: 200,
+      calldataGasUsed: 200,
+      blobGasPrice: 3n,
+      blobGasUsed: 300,
     },
     {
       timestamp: START.add(-2, 'hours'),
       txHash: '0x3',
       trackedTxId: TrackedTxId.random(),
-      data: {
-        type: 2,
-        gasUsed: 150,
-        gasPrice: 2,
-        calldataLength: 400,
-        calldataGasUsed: 400,
-      },
+      gasUsed: 150,
+      gasPrice: 2n,
+      calldataLength: 400,
+      calldataGasUsed: 400,
+      blobGasPrice: null,
+      blobGasUsed: null,
     },
   ]
 
@@ -81,13 +75,12 @@ describeDatabase(L2CostsRepository.name, (database) => {
           timestamp: START,
           txHash: '0x4',
           trackedTxId: DATA[0].trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 100,
-            gasPrice: 1,
-            calldataLength: 100,
-            calldataGasUsed: 100,
-          },
+          gasUsed: 100,
+          gasPrice: 1n,
+          calldataLength: 100,
+          calldataGasUsed: 100,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
       ]
       await repository.addMany(newRow)
@@ -100,29 +93,6 @@ describeDatabase(L2CostsRepository.name, (database) => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
   })
-
-  describe(
-    L2CostsRepository.prototype.findCountByProjectAndTimeRange.name,
-    () => {
-      it('should return count of rows for given project id and range timestamp', async () => {
-        const results = await repository.findCountByProjectAndTimeRange(
-          ProjectId('project-2'),
-          [START.add(-2, 'hours'), START.add(1, 'hours')],
-        )
-
-        expect(results).toEqual({ count: 2 })
-      })
-
-      it('should return count of rows equal 0 for given project id and range timestamp', async () => {
-        const results = await repository.findCountByProjectAndTimeRange(
-          ProjectId('project-2'),
-          [START.add(1, 'hours'), START.add(2, 'hours')],
-        )
-
-        expect(results).toEqual({ count: 0 })
-      })
-    },
-  )
 
   describe(L2CostsRepository.prototype.getWithProjectIdByTimeRange.name, () => {
     it('should return all rows for given time range', async () => {
@@ -153,59 +123,6 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(
-    L2CostsRepository.prototype.getByProjectAndTimeRangePaginated.name,
-    () => {
-      it('should return limited number of rows', async () => {
-        const trackedTxId = TrackedTxId.random()
-        await configRepository.deleteAll()
-        await configRepository.addMany([
-          {
-            id: trackedTxId,
-            projectId: ProjectId('project-1'),
-            type: 'liveness',
-            sinceTimestampInclusive: START,
-            debugInfo: '',
-          },
-        ])
-        await repository.deleteAll()
-        const DATA = range(7).map((i) => ({
-          timestamp: START.add(-i, 'hours'),
-          txHash: '0x1',
-          trackedTxId: trackedTxId,
-          data: {
-            type: 2 as const,
-            gasUsed: 100,
-            gasPrice: 1,
-            calldataLength: 100,
-            calldataGasUsed: 100,
-          },
-        }))
-        await repository.addMany(DATA)
-
-        const results = await repository.getByProjectAndTimeRangePaginated(
-          ProjectId('project-1'),
-          [START.add(-7, 'hours'), START.add(1, 'hours')],
-          0,
-          5,
-        )
-
-        expect(results).toEqualUnsorted(DATA.slice(2, 8))
-      })
-
-      it('should return all rows for given project id and since timestamp with exclusive to', async () => {
-        const results = await repository.getByProjectAndTimeRangePaginated(
-          ProjectId('project-2'),
-          [START.add(-1, 'days'), START],
-          0,
-          5,
-        )
-
-        expect(results).toEqual([DATA[2]])
-      })
-    },
-  )
-
   describe(L2CostsRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
@@ -224,19 +141,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.getByType.name, () => {
-    it('returns all records of type 2 tx', async () => {
-      const result = await repository.getByType(2)
-      expect(result).toEqual([DATA[0], DATA[2]] as L2CostsRecord<2>[])
-    })
-
-    it('returns all records of type 3 tx', async () => {
-      const result = await repository.getByType(3)
-      expect(result).toEqual([DATA[1]] as L2CostsRecord<3>[])
-    })
-  })
-
-  describe(L2CostsRepository.prototype.deleteFrom.name, () => {
+  describe(L2CostsRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
       const trackedTxId = TrackedTxId.random()
@@ -246,37 +151,34 @@ describeDatabase(L2CostsRepository.name, (database) => {
           timestamp: START.add(-1, 'hours'),
           txHash: '0x4',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
         {
           timestamp: START.add(1, 'hours'),
-          txHash: '0x4',
+          txHash: '0x45',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
         {
           timestamp: START.add(2, 'hours'),
           txHash: '0x5',
           trackedTxId,
-          data: {
-            type: 2,
-            gasUsed: 150,
-            gasPrice: 2,
-            calldataLength: 400,
-            calldataGasUsed: 400,
-          },
+          gasUsed: 150,
+          gasPrice: 2n,
+          calldataLength: 400,
+          calldataGasUsed: 400,
+          blobGasPrice: null,
+          blobGasUsed: null,
         },
       ]
 
@@ -291,7 +193,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       ])
       await repository.addMany(records)
 
-      await repository.deleteFrom(trackedTxId, START)
+      await repository.deleteFromById(trackedTxId, START)
 
       const result = await repository.getAll()
 

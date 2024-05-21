@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "aztecconnect",
   "initialAddresses": ["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"],
@@ -14,27 +14,35 @@
     "RollupProcessorV3": {
       "fields": {
         "getSupportedBridge": {
-          "type": "array",
-          "method": "getSupportedBridge",
-          "length": "{{ getSupportedBridgesLength }}",
-          "startIndex": 1,
-          "ignoreRelative": true
+          "handler": {
+            "type": "array",
+            "method": "getSupportedBridge",
+            "length": "{{ getSupportedBridgesLength }}",
+            "startIndex": 1,
+            "ignoreRelative": true
+          }
         },
         "getSupportedAsset": {
-          "type": "array",
-          "method": "getSupportedAsset",
-          "length": "{{ getSupportedAssetsLength }}",
-          "startIndex": 1,
-          "ignoreRelative": true
+          "handler": {
+            "type": "array",
+            "method": "getSupportedAsset",
+            "length": "{{ getSupportedAssetsLength }}",
+            "startIndex": 1,
+            "ignoreRelative": true
+          }
         },
         "rollupProviders": {
-          "type": "arrayFromOneEvent",
-          "event": "RollupProviderUpdated",
-          "valueKey": "providerAddress",
-          "flagKey": "valid"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "RollupProviderUpdated",
+            "valueKey": "providerAddress",
+            "flagKey": "valid"
+          }
         },
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       },
       "ignoreMethods": [

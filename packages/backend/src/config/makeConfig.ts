@@ -128,7 +128,6 @@ export function makeConfig(
       cache: {
         tvl: flags.isEnabled('cache', 'tvl'),
         liveness: flags.isEnabled('cache', 'liveness'),
-        l2costs: flags.isEnabled('cache', 'l2costs'),
       },
     },
     health: {
@@ -177,17 +176,6 @@ export function makeConfig(
             'tracked-txs',
             'l2costs',
             'aggregator',
-          ),
-          ethereumProviderUrl: env.string([
-            'ETHEREUM_RPC_URL_FOR_L2COSTS',
-            'ETHEREUM_RPC_URL',
-          ]),
-          ethereumProviderCallsPerMinute: env.integer(
-            [
-              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
-              'ETHEREUM_RPC_CALLS_PER_MINUTE',
-            ],
-            600,
           ),
           coingeckoApiKey: env.string([
             'COINGECKO_API_KEY_FOR_TVL',

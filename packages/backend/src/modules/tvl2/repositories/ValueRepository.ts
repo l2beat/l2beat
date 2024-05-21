@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
@@ -31,6 +32,8 @@ export interface ValueRecord {
   nativeForTotal: bigint
 }
 
+const BATCH_SIZE = 2_000
+
 export class ValueRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -39,32 +42,34 @@ export class ValueRepository extends BaseRepository {
 
   async getForProjects(projectIds: ProjectId[]) {
     const knex = await this.knex()
-    const rows = await knex('values')
-      .whereIn(
-        'project_id',
-        projectIds.map((id) => id.toString()),
-      )
-      .orderBy('timestamp', 'asc')
+    const rows = await knex('values').whereIn(
+      'project_id',
+      projectIds.map((id) => id.toString()),
+    )
     return rows.map(toRecord)
   }
 
-  async getDailyForProjects(projectIds: ProjectId[]) {
-    const knex = await this.knex()
-    const rows = await knex('values')
-      .whereIn(
-        'project_id',
-        projectIds.map((id) => id.toString()),
-      )
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
-      .orderBy('timestamp', 'asc')
-    return rows.map(toRecord)
+  async addOrUpdateMany(records: ValueRecord[]) {
+    await this.runInTransaction(async (trx) => {
+      for (let i = 0; i < records.length; i += BATCH_SIZE) {
+        await this._addOrUpdateMany(records.slice(i, i + BATCH_SIZE), trx)
+      }
+    })
+
+    return records.length
   }
 
-  async addMany(records: ValueRecord[]) {
-    const rows: ValueRow[] = records.map(toRow)
-    const knex = await this.knex()
-    await knex.batchInsert('values', rows, 10_000)
-    return rows.length
+  private async _addOrUpdateMany(
+    records: ValueRecord[],
+    trx: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+    const rows = records.map(toRow)
+
+    await knex('values')
+      .insert(rows)
+      .onConflict(['project_id', 'timestamp', 'data_source'])
+      .merge()
   }
 
   async addOrUpdate(record: ValueRecord) {

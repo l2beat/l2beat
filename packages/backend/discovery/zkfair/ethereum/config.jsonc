@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zkfair",
   "initialAddresses": ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861"],
@@ -35,13 +35,17 @@
       ],
       "fields": {
         "_HALT_AGGREGATION_TIMEOUT": {
-          "type": "hardcoded",
-          "value": 604800
+          "handler": {
+            "type": "hardcoded",
+            "value": 604800
+          }
         },
         "nondeterminsiticPendingState": {
-          "type": "stateFromEvent",
-          "event": "ProveNonDeterministicPendingState",
-          "returnParams": ["storedStateRoot", "provedStateRoot"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "ProveNonDeterministicPendingState",
+            "returnParams": ["storedStateRoot", "provedStateRoot"]
+          }
         }
       }
     },
@@ -55,7 +59,9 @@
       ],
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -83,9 +89,13 @@
       "ignoreDiscovery": true
     },
     "DataAvailabilityCommittee": {
+      "description": "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.",
       "fields": {
         "members": {
-          "type": "array"
+          "description": "URL and address of the DAC member",
+          "handler": {
+            "type": "array"
+          }
         }
       }
     }

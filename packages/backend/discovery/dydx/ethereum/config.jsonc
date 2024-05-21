@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "dydx",
   "initialAddresses": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],
@@ -43,37 +43,47 @@
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "fields": {
         "OPERATORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event LogOperatorAdded(address operator)",
-          "addKey": "operator",
-          "removeEvent": "event LogOperatorRemoved(address operator)",
-          "removeKey": "operator"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event LogOperatorAdded(address operator)",
+            "addKey": "operator",
+            "removeEvent": "event LogOperatorRemoved(address operator)",
+            "removeKey": "operator"
+          }
         },
         "escapeVerifier": {
-          "type": "storage",
-          "slot": 4,
-          "returnType": "address"
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          }
         }
       }
     },
     "Committee": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "GpsStatementVerifier": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
     "CpuFrilessVerifier": {
       "fields": {
         "constructorArgs": {
-          "type": "constructorArgs"
+          "handler": {
+            "type": "constructorArgs"
+          }
         }
       }
     },
@@ -94,14 +104,18 @@
       "ignoreInWatchMode": ["getProposalsCount"],
       "fields": {
         "EXECUTORS": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event ExecutorAuthorized(address executor)",
-          "addKey": "executor",
-          "removeEvent": "event ExecutorUnauthorized(address executor)",
-          "removeKey": "executor"
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event ExecutorAuthorized(address executor)",
+            "addKey": "executor",
+            "removeEvent": "event ExecutorUnauthorized(address executor)",
+            "removeKey": "executor"
+          }
         },
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -120,24 +134,32 @@
       "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         },
         "slashings": {
-          "type": "stateFromEvent",
-          "event": "Slashed",
-          "returnParams": ["amount", "recipient", "newExchangeRate"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "Slashed",
+            "returnParams": ["amount", "recipient", "newExchangeRate"]
+          }
         }
       }
     },
     "LiquidityStaking": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         },
         "BORROWERS_LIST": {
-          "type": "arrayFromOneEvent",
-          "event": "event ScheduledBorrowerAllocationChange(address indexed borrower,uint256 oldAllocation,uint256 newAllocation,uint256 epochNumber)",
-          "valueKey": "borrower"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event ScheduledBorrowerAllocationChange(address indexed borrower,uint256 oldAllocation,uint256 newAllocation,uint256 epochNumber)",
+            "valueKey": "borrower"
+          }
         }
       },
       "ignoreRelatives": ["BORROWERS_LIST"],
@@ -177,10 +199,12 @@
       "ignoreMethods": ["getMinimumVotingPowerNeeded"],
       "fields": {
         "PRIORITY_CONTROLLERS": {
-          "type": "arrayFromOneEvent",
-          "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
-          "valueKey": "account",
-          "flagKey": "isPriorityController"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event PriorityControllerUpdated(address account, bool isPriorityController)",
+            "valueKey": "account",
+            "flagKey": "isPriorityController"
+          }
         }
       }
     },
@@ -196,7 +220,9 @@
     "MerkleDistributor": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       },
       "ignoreMethods": [

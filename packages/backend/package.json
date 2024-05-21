@@ -28,7 +28,8 @@
     "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts",
     "compare-orbit-chains": "ts-node --transpile-only scripts/compareOrbitChains.ts",
     "compare-opstack-chains": "ts-node --transpile-only scripts/compareOpStackChains.ts",
-    "compare-flat-sources": "ts-node --transpile-only scripts/compare-flat/index.ts"
+    "compare-flat-sources": "ts-node --transpile-only scripts/compare-flat/index.ts",
+    "merge-meta-into-config": "ts-node --transpile-only scripts/mergeMetaIntoConfig.ts && yarn format:fix"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
@@ -42,6 +43,7 @@
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/uif": "*",
+    "@types/koa-compress": "^4.0.6",
     "@types/readline-sync": "^1.4.8",
     "ansi-to-html": "^0.7.2",
     "basic-auth": "^2.0.1",
@@ -51,6 +53,7 @@
     "jsonc-parser": "^3.2.0",
     "knex": "^2.4.2",
     "koa": "^2.14.1",
+    "koa-compress": "^5.1.1",
     "koa-conditional-get": "^3.0.0",
     "koa-etag": "^4.0.0",
     "lodash": "^4.17.21",
@@ -80,6 +83,7 @@
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
     "@types/supertest": "^2.0.12",
+    "comment-json": "^4.2.3",
     "supertest": "^6.2.3",
     "ts-node-dev": "^2.0.0"
   }

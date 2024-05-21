@@ -25,9 +25,18 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
-  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
+  async getByConfigIdsInRange(
+    configIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<PriceRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('prices').where('timestamp', timestamp.toDate())
+    const rows = await knex('prices')
+      .whereIn('configuration_id', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .andWhere('timestamp', '<=', toInclusive.toDate())
+      .orderBy('timestamp')
+
     return rows.map(toRecord)
   }
 

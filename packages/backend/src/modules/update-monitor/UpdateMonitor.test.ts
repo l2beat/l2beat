@@ -3,7 +3,7 @@ import {
   ConfigReader,
   DiscoveryConfig,
   DiscoveryDiff,
-  ValueMeta,
+  RawDiscoveryConfig,
 } from '@l2beat/discovery'
 import type {
   ContractParameters,
@@ -133,17 +133,13 @@ describe(UpdateMonitor.name, () => {
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
 
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
-        },
-
-        readMeta: async () => {
-          return undefined
         },
       })
 
@@ -208,20 +204,18 @@ describe(UpdateMonitor.name, () => {
 
   describe(UpdateMonitor.prototype.updateChain.name, () => {
     it('iterates over projects and finds diff', async () => {
+      const config = mockConfig(PROJECT_A)
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
+        readConfig: () => config,
 
-        readAllConfigsForChain: async () => [
+        readAllConfigsForChain: () => [
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ],
-
-        readMeta: async () => {
-          return undefined
-        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -273,7 +267,7 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
-        undefined,
+        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -283,7 +277,7 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
-        undefined,
+        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -293,8 +287,8 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification about the same change', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -337,8 +331,8 @@ describe(UpdateMonitor.name, () => {
 
     it('does not send notification if discovery throws', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -378,16 +372,14 @@ describe(UpdateMonitor.name, () => {
       const config = mockConfig(PROJECT_A)
 
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [config],
-        readDiscovery: async () => ({
+        readAllConfigsForChain: () => [config],
+        readConfig: () => config,
+        readDiscovery: () => ({
           ...mockProject,
           blockNumber: BLOCK_NUMBER - 1,
           contracts: [],
           version: 0,
         }),
-        readMeta: async () => {
-          return undefined
-        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -451,8 +443,8 @@ describe(UpdateMonitor.name, () => {
 
     it('handles error', async () => {
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: async () => [mockConfig(PROJECT_A)],
-        readDiscovery: async () => ({ ...mockProject, contracts: [] }),
+        readAllConfigsForChain: () => [mockConfig(PROJECT_A)],
+        readDiscovery: () => ({ ...mockProject, contracts: [] }),
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -502,7 +494,7 @@ describe(UpdateMonitor.name, () => {
         contracts: COMMITTED,
       }
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => committed,
+        readDiscovery: () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -577,7 +569,7 @@ describe(UpdateMonitor.name, () => {
       }
 
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => committed,
+        readDiscovery: () => committed,
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -681,7 +673,7 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async (name: string, chain: string) => {
+        readDiscovery: (name: string, chain: string) => {
           if (name === PROJECT_B && chain === 'ethereum') {
             return DISCOVERY_RESULT_ETH_2
           }
@@ -695,40 +687,29 @@ describe(UpdateMonitor.name, () => {
           }
         },
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           if (chain === 'arbitrum') {
             return [mockConfig(PROJECT_B, chain)]
           }
-
-          return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
-        },
-
-        readMeta: async (_: string, chain: string) => {
-          let valueMeta: ValueMeta | undefined = undefined
-          if (chain === 'arbitrum') {
-            valueMeta = {
-              severity: null,
-              description: null,
-              type: null,
-            }
-          } else {
-            valueMeta = {
-              severity: 'MEDIUM',
-              description: null,
-              type: null,
-            }
-          }
-
-          return {
-            contracts: [
-              {
-                name: NAME_A,
-                values: { a: valueMeta },
+          const innerConfig: Partial<RawDiscoveryConfig> = {
+            overrides: {
+              [NAME_A]: {
+                fields: {
+                  a: {
+                    severity: 'MEDIUM',
+                  },
+                },
               },
-            ],
+            },
           }
+
+          return [
+            mockConfig(PROJECT_A, chain, innerConfig),
+            mockConfig(PROJECT_B, chain, innerConfig),
+          ]
         },
       })
+
       const updateMonitor = new UpdateMonitor(
         runners,
         updateNotifier,
@@ -749,13 +730,13 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_A]: [
           {
             chainName: 'ethereum',
-            severityCounts: { low: 0, medium: 1, high: 0, unknown: 0 },
+            severityCounts: { low: 0, medium: 1, high: 0, unknown: 1 },
           },
         ],
         [PROJECT_B]: [
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
           },
         ],
       })
@@ -777,17 +758,13 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
-        },
-
-        readMeta: async () => {
-          return undefined
         },
       })
       const updateMonitor = new UpdateMonitor(
@@ -828,12 +805,12 @@ describe(UpdateMonitor.name, () => {
         addOrUpdate: async () => '',
       })
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: async () => ({
+        readDiscovery: () => ({
           ...mockProject,
           contracts: COMMITTED,
         }),
 
-        readAllConfigsForChain: async (chain: string) => {
+        readAllConfigsForChain: (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
       })
@@ -892,11 +869,16 @@ function mockContract(
   }
 }
 
-function mockConfig(name: string, chain = 'ethereum'): DiscoveryConfig {
+function mockConfig(
+  name: string,
+  chain = 'ethereum',
+  innerConfig: Partial<RawDiscoveryConfig> = {},
+): DiscoveryConfig {
   return new DiscoveryConfig({
     name,
     chain,
     initialAddresses: [],
+    ...innerConfig,
   })
 }
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polygon-plasma",
   "initialAddresses": [
@@ -71,9 +71,11 @@
     "StateSender": {
       "fields": {
         "REGISTRATIONS": {
-          "type": "arrayFromOneEvent",
-          "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
-          "valueKey": "sender"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
+            "valueKey": "sender"
+          }
         }
       },
       "ignoreInWatchMode": ["counter"]
@@ -136,7 +138,9 @@
     "Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },

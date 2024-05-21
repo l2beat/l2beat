@@ -2,7 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "blockNumber": 19859812,
-  "configHash": "0x5edb9b8eeaf1bd749321c169b2f0cf0a50803a2c52ed16d6fc39ebcb04e7d15c",
+  "configHash": "0xd8aac0f7f8af6990106a369fa895ec195a08d471be4321dcda2db8ea1fac6517",
   "version": 4,
   "contracts": [
     {
