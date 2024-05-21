@@ -13,12 +13,15 @@ export interface DashboardLayoutProps {
 
 export function DashboardLayout(props: DashboardLayoutProps) {
   const { path } = usePageBuildContext()
+  const scalingOrBridges = ['/scaling', '/bridges'].some((p) =>
+    path.startsWith(p),
+  )
   return (
-    <NavWrapper>
+    <NavWrapper legacyNav={!scalingOrBridges}>
       <PageContent>
         <main className="mt-4 md:mt-12">
           {props.children}
-          {['/scaling', '/bridges'].some((p) => path.startsWith(p)) && (
+          {scalingOrBridges && (
             <>
               <OtherSites />
               <About />

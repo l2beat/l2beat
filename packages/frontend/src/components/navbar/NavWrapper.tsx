@@ -271,10 +271,18 @@ function Divider({ className }: { className?: string }) {
   )
 }
 
-export function Sidenav({ links }: { links: NavbarLinkGroups }) {
+export function Sidenav({
+  links,
+  legacyNav,
+}: {
+  links: NavbarLinkGroups
+  legacyNav: boolean
+}) {
   const { config } = usePageBuildContext()
-  const sharedSizeClasses =
-    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]'
+  const sharedSizeClasses = cn(
+    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]',
+    legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
+  )
 
   return (
     <div
@@ -301,7 +309,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
           <div className="flex flex-row justify-between items-center">
             <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
             <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
-            <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4">
+            <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4 items-center">
               <DarkThemeToggle />
               <button className="xl:hidden" data-role="sidenav-mobile-toggle">
                 <MenuCloseIcon className="h-6 w-6" />
@@ -352,7 +360,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
             <Divider className="xl:hidden" />
-            <ul className="xl:hidden flex flex-row gap-4">
+            <ul className="xl:hidden flex flex-row gap-4 pb-12">
               <SocialLinks />
             </ul>
           </nav>
@@ -373,7 +381,99 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
   )
 }
 
-export function NavWrapper({ children }: { children: ReactNode }) {
+function LegacyNavBarLink({
+  href,
+  children,
+  large,
+  title,
+}: { href: string; large?: boolean } & (
+  | { title: string; children?: never }
+  | { title?: never; children: React.ReactNode }
+)) {
+  const { path } = usePageBuildContext()
+  return (
+    <li className="h-full">
+      <a
+        className={cn(
+          'flex h-full items-center font-medium',
+          large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
+          path === href &&
+            'border-b-2 border-current pt-0.5 text-pink-900 dark:text-pink-200',
+        )}
+        href={href}
+        target={href.startsWith('http') ? '_blank' : undefined}
+      >
+        {children || title}
+      </a>
+    </li>
+  )
+}
+
+function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
+  const { path, config } = usePageBuildContext()
+  return (
+    <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16 hidden xl:block">
+      <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
+        <ul className="flex h-full items-center">
+          <li className="mr-4 lg:mr-8">
+            <a href={path.startsWith('/bridges') ? '/bridges/summary' : '/'}>
+              <Logo className="h-8 w-auto" />
+            </a>
+          </li>
+          {links.map((group) => (
+            <LegacyNavBarLink
+              key={group.title}
+              large
+              href={group.links[0].href}
+              title={group.title}
+            />
+          ))}
+        </ul>
+        <div className="hidden h-full items-center gap-5 lg:flex">
+          <ul className="items-center gap-4 hidden 2xl:flex">
+            <SocialLinks />
+          </ul>
+          <div className="h-8 w-px bg-gray-300 dark:bg-gray-700 hidden 2xl:block" />
+          <ul className="flex h-full items-center gap-1.5">
+            <LegacyNavBarLink title="Forum" href={config.links.forum} />
+            {config.features.zkCatalog && (
+              <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
+            )}
+            <LegacyNavBarLink title="Donate" href={'/donate'} />
+            {config.features.governancePage ? (
+              <LegacyNavBarLink title="Governance" href={'/governance'} />
+            ) : (
+              <LegacyNavBarLink
+                title="Governance"
+                href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
+              />
+            )}
+            {config.features.glossary && (
+              <LegacyNavBarLink title="Glossary" href="/glossary" />
+            )}
+            <LegacyNavBarLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
+              Jobs
+              {config.features.hiringBadge && (
+                <HiringBadge className="ml-1 py-0.5 rounded-sm" />
+              )}
+            </LegacyNavBarLink>
+            <LegacyNavBarLink title="FAQ" href="/faq" />
+          </ul>
+          <div className="h-8 w-px bg-gray-300 dark:bg-gray-700" />
+          <DarkThemeToggle />
+        </div>
+      </nav>
+    </div>
+  )
+}
+
+export function NavWrapper({
+  children,
+  legacyNav,
+}: {
+  children: ReactNode
+  legacyNav?: boolean
+}) {
   const { config } = usePageBuildContext()
 
   const groups: NavbarLinkGroups = [
@@ -450,9 +550,15 @@ export function NavWrapper({ children }: { children: ReactNode }) {
   ]
 
   return (
-    <div className="flex flex-col xl:flex-row relative overflow-x-hidden">
+    <div
+      className={cn(
+        'flex flex-col xl:flex-row relative overflow-x-hidden',
+        legacyNav && 'xl:flex-col',
+      )}
+    >
+      {!!legacyNav && <LegacyNavBar links={groups} />}
       <MobileNavBar links={groups} />
-      <Sidenav links={groups} />
+      <Sidenav links={groups} legacyNav={!!legacyNav} />
       <div className="flex-1">{children}</div>
     </div>
   )
