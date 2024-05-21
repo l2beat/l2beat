@@ -273,7 +273,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] dark:border-r dark:border-gray-850 xl:dark:border-none flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
+          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
