@@ -10,11 +10,6 @@ import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
 import { branded, stringAs } from './branded'
 
-export type AmountConfigEntry =
-  | TotalSupplyEntry
-  | CirculatingSupplyEntry
-  | EscrowEntry
-
 export const AmountConfigBase = z.object({
   chain: z.string(),
   // TODO: resolve issue with type while using stringAs()
@@ -49,3 +44,10 @@ export const EscrowEntry = AmountConfigBase.extend({
   escrowAddress: stringAs(EthereumAddress),
 })
 export type EscrowEntry = z.infer<typeof EscrowEntry>
+
+export const AmountConfigEntry = z.union([
+  TotalSupplyEntry,
+  CirculatingSupplyEntry,
+  EscrowEntry,
+])
+export type AmountConfigEntry = z.infer<typeof AmountConfigEntry>
