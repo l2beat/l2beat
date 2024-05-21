@@ -22,7 +22,6 @@ import { BlockscoutInternalTransaction } from '../../peripherals/blockscout/sche
 import {
   VerifiersController,
   VerifiersControllerDeps,
-  testAddresses,
 } from './VerifiersController'
 
 const zkVerfifierAddress = EthereumAddress.random()
@@ -81,11 +80,7 @@ describe(VerifiersController.name, () => {
       const controller = createVeririferController()
       const result = controller.getVerifierAddresses(l2sMock, zksMock)
 
-      const expectedResult = [
-        ...testAddresses,
-        zkVerfifierAddress,
-        l2VerfifierAddress,
-      ]
+      const expectedResult = [zkVerfifierAddress, l2VerfifierAddress]
 
       expect(result).toEqualUnsorted(expectedResult)
     })

@@ -21,24 +21,6 @@ export interface VerifiersControllerDeps {
   logger?: Logger
 }
 
-// TODO to be removed when we will have proper project config in place
-export const testAddresses: EthereumAddress[] = [
-  // zkSync Era
-  EthereumAddress('0xdd9C826196cf3510B040A8784D85aE36674c7Ed2'),
-  // Polygon zkEVM
-  EthereumAddress('0x0775e11309d75aA6b0967917fB0213C5673eDf81'),
-  // Starknet
-  EthereumAddress('0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60'),
-  // Scroll
-  EthereumAddress('0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF'),
-  EthereumAddress('0x585DfaD7bF4099E011D185E266907A8ab60DAD2D'),
-  EthereumAddress('0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247'),
-  EthereumAddress('0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1'),
-  EthereumAddress('0x2293cd12e8564e8219d314b075867c2f66ac6941'),
-  // Loopring
-  EthereumAddress('0x6150343E0F43A17519c0327c41eDd9eBE88D01ef'),
-]
-
 export class VerifiersController {
   private readonly taskQueue: TaskQueue<void>
   private readonly logger: Logger
@@ -99,7 +81,7 @@ export class VerifiersController {
     l2s: Layer2[] = layer2s,
     zks: ZkCatalogProject[] = zkCatalogProjects,
   ): EthereumAddress[] {
-    const verifierAddress: EthereumAddress[] = [...testAddresses]
+    const verifierAddress: EthereumAddress[] = []
 
     l2s.forEach((l2) => {
       if (l2.stateValidation?.proofVerification) {
