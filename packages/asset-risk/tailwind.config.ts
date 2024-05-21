@@ -41,6 +41,7 @@ const config: Config = {
         black: '#222222',
       },
       blue: {
+        500: '#53A2FF',
         700: '#005DD7',
       },
       neutral: {

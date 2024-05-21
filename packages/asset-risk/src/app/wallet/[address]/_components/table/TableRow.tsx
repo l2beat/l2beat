@@ -52,7 +52,7 @@ export function TableRow({
           <div className="text-black dark:text-white font-bold text-lg">
             $0.00
           </div>
-          <div className="text-gray-500 font-medium text-sm">
+          <div className="text-gray-500 dark:text-gray-50 font-medium text-sm">
             {token.balance && formatUnits(token.balance, token.token.decimals)}
             &nbsp;
             {token.token.symbol}
@@ -70,7 +70,7 @@ export function TableRow({
           )}
           <div className="flex flex-col">
             <span className="font-bold text-lg">{token.token.name}</span>
-            <div className="font-normal flex items-center text-sm text-gray-500">
+            <div className="font-normal flex items-center text-sm text-gray-500 dark:text-gray-50">
               on <span className="font-medium">{token.chain.name}</span>
               &nbsp;
               {token.chain.stage && <StageBadge stage={token.chain.stage} />}
@@ -89,7 +89,7 @@ export function TableRow({
               {!!warningsCount && <Warning count={warningsCount} />}
             </div>
             <div className={cn(!isOpen && 'rotate-180')}>
-              <ArrowIcon />
+              <ArrowIcon className="dark:fill-gray-50" />
             </div>
           </div>
         </Cell>

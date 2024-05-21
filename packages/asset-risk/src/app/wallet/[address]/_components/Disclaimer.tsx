@@ -6,13 +6,13 @@ export function Disclaimer() {
       <h2 className="font-bold text-xl">
         How the Assets&apos; Risks Monitor work?
       </h2>
-      <p className="text-sm font-medium text-zinc-500">
+      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
         This is a paragraph 2 ipsum dolor sit amet, consectetur adipiscing elit.
         Proin elementum nulla tortor, ac aliquet nisl this is a link pretium.
         Aliquam id eros ante. Suspendisse vehicula rutrum vehicula. Curabitur
         nec laoreet sapien. Donec quis vulputate magna, non suscipit felis.
       </p>
-      <p className="text-sm font-medium text-zinc-500">
+      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
         Duis bibendum elementum leo sit amet dignissim. Vestibulum ante ipsum
         primis in faucibus orci luctus et ultrices posuere cubilia curae;
         Aliquam posuere neque sit amet nunc rutrum sollicitudin. Vestibulum at
