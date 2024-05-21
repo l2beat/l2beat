@@ -2,13 +2,24 @@ import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { layer2s } from '..'
+import { layer2s, bridges, Project } from '..'
 
-export const l2CommonContracts = getCommonContracts(layer2s.map((l2) => l2.id))
+export const l2CommonContracts = findCommonContracts(layer2s.map((l2) => l2.id))
+export const bridgeCommonContracts = findCommonContracts(bridges.map((b) => b.id))
 
-function getCommonContracts(projects: string[]) {
+export function getCommonContractsIn(projectType: Project['type']) {
+    if(projectType === 'layer2') {
+        return l2CommonContracts
+    } else if(projectType === 'bridge') {
+        return bridgeCommonContracts
+    } else {
+        return {}
+    }
+}
+
+function findCommonContracts(projects: string[]) {
   const configReader = new ConfigReader('../backend')
-  // TODO: Why only ethereum?
+  // TODO(radomski): Handling L3s
   const configs = configReader.readAllConfigsForChain('ethereum')
   const discoveriesFull = configs.map((c) =>
     configReader.readDiscovery(c.name, c.chain),

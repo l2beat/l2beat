@@ -5,9 +5,9 @@ import {
   Layer3,
   ScalingProjectContract,
   ScalingProjectEscrow,
+  getCommonContractsIn,
+  getProjectsIn,
   isSingleAddress,
-  l2CommonContracts,
-  layer2s,
 } from '@l2beat/config'
 import {
   assert,
@@ -384,24 +384,11 @@ function makeTechnologyContract(
     addresses.includes(ca.containingContract.toString()),
   )
 
-  const allAddresses = addresses.concat(implementationAddresses)
-  const usedIn = [
-    ...new Set(
-      allAddresses.flatMap((address) =>
-        (l2CommonContracts[address] ?? []).filter(
-          (name) => project.id !== name,
-        ),
-      ),
-    ),
-  ]
-  const usedInProjects: UsedInProject[] | undefined =
-    usedIn.length > 0
-      ? usedIn.map((id) => ({
-          id: id,
-          name: layer2s.find((l2) => l2.id === id)?.display.name ?? 'Unknown',
-          iconPath: `/icons/${id}.png`,
-        }))
-      : undefined
+  const usedInProjects = getUsedInProjects(
+    project,
+    addresses,
+    implementationAddresses,
+  )
 
   const result: TechnologyContract = {
     name: item.name,
@@ -486,4 +473,42 @@ function areAllAddressesUnverified(
   return addresses.every((address) => {
     return verificationStatus[address.toString()] === false
   })
+}
+
+function getUsedInProjects(
+  project: Layer2 | Layer3 | Bridge,
+  addresses: string[],
+  implementationAddresses: string[],
+): UsedInProject[] | undefined {
+  const allAddresses = addresses.concat(implementationAddresses)
+  const commonContracts = getCommonContractsIn(project.type)
+  const projects = getProjectsIn(project.type)
+
+  const usedIn = [
+    ...new Set(
+      allAddresses.flatMap((address) => {
+        const addressInProjects = commonContracts[address] ?? []
+        return addressInProjects.filter((id) => project.id !== id)
+      }),
+    ),
+  ]
+
+  let usedInProjects: UsedInProject[] | undefined
+
+  if (usedIn.length > 0) {
+    usedInProjects = usedIn.map((id) => {
+      const refProject = projects.find((p) => p.id === id)
+      if (!refProject) {
+        throw new Error('Invalid project type')
+      }
+
+      return {
+        id: id,
+        name: refProject.display.name ?? 'Unknown',
+        iconPath: `/icons/${refProject.display.slug}.png`,
+      }
+    })
+  }
+
+  return usedInProjects
 }
