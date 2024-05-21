@@ -53,7 +53,7 @@ export const orderly: Layer2 = opStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'OrderlyMultisig',
+      'ConduitMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig.',
     ),
   ],
