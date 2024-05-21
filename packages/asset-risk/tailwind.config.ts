@@ -29,6 +29,7 @@ const config: Config = {
       'pure-white': '#FFFFFF',
       white: '#FAFAFA',
       gray: {
+        50: '#AEAEAE',
         100: '#E6E7EC',
         200: '#DFDFDF',
         400: '#D0CED1',
