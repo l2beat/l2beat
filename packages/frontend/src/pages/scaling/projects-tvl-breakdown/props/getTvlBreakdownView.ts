@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import {
   CanonicalAssetBreakdownData,
   ExternalAssetBreakdownData,
@@ -39,7 +39,7 @@ export interface TvlBreakdownViewProps {
 }
 
 export function getTvlBreakdownView(
-  project: Layer2,
+  project: Layer2 | Layer3,
   tvlApiResponse: TvlApiResponse,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
 ): TvlBreakdownViewProps {

@@ -25,16 +25,16 @@ export interface ScalingSummaryViewEntryBase {
   hasImplementationChanged?: boolean
   isUpcoming?: boolean
   purposes: ScalingProjectPurpose[]
-}
-
-export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
-  riskValues: RiskValues
-  stage: StageConfig
   tvl?: ValueWithDisplayValue
   tvlTooltip?: string
   tvlBreakdown?: TokenBreakdownProps
   oneDayChange?: string
   sevenDayChange?: string
+}
+
+export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
+  riskValues: RiskValues
+  stage: StageConfig
   marketShare?: ValueWithDisplayValue
   marketShareValue?: number
   provider?: Layer2Provider
