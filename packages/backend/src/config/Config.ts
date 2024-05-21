@@ -58,7 +58,6 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
-    readonly l2costs: boolean
     readonly verifiers: boolean
   }
 }

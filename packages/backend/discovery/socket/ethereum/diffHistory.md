@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x4bd5593e7b5d34a2700f86bac590a29180eb78e9
+
+# Diff at Fri, 17 May 2024 07:36:32 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f530b3790f02092dbc5b25633755416ea7c2ec7d block: 19805467
+- current block number: 19888244
+
+## Description
+
+New plugs connected to vaults associated with Lyra are added.
+5 plugs, 1 has the same vault, 4 have vaults with the tokens:
+- weETH (supported already)
+- rswETH (restaked Swell ETH, added)
+- weETHC (Lyra wrapped eETH covered call, ignored for now)
+- rswethC (ignored for now)
+
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.28:
++        "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.27:
++        "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.26:
++        "0x3f66F272d33B764960779a301c4183306ae50e10"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.25:
++        "0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.24:
++        "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract rswETH Vault Lyra (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault Lyra (0x8180EcCC825b692ef65FF099a0A387743788bf78)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4.sol | 886 +++++++++++++++++++++
+ ...-0x8180EcCC825b692ef65FF099a0A387743788bf78.sol | 886 +++++++++++++++++++++
+ 2 files changed, 1772 insertions(+)
+```
+
 Generated with discovered.json: 0x24bfd7f6c3a89e63c879a013490d80256ff8a746
 
 # Diff at Sun, 05 May 2024 17:46:10 GMT:
