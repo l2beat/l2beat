@@ -12,6 +12,43 @@ const upgradeability = {
 }
 
 export const rss3: Layer2 = opStackL2({
+  daProvider: {
+    name: 'NearDA',
+    riskView: {
+      value: 'External',
+      description:
+        'Proof construction and state derivation rely fully on data that is NOT published on chain.',
+      sentiment: 'bad',
+    },
+    technology: {
+      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
+      description:
+        'Only hashes of blob data is published on an on chain inbox.',
+      references: [
+        {
+          text: 'REP-20 - Data Availability Layer Integration',
+          href: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
+        },
+        {
+          text: 'On-Chain Inbox',
+          href: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the data is not made available on the external provider.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the sequencer posts an unavailable or malicious transaction root.',
+          isCritical: true,
+        },
+      ],
+    },
+    bridge: { type: 'None' },
+  },
   discovery,
   display: {
     shortName: 'RSS3',

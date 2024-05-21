@@ -39,6 +39,7 @@ const MAIN_LAYER_SENTIMENT: Record<DataAvailabilityLayer, Sentiment> = {
   FraxtalDA: 'warning',
   RedstoneDA: 'warning',
   EigenDA: 'warning',
+  NearDA: 'warning',
 }
 
 const LAYER_DESCRIPTION: Record<
@@ -78,6 +79,10 @@ const LAYER_DESCRIPTION: Record<
   ],
   EigenDA: [
     'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an on chain inbox.',
+    null,
+  ],
+  NearDA: [
+    'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an on chain inbox.',
     null,
   ],
 }
