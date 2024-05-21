@@ -230,13 +230,25 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
         </div>
       </div>
       {currentGroup && (
-        <div className="overflow-x-scroll w-full border-b border-gray-200 dark:border-gray-850 text-center">
+        <div
+          className="overflow-x-scroll w-full border-b border-gray-200 dark:border-gray-850 text-center"
+          data-role="sidenav-mobile-tabs"
+        >
           <div className="inline-flex flex-row gap-2 px-4 py-2 m-auto">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
                 <a href={link.href} key={link.href}>
-                  <div className="rounded-[4px] border border-[#AB3BD2] text-xs font-semibold px-4 py-2.5 text-nowrap m-auto">
+                  <div
+                    className={cn(
+                      'rounded-[4px] border border-[#AB3BD2] text-xs font-semibold px-4 py-2.5 text-nowrap m-auto',
+                      link.href === path &&
+                        'bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] text-white border-0 px-[calc(1rem_+_1px)] py-[calc(0.625rem_+_1px)]',
+                    )}
+                    data-sidenav-mobile-tabs-active={
+                      link.href === path ? 'true' : 'false'
+                    }
+                  >
                     {link.title}
                   </div>
                 </a>

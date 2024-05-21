@@ -24,6 +24,7 @@ export function configureNavWrapper() {
     '[data-role=sidenav-collapse-toggle-container]',
   )
   const sidenavMobileToggles = $$('[data-role=sidenav-mobile-toggle]')
+  const sidenavMobileTabsContainer = $('[data-role=sidenav-mobile-tabs]')
 
   if (
     !sidenav ||
@@ -89,4 +90,12 @@ export function configureNavWrapper() {
       }
     }, 100)
   })
+
+  // Scroll sidenav
+
+  const sidenavLinks = $$('[data-sidenav-mobile-tabs-active=true]')
+
+  for (const link of sidenavLinks) {
+    sidenavMobileTabsContainer.scrollLeft = link.offsetLeft - 16 /* px gap */
+  }
 }
