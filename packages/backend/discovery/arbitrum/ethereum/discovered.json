@@ -13,7 +13,9 @@
         "implementation": "0x0eA7372338a589e7f0b00E463a53AA464ef04e17",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x0eA7372338a589e7f0b00E463a53AA464ef04e17"],
+      "implementations": [
+        "0x0eA7372338a589e7f0b00E463a53AA464ef04e17"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -47,17 +49,23 @@
         "implementation": "0xc4E3ff0b5B106f88Fc64c43031BE8b076ee9F21C",
         "admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
       },
-      "implementations": ["0xc4E3ff0b5B106f88Fc64c43031BE8b076ee9F21C"],
+      "implementations": [
+        "0xc4E3ff0b5B106f88Fc64c43031BE8b076ee9F21C"
+      ],
       "sinceTimestamp": 1659608791,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            ]
           },
           "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            ]
           },
           "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -68,7 +76,9 @@
           },
           "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            ]
           },
           "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -117,7 +127,9 @@
         "implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
+      "implementations": [
+        "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "batchCount": 602260,
@@ -136,7 +148,12 @@
         "isUsingFeeToken": false,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 64, 86400, 768],
+        "maxTimeVariation": [
+          5760,
+          64,
+          86400,
+          768
+        ],
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
@@ -174,7 +191,9 @@
         "implementation": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
-      "implementations": ["0x86f0cf42Ad673B3D666d103E009EC142D1298a17"],
+      "implementations": [
+        "0x86f0cf42Ad673B3D666d103E009EC142D1298a17"
+      ],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -184,7 +203,9 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
@@ -218,7 +239,9 @@
         "implementation": "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94"],
+      "implementations": [
+        "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94"
+      ],
       "sinceTimestamp": 1622243344,
       "values": {
         "allowListEnabled": false,
@@ -271,7 +294,9 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3"
       },
-      "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
+      "implementations": [
+        "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
+      ],
       "sinceTimestamp": 1662368855,
       "values": {
         "owner": "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5"
@@ -285,7 +310,9 @@
         "implementation": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x806421D09cDb253aa9d128a658e60c0B95eFFA01"],
+      "implementations": [
+        "0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -379,7 +406,9 @@
         "implementation": "0x263a68002876E307804168795519da0B32CC62fE",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x263a68002876E307804168795519da0B32CC62fE"],
+      "implementations": [
+        "0x263a68002876E307804168795519da0B32CC62fE"
+      ],
       "sinceTimestamp": 1622243344,
       "values": {
         "beacon": "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b",
@@ -404,7 +433,9 @@
         "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
-      "implementations": ["0x52595021fA01B3E14EC6C88953AFc8E35dFf423c"],
+      "implementations": [
+        "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c"
+      ],
       "sinceTimestamp": 1623784095,
       "values": {
         "counterpartGateway": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
@@ -423,7 +454,9 @@
         "implementation": "0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF",
         "admin": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766"
       },
-      "implementations": ["0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF"],
+      "implementations": [
+        "0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF"
+      ],
       "sinceTimestamp": 1659013011,
       "values": {
         "isMaster": false,
@@ -438,7 +471,9 @@
         "implementation": "0x360861b7b245c968128F0a53d281aDb1Df760711",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x360861b7b245c968128F0a53d281aDb1Df760711"],
+      "implementations": [
+        "0x360861b7b245c968128F0a53d281aDb1Df760711"
+      ],
       "sinceTimestamp": 1630296149,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -463,7 +498,9 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"
       },
-      "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
+      "implementations": [
+        "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
+      ],
       "sinceTimestamp": 1661964258,
       "values": {
         "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
@@ -477,7 +514,9 @@
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0x1066CEcC8880948FE55e427E94F1FF221d626591"],
+      "implementations": [
+        "0x1066CEcC8880948FE55e427E94F1FF221d626591"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "activeOutbox": "0x0000000000000000000000000000000000000000",
@@ -506,7 +545,9 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x0ea6999172c1B4563695F76A52de73c848587b17"
       },
-      "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
+      "implementations": [
+        "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
+      ],
       "sinceTimestamp": 1661962059,
       "values": {
         "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
@@ -578,7 +619,9 @@
         "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
-      "implementations": ["0xb4299A1F5f26fF6a98B7BA35572290C359fde900"],
+      "implementations": [
+        "0xb4299A1F5f26fF6a98B7BA35572290C359fde900"
+      ],
       "sinceTimestamp": 1623784100,
       "values": {
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
@@ -609,7 +652,9 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x509E3CDc218d163DB9A03678107b72e00163b061"
       },
-      "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
+      "implementations": [
+        "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
+      ],
       "sinceTimestamp": 1665084515,
       "values": {
         "owner": "0xd3132d052C9045D7cB0236586C9E2276e654343D"
@@ -641,7 +686,9 @@
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "implementations": [
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      ],
       "sinceTimestamp": 1630382926,
       "values": {
         "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
@@ -706,7 +753,9 @@
         "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
       },
-      "implementations": ["0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"],
+      "implementations": [
+        "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"
+      ],
       "sinceTimestamp": 1623867835,
       "values": {
         "counterpartGateway": "0x096760F208390250649E3e8763348E783AEF5562",
@@ -726,7 +775,9 @@
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "implementations": [
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      ],
       "sinceTimestamp": 1707458255,
       "values": {
         "domainSeparator": "0x7526599abb31ca0be13b02df12dd63c0f981649d6b802abd3cfe196fd70dc013",
@@ -791,7 +842,9 @@
         "implementation": "0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566",
         "admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
       },
-      "implementations": ["0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566"],
+      "implementations": [
+        "0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566"
+      ],
       "sinceTimestamp": 1661457944,
       "values": {
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -810,7 +863,9 @@
         "implementation": "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
-      "implementations": ["0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3"],
+      "implementations": [
+        "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3"
+      ],
       "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
@@ -820,19 +875,27 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"]
+            "members": [
+              "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x0000000000000000000000000000000000000000"]
+            "members": [
+              "0x0000000000000000000000000000000000000000"
+            ]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+            "members": [
+              "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            ]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -1591,10 +1654,14 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],
+        "modules": [
+          "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+        ],
         "threshold": "9 of 12 (75%)"
       },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "implementations": [
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      ],
       "sinceTimestamp": 1692138791,
       "values": {
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
@@ -1627,7 +1694,9 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c"
       },
-      "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
+      "implementations": [
+        "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"
+      ],
       "sinceTimestamp": 1664352371,
       "values": {
         "owner": "0xcd6BeDC12de2bF49afDE86cc91031d207318F207"
