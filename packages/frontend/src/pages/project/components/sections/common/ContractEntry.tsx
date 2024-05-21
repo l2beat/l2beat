@@ -110,6 +110,11 @@ export function ContractEntry({
     .filter((c) => c.type === 'implementation')
     .filter((c) => !sharedProxies.map((k) => k.id).includes(c.id))
 
+  const implementationLabel =
+    sharedProxies.length === 0
+      ? 'Used in projects'
+      : 'Used in projects (implementations)'
+
   return (
     <Callout
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
@@ -178,7 +183,7 @@ export function ContractEntry({
           )}
           {sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
-              label="Used in projects (implementations)"
+              label={implementationLabel}
               implementations={sharedImplementations}
               contractName={contract.name}
             />

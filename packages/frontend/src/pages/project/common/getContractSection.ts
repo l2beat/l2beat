@@ -5,8 +5,6 @@ import {
   Layer3,
   ScalingProjectContract,
   ScalingProjectEscrow,
-  getCommonContractsIn,
-  getProjectsIn,
   isSingleAddress,
 } from '@l2beat/config'
 import {
@@ -21,11 +19,11 @@ import {
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
 import { languageJoin } from '../../../utils/utils'
+import { getUsedInProjects } from '../common/getUsedInProjects'
 import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
   TechnologyContract,
   TechnologyContractLinks,
-  UsedInProject,
 } from '../components/sections/common/ContractEntry'
 import { getDiagramImage } from './getDiagramImage'
 
@@ -473,58 +471,4 @@ function areAllAddressesUnverified(
   return addresses.every((address) => {
     return verificationStatus[address.toString()] === false
   })
-}
-
-function getUsedInProjects(
-  project: Layer2 | Layer3 | Bridge,
-  addresses: string[],
-  implementationAddresses: string[],
-): UsedInProject[] | undefined {
-  const evalUsedInProject = (
-    addresses: string[],
-    type: UsedInProject['type'],
-  ) => {
-    const commonContracts = getCommonContractsIn(project.type)
-    const projects = getProjectsIn(project.type)
-
-    const usedIn = [
-      ...new Set(
-        addresses.flatMap((address) => {
-          const addressInProjects = commonContracts[address] ?? []
-          return addressInProjects.filter((id) => project.id !== id)
-        }),
-      ),
-    ]
-
-    let usedInProjects: UsedInProject[] | undefined
-
-    if (usedIn.length > 0) {
-      usedInProjects = usedIn.map((id) => {
-        const refProject = projects.find((p) => p.id === id)
-        if (!refProject) {
-          throw new Error('Invalid project type')
-        }
-
-        return {
-          type,
-          id,
-          name: refProject.display.name,
-          slug: refProject.display.slug,
-          iconPath: `/icons/${refProject.display.slug}.png`,
-        }
-      })
-    }
-    return usedInProjects
-  }
-
-  if (implementationAddresses.length === 0) {
-    return evalUsedInProject(addresses, 'implementation')
-  }
-
-  const asProxy = evalUsedInProject(addresses, 'proxy')
-  const asImplementation = evalUsedInProject(
-    implementationAddresses,
-    'implementation',
-  )
-  return (asProxy ?? []).concat(asImplementation ?? [])
 }
