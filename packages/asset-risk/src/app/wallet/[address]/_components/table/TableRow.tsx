@@ -40,8 +40,10 @@ export function TableRow({
     <>
       <tr
         className={cn(
-          'border-b cursor-pointer border-b-gray-200 dark:border-b-zinc-700',
-          'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
+          'cursor-pointer',
+          'hover:bg-black/[0.05] dark:hover:bg-white/[0.1]',
+          !isOpen && 'border-b border-b-gray-200 dark:border-b-zinc-700',
+          'group-hover/body:bg-black/[0.05]',
         )}
         onClick={() => setIsOpen((s) => !s)}
       >
@@ -96,7 +98,8 @@ export function TableRow({
         <tr
           className={cn(
             'cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
-            'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
+            'hover:bg-black/[0.05] dark:hover:bg-white/[0.1]',
+            'group-hover/body:bg-black/[0.05]',
           )}
         >
           <Cell className="col-span-5" colSpan={5}>
@@ -117,7 +120,13 @@ export function Cell({
   className?: ClassNameValue
 } & TdHTMLAttributes<HTMLTableCellElement>) {
   return (
-    <td className={cn('h-16 min-w-max p-2', className)} {...rest}>
+    <td
+      className={cn(
+        'h-16 min-w-max p-2 first:pl-[18px] last:pr-[18px]',
+        className,
+      )}
+      {...rest}
+    >
       {children}
     </td>
   )

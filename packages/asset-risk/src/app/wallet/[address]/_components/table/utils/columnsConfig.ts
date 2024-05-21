@@ -25,7 +25,7 @@ export const columnsConfig: SingleColumnConfig[] = [
     },
   },
   {
-    name: 'NAME',
+    name: 'ASSET',
     className: 'pl-12',
     sorting: {
       rule: 'alphabetical',

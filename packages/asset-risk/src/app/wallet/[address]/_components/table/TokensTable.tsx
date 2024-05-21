@@ -8,6 +8,7 @@ import {
 } from '~/app/assets/SortingArrows'
 import { Card } from '~/components/Card'
 import { cn } from '~/utils/cn'
+import { FilterInput } from './FilterInput'
 import { TableRow } from './TableRow'
 import {
   SingleColumnConfig,
@@ -50,6 +51,7 @@ type SortingState = {
 
 export function TokensTable(props: TokensTableProps) {
   const [sorting, setSorting] = useState<Partial<SortingState>>({})
+  const [filter, setFilter] = useState<string>('')
 
   let tokens = props.tokens
   if (sorting.selected) {
@@ -71,9 +73,18 @@ export function TokensTable(props: TokensTableProps) {
     })
   }
 
+  if (filter) {
+    tokens = tokens.filter((token) =>
+      token.token.name.toLowerCase().includes(filter.toLowerCase()),
+    )
+  }
+
   return (
     <Card className="rounded-none sm:rounded-xl overflow-x-auto">
-      <h2 className="text-xl font-bold">Assets</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold">Assets</h2>
+        <FilterInput filter={filter} setFilter={setFilter} />
+      </div>
       <div
         className={cn(
           'mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
@@ -93,14 +104,14 @@ export function TokensTable(props: TokensTableProps) {
               ))}
             </tr>
           </thead>
-          <tbody>
-            {props.tokens.map((token) => (
+          {tokens.map((token) => (
+            <tbody className="group/body">
               <TableRow
                 token={token}
                 key={`${token.chain.id}-${token.token.id}`}
               />
-            ))}
-          </tbody>
+            </tbody>
+          ))}
         </table>
       </div>
     </Card>
@@ -141,8 +152,7 @@ function TableColumnHeader({
       className={cn(
         'whitespace-pre py-2 pl-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
         'pr-3 last:pr-0 md:pr-4',
-        'rounded-tl-lg',
-        'rounded-tr-lg',
+        'first:pl-[18px] last:pr-[18px]',
         column.className,
       )}
     >
