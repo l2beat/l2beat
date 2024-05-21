@@ -310,7 +310,9 @@ function makeTechnologyContract(
       }
     }
   }
-  const implementationAddresses = links.filter((c) => !c.isAdmin).map((c) => c.address)
+  const implementationAddresses = links
+    .filter((c) => !c.isAdmin)
+    .map((c) => c.address)
 
   let description = item.description
 
@@ -380,13 +382,16 @@ function makeTechnologyContract(
     addresses.includes(ca.containingContract.toString()),
   )
 
-  if(project.id.toString() === 'zora') {
-      debugger
-  }
   const allAddresses = addresses.concat(implementationAddresses)
-  const usedInProjects = [...new Set(allAddresses.flatMap((address) =>
-    (l2CommonContracts[address] ?? []).filter((name) => project.id !== name),
-  ))]
+  const usedInProjects = [
+    ...new Set(
+      allAddresses.flatMap((address) =>
+        (l2CommonContracts[address] ?? []).filter(
+          (name) => project.id !== name,
+        ),
+      ),
+    ),
+  ]
   const usedInProjectIcons =
     usedInProjects.length > 0
       ? usedInProjects.map((name) => `/icons/${name}.png`)
