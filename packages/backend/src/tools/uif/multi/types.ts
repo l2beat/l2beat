@@ -31,3 +31,8 @@ export interface ConfigurationRange<T> {
   to: number
   configurations: Configuration<T>[]
 }
+
+export interface DbTransaction {
+  push: (cb: () => Promise<void>) => void
+  execute: () => Promise<void>
+}

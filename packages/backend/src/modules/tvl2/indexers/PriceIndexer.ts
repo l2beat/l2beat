@@ -3,6 +3,8 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
+import { KnexTx } from '../../../tools/uif/KnexMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -35,6 +37,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+    tx: KnexTx,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
@@ -76,9 +79,11 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    await this.$.priceRepository.addMany(optimizedPrices)
+    tx.push(async (trx: Knex.Transaction) => {
+      await this.$.priceRepository.addMany(optimizedPrices, trx)
+    })
 
-    this.logger.info('Saved prices into DB', {
+    this.logger.info('Saving prices into DB', {
       from,
       to: adjustedTo.toNumber(),
       configurationsToSync: configurationsToSync.length,

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
@@ -61,9 +62,9 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AmountRecord[]) {
+  async addMany(records: AmountRecord[], tx?: Knex.Transaction) {
     const rows: AmountRow[] = records.map(toRow)
-    const knex = await this.knex()
+    const knex = tx ?? (await this.knex())
     await knex.batchInsert('amounts', rows, 1_000)
     return rows.length
   }

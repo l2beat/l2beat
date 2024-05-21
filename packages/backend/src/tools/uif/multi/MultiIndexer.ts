@@ -6,6 +6,7 @@ import { toRanges } from './toRanges'
 import {
   Configuration,
   ConfigurationRange,
+  DbTransaction,
   RemovalConfiguration,
   SavedConfiguration,
   UpdateConfiguration,
@@ -19,6 +20,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
+    private readonly getTrx: () => DbTransaction,
     configurations?: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -83,6 +85,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: UpdateConfiguration<T>[],
+    trx: DbTransaction,
   ): Promise<number>
 
   /**
@@ -111,6 +114,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
+    trx: DbTransaction,
   ): Promise<void>
 
   /**
@@ -137,6 +141,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     const oldSafeHeight = (await this.getSafeHeight()) ?? safeHeight
 
     this.saved = new Map(toSave.map((c) => [c.id, c]))
+    // TODO: should we remove data in a transaction?
     if (toRemove.length > 0) {
       await this.removeData(toRemove)
     }
@@ -164,15 +169,12 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const middleware = {
-      saveToDB: async () => {},
-    }
-
+    const trx = this.getTrx()
     const newHeight = await this.multiUpdate(
       from,
       adjustedTo,
       configurations,
-      middleware,
+      trx,
     )
     if (newHeight < from || newHeight > adjustedTo) {
       throw new Error(
@@ -180,21 +182,17 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       )
     }
 
-    // runInTransaction
-    // {
-
-    await middleware.saveToDB()
-
     if (newHeight > from) {
       const updatedIds = this.updateSavedConfigurations(
         configurations,
         newHeight,
       )
       if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight)
+        await this.updateCurrentHeight(updatedIds, newHeight, trx)
       }
     }
-    // }
+
+    await trx.execute()
 
     return newHeight
   }
