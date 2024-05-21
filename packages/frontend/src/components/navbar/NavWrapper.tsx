@@ -64,9 +64,8 @@ function NavLink({
     <a href={href}>
       <li
         className={cn(
-          'flex items-center gap-[0.625rem] p-1.5 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#1D1E22] transition-colors xl:sidenav-collapsed:w-8 xl:sidenav-collapsed:h-8 xl:sidenav-collapsed:p-0 xl:sidenav-collapsed:justify-center',
-          active &&
-            'bg-[#d3d5d9] dark:bg-[#272A2F] hover:bg-[#d3d5d9] dark:hover:bg-[#272A2F]',
+          'flex items-center gap-[0.625rem] p-1.5 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#272A2F] transition-colors xl:sidenav-collapsed:w-8 xl:sidenav-collapsed:h-8 xl:sidenav-collapsed:p-0 xl:sidenav-collapsed:justify-center ease-out duration-300',
+          active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
         )}
       >
         <Icon />
@@ -111,8 +110,9 @@ function NavSmallLink({
     <a href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
         className={cn(
-          'font-medium text-xs leading-none hover:text-blue-700',
-          active && 'hover:text-[#AB3BD2] text-[#AB3BD2]',
+          'font-medium text-xs leading-none text-zinc-800 dark:text-white hover:text-zinc-500 dark:hover:text-gray-400 transition-colors ease-out duration-300',
+          active &&
+            'hover:text-pink-900 text-pink-900 dark:text-pink-200 dark:hover:text-pink-200',
         )}
       >
         {children ?? title}
