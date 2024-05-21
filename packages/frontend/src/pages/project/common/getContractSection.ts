@@ -7,6 +7,7 @@ import {
   ScalingProjectEscrow,
   isSingleAddress,
   l2CommonContracts,
+  layer2s,
 } from '@l2beat/config'
 import {
   assert,
@@ -24,6 +25,7 @@ import { ContractsSectionProps } from '../components/sections/ContractsSection/C
 import {
   TechnologyContract,
   TechnologyContractLinks,
+  UsedInProject,
 } from '../components/sections/common/ContractEntry'
 import { getDiagramImage } from './getDiagramImage'
 
@@ -383,7 +385,7 @@ function makeTechnologyContract(
   )
 
   const allAddresses = addresses.concat(implementationAddresses)
-  const usedInProjects = [
+  const usedIn = [
     ...new Set(
       allAddresses.flatMap((address) =>
         (l2CommonContracts[address] ?? []).filter(
@@ -392,9 +394,13 @@ function makeTechnologyContract(
       ),
     ),
   ]
-  const usedInProjectIcons =
-    usedInProjects.length > 0
-      ? usedInProjects.map((name) => `/icons/${name}.png`)
+  const usedInProjects: UsedInProject[] | undefined =
+    usedIn.length > 0
+      ? usedIn.map((id) => ({
+          id: id,
+          name: layer2s.find((l2) => l2.id === id)?.display.name ?? 'Unknown',
+          iconPath: `/icons/${id}.png`,
+        }))
       : undefined
 
   const result: TechnologyContract = {
@@ -402,7 +408,7 @@ function makeTechnologyContract(
     addresses,
     description,
     links,
-    usedInProjectIcons,
+    usedInProjects,
     etherscanUrl,
     chain,
     implementationHasChanged,

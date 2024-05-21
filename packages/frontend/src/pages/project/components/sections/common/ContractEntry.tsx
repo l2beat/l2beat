@@ -1,5 +1,6 @@
 import {
   ManuallyVerifiedContracts,
+  ProjectId,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import React from 'react'
@@ -10,9 +11,20 @@ import { Markdown } from '../../../../../components/Markdown'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../../components/tooltip/Tooltip'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  iconPath: string
+}
 
 export interface TechnologyContract {
   name: string
@@ -23,7 +35,7 @@ export interface TechnologyContract {
   links: TechnologyContractLinks[]
   upgradeableBy?: string
   upgradeDelay?: string
-  usedInProjectIcons?: string[]
+  usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
   references?: TechnologyReference[]
   implementationHasChanged?: boolean
@@ -148,20 +160,31 @@ export function ContractEntry({
               {contract.upgradeDelay}
             </p>
           )}
-          {contract.usedInProjectIcons && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
-              <strong className="text-black dark:text-white">
-                Used in projects:
-              </strong>{' '}
-              {contract.usedInProjectIcons.map((icon, i) => (
-                <img
-                  key={i}
-                  src={icon}
-                  alt="Project icon"
-                  className="h-5 w-5 mx-1 inline"
-                />
-              ))}
-            </p>
+          {contract.usedInProjects && (
+            <div className="mt-2 flex flex-row items-center">
+              <p className="text-gray-850 dark:text-gray-400">
+                <strong className="text-black dark:text-white">
+                  Used in projects:
+                </strong>{' '}
+              </p>
+              <div className="flex flex-row items-center">
+                {contract.usedInProjects.map((project, i) => (
+                  <Tooltip key={i}>
+                    <TooltipTrigger>
+                      <img
+                        key={i}
+                        src={project.iconPath}
+                        alt="Project icon"
+                        className="h-5 w-5 mx-1 inline"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <div>{project.name}</div>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
           )}
           {contract.upgradeConsiderations && (
             <>

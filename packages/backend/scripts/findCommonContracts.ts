@@ -68,9 +68,9 @@ async function findCommon(config: Config): Promise<void> {
       .includes(address)
 
     if (isEOA) {
-      commonEOAs[address] = linkedProjectes.map(p => p.name as ProjectId)
+      commonEOAs[address] = linkedProjectes.map((p) => p.name as ProjectId)
     } else if (isContract || isImplementation) {
-      commonContracts[address] = linkedProjectes.map(p => p.name as ProjectId)
+      commonContracts[address] = linkedProjectes.map((p) => p.name as ProjectId)
     }
   })
 
