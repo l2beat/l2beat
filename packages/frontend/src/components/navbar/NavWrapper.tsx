@@ -273,7 +273,8 @@ function Divider({ className }: { className?: string }) {
 
 export function Sidenav({ links }: { links: NavbarLinkGroups }) {
   const { config } = usePageBuildContext()
-  const sharedSizeClasses = 'w-full xl:w-[240px] 2xl:w-[280px]'
+  const sharedSizeClasses =
+    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]'
 
   return (
     <div
@@ -285,7 +286,7 @@ export function Sidenav({ links }: { links: NavbarLinkGroups }) {
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col h-screen xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
+          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-hidden transition-all',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
