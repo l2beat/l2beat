@@ -1,7 +1,7 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
 void main().catch((e) => {
@@ -45,8 +45,8 @@ async function findCommon(config: Config): Promise<void> {
     .filter(([_, count]) => count > 1)
     .map(([address, _]) => address)
 
-  const commonContracts: Record<string, ProjectId[]> = {}
-  const commonEOAs: Record<string, ProjectId[]> = {}
+  const commonContracts: string[] = []
+  const commonEOAs: string[] = []
 
   repeatedAddresses.forEach((address) => {
     const linkedProjectes = discoveries.filter((d) =>
@@ -68,16 +68,16 @@ async function findCommon(config: Config): Promise<void> {
       .includes(address)
 
     if (isEOA) {
-      commonEOAs[address] = linkedProjectes.map((p) => p.name as ProjectId)
+      commonEOAs.push(address)
     } else if (isContract || isImplementation) {
-      commonContracts[address] = linkedProjectes.map((p) => p.name as ProjectId)
+      commonContracts.push(address)
     }
   })
 
-  Object.keys(commonContracts).forEach((address) =>
+  commonContracts.forEach((address) =>
     printRelations(address, projectAddresses, discoveries),
   )
-  Object.keys(commonEOAs).forEach((address) =>
+  commonEOAs.forEach((address) =>
     printRelations(address, projectAddresses, discoveries),
   )
 }
