@@ -54,7 +54,6 @@ import { metal } from './metal'
 import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
-import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nil } from './nil'
@@ -165,7 +164,6 @@ export const layer2s: Layer2[] = [
   metis,
   mint,
   mode,
-  molten,
   morph,
   myria,
   nil,

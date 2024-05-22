@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x01e0590a42c7073c15f22e480af989cfb3a4b53e
+Generated with discovered.json: 0x88f7271bdc94a8918dadae580fdd5b16a6b44397
 
-# Diff at Wed, 22 May 2024 10:17:03 GMT:
+# Diff at Wed, 22 May 2024 11:01:31 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 213836711
+- current block number: 213847288
 
 ## Description
 
@@ -37,13 +37,19 @@ Initial discovery: Orbit stack L3 on Arbitrum with AnyTrust DA, custom native to
 
 ```diff
 +   Status: CREATED
-    contract ERC20Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79)
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract  (0x492c6278fea6b249F3A03672Ea1242fd6295fedA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80)
     +++ description: None
 ```
 
@@ -92,6 +98,12 @@ Initial discovery: Orbit stack L3 on Arbitrum with AnyTrust DA, custom native to
 ```diff
 +   Status: CREATED
     contract ValidatorUtils (0x9e83136d4B3AD04C766591EA51712F9aEa3194C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitGatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF)
     +++ description: None
 ```
 
