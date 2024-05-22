@@ -555,6 +555,8 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
     ],
     proofVerification: {
       aggregation: true,
+      description:
+        'zkSync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
       requiredTools: [
         {
           name: 'Custom tool',
@@ -566,7 +568,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
         {
           name: 'zkSyncEraVerifier',
           description:
-            'zkSync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
+            'Main onchain verifier. It verifies the final wrapped proof.',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0xdd9C826196cf3510B040A8784D85aE36674c7Ed2',

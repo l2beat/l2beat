@@ -229,6 +229,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     ],
     proofVerification: {
       aggregation: true,
+      description:
+        'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
       requiredTools: [
         {
           name: 'circom',
@@ -240,7 +242,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         {
           name: 'PolygonZkEvmVerifier',
           description:
-            'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
+            'Main onchain verifier. It verifies the final wrapped proof.',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0x0775e11309d75aA6b0967917fB0213C5673eDf81',
