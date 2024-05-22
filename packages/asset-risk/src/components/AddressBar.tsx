@@ -43,7 +43,7 @@ export function AddressBar() {
   }
 
   return (
-    <div className="flex flex-col w-[min(60vw,320px)] gap-2 max-w-[488px]">
+    <div className="flex flex-col w-full gap-2">
       <ConnectKitButton.Custom>
         {({ isConnected, show, truncatedAddress, address, ensName }) => {
           return isConnected ? (
