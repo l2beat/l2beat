@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xf2e03980d2c2b2090811551d30586bea33d1d20c
+
+# Diff at Wed, 22 May 2024 11:08:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d8b1d401a7eb2fd4dbc2edda92ae733061915c30 block: 19919191
+- current block number: 19925021
+
+## Description
+
+The Bridger is upgraded to an unverified implementation. Currently there are no funds in it as the prelaunch-farm (Engen) has concluded and assets were [bridged](https://etherscan.io/tx/0xbbdbbf2f7ddd1ac994d9a96b2da163e72339866dee3dbac7004fe4a64ee26f92) via socket to the Kinto L2.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x3636617973f25a512676cb06876f0C885568664a"
++        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
+      implementations.0:
+-        "0x3636617973f25a512676cb06876f0C885568664a"
++        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
+      values:
+-        {"DAI":"0x6B175474E89094C44Da98b954EedeAC495271d0F","ETH":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","exchangeProxy":"0xDef1C0ded9bec7F1a1670819833240f027b25EfF","l2Vault":"0x26181Dfc530d96523350e895180b09BAf3d816a0","owner":"0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82","paused":false,"sDAI":"0x83F20F44975D03b1b09e64809B757c47f942BEeA","senderAccount":"0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e","sUSDe":"0x9D39A5DE30e57443BfF2A8307A4256c8797A3497","swapsEnabled":true,"USDe":"0x4c9EDD5852cd905f086C759E8383e09bff1E68B3","weETH":"0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee","WETH":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","wstETH":"0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"}
+      derivedName:
+-        "Bridger"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Bridger/Bridger.sol => /dev/null               | 4582 --------------------
+ .../GnosisSafe.sol => /dev/null                    |  952 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   34 -
+ 3 files changed, 5568 deletions(-)
+```
+
 Generated with discovered.json: 0x1db08e3c132170b88ae88bdd175985aafd322d25
 
 # Diff at Tue, 21 May 2024 15:32:00 GMT:
