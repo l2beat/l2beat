@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_multiUpdate } from '../../../tools/uif/KnexMiddleware.test'
+import { _TEST_ONLY_execute } from '../../../tools/uif/KnexMiddleware.test'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
   DatabaseMiddleware,
@@ -68,7 +68,7 @@ describe(ChainAmountIndexer.name, () => {
         update('c', 100, null, true), // configuration with data should not be fetched
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
       )
@@ -113,7 +113,7 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
       )
@@ -147,7 +147,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [update('a', 100, null, false)]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
       )
@@ -180,7 +180,7 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
       )

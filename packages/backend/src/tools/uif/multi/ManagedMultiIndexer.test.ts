@@ -141,14 +141,14 @@ describe(ManagedMultiIndexer.name, () => {
 
     const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1)
+    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1, TestDbMiddleware)
 
     expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
       1,
       'indexer',
       ['a', 'b', 'c'],
       1,
-      undefined,
+      TestDbMiddleware,
     )
   })
 

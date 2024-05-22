@@ -4,6 +4,8 @@ import { expect, mockObject } from 'earl'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
 import { IndexerStateRepository } from './IndexerStateRepository'
+import { _TEST_ONLY_execute } from './KnexMiddleware.test'
+import { DatabaseMiddleware } from './multi/types'
 
 describe(IndexerService.name, () => {
   describe(IndexerService.prototype.setSafeHeight.name, () => {
@@ -158,7 +160,14 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.updateSavedConfigurations('indexer', ['a', 'b'], 123)
+    await _TEST_ONLY_execute(async (dbMiddleware: DatabaseMiddleware) => {
+      await indexerService.updateSavedConfigurations(
+        'indexer',
+        ['a', 'b'],
+        123,
+        dbMiddleware,
+      )
+    })
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,

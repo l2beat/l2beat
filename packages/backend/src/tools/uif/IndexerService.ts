@@ -60,25 +60,20 @@ export class IndexerService {
     }))
   }
 
-  async updateSavedConfigurations(
+  updateSavedConfigurations(
     indexerId: string,
     configurationIds: string[],
     currentHeight: number | null,
-    dbMiddleware?: DatabaseMiddleware,
-  ): Promise<void> {
-    const cb = async (trx?: Knex.Transaction) => {
+    dbMiddleware: DatabaseMiddleware,
+  ): void {
+    dbMiddleware.add(async (trx?: Knex.Transaction) => {
       await this.indexerConfigurationRepository.updateSavedConfigurations(
         indexerId,
         configurationIds,
         currentHeight,
         trx,
       )
-    }
-    if (dbMiddleware) {
-      dbMiddleware.add(cb)
-    } else {
-      await cb()
-    }
+    })
   }
 
   async persistOnlyUsedConfigurations(

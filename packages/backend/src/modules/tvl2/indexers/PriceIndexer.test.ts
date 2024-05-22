@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_multiUpdate } from '../../../tools/uif/KnexMiddleware.test'
+import { _TEST_ONLY_execute } from '../../../tools/uif/KnexMiddleware.test'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
   removal,
@@ -76,7 +76,7 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, configurations, dbMiddleware),
       )
@@ -135,7 +135,7 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate(
+      const safeHeight = await _TEST_ONLY_execute(
         (dbMiddleware: DatabaseMiddleware) =>
           indexer.multiUpdate(from, to, configurations, dbMiddleware),
       )
