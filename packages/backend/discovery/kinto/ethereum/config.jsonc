@@ -42,14 +42,14 @@
       "ignoreRelatives": [
         "DAI",
         "ETH",
-        "exchangeProxy",
         "l2Vault",
         "sDAI",
         "sUSDe",
         "USDe",
         "weETH",
         "WETH",
-        "wstETH"
+        "wstETH",
+        "swapRouter"
       ],
       "ignoreMethods": ["proxiableUUID", "depositCount", "domainSeparator"]
     },
