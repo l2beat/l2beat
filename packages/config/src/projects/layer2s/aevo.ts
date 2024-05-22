@@ -70,7 +70,7 @@ export const aevo: Layer2 = opStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'AevoMultiSig',
+      'ConduitMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],

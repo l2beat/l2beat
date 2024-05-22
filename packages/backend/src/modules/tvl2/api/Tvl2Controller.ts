@@ -94,12 +94,16 @@ export class Tvl2Controller {
     )
     this.priceConfigs = getPriceConfigIds(config)
     this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
-      const config = this.amountConfig.get(id)
-      if (!config) {
+      if (config.projectsExcludedFromApi.includes(id.toString())) {
         return []
       }
-      assert(config, 'Config not found: ' + id.toString())
-      const minTimestamp = config
+
+      const amounts = this.amountConfig.get(id)
+      if (!amounts) {
+        return []
+      }
+      assert(amounts, 'Config not found: ' + id.toString())
+      const minTimestamp = amounts
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
 
@@ -107,7 +111,7 @@ export class Tvl2Controller {
         string,
         { name: string; minTimestamp: UnixTime }
       >()
-      for (const amount of config) {
+      for (const amount of amounts) {
         const name =
           amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
 
