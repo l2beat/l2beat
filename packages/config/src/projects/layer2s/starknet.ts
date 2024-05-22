@@ -1,11 +1,11 @@
 import {
   assert,
+  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatLargeNumberShared,
   formatSeconds,
-  ChainId,
 } from '@l2beat/shared-pure'
 
 import {
@@ -31,7 +31,6 @@ import {
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { mainnet } from 'wagmi/chains'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
