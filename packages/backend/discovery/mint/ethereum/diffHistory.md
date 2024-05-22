@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa21ce804849011dab4d7f6413ad8dfaeed2b5f97
+Generated with discovered.json: 0x4fe6b15ce9fb31f900191985a91e36dad486b310
 
-# Diff at Wed, 22 May 2024 16:08:08 GMT:
+# Diff at Wed, 22 May 2024 16:20:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19926510
+- current block number: 19926571
 
 ## Description
 
@@ -13,7 +13,7 @@ First discovery.
 
 ```diff
 +   Status: CREATED
-    contract MintBridge (0x2b3F201543adF73160bA42E1a5b7750024F30420)
+    contract L1StandardBridge (0x2b3F201543adF73160bA42E1a5b7750024F30420)
     +++ description: None
 ```
 

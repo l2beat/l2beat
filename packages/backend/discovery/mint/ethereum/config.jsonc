@@ -4,7 +4,7 @@
   "name": "mint",
   "initialAddresses": ["0x2b3F201543adF73160bA42E1a5b7750024F30420"],
   "names": {
-    "0x2b3F201543adF73160bA42E1a5b7750024F30420": "MintBridge",
+    "0x2b3F201543adF73160bA42E1a5b7750024F30420": "L1StandardBridge",
     "0x59625d1FE0Eeb8114a4d13c863978F39b3471781": "OptimismPortal",
     "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED": "L2OutputOracle",
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",

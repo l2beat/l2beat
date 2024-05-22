@@ -1,12 +1,12 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "blockNumber": 19926510,
-  "configHash": "0xdb77e622b4ea15c30acb8948f34b0d6491b68f6bd2001fef9b3c72a7885a580b",
+  "blockNumber": 19926571,
+  "configHash": "0x4026921138195e69fa9628010573d85df72610bace70d8d7b254012c56a4d8b7",
   "version": 4,
   "contracts": [
     {
-      "name": "MintBridge",
+      "name": "L1StandardBridge",
       "address": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -65,7 +65,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19926499],
+        "params": [1000000000, 491310, 19926538],
         "paused": false,
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
         "version": "1.7.2"
@@ -173,7 +173,7 @@
       "sinceTimestamp": 1715609063,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625746",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625747",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
