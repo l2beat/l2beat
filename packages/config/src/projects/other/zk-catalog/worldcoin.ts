@@ -13,6 +13,7 @@ export const worldcoin: ZkCatalogProject = {
   },
   proofVerification: {
     aggregation: false,
+    description: '',
     verifiers: [
       {
         name: 'OpWorldID_Zero',
@@ -140,15 +141,13 @@ export const worldcoin: ZkCatalogProject = {
     ],
     requiredTools: [
       {
-        name: 'snarkjs@0.6.11',
-        description:
-          'A JavaScript and Pure Web Assembly implementation of zkSNARK and PLONK schemes. It uses the Groth16 Protocol (3 point only and 3 pairings), PLONK and FFLONK.',
+        name: 'snarkjs',
+        version: 'v0.6.11',
         link: 'https://github.com/iden3/snarkjs/releases/tag/v0.6.11',
       },
       {
-        name: 'circom@2.0.3',
-        description:
-          'A domain-specific language for defining arithmetic circuits that can be used to generate zero-knowledge proofs.',
+        name: 'circom',
+        version: 'v2.0.3',
         link: 'https://github.com/iden3/circom/releases/tag/v2.0.3',
       },
     ],
