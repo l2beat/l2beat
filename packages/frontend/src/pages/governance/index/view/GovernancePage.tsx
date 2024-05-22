@@ -23,7 +23,7 @@ export interface GovernancePageProps {
 
 export function GovernancePage(props: GovernancePageProps) {
   return (
-    <DashboardLayout footer={props.footer}>
+    <DashboardLayout>
       <Header
         delegatedProjects={props.delegatedProjects}
         pageContentClassName="md:px-6 lg:px-12 justify-start"

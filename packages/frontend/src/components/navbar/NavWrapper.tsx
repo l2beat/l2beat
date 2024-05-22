@@ -412,10 +412,10 @@ function LegacyNavBarLink({
 function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
   const { path, config } = usePageBuildContext()
   return (
-    <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16 hidden xl:block">
-      <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
-        <ul className="flex h-full items-center">
-          <li className="mr-4 lg:mr-8">
+    <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
+      <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
+        <ul className="flex py-4 items-center">
+          <li className="mr-8">
             <a href={path.startsWith('/bridges') ? '/bridges/summary' : '/'}>
               <Logo className="h-8 w-auto" />
             </a>
@@ -429,7 +429,7 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
             />
           ))}
         </ul>
-        <div className="hidden h-full items-center gap-5 lg:flex">
+        <div className="flex h-full items-center gap-5">
           <ul className="items-center gap-4 hidden 2xl:flex">
             <SocialLinks />
           </ul>
