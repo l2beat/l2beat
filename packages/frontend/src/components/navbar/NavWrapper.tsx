@@ -195,6 +195,13 @@ type NavbarLinkGroups = {
   }[]
 }[]
 
+function getMainLink(path: string, links: NavbarLinkGroups) {
+  return (
+    links.find((g) => path.startsWith(`/${g.links[0].href.split('/')[1]}`))
+      ?.links[0].href ?? '/'
+  )
+}
+
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
  */
@@ -209,7 +216,9 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
         {/* Left side */}
         <div className="flex flex-row gap-4">
           <div className="py-4">
-            <Logo className="h-8 w-auto" />
+            <a href={getMainLink(path, links)}>
+              <Logo className="h-8 w-auto" />
+            </a>
           </div>
           <ul className="flex flex-row">
             <MobileNavBarLink
@@ -280,7 +289,7 @@ export function Sidenav({
   links: NavbarLinkGroups
   legacyNav: boolean
 }) {
-  const { config } = usePageBuildContext()
+  const { config, path } = usePageBuildContext()
   const sharedSizeClasses = cn(
     'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
@@ -309,7 +318,7 @@ export function Sidenav({
           data-role="sidenav-collapse-content"
         >
           <div className="flex flex-row justify-between items-center">
-            <a href="/">
+            <a href={getMainLink(path, links)}>
               <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
               <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
             </a>
