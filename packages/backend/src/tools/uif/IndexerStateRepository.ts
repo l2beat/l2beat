@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-import { IndexerStateRow } from 'knex/types/tables'
 
 import {
   BaseRepository,
@@ -9,9 +8,18 @@ import {
 } from '../../peripherals/database/BaseRepository'
 import { Database } from '../../peripherals/database/Database'
 
+export interface IndexerStateRow {
+  indexer_id: string
+  safe_height: number
+  config_hash?: string | undefined
+  min_timestamp: Date | undefined
+}
+
 export interface IndexerStateRecord {
   indexerId: string
   safeHeight: number
+  // TODO: make it required in every indexer
+  configHash?: string
   // TODO: phase out minTimestamp
   minTimestamp?: UnixTime
 }
@@ -79,6 +87,7 @@ function toRecord(row: IndexerStateRow): IndexerStateRecord {
   return {
     indexerId: row.indexer_id,
     safeHeight: row.safe_height,
+    configHash: row.config_hash ?? undefined,
     minTimestamp: row.min_timestamp
       ? UnixTime.fromDate(row.min_timestamp)
       : undefined,
@@ -89,6 +98,7 @@ function toRow(record: IndexerStateRecord): IndexerStateRow {
   return {
     indexer_id: record.indexerId,
     safe_height: record.safeHeight,
+    config_hash: record.configHash,
     min_timestamp: record.minTimestamp?.toDate(),
   }
 }
