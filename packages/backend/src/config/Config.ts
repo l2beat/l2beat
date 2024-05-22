@@ -96,6 +96,7 @@ export interface Tvl2Config {
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
+  readonly projectsExcludedFromApi: string[]
 }
 
 export interface TrackedTxsConfig {
