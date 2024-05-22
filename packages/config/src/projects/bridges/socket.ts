@@ -142,6 +142,12 @@ export const socket: Bridge = {
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x64dF894688c5052BeAdC35371cF69151Ebc5D658'),
+        name: 'WETH Vault Reya',
+        description: 'Socket Vault associated with Reya.',
+        tokens: ['WETH'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
         name: 'WETH Vault Hook',
         description: 'Socket Vault associated with Hook.',
