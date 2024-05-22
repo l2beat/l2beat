@@ -1665,14 +1665,16 @@
       "address": "0xACCBC418a994a27a75644d8d591afC22FaBA594e",
       "category": "ether",
       "type": "NMV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "coingeckoId": "ethereum"
     },
     {
       "symbol": "mUSD",
       "address": "0x649d4524897cE85A864DC2a2D5A11Adb3044f44a",
       "category": "stablecoin",
       "type": "NMV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "coingeckoId": "tether"
     },
     {
       "symbol": "STONE",
