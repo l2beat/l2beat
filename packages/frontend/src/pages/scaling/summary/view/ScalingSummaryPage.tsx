@@ -7,7 +7,6 @@ import {
   ScalingSummaryView,
   ScalingSummaryViewProps,
 } from './ScalingSummaryView'
-import { OtherSites } from '../../../../components/other-sites/OtherSites'
 
 export interface SummaryPageProps {
   tvlView: ScalingSummaryViewProps

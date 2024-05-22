@@ -1,6 +1,7 @@
 import React, { ReactNode, SVGAttributes } from 'react'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
+import { LogoSmall } from '../LogoSmall'
 import {
   ActivityIcon,
   MenuCloseIcon,
@@ -16,9 +17,8 @@ import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
-import { usePageBuildContext } from './navigationContext'
-import { LogoSmall } from '../LogoSmall'
 import { SocialLinks } from './SocialLinks'
+import { usePageBuildContext } from './navigationContext'
 
 function NavLinkGroup({
   title,
@@ -138,6 +138,7 @@ function NavCollapseIcon({ className, ...props }: SVGAttributes<SVGElement>) {
   )
 }
 
+/*
 function NewItemBadge() {
   return (
     <span className="text-[#AB3BD2] dark:text-[#AB3BD2] text-xs font-semibold">
@@ -145,6 +146,7 @@ function NewItemBadge() {
     </span>
   )
 }
+*/
 
 function MobileNavBarLink({
   title,
