@@ -59,7 +59,7 @@ const plugs = [
   '0x32295769ea702BA9337EE5B65c6b42aFF75FEC62',
 ]
 
-const chainSlugToName = {
+const chainSlugToName: Record<string, string> = {
   1: 'Ethereum',
   5: 'Goerli',
   10: 'Optimism',
@@ -102,8 +102,7 @@ interface TokenInfo {
 
 interface Result {
   address: string
-  hub: string | null
-  bridge: string | null
+  hubOrBridge: string | null
   siblingChainSlug: number | string | null
   tokens: TokenInfo[]
   tags?: string[]
@@ -195,36 +194,24 @@ async function exploreContract(address: string): Promise<Result> {
 
   const result: Result = {
     address,
-    hub: hub || null,
-    bridge: bridge || null,
+    hubOrBridge: hub || bridge || null,
     siblingChainSlug: siblingChainSlug || 'unknown',
     tokens: [],
   }
 
-  if (hub) {
-    const hubContract = new ethers.Contract(hub, abi, provider)
+  const hubOrBridgeAddress = hub || bridge
+  if (hubOrBridgeAddress) {
+    const hubOrBridgeContract = new ethers.Contract(
+      hubOrBridgeAddress,
+      abi,
+      provider,
+    )
     const token =
-      (await getContractValue(hubContract, 'token__')) ||
-      (await getContractValue(hubContract, 'token'))
+      (await getContractValue(hubOrBridgeContract, 'token__')) ||
+      (await getContractValue(hubOrBridgeContract, 'token'))
     if (token) {
       const tokenInfo = await getTokenInfoFromEtherscan(token)
-      const tvl = await getTokenTVL(token, hub)
-      if (tokenInfo) {
-        result.tokens.push({ token, ...tokenInfo, tvl })
-      } else {
-        result.tokens.push({ token, tvl })
-      }
-    }
-  }
-
-  if (bridge) {
-    const bridgeContract = new ethers.Contract(bridge, abi, provider)
-    const token =
-      (await getContractValue(bridgeContract, 'token__')) ||
-      (await getContractValue(bridgeContract, 'token'))
-    if (token) {
-      const tokenInfo = await getTokenInfoFromEtherscan(token)
-      const tvl = await getTokenTVL(token, bridge)
+      const tvl = await getTokenTVL(token, hubOrBridgeAddress)
       if (tokenInfo) {
         result.tokens.push({ token, ...tokenInfo, tvl })
       } else {
@@ -246,13 +233,11 @@ async function main(): Promise<void> {
   // Group by siblingChainSlug and sort by TVL
   const groupedResults = results.reduce<{ [key: string]: Result[] }>(
     (acc, result) => {
-      if (!result.siblingChainSlug) {
-        result.siblingChainSlug = 'unknown'
+      const slug = result.siblingChainSlug?.toString() || 'unknown'
+      if (!acc[slug]) {
+        acc[slug] = []
       }
-      if (!acc[result.siblingChainSlug]) {
-        acc[result.siblingChainSlug] = []
-      }
-      acc[result.siblingChainSlug].push(result)
+      acc[slug].push(result)
       return acc
     },
     {},
@@ -270,21 +255,21 @@ async function main(): Promise<void> {
   const addressMap = new Map<string, { count: number; slugs: Set<string> }>()
 
   results.forEach((result) => {
-    const hubBridge = result.hub || result.bridge
-    if (hubBridge) {
-      if (!addressMap.has(hubBridge)) {
-        addressMap.set(hubBridge, { count: 0, slugs: new Set<string>() })
+    const hubOrBridge = result.hubOrBridge
+    if (hubOrBridge) {
+      if (!addressMap.has(hubOrBridge)) {
+        addressMap.set(hubOrBridge, { count: 0, slugs: new Set<string>() })
       }
-      const entry = addressMap.get(hubBridge)!
+      const entry = addressMap.get(hubOrBridge)!
       entry.count++
       entry.slugs.add(result.siblingChainSlug as string)
     }
   })
 
   results.forEach((result) => {
-    const hubBridge = result.hub || result.bridge
-    if (hubBridge) {
-      const entry = addressMap.get(hubBridge)!
+    const hubOrBridge = result.hubOrBridge
+    if (hubOrBridge) {
+      const entry = addressMap.get(hubOrBridge)!
       result.tags = result.tags || []
       if (entry.count > 1) {
         result.tags.push('multiplug')
@@ -317,23 +302,23 @@ async function main(): Promise<void> {
     escrowsByProject[slugName] = []
 
     results.forEach((result) => {
-      const hubBridge = result.hub || result.bridge
-      if (hubBridge && result.tokens.length > 0) {
+      const hubOrBridge = result.hubOrBridge
+      if (hubOrBridge && result.tokens.length > 0) {
         result.tokens.forEach((token) => {
           if (token.tvl > 0) {
-            initialAddressesByProject[slugName].push(hubBridge)
+            initialAddressesByProject[slugName].push(hubOrBridge)
             const name = `${token.tokenSymbol} Vault ${slugName}`
-            namesByProject[slugName][hubBridge] = name
+            namesByProject[slugName][hubOrBridge] = name
             ignoreMethodsByProject[slugName][name] = {
-              ignoreMethods: ['token', 'hook__'],
+              ignoreMethods: ['token', 'token__', 'hook__'],
             }
             escrowsByProject[slugName].push(
               `discovery.getEscrowDetails({
-        address: EthereumAddress('${hubBridge}'),
-        name: '${name}',
-        description: 'Socket Vault associated with ${slugName}.',
-        tokens: ['${token.tokenSymbol}'],
-      }),`,
+                address: EthereumAddress('${hubOrBridge}'),
+                name: '${name}',
+                description: 'Socket Vault associated with ${slugName}.',
+                tokens: ['${token.tokenSymbol}'],
+              }),`,
             )
           }
         })
@@ -341,7 +326,9 @@ async function main(): Promise<void> {
     })
   }
 
-  const projectKeys = Object.keys(initialAddressesByProject)
+  const projectKeys = Object.keys(initialAddressesByProject).filter(
+    (key) => initialAddressesByProject[key].length > 0,
+  )
 
   // Combine all project initial addresses with comments
   const initialAddressesSection = projectKeys
@@ -361,7 +348,7 @@ async function main(): Promise<void> {
       const names = Object.entries(namesByProject[project])
         .map(([addr, name]) => `    "${addr}": "${name}"`)
         .join(',\n')
-      return names
+      return `// ${project}\n${names}`
     })
     .join(',\n')
 
@@ -373,7 +360,7 @@ async function main(): Promise<void> {
       const ignoreMethods = Object.entries(ignoreMethodsByProject[project])
         .map(([name, methods]) => `    "${name}": ${JSON.stringify(methods)}`)
         .join(',\n')
-      return ignoreMethods
+      return `// ${project}\n${ignoreMethods}`
     })
     .join(',\n')
 
@@ -383,7 +370,7 @@ async function main(): Promise<void> {
   const escrowsSection = projectKeys
     .map((project) => {
       const escrows = escrowsByProject[project].join('\n')
-      return escrows
+      return `// ${project}\n${escrows}`
     })
     .join('\n')
 
