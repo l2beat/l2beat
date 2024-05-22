@@ -37,7 +37,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
-    middleware: DatabaseMiddleware,
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
@@ -79,7 +79,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    middleware.push(async (trx?: Knex.Transaction) => {
+    dbMiddleware.add(async (trx?: Knex.Transaction) => {
       await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 

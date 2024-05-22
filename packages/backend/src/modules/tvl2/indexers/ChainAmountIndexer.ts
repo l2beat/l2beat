@@ -85,7 +85,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    dbMiddleware.push(async (trx?: Knex.Transaction) => {
+    dbMiddleware.add(async (trx?: Knex.Transaction) => {
       await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 

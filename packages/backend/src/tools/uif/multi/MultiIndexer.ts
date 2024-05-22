@@ -14,7 +14,7 @@ import {
 
 export const getDefaultDatabaseMiddleware = () => ({
   queue: [] as (() => Promise<void>)[],
-  push(cb: () => Promise<void>) {
+  add(cb: () => Promise<void>) {
     this.queue.push(cb)
   },
   async execute() {
@@ -100,7 +100,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: UpdateConfiguration<T>[],
-    middleware: DatabaseMiddleware,
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number>
 
   /**
@@ -129,7 +129,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
-    middleware?: DatabaseMiddleware,
+    dbMiddleware?: DatabaseMiddleware,
   ): Promise<void>
 
   /**
@@ -184,13 +184,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const middleware =
+    const dbMiddleware =
       (await this.newDatabaseMiddleware?.()) ?? getDefaultDatabaseMiddleware()
     const newHeight = await this.multiUpdate(
       from,
       adjustedTo,
       configurations,
-      middleware,
+      dbMiddleware,
     )
     if (newHeight < from || newHeight > adjustedTo) {
       throw new Error(
@@ -204,11 +204,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
         newHeight,
       )
       if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight, middleware)
+        await this.updateCurrentHeight(updatedIds, newHeight, dbMiddleware)
       }
     }
 
-    await middleware.execute()
+    await dbMiddleware.execute()
 
     return newHeight
   }

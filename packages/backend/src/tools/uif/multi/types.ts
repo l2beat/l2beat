@@ -33,6 +33,6 @@ export interface ConfigurationRange<T> {
 }
 
 export interface DatabaseMiddleware {
-  push: (cb: () => Promise<void>) => void
+  add: (cb: () => Promise<void>) => void
   execute: () => Promise<void>
 }

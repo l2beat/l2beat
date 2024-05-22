@@ -64,7 +64,7 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
     currentHeight: number | null,
-    middleware?: DatabaseMiddleware,
+    dbMiddleware?: DatabaseMiddleware,
   ): Promise<void> {
     const cb = async (trx?: Knex.Transaction) => {
       await this.indexerConfigurationRepository.updateSavedConfigurations(
@@ -74,8 +74,8 @@ export class IndexerService {
         trx,
       )
     }
-    if (middleware) {
-      middleware.push(cb)
+    if (dbMiddleware) {
+      dbMiddleware.add(cb)
     } else {
       await cb()
     }
