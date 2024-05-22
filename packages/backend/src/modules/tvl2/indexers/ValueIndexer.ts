@@ -1,10 +1,12 @@
 import {
   AmountConfigEntry,
+  CoingeckoPriceConfigEntry,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { createHash } from 'crypto'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -15,6 +17,8 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { AmountId, createAmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId, createPriceId } from '../utils/createPriceId'
+import { createValueId } from '../utils/createValueId'
+import { assert } from '@l2beat/backend-tools'
 
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -37,7 +41,8 @@ export class ValueIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ValueIndexerDeps) {
     const logger = $.logger.tag($.tag)
     const name = 'value_indexer'
-    super({ ...$, name, logger })
+    const configHash = getValuesConfigHash($.amountConfigs, $.priceConfigs)
+    super({ ...$, name, logger, configHash })
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
@@ -130,4 +135,23 @@ function getPriceConfigIds(prices: PriceConfigEntry[]) {
   }
 
   return result
+}
+
+function getValuesConfigHash(
+  amountConfigs: AmountConfigEntry[],
+  priceConfigs: CoingeckoPriceConfigEntry[],
+): string {
+  const input = []
+
+  for (const amount of amountConfigs) {
+    const price = priceConfigs.find(
+      (p) => p.address === amount.address && p.chain === amount.chain,
+    )
+    assert(price, `Price config not found for ${createAmountId(amount)}`)
+    const valueId = createValueId(amount, price)
+    input.push(valueId)
+  }
+
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
+  return hash.slice(0, 12)
 }
