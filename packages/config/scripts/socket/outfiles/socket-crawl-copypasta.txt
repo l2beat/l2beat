@@ -1,16 +1,11 @@
 "initialAddresses": [
 // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
     "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
     "0x8180EcCC825b692ef65FF099a0A387743788bf78",
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
-    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
@@ -84,12 +79,6 @@ discovery.getEscrowDetails({
                 tokens: ['USDC'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d'),
-                name: 'USDC Vault Lyra',
-                description: 'Socket Vault associated with Lyra.',
-                tokens: ['USDC'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
                 name: 'rswETH Vault Lyra',
                 description: 'Socket Vault associated with Lyra.',
@@ -108,18 +97,6 @@ discovery.getEscrowDetails({
                 tokens: ['WETH'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
-                name: 'WETH Vault Lyra',
-                description: 'Socket Vault associated with Lyra.',
-                tokens: ['WETH'],
-              }),
-discovery.getEscrowDetails({
-                address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
-                name: 'wstETH Vault Lyra',
-                description: 'Socket Vault associated with Lyra.',
-                tokens: ['wstETH'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
                 name: 'wstETH Vault Lyra',
                 description: 'Socket Vault associated with Lyra.',
@@ -130,18 +107,6 @@ discovery.getEscrowDetails({
                 name: 'SNX Vault Lyra',
                 description: 'Socket Vault associated with Lyra.',
                 tokens: ['SNX'],
-              }),
-discovery.getEscrowDetails({
-                address: EthereumAddress('0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592'),
-                name: 'SNX Vault Lyra',
-                description: 'Socket Vault associated with Lyra.',
-                tokens: ['SNX'],
-              }),
-discovery.getEscrowDetails({
-                address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
-                name: 'WBTC Vault Lyra',
-                description: 'Socket Vault associated with Lyra.',
-                tokens: ['WBTC'],
               }),
 discovery.getEscrowDetails({
                 address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),

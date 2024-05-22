@@ -346,6 +346,15 @@ async function main(): Promise<void> {
     (key) => initialAddressesByProject[key].length > 0,
   )
 
+  // Deduplication step
+  const deduplicateArray = (arr: string[]) => Array.from(new Set(arr))
+  projectKeys.forEach((key) => {
+    initialAddressesByProject[key] = deduplicateArray(
+      initialAddressesByProject[key],
+    )
+    escrowsByProject[key] = deduplicateArray(escrowsByProject[key])
+  })
+
   const initialAddressesSection = projectKeys
     .map(
       (project) =>
