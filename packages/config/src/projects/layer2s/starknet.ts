@@ -5,6 +5,7 @@ import {
   UnixTime,
   formatLargeNumberShared,
   formatSeconds,
+  ChainId,
 } from '@l2beat/shared-pure'
 
 import {
@@ -30,6 +31,7 @@ import {
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { mainnet } from 'wagmi/chains'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
@@ -710,6 +712,48 @@ export const starknet: Layer2 = {
     genesisState: 'There is no non-empty genesis state.',
     dataFormat:
       'The data format has been updated with different versions, and the full specification can be found [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/).',
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [],
+    proofVerification: {
+      aggregation: true,
+      requiredTools: [],
+      verifiers: [
+        {
+          name: 'SHARPVerifier',
+          description:
+            'Starknet utilizes STARKs for their system. The protocol makes use of recursive aggregation across multiple projects that share the same onchain verifier. SHARP stands for SHARed Prover. Different programs are represented onchain with different program hashes.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'GpsStatementVerifier',
+              proofSystem: 'STARK',
+              mainArithmetization: 'AIR',
+              mainPCS: 'FRI',
+              link: 'https://etherscan.io/address/0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF#code',
+            },
+            {
+              name: 'RecursiveVerifier',
+              proofSystem: 'STARK',
+              mainArithmetization: 'AIR',
+              mainPCS: 'FRI',
+            },
+            {
+              name: 'MainVerifier',
+              proofSystem: 'STARK',
+              mainArithmetization: 'AIR',
+              mainPCS: 'FRI',
+            },
+          ],
+        },
+      ],
+    },
   },
   contracts: {
     addresses: [
