@@ -64,7 +64,7 @@
   "immutablezkevm": true,
   "kakarotzkevm": true,
   "karak": true,
-  "kinto": true,
+  "kinto": false,
   "kroma": true,
   "layer2finance": true,
   "layer2financezk": false,

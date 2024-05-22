@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf2e03980d2c2b2090811551d30586bea33d1d20c
+Generated with discovered.json: 0xd46eed065dd32b285ece0f7fbbc5d7a8349260d6
 
-# Diff at Wed, 22 May 2024 11:08:05 GMT:
+# Diff at Wed, 22 May 2024 11:36:41 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@d8b1d401a7eb2fd4dbc2edda92ae733061915c30 block: 19919191
-- current block number: 19925021
+- current block number: 19925162
 
 ## Description
 
@@ -31,19 +31,11 @@ The Bridger is upgraded to an unverified implementation. Currently there are no 
     }
 ```
 
-```diff
--   Status: DELETED
-    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
 .../Bridger/Bridger.sol => /dev/null               | 4582 --------------------
- .../GnosisSafe.sol => /dev/null                    |  952 ----
- .../GnosisSafeProxy.p.sol => /dev/null             |   34 -
- 3 files changed, 5568 deletions(-)
+ 1 file changed, 4582 deletions(-)
 ```
 
 Generated with discovered.json: 0x1db08e3c132170b88ae88bdd175985aafd322d25

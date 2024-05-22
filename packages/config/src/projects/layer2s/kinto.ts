@@ -18,14 +18,19 @@ export const kinto: Layer2 = orbitStackL2({
     purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://kinto.xyz'],
-      apps: ['https://engen.kinto.xyz/engen-setup'],
+      apps: ['https://engen.kinto.xyz'],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: ['https://explorer.kinto.xyz/', 'https://searchkinto.com/'],
+      explorers: [
+        'https://explorer.kinto.xyz/',
+        'https://kintoscan.io/',
+        'https://searchkinto.com/',
+      ],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
-        'https://discord.gg/utEYFxKFgB',
+        'https://discord.com/invite/kinto',
         'https://mirror.xyz/kintoxyz.eth',
+        'https://medium.com/mamori-finance',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -133,20 +138,22 @@ export const kinto: Layer2 = orbitStackL2({
       'BridgerOwnerMultisig',
       'Multisig that can upgrade the Engen escrow.',
     ),
-    {
-      name: 'Bridger Sender Account',
-      description:
-        'EOA privileged to call `bridgeDeposits()` on the Bridger L1 escrow to send escrowed funds to the L2. It can also deposit tokens into the escrow itself by submitting signatures.',
-      accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
-    },
+    // Contract currently unverified
+    // {
+    //   name: 'Bridger Sender Account',
+    //   description:
+    //     'EOA privileged to call `bridgeDeposits()` on the Bridger L1 escrow to send escrowed funds to the L2. It can also deposit tokens into the escrow itself by submitting signatures.',
+    //   accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
+    // },
   ],
   milestones: [
-    // {
-    //   name: 'Mainnet final launch',
-    //   link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-update-numbers-rewards-00f96370ceac',
-    //   date: '2024-05-16T00:00:00Z',
-    //   description: 'Engen mining is completed and locked funds are deposited to the Kinto L2. Users can deposit and withdraw funds.',
-    // },
+    {
+      name: 'Mainnet full launch',
+      link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',
+      date: '2024-05-22T00:00:00Z',
+      description:
+        'Engen mining is completed and locked funds are bridged to the Kinto L2.',
+    },
     {
       name: 'Kinto Mainnet Genesis',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-kintos-launch-the-set-up-7eddfbb4bc38',
