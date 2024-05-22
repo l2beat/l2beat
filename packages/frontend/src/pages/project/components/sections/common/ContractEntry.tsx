@@ -26,6 +26,7 @@ export interface UsedInProject {
   slug: string
   iconPath: string
   targetName: string
+  hrefRoot: string
   type: 'implementation' | 'proxy' | 'permission'
 }
 
@@ -229,7 +230,7 @@ function UsedInProjectEntry({
           <Tooltip key={i} disabledOnMobile>
             <TooltipTrigger>
               <a
-                href={`/scaling/projects/${project.slug}/#${project.targetName}`}
+                href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
               >
                 <img
                   key={i}

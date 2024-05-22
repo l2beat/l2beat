@@ -32,6 +32,7 @@ export function getUsedInProjects(
           slug: ref.slug,
           targetName: ref.targetName,
           iconPath: `/icons/${ref.slug}.png`,
+          hrefRoot: project.type === 'bridge' ? 'bridges' : 'scaling',
         }
       })
     }
