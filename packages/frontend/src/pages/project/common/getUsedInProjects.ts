@@ -1,9 +1,4 @@
-import {
-  Bridge,
-  Layer2,
-  Layer3,
-  getCommonContractsIn,
-} from '@l2beat/config'
+import { Bridge, Layer2, Layer3, getCommonContractsIn } from '@l2beat/config'
 import { UsedInProject } from '../components/sections/common/ContractEntry'
 
 export function getUsedInProjects(
