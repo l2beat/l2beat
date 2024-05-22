@@ -14,10 +14,10 @@ import { gatherAddressesFromUpgradeability } from '../../scripts/checkVerifiedCo
 export const l2CommonContracts = findCommonContracts(layer2s)
 export const bridgeCommonContracts = findCommonContracts(bridges)
 
-export function getCommonContractsIn(projectType: Project['type']) {
-  if (projectType === 'layer2') {
+export function getCommonContractsIn(project: Project) {
+  if (project.type === 'layer2') {
     return l2CommonContracts
-  } else if (projectType === 'bridge') {
+  } else if (project.type === 'bridge') {
     return bridgeCommonContracts
   } else {
     return {}
@@ -25,7 +25,7 @@ export function getCommonContractsIn(projectType: Project['type']) {
 }
 
 function findCommonContracts(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions'>[],
+  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
 ) {
   const configReader = new ConfigReader('../backend')
   // TODO(radomski): Handling L3s
@@ -80,7 +80,7 @@ function findCommonContracts(
   })
 
   const merged = merge(commonContracts, commonEOAs)
-  const referenced = dropNonusedAddresses(projects, merged)
+  const referenced = pickOutReferencedEntries(projects, merged)
   return referenced
 }
 
@@ -88,10 +88,12 @@ type ReferenceInfo = {
   id: ProjectId
   usedAs: 'contract' | 'permission'
   targetName: string
+  name: string
+  slug: string
 }
 
-function dropNonusedAddresses(
-  projects: Pick<Project, 'id' | 'contracts' | 'permissions'>[],
+function pickOutReferencedEntries(
+  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
   commonContracts: Record<string, ProjectId[]>,
 ): Record<string, ReferenceInfo[]> {
   const result: Record<string, ReferenceInfo[]> = {}
@@ -111,6 +113,8 @@ function dropNonusedAddresses(
           id,
           usedAs: 'contract',
           targetName: contract.name,
+          name: project.display.name,
+          slug: project.display.slug,
         })
       } else if (permission !== undefined) {
         result[address] ??= []
@@ -118,6 +122,8 @@ function dropNonusedAddresses(
           id,
           usedAs: 'permission',
           targetName: permission.name,
+          name: project.display.name,
+          slug: project.display.slug,
         })
       }
     })

@@ -3,7 +3,6 @@ import {
   Layer2,
   Layer3,
   getCommonContractsIn,
-  getProjectsIn,
 } from '@l2beat/config'
 import { UsedInProject } from '../components/sections/common/ContractEntry'
 
@@ -16,8 +15,7 @@ export function getUsedInProjects(
     addresses: string[],
     type: UsedInProject['type'],
   ) => {
-    const commonContracts = getCommonContractsIn(project.type)
-    const projects = getProjectsIn(project.type)
+    const commonContracts = getCommonContractsIn(project)
 
     const usedIn = [
       ...new Set(
@@ -32,18 +30,13 @@ export function getUsedInProjects(
 
     if (usedIn.length > 0) {
       usedInProjects = usedIn.map((ref) => {
-        const refProject = projects.find((p) => p.id === ref.id)
-        if (!refProject) {
-          throw new Error('Invalid project type')
-        }
-
         return {
           type,
           id: ref.id,
-          name: refProject.display.name,
-          slug: refProject.display.slug,
+          name: ref.name,
+          slug: ref.slug,
           targetName: ref.targetName,
-          iconPath: `/icons/${refProject.display.slug}.png`,
+          iconPath: `/icons/${ref.slug}.png`,
         }
       })
     }
