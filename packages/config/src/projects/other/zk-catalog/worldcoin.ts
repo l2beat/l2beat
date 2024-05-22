@@ -1,7 +1,5 @@
-import { link } from 'fs'
-import { identity } from 'lodash'
-import { ZkCatalogProject } from './types/ZkCatalogProject'
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoin: ZkCatalogProject = {
   display: {
