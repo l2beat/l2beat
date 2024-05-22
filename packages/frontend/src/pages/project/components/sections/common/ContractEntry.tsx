@@ -226,7 +226,7 @@ function UsedInProjectEntry({
       </p>
       <div className="flex flex-row items-center">
         {implementations.map((project, i) => (
-          <Tooltip key={i}>
+          <Tooltip key={i} disabledOnMobile>
             <TooltipTrigger>
               <a
                 href={`/scaling/projects/${project.slug}/#${project.targetName}`}
