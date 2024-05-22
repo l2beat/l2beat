@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { createHash } from 'crypto'
+import { assert } from '@l2beat/backend-tools'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -18,7 +19,6 @@ import { AmountId, createAmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId, createPriceId } from '../utils/createPriceId'
 import { createValueId } from '../utils/createValueId'
-import { assert } from '@l2beat/backend-tools'
 
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -93,6 +93,13 @@ export class ValueIndexer extends ManagedChildIndexer {
     )
 
     await this.$.valueRepository.addOrUpdateMany(values)
+
+    this.logger.info('Saved values into DB', {
+      from,
+      to,
+      timestamps: timestamps.length,
+      values: values.length,
+    })
 
     return timestamps[timestamps.length - 1].toNumber()
   }
