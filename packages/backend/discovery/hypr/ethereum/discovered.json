@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 19918842,
+  "blockNumber": 19927696,
   "configHash": "0x13459d3d441c15286942077c1d443e8c8e890e3b2a9bb3dad48a509d9b138acb",
   "version": 4,
   "contracts": [
@@ -98,10 +98,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5392800,
-        "latestOutputIndex": 2995,
-        "nextBlockNumber": 5394600,
-        "nextOutputIndex": 2996,
+        "latestBlockNumber": 5443200,
+        "latestOutputIndex": 3023,
+        "nextBlockNumber": 5445000,
+        "nextOutputIndex": 3024,
         "PROPOSER": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
         "startingBlockNumber": 0,
         "startingTimestamp": 1705512383,
@@ -117,7 +117,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -125,14 +125,16 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 3,
-        "nonce": 33,
+        "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -265,7 +267,9 @@
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
     "0x1bBde518ad01BaABFE30020407A7630FB17B545d": [
