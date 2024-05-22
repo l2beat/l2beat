@@ -14,7 +14,7 @@ export const worldcoin: ZkCatalogProject = {
       {
         name: 'OpWorldID_Zero',
         description:
-          "Semaphore verifier of size 30 for the 'phone' anonymity set.",
+          "Semaphore verifier of size 30 for the 'phone' anonymity set. The verification appears as unsuccessful due to circom@2.0.3 not being deterministic when producing the r1cs file.",
         contractAddress: EthereumAddress(
           '0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB',
         ),
@@ -34,7 +34,7 @@ export const worldcoin: ZkCatalogProject = {
       {
         name: 'OpWorldID_One',
         description:
-          "Semaphore verifier of size 30 for the 'orb' anonymity set.",
+          "Semaphore verifier of size 30 for the 'orb' anonymity set. The verification appears as unsuccessful due to circom@2.0.3 not being deterministic when producing the r1cs file.",
         contractAddress: EthereumAddress(
           '0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF',
         ),
