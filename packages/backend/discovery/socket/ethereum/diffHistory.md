@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xea4aa07904aaebedfc40af9eb06cb07aa1598724
+Generated with discovered.json: 0xb52373f4cf5c6c3483c2c1a326849974a5d0687f
 
-# Diff at Wed, 22 May 2024 19:22:32 GMT:
+# Diff at Wed, 22 May 2024 20:21:15 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@bac4efad06804152ae97853892e122a801bbc509 block: 19926155
-- current block number: 19927478
+- current block number: 19927768
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New socket script: only vaults with non-zero TVL are added.
 
 ## Config/verification related changes
 

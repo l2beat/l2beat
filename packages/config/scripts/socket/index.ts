@@ -189,7 +189,7 @@ async function getTokenTVL(token: string, account: string): Promise<number> {
   }
 }
 
-async function getOwner(contract: ethers.Contract): Promise<string | null> {
+function getOwner(contract: ethers.Contract): Promise<string | null> {
   return getContractValue(contract, 'owner') as Promise<string | null>
 }
 
