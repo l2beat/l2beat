@@ -1,8 +1,8 @@
 import { isAddress } from 'viem'
 import { Card } from '~/components/Card'
+import { ChangeWalletButton } from '~/components/ChangeWalletButton'
 import { formatAddress } from '~/utils/formatAddress'
 import { formatNumberWithCommas } from '~/utils/formatNumber'
-import { ChangeWallet } from './ChangeWallet'
 import { Token } from './table/TokensTable'
 
 interface DetailsHeaderProps {
@@ -49,7 +49,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             {isAddress(props.walletAddress)
               ? formatAddress(props.walletAddress)
               : props.walletAddress}
-            <ChangeWallet wallet={props.walletAddress} />
+            <ChangeWalletButton wallet={props.walletAddress} />
           </span>
         </div>
       </div>

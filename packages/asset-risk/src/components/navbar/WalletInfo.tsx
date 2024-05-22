@@ -1,5 +1,4 @@
 'use client'
-import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
 import { useAccount, useEnsName } from 'wagmi'
 import { formatAddress } from '~/utils/formatAddress'
@@ -25,11 +24,7 @@ export function WalletInfo() {
             ? formatAddress('0x8aEb2A694589a6ACaD9716d23198ed3784d4C50e')
             : null}
       </Link>
-      <ConnectKitButton.Custom>
-        {({ isConnected, show }) => {
-          return isConnected && <ChangeWalletButton show={show} />
-        }}
-      </ConnectKitButton.Custom>
+      <ChangeWalletButton />
     </div>
   )
 }
