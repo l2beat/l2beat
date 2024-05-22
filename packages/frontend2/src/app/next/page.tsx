@@ -1,6 +1,6 @@
+import { Metadata } from 'next'
 import { api } from '~/trpc/server'
 import { HelloClient } from './_components/hello-client'
-import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   robots: {
