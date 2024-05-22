@@ -13,12 +13,12 @@ import { type Layer2, type Layer2Display } from '../types'
 export interface UnderReviewConfigCommon {
   id: string
   rpcUrl?: string
+  escrows?: ScalingProjectEscrow[]
   transactionApi?: ScalingProjectTransactionApi
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
-  escrows: ScalingProjectEscrow[]
   chainConfig?: Layer2['chainConfig']
 }
 
@@ -39,7 +39,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
       stage: 'UnderReview',
     },
     config: {
-      escrows: templateVars.escrows,
+      escrows: templateVars.escrows ?? [],
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
@@ -68,7 +68,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
       ...templateVars.display,
     },
     config: {
-      escrows: [],
+      escrows: templateVars.escrows ?? [],
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
