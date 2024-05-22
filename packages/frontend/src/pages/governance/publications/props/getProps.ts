@@ -1,4 +1,4 @@
-import { usePageBuildContext } from '../../../../components/navbar/navigationContext'
+import { Config } from '../../../../build/config'
 import {
   CollectionEntry,
   getCollection,
@@ -8,8 +8,9 @@ import { getGovernancePublicationEntry } from '../../index/props/getGovernancePu
 import { GovernancePublicationsPageProps } from '../view/GovernancePublicationsPage'
 import { getPageMetadata } from './getPageMetadata'
 
-export function getProps(): Wrapped<GovernancePublicationsPageProps> {
-  const { config } = usePageBuildContext()
+export function getProps(
+  config: Config,
+): Wrapped<GovernancePublicationsPageProps> {
   const publications = getCollection('publications')
 
   return {

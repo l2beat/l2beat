@@ -95,7 +95,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   if (config.features.governancePage) {
     pages.push(getGovernancePage())
-    pages.push(getGovernancePublicationsPage())
+    pages.push(getGovernancePublicationsPage(config))
     pages.push(...getGovernancePublicationPages())
   }
 
