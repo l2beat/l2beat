@@ -94,9 +94,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   if (config.features.governancePage) {
-    pages.push(getGovernancePage(config))
-    pages.push(getGovernancePublicationsPage(config))
-    pages.push(...getGovernancePublicationPages(config))
+    pages.push(getGovernancePage())
+    pages.push(getGovernancePublicationsPage())
+    pages.push(...getGovernancePublicationPages())
   }
 
   if (config.features.glossary) {
