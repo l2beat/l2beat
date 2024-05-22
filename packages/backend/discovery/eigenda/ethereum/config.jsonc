@@ -12,7 +12,8 @@
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
-    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig"
+    "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
+    "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager"
   },
   "sharedModules": {
     "EigenLayerOperationsMultisig": "shared-eigenlayer",
@@ -70,6 +71,35 @@
           "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
           "severity": "HIGH",
           "type": "RISK_PARAMETER"
+        }
+      }
+    },
+    "EjectionManager": {
+      "description": "Contract used for ejection of operators from the RegistryCoordinator.",
+      "fields": {
+        "ejectors": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "EjectorUpdated",
+            "valueKey": "ejector",
+            "flagKey": "status"
+          }
+        },
+        "ejectionRateLimitWindow": {
+          "description": "Time delta to track ejection over",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "QuorumEjectionParams",
+            "valueKey": "rateLimitWindow",
+          }
+        },
+        "ejectableStakePercent": {
+          "description": "Max stake to be ejectable per time delta",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "QuorumEjectionParams",
+            "valueKey": "ejectableStakePercent"
+          }
         }
       }
     }

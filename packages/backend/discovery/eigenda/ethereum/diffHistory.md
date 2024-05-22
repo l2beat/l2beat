@@ -1,14 +1,57 @@
-Generated with discovered.json: 0x977898c669d6ee8cc18229f977ad402dc09b23d6
+Generated with discovered.json: 0x1bf70137a0a668ed1625b20d5ebd3a7db16713ab
 
-# Diff at Tue, 21 May 2024 13:31:11 GMT:
+# Diff at Wed, 22 May 2024 11:14:43 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19840892
-- current block number: 19918593
+- current block number: 19925053
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Registry coordinator:
+    - ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
+    - 
+
+## Watched changes
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      values.ejector:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+    }
+```
+
+```diff
+    contract eigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
++        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
+      implementations.0:
+-        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
++        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
+      values.quorumNumbersRequired:
+-        "0x00"
++        "0x0001"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+```
+
+## Source code changes
+
+```diff
+.../.flat/EjectionManager/EjectionManager.sol      | 583 +++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 630 +++++++++++++++++++++
+ .../EigenDAServiceManager.sol                      |   2 +-
+ 3 files changed, 1214 insertions(+), 1 deletion(-)
+```
 
 ## Config/verification related changes
 
