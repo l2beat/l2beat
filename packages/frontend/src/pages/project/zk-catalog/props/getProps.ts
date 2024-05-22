@@ -1,25 +1,27 @@
 import { Layer2, Layer3, ZkCatalogProject } from '@l2beat/config'
 
-import { assert } from '@l2beat/shared-pure'
+import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getCollectionEntry } from '../../../../content/getCollection'
+import { getProofVerification } from '../../../../utils/zk-catalog/getProofVerification'
+import { hasTrustedSetup } from '../../../../utils/zk-catalog/hasTrustedSetup'
 import { Wrapped } from '../../../Page'
 import {
   ZkCatalogProjectDetails,
   ZkCatalogProjectPageProps,
 } from '../view/ZkCatalogProjectPage'
 import { getPageMetadata } from './getPageMetadata'
-import { hasTrustedSetup } from './hasTrustedSetup'
 
 export function getProps(
   project: Layer2 | Layer3 | ZkCatalogProject,
   config: Config,
+  verifiersApiResponse: VerifiersApiResponse,
 ): Wrapped<ZkCatalogProjectPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config, 'zk-catalog'),
-      details: getZkCatalogProjectDetails(project),
+      details: getZkCatalogProjectDetails(project, verifiersApiResponse),
       footer: getFooterProps(config),
     },
     wrapper: {
@@ -31,33 +33,30 @@ export function getProps(
 
 function getZkCatalogProjectDetails(
   project: Layer2 | Layer3 | ZkCatalogProject,
+  verifiersApiResponse: VerifiersApiResponse,
 ): ZkCatalogProjectDetails {
   const descriptionEntry = getCollectionEntry(
     'zkCatalogDescriptions',
     project.display.slug,
   )
 
-  if (project.type === 'zk-catalog') {
-    return {
-      title: project.display.name,
-      icon: `/icons/${project.display.slug}.png`,
-      linkToMainProjectDetails: undefined,
-      hasTrustedSetup: hasTrustedSetup(project.proofVerification.verifiers),
-      description: descriptionEntry.content,
-      ...project.proofVerification,
-    }
-  }
+  const proofVerification = getProofVerification(project, verifiersApiResponse)
 
-  assert(project.stateValidation?.proofVerification, 'Invalid project')
-
-  return {
+  const baseDetails = {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    linkToMainProjectDetails: `/scaling/projects/${project.display.slug}`,
-    hasTrustedSetup: hasTrustedSetup(
-      project.stateValidation.proofVerification.verifiers,
-    ),
+    linkToMainProjectDetails: undefined,
+    hasTrustedSetup: hasTrustedSetup(proofVerification.verifiers),
     description: descriptionEntry.content,
-    ...project.stateValidation.proofVerification,
+    ...proofVerification,
+  }
+
+  if (project.type === 'zk-catalog') {
+    return baseDetails
+  }
+
+  return {
+    ...baseDetails,
+    linkToMainProjectDetails: `/scaling/projects/${project.display.slug}`,
   }
 }
