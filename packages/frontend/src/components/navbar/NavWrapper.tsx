@@ -307,8 +307,10 @@ export function Sidenav({
           data-role="sidenav-collapse-content"
         >
           <div className="flex flex-row justify-between items-center">
-            <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
-            <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
+            <a href="/">
+              <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
+              <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
+            </a>
             <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4 items-center">
               <DarkThemeToggle />
               <button className="xl:hidden" data-role="sidenav-mobile-toggle">
