@@ -1,6 +1,6 @@
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
   Project,
@@ -8,28 +8,45 @@ import {
   ScalingProjectPermission,
   bridges,
   layer2s,
+  layer3s,
 } from '..'
 import { gatherAddressesFromUpgradeability } from '../../scripts/checkVerifiedContracts/addresses'
-
-export const l2CommonContracts = findCommonContracts(layer2s)
-export const bridgeCommonContracts = findCommonContracts(bridges)
+import { hashJson } from '@l2beat/shared'
 
 export function getCommonContractsIn(project: Project) {
   if (project.type === 'layer2') {
-    return l2CommonContracts
+    return findCommonContractsMemoized(layer2s)
   } else if (project.type === 'bridge') {
-    return bridgeCommonContracts
+    return findCommonContractsMemoized(bridges)
+} else if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
+    const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
+    return findCommonContractsMemoized(projects, project.hostChain as string)
   } else {
     return {}
   }
 }
 
+const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
+
+function findCommonContractsMemoized(
+  projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  hostChain: string = 'ethereum',
+) {
+    const hash = hashJson(hostChain + JSON.stringify(projects.map(p => p.id)))
+    if (memo.has(hash)) {
+      return memo.get(hash)
+    }
+    const result = findCommonContracts(projects, hostChain)
+    memo.set(hash, result)
+    return result
+}
+
 function findCommonContracts(
   projects: Pick<Project, 'id' | 'contracts' | 'permissions' | 'display'>[],
+  hostChain: string,
 ) {
   const configReader = new ConfigReader('../backend')
-  // TODO(radomski): Handling L3s
-  const configs = configReader.readAllConfigsForChain('ethereum')
+  const configs = configReader.readAllConfigsForChain(hostChain)
   const discoveriesFull = configs.map((c) =>
     configReader.readDiscovery(c.name, c.chain),
   )
