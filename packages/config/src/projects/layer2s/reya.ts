@@ -36,13 +36,13 @@ export const reya: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'reya',
     chainId: 1729,
-    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerUrl: 'https://explorer.reya.network',
     explorerApi: {
       url: 'https://explorer.reya.network/api',
       type: 'blockscout',
     },
     multicallContracts: [],
-    minTimestampForTvl: new UnixTime(1709380607),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
   },
   trackedTxs: [
     {

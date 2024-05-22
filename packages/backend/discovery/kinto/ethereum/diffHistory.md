@@ -1,4 +1,106 @@
-Generated with discovered.json: 0xa78ed74c87eef55839623ea4373878af98307bd2
+Generated with discovered.json: 0x1db08e3c132170b88ae88bdd175985aafd322d25
+
+# Diff at Tue, 21 May 2024 15:32:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d10db8000986dcc20fb2efb94c0e0636ac38fa21 block: 19888796
+- current block number: 19919191
+
+## Description
+
+The Bridger contract (pre-launch escrow for Kinto) is upgraded: The hardcoded orbitstack-native bridges are removed and the bridgeDeposits() function is modified to allow bridging via arbitrary bridges. Kinto will use socket as an external bridge for their L2 and the assets currently locked in the Bridger contract.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
++        "0x3636617973f25a512676cb06876f0C885568664a"
+      implementations.0:
+-        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
++        "0x3636617973f25a512676cb06876f0C885568664a"
+      values.L1GatewayRouter:
+-        "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60"
+      values.standardGateway:
+-        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42"
+      derivedName:
+-        "BridgerV4"
++        "Bridger"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BridgerV4.sol => .flat/Bridger/Bridger.sol}    | 5518 ++++++++++----------
+ 1 file changed, 2757 insertions(+), 2761 deletions(-)
+```
+
+Generated with discovered.json: 0x76f1e50a00a33e6f1eb3cc4ddf6d1768e457194b
+
+# Diff at Fri, 17 May 2024 09:28:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@cf6498d339a075296e717008e17a69561c236726 block: 19883606
+- current block number: 19888796
+
+## Description
+
+The wasmModuleRoot changes to a new value (which is not known in our ArbOS history). Looking at the Kinto Github repo, this is the [Hardfork #4 upgrade](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/4).
+Changes are mainly related to the integration of the Socket bridge contracts in preparation for the May 22nd 'full mainnet launch'.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169"
++        "0x6948185c62070f9523a93664e8d064627f65830fd308af5e82f21292a2060fb8"
+    }
+```
+
+Generated with discovered.json: 0xd5b099929f8b81f2ec7e02982922564807216015
+
+# Diff at Thu, 16 May 2024 06:39:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@814c482c2be2428b2782bc85afecccac8c999b5e block: 19830808
+- current block number: 19880804
+
+## Description
+
+New signer added to the ExecutorMultisig (Rollup owner): `0x08E674c4538caE03B6c05405881dDCd95DcaF5a8`
+
+## Watched changes
+
+```diff
+    contract ExecutorMultisig (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+      values.getOwners.4:
++        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.getOwners.3:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "0x356000Cec4fC967f8FC372381D983426760A0391"
+      values.getOwners.2:
+-        "0x356000Cec4fC967f8FC372381D983426760A0391"
++        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+      values.getOwners.1:
+-        "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.getOwners.0:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    }
+```
+
+Generated with discovered.json: 0x7b73332ba44977745e2bfdaabbe0a1aaf9f426ed
 
 # Diff at Thu, 09 May 2024 06:51:41 GMT:
 

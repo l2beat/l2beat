@@ -1,4 +1,29 @@
-Generated with discovered.json: 0x134e46247e744e00b1b0a3f309124e847a5fa4f8
+Generated with discovered.json: 0x6124ec4be2edb290f32c6def8e55cfc071ddc45e
+
+# Diff at Thu, 16 May 2024 10:59:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@59d36171ee3aaf27d6db0c75fdfba523d2dad686 block: 19718134
+- current block number: 19882094
+
+## Description
+
+Changes related to improving the shared-polygon-cdk module.
+Verifier is no longer part of this shared module - each rollup discoveres it for themselfs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718134 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x675abae30b8f0674b5c4e121e5e94f1373994217
 
 # Diff at Tue, 23 Apr 2024 12:36:37 GMT:
 

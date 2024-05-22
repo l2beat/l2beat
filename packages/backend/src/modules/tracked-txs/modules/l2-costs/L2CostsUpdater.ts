@@ -1,9 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-import { partition } from 'lodash'
-
-import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
 import { TrackedTxId } from '../../types/TrackedTxId'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
@@ -15,7 +12,6 @@ import {
 export class L2CostsUpdater implements TxUpdaterInterface {
   constructor(
     private readonly l2CostsRepository: L2CostsRepository,
-    private readonly rpcClient: ViemRpcClient,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -27,61 +23,30 @@ export class L2CostsUpdater implements TxUpdaterInterface {
       return
     }
 
-    const transformedTransactions =
-      await this.addDetailsTransactionsAndTransform(transactions)
-    await this.l2CostsRepository.addMany(transformedTransactions, knexTx)
+    const transformed = await this.transform(transactions)
+    await this.l2CostsRepository.addMany(transformed, knexTx)
+    this.logger.info('Updated L2 costs', { count: transactions.length })
   }
 
-  async deleteFrom(
+  async deleteFromById(
     id: TrackedTxId,
-    untilTimestamp: UnixTime,
+    fromInclusive: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.l2CostsRepository.deleteFrom(id, untilTimestamp, knexTrx)
+    await this.l2CostsRepository.deleteFromById(id, fromInclusive, knexTrx)
   }
 
-  async addDetailsTransactionsAndTransform(
-    transactions: TrackedTxResult[],
-  ): Promise<L2CostsRecord[]> {
-    const [type3txs, otherTypeTxs] = partition(
-      transactions,
-      (tx) => tx.transactionType === 3,
-    )
-
-    const type3txsDetailsPromises = type3txs.map(async (tx) => {
-      const receipt = await this.rpcClient.getTransactionReceipt(
-        tx.hash as `0x${string}`,
-      )
-      return {
-        timestamp: tx.blockTimestamp,
-        txHash: tx.hash,
-        trackedTxId: tx.use.id,
-        data: {
-          type: 3 as const,
-          gasUsed: tx.receiptGasUsed,
-          gasPrice: tx.gasPrice,
-          calldataLength: tx.dataLength,
-          calldataGasUsed: tx.calldataGasUsed,
-          blobGasUsed: Number(receipt.blobGasUsed),
-          blobGasPrice: Number(receipt.blobGasPrice),
-        },
-      }
-    })
-    const otherTypeTxsDetails = otherTypeTxs.map((tx) => {
-      return {
-        timestamp: tx.blockTimestamp,
-        txHash: tx.hash,
-        trackedTxId: tx.use.id,
-        data: {
-          type: tx.transactionType as 0 | 1 | 2,
-          gasUsed: tx.receiptGasUsed,
-          gasPrice: tx.gasPrice,
-          calldataLength: tx.dataLength,
-          calldataGasUsed: tx.calldataGasUsed,
-        },
-      }
-    })
-    const type3txsDetails = await Promise.all(type3txsDetailsPromises)
-    return [...type3txsDetails, ...otherTypeTxsDetails]
+  async transform(transactions: TrackedTxResult[]): Promise<L2CostsRecord[]> {
+    return transactions.map((tx) => ({
+      timestamp: tx.blockTimestamp,
+      txHash: tx.hash,
+      trackedTxId: tx.use.id,
+      gasUsed: tx.receiptGasUsed,
+      gasPrice: tx.gasPrice,
+      calldataLength: tx.dataLength,
+      calldataGasUsed: tx.calldataGasUsed,
+      blobGasUsed: tx.receiptBlobGasUsed,
+      blobGasPrice: tx.receiptBlobGasPrice,
+    }))
   }
 }

@@ -1,9 +1,9 @@
 {
   "name": "polynetwork",
   "chain": "ethereum",
-  "blockNumber": 19581852,
-  "configHash": "0x53087e5fe7ae5fff46fecc1e0744b7235934c6dfa3c08d94dede72d9b6e59691",
-  "version": 3,
+  "blockNumber": 19916953,
+  "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
+  "version": 4,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -17,9 +17,10 @@
         "EthCrossChainDataAddress": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
         "isOwner": false,
         "owner": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "paused": false,
+        "paused": true,
         "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
-      }
+      },
+      "derivedName": "EthCrossChainManager"
     },
     {
       "name": "Lock Proxy 1",
@@ -88,7 +89,7 @@
         "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "isOwner": false,
         "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
-        "paused": false
+        "paused": true
       },
       "derivedName": "EthCrossChainManagerProxy"
     },
@@ -152,11 +153,11 @@
       },
       "sinceTimestamp": 1597287911,
       "values": {
-        "EthToPolyTxHashIndex": 71124,
-        "getEthTxHashIndex": 71124,
+        "EthToPolyTxHashIndex": 71400,
+        "getEthTxHashIndex": 71400,
         "isOwner": false,
         "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
-        "paused": false
+        "paused": true
       },
       "derivedName": "EthCrossChainData"
     },

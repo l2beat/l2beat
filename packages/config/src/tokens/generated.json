@@ -122,6 +122,21 @@
       "formula": "locked"
     },
     {
+      "id": "alex-alex",
+      "name": "ALEX",
+      "coingeckoId": "alexgo",
+      "address": "0xe7c3755482d0dA522678Af05945062d4427e0923",
+      "symbol": "ALEX",
+      "decimals": 18,
+      "deploymentTimestamp": 1710946703,
+      "coingeckoListingTimestamp": 1662508800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25837/large/ALEX_Token.png?1696524922",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "amp-amp",
       "name": "Amp",
       "coingeckoId": "amp-token",
@@ -1217,6 +1232,21 @@
       "formula": "locked"
     },
     {
+      "id": "esov-esov",
+      "name": "eSOV",
+      "coingeckoId": "sovryn",
+      "address": "0xbdab72602e9AD40FC6a6852CAf43258113B8F7a5",
+      "symbol": "eSOV",
+      "decimals": 18,
+      "deploymentTimestamp": 1619598324,
+      "coingeckoListingTimestamp": 1623369600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16248/large/sovryn_logo_orange.png?1709174299",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",
@@ -1226,6 +1256,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "ethfi-ether.fi-governance-token",
+      "name": "ether.fi governance token",
+      "coingeckoId": "ether-fi",
+      "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+      "symbol": "ETHFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1708665119,
+      "coingeckoListingTimestamp": 1710720000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3046,6 +3091,21 @@
       "formula": "locked"
     },
     {
+      "id": "rsweth-rsweth",
+      "name": "rswETH",
+      "coingeckoId": "restaked-swell-eth",
+      "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+      "symbol": "rswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706241095,
+      "coingeckoListingTimestamp": 1706572800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "sand-sand",
       "name": "SAND",
       "coingeckoId": "the-sandbox",
@@ -3161,6 +3221,21 @@
       "coingeckoListingTimestamp": 1578700800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "speth-spectrum-staked-eth",
+      "name": "Spectrum Staked ETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "symbol": "spETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715574719,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3451,6 +3526,21 @@
       "formula": "locked"
     },
     {
+      "id": "tbtc-tbtc-v2",
+      "name": "tBTC v2",
+      "coingeckoId": "tbtc",
+      "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+      "symbol": "tBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1629198727,
+      "coingeckoListingTimestamp": 1600819200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "tel-telcoin",
       "name": "Telcoin",
       "coingeckoId": "telcoin",
@@ -3656,6 +3746,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1699979555,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -4142,7 +4247,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 10,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4218,6 +4323,25 @@
       }
     },
     {
+      "id": "optimism:stg-stargatetoken",
+      "name": "StargateToken",
+      "coingeckoId": "stargate-finance",
+      "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
+      "symbol": "STG",
+      "decimals": 18,
+      "deploymentTimestamp": 1647502788,
+      "coingeckoListingTimestamp": 1647561600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "optimism:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4274,7 +4398,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 169,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4640,6 +4764,63 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "lyra:usdt-lyra-usdt",
+      "name": "Lyra USDT",
+      "coingeckoId": "tether",
+      "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1704437385,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 957,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "lyra:wbtc-lyra-wbtc",
+      "name": "Lyra WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x9b80ab732a6F1030326Af0014f106E12C4Db18EC",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1704437385,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 957,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "lyra:rsweth-rsweth",
+      "name": "rswETH",
+      "coingeckoId": "restaked-swell-eth",
+      "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
+      "symbol": "rswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715844291,
+      "coingeckoListingTimestamp": 1706572800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "chainId": 957,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4650,6 +4831,44 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 957,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "lyra:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715844207,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 957,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "lyra:wsteth-wrapped-liquid-staked-ether-2.0",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "coingeckoId": "wrapped-steth",
+      "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
+      "symbol": "wstETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1709269355,
+      "coingeckoListingTimestamp": 1633564800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "chainId": 957,
       "type": "EBV",
       "formula": "totalSupply",
@@ -4860,7 +5079,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "chainId": 5000,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4879,11 +5098,144 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
       "chainId": 5000,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "kinto:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884930,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:ena-ena",
+      "name": "ENA",
+      "coingeckoId": "ethena",
+      "address": "0xE040001C257237839a69E9683349C173297876F0",
+      "symbol": "ENA",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884952,
+      "coingeckoListingTimestamp": 1712016000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:ethfi-ether.fi-governance-token",
+      "name": "ether.fi governance token",
+      "coingeckoId": "ether-fi",
+      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
+      "symbol": "ETHFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1716212866,
+      "coingeckoListingTimestamp": 1710720000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:sdai-savings-dai",
+      "name": "Savings Dai",
+      "coingeckoId": "savings-dai",
+      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
+      "symbol": "sDAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884933,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884939,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884946,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:wsteth-wrapped-liquid-staked-ether-2.0",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "coingeckoId": "wrapped-steth",
+      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
+      "symbol": "wstETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884943,
+      "coingeckoListingTimestamp": 1633564800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "chainId": 7887,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
       }
     },
     {
@@ -4961,6 +5313,21 @@
       "formula": "totalSupply"
     },
     {
+      "id": "base:friend-friend",
+      "name": "FRIEND",
+      "coingeckoId": "friend-tech",
+      "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
+      "symbol": "FRIEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1714668663,
+      "coingeckoListingTimestamp": 1714694400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/37475/large/friend.jpeg?1714464901",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "base:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -4972,7 +5339,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 8453,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4993,6 +5360,25 @@
       "chainId": 8453,
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "id": "base:ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1712153667,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 8453,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
     },
     {
       "id": "base:seam-seamless",
@@ -5070,7 +5456,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 34443,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5141,7 +5527,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 34443,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -5160,7 +5546,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 34443,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5213,7 +5599,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/26115/large/btcb.png?1696525205",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5472,6 +5858,21 @@
       }
     },
     {
+      "id": "arbitrum:jones-jones-dao",
+      "name": "Jones DAO",
+      "coingeckoId": "jones-dao",
+      "address": "0x10393c20975cF177a3513071bC110f7962CD67da",
+      "symbol": "JONES",
+      "decimals": 18,
+      "deploymentTimestamp": 1642955180,
+      "coingeckoListingTimestamp": 1643500800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23290/large/3c8c2ed8-afb3-4b67-9937-5493acd88b50.jpg?1696522508",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -5483,12 +5884,27 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "arbitrum:lode-lodestar",
+      "name": "Lodestar",
+      "coingeckoId": "lodestar",
+      "address": "0xF19547f9ED24aA66b03c3a552D181Ae334FBb8DB",
+      "symbol": "LODE",
+      "decimals": 18,
+      "deploymentTimestamp": 1668927536,
+      "coingeckoListingTimestamp": 1669075200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28218/large/Lodestar_PFP_350x350px.jpg?1696527220",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "arbitrum:moz-mozaic-token",
@@ -5616,6 +6032,40 @@
       }
     },
     {
+      "id": "arbitrum:stg-stargatetoken",
+      "name": "StargateToken",
+      "coingeckoId": "stargate-finance",
+      "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+      "symbol": "STG",
+      "decimals": 18,
+      "deploymentTimestamp": 1647502704,
+      "coingeckoListingTimestamp": 1647561600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "arbitrum:umami-umami",
+      "name": "Umami",
+      "coingeckoId": "umami-finance",
+      "address": "0x1622bF67e6e5747b81866fE0b85178a93C7F86e3",
+      "symbol": "UMAMI",
+      "decimals": 9,
+      "deploymentTimestamp": 1638219842,
+      "coingeckoListingTimestamp": 1638403200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21159/large/_UMAMI-200px.jpg?1696520536",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -5717,7 +6167,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 59144,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5815,7 +6265,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 59144,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5849,7 +6299,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 81457,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5920,7 +6370,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 534352,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -5939,7 +6389,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 534352,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",

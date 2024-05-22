@@ -1,0 +1,5 @@
+{
+  "term": "Externally bridged token",
+  "definition": "Asset bridged to L2 via non-canonical bridge (lock-mint or burn-mint). These assets are either originally minted on Ethereum L1 but they are not using a canonical bridge or — more likely — they are originally minted on some other L1 (e.g. Polygon, Avalanche, BSC) and are bridged to L2 via non-canonical bridge.",
+  "isSpicy": false
+}

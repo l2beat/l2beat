@@ -7,6 +7,7 @@ export function getStagingConfig(): Config {
     features: {
       ...common.features,
       buildAllProjectPages: true,
+      layer3sTvl: true,
     },
     backend: {
       apiUrl: 'https://staging.l2beat.com',

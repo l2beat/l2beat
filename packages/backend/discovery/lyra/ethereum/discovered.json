@@ -1,9 +1,9 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 19531962,
-  "configHash": "0x01068392ea8f8fbda1752af503075266be7520bc8821e1280729ba7ed2eb77b9",
-  "version": 3,
+  "blockNumber": 19918742,
+  "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
+  "version": 4,
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -72,10 +72,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5797800,
-        "latestOutputIndex": 3220,
-        "nextBlockNumber": 5799600,
-        "nextOutputIndex": 3221,
+        "latestBlockNumber": 8134200,
+        "latestOutputIndex": 4518,
+        "nextBlockNumber": 8136000,
+        "nextOutputIndex": 4519,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
@@ -98,7 +98,7 @@
       }
     },
     {
-      "name": "LyraMultisig",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -119,7 +119,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 20,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -137,7 +137,7 @@
       "sinceTimestamp": 1700021675,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619902",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619945",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -202,7 +202,7 @@
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 590849, 19512451],
+        "params": [1000000000, 590849, 19914836],
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
         "version": "1.7.2"

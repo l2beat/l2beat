@@ -1,4 +1,115 @@
-Generated with discovered.json: 0xfb40cf5c3e08222a263adeb0f1dfbb515d0bc87d
+Generated with discovered.json: 0xa0a3a180bbe07126921139ba914dacd6c24e9f86
+
+# Diff at Mon, 20 May 2024 09:34:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7e20051208df39f6d4f6d35a22cb1356bd1b211c block: 19825366
+- current block number: 19910271
+
+## Description
+
+Starkex diamond contracts are upgraded to [version 4.0.1](https://github.com/starkware-libs/starkex-contracts/releases).
+
+- Removed the need to register users (Registration is now only required for deposit cancellation and escape flows.)
+- Slight change to the way the hash message for on-chain registration is calculated.
+
+### AllVerifiers.2.sol
+
+- formatting
+- uncheckedTokenContractCall() removed
+
+### TokensAndRamping.3.sol
+
+Change to the way the hash message for on-chain registration is calculated. (ownerKey vs ethKey)
+
+- formatting
+- withdrawTo(), withdrawNftTo(), is now withdraw(), withdrawNft()
+- EllipticCurve lib added
+- registerUser() is now registerAdddress() and using `ECDSA.verify`
+- starkKey is now ownerKey
+
+### Other diamond facets
+
+- formatting and minor changes
+
+### DepositCancelDelay
+
+- Reduced from 3 days to 2 days.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      upgradeability.facets.StarkWare_AllVerifiers_2020_1:
+-        "0xF65C115efd24102315Af53f84aD65aD240bc9D57"
++        "0x62BCA4DB742A99c834e2c24b609656A70EA25379"
+      upgradeability.facets.StarkWare_TokensAndRamping_2020_1:
+-        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
++        "0x8536850750956c2FEebeCAB786d82271a5467687"
+      upgradeability.facets.StarkWare_StarkExState_2021_1:
+-        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
++        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
+      upgradeability.facets.StarkWare_ForcedActions_2020_1:
+-        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
++        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
+      upgradeability.facets.StarkWare_OnchainVaults_2021_1:
+-        "0x2D542881E93491e765E5110c1e373FC2968E720A"
++        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
+      upgradeability.facets.StarkWare_ProxyUtils_2021_1:
+-        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      implementations.6:
+-        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      implementations.5:
+-        "0x2D542881E93491e765E5110c1e373FC2968E720A"
++        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
+      implementations.4:
+-        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
++        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
+      implementations.3:
+-        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
++        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
+      implementations.2:
+-        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
++        "0x8536850750956c2FEebeCAB786d82271a5467687"
+      implementations.1:
+-        "0xF65C115efd24102315Af53f84aD65aD240bc9D57"
++        "0x62BCA4DB742A99c834e2c24b609656A70EA25379"
+      implementations.0:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
++++ description: The time delay required before canceled deposits to the L2 can be reclaimed.
+      values.DEPOSIT_CANCEL_DELAY:
+-        259200
++        172800
+      values.implementation:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.VERSION:
+-        "3.0.3"
++        "4.0.1"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchange/AllVerifiers.2.sol               |  301 ++---
+ .../StarkExchange/ForcedActions.5.sol              |  291 ++---
+ .../StarkExchange/OnchainVaults.6.sol              |  349 +++---
+ .../StarkExchange/ProxyUtils.7.sol                 |  124 +-
+ .../StarkExchange/StarkExState.4.sol               |  631 ++++------
+ .../StarkExchange/StarkExchange.1.sol              |  272 ++---
+ .../StarkExchange/TokensAndRamping.3.sol           | 1245 ++++++++++++--------
+ 7 files changed, 1565 insertions(+), 1648 deletions(-)
+```
+
+Generated with discovered.json: 0x8a763974559283af9b7c5b24360ce3bc57897fa7
 
 # Diff at Wed, 08 May 2024 12:33:48 GMT:
 

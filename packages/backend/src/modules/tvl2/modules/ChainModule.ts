@@ -30,6 +30,7 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { ValueService } from '../services/ValueService'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
@@ -52,6 +53,7 @@ export function createChainModules(
   return config.chains
     .map((chain) =>
       createChainModule(
+        config,
         chain,
         config.amounts,
         peripherals,
@@ -68,6 +70,7 @@ export function createChainModules(
 }
 
 function createChainModule(
+  config: Tvl2Config,
   chainConfig: ChainTvlConfig,
   amounts: AmountConfigEntry[],
   peripherals: Peripherals,
@@ -156,7 +159,7 @@ function createChainModule(
     chain,
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
-    blockTimestampsRepository: peripherals.getRepository(
+    blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
     encode,
@@ -167,18 +170,20 @@ function createChainModule(
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
-
+  const parents = [priceModule.descendant, chainAmountIndexer]
   for (const [project, amountConfigs] of Object.entries(perProject)) {
     const priceConfigs = new Set(
       amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
     )
 
-    const parents = [priceModule.indexer, chainAmountIndexer]
+    const valueService = new ValueService({
+      amountRepository: peripherals.getRepository(AmountRepository),
+      priceRepository: peripherals.getRepository(PriceRepository),
+    })
 
     const indexer = new ValueIndexer({
-      priceRepo: peripherals.getRepository(PriceRepository),
-      amountRepo: peripherals.getRepository(AmountRepository),
-      valueRepo: peripherals.getRepository(ValueRepository),
+      valueService,
+      valueRepository: peripherals.getRepository(ValueRepository),
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),
@@ -194,6 +199,7 @@ function createChainModule(
           amountConfigs[0].sinceTimestamp,
         )
         .toNumber(),
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 
     valueIndexers.push(indexer)

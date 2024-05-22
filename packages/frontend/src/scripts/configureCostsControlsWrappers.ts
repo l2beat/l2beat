@@ -10,7 +10,7 @@ const SORTING_ARROWS_NAMES = [
 ]
 
 export function configureCostsControlsWrappers() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
 
   const cells = $$('[data-role="costs-controls-wrapper"]')
 

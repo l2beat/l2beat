@@ -25,11 +25,13 @@ import {
 export interface ScalingSummaryViewProps {
   layer2s: ScalingL2SummaryViewEntry[]
   layer3s: ScalingL3SummaryViewEntry[]
+  layer3sTvl: boolean
 }
 
 export function ScalingSummaryView({
   layer2s,
   layer3s,
+  layer3sTvl,
 }: ScalingSummaryViewProps) {
   const rows: RowConfig<ScalingSummaryViewEntry> = {
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
@@ -110,7 +112,9 @@ export function ScalingSummaryView({
               <TableView
                 items={layer3sProjects}
                 rows={rows}
-                columnsConfig={getLayer3sScalingSummaryColumnsConfig()}
+                columnsConfig={getLayer3sScalingSummaryColumnsConfig(
+                  layer3sTvl,
+                )}
               />
             ),
             itemsCount: layer3sProjects.length,

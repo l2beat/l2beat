@@ -60,7 +60,12 @@ export const reddioex: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
-      apps: ['https://reddio.com/explore', 'https://dashboard.reddio.com'],
+      apps: [
+        'https://reddio.com/explore',
+        'https://dashboard.reddio.com',
+        'https://bridge.reddio.com',
+        'https://reddio.com/redSonic',
+      ],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
       repositories: ['https://github.com/reddio-com/starkex-contracts-source'],

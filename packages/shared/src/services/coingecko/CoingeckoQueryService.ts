@@ -157,6 +157,14 @@ export class CoingeckoQueryService {
 
     return result
   }
+
+  static getAdjustedTo(from: UnixTime, to: UnixTime): UnixTime {
+    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
+
+    return to.gt(from.add(maxDaysForOneCall, 'days'))
+      ? from.add(maxDaysForOneCall, 'days')
+      : to
+  }
 }
 
 export function pickClosestValues(

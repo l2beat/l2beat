@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x540ca88f8981b161a151986f136629dc3e13d7c5
+
+# Diff at Tue, 21 May 2024 14:05:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19859812
+- current block number: 19918763
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19859812 (main branch discovery), not current.
+
+```diff
+    contract OrderlyMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "OrderlyMultisig"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0x5edacefb20bc8a6791e626d8341b2641515ce115
+
+# Diff at Mon, 13 May 2024 08:10:33 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@142cacbaef1c026127ab0d88f45c576741b3a345 block: 19830984
+- current block number: 19859812
+
+## Description
+
+After doubling the gasLimit, it is now decreased to 40M, still a 1/3 increase from the original 30M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        60000000
++        40000000
+    }
+```
+
 Generated with discovered.json: 0x5d1123ab6324ea7e55ea01032dfc89c12ca212e2
 
 # Diff at Thu, 09 May 2024 07:27:13 GMT:

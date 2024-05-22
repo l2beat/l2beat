@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "shared-eigenlayer",
   "initialAddresses": [
@@ -43,7 +43,9 @@
     "bEIGEN Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -53,16 +55,20 @@
     "EIGEN Timelock": {
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
     "StrategyManager": {
       "fields": {
         "strategies": {
-          "type": "arrayFromOneEvent",
-          "event": "StrategyAddedToDepositWhitelist",
-          "valueKey": "strategy"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "StrategyAddedToDepositWhitelist",
+            "valueKey": "strategy"
+          }
         }
       }
     },
@@ -73,7 +79,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "ETHx-Strategy": {
       "ignoreMethods": [
@@ -82,7 +105,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "cbETH-Strategy": {
       "ignoreMethods": [
@@ -91,7 +131,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "stETH-Strategy": {
       "ignoreMethods": [
@@ -100,7 +157,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "ankrETH-Strategy": {
       "ignoreMethods": [
@@ -109,7 +183,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "OETH-Strategy": {
       "ignoreMethods": [
@@ -118,7 +209,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "osETH-Strategy": {
       "ignoreMethods": [
@@ -127,7 +235,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "swETH-Strategy": {
       "ignoreMethods": [
@@ -136,7 +261,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "wBETH-Strategy": {
       "ignoreMethods": [
@@ -145,7 +287,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "sfrxETH-Strategy": {
       "ignoreMethods": [
@@ -154,7 +313,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "RiverV1-Strategy": {
       "ignoreMethods": [
@@ -163,7 +339,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "METH-Strategy": {
       "ignoreMethods": [
@@ -172,7 +365,24 @@
         "underlyingToShares",
         "underlyingToSharesView"
       ],
-      "ignoreInWatchMode": ["totalShares"]
+      "ignoreInWatchMode": ["totalShares"],
+      "fields": {
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
     },
     "bEIGEN-Strategy": {
       "ignoreMethods": [
@@ -198,15 +408,20 @@
     "EigenlayerCommunityMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
+    "EigenlayerTokenMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "EigenLayerBeaconOracle": {
       "ignoreMethods": ["findBlockRoot", "timestampToBlockRoot"]
     },
     "AVSDirectory": {
       "fields": {
         "avs": {
-          "type": "arrayFromOneEvent",
-          "event": "OperatorAVSRegistrationStatusUpdated",
-          "valueKey": "avs"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "OperatorAVSRegistrationStatusUpdated",
+            "valueKey": "avs"
+          }
         }
       },
       "ignoreRelatives": ["avs"],

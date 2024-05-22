@@ -229,7 +229,7 @@ function DataCell<T>(props: {
   const isLastColumn = props.groupOptions?.isLast && !props.isLastColumn
   const value = props.columnConfig.getValue(props.item, props.rowIndex)
 
-  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+  if (!value && props.columnConfig.removeCellOnFalsyValue?.(props.item)) {
     if (isLastColumn) {
       return <RowFiller idHref={idHref} />
     }

@@ -25,6 +25,7 @@ import {
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -60,15 +61,16 @@ export interface PolygonCDKStackConfig {
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
-  rollupManagerContract: ContractParameters
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
   upgradesAndGovernance?: string
+  stateValidation?: ScalingProjectStateValidation
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
+  const rollupManagerContract = shared.getContract('PolygonRollupManager')
 
   const upgradeDelay = shared.getContractValue<number>(
     'Timelock',
@@ -76,19 +78,19 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
   const trustedAggregatorTimeout = shared.getContractValue<number>(
-    templateVars.rollupManagerContract.name,
+    rollupManagerContract.name,
     'trustedAggregatorTimeout',
   )
   const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
   const pendingStateTimeout = shared.getContractValue<number>(
-    templateVars.rollupManagerContract.name,
+    rollupManagerContract.name,
     'pendingStateTimeout',
   )
   const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
 
   const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
     shared.getContractValue<number>(
-      templateVars.rollupManagerContract.name,
+      rollupManagerContract.name,
       '_HALT_AGGREGATION_TIMEOUT',
     ),
   )
@@ -120,7 +122,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 
   assert(
-    templateVars.rollupManagerContract.address ===
+    rollupManagerContract.address ===
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
@@ -142,8 +144,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       finality: templateVars.display.finality ?? {
         finalizationPeriod: 0,
         warnings: {
-          timeToInclusion:
-            'Uniform block distribution is assumed for calculations.',
+          timeToInclusion: {
+            sentiment: 'neutral',
+            value: 'Uniform block distribution is assumed for calculations.',
+          },
         },
       },
     },
@@ -308,10 +312,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ...RISK_VIEW.STATE_ZKP_SN,
         sources: [
           {
-            contract: templateVars.rollupManagerContract.name,
+            contract: rollupManagerContract.name,
             references: [
               `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.rollupManagerContract,
+                rollupManagerContract,
               )}`,
             ],
           },
@@ -344,13 +348,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         sources: [
           {
-            contract: templateVars.rollupManagerContract.name,
+            contract: rollupManagerContract.name,
             references: [
               `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.rollupManagerContract,
+                rollupManagerContract,
               )}`,
               `https://etherscan.io/address/${safeGetImplementation(
-                templateVars.rollupManagerContract,
+                rollupManagerContract,
               )}`,
             ],
           },
@@ -399,7 +403,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           {
             text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
             href: `https://etherscan.io/address/${safeGetImplementation(
-              templateVars.rollupManagerContract,
+              rollupManagerContract,
             )}`,
           },
         ],
@@ -457,12 +461,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
     },
     stateDerivation: templateVars.stateDerivation,
+    stateValidation: templateVars.stateValidation,
     permissions: [
       {
         name: 'ProxyAdminOwner',
         accounts: [
           templateVars.discovery.formatPermissionedAccount(
-            templateVars.discovery.getContractValue('ProxyAdmin', 'owner'), // could be EOA or multisig
+            shared.getContractValue('SharedProxyAdmin', 'owner'), // could be EOA or multisig
           ),
         ],
         description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.`,
@@ -481,7 +486,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       {
         name: 'Proposer (Trusted Aggregator)',
         accounts: shared.getAccessControlRolePermission(
-          templateVars.rollupManagerContract.name,
+          rollupManagerContract.name,
           'TRUSTED_AGGREGATOR',
         ),
         description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
@@ -528,7 +533,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
           },
         ),
-        shared.getContractDetails(templateVars.rollupManagerContract.name, {
+        shared.getContractDetails(rollupManagerContract.name, {
           description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
           ...sharedUpgradeability,
         }),
@@ -575,7 +580,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         {
           text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
           href: `https://etherscan.io/address/${safeGetImplementation(
-            templateVars.rollupManagerContract,
+            rollupManagerContract,
           )}`,
         },
       ],

@@ -8,18 +8,18 @@ describe('specialCases', () => {
   // Define the chains to be tested
   const chains = [
     { name: 'base', discovery: 'base' },
-    { name: 'arbitrum', discovery: 'arbitrum' }
+    { name: 'arbitrum', discovery: 'arbitrum' },
   ]
 
   // Fetch configuration and discovery data for all chains
   const promises = chains.map(({ name, discovery }) => {
     return Promise.all([
       configReader.readConfig('blobstream', name),
-      configReader.readDiscovery('blobstream', discovery)
+      configReader.readDiscovery('blobstream', discovery),
     ])
   })
 
-  Promise.all(promises).then(chainData => {
+  Promise.all(promises).then((chainData) => {
     chainData.forEach(([config, discovery], index) => {
       const chain = chains[index]
       const configOverrides = getGatewayConfigOverrides(config)
@@ -29,18 +29,30 @@ describe('specialCases', () => {
         runTestCases(configOverrides, discoveryBlobstream, chain.name)
       })
     })
-
   })
 
   function runTestCases(configOverrides, discoveryBlobstream, chain) {
     const cases = [
-      ['nextHeaderFunctionId', 'nextHeaderVerifier', 'nextHeaderProvers', 'nextHeaderVerifierOwner'],
-      ['headerRangeFunctionId', 'headerRangeVerifier', 'headerRangeProvers', 'headerRangeVerifierOwner'],
+      [
+        'nextHeaderFunctionId',
+        'nextHeaderVerifier',
+        'nextHeaderProvers',
+        'nextHeaderVerifierOwner',
+      ],
+      [
+        'headerRangeFunctionId',
+        'headerRangeVerifier',
+        'headerRangeProvers',
+        'headerRangeVerifierOwner',
+      ],
     ]
 
     cases.forEach(([valueKey, override, prover, verifierOwner]) => {
       const configFunctionId = getConfigFunctionId(configOverrides, override)
-      const discoveryFunctionId = getDiscoveryFunctionId(discoveryBlobstream, valueKey)
+      const discoveryFunctionId = getDiscoveryFunctionId(
+        discoveryBlobstream,
+        valueKey,
+      )
 
       it(`FunctionIDs from BlobstreamX contract discovery should match the call args in config.json for ${chain}`, () => {
         expect(configFunctionId).toEqual(discoveryFunctionId)
@@ -51,7 +63,11 @@ describe('specialCases', () => {
         expect(proverArgValue).toEqual(discoveryFunctionId)
       })
 
-      const verifierOwnerArg = getConfigCallArg(configOverrides, verifierOwner, 0)
+      const verifierOwnerArg = getConfigCallArg(
+        configOverrides,
+        verifierOwner,
+        0,
+      )
       it(`Verifier owner argument from config.json should match discovery for ${chain}`, () => {
         expect(verifierOwnerArg).toEqual(discoveryFunctionId)
       })
@@ -65,7 +81,9 @@ describe('specialCases', () => {
   }
 
   function getDiscoveryBlobstream(blobstreamDiscovery) {
-    const discoveryBlobstream = blobstreamDiscovery.contracts.find((c) => c.name === 'BlobstreamX')
+    const discoveryBlobstream = blobstreamDiscovery.contracts.find(
+      (c) => c.name === 'BlobstreamX',
+    )
     assert(discoveryBlobstream, 'BlobstreamX not found in discovery')
     return discoveryBlobstream
   }
@@ -92,7 +110,10 @@ describe('specialCases', () => {
   function getConfigCallArg(configOverrides, functionName, argIndex) {
     const functionConfig = configOverrides.fields[functionName]
     assert(functionConfig, `${functionName} not found in config`)
-    assert(functionConfig.args.length > argIndex, `Argument index ${argIndex} out of range for ${functionName}`)
+    assert(
+      functionConfig.args.length > argIndex,
+      `Argument index ${argIndex} out of range for ${functionName}`,
+    )
     return functionConfig.args[argIndex]
   }
 })

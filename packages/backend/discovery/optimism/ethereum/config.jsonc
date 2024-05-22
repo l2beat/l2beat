@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "optimism",
   "initialAddresses": [
@@ -41,99 +41,137 @@
     "AddressManager": {
       "fields": {
         "BondManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["BondManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["BondManager"]
+          }
         },
         "OVM_L2CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_L2CrossDomainMessenger"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_L2CrossDomainMessenger"]
+          }
         },
         "OVM_DecompressionPrecompileAddress": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_DecompressionPrecompileAddress"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_DecompressionPrecompileAddress"]
+          }
         },
         "OVM_Sequencer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_Sequencer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_Sequencer"]
+          }
         },
         "OVM_Proposer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_Proposer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_Proposer"]
+          }
         },
         "OVM_ChainStorageContainer_CTC_batches": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_ChainStorageContainer-CTC-batches"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_ChainStorageContainer-CTC-batches"]
+          }
         },
         "OVM_ChainStorageContainer_CTC_queue": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_ChainStorageContainer-CTC-queue"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_ChainStorageContainer-CTC-queue"]
+          }
         },
         "OVM_ChainStorageContainer_SCC_batches": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_ChainStorageContainer-SCC-batches"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_ChainStorageContainer-SCC-batches"]
+          }
         },
         "OVM_CanonicalTransactionChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_CanonicalTransactionChain"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_CanonicalTransactionChain"]
+          }
         },
         "OVM_StateCommitmentChain": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_StateCommitmentChain"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_StateCommitmentChain"]
+          }
         },
         "OVM_BondManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_BondManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_BondManager"]
+          }
         },
         "Proxy__OVM_L1CrossDomainMessenger": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__OVM_L1CrossDomainMessenger"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__OVM_L1CrossDomainMessenger"]
+          }
         },
         "OVM_ExecutionManager": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_ExecutionManager"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_ExecutionManager"]
+          }
         },
         "OVM_FraudVerifier": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_FraudVerifier"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_FraudVerifier"]
+          }
         },
         "OVM_StateManagerFactory": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_StateManagerFactory"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_StateManagerFactory"]
+          }
         },
         "OVM_StateTransitionerFactory": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_StateTransitionerFactory"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_StateTransitionerFactory"]
+          }
         },
         "OVM_SafetyChecker": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_SafetyChecker"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_SafetyChecker"]
+          }
         },
         "OVM_L1MultiMessageRelayer": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["OVM_L1MultiMessageRelayer"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["OVM_L1MultiMessageRelayer"]
+          }
         },
         "Proxy__OVM_L1StandardBridge": {
-          "type": "call",
-          "method": "getAddress",
-          "args": ["Proxy__OVM_L1StandardBridge"]
+          "handler": {
+            "type": "call",
+            "method": "getAddress",
+            "args": ["Proxy__OVM_L1StandardBridge"]
+          }
         }
       }
     },
@@ -208,15 +246,23 @@
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
         }
       }
     },
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+      "ignoreInWatchMode": ["params"],
+      "fields": {
+        "paused": {
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+          "severity": "HIGH"
+        }
+      }
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
@@ -226,17 +272,27 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["scalar"]
@@ -245,7 +301,9 @@
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {
-          "type": "accessControl"
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },

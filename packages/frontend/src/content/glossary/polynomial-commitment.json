@@ -1,0 +1,5 @@
+{
+  "term": "Polynomial commitment",
+  "definition": "A commitment scheme that commits to a polynomial.",
+  "isSpicy": false
+}

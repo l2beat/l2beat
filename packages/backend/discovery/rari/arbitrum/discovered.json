@@ -1,9 +1,9 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 204795680,
-  "configHash": "0xbcea1e0e794c6195ac58dd1d647895d0ea4677f157772ec2d50054c8bee083d4",
-  "version": 3,
+  "blockNumber": 211899420,
+  "configHash": "0x7e4f8775e03c845de4397d20ebffa21ee07bc9774f5839d9f69b3d0eed5a4130",
+  "version": 4,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -87,11 +87,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 50913,
+        "delayedMessageCount": 51672,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 2377,
-        "sequencerReportedSubMessageCount": 302342
+        "sequencerMessageCount": 2887,
+        "sequencerReportedSubMessageCount": 322670
       },
       "derivedName": "Bridge"
     },
@@ -137,12 +137,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2069,
+        "firstUnresolvedNode": 2564,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 2068,
-        "latestNodeCreated": 2221,
+        "latestConfirmed": 2563,
+        "latestNodeCreated": 2715,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -326,7 +326,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1705716145,
       "values": {
-        "batchCount": 2377,
+        "batchCount": 2887,
         "batchPosters": ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"],
         "bridge": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
         "dacKeyset": {
@@ -341,7 +341,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 50912
+        "totalDelayedMessagesRead": 51669
       },
       "derivedName": "SequencerInbox"
     },

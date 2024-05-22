@@ -7,7 +7,7 @@ import { rerenderTable } from './table/configureTables'
 const states = new Map<string, string[]>()
 
 export function configureProjectFilters() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
   const projectFilters = $.maybe('#project-filters')
   if (!projectFilters) {
     return

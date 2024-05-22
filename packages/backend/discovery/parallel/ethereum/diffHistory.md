@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xb90c0c968dd58aa2b68aeea5844d4144445aeaf7
+Generated with discovered.json: 0x3b4a0f59eae8e09d6bb2504085ccc013ca253e95
+
+# Diff at Tue, 21 May 2024 14:11:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19883602
+- current block number: 19918791
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19883602 (main branch discovery), not current.
+
+```diff
+    contract OwnerMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "OwnerMultisig"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0x9499a161dab92924ef2ab20a6556f1aa1fc54d83
 
 # Diff at Thu, 02 May 2024 08:17:10 GMT:
 

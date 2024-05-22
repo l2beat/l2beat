@@ -1,0 +1,5 @@
+{
+  "term": "Schnorr signature",
+  "definition": "A type of digital signature that is more efficient than traditional digital signatures and can be used in conjunction with threshold signatures to enable multisignature schemes.",
+  "isSpicy": false
+}

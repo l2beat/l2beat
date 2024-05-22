@@ -1,6 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -8,7 +13,6 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 
@@ -132,11 +136,16 @@ describe(UpdateNotifier.name, () => {
           diff: [{ key: 'A', before: '1', after: '2' }],
         },
       ]
-      const meta: DiscoveryMeta = {
-        contracts: [
-          {
-            name: 'Contract',
-            values: {
+      const config = new DiscoveryConfig({
+        name: 'test',
+        chain: 'ethereum',
+        initialAddresses: [],
+        names: {
+          '0x0000000000000000000000000000000000000001': 'Contract',
+        },
+        overrides: {
+          Contract: {
+            fields: {
               A: {
                 type: null,
                 severity: 'MEDIUM',
@@ -144,13 +153,13 @@ describe(UpdateNotifier.name, () => {
               },
             },
           },
-        ],
-      }
+        },
+      })
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        meta,
+        config,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -421,7 +430,7 @@ describe(UpdateNotifier.name, () => {
         ['project-a', 'ethereum', '2', '', '1', '4'],
         ['project-a', 'arbitrum', '', '', '', '12'],
       ]
-      const table = printAsciiTable(headers, rows)
+      const table = formatAsAsciiTable(headers, rows)
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 

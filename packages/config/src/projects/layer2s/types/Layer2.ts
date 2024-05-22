@@ -1,4 +1,8 @@
-import type { ProjectId, Sentiment } from '@l2beat/shared-pure'
+import type {
+  ProjectId,
+  Sentiment,
+  WarningValueWithSentiment,
+} from '@l2beat/shared-pure'
 
 import type {
   DataAvailabilityWithSentiment,
@@ -67,8 +71,6 @@ export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
-  /** Warning for TVL */
-  tvlWarning?: WarningWithSentiment
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
@@ -84,8 +86,8 @@ export interface Layer2LivenessDisplay {
 export interface Layer2FinalityDisplay {
   /** Warning tooltip content for finality tab for given project */
   warnings?: {
-    timeToInclusion?: string
-    stateUpdateDelay?: string
+    timeToInclusion?: WarningValueWithSentiment
+    stateUpdateDelay?: WarningValueWithSentiment
   }
   /** Finalization period displayed in table for given project (time in seconds) */
   finalizationPeriod?: number

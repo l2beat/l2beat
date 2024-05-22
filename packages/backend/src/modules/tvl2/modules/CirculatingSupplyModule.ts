@@ -17,6 +17,8 @@ import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
+import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
+import { ValueService } from '../services/ValueService'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
@@ -24,6 +26,7 @@ import { PriceModule } from './PriceModule'
 
 export interface CirculatingSupplyModule {
   start: () => Promise<void> | void
+  descendant: DescendantIndexer
 }
 
 export function createCirculatingSupplyModule(
@@ -45,6 +48,10 @@ export function createCirculatingSupplyModule(
   )
   const indexersMap = new Map<string, CirculatingSupplyIndexer>()
 
+  const circulatingSupplyService = new CirculatingSupplyService({
+    coingeckoQueryService,
+  })
+
   const indexers = circulatingSupplies.map((circulatingSupply) => {
     const indexer = new CirculatingSupplyIndexer({
       logger,
@@ -52,8 +59,8 @@ export function createCirculatingSupplyModule(
       parents: [hourlyIndexer],
       minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       indexerService,
-      config: circulatingSupply,
-      coingeckoQueryService,
+      configuration: circulatingSupply,
+      circulatingSupplyService,
       amountRepository: peripherals.getRepository(AmountRepository),
       syncOptimizer,
     })
@@ -76,12 +83,16 @@ export function createCirculatingSupplyModule(
       return indexer
     })
 
-    const parents = [priceModule.indexer, ...csIndexers]
+    const parents = [priceModule.descendant, ...csIndexers]
+
+    const valueService = new ValueService({
+      amountRepository: peripherals.getRepository(AmountRepository),
+      priceRepository: peripherals.getRepository(PriceRepository),
+    })
 
     const indexer = new ValueIndexer({
-      priceRepo: peripherals.getRepository(PriceRepository),
-      amountRepo: peripherals.getRepository(AmountRepository),
-      valueRepo: peripherals.getRepository(ValueRepository),
+      valueService,
+      valueRepository: peripherals.getRepository(ValueRepository),
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),
@@ -97,6 +108,7 @@ export function createCirculatingSupplyModule(
           amountConfigs[0].sinceTimestamp,
         )
         .toNumber(),
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 
     valueIndexers.push(indexer)
@@ -124,5 +136,6 @@ export function createCirculatingSupplyModule(
 
       await descendant.start()
     },
+    descendant,
   }
 }

@@ -22,6 +22,8 @@ export interface Layer3 {
   id: ProjectId
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
+  /** Is this layer3 archived? */
+  isArchived?: boolean
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
@@ -32,6 +34,8 @@ export interface Layer3 {
   config: Layer3Config
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
+  /** Stacked risk view values for this layer3 and it's base chain */
+  stackedRiskView?: ScalingProjectRiskView
   /** Data availability of scaling project project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */

@@ -8,8 +8,8 @@ import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
+  DiscoveryConfig,
   DiscoveryDiff,
-  DiscoveryMeta,
   diffDiscovery,
   discover,
   discoveryDiffToMarkdown,
@@ -47,7 +47,6 @@ async function updateDiffHistoryFile() {
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chain)
   const config = await configReader.readConfig(projectName, chain)
-  const meta = await configReader.readMeta(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -91,7 +90,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
-      meta,
+      config,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -178,12 +177,12 @@ async function performDiscoveryOnPreviousBlock(
   await rimraf(`${root}/discovered@${blockNumberFromMainBranch}.json`)
 
   // get code diff with main branch
-  const codeDiff = compareFolders(
-    `${root}/.code@${blockNumberFromMainBranch}`,
-    `${root}/.code`,
+  const flatDiff = compareFolders(
+    `${root}/.flat@${blockNumberFromMainBranch}`,
+    `${root}/.flat`,
   )
 
-  return { prevDiscovery, codeDiff: codeDiff === '' ? undefined : codeDiff }
+  return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
 }
 
 function getMainBranchName(): 'main' | 'master' {
@@ -261,7 +260,7 @@ function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
-  meta: DiscoveryMeta | undefined,
+  discoveryConfig: DiscoveryConfig | undefined,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -300,7 +299,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs, meta))
+    result.push(discoveryDiffToMarkdown(diffs, discoveryConfig))
     result.push('')
   }
 
@@ -323,7 +322,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff, meta))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff, discoveryConfig))
     result.push('')
   }
 

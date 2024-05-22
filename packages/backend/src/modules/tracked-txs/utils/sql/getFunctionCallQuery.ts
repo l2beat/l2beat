@@ -41,18 +41,19 @@ export function getFunctionCallQuery(
           nonZeroBytes++;
         }
       }
-    
+
       return 16 * nonZeroBytes + 4 * zeroBytes;
     """;
-    
-    SELECT
+
+    SELECT DISTINCT
       txs.hash,
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
-      txs.transaction_type,
       txs.receipt_gas_used,
       txs.gas_price,
+      txs.receipt_blob_gas_used,
+      txs.receipt_blob_gas_price,
       CalculateCalldataGasUsed(txs.input) AS calldata_gas_used,
       (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
       CASE

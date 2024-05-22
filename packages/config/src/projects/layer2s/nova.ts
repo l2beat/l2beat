@@ -1,25 +1,11 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import {
-  CONTRACTS,
-  EXITS,
-  FORCE_TRANSACTIONS,
-  MILESTONES,
-  NUGGETS,
-  OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
-  makeBridgeCompatible,
-} from '../../common'
-import { subtractOne } from '../../common/assessCount'
-import { UPGRADE_MECHANISM } from '../../common/upgradeMechanism'
+import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  DEFAULT_OTHER_CONSIDERATIONS,
+  orbitStackL2,
+} from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
@@ -39,6 +25,16 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+
+const upgradeExecutorUpgradeability = {
+  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
 
 const maxTimeVariation = discovery.getContractValue<number[]>(
   'SequencerInbox',
@@ -46,37 +42,26 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
-const nOfChallengers = discovery.getContractValue<string[]>(
-  'RollupProxy',
-  'validators',
-).length
-
-const DAC = discovery.getContractValue<{
-  membersCount: number
-  requiredSignatures: number
-}>('SequencerInbox', 'dacKeyset')
-const { membersCount, requiredSignatures } = DAC
-
-export const nova: Layer2 = {
-  type: 'layer2',
-  id: ProjectId('nova'),
+export const nova: Layer2 = orbitStackL2({
+  discovery,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
-    warning:
-      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     purposes: ['Universal'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
       websites: [
         'https://nova.arbitrum.io/',
         'https://arbitrum.io/',
         'https://arbitrum.foundation/',
       ],
-      apps: [],
+      apps: [
+        'https://bridge.arbitrum.io/?destinationChain=arbitrum-nova&sourceChain=ethereum',
+      ],
       documentation: [
         'https://developer.arbitrum.io/',
         'https://developer.arbitrum.io/inside-arbitrum-nitro/#inside-anytrust',
@@ -98,49 +83,92 @@ export const nova: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
-  config: {
-    escrows: [
-      {
-        address: EthereumAddress('0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd'),
-        sinceTimestamp: new UnixTime(1656073623),
-        tokens: ['ETH'],
-      },
-      {
-        address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
-        sinceTimestamp: new UnixTime(1659620187),
-        tokens: ['DAI'],
-      },
-      {
-        address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
-        sinceTimestamp: new UnixTime(1656305583),
-        tokens: '*',
-      },
-    ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://nova.arbitrum.io/rpc',
-      assessCount: subtractOne,
-      startBlock: 1,
-    },
-  },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['DAC', 'Ethereum (calldata)'],
-    bridge: {
-      type: 'DAC Members',
-      membersCount,
-      requiredSignatures,
-    },
-    mode: 'Transactions data (compressed)',
-  }),
-  riskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount,
-      requiredSignatures,
+  rpcUrl: 'https://nova.arbitrum.io/rpc',
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'SecurityCouncil',
+      'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+      [
+        {
+          text: 'Security Council members - Arbitrum DAO Governance Docs',
+          href: 'https://docs.arbitrum.foundation/foundational-documents/transparency-report-initial-foundation-setup',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'BatchPosterManagerMultisig',
+      'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('L1ArbitrumTimelock'),
+      'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+    ),
+  ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('RollupProxy', {
+      description:
+        'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+      ...upgradeExecutorUpgradeability,
     }),
+    discovery.getContractDetails('Bridge', {
+      description:
+        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('SequencerInbox', {
+      description:
+        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('Inbox', {
+      description:
+        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractFromValue('RollupProxy', 'outbox', {
+      description:
+        "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('UpgradeExecutor', {
+      description:
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('L1ArbitrumTimelock', {
+      description:
+        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('L1GatewayRouter', {
+      description: 'Router managing token <--> gateway mapping.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getContractDetails('ChallengeManager', {
+      description:
+        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy.',
+      ...upgradeExecutorUpgradeability,
+    }),
+  ],
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
+      sinceTimestamp: new UnixTime(1659620187),
+      tokens: ['DAI'],
+      description:
+        'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
+      sinceTimestamp: new UnixTime(1656305583),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
+      ...upgradeExecutorUpgradeability,
+    }),
+  ],
+  nonTemplateRiskView: {
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
@@ -164,188 +192,16 @@ export const nova: Layer2 = {
         sentiment: 'bad',
       },
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-      validatorAfkBlocks * assumedBlockTime,
-    ),
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  technology: {
-    stateCorrectness: {
-      name: 'Fraud proofs ensure state correctness',
-      description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, usually one week one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.',
-      risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: 'none of the whitelisted verifiers checks the published state. Fraud proofs assume at least one honest and able validator.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
-        },
-        {
-          text: 'RollupUserLogic.sol#L288 - Etherscan source code, onlyValidator modifier',
-          href: 'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L288',
-        },
-      ],
-    },
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-      membersCount,
-      requiredSignatures,
-    }),
-    operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
-      references: [
-        {
-          text: 'Sequencer - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/sequencer',
-        },
-      ],
-    },
-    forceTransactions: {
-      ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
-      references: [
-        {
-          text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
-        },
-      ],
-    },
-    exitMechanisms: [
-      {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
-        references: [
-          {
-            text: 'Transaction lifecycle - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/tx-lifecycle',
-          },
-          {
-            text: 'L2 to L1 Messages - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
-          },
-          {
-            text: 'Mainnet for everyone - Arbitrum Blog',
-            href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
-          },
-        ],
-        risks: [],
-      },
-      {
-        name: 'Tradeable Bridge Exit',
-        description:
-          "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. The user will get the funds immediately, however the third party has to wait for the block to be finalized. This is implemented as a first party functionality inside Arbitrum's token bridge.",
-        risks: [],
-        references: [
-          {
-            text: 'Tradeable Bridge Exits - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
-          },
-        ],
-      },
-    ],
+  },
+  nonTemplateTechnology: {
     otherConsiderations: [
-      {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-          },
-        ],
-        references: [
-          {
-            text: 'Arbitrum Nitro Sneak Preview',
-            href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
-          },
-        ],
-      },
+      ...DEFAULT_OTHER_CONSIDERATIONS,
       UPGRADE_MECHANISM.ARBITRUM_DAO(
         l1TimelockDelay,
         challengeWindow * assumedBlockTime,
         l2TimelockDelay,
       ),
     ],
-  },
-  contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ProxyAdmin 1',
-        'This contract is an admin of most other contracts allowed to upgrade their implementations. It is owned by the Upgrade Executor.',
-      ),
-      discovery.getContractDetails(
-        'UpgradeExecutor',
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock. Can cancel Timelock's proposals.",
-      ),
-      discovery.getContractDetails(
-        'ProxyAdmin 2',
-        'This contract is an admin of the Update Executor contract, but is also owned by it.',
-      ),
-      discovery.getContractDetails(
-        'L1ArbitrumTimelock',
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the Nova counterpart of this contract can execute the upgrades.',
-      ),
-      discovery.getContractDetails(
-        'RollupProxy',
-        'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-      ),
-      discovery.getContractDetails(
-        'SequencerInbox',
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
-      ),
-      discovery.getContractDetails(
-        'BatchPosterManagerMultisig',
-        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-      ),
-      discovery.getContractDetails(
-        'Inbox',
-        'Entry point for users depositing ETH and sending L1 --> Nova messages. Deposited ETH is escrowed in a Bridge contract.',
-      ),
-      discovery.getContractDetails(
-        'Bridge',
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to Nova.',
-      ),
-      discovery.getContractDetails('Outbox'),
-      discovery.getContractDetails(
-        'ChallengeManager',
-        'Contract managing an interactive fraud challenge process.',
-      ),
-      discovery.getContractDetails(
-        'OneStepProofEntry',
-        'Contract managing adjudication logic for EVM implementation in WASM used by the fraud proofs.',
-      ),
-      discovery.getContractDetails(
-        'ProxyAdmin 3',
-        'Yet another proxy admin for the three gateway contracts below. It is also owned by the Upgrade Executor.',
-      ),
-      discovery.getContractDetails(
-        'L1GatewayRouter',
-        'Router managing token <--> gateway mapping.',
-      ),
-      discovery.getContractDetails(
-        'L1ERC20Gateway',
-        'Main entry point for users depositing ERC20 tokens. Upon depositing, on Nova a generic, "wrapped" token will be minted.',
-      ),
-      discovery.getContractDetails(
-        'L1CustomGateway',
-        'Main entry point for users depositing ERC20 tokens that require minting custom token on Nova.',
-      ),
-      discovery.getContractDetails(
-        'L1DaiGateway',
-        'Custom DAI Gateway, main entry point for users depositing DAI to Nova where "canonical" Nova DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      ),
-      discovery.getContractDetails(
-        'L1Escrow',
-        'DAI Vault for custom DAI Gateway managed by MakerDAO.',
-      ),
-    ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
     {
@@ -361,4 +217,4 @@ export const nova: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
-}
+})

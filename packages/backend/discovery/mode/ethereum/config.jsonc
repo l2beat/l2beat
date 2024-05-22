@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "mode",
   "initialAddresses": [
@@ -12,7 +12,7 @@
     "0x4317ba146D4933D889518a3e5E11Fe7a53199b04": "L2OutputOracle",
     "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": "AddressManager",
     "0x309Fe2536d01867018D120b40e4676723C53A14C": "ChallengerMultisig",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
     "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221": "SystemConfig",
     "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f": "L1CrossDomainMessenger",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
@@ -41,13 +41,15 @@
       ],
       "fields": {
         "deletedOutputs": {
-          "type": "stateFromEvent",
-          "event": "OutputsDeleted",
-          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "OutputsDeleted",
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+          }
         }
       }
     },
-    "ProxyAdminOwner": {
+    "ConduitMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
@@ -58,17 +60,27 @@
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {
-          "type": "call",
-          "method": "function batcherHash() view returns (address)",
-          "args": []
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
         },
         "opStackDA": {
-          "type": "opStackDA",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
         },
         "sequencerInbox": {
-          "type": "opStackSequencerInbox",
-          "sequencerAddress": "{{ batcherHash }}"
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
         }
       },
       "ignoreInWatchMode": ["scalar"]

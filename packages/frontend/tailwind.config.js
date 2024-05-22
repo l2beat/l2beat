@@ -33,7 +33,7 @@ module.exports = {
       },
     },
     animation: {
-      'quick-fade-in': 'fade-in 0.1s ease-in-out',
+      'quick-fade-in': 'fade-in 0.1s ease-out',
       pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
@@ -62,9 +62,11 @@ module.exports = {
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
+        800: '#222125',
         900: '#131215',
       },
       zinc: {
+        100: '#F3F3F3',
         300: '#DBDBDB',
         500: '#5F6470',
         700: '#393C43',
@@ -105,6 +107,7 @@ module.exports = {
         50: '#6C57BF',
         100: '#7E41CC',
         300: '#F1D6FF',
+        450: '#C164E3',
         500: '#6A008E',
         700: '#4A133C',
         800: '#32102A',
@@ -165,12 +168,14 @@ module.exports = {
         500: '#27AC9F',
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
+      fuchsia: { 700: '#860CB0' },
     },
     screens: {
       xs: '400px',
       sm: '550px',
       md: '750px',
       lg: '1120px',
+      xl: '1256px',
     },
     zIndex: {
       1: '1',

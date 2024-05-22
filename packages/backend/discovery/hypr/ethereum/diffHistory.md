@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xf6e236d0fdcead86c9a6017a6c0be0cb99c5d02a
+Generated with discovered.json: 0x94f719afbbf7296c277466ef2c8ac32a8596e628
+
+# Diff at Tue, 21 May 2024 14:21:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19531598
+- current block number: 19918842
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531598 (main branch discovery), not current.
+
+```diff
+    contract LyraMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "LyraMultisig"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0xcb35ba385fe9ac2754b38d86f7aee769f1626d94
 
 # Diff at Thu, 28 Mar 2024 09:04:15 GMT:
 

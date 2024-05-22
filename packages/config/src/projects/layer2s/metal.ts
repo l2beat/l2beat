@@ -28,7 +28,13 @@ export const metal: Layer2 = opStackL2({
       documentation: [],
       explorers: ['https://explorer.metall2.com'],
       repositories: [],
-      socialMedia: ['https://twitter.com/metalpaysme'],
+      socialMedia: [
+        'https://twitter.com/metalpaysme',
+        'https://reddit.com/r/metalpay/',
+        'https://facebook.com/metalpaysme',
+        'https://t.me/metalpaysme',
+        'https://linkedin.com/company/metallicus',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },
@@ -46,7 +52,7 @@ export const metal: Layer2 = opStackL2({
   usesBlobs: true,
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
+      'ConduitMultisig',
       'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
     discovery.contractAsPermissioned(

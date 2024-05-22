@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xaf54a96131f4555110c26941ac4b68c40625933a
+
+# Diff at Tue, 14 May 2024 07:08:06 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0dcad16d442c9306c666eb55cc246f5202105346 block: 12908240
+- current block number: 14440563
+
+## Description
+
+This update extends the sequencer-only window for degen chain by 1000x to 1000d. (MaxTimeVariation.delayBlocks, maxTimeVariation.delaySeconds)
+Context: Big chain reorg on the L2, no batches posted for the last ~30h.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: None
+      values.maxTimeVariation.2:
+-        86400
++        86400000
+      values.maxTimeVariation.0:
+-        5760
++        3456000
+    }
+```
+
 Generated with discovered.json: 0xb10226147642416599acfd9706b5734973b04a80
 
 # Diff at Mon, 08 Apr 2024 19:50:43 GMT:

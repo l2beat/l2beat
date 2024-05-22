@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 19830808,
-  "configHash": "0xc17405c0d1b97c56ff475aead2ecc07b275399110fc6495b58e8cf183e85d18d",
+  "blockNumber": 19919191,
+  "configHash": "0xcb46e4c33e4fdc948ccde48d04feec314580326134be58b2a601e93cc09453d5",
   "version": 4,
   "contracts": [
     {
@@ -24,22 +24,20 @@
       "address": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F",
+        "implementation": "0x3636617973f25a512676cb06876f0C885568664a",
         "admin": "0x0000000000000000000000000000000000000000"
       },
-      "implementations": ["0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"],
+      "implementations": ["0x3636617973f25a512676cb06876f0C885568664a"],
       "sinceTimestamp": 1710248135,
       "values": {
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "exchangeProxy": "0xDef1C0ded9bec7F1a1670819833240f027b25EfF",
-        "L1GatewayRouter": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
         "l2Vault": "0x26181Dfc530d96523350e895180b09BAf3d816a0",
         "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
         "paused": false,
         "sDAI": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
         "senderAccount": "0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
-        "standardGateway": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
         "sUSDe": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
         "swapsEnabled": true,
         "USDe": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
@@ -47,7 +45,7 @@
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wstETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
-      "derivedName": "BridgerV4"
+      "derivedName": "Bridger"
     },
     {
       "name": "ExecutorMultisig",
@@ -56,7 +54,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 4 (75%)"
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1702416755,
@@ -64,6 +62,7 @@
         "domainSeparator": "0xfc0ed923efd6ca5c12613676f61ace65168a486c6ff550021738910aa5ea6f46",
         "getChainId": 1,
         "getOwners": [
+          "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
           "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
           "0x356000Cec4fC967f8FC372381D983426760A0391",
@@ -97,8 +96,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972755,
-      "derivedName": "OneStepProverMemory"
+      "sinceTimestamp": 1701972755
     },
     {
       "name": "RollupProxy",
@@ -123,12 +121,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1436,
+        "firstUnresolvedNode": 1485,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1435,
-        "latestNodeCreated": 1460,
+        "latestConfirmed": 1484,
+        "latestNodeCreated": 1511,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -146,7 +144,7 @@
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169",
+        "wasmModuleRoot": "0x6948185c62070f9523a93664e8d064627f65830fd308af5e82f21292a2060fb8",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -289,11 +287,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 2366,
+        "delayedMessageCount": 2541,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 2269,
-        "sequencerReportedSubMessageCount": 129768
+        "sequencerMessageCount": 2439,
+        "sequencerReportedSubMessageCount": 134615
       },
       "derivedName": "Bridge"
     },
@@ -303,8 +301,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972815,
-      "derivedName": "OneStepProverMath"
+      "sinceTimestamp": 1701972815
     },
     {
       "name": "OneStepProverHostIo",
@@ -312,8 +309,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972863,
-      "derivedName": "OneStepProverHostIo"
+      "sinceTimestamp": 1701972863
     },
     {
       "name": "ValidatorWalletCreator",
@@ -371,8 +367,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1701972707,
-      "derivedName": "OneStepProver0"
+      "sinceTimestamp": 1701972707
     },
     {
       "name": "BridgerOwnerMultisig",
@@ -397,7 +392,7 @@
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
         "getThreshold": 3,
-        "nonce": 76,
+        "nonce": 86,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -413,7 +408,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1702607855,
       "values": {
-        "batchCount": 2269,
+        "batchCount": 2439,
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "DATA_AUTHENTICATED_FLAG": "0x40",
@@ -425,7 +420,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2365
+        "totalDelayedMessagesRead": 2540
       },
       "derivedName": "SequencerInbox"
     }
@@ -654,6 +649,64 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
+    ],
+    "0x3636617973f25a512676cb06876f0C885568664a": [
+      "constructor(address _l2Vault)",
+      "error GasFeeTooHigh()",
+      "error InvalidAmount()",
+      "error InvalidAsset()",
+      "error InvalidAssets()",
+      "error InvalidNonce()",
+      "error InvalidSigner()",
+      "error OnlyExchangeProxy()",
+      "error OnlyOwner()",
+      "error OnlySender()",
+      "error SignatureExpired()",
+      "error SlippageError()",
+      "error SwapCallFailed()",
+      "error SwapsDisabled()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event AssetBridged(address indexed asset, uint256 indexed amount)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought, uint256 depositCount)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DAI() view returns (address)",
+      "function ETH() view returns (address)",
+      "function USDe() view returns (address)",
+      "function WETH() view returns (address)",
+      "function allowedAssets(address) view returns (bool)",
+      "function bridgeDeposits(address asset, uint256 amount, tuple(address vault, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable",
+      "function depositBySig(bytes _permitSignature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, tuple(address spender, address swapTarget, bytes swapCallData, uint256 gasFee) _swapData) payable",
+      "function depositCount() view returns (uint256)",
+      "function depositETH(address _kintoWallet, address _finalAsset, uint256 _minReceive, tuple(address spender, address swapTarget, bytes swapCallData, uint256 gasFee) _swapData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function domainSeparator() view returns (bytes32)",
+      "function exchangeProxy() view returns (address)",
+      "function initialize(address _senderAccount)",
+      "function l2Vault() view returns (address)",
+      "function nonces(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sDAI() view returns (address)",
+      "function sUSDe() view returns (address)",
+      "function senderAccount() view returns (address)",
+      "function setSenderAccount(address _senderAccount)",
+      "function setSwapsEnabled(bool _swapsEnabled)",
+      "function swapsEnabled() view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function weETH() view returns (address)",
+      "function whitelistAssets(address[] _assets, bool[] _flags)",
+      "function wstETH() view returns (address)"
     ],
     "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
@@ -926,66 +979,6 @@
     ],
     "0x89AF7C4C2198c426cFe6E86de0680A0850503e06": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
-    ],
-    "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F": [
-      "constructor(address _l2Vault)",
-      "error GasFeeTooHigh()",
-      "error InvalidAmount()",
-      "error InvalidAsset()",
-      "error InvalidAssets()",
-      "error InvalidNonce()",
-      "error InvalidSigner()",
-      "error NotEnoughEthToBridge()",
-      "error OnlyExchangeProxy()",
-      "error OnlyOwner()",
-      "error OnlySender()",
-      "error SignatureExpired()",
-      "error SlippageError()",
-      "error SwapCallFailed()",
-      "error SwapsDisabled()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought, uint256 depositCount)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function DAI() view returns (address)",
-      "function ETH() view returns (address)",
-      "function L1GatewayRouter() view returns (address)",
-      "function USDe() view returns (address)",
-      "function WETH() view returns (address)",
-      "function allowedAssets(address) view returns (bool)",
-      "function bridgeDeposits(address asset, uint256 maxGas, uint256 gasPriceBid, uint256 maxSubmissionCost) payable",
-      "function depositBySig(bytes _permitSignature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, tuple(address spender, address swapTarget, bytes swapCallData, uint256 gasFee) _swapData) payable",
-      "function depositCount() view returns (uint256)",
-      "function depositETH(address _kintoWallet, address _finalAsset, uint256 _minReceive, tuple(address spender, address swapTarget, bytes swapCallData, uint256 gasFee) _swapData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function domainSeparator() view returns (bytes32)",
-      "function exchangeProxy() view returns (address)",
-      "function initialize(address _senderAccount)",
-      "function l2Vault() view returns (address)",
-      "function nonces(address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function sDAI() view returns (address)",
-      "function sUSDe() view returns (address)",
-      "function senderAccount() view returns (address)",
-      "function setSenderAccount(address _senderAccount)",
-      "function setSwapsEnabled(bool _swapsEnabled)",
-      "function standardGateway() view returns (address)",
-      "function swapsEnabled() view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function weETH() view returns (address)",
-      "function whitelistAssets(address[] _assets, bool[] _flags)",
-      "function wstETH() view returns (address)"
     ],
     "0x99a2A31300816C1FA3f40818AC9280fe7271F878": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"

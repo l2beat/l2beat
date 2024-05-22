@@ -33,7 +33,7 @@ export const degen: Layer3 = orbitStackL3({
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.degen.tips',
-    defaultCallsPerMinute: 900,
+    defaultCallsPerMinute: 5000,
     assessCount: subtractOne,
     startBlock: 1,
   },

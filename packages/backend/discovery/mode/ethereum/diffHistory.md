@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xcd419d81c5ff713c00b186c5c5ef76713cae6499
+Generated with discovered.json: 0x6580fca91888426840cc3da6d0b9e9b39d214523
+
+# Diff at Tue, 21 May 2024 14:02:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19711616
+- current block number: 19918748
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19711616 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminOwner (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ProxyAdminOwner"
++        "ConduitMultisig"
+    }
+```
+
+Generated with discovered.json: 0x8d82bf4a8f5996acda0e483af1b8e4b842e3256c
 
 # Diff at Mon, 22 Apr 2024 14:44:50 GMT:
 

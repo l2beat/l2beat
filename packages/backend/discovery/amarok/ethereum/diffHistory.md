@@ -1,4 +1,53 @@
-Generated with discovered.json: 0x0897868b5ad3b9ac30e7422485e3646f39522831
+Generated with discovered.json: 0xc22730c77acab6c4f78ebd589f671e0ed63e7898
+
+# Diff at Mon, 20 May 2024 12:12:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@477e1ce9602e5cbd6b592ca2ad6cfcdb8e416b72 block: 19624596
+- current block number: 19911056
+
+## Description
+
+A new router and a new hub are added.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors.13:
++        "0x279fDA9AdDB854541f0bb86733d924e28c24c625"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0x13d3fa9798ffd60797858bd05e95cbe3c3d7ebb6ee02922f0625e12f8bcbe51c"
++        "0xc42a577ed5d3cd88fe742888027cc407ea75817228119d14e6d19cd8e80208d6"
+    }
+```
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.ROUTERS.28:
++        "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract xLayerZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x279fDA9AdDB854541f0bb86733d924e28c24c625.sol} |   0
+ ...-0x7ed49D0a13255802A281C08688563bd8D5f726b1.sol | 769 +++++++++++++++++++++
+ 2 files changed, 769 insertions(+)
+```
+
+Generated with discovered.json: 0xe66b6789a0cadd7ee2873b545abb9cd6cf542101
 
 # Diff at Wed, 10 Apr 2024 10:21:54 GMT:
 

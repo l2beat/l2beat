@@ -49,7 +49,7 @@ export function createTvl2Module(
 
   const idConverter = new IdConverter(config.tvl2.prices)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tvl')
 
   const priceModule = createPriceModule(
     config.tvl2,
@@ -86,11 +86,12 @@ export function createTvl2Module(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(ValueRepository),
-    config.projects.map((p) => p.projectId),
+    config.tvl2.chainConverter,
+    config.tvl2.projects,
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
-  const tvlRouter = createTvl2Router(tvlController)
+  const tvlRouter = createTvl2Router(tvlController, clock)
 
   const start = async () => {
     await hourlyIndexer.start()

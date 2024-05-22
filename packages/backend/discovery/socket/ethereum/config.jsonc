@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "socket",
   "initialAddresses": [
@@ -12,8 +12,24 @@
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
     "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5", // kinto from here
+    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
+    "0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc",
+    "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
+    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
+    "0xc7a542f73049C11f9719Be6Ff701fCA882D60020",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
+    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
+    "0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58"
   ],
   // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
+  // kinto chainslug: 7887
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
     "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": "OptimismSwitchboard",
@@ -29,27 +45,51 @@
     "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": "USDT Vault Lyra",
     "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "LyraMultisig",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault Hook", // hook.xyz, hook eoa admin
-    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya" // socket admin
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya", // socket admin
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78": "weETH Vault Lyra",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
+    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": "ETHFI Vault Kinto",
+    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": "weETH Vault Kinto",
+    "0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc": "wUSDM Vault Kinto",
+    "0x43b718Aa5e678b08615CA984cbe25f690B085b32": "sUSDe Vault Kinto",
+    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": "sDAI Vault Kinto",
+    "0xc7a542f73049C11f9719Be6Ff701fCA882D60020": "eETH Vault Kinto",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": "USDe Vault Kinto",
+    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": "ENA Vault Kinto",
+    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d": "USDC Vault Kinto",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
+    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault Kinto",
+    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
+    "0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58": "DAI Vault 2 Kinto"
   },
   "overrides": {
     "Socket": {
       "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
         "plugs": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "plug",
-          "ignoreRelative": true
+          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
+          "severity": "LOW",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "plug",
+            "ignoreRelative": true
+          }
         },
         "inboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "inboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "inboundSwitchboard"
+          }
         },
         "outboundSwitchboards": {
-          "type": "arrayFromOneEvent",
-          "event": "PlugConnected",
-          "valueKey": "outboundSwitchboard"
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PlugConnected",
+            "valueKey": "outboundSwitchboard"
+          }
         }
       }
     },
@@ -59,7 +99,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "OptimismSwitchboard2": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -67,7 +117,17 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "PolygonL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -76,7 +136,17 @@
         "checkpointManager",
         "fxRoot",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "ArbitrumL1Switchboard": {
       "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
@@ -86,14 +156,26 @@
         "inbox__",
         "outbox__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
     },
     "FastSwitchboard": {
       "fields": {
         "accessControl": {
-          "type": "accessControl",
-          "roleNames": {
-            "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
           }
         }
       }
@@ -124,6 +206,51 @@
     },
     "USDT Vault Lyra": {
       "ignoreRelatives": ["token__"]
+    },
+    "weETH Vault Lyra": {
+      "ignoreRelatives": ["token", "hook__"]
+    },
+    "rswETH Vault Lyra": {
+      "ignoreRelatives": ["token", "hook__"]
+    },
+    "ETHFI Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "weETH Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "wUSDM Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "sUSDe Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "sDAI Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "eETH Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "USDe Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "ENA Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "USDC Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "WETH Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "wstETH Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "DAI Vault Kinto": {
+      "ignoreMethods": ["token", "hook__"]
+    },
+    "DAI Vault 2 Kinto": {
+      "ignoreMethods": ["token", "hook__"]
     }
   }
 }

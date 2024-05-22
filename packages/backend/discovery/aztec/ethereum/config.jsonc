@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../discovery/schemas/config.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "aztec",
   "initialAddresses": [
@@ -38,24 +38,41 @@
       ],
       "fields": {
         "rollupProviders": {
-          "type": "arrayFromOneEvent",
-          "event": "RollupProviderUpdated",
-          "valueKey": "providerAddress",
-          "flagKey": "valid"
+          "description": "Can call the ProcessRollup function",
+          "severity": "LOW",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "RollupProviderUpdated",
+            "valueKey": "providerAddress",
+            "flagKey": "valid"
+          }
         },
-
         "removedRollupProviders": {
-          "type": "arrayFromOneEvent",
-          "event": "RollupProviderUpdated",
-          "valueKey": "providerAddress",
-          "flagKey": "valid",
-          "invert": true
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "RollupProviderUpdated",
+            "valueKey": "providerAddress",
+            "flagKey": "valid",
+            "invert": true
+          }
+        },
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
         }
       }
     },
     "AztecFeeDistributor": {
       "ignoreRelatives": ["factory", "router", "WETH"],
-      "ignoreInWatchMode": ["txFeeBalance"]
+      "ignoreInWatchMode": ["txFeeBalance"],
+      "fields": {
+        "reimburseConstant": {
+          "description": "Tip that gets added to a gas reimbursement for processing the rollup.",
+          "severity": "LOW"
+        }
+      }
     },
     "Aztec Multisig": {
       "ignoreInWatchMode": ["nonce"]
