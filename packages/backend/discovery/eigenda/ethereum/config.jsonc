@@ -75,7 +75,7 @@
       }
     },
     "EjectionManager": {
-      "extends": "eigenLayer/EjectionManager"
+      "extends": "eigenlayer/EjectionManager"
     }
   }
 }
