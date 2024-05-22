@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 19883593,
-  "configHash": "0x3976d1b800702a9c65f0ea9ec5577fdc6f3e986b6a82ddc18e5a33b2bbdda96f",
+  "blockNumber": 19926951,
+  "configHash": "0x051d1387b0877c83edceb1240e59c91a2d643f102b9283181cacefe02b1612d1",
   "version": 4,
   "contracts": [
     {
@@ -27,7 +27,10 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"]
+            "members": [
+              "0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1",
+              "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+            ]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
@@ -88,11 +91,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 2732,
+        "delayedMessageCount": 4689,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 2255,
-        "sequencerReportedSubMessageCount": 468860
+        "sequencerMessageCount": 4199,
+        "sequencerReportedSubMessageCount": 1212892
       },
       "derivedName": "Bridge"
     },
@@ -142,12 +145,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 727,
+        "firstUnresolvedNode": 789,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
-        "latestConfirmed": 726,
-        "latestNodeCreated": 796,
+        "latestConfirmed": 788,
+        "latestNodeCreated": 940,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -210,7 +213,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1709380607,
       "values": {
-        "batchCount": 2255,
+        "batchCount": 4199,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -226,7 +229,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2728
+        "totalDelayedMessagesRead": 4685
       },
       "derivedName": "SequencerInbox"
     },
@@ -289,6 +292,37 @@
       }
     },
     {
+      "name": "ReyaMultisig",
+      "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": [],
+        "threshold": "5 of 9 (56%)"
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1711489163,
+      "values": {
+        "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
+        "getChainId": 1,
+        "getOwners": [
+          "0x28bB9385A588EF4747264D19B9A9F1603591680c",
+          "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+          "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
+          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
+          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
+          "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+          "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
+          "0xebD4919C075417a86F19713dADe101852867A04F"
+        ],
+        "getThreshold": 5,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "OneStepProver0",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
       "upgradeability": {
@@ -327,11 +361,20 @@
     }
   ],
   "eoas": [
+    "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+    "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
+    "0x28bB9385A588EF4747264D19B9A9F1603591680c",
+    "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
     "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
     "0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122",
+    "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
     "0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1",
-    "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
+    "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+    "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
+    "0xebD4919C075417a86F19713dADe101852867A04F",
+    "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a",
+    "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
   ],
   "abis": {
     "0x07390626b8Bc2C04b1D93c7D246A0629198D7868": [
@@ -841,6 +884,58 @@
       "function setTemplate(address _template)",
       "function template() view returns (address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": [
+      "constructor(address _singleton)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xDf94F0474F205D086dbc2e66D69a856FCf520622": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
