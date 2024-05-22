@@ -17,6 +17,7 @@ export interface ManagedChildIndexerOptions extends IndexerOptions {
   indexerService: IndexerService
   logger: Logger
   updateRetryStrategy?: RetryStrategy
+  configHash?: string
 }
 
 export abstract class ManagedChildIndexer extends ChildIndexer {
@@ -35,13 +36,38 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
     const safeHeight = await this.options.indexerService.getSafeHeight(
       this.indexerId,
     )
-    return safeHeight ?? this.options.minHeight - 1
+
+    if (safeHeight === undefined) {
+      return this.options.minHeight - 1
+    }
+
+    if (this.options.configHash) {
+      const previousHash = await this.options.indexerService.getConfigHash(
+        this.indexerId,
+      )
+
+      // TODO: test this
+      if (previousHash && previousHash !== this.options.configHash) {
+        this.logger.info('Config hash change detected, triggering invalidate', {
+          indexerId: this.indexerId,
+          previousHash,
+          currentHash: this.options.configHash,
+          currentHeight: safeHeight,
+          targetHeight: this.options.minHeight - 1,
+        })
+
+        return this.options.minHeight - 1
+      }
+    }
+
+    return safeHeight
   }
 
-  async setSafeHeight(safeHeight: number) {
+  async setSafeHeight(safeHeight: number, configHash?: string) {
     return await this.options.indexerService.setSafeHeight(
       this.indexerId,
       safeHeight,
+      configHash,
     )
   }
 }
