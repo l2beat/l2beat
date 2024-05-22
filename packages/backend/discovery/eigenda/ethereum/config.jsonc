@@ -75,33 +75,7 @@
       }
     },
     "EjectionManager": {
-      "description": "Contract used for ejection of operators from the RegistryCoordinator.",
-      "fields": {
-        "ejectors": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "EjectorUpdated",
-            "valueKey": "ejector",
-            "flagKey": "status"
-          }
-        },
-        "ejectionRateLimitWindow": {
-          "description": "Time delta to track ejection over",
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "QuorumEjectionParams",
-            "valueKey": "rateLimitWindow",
-          }
-        },
-        "ejectableStakePercent": {
-          "description": "Max stake to be ejectable per time delta",
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "QuorumEjectionParams",
-            "valueKey": "ejectableStakePercent"
-          }
-        }
-      }
+        "extends": "eigenLayer/EjectionManager"
     }
   }
 }
