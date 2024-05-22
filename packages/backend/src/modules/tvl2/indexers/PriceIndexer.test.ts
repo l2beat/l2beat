@@ -64,7 +64,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -124,7 +124,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -160,7 +160,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[] =

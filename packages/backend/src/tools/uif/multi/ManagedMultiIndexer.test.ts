@@ -33,7 +33,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        getDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
+        newDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -48,7 +48,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        getDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
+        newDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
       }
       new TestIndexer({
         ...common,
@@ -313,7 +313,7 @@ async function initializeMockIndexer(
     logger: Logger.SILENT,
     encode: (v) => v,
     decode: (v) => v,
-    getDatabaseMiddleware: () => Promise.resolve(TestDbMiddleware),
+    newDatabaseMiddleware: () => Promise.resolve(TestDbMiddleware),
   })
   return indexer
 }

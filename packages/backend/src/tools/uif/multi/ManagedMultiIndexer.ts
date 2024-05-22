@@ -15,7 +15,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   decode: (blob: string) => T
   logger: Logger
   updateRetryStrategy?: RetryStrategy
-  getDatabaseMiddleware: () => Promise<DatabaseMiddleware | undefined>
+  newDatabaseMiddleware: () => Promise<DatabaseMiddleware | undefined>
 }
 
 export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
@@ -26,7 +26,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
       options.logger,
       options.parents,
       options.configurations,
-      options.getDatabaseMiddleware,
+      options.newDatabaseMiddleware,
       options,
     )
 

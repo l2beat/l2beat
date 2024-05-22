@@ -166,7 +166,7 @@ function createChainModule(
     encode,
     decode,
     syncOptimizer,
-    getDatabaseMiddleware: async () =>
+    newDatabaseMiddleware: async () =>
       new KnexMiddleware(await peripherals.database.getKnex()),
   })
 
