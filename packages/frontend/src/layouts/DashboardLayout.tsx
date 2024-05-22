@@ -20,7 +20,13 @@ export function DashboardLayout(props: DashboardLayoutProps) {
   return (
     <NavWrapper legacyNav={!scalingOrBridges}>
       <PageContent
-        className={cn(!scalingOrBridges && 'max-w-none px-0 md:px-0')}
+        className={cn(
+          // This is a bit of a hack to make sure the page content is full height (and the footer is out of view)
+          'min-h-[calc(100vh_-_5rem)]',
+          // When using the legacy layout we need to take header height into account
+          !scalingOrBridges &&
+            'max-w-none px-0 md:px-0 min-h-[calc(100vh_-_13.5rem)]',
+        )}
       >
         <main className={cn(!!scalingOrBridges && 'mt-4 md:mt-12 relative')}>
           {props.children}

@@ -26,23 +26,21 @@ export interface ZkCatalogProjectDetails extends ProofVerification {
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <DashboardLayout>
-      <PageContent mobileFull>
-        <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
-          <Breadcrumbs icon={props.details.icon} title={props.details.title} />
-          <Header {...props} />
-        </div>
-        <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
-          <Section title="List of verifiers">
-            <Verifiers items={props.details.verifiers} />
-          </Section>
-          <Section title="Description">
-            <Markdown>{props.details.description}</Markdown>
-          </Section>
-          <Section title="List of required tools">
-            <RequiredTools items={props.details.requiredTools} />
-          </Section>
-        </div>
-      </PageContent>
+      <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
+        <Breadcrumbs icon={props.details.icon} title={props.details.title} />
+        <Header {...props} />
+      </div>
+      <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
+        <Section title="List of verifiers">
+          <Verifiers items={props.details.verifiers} />
+        </Section>
+        <Section title="Description">
+          <Markdown>{props.details.description}</Markdown>
+        </Section>
+        <Section title="List of required tools">
+          <RequiredTools items={props.details.requiredTools} />
+        </Section>
+      </div>
     </DashboardLayout>
   )
 }
