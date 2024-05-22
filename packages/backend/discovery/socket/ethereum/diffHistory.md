@@ -1,3 +1,158 @@
+Generated with discovered.json: 0x270c9a4be5179847348c9996495c57e617b53257
+
+# Diff at Wed, 22 May 2024 11:58:01 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d8b1d401a7eb2fd4dbc2edda92ae733061915c30 block: 19919092
+- current block number: 19925268
+
+## Description
+
+A new plug is added, connecting a new empty WETH vault to Reya.
+Kinto changes the owner of all their vaults from an EOA to their Multisig.
+
+## Watched changes
+
+```diff
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract ENA Vault Kinto (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract sUSDe Vault Kinto (0x43b718Aa5e678b08615CA984cbe25f690B085b32) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract sDAI Vault Kinto (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.43:
++        "0x32295769ea702BA9337EE5B65c6b42aFF75FEC62"
+    }
+```
+
+```diff
+    contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract wstETH Vault Kinto (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract eETH Vault Kinto (0xc7a542f73049C11f9719Be6Ff701fCA882D60020) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract wUSDM Vault Kinto (0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
+    contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397) {
+    +++ description: None
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/KintoMultisig/GnosisSafe.sol    | 952 +++++++++++++++++++++
+ .../.flat/KintoMultisig/GnosisSafeProxy.p.sol      |  34 +
+ ...-0x64dF894688c5052BeAdC35371cF69151Ebc5D658.sol | 886 +++++++++++++++++++
+ 3 files changed, 1872 insertions(+)
+```
+
 Generated with discovered.json: 0xcaeb1c446a3f5c31fd87a9bd4a84fbc98f2e9f5b
 
 # Diff at Tue, 21 May 2024 15:12:04 GMT:
