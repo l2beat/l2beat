@@ -39,7 +39,7 @@ export const kinto: Layer2 = orbitStackL2({
       type: 'blockscout',
     },
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:00Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
   },
   trackedTxs: [
     {
