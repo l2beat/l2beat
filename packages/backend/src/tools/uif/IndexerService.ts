@@ -10,26 +10,22 @@ export class IndexerService {
 
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
-  async setSafeHeight(
-    indexerId: string,
-    safeHeight: number,
-    configHash?: string,
-  ) {
-    await this.indexerStateRepository.addOrUpdate({
-      indexerId,
-      safeHeight,
-      configHash,
-    })
-  }
-
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
     const record = await this.indexerStateRepository.findIndexerState(indexerId)
     return record?.safeHeight
   }
 
+  async setSafeHeight(indexerId: string, safeHeight: number) {
+    await this.indexerStateRepository.setSafeHeight(indexerId, safeHeight)
+  }
+
   async getConfigHash(indexerId: string): Promise<string | undefined> {
     const record = await this.indexerStateRepository.findIndexerState(indexerId)
     return record?.configHash
+  }
+
+  async setConfigHash(indexerId: string, configHash: string) {
+    await this.indexerStateRepository.setConfigHash(indexerId, configHash)
   }
 
   // #endregion

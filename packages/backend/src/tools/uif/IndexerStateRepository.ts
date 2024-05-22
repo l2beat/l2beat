@@ -67,6 +67,18 @@ export class IndexerStateRepository extends BaseRepository {
       .update({ safe_height: safeHeight })
   }
 
+  async setConfigHash(
+    indexerId: string,
+    configHash: string,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+
+    return await knex('indexer_state')
+      .where({ indexer_id: indexerId })
+      .update({ config_hash: configHash })
+  }
+
   // #region methods used only in tests
 
   async getAll(): Promise<IndexerStateRecord[]> {
