@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc32a7c7a041fd05ebe665655ae4552e25de6a5e1
+
+# Diff at Tue, 21 May 2024 14:28:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19531398
+- current block number: 19918875
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531398 (main branch discovery), not current.
+
+```diff
+    contract AevoMultiSig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "AevoMultiSig"
++        "ConduitMultisig"
+    }
+```
+
 Generated with discovered.json: 0x7ea75822b1ed65b8b2d69da70a1727f6abbd48b5
 
 # Diff at Thu, 28 Mar 2024 08:24:20 GMT:

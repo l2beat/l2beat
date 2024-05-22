@@ -22,6 +22,8 @@ export interface Layer3 {
   id: ProjectId
   /** Is this layer3 an upcoming rollup? */
   isUpcoming?: boolean
+  /** Is this layer3 archived? */
+  isArchived?: boolean
   /** Has this layer3 changed and is under review? */
   isUnderReview?: boolean
   /** ProjectId of hostChain */
