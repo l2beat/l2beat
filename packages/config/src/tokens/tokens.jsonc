@@ -1421,6 +1421,12 @@
   ],
   "optimism": [
     {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
+    {
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
       "type": "EBV",
@@ -1763,6 +1769,12 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
