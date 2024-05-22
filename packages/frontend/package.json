@@ -33,8 +33,6 @@
     "@bugsnag/js": "^7.22.3",
     "@l2beat/config": "*",
     "@l2beat/shared-pure": "*",
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
     "@types/express": "^4.17.16",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",
