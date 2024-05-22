@@ -59,7 +59,7 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'PGNMultisig',
+      'ConduitMultisig',
       'This address is the owner of the following contracts: SystemConfig, ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     ...discovery.getMultisigPermission(

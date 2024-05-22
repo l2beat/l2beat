@@ -23,6 +23,7 @@ export function getProps(
         tvl,
         verificationStatus,
         implementationChange,
+        config.features,
       ),
       milestones: config.milestones,
     },

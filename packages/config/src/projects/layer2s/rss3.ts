@@ -12,6 +12,47 @@ const upgradeability = {
 }
 
 export const rss3: Layer2 = opStackL2({
+  daProvider: {
+    name: 'NearDA',
+    riskView: {
+      value: 'External',
+      description:
+        'Proof construction and state derivation rely fully on data that is NOT published on chain.',
+      sentiment: 'bad',
+    },
+    technology: {
+      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
+      description:
+        'Transaction data is submitted to a blob store contract on NearDA. Only hashes of blob data is published on an onchain inbox.',
+      references: [
+        {
+          text: 'REP-20 - Data Availability Layer Integration',
+          href: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
+        },
+        {
+          text: 'RSS3 NearDA blob store contract',
+          href: 'https://nearblocks.io/address/vsl-da.near',
+        },
+        {
+          text: 'On-Chain Inbox',
+          href: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the data is not made available on the external provider.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the sequencer posts an unavailable or malicious transaction root.',
+          isCritical: true,
+        },
+      ],
+    },
+    bridge: { type: 'None' },
+  },
   discovery,
   display: {
     shortName: 'RSS3',
@@ -95,6 +136,12 @@ export const rss3: Layer2 = opStackL2({
       link: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
       description: 'RSS3 Network Mainnet Alpha is live.',
+    },
+    {
+      name: 'RSS3 starts using NearDA',
+      link: 'https://x.com/rss3_/status/1788183577219436985',
+      date: '2024-05-07T00:00:00Z',
+      description: 'RSS3 Network starts publishing data to NearDA.',
     },
   ],
 })

@@ -11,7 +11,7 @@ export function getProps(
   return {
     props: {
       tvlView: getScalingTvlView(
-        config.layer2s,
+        [...config.layer2s, ...config.layer3s],
         pagesData.tvlApiResponse,
         pagesData.implementationChange,
       ),
