@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { KnexTrx } from '../../../tools/uif/KnexMiddleware'
 import { _TEST_ONLY_multiUpdate } from '../../../tools/uif/KnexMiddleware.test'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -14,7 +13,7 @@ import {
   update,
 } from '../../../tools/uif/multi/test/mockConfigurations'
 import {
-  DbTransaction,
+  DatabaseMiddleware,
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
@@ -65,7 +64,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDbTrx: async () => mockObject<DbTransaction>({}),
+        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -77,8 +76,9 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
-        indexer.multiUpdate(from, to, configurations, trx),
+      const safeHeight = await _TEST_ONLY_multiUpdate(
+        (dbMiddleware: DatabaseMiddleware) =>
+          indexer.multiUpdate(from, to, configurations, dbMiddleware),
       )
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
@@ -124,7 +124,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDbTrx: async () => mockObject<DbTransaction>({}),
+        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -135,8 +135,9 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
-        indexer.multiUpdate(from, to, configurations, trx),
+      const safeHeight = await _TEST_ONLY_multiUpdate(
+        (dbMiddleware: DatabaseMiddleware) =>
+          indexer.multiUpdate(from, to, configurations, dbMiddleware),
       )
       expect(safeHeight).toEqual(to)
     })
@@ -159,7 +160,7 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
-        getDbTrx: async () => mockObject<DbTransaction>({}),
+        getDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[] =

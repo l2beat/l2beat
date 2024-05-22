@@ -32,7 +32,7 @@ export interface ConfigurationRange<T> {
   configurations: Configuration<T>[]
 }
 
-export interface DbTransaction {
+export interface DatabaseMiddleware {
   push: (cb: () => Promise<void>) => void
   execute: () => Promise<void>
 }

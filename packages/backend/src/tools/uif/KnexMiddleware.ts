@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
-import { DbTransaction } from './multi/types'
+import { DatabaseMiddleware } from './multi/types'
 
-export class KnexTrx implements DbTransaction {
+export class KnexMiddleware implements DatabaseMiddleware {
   private readonly queue: ((tx?: Knex.Transaction) => Promise<void>)[] = []
   constructor(private readonly knex: Knex) {}
 

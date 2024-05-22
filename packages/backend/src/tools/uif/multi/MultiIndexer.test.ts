@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn } from 'earl'
 
-import { MultiIndexer } from './MultiIndexer'
+import { MultiIndexer, getDefaultDatabaseMiddleware } from './MultiIndexer'
 import {
   Configuration,
   RemovalConfiguration,
@@ -147,12 +147,12 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [update('a', 100, 200, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a'],
         200,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -170,12 +170,12 @@ describe(MultiIndexer.name, () => {
         300,
         400,
         [update('b', 300, 400, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['b'],
         400,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -193,12 +193,12 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [update('a', 100, 200, false), update('b', 100, 400, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a', 'b'],
         200,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -216,12 +216,12 @@ describe(MultiIndexer.name, () => {
         301,
         400,
         [update('a', 100, 400, false), update('b', 200, 500, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a', 'b'],
         400,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -281,12 +281,12 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [update('a', 100, 200, true), update('b', 100, 400, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['b'],
         200,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -303,12 +303,12 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [update('a', 100, 200, true), update('b', 100, 400, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['b'],
         200,
-        undefined,
+        TestDbMiddleware,
       )
 
       // The same range. In real life might be a result of a parent reorg
@@ -319,7 +319,7 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [update('a', 100, 200, true), update('b', 100, 400, true)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
 
@@ -330,13 +330,13 @@ describe(MultiIndexer.name, () => {
         201,
         400,
         [update('b', 100, 400, false)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
         2,
         ['b'],
         400,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -361,12 +361,12 @@ describe(MultiIndexer.name, () => {
           update('b', 100, 500, true),
           update('c', 100, 500, true),
         ],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a'],
         250,
-        undefined,
+        TestDbMiddleware,
       )
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
@@ -379,13 +379,13 @@ describe(MultiIndexer.name, () => {
           update('b', 100, 500, false),
           update('c', 100, 500, true),
         ],
-        undefined,
+        TestDbMiddleware,
       )
       expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
         2,
         ['a', 'b'],
         500,
-        undefined,
+        TestDbMiddleware,
       )
     })
 
@@ -485,12 +485,7 @@ class TestMultiIndexer extends MultiIndexer<null> {
     configurations: Configuration<null>[] | undefined,
     private readonly _saved: SavedConfiguration<null>[],
   ) {
-    super(
-      Logger.SILENT,
-      [],
-      async () => Promise.resolve(undefined),
-      configurations,
-    )
+    super(Logger.SILENT, [], configurations, async () => TestDbMiddleware)
   }
 
   getSafeHeight =
@@ -549,3 +544,5 @@ function removal(
 ): RemovalConfiguration<null> {
   return { id, properties: null, from, to }
 }
+
+const TestDbMiddleware = getDefaultDatabaseMiddleware()

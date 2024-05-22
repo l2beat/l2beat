@@ -6,11 +6,24 @@ import { toRanges } from './toRanges'
 import {
   Configuration,
   ConfigurationRange,
-  DbTransaction,
+  DatabaseMiddleware,
   RemovalConfiguration,
   SavedConfiguration,
   UpdateConfiguration,
 } from './types'
+
+export const getDefaultDatabaseMiddleware = () => ({
+  queue: [] as (() => Promise<void>)[],
+  push(cb: () => Promise<void>) {
+    this.queue.push(cb)
+  },
+  async execute() {
+    for (const cb of this.queue) {
+      await cb()
+    }
+    this.queue = []
+  },
+})
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
@@ -20,8 +33,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
-    private readonly getTrx: () => Promise<DbTransaction | undefined>,
     configurations?: Configuration<T>[],
+    private readonly getDatabaseMiddleware?: () => Promise<
+      DatabaseMiddleware | undefined
+    >,
     options?: IndexerOptions,
   ) {
     super(logger, parents, options)
@@ -85,7 +100,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: UpdateConfiguration<T>[],
-    trx?: DbTransaction,
+    middleware: DatabaseMiddleware,
   ): Promise<number>
 
   /**
@@ -114,7 +129,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
-    trx?: DbTransaction,
+    middleware?: DatabaseMiddleware,
   ): Promise<void>
 
   /**
@@ -169,12 +184,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const trx = await this.getTrx()
+    const middleware =
+      (await this.getDatabaseMiddleware?.()) ?? getDefaultDatabaseMiddleware()
     const newHeight = await this.multiUpdate(
       from,
       adjustedTo,
       configurations,
-      trx,
+      middleware,
     )
     if (newHeight < from || newHeight > adjustedTo) {
       throw new Error(
@@ -188,11 +204,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
         newHeight,
       )
       if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight, trx)
+        await this.updateCurrentHeight(updatedIds, newHeight, middleware)
       }
     }
 
-    await trx?.execute()
+    await middleware.execute()
 
     return newHeight
   }

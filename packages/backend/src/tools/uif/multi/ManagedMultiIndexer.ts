@@ -3,7 +3,7 @@ import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration, DbTransaction, SavedConfiguration } from './types'
+import { Configuration, DatabaseMiddleware, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -15,7 +15,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   decode: (blob: string) => T
   logger: Logger
   updateRetryStrategy?: RetryStrategy
-  getDbTrx: () => Promise<DbTransaction | undefined>
+  getDatabaseMiddleware: () => Promise<DatabaseMiddleware | undefined>
 }
 
 export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
@@ -25,8 +25,8 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     super(
       options.logger,
       options.parents,
-      options.getDbTrx,
       options.configurations,
+      options.getDatabaseMiddleware,
       options,
     )
 
@@ -76,13 +76,13 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   override async updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
-    trx?: DbTransaction,
+    middleware?: DatabaseMiddleware,
   ): Promise<void> {
     await this.options.indexerService.updateSavedConfigurations(
       this.indexerId,
       configurationIds,
       currentHeight,
-      trx,
+      middleware,
     )
   }
 }

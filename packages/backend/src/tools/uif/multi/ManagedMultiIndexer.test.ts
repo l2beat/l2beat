@@ -5,15 +5,15 @@ import { describeDatabase } from '../../../test/database'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
+import { KnexMiddleware } from '../KnexMiddleware'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
-import { MultiIndexer } from './MultiIndexer'
+import { MultiIndexer, getDefaultDatabaseMiddleware } from './MultiIndexer'
 import {
   Configuration,
-  DbTransaction,
   RemovalConfiguration,
   SavedConfiguration,
   UpdateConfiguration,
@@ -33,7 +33,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        getDbTrx: async () => mockObject<DbTransaction>({}),
+        getDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -48,7 +48,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        getDbTrx: async () => mockObject<DbTransaction>({}),
+        getDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
       }
       new TestIndexer({
         ...common,
@@ -193,7 +193,7 @@ describe(ManagedMultiIndexer.name, () => {
         100,
         199,
         [update('a', 100, 300, false), update('d', 100, null, true)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
@@ -204,14 +204,14 @@ describe(ManagedMultiIndexer.name, () => {
           update('b', 200, 500, false),
           update('d', 100, null, true),
         ],
-        undefined,
+        TestDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
         [update('b', 200, 500, false), update('d', 100, null, true)],
-        undefined,
+        TestDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
@@ -222,13 +222,13 @@ describe(ManagedMultiIndexer.name, () => {
           update('c', 400, null, false),
           update('d', 100, null, true),
         ],
-        undefined,
+        TestDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
         551,
         600,
         [update('c', 400, null, false), update('d', 100, null, false)],
-        undefined,
+        TestDbMiddleware,
       )
 
       const configurations = await getSavedConfigurations(indexerService)
@@ -313,7 +313,7 @@ async function initializeMockIndexer(
     logger: Logger.SILENT,
     encode: (v) => v,
     decode: (v) => v,
-    getDbTrx: async () => undefined,
+    getDatabaseMiddleware: () => Promise.resolve(TestDbMiddleware),
   })
   return indexer
 }
@@ -357,3 +357,5 @@ function removal(
 ): RemovalConfiguration<string> {
   return { id: id.repeat(12), properties: '', from, to }
 }
+
+const TestDbMiddleware = getDefaultDatabaseMiddleware()

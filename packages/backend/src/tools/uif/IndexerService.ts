@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
-import { DbTransaction, SavedConfiguration } from './multi/types'
+import { DatabaseMiddleware, SavedConfiguration } from './multi/types'
 
 export class IndexerService {
   constructor(
@@ -64,7 +64,7 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
     currentHeight: number | null,
-    trx?: DbTransaction,
+    middleware?: DatabaseMiddleware,
   ): Promise<void> {
     const cb = async (trx?: Knex.Transaction) => {
       await this.indexerConfigurationRepository.updateSavedConfigurations(
@@ -74,8 +74,8 @@ export class IndexerService {
         trx,
       )
     }
-    if (trx) {
-      trx.push(cb)
+    if (middleware) {
+      middleware.push(cb)
     } else {
       await cb()
     }
