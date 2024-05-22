@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xb6ffb46f2934ae27cf74afbbd30bf499b1c6920a
+
+# Diff at Wed, 22 May 2024 20:10:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bac4efad06804152ae97853892e122a801bbc509 block: 19918763
+- current block number: 19927716
+
+## Description
+
+ConduitMultisig multisig update.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+      values.getOwners.6:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners.5:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.getOwners.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.getOwners.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getOwners.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.getOwners.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x540ca88f8981b161a151986f136629dc3e13d7c5
 
 # Diff at Tue, 21 May 2024 14:05:34 GMT:
