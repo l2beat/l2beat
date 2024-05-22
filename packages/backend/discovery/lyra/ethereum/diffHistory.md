@@ -8,7 +8,7 @@ Generated with discovered.json: 0x117823d93b3f57583b4548d42085af652caf8daa
 
 ## Description
 
-ConduitMultisig multisig update.
+ConduitMultisig update.
 
 ## Watched changes
 
