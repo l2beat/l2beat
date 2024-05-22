@@ -586,7 +586,6 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
-              trustedSetup: 'No',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
             },
             {
@@ -594,7 +593,6 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
-              trustedSetup: 'No',
               link: 'https://github.com/matter-labs/era-zkevm_circuits',
             },
           ],
