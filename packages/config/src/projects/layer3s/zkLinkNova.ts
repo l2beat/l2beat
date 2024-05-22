@@ -1,11 +1,11 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
 export const zklinknova: Layer3 = underReviewL3({
   id: 'zklinknova',
   // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
-  hostChain: 'Multiple',
+  hostChain: ProjectId('linea'),
   display: {
     name: 'zkLink Nova',
     slug: 'zklinknova',
