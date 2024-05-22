@@ -6,7 +6,7 @@ export function LastUsedCell({ days }: { days: number | undefined }) {
   }
 
   if (days === 0) {
-    return 'today'
+    return 'Today'
   }
 
   if (days === 1) {
