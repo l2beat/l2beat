@@ -9,8 +9,20 @@ Generated with discovered.json: 0x23b98548cb757395e62deaa26f4249f17761d837
 ## Description
 
 Registry coordinator:
-    - ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
-    - 
+    - Ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
+
+eigenDAServiceManager:
+    - New EjectionManager contract
+    - quorumNumbersRequired - second quorum (EIGEN token) now active
+
+EjectionManager:
+- used to eject validators from quorum
+- permissioned, only ejectors and owner can eject operators
+- operators to eject are external input provided by ejector
+    Ejection spec parameters: 
+        - Max 200 operators for each quorum. When the global operator cap (200) is reached for the quorum, the joining operator must have more than 1.1X the quorum weight of the current lowest-weighted operator in order to replace that operator.
+        - RateLimitWindow and max EjectableStakePercent. There is a time delta (7 days) to track ejection over. SC checks that system cannot eject more than ejectableStakePercent (33.33%) of total stake in this time delta.
+
 
 ## Watched changes
 
