@@ -36,12 +36,20 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
-  extendedTemplate?: string
+  extendedTemplate?: {
+    template: string
+    reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
+  }
 }
 
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
+}
+
+export interface RelativeAddress {
+  address: EthereumAddress
+  template?: string
 }
 
 export class AddressAnalyzer {
@@ -61,7 +69,7 @@ export class AddressAnalyzer {
     logger: DiscoveryLogger,
   ): Promise<{
     analysis: Analysis
-    relatives: { address: EthereumAddress; template?: string }[]
+    relatives: RelativeAddress[]
   }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
@@ -114,7 +122,9 @@ export class AddressAnalyzer {
         abis: sources.abis,
         sourceBundles: sources.sources,
         matchingTemplates,
-        extendedTemplate: overrides?.extends,
+        extendedTemplate: overrides?.extends
+          ? { template: overrides.extends, reason: 'byExtends' }
+          : undefined,
       },
       relatives: getRelatives(
         results,

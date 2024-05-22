@@ -24,13 +24,19 @@ export class DiscoveryEngine {
     const resolved: Analysis[] = []
     const stack = new DiscoveryStack()
 
-    stack.push(config.initialAddresses, 0)
+    stack.push(
+      config.initialAddresses.map((address) => ({
+        address,
+        template: undefined,
+      })),
+      0,
+    )
 
     while (!stack.isEmpty()) {
       const items = stack.popAll().filter((item) => {
         const reason = shouldSkip(item, config)
         if (reason) {
-          this.logger.logSkip(item.address, reason)
+          this.logger.logSkip(item.relative.address, reason)
           return false
         }
         return true
@@ -43,10 +49,10 @@ export class DiscoveryEngine {
             buffered: true,
           })
 
-          bufferedLogger.log(`Analyzing ${item.address.toString()}`)
+          bufferedLogger.log(`Analyzing ${item.relative.address.toString()}`)
           const { analysis, relatives } = await this.addressAnalyzer.analyze(
-            item.address,
-            config.overrides.get(item.address),
+            item.relative.address,
+            config.overrides.get(item.relative.address),
             blockNumber,
             bufferedLogger,
           )

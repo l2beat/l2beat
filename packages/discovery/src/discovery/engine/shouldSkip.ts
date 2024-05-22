@@ -5,11 +5,11 @@ export function shouldSkip(
   item: DiscoveryStackItem,
   config: DiscoveryConfig,
 ): string | undefined {
-  if (config.overrides.get(item.address).ignoreDiscovery) {
+  if (config.overrides.get(item.relative.address).ignoreDiscovery) {
     return 'Address ignored'
   }
 
-  if (config.isInSharedModules(item.address)) {
+  if (config.isInSharedModules(item.relative.address)) {
     return 'Part of a shared module'
   }
 

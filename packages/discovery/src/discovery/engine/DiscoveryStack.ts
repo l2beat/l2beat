@@ -1,39 +1,42 @@
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { RelativeAddress } from '../analysis/AddressAnalyzer'
 
 export interface DiscoveryStackItem {
-  address: EthereumAddress
+  relative: RelativeAddress
   depth: number
   counter: number
 }
 
 export class DiscoveryStack {
-  private readonly known = new Set<EthereumAddress>()
+  private readonly seen: RelativeAddress[] = []
   private readonly stack: {
-    address: EthereumAddress
+    relative: RelativeAddress
     depth: number
-    template?: string
   }[] = []
   private counter = 0
 
-  push(
-    addresses: { address: EthereumAddress; template?: string }[],
-    depth: number,
-    template?: string,
-  ): EthereumAddress[] {
-    const uniqueReversed = addresses
-      .filter((x, i, a) => a.indexOf(x) === i)
-      .reverse()
+  push(relatives: RelativeAddress[], depth: number): EthereumAddress[] {
     const added = []
-    for (const address of uniqueReversed) {
-      if (this.known.has(address) || address === EthereumAddress.ZERO) {
+    for (const relative of relatives) {
+      if (relative.address === EthereumAddress.ZERO) {
         continue
       }
-      this.stack.push({ address, depth, template })
-      this.known.add(address)
-      added.push(address)
+      // If the same address has been seen before, but with a different
+      // template, we should still add it to the stack
+      const wasSeenWithTheSameTemplate =
+        this.seen.find(
+          (x) =>
+            x.address === relative.address && x.template === relative.template,
+        ) !== undefined
+      if (wasSeenWithTheSameTemplate) {
+        continue
+      }
+      this.stack.push({ relative, depth })
+      this.seen.push(relative)
+      added.push(relative.address)
     }
-    return added.reverse()
+    return added
   }
 
   isEmpty(): boolean {
