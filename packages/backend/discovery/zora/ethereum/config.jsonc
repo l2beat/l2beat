@@ -20,10 +20,10 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner" // Conduit Multisig
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig" // Conduit Multisig
   },
   "overrides": {
-    "ProxyAdminOwner": {
+    "ConduitMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "OptimismPortal": {

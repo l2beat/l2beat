@@ -52,7 +52,7 @@ export const metal: Layer2 = opStackL2({
   usesBlobs: true,
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
+      'ConduitMultisig',
       'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
     discovery.contractAsPermissioned(

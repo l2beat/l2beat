@@ -30,6 +30,17 @@ export const kinto: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'kinto',
+    chainId: 7887,
+    explorerUrl: 'https://explorer.kinto.xyz',
+    explorerApi: {
+      url: 'https://explorer.kinto.xyz/api',
+      type: 'blockscout',
+    },
+    // this is the full launch of their mainnet, should be negligible socket bridged tvl before
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:00Z')),
+  },
   trackedTxs: [
     {
       uses: [
@@ -113,11 +124,6 @@ export const kinto: Layer2 = orbitStackL2({
     assessCount: subtractOne,
     startBlock: 1,
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('L1GatewayRouter', {
-      description: 'Router managing token <--> gateway mapping.',
-    }),
-  ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ExecutorMultisig',
