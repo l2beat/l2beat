@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useAccount, useEnsName } from 'wagmi'
 import { formatAddress } from '~/utils/formatAddress'
 import { ChangeWallet } from '../ChangeWallet'
@@ -13,13 +14,16 @@ export function WalletInfo() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="font-medium text-sm text-black">
+      <Link
+        className="font-medium text-sm text-black"
+        href={`/wallet/${address}`}
+      >
         {ensAddress
           ? ensAddress
           : address
             ? formatAddress('0x8aEb2A694589a6ACaD9716d23198ed3784d4C50e')
             : null}
-      </span>
+      </Link>
       <ChangeWallet />
     </div>
   )
