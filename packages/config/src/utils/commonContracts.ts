@@ -53,11 +53,23 @@ function findCommonContracts(
   hostChain: string,
 ) {
   const configReader = new ConfigReader('../backend')
-  const configs = configReader.readAllConfigsForChain(hostChain)
-  const discoveriesFull = configs.map((c) =>
-    configReader.readDiscovery(c.name, c.chain),
+  const allConfigs = configReader.readAllConfigsForChain(hostChain)
+  const configs = allConfigs.filter((c) =>
+    projects.map((p) => p.id.toString()).includes(c.name),
   )
-  const discoveries = getFilteredDiscoveries(projects, discoveriesFull)
+
+  const discoveriesFull = configs.flatMap((c) => {
+    const sharedModules = c.sharedModules.map((module) =>
+      configReader.readDiscovery(module, c.chain),
+    )
+    const sharedContracts = sharedModules.flatMap((m) => m.contracts)
+    const projectDiscovery = configReader.readDiscovery(c.name, c.chain)
+    return {
+      ...projectDiscovery,
+      contracts: [...projectDiscovery.contracts, ...sharedContracts],
+    }
+  })
+  const discoveries = discoveriesFull
 
   const projectAddresses = Object.fromEntries(
     discoveries.map((d) => [
@@ -214,17 +226,6 @@ function getPermissionContainingAddress(
   }
 
   return undefined
-}
-
-function getFilteredDiscoveries(
-  projects: Pick<Project, 'id'>[],
-  discoveriesFull: DiscoveryOutput[],
-) {
-  return discoveriesFull.filter(
-    (d) =>
-      d.name.startsWith('shared-') ||
-      projects.map((p) => p.id.toString()).includes(d.name),
-  )
 }
 
 function getProjectAddresses(project: DiscoveryOutput) {
