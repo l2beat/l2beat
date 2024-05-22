@@ -9,6 +9,10 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    FALLBACK_REWRITE_DESTINATION: z
+      .string()
+      .url()
+      .default('http://localhost:8080'),
   },
 
   /**
@@ -22,6 +26,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    FALLBACK_REWRITE_DESTINATION: process.env.FALLBACK_REWRITE_DESTINATION,
   },
 
   /**

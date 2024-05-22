@@ -1,3 +1,5 @@
+import { env } from './src/env'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // biome-ignore lint/suspicious/useAwait: rewrites must be
@@ -8,7 +10,7 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: `https://l2beat-production.vercel.app/:path*`,
+          destination: `${env.FALLBACK_REWRITE_DESTINATION}/:path*`,
         },
       ],
     }
