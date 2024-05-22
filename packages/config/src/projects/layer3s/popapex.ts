@@ -41,7 +41,7 @@ export const popapex: Layer3 = orbitStackL3({
     type: 'rpc',
     startBlock: 1,
     defaultUrl: 'https://rpc.apex.proofofplay.com',
-    defaultCallsPerMinute: 5000,
+    defaultCallsPerMinute: 10000,
     assessCount: subtractOne,
   },
   nonTemplatePermissions: [
