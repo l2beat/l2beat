@@ -1,9 +1,13 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { AddressAnalyzer, Analysis } from '../analysis/AddressAnalyzer'
+import {
+  AddressAnalyzer,
+  AddressesWithTemplates,
+  Analysis,
+} from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryStack } from './DiscoveryStack'
 import { shouldSkip } from './shouldSkip'
 
 // Bump this value when the logic of discovery changes,
@@ -22,55 +26,111 @@ export class DiscoveryEngine {
     blockNumber: number,
   ): Promise<Analysis[]> {
     const resolved: Analysis[] = []
-    const stack = new DiscoveryStack()
+    let relativesWithTemplates: AddressesWithTemplates = {}
+    let depth = 0
+    let count = 0
 
-    stack.push(
-      config.initialAddresses.map((address) => ({
-        address,
-        template: undefined,
-      })),
-      0,
-    )
+    config.initialAddresses.forEach((address) => {
+      relativesWithTemplates[address.toString()] = new Set()
+    })
 
-    while (!stack.isEmpty()) {
-      const items = stack.popAll().filter((item) => {
-        const reason = shouldSkip(item, config)
-        if (reason) {
-          this.logger.logSkip(item.relative.address, reason)
-          return false
+    while (Object.keys(relativesWithTemplates).length > 0) {
+      const toAnalyze: AddressesWithTemplates = {}
+
+      for (const [_address, templates] of Object.entries(
+        relativesWithTemplates,
+      )) {
+        const address = EthereumAddress(_address)
+        const alreadyAnalyzed = resolved.find((x) => x.address === address)
+        if (alreadyAnalyzed === undefined) {
+          toAnalyze[_address] = templates
+          continue
         }
-        return true
-      })
+
+        // We have already analyzed this address:
+
+        if (templates.size === 0) {
+          // We have nothing new to suggest
+          continue // don't analyze again
+        }
+        if (alreadyAnalyzed.type === 'EOA') {
+          // Templates suggestions don't make sense for EOAs
+          continue // don't analyze again
+        }
+        if (alreadyAnalyzed.extendedTemplate?.reason === 'byExtends') {
+          // if already analyzed template was explicitly set, we always
+          // ignore all templates suggested by referrers
+          continue // don't analyze again
+        }
+        const reason = shouldSkip(address, config, depth, count)
+        if (reason) {
+          this.logger.logSkip(address, reason)
+          continue
+        }
+
+        // - was it analyzed with exactly the same template?
+        if (templates.size === 1) {
+          const template = Array.from(templates)[0]
+          if (alreadyAnalyzed.extendedTemplate?.template === template) {
+            continue // don't analyze again
+          }
+        }
+
+        if (alreadyAnalyzed.extendedTemplate !== undefined) {
+          // There was a different template already used in analysis
+          alreadyAnalyzed.errors['@template'] =
+            `Additional templates suggested: ${Array.from(templates).join(
+              ', ',
+            )}`
+          continue // don't analyze again
+        }
+
+        // We have already analyzed this address without template
+        // so let's remove it from resolved and analyze again with
+        // suggested templates
+        resolved.splice(resolved.indexOf(alreadyAnalyzed), 1)
+        toAnalyze[_address] = templates
+      }
+
+      relativesWithTemplates = {}
 
       await Promise.all(
-        items.map(async (item) => {
+        Object.entries(toAnalyze).map(async ([_address, templates]) => {
+          const address = EthereumAddress(_address)
           const bufferedLogger = new DiscoveryLogger({
             enabled: false,
             buffered: true,
           })
 
-          bufferedLogger.log(`Analyzing ${item.relative.address.toString()}`)
+          bufferedLogger.log(`Analyzing ${address.toString()}`)
           const { analysis, relatives } = await this.addressAnalyzer.analyze(
-            item.relative.address,
-            config.overrides.get(item.relative.address),
+            address,
+            config.overrides.get(address),
             blockNumber,
             bufferedLogger,
+            templates,
           )
           resolved.push(analysis)
 
-          const newRelatives = stack.push(relatives, item.depth + 1)
-          bufferedLogger.logRelatives(newRelatives)
+          count += Object.keys(relatives).length
+          for (const [address, suggestedTemplates] of Object.entries(
+            relatives,
+          )) {
+            relativesWithTemplates[address] = new Set([
+              ...(relativesWithTemplates[address] ?? []),
+              ...suggestedTemplates,
+            ])
+          }
+
           bufferedLogger.flushToLogger(this.logger)
         }),
       )
+
+      depth++
     }
 
     this.logger.flushServer(config.name)
-
     this.checkErrors(resolved)
-
-    this.logger.log(`Address count = ${stack.getAddressCount()}`)
-
     return resolved
   }
 

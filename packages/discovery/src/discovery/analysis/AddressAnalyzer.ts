@@ -52,6 +52,8 @@ export interface RelativeAddress {
   template?: string
 }
 
+export type AddressesWithTemplates = Record<string, Set<string>>
+
 export class AddressAnalyzer {
   constructor(
     private readonly provider: DiscoveryProvider,
@@ -67,14 +69,15 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
+    _templates: Set<string>, // TODO
   ): Promise<{
     analysis: Analysis
-    relatives: RelativeAddress[]
+    relatives: AddressesWithTemplates
   }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: [] }
+      return { analysis: { type: 'EOA', address }, relatives: {} }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)

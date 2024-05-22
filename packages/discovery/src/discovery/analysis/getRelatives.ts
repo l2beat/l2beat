@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
-import { RelativeAddress } from './AddressAnalyzer'
+import { AddressesWithTemplates } from './AddressAnalyzer'
 
 export function getRelatives(
   parameters: HandlerResult[],
@@ -11,30 +11,47 @@ export function getRelatives(
   knownRelatives?: EthereumAddress[],
   ignoredAddresses?: EthereumAddress[],
   fields?: { [key: string]: DiscoveryContractField },
-): RelativeAddress[] {
-  const result = parameters
-    .filter((x) => !x.ignoreRelative)
-    .filter((x) => !ignoredFields?.includes(x.field))
-    .flatMap((x) =>
-      getAddresses(x.value, fields?.[x.field]?.target?.handler ?? undefined),
+): AddressesWithTemplates {
+  const result: AddressesWithTemplates = {}
+
+  for (const param of parameters) {
+    if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
+      continue
+    }
+    const addresses = getAddresses(param.value)
+    const withKnownRelatives = addresses.concat(knownRelatives ?? [])
+    const deduplicated = withKnownRelatives.filter(
+      (address, index, self) => self.indexOf(address) === index,
     )
-    .concat(knownRelatives?.map((a) => ({ address: a })) ?? [])
-    .filter((x) => !ignoredAddresses?.includes(x.address))
+    const withoutIgnored = deduplicated.filter(
+      (address) => !ignoredAddresses?.includes(address),
+    )
+    const template = fields?.[param.field]?.target?.handler ?? undefined
+    for (const address of withoutIgnored) {
+      const addressStr = address.toString()
+      const curTemplates = result[addressStr] ?? new Set()
+      result[addressStr] = curTemplates
+
+      if (template !== undefined) {
+        curTemplates.add(template)
+      }
+    }
+  }
+
   return result
-  // .filter((x, i, a) => a.indexOf(x) === i) // removes duplicates
 }
 
 function getAddresses(
   value: ContractValue | undefined,
   template?: string,
-): RelativeAddress[] {
+): EthereumAddress[] {
   if (Array.isArray(value)) {
     return value.flatMap((v) => getAddresses(v, template))
   } else if (typeof value === 'object') {
     return Object.values(value).flatMap((v) => getAddresses(v, template))
   } else if (typeof value === 'string') {
     try {
-      return [{ address: EthereumAddress(value), template }]
+      return [EthereumAddress(value)]
     } catch {
       return []
     }
