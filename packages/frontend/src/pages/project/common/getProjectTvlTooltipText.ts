@@ -5,7 +5,7 @@ import { languageJoin } from '../../../utils/utils'
 
 export function getProjectTvlTooltipText(
   config: Layer2['config'],
-  chainId: number | undefined,
+  chainId?: number,
 ) {
   const hasCanonical = config.escrows.length > 0
   const hasExternal =

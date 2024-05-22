@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import {
   NEW_CRYPTOGRAPHY,
@@ -196,6 +201,79 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'SecurityCouncil',
     )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   ].join('\n\n'),
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          'Polygon zkEVM proof system PIL-STARK can be found [here](https://github.com/0xPolygonHermez/pil-stark).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'Polygon zkEVM circuits are built from PIL and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+        ],
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this guide](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md). The system requires a trusted setup.',
+      },
+    ],
+    proofVerification: {
+      aggregation: true,
+      requiredTools: [
+        {
+          name: 'circom',
+          version: 'v2.1.8',
+          link: 'https://github.com/iden3/circom/releases/tag/v2.1.8',
+        },
+      ],
+      verifiers: [
+        {
+          name: 'PolygonZkEvmVerifier',
+          description:
+            'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x0775e11309d75aA6b0967917fB0213C5673eDf81',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'FflonkVerifier',
+              proofSystem: 'fflonk',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG-fflonk',
+              trustedSetup: 'Powers of Tau 28',
+              link: 'https://etherscan.io/address/0x0775e11309d75aA6b0967917fB0213C5673eDf81#code',
+            },
+            {
+              name: 'RecursiveVerifier',
+              proofSystem: 'eSTARK',
+              mainArithmetization: 'eAIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'No',
+            },
+            {
+              name: 'MainVerifier',
+              proofSystem: 'eSTARK',
+              mainArithmetization: 'eAIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'No',
+            },
+          ],
+        },
+      ],
+    },
+  },
   milestones: [
     {
       name: 'Polygon zkEVM Etrog upgrade',

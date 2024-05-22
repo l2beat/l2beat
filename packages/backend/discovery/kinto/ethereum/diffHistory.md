@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x1db08e3c132170b88ae88bdd175985aafd322d25
+
+# Diff at Tue, 21 May 2024 15:32:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d10db8000986dcc20fb2efb94c0e0636ac38fa21 block: 19888796
+- current block number: 19919191
+
+## Description
+
+The Bridger contract (pre-launch escrow for Kinto) is upgraded: The hardcoded orbitstack-native bridges are removed and the bridgeDeposits() function is modified to allow bridging via arbitrary bridges. Kinto will use socket as an external bridge for their L2 and the assets currently locked in the Bridger contract.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
++        "0x3636617973f25a512676cb06876f0C885568664a"
+      implementations.0:
+-        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
++        "0x3636617973f25a512676cb06876f0C885568664a"
+      values.L1GatewayRouter:
+-        "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60"
+      values.standardGateway:
+-        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42"
+      derivedName:
+-        "BridgerV4"
++        "Bridger"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BridgerV4.sol => .flat/Bridger/Bridger.sol}    | 5518 ++++++++++----------
+ 1 file changed, 2757 insertions(+), 2761 deletions(-)
+```
+
 Generated with discovered.json: 0x76f1e50a00a33e6f1eb3cc4ddf6d1768e457194b
 
 # Diff at Fri, 17 May 2024 09:28:07 GMT:

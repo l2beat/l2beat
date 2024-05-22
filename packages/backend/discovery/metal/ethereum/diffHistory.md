@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x945f32bd03147da666809aa29cce279673ba1992
+
+# Diff at Tue, 21 May 2024 14:01:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19781431
+- current block number: 19918744
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19781431 (main branch discovery), not current.
+
+```diff
+    contract MetalMultisig (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      name:
+-        "MetalMultisig"
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ProxyAdminOwner"
++        "ConduitMultisig"
+    }
+```
+
 Generated with discovered.json: 0x9bd81dfc1056a71d240cdbab98badebd5ecd7362
 
 # Diff at Wed, 24 Apr 2024 05:49:16 GMT:

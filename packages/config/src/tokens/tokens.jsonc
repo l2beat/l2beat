@@ -318,6 +318,10 @@
       "category": "ether"
     },
     {
+      "symbol": "ETHFI",
+      "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -826,6 +830,10 @@
       "address": "0xc98D64DA73a6616c42117b582e832812e7B8D57F"
     },
     {
+      "symbol": "rswETH",
+      "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0"
+    },
+    {
       "symbol": "RUNE",
       "address": "0x3155BA85D5F96b2d030a4966AF206230e46849cb",
       "coingeckoId": "thorchain"
@@ -999,6 +1007,11 @@
     {
       "symbol": "USDD",
       "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDe",
+      "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
       "category": "stablecoin"
     },
     {
@@ -1640,6 +1653,61 @@
         "slug": "socket"
       },
       "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "rswETH",
+      "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "restaked-swell-eth"
+    },
+    {
+      "symbol": "weETH",
+      "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-eeth"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x9b80ab732a6F1030326Af0014f106E12C4Db18EC",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-bitcoin"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-steth"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "tether"
     }
   ],
   "mantapacific": [
@@ -1772,6 +1840,85 @@
       "address": "0x1cd3e2a23c45a690a18ed93fd1412543f464158f",
       "type": "NMV",
       "formula": "circulatingSupply"
+    }
+  ],
+  "kinto": [
+    {
+      "symbol": "weETH",
+      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-eeth"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "wrapped-steth"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "dai"
+    },
+    {
+      "symbol": "ENA",
+      "address": "0xE040001C257237839a69E9683349C173297876F0",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena"
+    },
+    {
+      "symbol": "ETHFI",
+      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ether-fi"
+    },
+    {
+      "symbol": "sDAI",
+      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "savings-dai"
+    },
+    {
+      "symbol": "sUSDe",
+      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena-staked-usde"
     }
   ],
   "kroma": [

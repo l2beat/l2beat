@@ -1,5 +1,6 @@
 import {
   ManuallyVerifiedContracts,
+  ProjectId,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import React from 'react'
@@ -10,9 +11,24 @@ import { Markdown } from '../../../../../components/Markdown'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../../components/tooltip/Tooltip'
 import { cn } from '../../../../../utils/cn'
 import { EtherscanLink } from '../ContractsSection/EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+  iconPath: string
+  targetName: string
+  hrefRoot: string
+  type: 'implementation' | 'proxy' | 'permission'
+}
 
 export interface TechnologyContract {
   name: string
@@ -23,6 +39,7 @@ export interface TechnologyContract {
   links: TechnologyContractLinks[]
   upgradeableBy?: string
   upgradeDelay?: string
+  usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
   references?: TechnologyReference[]
   implementationHasChanged?: boolean
@@ -88,6 +105,16 @@ export function ContractEntry({
     }
   })
 
+  const sharedProxies = (contract.usedInProjects ?? []).filter(
+    (c) => c.type === 'proxy',
+  )
+  const sharedImplementations = (contract.usedInProjects ?? [])
+    .filter((c) => c.type === 'implementation')
+    .filter((c) => !sharedProxies.map((k) => k.id).includes(c.id))
+  const sharedPermissions = (contract.usedInProjects ?? []).filter(
+    (c) => c.type === 'permission',
+  )
+
   return (
     <Callout
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
@@ -147,6 +174,24 @@ export function ContractEntry({
               {contract.upgradeDelay}
             </p>
           )}
+          {sharedProxies.length !== 0 && (
+            <UsedInProjectEntry
+              label="Proxy used in"
+              implementations={sharedProxies}
+            />
+          )}
+          {sharedImplementations.length !== 0 && (
+            <UsedInProjectEntry
+              label={'Implementation used in'}
+              implementations={sharedImplementations}
+            />
+          )}
+          {sharedPermissions.length !== 0 && (
+            <UsedInProjectEntry
+              label={'Used in'}
+              implementations={sharedPermissions}
+            />
+          )}
           {contract.upgradeConsiderations && (
             <>
               <button
@@ -167,5 +212,40 @@ export function ContractEntry({
         </>
       }
     />
+  )
+}
+
+function UsedInProjectEntry({
+  label,
+  implementations,
+}: { label: string; implementations: UsedInProject[] }) {
+  return (
+    <div className="mt-2 flex flex-row items-center">
+      <p className="text-gray-850 dark:text-gray-400">
+        <strong className="text-black dark:text-white">{label}</strong>
+        {': '}
+      </p>
+      <div className="flex flex-row items-center">
+        {implementations.map((project, i) => (
+          <Tooltip key={i} disabledOnMobile>
+            <TooltipTrigger>
+              <a
+                href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
+              >
+                <img
+                  key={i}
+                  src={project.iconPath}
+                  alt="Project icon"
+                  className="h-5 w-5 mx-1 inline"
+                />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div>{project.name}</div>
+            </TooltipContent>
+          </Tooltip>
+        ))}
+      </div>
+    </div>
   )
 }

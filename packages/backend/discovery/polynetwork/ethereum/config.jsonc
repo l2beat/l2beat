@@ -14,9 +14,13 @@
     "0xf6378141BC900020a438F3914e4C3ceA29907b27": "Lock Proxy 5",
     "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC": "Lock Proxy 6",
     "0x51ba447DaD1de30b91286471BcB570F69ECE968D": "Lock Proxy 7",
-    "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": "Lock Proxy 8"
+    "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": "Lock Proxy 8",
+    "0x14413419452Aaf089762A0c5e95eD2A13bBC488C": "EthCrossChainManager"
   },
   "overrides": {
+    "EthCrossChainManager": {
+      "description": "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs."
+    },
     "PolyWrapper": {
       "fields": {
         "lockProxyIndexMap": {
@@ -34,6 +38,7 @@
       }
     },
     "EthCrossChainManagerProxy": {
+      "description": "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.",
       "fields": {
         "getEthCrossChainManager": {
           "handler": {
@@ -45,6 +50,7 @@
       }
     },
     "EthCrossChainData": {
+      "description": "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.",
       "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "ignoreMethods": [
         "EthToPolyTxHashMap",
