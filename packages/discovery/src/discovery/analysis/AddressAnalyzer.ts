@@ -59,7 +59,10 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-  ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
+  ): Promise<{
+    analysis: Analysis
+    relatives: { address: EthereumAddress; template?: string }[]
+  }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
@@ -118,6 +121,7 @@ export class AddressAnalyzer {
         overrides?.ignoreRelatives,
         proxy?.relatives,
         proxy?.implementations,
+        overrides?.fields,
       ),
     }
   }

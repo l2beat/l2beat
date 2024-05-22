@@ -9,10 +9,18 @@ export interface DiscoveryStackItem {
 
 export class DiscoveryStack {
   private readonly known = new Set<EthereumAddress>()
-  private readonly stack: { address: EthereumAddress; depth: number }[] = []
+  private readonly stack: {
+    address: EthereumAddress
+    depth: number
+    template?: string
+  }[] = []
   private counter = 0
 
-  push(addresses: EthereumAddress[], depth: number): EthereumAddress[] {
+  push(
+    addresses: { address: EthereumAddress; template?: string }[],
+    depth: number,
+    template?: string,
+  ): EthereumAddress[] {
     const uniqueReversed = addresses
       .filter((x, i, a) => a.indexOf(x) === i)
       .reverse()
@@ -21,7 +29,7 @@ export class DiscoveryStack {
       if (this.known.has(address) || address === EthereumAddress.ZERO) {
         continue
       }
-      this.stack.push({ address, depth })
+      this.stack.push({ address, depth, template })
       this.known.add(address)
       added.push(address)
     }
