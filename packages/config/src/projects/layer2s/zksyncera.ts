@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -19,7 +20,6 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { example } from '../other/zk-catalog/example'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -553,7 +553,54 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
           'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
       },
     ],
-    proofVerification: example.proofVerification,
+    proofVerification: {
+      aggregation: true,
+      requiredTools: [
+        {
+          name: 'Custom tool',
+          version: 'v14.2.0',
+          link: 'https://github.com/matter-labs/zksync-era/tree/prover-v14.2.0/prover/vk_setup_data_generator_server_fri',
+        },
+      ],
+      verifiers: [
+        {
+          name: 'zkSyncEraVerifier',
+          description:
+            'zkSync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0xdd9C826196cf3510B040A8784D85aE36674c7Ed2',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'PlonkVerifier',
+              proofSystem: 'Plonk SNARK',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Aztec ceremony',
+              link: 'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code',
+            },
+            {
+              name: 'RecursiveVerifier',
+              proofSystem: 'Redshift',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'LPC',
+              trustedSetup: 'No',
+              link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
+            },
+            {
+              name: 'MainVerifier',
+              proofSystem: 'Redshift',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'LPC',
+              trustedSetup: 'No',
+              link: 'https://github.com/matter-labs/era-zkevm_circuits',
+            },
+          ],
+        },
+      ],
+    },
   },
   permissions: [
     ...discovery.getMultisigPermission(

@@ -1,3 +1,280 @@
+Generated with discovered.json: 0xcaeb1c446a3f5c31fd87a9bd4a84fbc98f2e9f5b
+
+# Diff at Tue, 21 May 2024 15:12:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d10db8000986dcc20fb2efb94c0e0636ac38fa21 block: 19888244
+- current block number: 19919092
+
+## Description
+
+New plugs and escrows are added, related to Kinto.
+The recently added Lyra vaults are now governed by the Lyra multisig.
+
+## Watched changes
+
+```diff
+    contract rswETH Vault Lyra (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      values.owner:
+-        "0xA82994cc5e9D94FED2916f762e03245FcBE79f23"
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
+
+```diff
+    contract weETH Vault Lyra (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      values.owner:
+-        "0xA82994cc5e9D94FED2916f762e03245FcBE79f23"
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.42:
++        "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.41:
++        "0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.40:
++        "0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.39:
++        "0xE274dB6b891159547FbDC18b07412EE7F4B8d767"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.38:
++        "0xF5992B6A0dEa32dCF6BE7bfAf762A4D94f139Ea7"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.37:
++        "0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.36:
++        "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.35:
++        "0x73E0d4953c356a5Ca3A3D172739128776B2920b5"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.34:
++        "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.33:
++        "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.32:
++        "0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.31:
++        "0x83C6d6597891Ad48cF5e0BA901De55120C37C6bE"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.30:
++        "0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.29:
++        "0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault Kinto (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ENA Vault Kinto (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Kinto (0x43b718Aa5e678b08615CA984cbe25f690B085b32)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Kinto (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault 2 Kinto (0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETHFI Vault Kinto (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault Kinto (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract eETH Vault Kinto (0xc7a542f73049C11f9719Be6Ff701fCA882D60020)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wUSDM Vault Kinto (0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault Kinto (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94.sol | 886 +++++++++++++++++++++
+ ...-0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5.sol | 886 +++++++++++++++++++++
+ ...-0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd.sol | 886 +++++++++++++++++++++
+ ...-0x43b718Aa5e678b08615CA984cbe25f690B085b32.sol | 886 +++++++++++++++++++++
+ ...-0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85.sol | 886 +++++++++++++++++++++
+ ...-0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58.sol | 886 +++++++++++++++++++++
+ ...-0x755cD5d147036E11c76F1EeffDd94794fC265f0d.sol | 886 +++++++++++++++++++++
+ ...-0x95d60E34aB2E626407d98dF8C240e6174e5D37E5.sol | 886 +++++++++++++++++++++
+ ...-0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc.sol | 886 +++++++++++++++++++++
+ ...-0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc.sol | 886 +++++++++++++++++++++
+ ...-0xc7a542f73049C11f9719Be6Ff701fCA882D60020.sol | 886 +++++++++++++++++++++
+ ...-0xdf34E61B6e7B9e348713d528fEB019d504d38c1e.sol | 886 +++++++++++++++++++++
+ ...-0xeB66259d2eBC3ed1d3a98148f6298927d8A36397.sol | 886 +++++++++++++++++++++
+ 13 files changed, 11518 insertions(+)
+```
+
+Generated with discovered.json: 0x4bd5593e7b5d34a2700f86bac590a29180eb78e9
+
+# Diff at Fri, 17 May 2024 07:36:32 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f530b3790f02092dbc5b25633755416ea7c2ec7d block: 19805467
+- current block number: 19888244
+
+## Description
+
+New plugs connected to vaults associated with Lyra are added.
+5 plugs, 1 has the same vault, 4 have vaults with the tokens:
+- weETH (supported already)
+- rswETH (restaked Swell ETH, added)
+- weETHC (Lyra wrapped eETH covered call, ignored for now)
+- rswethC (ignored for now)
+
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.28:
++        "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.27:
++        "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.26:
++        "0x3f66F272d33B764960779a301c4183306ae50e10"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.25:
++        "0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.24:
++        "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract rswETH Vault Lyra (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault Lyra (0x8180EcCC825b692ef65FF099a0A387743788bf78)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4.sol | 886 +++++++++++++++++++++
+ ...-0x8180EcCC825b692ef65FF099a0A387743788bf78.sol | 886 +++++++++++++++++++++
+ 2 files changed, 1772 insertions(+)
+```
+
 Generated with discovered.json: 0x24bfd7f6c3a89e63c879a013490d80256ff8a746
 
 # Diff at Sun, 05 May 2024 17:46:10 GMT:

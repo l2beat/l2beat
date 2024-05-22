@@ -1,3 +1,4 @@
+import { WarningWithSentiment } from '../projects'
 import { ScalingProjectCategory } from './ScalingProjectCategory'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
 import { ScalingProjectPurpose } from './ScalingProjectPurpose'
@@ -20,6 +21,8 @@ export interface ScalingProjectDisplay {
         href: string
       }
     | string
+  /** Warning for TVL */
+  tvlWarning?: WarningWithSentiment
   /** A warning displayed above the description of the project */
   warning?: string
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */

@@ -66,10 +66,12 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       new UnixTime(targetHeight),
     )
 
-    this.logger.info('Deleted records', {
-      targetHeight,
-      deletedRecords,
-    })
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted records', {
+        targetHeight,
+        deletedRecords,
+      })
+    }
 
     return targetHeight
   }

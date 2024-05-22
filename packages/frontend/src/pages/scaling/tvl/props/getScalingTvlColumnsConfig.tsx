@@ -9,7 +9,10 @@ import { ScalingTvlViewEntry } from '../types'
 
 export function getScalingTvlColumnsConfig() {
   const columns: ColumnConfig<ScalingTvlViewEntry>[] = [
-    ...getProjectWithIndexColumns(),
+    ...getProjectWithIndexColumns({
+      showIsL3: true,
+      indexAsDefaultSort: false,
+    }),
     {
       type: 'group',
       columns: [

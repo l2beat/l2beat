@@ -118,7 +118,7 @@ export const immutablex: Layer2 = {
         {
           contract: 'StarkExchange',
           references: [
-            'https://etherscan.io/address/0x86d8f977C9cEC503ad4E6805802cEf62Cde13773#code#F34#L180',
+            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L123',
           ],
         },
         {

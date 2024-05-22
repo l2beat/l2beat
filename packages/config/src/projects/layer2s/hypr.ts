@@ -29,6 +29,12 @@ export const hypr: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1705509623),
   isNodeAvailable: 'UnderReview',
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      'Owner of the ProxyAdmin: it can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. Also designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
+    ),
+  ],
   milestones: [
     {
       name: 'Hypr live on mainnet',

@@ -1,9 +1,9 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 19781431,
-  "configHash": "0xb37923512d8720e3e0e610b994078318e08f713dd89ef2b7852a3bc80b550979",
-  "version": 3,
+  "blockNumber": 19918744,
+  "configHash": "0x78a24c0d1bd67ba1c8519c18889b09cebcb0bee010127e27759aab6bbbf9c5c1",
+  "version": 4,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1711563671,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619794",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619810",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -83,10 +83,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1533600,
-        "latestOutputIndex": 70,
-        "nextBlockNumber": 1555200,
-        "nextOutputIndex": 71,
+        "latestBlockNumber": 2354400,
+        "latestOutputIndex": 108,
+        "nextBlockNumber": 2376000,
+        "nextOutputIndex": 109,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -113,7 +113,7 @@
         "L2_ORACLE": "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426",
         "l2Oracle": "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19733980],
+        "params": [1000000000, 491310, 19912524],
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
@@ -123,7 +123,7 @@
       "derivedName": "OptimismPortal"
     },
     {
-      "name": "MetalMultisig",
+      "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "upgradeability": {
         "type": "gnosis safe",
@@ -143,11 +143,10 @@
         "getThreshold": 2,
         "nonce": 31,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -168,7 +167,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 30,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

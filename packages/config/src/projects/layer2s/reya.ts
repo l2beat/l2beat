@@ -36,7 +36,7 @@ export const reya: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'reya',
     chainId: 1729,
-    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerUrl: 'https://explorer.reya.network',
     explorerApi: {
       url: 'https://explorer.reya.network/api',
       type: 'blockscout',

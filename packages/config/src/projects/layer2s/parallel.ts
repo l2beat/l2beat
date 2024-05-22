@@ -141,7 +141,7 @@ export const parallel: Layer2 = orbitStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'OwnerMultisig',
+      'ConduitMultisig',
       'Multisig that can execute upgrades via the UpgradeExecutor.',
     ),
     {
