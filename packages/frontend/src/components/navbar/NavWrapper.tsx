@@ -366,9 +366,7 @@ export function Sidenav({
               )}
               <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
                 Jobs
-                {config.features.hiringBadge && (
-                  <HiringBadge className="ml-1 py-0.5 rounded-sm text-2xs" />
-                )}
+                {config.features.hiringBadge && <HiringBadge />}
               </NavSmallLink>
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
@@ -466,9 +464,7 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
             )}
             <LegacyNavBarLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
-              {config.features.hiringBadge && (
-                <HiringBadge className="ml-1 py-0.5 rounded-sm text-2xs" />
-              )}
+              {config.features.hiringBadge && <HiringBadge />}
             </LegacyNavBarLink>
             <LegacyNavBarLink title="FAQ" href="/faq" />
           </ul>
