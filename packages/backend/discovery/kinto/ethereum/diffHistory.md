@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x465be3dcf832bb45e421038bb58ed5c8091e288b
+
+# Diff at Wed, 22 May 2024 15:45:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d8b1d401a7eb2fd4dbc2edda92ae733061915c30 block: 19919191
+- current block number: 19926394
+
+## Description
+
+The Bridger is upgraded to a new implementation. Currently there are no funds in it as the prelaunch-farm (Engen) has concluded and assets were [bridged](https://etherscan.io/tx/0xbbdbbf2f7ddd1ac994d9a96b2da163e72339866dee3dbac7004fe4a64ee26f92) via socket to the Kinto L2.
+
+### Bridger.sol
+
+The logic of the Bridger is still a Gateway contract to the Kinto L2. As the prelaunch phase has concluded, ERC-20 tokens can now be deposited to the Bridger and are bridged directly to the L2, so the Bridger will not escrow assets anymore. It also now uses a 0x exchange proxy to swap into 'final assets' before depositing. Final assets for Kinto can be defined by the depositer and can also be the inputAsset, in which case no swap is performed and the asset is bridged directly. The bridge address is supplied with the call to `depositERC20()`.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x3636617973f25a512676cb06876f0C885568664a"
++        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
+      implementations.0:
+-        "0x3636617973f25a512676cb06876f0C885568664a"
++        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
+      values.exchangeProxy:
+-        "0xDef1C0ded9bec7F1a1670819833240f027b25EfF"
+      values.sDAI:
+-        "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+      values.swapsEnabled:
+-        true
+      values.weETH:
+-        "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
+      values.swapRouter:
++        "0xDef1C0ded9bec7F1a1670819833240f027b25EfF"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZeroEx (0xDef1C0ded9bec7F1a1670819833240f027b25EfF)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@19919191 => .flat}/Bridger/Bridger.sol  | 1090 ++++++++++----------
+ .../.flat@19919191/ZeroEx.sol => /dev/null         |  729 -------------
+ 2 files changed, 532 insertions(+), 1287 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19919191 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ZeroEx (0xDef1C0ded9bec7F1a1670819833240f027b25EfF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1db08e3c132170b88ae88bdd175985aafd322d25
 
 # Diff at Tue, 21 May 2024 15:32:00 GMT:

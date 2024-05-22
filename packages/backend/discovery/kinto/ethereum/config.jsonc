@@ -5,7 +5,8 @@
   "initialAddresses": [
     "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB", // Bridge
     "0x0f1b7bd7762662B23486320AA91F30312184f70C", // Bridger
-    "0x7870D5398DB488c669B406fBE57b8d05b6A35e42"
+    "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
   ],
   "names": {
     "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
@@ -41,14 +42,14 @@
       "ignoreRelatives": [
         "DAI",
         "ETH",
-        "exchangeProxy",
         "l2Vault",
         "sDAI",
         "sUSDe",
         "USDe",
         "weETH",
         "WETH",
-        "wstETH"
+        "wstETH",
+        "swapRouter"
       ],
       "ignoreMethods": ["proxiableUUID", "depositCount", "domainSeparator"]
     },
