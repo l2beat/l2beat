@@ -1,19 +1,17 @@
 import { link } from 'fs'
 import { identity } from 'lodash'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 export const worldcoin: ZkCatalogProject = {
   display: {
     slug: 'worldcoin',
     name: 'Worldcoin',
-    description:
-      "Worldcoin is designed to become the world's largest privacy-preserving human identity and financial network.",
-    link: 'https://worldcoin.org/',
   },
   proofVerification: {
     aggregation: false,
-    description: '',
+    description:
+      'Worldcoin uses two types of circuits: Semaphore to prove the inclusion of a WorldId in the anonymity set, and the Semaphore Merkle Tree Batcher (SMTB) to efficiently insert or delete users from the Semaphore Merkle trees.',
     verifiers: [
       {
         name: 'OpWorldID_Zero',
@@ -22,7 +20,8 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB',
         ),
-        verified: 'no',
+        chainId: ChainId.OPTIMISM,
+        verified: 'failed',
         subVerifiers: [
           {
             name: 'Semaphore30',
@@ -41,7 +40,8 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF',
         ),
-        verified: 'no',
+        chainId: ChainId.OPTIMISM,
+        verified: 'failed',
         subVerifiers: [
           {
             name: 'Semaphore30',
@@ -55,10 +55,11 @@ export const worldcoin: ZkCatalogProject = {
       },
       {
         name: 'Size 100 Register',
-        description: 'Register verifier of size 100.',
+        description: 'SMTB Register verifier of size 100.',
         contractAddress: EthereumAddress(
           '0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258',
         ),
+        chainId: ChainId.OPTIMISM,
         verified: 'no',
         subVerifiers: [
           {
@@ -72,10 +73,11 @@ export const worldcoin: ZkCatalogProject = {
       },
       {
         name: 'Size 600 Register',
-        description: 'Register verifier of size 600.',
+        description: 'SMTB Register verifier of size 600.',
         contractAddress: EthereumAddress(
           '0xFC1c26E964F791f81a33F49D91f79456891AA1c1',
         ),
+        chainId: ChainId.OPTIMISM,
         verified: 'no',
         subVerifiers: [
           {
@@ -89,10 +91,11 @@ export const worldcoin: ZkCatalogProject = {
       },
       {
         name: 'Size 1200 Register',
-        description: 'Register verifier of size 1200.',
+        description: 'SMTB Register verifier of size 1200.',
         contractAddress: EthereumAddress(
           '0xE44c83b9e1971A24EC698829297A0C4026B0CeF9',
         ),
+        chainId: ChainId.OPTIMISM,
         verified: 'no',
         subVerifiers: [
           {
@@ -106,10 +109,11 @@ export const worldcoin: ZkCatalogProject = {
       },
       {
         name: 'Size 10 Delete',
-        description: 'Delete verifier of size 10.',
+        description: 'SMTB Delete verifier of size 10.',
         contractAddress: EthereumAddress(
           '0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1',
         ),
+        chainId: ChainId.OPTIMISM,
         verified: 'no',
         subVerifiers: [
           {
@@ -123,10 +127,11 @@ export const worldcoin: ZkCatalogProject = {
       },
       {
         name: 'Size 100 Delete',
-        description: 'Delete verifier of size 100.',
+        description: 'SMTB Delete verifier of size 100.',
         contractAddress: EthereumAddress(
           '0x43B68ccBa7FC726540768fD1537c3179283140ed',
         ),
+        chainId: ChainId.OPTIMISM,
         verified: 'no',
         subVerifiers: [
           {
@@ -152,4 +157,5 @@ export const worldcoin: ZkCatalogProject = {
       },
     ],
   },
+  type: 'zk-catalog',
 }
