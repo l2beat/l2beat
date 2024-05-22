@@ -3,6 +3,7 @@ const config = {
   plugins: {
     tailwindcss: {},
   },
-};
+}
 
-export default config;
+// biome-ignore lint/style/noDefaultExport: config file
+export default config

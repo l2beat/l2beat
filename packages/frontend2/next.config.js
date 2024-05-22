@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  rewrites() {
+  // biome-ignore lint/suspicious/useAwait: rewrites must be
+  async rewrites() {
     return {
+      beforeFiles: [],
+      afterFiles: [],
       fallback: [
         {
           source: '/:path*',
@@ -12,4 +15,5 @@ const nextConfig = {
   },
 }
 
+// biome-ignore lint/style/noDefaultExport: config file
 export default nextConfig
