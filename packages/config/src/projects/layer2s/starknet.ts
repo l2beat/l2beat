@@ -715,7 +715,19 @@ export const starknet: Layer2 = {
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
-    categories: [],
+    categories: [
+      {
+        title: 'Proven Program',
+        description:
+          'The source code of the Starknet OS can be found [here](https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os). The source code of the bootloader can be found [here](https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo).',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+        ],
+      },
+    ],
     proofVerification: {
       aggregation: true,
       requiredTools: [],
