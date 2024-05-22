@@ -1,30 +1,56 @@
-import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig, diffDiscovery } from '@l2beat/discovery'
 import {
   assert,
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 
+import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
 
 export class ImplementationChangeController {
+  private readonly onDiskChains: string[] = []
+  private readonly onDiskProjects: Record<string, string[]> = {}
+  private readonly onDiskConfigs: Record<
+    string,
+    Record<string, DiscoveryConfig>
+  > = {}
+  private readonly onDiskDiscoveries: Record<
+    string,
+    Record<string, DiscoveryOutput>
+  > = {}
+
   constructor(
     private readonly updateMonitorRepository: UpdateMonitorRepository,
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
-  ) {}
+  ) {
+    this.onDiskChains = this.configReader.readAllChains()
+    for (const chain of this.onDiskChains) {
+      const projects = this.configReader.readAllProjectsForChain(chain)
+      this.onDiskProjects[chain] = projects
+
+      for (const project of projects) {
+        const config = this.configReader.readConfig(project, chain)
+        const discovery = this.configReader.readDiscovery(project, chain)
+
+        this.onDiskConfigs[chain] ??= {}
+        this.onDiskDiscoveries[chain] ??= {}
+        this.onDiskConfigs[chain][project] = config
+        this.onDiskDiscoveries[chain][project] = discovery
+      }
+    }
+  }
 
   async getImplementationChangeReport(): Promise<ImplementationChangeReportApiResponse> {
     const result: ImplementationChangeReportApiResponse = {
       projects: {},
     }
 
-    const chains = this.configReader.readAllChains()
-    for (const chain of chains) {
-      const projects = this.configReader.readAllProjectsForChain(chain)
-      for (const project of projects) {
-        const config = await this.configReader.readConfig(project, chain)
-        const discovery = await this.configReader.readDiscovery(project, chain)
+    for (const chain of this.onDiskChains) {
+      for (const project of this.onDiskProjects[chain]) {
+        const config = this.onDiskConfigs[chain][project]
+        const discovery = this.onDiskDiscoveries[chain][project]
         const chainId = this.chainConverter.toChainId(chain)
         const newDiscovery = await this.updateMonitorRepository.findLatest(
           config.name,
