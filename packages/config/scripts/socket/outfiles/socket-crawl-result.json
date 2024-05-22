@@ -12,7 +12,9 @@
           "tvl": 13250035.44448
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
@@ -26,7 +28,9 @@
           "tvl": 13250035.44448
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508",
@@ -37,7 +41,7 @@
           "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
           "tokenName": "rswETH",
           "tokenSymbol": "rswETH",
-          "tvl": 595.191294901646
+          "tvl": 595.6872888492287
         }
       ],
       "tags": []
@@ -68,7 +72,9 @@
           "tvl": 118.90013143661652
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xf71A92D4bEFc2e18671c3b20377d45729790e880",
@@ -82,7 +88,9 @@
           "tvl": 118.90013143661652
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
@@ -96,7 +104,9 @@
           "tvl": 108.7381290834182
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xdCcFb24f983586144c085426dbfa3414045E19a3",
@@ -110,7 +120,9 @@
           "tvl": 108.7381290834182
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E",
@@ -124,7 +136,9 @@
           "tvl": 60.00744216377353
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x8F4e67C61232167584333e23D7d67BD73d80a4F5",
@@ -138,7 +152,9 @@
           "tvl": 60.00744216377353
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
@@ -152,7 +168,9 @@
           "tvl": 2.28413144
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
@@ -166,7 +184,9 @@
           "tvl": 2.28413144
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
@@ -180,7 +200,9 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
@@ -194,7 +216,9 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
@@ -208,7 +232,9 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
@@ -222,7 +248,9 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x3f66F272d33B764960779a301c4183306ae50e10",
@@ -236,7 +264,10 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0xb1178803A726e2077947754de9f2f0cbdA29A60F",
@@ -494,7 +525,10 @@
           "tvl": 0
         }
       ],
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "1324967486": [

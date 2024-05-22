@@ -6,12 +6,17 @@ import pLimit from 'p-limit'
 
 dotenv.config()
 
-const ETHERSCAN_API_KEY = process.env.ETHEREUM_ETHERSCAN_API_KEY!
-const RPC_URL = process.env.ETHEREUM_RPC_URL!
+const ETHERSCAN_API_KEY = process.env.ETHEREUM_ETHERSCAN_API_KEY
+const RPC_URL = process.env.ETHEREUM_RPC_URL
+
+if (!ETHERSCAN_API_KEY || !RPC_URL) {
+  throw new Error('Missing environment variables')
+}
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-const limit = pLimit(2) // Limit concurrency to 2 requests at a time
+const limit = pLimit(2)
 
+// copypaste plugs from discovered.json here:
 const plugs = [
   '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
   '0x200AF8FCdD5246D70B369A98143Ac8930A077B7A',
@@ -111,20 +116,21 @@ interface Result {
 async function getContractValue(
   contract: ethers.Contract,
   functionName: string,
-  ...args: any[]
-): Promise<any> {
+  ...args: unknown[]
+): Promise<unknown> {
   try {
     console.log(`Fetching ${functionName} from ${contract.address}`)
     return await contract[functionName](...args)
-  } catch (error: any) {
+  } catch (error) {
     console.error(
-      `Failed to fetch ${functionName} from ${contract.address}: ${error.message}`,
+      `Failed to fetch ${functionName} from ${contract.address}: ${
+        error instanceof Error ? error.message : error
+      }`,
     )
     return null
   }
 }
 
-// This is a hack because the etherscan tokeninfo api endpoint is pro-only
 async function getTokenInfoFromEtherscan(
   contractAddress: string,
 ): Promise<{ tokenName: string; tokenSymbol: string } | null> {
@@ -132,7 +138,7 @@ async function getTokenInfoFromEtherscan(
     console.log(
       `Fetching token transactions for ${contractAddress} from Etherscan`,
     )
-    const response = await axios.get('https://api.etherscan.io/api', {
+    const { data } = await axios.get('https://api.etherscan.io/api', {
       params: {
         module: 'account',
         action: 'tokentx',
@@ -143,16 +149,18 @@ async function getTokenInfoFromEtherscan(
       },
     })
 
-    if (response.data.status === '1' && response.data.result.length > 0) {
-      const { tokenName, tokenSymbol } = response.data.result[0]
+    if (data.status === '1' && data.result.length > 0) {
+      const { tokenName, tokenSymbol } = data.result[0]
       return { tokenName, tokenSymbol }
     } else {
       console.error(`No token transactions found for ${contractAddress}`)
       return null
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error(
-      `Failed to fetch token transactions for ${contractAddress} from Etherscan: ${error.message}`,
+      `Failed to fetch token transactions for ${contractAddress} from Etherscan: ${
+        error instanceof Error ? error.message : error
+      }`,
     )
     return null
   }
@@ -165,11 +173,17 @@ async function getTokenTVL(token: string, account: string): Promise<number> {
       'function decimals() view returns (uint8)',
     ]
     const tokenContract = new ethers.Contract(token, tokenAbi, provider)
-    const balance = await getContractValue(tokenContract, 'balanceOf', account)
-    const decimals = await getContractValue(tokenContract, 'decimals')
-    return balance ? balance / Math.pow(10, decimals) : 0
-  } catch (error: any) {
-    console.error(`Failed to fetch TVL for token ${token}: ${error.message}`)
+    const [balance, decimals] = await Promise.all([
+      getContractValue(tokenContract, 'balanceOf', account),
+      getContractValue(tokenContract, 'decimals'),
+    ])
+    return balance ? Number(balance) / Math.pow(10, Number(decimals)) : 0
+  } catch (error) {
+    console.error(
+      `Failed to fetch TVL for token ${token}: ${
+        error instanceof Error ? error.message : error
+      }`,
+    )
     return 0
   }
 }
@@ -185,24 +199,26 @@ async function exploreContract(address: string): Promise<Result> {
   ]
 
   const contract = new ethers.Contract(address, abi, provider)
-
-  const [hub, bridge, siblingChainSlug] = await Promise.all([
+  const [hub, bridge, siblingChainSlugRaw] = await Promise.all([
     getContractValue(contract, 'hub__'),
     getContractValue(contract, 'bridge__'),
     getContractValue(contract, 'siblingChainSlug'),
   ])
 
+  const siblingChainSlug =
+    typeof siblingChainSlugRaw === 'number' ? siblingChainSlugRaw : 'unknown'
+
   const result: Result = {
     address,
-    hubOrBridge: hub || bridge || null,
-    siblingChainSlug: siblingChainSlug || 'unknown',
+    hubOrBridge: (hub as string) || (bridge as string) || null,
+    siblingChainSlug,
     tokens: [],
   }
 
   const hubOrBridgeAddress = hub || bridge
   if (hubOrBridgeAddress) {
     const hubOrBridgeContract = new ethers.Contract(
-      hubOrBridgeAddress,
+      hubOrBridgeAddress as string,
       abi,
       provider,
     )
@@ -210,12 +226,15 @@ async function exploreContract(address: string): Promise<Result> {
       (await getContractValue(hubOrBridgeContract, 'token__')) ||
       (await getContractValue(hubOrBridgeContract, 'token'))
     if (token) {
-      const tokenInfo = await getTokenInfoFromEtherscan(token)
-      const tvl = await getTokenTVL(token, hubOrBridgeAddress)
+      const tokenInfo = await getTokenInfoFromEtherscan(token as string)
+      const tvl = await getTokenTVL(
+        token as string,
+        hubOrBridgeAddress as string,
+      )
       if (tokenInfo) {
-        result.tokens.push({ token, ...tokenInfo, tvl })
+        result.tokens.push({ token: token as string, ...tokenInfo, tvl })
       } else {
-        result.tokens.push({ token, tvl })
+        result.tokens.push({ token: token as string, tvl })
       }
     }
   }
@@ -230,28 +249,24 @@ async function main(): Promise<void> {
   )
   console.log('Exploration completed')
 
-  // Group by siblingChainSlug and sort by TVL
   const groupedResults = results.reduce<{ [key: string]: Result[] }>(
     (acc, result) => {
       const slug = result.siblingChainSlug?.toString() || 'unknown'
-      if (!acc[slug]) {
-        acc[slug] = []
-      }
+      if (!acc[slug]) acc[slug] = []
       acc[slug].push(result)
       return acc
     },
     {},
   )
 
-  for (const key in groupedResults) {
-    groupedResults[key] = groupedResults[key].sort((a, b) => {
+  Object.keys(groupedResults).forEach((key) => {
+    groupedResults[key].sort((a, b) => {
       const aTVL = a.tokens.reduce((sum, token) => sum + (token.tvl || 0), 0)
       const bTVL = b.tokens.reduce((sum, token) => sum + (token.tvl || 0), 0)
       return bTVL - aTVL
     })
-  }
+  })
 
-  // Detect multiplug and multiproject vaults
   const addressMap = new Map<string, { count: number; slugs: Set<string> }>()
 
   results.forEach((result) => {
@@ -260,33 +275,34 @@ async function main(): Promise<void> {
       if (!addressMap.has(hubOrBridge)) {
         addressMap.set(hubOrBridge, { count: 0, slugs: new Set<string>() })
       }
-      const entry = addressMap.get(hubOrBridge)!
-      entry.count++
-      entry.slugs.add(result.siblingChainSlug as string)
+      const entry = addressMap.get(hubOrBridge)
+      if (entry) {
+        entry.count++
+        entry.slugs.add(result.siblingChainSlug as string)
+      }
     }
   })
 
   results.forEach((result) => {
     const hubOrBridge = result.hubOrBridge
     if (hubOrBridge) {
-      const entry = addressMap.get(hubOrBridge)!
-      result.tags = result.tags || []
-      if (entry.count > 1) {
-        result.tags.push('multiplug')
-      }
-      if (entry.slugs.size > 1) {
-        result.tags.push('multiproject')
+      const entry = addressMap.get(hubOrBridge)
+      if (entry) {
+        result.tags = result.tags || []
+        if (entry.count > 1) result.tags.push('multiplug')
+        if (entry.slugs.size > 1) result.tags.push('multiproject')
       }
     }
   })
 
-  console.log('Writing results to socket-crawl.json')
-  fs.writeFileSync('socket-crawl.json', JSON.stringify(groupedResults, null, 2))
-  console.log('Results written to socket-crawl.json')
+  console.log('Writing results to socket-crawl-result.json')
+  fs.writeFileSync(
+    'scripts/socket/outfiles/socket-crawl-result.json',
+    JSON.stringify(groupedResults, null, 2),
+  )
+  console.log('Results written to socket-crawl-result.json')
 
-  // Generate socket-crawl-copypasta.txt
   const copypasta: string[] = []
-
   const initialAddressesByProject: { [key: string]: string[] } = {}
   const namesByProject: { [key: string]: { [address: string]: string } } = {}
   const ignoreMethodsByProject: {
@@ -330,56 +346,47 @@ async function main(): Promise<void> {
     (key) => initialAddressesByProject[key].length > 0,
   )
 
-  // Combine all project initial addresses with comments
   const initialAddressesSection = projectKeys
-    .map((project) => {
-      const addresses = initialAddressesByProject[project]
-        .map((addr) => `    "${addr}"`)
-        .join(',\n')
-      return `// ${project}\n${addresses}`
-    })
+    .map(
+      (project) =>
+        `// ${project}\n${initialAddressesByProject[project]
+          .map((addr) => `    "${addr}"`)
+          .join(',\n')}`,
+    )
     .join(',\n')
-
   copypasta.push(`"initialAddresses": [\n${initialAddressesSection}\n],`)
 
-  // Combine all project names
   const namesSection = projectKeys
-    .map((project) => {
-      const names = Object.entries(namesByProject[project])
-        .map(([addr, name]) => `    "${addr}": "${name}"`)
-        .join(',\n')
-      return `// ${project}\n${names}`
-    })
+    .map(
+      (project) =>
+        `// ${project}\n${Object.entries(namesByProject[project])
+          .map(([addr, name]) => `    "${addr}": "${name}"`)
+          .join(',\n')}`,
+    )
     .join(',\n')
-
   copypasta.push(`"names": {\n${namesSection}\n},`)
 
-  // Combine all project ignoreMethods
   const ignoreMethodsSection = projectKeys
-    .map((project) => {
-      const ignoreMethods = Object.entries(ignoreMethodsByProject[project])
-        .map(([name, methods]) => `    "${name}": ${JSON.stringify(methods)}`)
-        .join(',\n')
-      return `// ${project}\n${ignoreMethods}`
-    })
+    .map(
+      (project) =>
+        `// ${project}\n${Object.entries(ignoreMethodsByProject[project])
+          .map(([name, methods]) => `    "${name}": ${JSON.stringify(methods)}`)
+          .join(',\n')}`,
+    )
     .join(',\n')
-
   copypasta.push(`"ignoreMethods": {\n${ignoreMethodsSection}\n},`)
 
-  // Combine all project escrows
   const escrowsSection = projectKeys
-    .map((project) => {
-      const escrows = escrowsByProject[project].join('\n')
-      return `// ${project}\n${escrows}`
-    })
+    .map((project) => `// ${project}\n${escrowsByProject[project].join('\n')}`)
     .join('\n')
-
   copypasta.push(`escrows: [\n${escrowsSection}\n],`)
 
-  fs.writeFileSync('socket-crawl-copypasta.txt', copypasta.join('\n\n'))
+  fs.writeFileSync(
+    'scripts/socket/outfiles/socket-crawl-copypasta.txt',
+    copypasta.join('\n\n'),
+  )
   console.log('Results written to socket-crawl-copypasta.txt')
 
-  // Explicitly close the provider connection
   provider.removeAllListeners()
   console.log('Exiting script')
   process.exit(0)
