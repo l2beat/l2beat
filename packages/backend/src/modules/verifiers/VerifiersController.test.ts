@@ -12,14 +12,16 @@ import {
   ZkCatalogProject,
 } from '@l2beat/config'
 import {
+  BlockscoutInternalTransaction,
+  BlockscoutV2Client,
+} from '@l2beat/shared'
+import {
   ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
-import { BlockscoutInternalTransaction } from '../../peripherals/blockscout/schemas'
 import {
   VerifiersController,
   VerifiersControllerDeps,
@@ -91,7 +93,7 @@ describe(VerifiersController.name, () => {
     it('correctly fetches verifier statuses', async () => {
       const timestamp = UnixTime.now()
       const controller = createVeririferController({
-        blockscoutClient: mockObject<BlockscoutClient>({
+        blockscoutClient: mockObject<BlockscoutV2Client>({
           getInternalTransactions: mockFn().resolvesTo([
             mockObject<BlockscoutInternalTransaction>({
               timestamp: timestamp.add(-1, 'hours'),
@@ -117,7 +119,7 @@ describe(VerifiersController.name, () => {
 
     it('return null if status fetch fails', async () => {
       const controller = createVeririferController({
-        blockscoutClient: mockObject<BlockscoutClient>({
+        blockscoutClient: mockObject<BlockscoutV2Client>({
           getInternalTransactions: mockFn().throws(
             new Error('Failed to fetch'),
           ),
@@ -149,7 +151,7 @@ describe(VerifiersController.name, () => {
 
 function createVeririferController(deps?: Partial<VerifiersControllerDeps>) {
   return new VerifiersController({
-    blockscoutClient: mockObject<BlockscoutClient>(),
+    blockscoutClient: mockObject<BlockscoutV2Client>(),
     projects: [],
     logger: Logger.SILENT,
     ...deps,

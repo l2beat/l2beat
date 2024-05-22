@@ -1,8 +1,8 @@
-import { HttpClient } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
-import { BlockscoutClient } from './BlockscoutClient'
+import { HttpClient } from '../HttpClient'
+import { BlockscoutV2Client } from './BlockscoutV2Client'
 
 const API_URL = 'https://example.com/api'
 const NOW = UnixTime.now()
@@ -56,8 +56,8 @@ const responseMock = {
   },
 }
 
-describe(BlockscoutClient.name, () => {
-  describe(BlockscoutClient.prototype.call.name, () => {
+describe(BlockscoutV2Client.name, () => {
+  describe(BlockscoutV2Client.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn().resolvesTo(
@@ -65,7 +65,7 @@ describe(BlockscoutClient.name, () => {
         ),
       })
 
-      const blockscoutClient = new BlockscoutClient(httpClient, API_URL)
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await blockscoutClient.call('mod', 'id', 'act', {
         foo: 'bar',
         baz: '123',
@@ -84,7 +84,7 @@ describe(BlockscoutClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutClient(httpClient, API_URL)
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
       )
@@ -97,7 +97,7 @@ describe(BlockscoutClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutClient(httpClient, API_URL)
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await expect(blockscoutClient.call('mod', 'id', 'act')).toBeRejectedWith(
         `Unexpected token m in JSON at position 0`,
       )
@@ -110,17 +110,17 @@ describe(BlockscoutClient.name, () => {
         },
       })
 
-      const blockscoutClient = new BlockscoutClient(httpClient, API_URL)
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       const result = await blockscoutClient.call('mod', 'id', 'act')
       expect(result).toEqual(responseMock)
     })
   })
 
-  describe(BlockscoutClient.prototype.getInternalTransactions.name, () => {
+  describe(BlockscoutV2Client.prototype.getInternalTransactions.name, () => {
     it('correctly parser api response', async () => {
       const address = EthereumAddress.random()
       const callMock = mockFn().resolvesTo(responseMock)
-      const blockscoutClient = new BlockscoutClient(
+      const blockscoutClient = new BlockscoutV2Client(
         mockObject<HttpClient>(),
         API_URL,
       )
@@ -140,7 +140,7 @@ describe(BlockscoutClient.name, () => {
     it('throws if schema is not correct', async () => {
       const address = EthereumAddress.random()
       const callMock = mockFn().resolvesTo({})
-      const blockscoutClient = new BlockscoutClient(
+      const blockscoutClient = new BlockscoutV2Client(
         mockObject<HttpClient>(),
         API_URL,
       )

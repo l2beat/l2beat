@@ -1,16 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import {
   EthereumAddress,
   RateLimiter,
   getErrorMessage,
 } from '@l2beat/shared-pure'
+import { HttpClient } from '../HttpClient'
 import {
   BlockscoutGetInternalTransactionsResponse,
   BlockscoutInternalTransaction,
-} from './schemas'
+} from './model'
 
-export class BlockscoutClient {
+export class BlockscoutV2Client {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -28,7 +28,7 @@ export class BlockscoutClient {
     services: { httpClient: HttpClient; logger: Logger },
     options: { url: string },
   ) {
-    return new BlockscoutClient(
+    return new BlockscoutV2Client(
       services.httpClient,
       options.url,
       services.logger,

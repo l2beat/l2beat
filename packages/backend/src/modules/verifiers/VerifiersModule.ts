@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { BlockscoutV2Client } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
-import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
 import { ApplicationModule } from '../ApplicationModule'
 import { VerifiersController } from './VerifiersController'
 import { createVerifiersRouter } from './VerifiersRouter'
@@ -16,7 +16,7 @@ export function createVerifiersModule(
     return
   }
 
-  const blockscoutClient = peripherals.getClient(BlockscoutClient, {
+  const blockscoutClient = peripherals.getClient(BlockscoutV2Client, {
     url: config.verifiers.blockscoutApiUrl,
   })
 

@@ -5,6 +5,7 @@ import {
   layer2s,
   zkCatalogProjects,
 } from '@l2beat/config'
+import { BlockscoutV2Client } from '@l2beat/shared'
 import {
   assert,
   EthereumAddress,
@@ -12,11 +13,10 @@ import {
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 import { Project } from '../../model/Project'
-import { BlockscoutClient } from '../../peripherals/blockscout/BlockscoutClient'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export interface VerifiersControllerDeps {
-  blockscoutClient: BlockscoutClient
+  blockscoutClient: BlockscoutV2Client
   projects: Project[]
   logger: Logger
 }
