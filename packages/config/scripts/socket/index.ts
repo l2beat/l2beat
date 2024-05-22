@@ -110,6 +110,7 @@ interface Result {
   hubOrBridge: string | null
   siblingChainSlug: number | string | null
   tokens: TokenInfo[]
+  owner: string | null // Added owner field
   tags?: string[]
 }
 
@@ -188,6 +189,10 @@ async function getTokenTVL(token: string, account: string): Promise<number> {
   }
 }
 
+async function getOwner(contract: ethers.Contract): Promise<string | null> {
+  return getContractValue(contract, 'owner') as Promise<string | null>
+}
+
 async function exploreContract(address: string): Promise<Result> {
   console.log(`Exploring contract at ${address}`)
   const abi = [
@@ -196,13 +201,15 @@ async function exploreContract(address: string): Promise<Result> {
     'function siblingChainSlug() view returns (uint32)',
     'function token__() view returns (address)',
     'function token() view returns (address)',
+    'function owner() view returns (address)', // Added owner function to ABI
   ]
 
   const contract = new ethers.Contract(address, abi, provider)
-  const [hub, bridge, siblingChainSlugRaw] = await Promise.all([
+  const [hub, bridge, siblingChainSlugRaw, owner] = await Promise.all([
     getContractValue(contract, 'hub__'),
     getContractValue(contract, 'bridge__'),
     getContractValue(contract, 'siblingChainSlug'),
+    getOwner(contract),
   ])
 
   const siblingChainSlug =
@@ -213,6 +220,7 @@ async function exploreContract(address: string): Promise<Result> {
     hubOrBridge: (hub as string) || (bridge as string) || null,
     siblingChainSlug,
     tokens: [],
+    owner: owner as string | null, // Include owner in result
   }
 
   const hubOrBridgeAddress = hub || bridge

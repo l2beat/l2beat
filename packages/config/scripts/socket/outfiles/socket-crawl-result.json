@@ -12,6 +12,7 @@
           "tvl": 13250035.44448
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -26,6 +27,7 @@
           "tvl": 13250035.44448
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -40,6 +42,7 @@
           "tvl": 595.6872888492287
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": []
     },
     {
@@ -54,6 +57,7 @@
           "tvl": 421.2106730027646
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": []
     },
     {
@@ -68,6 +72,7 @@
           "tvl": 118.90013143661652
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -82,6 +87,7 @@
           "tvl": 118.90013143661652
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -96,6 +102,7 @@
           "tvl": 108.7381290834182
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -110,6 +117,7 @@
           "tvl": 108.7381290834182
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -124,6 +132,7 @@
           "tvl": 60.00744216377353
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -138,6 +147,7 @@
           "tvl": 60.00744216377353
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -152,6 +162,7 @@
           "tvl": 2.28413144
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -166,6 +177,7 @@
           "tvl": 2.28413144
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -180,6 +192,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": ["multiplug"]
     },
     {
@@ -194,6 +207,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": ["multiplug"]
     },
     {
@@ -208,6 +222,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -222,6 +237,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug"]
     },
     {
@@ -236,6 +252,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug", "multiproject"]
     },
     {
@@ -250,6 +267,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": []
     }
   ],
@@ -266,6 +284,7 @@
           "tvl": 100
         }
       ],
+      "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "tags": []
     },
     {
@@ -280,6 +299,7 @@
           "tvl": 32.796084113170664
         }
       ],
+      "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "tags": []
     }
   ],
@@ -296,6 +316,7 @@
           "tvl": 3723672.9216251336
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -310,6 +331,7 @@
           "tvl": 3034043.22616589
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -324,6 +346,7 @@
           "tvl": 23952.950190000003
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -338,6 +361,7 @@
           "tvl": 2161.635076672477
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -352,6 +376,7 @@
           "tvl": 1646.6935376251336
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -366,6 +391,7 @@
           "tvl": 1.1
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -380,6 +406,7 @@
           "tvl": 0.1
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -394,6 +421,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "tags": []
     },
     {
@@ -408,6 +436,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -422,6 +451,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -436,6 +466,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -450,6 +481,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -464,6 +496,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     },
     {
@@ -478,6 +511,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "tags": []
     }
   ],
@@ -494,6 +528,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "tags": ["multiplug", "multiproject"]
     }
   ],
@@ -510,6 +545,7 @@
           "tvl": 37492908.521118
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     },
     {
@@ -524,6 +560,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     },
     {
@@ -538,6 +575,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     },
     {
@@ -550,6 +588,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     },
     {
@@ -564,6 +603,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     },
     {
@@ -578,6 +618,7 @@
           "tvl": 0
         }
       ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "tags": []
     }
   ],
@@ -586,19 +627,22 @@
       "address": "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D",
       "hubOrBridge": null,
       "siblingChainSlug": "unknown",
-      "tokens": []
+      "tokens": [],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
     },
     {
       "address": "0x280D208f0eE2f053A0441099bcBFf298bc8b9444",
       "hubOrBridge": null,
       "siblingChainSlug": "unknown",
-      "tokens": []
+      "tokens": [],
+      "owner": "0x4cAC359ab2A020CF212D82C1b66fC8abF81b1Dd0"
     },
     {
       "address": "0x37091ade7C4E1A914D3155449e25eE91DA08EbE4",
       "hubOrBridge": null,
       "siblingChainSlug": "unknown",
-      "tokens": []
+      "tokens": [],
+      "owner": "0x4cAC359ab2A020CF212D82C1b66fC8abF81b1Dd0"
     }
   ]
 }
