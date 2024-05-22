@@ -1,250 +1,401 @@
-import { exec } from 'child_process'
-import { assert, getEnv } from '@l2beat/backend-tools'
-import { RateLimitedProvider } from '@l2beat/discovery'
-import { RawDiscoveryConfig } from '@l2beat/discovery/dist/discovery/config/RawDiscoveryConfig'
-import { EthereumAddress, notUndefined } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
-import { readFile, writeFile } from 'fs/promises'
-import { parse as parseJSONC } from 'jsonc-parser'
-import { setTimeout } from 'timers/promises'
+import * as fs from 'fs'
+import axios from 'axios'
+import * as dotenv from 'dotenv'
+import { ethers } from 'ethers'
+import pLimit from 'p-limit'
 
-import { tokenList } from '../../src'
-import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
-import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
+dotenv.config()
 
-const hubAbi = ['function hub__() view returns (address)']
-const hubInt = new utils.Interface(hubAbi)
+const ETHERSCAN_API_KEY = process.env.ETHEREUM_ETHERSCAN_API_KEY!
+const RPC_URL = process.env.ETHEREUM_RPC_URL!
 
-const bridgeAbi = ['function bridge__() view returns (address)']
-const bridgeInt = new utils.Interface(bridgeAbi)
+const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
+const limit = pLimit(2) // Limit concurrency to 2 requests at a time
 
-const tokenAbi = [
-  'function token__() view returns (address)',
-  'function token() view returns (address)',
+const plugs = [
+  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
+  '0x200AF8FCdD5246D70B369A98143Ac8930A077B7A',
+  '0x22d8360eB04F46195c7B02A66658C375948d8A99',
+  '0xA621Bc5A9d13D39eb098865B723CEee71BB5C181',
+  '0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa',
+  '0xCf814e58f1649F94d37E51f730D6bF72409fA09c',
+  '0xf71A92D4bEFc2e18671c3b20377d45729790e880',
+  '0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166',
+  '0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B',
+  '0x02D53793b18d032Cd94d745F7586C6F66F83f8e3',
+  '0x3553c0102684c20e2f8192d6F013c7242710b4b3',
+  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444',
+  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4',
+  '0x68411d61adF1341A6392C87A93941FdD3EE7DF8E',
+  '0x8F4e67C61232167584333e23D7d67BD73d80a4F5',
+  '0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660',
+  '0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5',
+  '0xdCcFb24f983586144c085426dbfa3414045E19a3',
+  '0x6A769e25081396a49a6702758d0830920ac1163A',
+  '0x2Dba37E679358125BaB2132dDF5133d7d66F7D06',
+  '0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF',
+  '0x998d7C2257591cC38383B4F91474c5346111f2E6',
+  '0x223033E1F905eEd161a7B2EBeb786a158156fb8D',
+  '0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D',
+  '0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3',
+  '0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508',
+  '0x3f66F272d33B764960779a301c4183306ae50e10',
+  '0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D',
+  '0xb1178803A726e2077947754de9f2f0cbdA29A60F',
+  '0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27',
+  '0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1',
+  '0x83C6d6597891Ad48cF5e0BA901De55120C37C6bE',
+  '0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252',
+  '0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff',
+  '0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96',
+  '0x73E0d4953c356a5Ca3A3D172739128776B2920b5',
+  '0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff',
+  '0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8',
+  '0xF5992B6A0dEa32dCF6BE7bfAf762A4D94f139Ea7',
+  '0xE274dB6b891159547FbDC18b07412EE7F4B8d767',
+  '0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67',
+  '0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0',
+  '0xdE9D8c2d465669c661672d7945D4d4f5407d22E2',
+  '0x32295769ea702BA9337EE5B65c6b42aFF75FEC62',
 ]
-const tokenInt = new utils.Interface(tokenAbi)
 
-const EXCLUDED_PLUGS = [
-  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D', // TODO: check what is this (Counter)
-  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444', // TODO: check what is this (Counter)
-  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4', // TODO: check what is this (SocketPlug)
-]
+const chainSlugToName = {
+  1: 'Ethereum',
+  5: 'Goerli',
+  10: 'Optimism',
+  56: 'BNB Chain',
+  89: 'Viction testnet',
+  137: 'Polygon',
+  420: 'Optimism Goerli',
+  647: 'Stavanger testnet',
+  901: 'Lyra testnet',
+  919: 'Mode testnet',
+  957: 'Lyra',
+  1024: 'Parallel',
+  1729: 'Reya Cronos Testnet',
+  2999: 'Aevo',
+  4665: 'Hook',
+  5000: 'Mantle',
+  7887: 'Kinto',
+  8453: 'Base',
+  34443: 'Mode',
+  42161: 'Arbitrum',
+  80001: 'Polygon Mumbai testnet',
+  421613: 'Arbitrum Goerli',
+  421614: 'Arbitrum Sepolia',
+  11155111: 'Sepolia',
+  11155112: 'Aevo testnet',
+  11155420: 'Optimism Sepolia',
+  46658378: 'Hook testnet',
+  686669576: 'SX Network Testnet',
+  28122024: 'Ancient8 testnet2',
+  1324967486: 'Reya',
+  1399904803: 'XAI Testnet',
+}
 
-const SOCKET_DISCOVERY_CONFIG_PATH =
-  '../backend/discovery/socket/ethereum/config.jsonc'
+interface TokenInfo {
+  token: string
+  tokenName?: string
+  tokenSymbol?: string
+  tvl: number
+}
 
-/**
- * This script finds all vaults that are connected to the socket bridge via plugs.
- * The vaults are used as escrows for the socket bridge.
- * It is separated from discovery as every additional plug requires modifying the
- * discovery config. The output should be studied carefully to make sure that we add
- * all the relevant escrows.
- *
- * Note that this script only works with standard plugs. If a plug is not standard,
- * the script will fail, so a non-standard plug needs to be excluded.
- *
- * The output of this script is saved in src/projects/bridges/socket-vaults.json.
- */
-async function main() {
+interface Result {
+  address: string
+  hub: string | null
+  bridge: string | null
+  siblingChainSlug: number | string | null
+  tokens: TokenInfo[]
+  tags?: string[]
+}
+
+async function getContractValue(
+  contract: ethers.Contract,
+  functionName: string,
+  ...args: any[]
+): Promise<any> {
   try {
-    const env = getEnv()
-
-    const discovery = new ProjectDiscovery('socket')
-    const plugs = discovery.getContractValue<string[]>('Socket', 'plugs')
-    const plugsFiltered = plugs.filter((x) => !EXCLUDED_PLUGS.includes(x))
-
-    const alchemyProvider = new providers.AlchemyProvider(
-      'homestead',
-      env.string('ALCHEMY_API_KEY'),
+    console.log(`Fetching ${functionName} from ${contract.address}`)
+    return await contract[functionName](...args)
+  } catch (error: any) {
+    console.error(
+      `Failed to fetch ${functionName} from ${contract.address}: ${error.message}`,
     )
-    const provider = new RateLimitedProvider(alchemyProvider, 150)
-    const blockNumber = await provider.getBlockNumber()
+    return null
+  }
+}
 
-    console.log('block number: ', blockNumber)
-    console.log('getting vaults from plugs list...')
-    const vaultsRaw = await Promise.all(
-      plugsFiltered.map((plugAddress) =>
-        getVaultAddress(plugAddress, provider, blockNumber),
-      ),
-    )
-
-    const vaults = vaultsRaw
-      .filter(notUndefined)
-      .filter((x, i, a) => a.indexOf(x) === i)
-
+// This is a hack because the etherscan tokeninfo api endpoint is pro-only
+async function getTokenInfoFromEtherscan(
+  contractAddress: string,
+): Promise<{ tokenName: string; tokenSymbol: string } | null> {
+  try {
     console.log(
-      `fetching vaults data (this will take around ${
-        vaults.length * 2
-      } seconds)...`,
+      `Fetching token transactions for ${contractAddress} from Etherscan`,
     )
-    const vaultsData = []
-    for (const vault of vaults) {
-      // avoid rate limiting
-      await setTimeout(1000)
-      const { tvl, ethValue } = await scrapEtherscanForTvl(vault)
-      const tokenAddress = await getTokenAddress(vault, provider, blockNumber)
-      const token = tokenList.find(
-        (t) => t.address?.toString() === tokenAddress,
-      )
-      vaultsData.push({
-        address: vault,
-        tvl,
-        ethValue,
-        token: token?.symbol || tokenAddress, // Use token address if token is not found
-      })
-    }
+    const response = await axios.get('https://api.etherscan.io/api', {
+      params: {
+        module: 'account',
+        action: 'tokentx',
+        contractaddress: contractAddress,
+        page: 1,
+        offset: 5,
+        apikey: ETHERSCAN_API_KEY,
+      },
+    })
 
-    const significantVaults = vaultsData.filter(
-      (v) => v.tvl !== '0' || v.ethValue !== '0.00',
-    )
-
-    const comment =
-      'This file was autogenerated. Do not modify it by hand, instead use: yarn update-socket'
-
-    await writeFile(
-      'src/projects/bridges/socket-vaults.json',
-      JSON.stringify(
-        { comment, significantVaults, vaults, vaultsData, plugs },
-        null,
-        2,
-      ),
-    )
-
-    if (significantVaults.length === 0) {
-      console.log('no significant vaults found')
-      return
-    }
-    console.log('reading discovery config...')
-    const discoveryConfig = await readSocketDiscoveryConfig()
-
-    if (
-      significantVaults.every((v) =>
-        discoveryConfig.initialAddresses.find(
-          (x) => x.toString() === v.address,
-        ),
-      )
-    ) {
-      console.log('all significant vaults already discovered')
-      return
-    }
-
-    discoveryConfig.names = discoveryConfig.names || {}
-    discoveryConfig.overrides = discoveryConfig.overrides || {}
-
-    for (const vault of significantVaults) {
-      const vaultAddress = EthereumAddress(vault.address)
-      if (!discoveryConfig.initialAddresses.includes(vaultAddress)) {
-        discoveryConfig.initialAddresses.push(vaultAddress)
-        assert(
-          vault.token,
-          `Vault ${vault.address} does not have a token associated`,
-        )
-        const vaultName = `${vault.token} Vault`
-        discoveryConfig.names[vaultAddress.toString()] = vaultName
-        discoveryConfig.overrides[vaultName] = { ignoreMethods: ['token__'] }
-      }
-    }
-    console.log('writing new discovery config...')
-    await writeFile(
-      SOCKET_DISCOVERY_CONFIG_PATH,
-      JSON.stringify(discoveryConfig, null, 2),
-    )
-
-    console.log('formatting...')
-    exec('cd ../backend && yarn format:fix')
-
-    console.log('running discovery...')
-    exec('cd ../backend && yarn discover ethereum socket')
-  } catch (e) {
-    console.error(e)
-    process.exit(1)
-  }
-}
-
-main()
-
-async function readSocketDiscoveryConfig() {
-  const file = await readFile(SOCKET_DISCOVERY_CONFIG_PATH, 'utf-8')
-  const parsed = parseJSONC(file) as unknown
-  return RawDiscoveryConfig.parse(parsed)
-}
-
-// Some newer plugs do not have 'hub__' but 'bridge__' and their vaults do not have 'token__' but 'token'.
-async function getTokenAddress(
-  vaultAddress: string,
-  provider: RateLimitedProvider,
-  blockNumber: number,
-) {
-  let tokenAddressBytes: string
-  try {
-    const tx = {
-      to: vaultAddress,
-      data: tokenInt.encodeFunctionData('token__', []),
-    }
-    tokenAddressBytes = await provider.call(tx, blockNumber)
-  } catch (e) {
-    if (
-      e instanceof Error &&
-      e.message.includes('Transaction reverted without a reason string')
-    ) {
-      console.error(
-        `Vault ${vaultAddress} does not have token__(). Trying token()...`,
-      )
-      const tx = {
-        to: vaultAddress,
-        data: tokenInt.encodeFunctionData('token', []),
-      }
-      try {
-        tokenAddressBytes = await provider.call(tx, blockNumber)
-      } catch (e) {
-        console.error(
-          `Vault ${vaultAddress} does not have any token set. It probably needs to be excluded and checked manually. (${e})`,
-        )
-        process.exit(1)
-      }
+    if (response.data.status === '1' && response.data.result.length > 0) {
+      const { tokenName, tokenSymbol } = response.data.result[0]
+      return { tokenName, tokenSymbol }
     } else {
-      throw e
+      console.error(`No token transactions found for ${contractAddress}`)
+      return null
     }
+  } catch (error: any) {
+    console.error(
+      `Failed to fetch token transactions for ${contractAddress} from Etherscan: ${error.message}`,
+    )
+    return null
   }
-  return getAddressFromBytes(tokenAddressBytes)
 }
 
-async function getVaultAddress(
-  plugAddress: string,
-  provider: RateLimitedProvider,
-  blockNumber: number,
-): Promise<string> {
-  let addressBytes: string
+async function getTokenTVL(token: string, account: string): Promise<number> {
   try {
-    const tx = { to: plugAddress, data: hubInt.encodeFunctionData('hub__', []) }
-    addressBytes = await provider.call(tx, blockNumber)
-  } catch (e) {
-    if (
-      e instanceof Error &&
-      e.message.includes('Transaction reverted without a reason string')
-    ) {
-      console.error(
-        `Plug ${plugAddress} does not have hub__(). Trying bridge__()...`,
-      )
-      const tx = {
-        to: plugAddress,
-        data: bridgeInt.encodeFunctionData('bridge__', []),
-      }
-      try {
-        addressBytes = await provider.call(tx, blockNumber)
-      } catch (e) {
-        console.error(
-          `Plug ${plugAddress} does not have hub__() nor bridge__() functions. It probably needs to be excluded and checked manually. (${e})`,
-        )
-        process.exit(1)
-      }
-    } else {
-      throw e
-    }
+    const tokenAbi = [
+      'function balanceOf(address account) view returns (uint256)',
+      'function decimals() view returns (uint8)',
+    ]
+    const tokenContract = new ethers.Contract(token, tokenAbi, provider)
+    const balance = await getContractValue(tokenContract, 'balanceOf', account)
+    const decimals = await getContractValue(tokenContract, 'decimals')
+    return balance ? balance / Math.pow(10, decimals) : 0
+  } catch (error: any) {
+    console.error(`Failed to fetch TVL for token ${token}: ${error.message}`)
+    return 0
   }
-  return getAddressFromBytes(addressBytes)
 }
 
-function getAddressFromBytes(bytes: string) {
-  return utils.getAddress('0x' + bytes.slice(26))
+async function exploreContract(address: string): Promise<Result> {
+  console.log(`Exploring contract at ${address}`)
+  const abi = [
+    'function hub__() view returns (address)',
+    'function bridge__() view returns (address)',
+    'function siblingChainSlug() view returns (uint32)',
+    'function token__() view returns (address)',
+    'function token() view returns (address)',
+  ]
+
+  const contract = new ethers.Contract(address, abi, provider)
+
+  const [hub, bridge, siblingChainSlug] = await Promise.all([
+    getContractValue(contract, 'hub__'),
+    getContractValue(contract, 'bridge__'),
+    getContractValue(contract, 'siblingChainSlug'),
+  ])
+
+  const result: Result = {
+    address,
+    hub: hub || null,
+    bridge: bridge || null,
+    siblingChainSlug: siblingChainSlug || 'unknown',
+    tokens: [],
+  }
+
+  if (hub) {
+    const hubContract = new ethers.Contract(hub, abi, provider)
+    const token =
+      (await getContractValue(hubContract, 'token__')) ||
+      (await getContractValue(hubContract, 'token'))
+    if (token) {
+      const tokenInfo = await getTokenInfoFromEtherscan(token)
+      const tvl = await getTokenTVL(token, hub)
+      if (tokenInfo) {
+        result.tokens.push({ token, ...tokenInfo, tvl })
+      } else {
+        result.tokens.push({ token, tvl })
+      }
+    }
+  }
+
+  if (bridge) {
+    const bridgeContract = new ethers.Contract(bridge, abi, provider)
+    const token =
+      (await getContractValue(bridgeContract, 'token__')) ||
+      (await getContractValue(bridgeContract, 'token'))
+    if (token) {
+      const tokenInfo = await getTokenInfoFromEtherscan(token)
+      const tvl = await getTokenTVL(token, bridge)
+      if (tokenInfo) {
+        result.tokens.push({ token, ...tokenInfo, tvl })
+      } else {
+        result.tokens.push({ token, tvl })
+      }
+    }
+  }
+
+  return result
 }
+
+async function main(): Promise<void> {
+  console.log('Starting contract exploration')
+  const results = await Promise.all(
+    plugs.map((address) => limit(() => exploreContract(address))),
+  )
+  console.log('Exploration completed')
+
+  // Group by siblingChainSlug and sort by TVL
+  const groupedResults = results.reduce<{ [key: string]: Result[] }>(
+    (acc, result) => {
+      if (!result.siblingChainSlug) {
+        result.siblingChainSlug = 'unknown'
+      }
+      if (!acc[result.siblingChainSlug]) {
+        acc[result.siblingChainSlug] = []
+      }
+      acc[result.siblingChainSlug].push(result)
+      return acc
+    },
+    {},
+  )
+
+  for (const key in groupedResults) {
+    groupedResults[key] = groupedResults[key].sort((a, b) => {
+      const aTVL = a.tokens.reduce((sum, token) => sum + (token.tvl || 0), 0)
+      const bTVL = b.tokens.reduce((sum, token) => sum + (token.tvl || 0), 0)
+      return bTVL - aTVL
+    })
+  }
+
+  // Detect multiplug and multiproject vaults
+  const addressMap = new Map<string, { count: number; slugs: Set<string> }>()
+
+  results.forEach((result) => {
+    const hubBridge = result.hub || result.bridge
+    if (hubBridge) {
+      if (!addressMap.has(hubBridge)) {
+        addressMap.set(hubBridge, { count: 0, slugs: new Set<string>() })
+      }
+      const entry = addressMap.get(hubBridge)!
+      entry.count++
+      entry.slugs.add(result.siblingChainSlug as string)
+    }
+  })
+
+  results.forEach((result) => {
+    const hubBridge = result.hub || result.bridge
+    if (hubBridge) {
+      const entry = addressMap.get(hubBridge)!
+      result.tags = result.tags || []
+      if (entry.count > 1) {
+        result.tags.push('multiplug')
+      }
+      if (entry.slugs.size > 1) {
+        result.tags.push('multiproject')
+      }
+    }
+  })
+
+  console.log('Writing results to socket-crawl.json')
+  fs.writeFileSync('socket-crawl.json', JSON.stringify(groupedResults, null, 2))
+  console.log('Results written to socket-crawl.json')
+
+  // Generate socket-crawl-copypasta.txt
+  const copypasta: string[] = []
+
+  const initialAddressesByProject: { [key: string]: string[] } = {}
+  const namesByProject: { [key: string]: { [address: string]: string } } = {}
+  const ignoreMethodsByProject: {
+    [key: string]: { [name: string]: { ignoreMethods: string[] } }
+  } = {}
+  const escrowsByProject: { [key: string]: string[] } = {}
+
+  for (const [slug, results] of Object.entries(groupedResults)) {
+    const slugName = chainSlugToName[slug] || slug
+    initialAddressesByProject[slugName] = []
+    namesByProject[slugName] = {}
+    ignoreMethodsByProject[slugName] = {}
+    escrowsByProject[slugName] = []
+
+    results.forEach((result) => {
+      const hubBridge = result.hub || result.bridge
+      if (hubBridge && result.tokens.length > 0) {
+        result.tokens.forEach((token) => {
+          if (token.tvl > 0) {
+            initialAddressesByProject[slugName].push(hubBridge)
+            const name = `${token.tokenSymbol} Vault ${slugName}`
+            namesByProject[slugName][hubBridge] = name
+            ignoreMethodsByProject[slugName][name] = {
+              ignoreMethods: ['token', 'hook__'],
+            }
+            escrowsByProject[slugName].push(
+              `discovery.getEscrowDetails({
+        address: EthereumAddress('${hubBridge}'),
+        name: '${name}',
+        description: 'Socket Vault associated with ${slugName}.',
+        tokens: ['${token.tokenSymbol}'],
+      }),`,
+            )
+          }
+        })
+      }
+    })
+  }
+
+  const projectKeys = Object.keys(initialAddressesByProject)
+
+  // Combine all project initial addresses with comments
+  const initialAddressesSection = projectKeys
+    .map((project) => {
+      const addresses = initialAddressesByProject[project]
+        .map((addr) => `    "${addr}"`)
+        .join(',\n')
+      return `// ${project}\n${addresses}`
+    })
+    .join(',\n')
+
+  copypasta.push(`"initialAddresses": [\n${initialAddressesSection}\n],`)
+
+  // Combine all project names
+  const namesSection = projectKeys
+    .map((project) => {
+      const names = Object.entries(namesByProject[project])
+        .map(([addr, name]) => `    "${addr}": "${name}"`)
+        .join(',\n')
+      return names
+    })
+    .join(',\n')
+
+  copypasta.push(`"names": {\n${namesSection}\n},`)
+
+  // Combine all project ignoreMethods
+  const ignoreMethodsSection = projectKeys
+    .map((project) => {
+      const ignoreMethods = Object.entries(ignoreMethodsByProject[project])
+        .map(([name, methods]) => `    "${name}": ${JSON.stringify(methods)}`)
+        .join(',\n')
+      return ignoreMethods
+    })
+    .join(',\n')
+
+  copypasta.push(`"ignoreMethods": {\n${ignoreMethodsSection}\n},`)
+
+  // Combine all project escrows
+  const escrowsSection = projectKeys
+    .map((project) => {
+      const escrows = escrowsByProject[project].join('\n')
+      return escrows
+    })
+    .join('\n')
+
+  copypasta.push(`escrows: [\n${escrowsSection}\n],`)
+
+  fs.writeFileSync('socket-crawl-copypasta.txt', copypasta.join('\n\n'))
+  console.log('Results written to socket-crawl-copypasta.txt')
+
+  // Explicitly close the provider connection
+  provider.removeAllListeners()
+  console.log('Exiting script')
+  process.exit(0)
+}
+
+main().catch(console.error)
