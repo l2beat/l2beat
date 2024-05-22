@@ -8,7 +8,10 @@ Generated with discovered.json: 0x158f5a40f66ed6279c673ec1f123ee8373e2d4bc
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+EigenPod implementation change:
+      - Changed verification that the withdrawal credentials of validator(s) owned by the podOwner are pointed to the eigenPod contract.
+            - Removed check that the provided timestamp of stateRoot being proven is after the `mostRecentWithdrawalTimestamp` (the latest timestamp at which the pod owner withdrew the balance of the pod).
+            - After the M2 upgrade, `mostRecentWithdrawalTimestamp` will be 0 for any pods deployed. If this is non-zero, now the SC checks that the proof timestamp is from the epoch AFTER `activateRestaking` was called.
 
 ## Watched changes
 
