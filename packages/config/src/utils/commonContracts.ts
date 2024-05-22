@@ -1,7 +1,12 @@
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, Hash256, ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  Hash256,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
   Project,
@@ -34,7 +39,9 @@ function findCommonContractsMemoized(
 ) {
   const hash = hashJson(hostChain + JSON.stringify(projects.map((p) => p.id)))
   if (memo.has(hash)) {
-    return memo.get(hash)
+    const result = memo.get(hash)
+    assert(result !== undefined)
+    return result
   }
   const result = findCommonContracts(projects, hostChain)
   memo.set(hash, result)
