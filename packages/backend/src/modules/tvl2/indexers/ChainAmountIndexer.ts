@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { assert } from '@l2beat/backend-tools'
 import { Knex } from 'knex'
-import { KnexTx } from '../../../tools/uif/KnexMiddleware'
+import { KnexTrx } from '../../../tools/uif/KnexMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -37,7 +37,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
-    tx: KnexTx,
+    tx: KnexTrx,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 

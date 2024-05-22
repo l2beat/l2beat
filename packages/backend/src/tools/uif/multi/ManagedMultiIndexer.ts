@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
-import { KnexTx } from '../KnexMiddleware'
+import { KnexTrx } from '../KnexMiddleware'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
 import { Configuration, SavedConfiguration } from './types'
@@ -70,7 +70,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   override async updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
-    trx: KnexTx,
+    trx: KnexTrx,
   ): Promise<void> {
     await this.options.indexerService.updateSavedConfigurations(
       this.indexerId,

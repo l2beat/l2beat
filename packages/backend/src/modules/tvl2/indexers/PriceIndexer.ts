@@ -4,7 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-import { KnexTx } from '../../../tools/uif/KnexMiddleware'
+import { KnexTrx } from '../../../tools/uif/KnexMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -37,7 +37,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
-    tx: KnexTx,
+    tx: KnexTrx,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
