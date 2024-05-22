@@ -62,9 +62,9 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AmountRecord[], tx?: Knex.Transaction) {
+  async addMany(records: AmountRecord[], trx?: Knex.Transaction) {
     const rows: AmountRow[] = records.map(toRow)
-    const knex = await this.knex(tx)
+    const knex = await this.knex(trx)
     await knex.batchInsert('amounts', rows, 1_000)
     return rows.length
   }

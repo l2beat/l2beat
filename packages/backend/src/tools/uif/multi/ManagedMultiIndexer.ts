@@ -1,10 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
-import { KnexTrx } from '../KnexMiddleware'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration, SavedConfiguration } from './types'
+import { Configuration, DbTransaction, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -16,13 +15,20 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   decode: (blob: string) => T
   logger: Logger
   updateRetryStrategy?: RetryStrategy
+  getDbTrx: () => Promise<DbTransaction | undefined>
 }
 
 export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   private readonly indexerId
 
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
-    super(options.logger, options.parents, options.configurations, options)
+    super(
+      options.logger,
+      options.parents,
+      options.getDbTrx,
+      options.configurations,
+      options,
+    )
 
     this.indexerId = options.name
     if (options.tag) {
@@ -70,7 +76,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   override async updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
-    trx: KnexTrx,
+    trx?: DbTransaction,
   ): Promise<void> {
     await this.options.indexerService.updateSavedConfigurations(
       this.indexerId,

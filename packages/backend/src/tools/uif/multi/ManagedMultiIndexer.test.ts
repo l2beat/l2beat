@@ -13,6 +13,7 @@ import {
 import { MultiIndexer } from './MultiIndexer'
 import {
   Configuration,
+  DbTransaction,
   RemovalConfiguration,
   SavedConfiguration,
   UpdateConfiguration,
@@ -32,6 +33,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -46,6 +48,7 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       }
       new TestIndexer({
         ...common,
@@ -145,6 +148,7 @@ describe(ManagedMultiIndexer.name, () => {
       'indexer',
       ['a', 'b', 'c'],
       1,
+      undefined,
     )
   })
 
@@ -184,28 +188,48 @@ describe(ManagedMultiIndexer.name, () => {
         current = await indexer.update(current + 1, target)
       }
 
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 199, [
-        update('a', 100, 300, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(2, 200, 300, [
-        update('a', 100, 300, false),
-        update('b', 200, 500, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(3, 301, 399, [
-        update('b', 200, 500, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(4, 400, 500, [
-        update('b', 200, 500, false),
-        update('c', 400, null, false),
-        update('d', 100, null, true),
-      ])
-      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(551, 600, [
-        update('c', 400, null, false),
-        update('d', 100, null, false),
-      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        1,
+        100,
+        199,
+        [update('a', 100, 300, false), update('d', 100, null, true)],
+        undefined,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        2,
+        200,
+        300,
+        [
+          update('a', 100, 300, false),
+          update('b', 200, 500, false),
+          update('d', 100, null, true),
+        ],
+        undefined,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        3,
+        301,
+        399,
+        [update('b', 200, 500, false), update('d', 100, null, true)],
+        undefined,
+      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
+        4,
+        400,
+        500,
+        [
+          update('b', 200, 500, false),
+          update('c', 400, null, false),
+          update('d', 100, null, true),
+        ],
+        undefined,
+      )
+      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
+        551,
+        600,
+        [update('c', 400, null, false), update('d', 100, null, false)],
+        undefined,
+      )
 
       const configurations = await getSavedConfigurations(indexerService)
 
@@ -289,6 +313,7 @@ async function initializeMockIndexer(
     logger: Logger.SILENT,
     encode: (v) => v,
     decode: (v) => v,
+    getDbTrx: async () => undefined,
   })
   return indexer
 }

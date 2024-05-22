@@ -17,6 +17,7 @@ import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
+import { KnexTrx } from '../../../tools/uif/KnexMiddleware'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import {
@@ -165,6 +166,7 @@ function createChainModule(
     encode,
     decode,
     syncOptimizer,
+    getDbTrx: async () => new KnexTrx(await peripherals.database.getKnex()),
   })
 
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')

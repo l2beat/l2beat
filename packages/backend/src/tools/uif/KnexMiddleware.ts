@@ -2,10 +2,10 @@ import { Knex } from 'knex'
 import { DbTransaction } from './multi/types'
 
 export class KnexTrx implements DbTransaction {
-  private readonly queue: ((tx: Knex.Transaction) => Promise<void>)[] = []
+  private readonly queue: ((tx?: Knex.Transaction) => Promise<void>)[] = []
   constructor(private readonly knex: Knex) {}
 
-  push(cb: (tx: Knex.Transaction) => Promise<void>) {
+  push(cb: (tx?: Knex.Transaction) => Promise<void>) {
     this.queue.push(cb)
   }
 
@@ -19,6 +19,12 @@ export class KnexTrx implements DbTransaction {
     } catch (e) {
       await tx.rollback()
       throw e
+    }
+  }
+
+  async _TEST_ONLY_execute() {
+    for (const cb of this.queue) {
+      await cb()
     }
   }
 }

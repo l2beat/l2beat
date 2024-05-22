@@ -162,7 +162,7 @@ describe(IndexerService.name, () => {
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123, undefined)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {

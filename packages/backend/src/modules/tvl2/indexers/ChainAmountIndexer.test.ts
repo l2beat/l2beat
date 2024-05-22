@@ -2,8 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
+import { KnexTrx } from '../../../tools/uif/KnexMiddleware'
+import { _TEST_ONLY_multiUpdate } from '../../../tools/uif/KnexMiddleware.test'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
+  DbTransaction,
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
@@ -57,6 +60,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       })
 
       const toUpdate = [
@@ -65,7 +69,9 @@ describe(ChainAmountIndexer.name, () => {
         update('c', 100, null, true), // configuration with data should not be fetched
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
+        indexer.multiUpdate(from, to, toUpdate, trx),
+      )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -75,9 +81,10 @@ describe(ChainAmountIndexer.name, () => {
         toUpdate.slice(0, 2),
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
-        amount('a', 200, 123),
-      ])
+      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
+        [amount('a', 200, 123)],
+        undefined,
+      )
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
@@ -98,6 +105,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       })
 
       const toUpdate = [
@@ -105,7 +113,9 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
+        indexer.multiUpdate(from, to, toUpdate, trx),
+      )
 
       expect(safeHeight).toEqual(to)
     })
@@ -131,11 +141,14 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       })
 
       const toUpdate = [update('a', 100, null, false)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
+        indexer.multiUpdate(from, to, toUpdate, trx),
+      )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
       expect(safeHeight).toEqual(to)
@@ -157,6 +170,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       })
 
       const toUpdate = [
@@ -164,7 +178,9 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await _TEST_ONLY_multiUpdate((trx: KnexTrx) =>
+        indexer.multiUpdate(from, to, toUpdate, trx),
+      )
 
       expect(safeHeight).toEqual(to)
     })
@@ -188,6 +204,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        getDbTrx: async () => mockObject<DbTransaction>({}),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

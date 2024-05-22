@@ -79,7 +79,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    tx.push(async (trx: Knex.Transaction) => {
+    tx.push(async (trx?: Knex.Transaction) => {
       await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 

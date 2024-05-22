@@ -37,7 +37,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
-    tx: KnexTrx,
+    trx: KnexTrx,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
@@ -85,8 +85,8 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    tx.push(async (tx: Knex.Transaction) => {
-      await this.$.amountRepository.addMany(nonZeroAmounts, tx)
+    trx.push(async (trx?: Knex.Transaction) => {
+      await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
     this.logger.info('Saving amounts for timestamp into DB', {
