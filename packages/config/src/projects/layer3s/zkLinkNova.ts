@@ -14,10 +14,10 @@ export const zklinknova: Layer3 = underReviewL3({
     category: 'Validium',
     provider: 'zkLink Nexus',
     links: {
-      websites: ['https://zklink.io', 'https://zk.link'],
-      apps: ['https://app.zklink.io', 'https://portal.zklink.io'],
-      documentation: ['https://docs.zklink.io'],
-      explorers: ['https://explorer.zklink.io'],
+      websites: ['https://zk.link'],
+      apps: ['https://playground-nexus.zk.link'],
+      documentation: ['https://docs.zk.link'],
+      explorers: ['https://scan-nexus.zk.link'],
       repositories: ['https://github.com/zkLinkProtocol'],
       socialMedia: [
         'https://blog.zk.link',
@@ -27,4 +27,16 @@ export const zklinknova: Layer3 = underReviewL3({
       ],
     },
   },
+  escrows: [
+    {
+      chain: 'arbitrum',
+      includeInTotal: false,
+      ...discovery.getEscrowDetails({
+        address: EthereumAddress('0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b'),
+        tokens: '*',
+        description:
+          'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+      }),
+    },
+  ],
 })
