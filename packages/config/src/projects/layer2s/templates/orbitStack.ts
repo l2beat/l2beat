@@ -1,5 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { ProjectId, assert, formatSeconds } from '@l2beat/shared-pure'
+import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
 import {
