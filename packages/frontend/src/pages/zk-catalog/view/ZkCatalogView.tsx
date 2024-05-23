@@ -6,7 +6,12 @@ import {
   AccordionTrigger,
 } from '../../../components/Accordion'
 import { Link } from '../../../components/Link'
-import { ChevronDownIcon } from '../../../components/icons'
+import { ChevronDownIcon, InfoIcon } from '../../../components/icons'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../components/tooltip/Tooltip'
 import { cn } from '../../../utils/cn'
 import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
@@ -61,12 +66,14 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             </DetailsItem>
             <DetailsItem
               title="Aggregation"
+              tooltip="Shows if recursive proof aggregation is used."
               className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
             >
               {item.aggregation ? 'Yes' : 'No'}
             </DetailsItem>
             <DetailsItem
               title="Trusted setup"
+              tooltip="Shows if a trusted setup is used anywhere in the proving stack."
               className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
             >
               {item.hasTrustedSetup ? 'Yes' : 'No'}
@@ -95,14 +102,26 @@ function DetailsItem({
   title,
   children,
   className,
+  tooltip,
 }: {
   title: string
-  className?: string
   children: React.ReactNode
+  className?: string
+  tooltip?: string
 }) {
   return (
     <div className={cn('flex gap-0.5 flex-col', className)}>
-      <p className="text-gray-500 text-2xs uppercase font-semibold">{title}</p>
+      <div className="flex items-center gap-1.5 text-gray-500 text-2xs uppercase font-semibold">
+        {title}
+        {tooltip ? (
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="fill-current md:size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        ) : null}
+      </div>
       <div className="text-lg font-bold">{children}</div>
     </div>
   )
