@@ -11,6 +11,7 @@ import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
   items: ZkCatalogProjectDetails['verifiers']
+  askForVerificationLink: string
 }
 
 export function Verifiers(props: Props) {
@@ -53,7 +54,10 @@ export function Verifiers(props: Props) {
               />
             </td>
             <td className="pr-4">
-              <VerifiedCell verified={item.verified} />
+              <VerifiedCell
+                verified={item.verified}
+                askForVerificationLink={props.askForVerificationLink}
+              />
             </td>
             <td className="pr-4 hidden md:table-cell">
               <LastUsedCell days={item.lastUsedDaysAgo} />
@@ -96,7 +100,9 @@ export function Verifiers(props: Props) {
               <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
                 <div>
-                  <Link>Ask for verification</Link>
+                  <Link href={props.askForVerificationLink}>
+                    Ask for verification
+                  </Link>
                 </div>
               ) : null}
             </td>

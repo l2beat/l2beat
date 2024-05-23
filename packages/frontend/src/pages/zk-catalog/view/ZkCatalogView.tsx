@@ -18,6 +18,7 @@ import { ZkCatalogViewEntry } from '../types'
 
 export interface ZkCatalogViewProps {
   items: ZkCatalogViewEntry[]
+  askForVerificationLink: string
 }
 
 // TODO: Add storybook after research team provides the config files
@@ -80,6 +81,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
                 verifier={verifier}
+                askForVerificationLink={props.askForVerificationLink}
               />
             ))}
           </AccordionContent>
@@ -108,8 +110,10 @@ function DetailsItem({
 
 function VerifierCard({
   verifier,
+  askForVerificationLink,
 }: {
   verifier: ZkCatalogViewEntry['verifiers'][number]
+  askForVerificationLink: string
 }) {
   return (
     <div className="space-y-5 md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
@@ -122,7 +126,10 @@ function VerifierCard({
           />
         </DetailsItem>
         <DetailsItem title="Verification status">
-          <VerifiedCell verified={verifier.verified} />
+          <VerifiedCell
+            verified={verifier.verified}
+            askForVerificationLink={askForVerificationLink}
+          />
         </DetailsItem>
         <DetailsItem title="Last used" className="lg:pl-10">
           <LastUsedCell days={verifier.lastUsedDaysAgo} />

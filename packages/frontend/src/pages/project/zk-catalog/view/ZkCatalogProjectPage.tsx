@@ -19,6 +19,7 @@ import { Verifiers } from './Verifiers'
 export interface ZkCatalogProjectPageProps {
   navbar: NavbarProps
   details: ZkCatalogProjectDetails
+  askForVerificationLink: string
   footer: FooterProps
 }
 
@@ -41,7 +42,10 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
         </div>
         <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
           <Section title="List of verifiers">
-            <Verifiers items={props.details.verifiers} />
+            <Verifiers
+              items={props.details.verifiers}
+              askForVerificationLink={props.askForVerificationLink}
+            />
           </Section>
           <Section title="Description">
             <Markdown>{props.details.description}</Markdown>
