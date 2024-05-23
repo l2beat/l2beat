@@ -140,27 +140,25 @@ export class FinalityIndexer extends ChildIndexer {
     }
   }
 
-  override async initialize(): Promise<number> {
-    await this.initializeIndexerState()
-    return await this.getSafeHeight()
-  }
-
-  async initializeIndexerState() {
-    const safeHeight = this.configuration.minTimestamp.toNumber()
+  override async initialize() {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
 
-    if (indexerState === undefined) {
-      await this.stateRepository.addOrUpdate({
-        indexerId: this.indexerId,
-        safeHeight,
-        minTimestamp: this.configuration.minTimestamp,
-      })
-      return
-    }
+    const safeHeight =
+      indexerState?.safeHeight ?? this.configuration.minTimestamp.toNumber()
 
-    await this.setSafeHeight(safeHeight)
+    return { safeHeight }
+  }
+
+  override async setInitialState(
+    safeHeight: number,
+    _configHash?: string | undefined,
+  ): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      safeHeight,
+    })
   }
 
   async getSafeHeight(): Promise<number> {
