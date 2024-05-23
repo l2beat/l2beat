@@ -30,7 +30,8 @@
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
     "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
     "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector",
-    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector"
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector",
+    "0x279fDA9AdDB854541f0bb86733d924e28c24c625": "xLayerZkHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -109,14 +110,14 @@
           "handler": {
             "type": "array",
             "method": "connectors",
-            "maxLength": 14
+            "maxLength": 15
           }
         },
         "domains": {
           "handler": {
             "type": "array",
             "method": "domains",
-            "maxLength": 14
+            "maxLength": 15
           }
         },
         "connectorsHash": {
@@ -186,6 +187,10 @@
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "PolygonZkHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
+    "xLayerZkHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },

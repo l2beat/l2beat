@@ -10,8 +10,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
-import { TechnologyContract } from '../components/sections/common/ContractEntry'
+import {
+  TechnologyContract,
+  UsedInProject,
+} from '../components/sections/common/ContractEntry'
 import { ProjectDetailsPermissionsSection } from '../components/sections/types'
+import { getUsedInProjects } from './getUsedInProjects'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,
@@ -37,12 +41,15 @@ export function getPermissionsSection(
   return (
     project.permissions && {
       ...section,
-      permissions: project.permissions.map(toTechnologyContract),
+      permissions: project.permissions.map((p) =>
+        toTechnologyContract(project, p),
+      ),
     }
   )
 }
 
 function toTechnologyContract(
+  project: Layer2 | Layer3 | Bridge,
   permission: ScalingProjectPermission,
 ): TechnologyContract {
   const chain = permission.chain ?? 'ethereum'
@@ -62,10 +69,22 @@ function toTechnologyContract(
     addresses.push(permission.accounts[0].address.toString())
   }
 
+  let usedInProjects: UsedInProject[] | undefined
+  if (permission.accounts.length === 1) {
+    usedInProjects = getUsedInProjects(project, [], addresses)
+    if (usedInProjects !== undefined) {
+      usedInProjects = usedInProjects.map((p) => ({
+        ...p,
+        type: 'permission',
+      }))
+    }
+  }
+
   return {
     name: permission.name,
     addresses,
     etherscanUrl,
+    usedInProjects,
     chain,
     description: permission.description,
     links,

@@ -71,8 +71,6 @@ export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
-  /** Warning for TVL */
-  tvlWarning?: WarningWithSentiment
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }

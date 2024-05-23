@@ -1,9 +1,9 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 19531598,
-  "configHash": "0x7fcb591318c32b60f209f1878effae63b52cf61d069712dc11b05c13cd0a8c93",
-  "version": 3,
+  "blockNumber": 19927696,
+  "configHash": "0x13459d3d441c15286942077c1d443e8c8e890e3b2a9bb3dad48a509d9b138acb",
+  "version": 4,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -98,10 +98,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3049200,
-        "latestOutputIndex": 1693,
-        "nextBlockNumber": 3051000,
-        "nextOutputIndex": 1694,
+        "latestBlockNumber": 5443200,
+        "latestOutputIndex": 3023,
+        "nextBlockNumber": 5445000,
+        "nextOutputIndex": 3024,
         "PROPOSER": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
         "startingBlockNumber": 0,
         "startingTimestamp": 1705512383,
@@ -111,13 +111,13 @@
       "derivedName": "L2OutputOracle"
     },
     {
-      "name": "LyraMultisig",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -125,14 +125,16 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 3,
-        "nonce": 20,
+        "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -165,7 +167,7 @@
       "sinceTimestamp": 1705512431,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620171",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620187",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -193,7 +195,7 @@
         "GUARDIAN": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "L2_ORACLE": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19530443],
+        "params": [1000000000, 491822, 19726464],
         "paused": false,
         "SYSTEM_CONFIG": "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586",
         "version": "1.7.2"
@@ -265,7 +267,9 @@
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
     "0x1bBde518ad01BaABFE30020407A7630FB17B545d": [
