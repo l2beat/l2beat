@@ -10,7 +10,7 @@ The circuit is written in circom and the keys are generatd using the snarkjs lib
 
 The procedure is explained for the semaphore circuit of size 30, but the same applies to the other sizes. Note that every subverifier should be verified to consider the contract secure, because it is sufficient for one to be malicious to break the security of the system. A script that semi-automatically performs the verification process can be found [here](https://github.com/lucadonnoh/WLD-vkeys-verifier/tree/main). If you perform the verification manually, make sure to install the needed tools with the correct versions, as the verification fails with the latest ones.
 
-[TODO: insert image here]
+![Semaphore verification process](/images/zk-catalog/semaphore-verification.png)
 
 **From the .circom to the .r1cs file**: the circom version used in the original verification key generation process is non deterministic, meaning that a different r1cs file is generated every time the circom file is compiled. A workaround is currently being investigated.
 
