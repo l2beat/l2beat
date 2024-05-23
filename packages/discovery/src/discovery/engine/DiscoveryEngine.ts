@@ -25,74 +25,39 @@ export class DiscoveryEngine {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<Analysis[]> {
-    const resolved: Analysis[] = []
-    let relativesWithTemplates: AddressesWithTemplates = {}
+    let resolved: Analysis[] = []
+    const toAnalyze: AddressesWithTemplates = {}
     let depth = 0
     let count = 0
 
     config.initialAddresses.forEach((address) => {
-      relativesWithTemplates[address.toString()] = new Set()
+      toAnalyze[address.toString()] = new Set()
     })
 
-    while (Object.keys(relativesWithTemplates).length > 0) {
-      const toAnalyze: AddressesWithTemplates = {}
-
-      for (const [_address, templates] of Object.entries(
-        relativesWithTemplates,
-      )) {
-        const address = EthereumAddress(_address)
-        const alreadyAnalyzed = resolved.find((x) => x.address === address)
-        if (alreadyAnalyzed === undefined) {
-          toAnalyze[_address] = templates
-          continue
+    while (Object.keys(toAnalyze).length > 0) {
+      for (const analysis of resolved) {
+        const address = analysis.address.toString()
+        const suggestedTemplates = toAnalyze[address] ?? new Set()
+        if (analysisCoversSuggestedTemplates(analysis, suggestedTemplates)) {
+          delete toAnalyze[address]
+        } else if (
+          analysis.type !== 'EOA' &&
+          analysis.extendedTemplate !== undefined
+        ) {
+          analysis.errors['@template'] = `Conflicting templates: ${Array.from(
+            suggestedTemplates,
+          ).join(', ')}`
+          delete toAnalyze[address]
         }
-
-        // We have already analyzed this address:
-
-        if (templates.size === 0) {
-          // We have nothing new to suggest
-          continue // don't analyze again
-        }
-        if (alreadyAnalyzed.type === 'EOA') {
-          // Templates suggestions don't make sense for EOAs
-          continue // don't analyze again
-        }
-        if (alreadyAnalyzed.extendedTemplate?.reason === 'byExtends') {
-          // if already analyzed template was explicitly set, we always
-          // ignore all templates suggested by referrers
-          continue // don't analyze again
-        }
-        const reason = shouldSkip(address, config, depth, count)
-        if (reason) {
-          this.logger.logSkip(address, reason)
-          continue
-        }
-
-        // - was it analyzed with exactly the same template?
-        if (templates.size === 1) {
-          const template = Array.from(templates)[0]
-          if (alreadyAnalyzed.extendedTemplate?.template === template) {
-            continue // don't analyze again
-          }
-        }
-
-        if (alreadyAnalyzed.extendedTemplate !== undefined) {
-          // There was a different template already used in analysis
-          alreadyAnalyzed.errors['@template'] =
-            `Additional templates suggested: ${Array.from(templates).join(
-              ', ',
-            )}`
-          continue // don't analyze again
-        }
-
-        // We have already analyzed this address without template
-        // so let's remove it from resolved and analyze again with
-        // suggested templates
-        resolved.splice(resolved.indexOf(alreadyAnalyzed), 1)
-        toAnalyze[_address] = templates
       }
 
-      relativesWithTemplates = {}
+      // TODO: Use shouldSkip(), where does the error info go?
+      if (count > config.maxAddresses || depth > config.maxDepth) {
+        console.log('limits exceeded')
+      }
+
+      // remove resolved addresses that need to be analyzed again
+      resolved = resolved.filter((x) => !(x.address.toString() in toAnalyze))
 
       await Promise.all(
         Object.entries(toAnalyze).map(async ([_address, templates]) => {
@@ -116,8 +81,8 @@ export class DiscoveryEngine {
           for (const [address, suggestedTemplates] of Object.entries(
             relatives,
           )) {
-            relativesWithTemplates[address] = new Set([
-              ...(relativesWithTemplates[address] ?? []),
+            toAnalyze[address] = new Set([
+              ...(toAnalyze[address] ?? []),
               ...suggestedTemplates,
             ])
           }
@@ -199,4 +164,17 @@ export class DiscoveryEngine {
       }
     }
   }
+}
+
+function analysisCoversSuggestedTemplates(
+  analysis: Analysis,
+  suggestedTemplates: Set<string>,
+): boolean {
+  return (
+    analysis.type === 'EOA' || // Templates suggestions don't make sense for EOAs
+    analysis.extendedTemplate?.reason === 'byExtends' || // Explicit template was set
+    suggestedTemplates.size === 0 || // We have nothing new to suggest
+    (suggestedTemplates.size === 1 &&
+      analysis.extendedTemplate?.template === Array.from(suggestedTemplates)[0]) // Exactly the same template was analyzed
+  )
 }

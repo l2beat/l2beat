@@ -4,14 +4,18 @@ import { expect, mockFn, mockObject } from 'earl'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryEngine } from './DiscoveryEngine'
+import { DiscoveryEngine } from './DiscoveryEngine.1'
 
-describe(DiscoveryEngine.name, () => {
+describe.only(DiscoveryEngine.name, () => {
   const BLOCK_NUMBER = 1234
   const A = EthereumAddress.random()
   const B = EthereumAddress.random()
   const C = EthereumAddress.random()
   const D = EthereumAddress.random()
+  // const strA = A.toString()
+  const strB = B.toString()
+  const strC = C.toString()
+  const strD = D.toString()
 
   it('can perform a discovery', async () => {
     const config = new DiscoveryConfig({
@@ -34,15 +38,15 @@ describe(DiscoveryEngine.name, () => {
     addressAnalyzer.analyze
       .resolvesToOnce({
         analysis: { type: 'EOA', address: A },
-        relatives: [B, C],
+        relatives: { [strB]: new Set(), [strC]: new Set() },
       })
       .resolvesToOnce({
         analysis: { type: 'EOA', address: C },
-        relatives: [B, D],
+        relatives: { [strB]: new Set(), [strD]: new Set() },
       })
       .resolvesToOnce({
         analysis: { type: 'EOA', address: D },
-        relatives: [],
+        relatives: {},
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
