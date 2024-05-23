@@ -2,8 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_execute } from '../../../tools/uif/KnexMiddleware.test'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
   DatabaseMiddleware,
   RemovalConfiguration,
@@ -59,7 +59,8 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -68,9 +69,11 @@ describe(ChainAmountIndexer.name, () => {
         update('c', 100, null, true), // configuration with data should not be fetched
       ]
 
-      const safeHeight = await _TEST_ONLY_execute(
-        (dbMiddleware: DatabaseMiddleware) =>
-          indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
       )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -105,7 +108,8 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -113,9 +117,11 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await _TEST_ONLY_execute(
-        (dbMiddleware: DatabaseMiddleware) =>
-          indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
       )
 
       expect(safeHeight).toEqual(to)
@@ -142,14 +148,17 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [update('a', 100, null, false)]
 
-      const safeHeight = await _TEST_ONLY_execute(
-        (dbMiddleware: DatabaseMiddleware) =>
-          indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
       )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -172,7 +181,8 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -180,9 +190,11 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await _TEST_ONLY_execute(
-        (dbMiddleware: DatabaseMiddleware) =>
-          indexer.multiUpdate(from, to, toUpdate, dbMiddleware),
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
       )
 
       expect(safeHeight).toEqual(to)
@@ -207,7 +219,8 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

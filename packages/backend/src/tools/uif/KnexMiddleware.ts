@@ -21,10 +21,4 @@ export class KnexMiddleware implements DatabaseMiddleware {
       throw e
     }
   }
-
-  async _TEST_ONLY_execute() {
-    for (const cb of this.queue) {
-      await cb()
-    }
-  }
 }

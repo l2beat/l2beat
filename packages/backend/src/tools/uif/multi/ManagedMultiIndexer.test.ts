@@ -12,7 +12,7 @@ import {
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
-import { getTestDbMiddleware } from './MultiIndexer.test'
+import { mockDbMiddleware } from './MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -142,14 +142,14 @@ describe(ManagedMultiIndexer.name, () => {
 
     const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1, TestDbMiddleware)
+    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1, mockDbMiddleware)
 
     expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
       1,
       'indexer',
       ['a', 'b', 'c'],
       1,
-      TestDbMiddleware,
+      mockDbMiddleware,
     )
   })
 
@@ -194,7 +194,7 @@ describe(ManagedMultiIndexer.name, () => {
         100,
         199,
         [update('a', 100, 300, false), update('d', 100, null, true)],
-        TestDbMiddleware,
+        mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
@@ -205,14 +205,14 @@ describe(ManagedMultiIndexer.name, () => {
           update('b', 200, 500, false),
           update('d', 100, null, true),
         ],
-        TestDbMiddleware,
+        mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
         [update('b', 200, 500, false), update('d', 100, null, true)],
-        TestDbMiddleware,
+        mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
@@ -223,13 +223,13 @@ describe(ManagedMultiIndexer.name, () => {
           update('c', 400, null, false),
           update('d', 100, null, true),
         ],
-        TestDbMiddleware,
+        mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
         551,
         600,
         [update('c', 400, null, false), update('d', 100, null, false)],
-        TestDbMiddleware,
+        mockDbMiddleware,
       )
 
       const configurations = await getSavedConfigurations(indexerService)
@@ -314,7 +314,7 @@ async function initializeMockIndexer(
     logger: Logger.SILENT,
     encode: (v) => v,
     decode: (v) => v,
-    createDatabaseMiddleware: () => Promise.resolve(TestDbMiddleware),
+    createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
   })
   return indexer
 }
@@ -358,5 +358,3 @@ function removal(
 ): RemovalConfiguration<string> {
   return { id: id.repeat(12), properties: '', from, to }
 }
-
-const TestDbMiddleware = getTestDbMiddleware()
