@@ -26,7 +26,7 @@ export class DiscoveryEngine {
     blockNumber: number,
   ): Promise<Analysis[]> {
     let resolved: Analysis[] = []
-    const toAnalyze: AddressesWithTemplates = {}
+    let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
     let count = 0
 
@@ -68,8 +68,11 @@ export class DiscoveryEngine {
       // remove resolved addresses that need to be analyzed again
       resolved = resolved.filter((x) => !(x.address.toString() in toAnalyze))
 
+      const leftToAnalyze = Object.entries(toAnalyze)
+      toAnalyze = {}
+
       await Promise.all(
-        Object.entries(toAnalyze).map(async ([_address, templates]) => {
+        leftToAnalyze.map(async ([_address, templates]) => {
           const address = EthereumAddress(_address)
           const bufferedLogger = new DiscoveryLogger({
             enabled: false,
