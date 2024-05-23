@@ -3,7 +3,7 @@ import { env } from './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // biome-ignore lint/suspicious/useAwait: rewrites must be
+  // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async rewrites() {
     return {
       beforeFiles: [],
