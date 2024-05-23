@@ -77,6 +77,21 @@
       "formula": "locked"
     },
     {
+      "id": "aevo-aevo",
+      "name": "Aevo",
+      "coingeckoId": "aevo-exchange",
+      "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
+      "symbol": "AEVO",
+      "decimals": 18,
+      "deploymentTimestamp": 1706636159,
+      "coingeckoListingTimestamp": 1710288000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35893/large/aevo.png?1710138340",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",

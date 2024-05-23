@@ -22,6 +22,10 @@
       "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
     },
     {
+      "symbol": "AEVO",
+      "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"

@@ -53,7 +53,7 @@ export const fraxtal: Layer2 = opStackL2({
     },
     bridge: { type: 'None' },
   },
-  associatedTokens: ['FXS'],
+  associatedTokens: ['FXS', 'FPIS'],
   discovery,
   display: {
     name: 'Fraxtal',
