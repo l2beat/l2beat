@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Badge } from '../badge/Badge'
 import { cn } from '../../utils/cn'
+import { Badge } from '../badge/Badge'
 
 export function HiringBadge({ className }: { className?: string }) {
   return (
