@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "mint",
+  "initialAddresses": [
+    "0x2b3F201543adF73160bA42E1a5b7750024F30420",
+    "0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+  ],
+  "names": {
+    "0xEa4165C5CDCA155779803A113d8391b741bA5228": "AddressManager",
+    "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19": "L1CrossDomainMessenger",
+    "0x2b3F201543adF73160bA42E1a5b7750024F30420": "L1StandardBridge",
+    "0x59625d1FE0Eeb8114a4d13c863978F39b3471781": "OptimismPortal",
+    "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED": "L2OutputOracle",
+    "0xC975862927797812371A9Fb631f83F8f5e2240D5": "SystemConfig",
+    "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF": "ProxyAdmin",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner"
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
+        },
+        "opStackDA": {
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "sequencerInbox": {
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        }
+      }
+    }
+  }
+}
