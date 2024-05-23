@@ -3,8 +3,10 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
-import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../../peripherals/database/DatabaseMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -79,7 +81,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    dbMiddleware.add(async (trx?: Knex.Transaction) => {
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
       await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 

@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { describeDatabase } from '../../../test/database'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'

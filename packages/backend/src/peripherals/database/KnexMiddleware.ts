@@ -1,11 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-
-export interface DatabaseMiddleware {
-  add: (cb: () => Promise<void>) => void
-  execute: () => Promise<void>
-}
-export type DatabaseTransaction = Knex.Transaction
+import { DatabaseMiddleware } from './DatabaseMiddleware'
 
 /**
  * Middleware that allows to execute multiple database operations in a single transaction.

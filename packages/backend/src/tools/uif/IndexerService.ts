@@ -1,7 +1,7 @@
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
-} from '../../peripherals/database/KnexMiddleware'
+} from '../../peripherals/database/DatabaseMiddleware'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'

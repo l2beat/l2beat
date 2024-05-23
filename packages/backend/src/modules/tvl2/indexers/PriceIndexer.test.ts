@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'

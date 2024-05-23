@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
-import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'

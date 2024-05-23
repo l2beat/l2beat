@@ -1,8 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { assert } from '@l2beat/backend-tools'
-import { Knex } from 'knex'
-import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../../peripherals/database/DatabaseMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -85,7 +87,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    dbMiddleware.add(async (trx?: Knex.Transaction) => {
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
       await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
