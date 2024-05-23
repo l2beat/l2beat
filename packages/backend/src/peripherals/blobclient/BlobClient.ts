@@ -72,7 +72,7 @@ export class BlobClient {
     const response = await this.call(endpoint)
     const parsed = BlockSidecarSchema.safeParse(response)
     if (!parsed.success) {
-      this.logger.error('Error downloading block sidecar', {
+      this.logger.warn('Error downloading block sidecar', {
         blockNumber,
         error: parsed.error,
         response,
@@ -101,7 +101,7 @@ export class BlobClient {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
     const parsed = TxWithBlobsSchema.safeParse(result)
     if (!parsed.success) {
-      this.logger.error('Error downloading transaction', {
+      this.logger.warn('Error downloading transaction', {
         txHash,
         error: parsed.error,
         result,
@@ -123,7 +123,7 @@ export class BlobClient {
     ])
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
     if (!parsed.success) {
-      this.logger.error('Error downloading block', {
+      this.logger.warn('Error downloading block', {
         blockNumber,
         error: parsed.error,
         result,
@@ -151,7 +151,7 @@ export class BlobClient {
     const json = (await response.json()) as unknown
     const parsed = RpcResultSchema.safeParse(json)
     if (!parsed.success) {
-      this.logger.error('Error calling RPC', {
+      this.logger.warn('Error calling RPC', {
         method,
         params,
         error: parsed.error,
@@ -170,7 +170,7 @@ export class BlobClient {
     const parsedBlock =
       BlockWithParentBeaconBlockRootSchema.safeParse(childBlock)
     if (!parsedBlock.success) {
-      this.logger.error('Error getting beacon block id', {
+      this.logger.warn('Error getting beacon block id', {
         blockNumber,
         error: parsedBlock.error,
         childBlock,
