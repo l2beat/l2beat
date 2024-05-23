@@ -526,12 +526,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         }),
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
+        ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
           challengeWindowSeconds,
         ),
+        secondLine: `${formatSeconds(challengeWindowSeconds)} challenge period`,
+      },
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
           ? (() => {

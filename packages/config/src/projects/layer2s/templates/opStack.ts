@@ -496,7 +496,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             mode: 'Transactions data (compressed)',
           }),
     riskView: makeBridgeCompatible({
-      stateValidation: RISK_VIEW.STATE_NONE,
+      stateValidation: {
+        ...RISK_VIEW.STATE_NONE,
+        secondLine: `${formatSeconds(
+          FINALIZATION_PERIOD_SECONDS,
+        )} challenge period`,
+      },
       dataAvailability: {
         ...riskViewDA(daProvider),
         sources: [
