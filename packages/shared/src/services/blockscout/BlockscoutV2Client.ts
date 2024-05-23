@@ -14,7 +14,7 @@ export class BlockscoutV2Client {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
-  private readonly timeoutMs = 20_000
+  private readonly timeoutMs = 10_000
 
   constructor(
     private readonly httpClient: HttpClient,
