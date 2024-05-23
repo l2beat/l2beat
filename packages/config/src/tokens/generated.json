@@ -2791,6 +2791,21 @@
       "formula": "locked"
     },
     {
+      "id": "pufeth-pufeth",
+      "name": "pufETH",
+      "coingeckoId": "pufeth",
+      "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+      "symbol": "pufETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706723327,
+      "coingeckoListingTimestamp": 1707696000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "puff-puff",
       "name": "Puff",
       "coingeckoId": "puff-the-dragon",

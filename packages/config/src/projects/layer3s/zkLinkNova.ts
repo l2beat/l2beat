@@ -41,7 +41,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x5Bd51296423A9079b931414C1De65e7057326EaA'),
       sinceTimestamp: new UnixTime(1711095511),
-      tokens: '*', //e.g. OP, USDT, USDC, DAI, WBTC...
+      tokens: '*', // missing ~450k: USDT, wBTC, DAI
     },
     {
       chain: 'linea',
@@ -55,7 +55,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x62cE247f34dc316f93D3830e4Bf10959FCe630f8'),
       sinceTimestamp: new UnixTime(1709218113),
-      tokens: '*', // e.g. ezETH, USDT, USDC.e, WBTC
+      tokens: '*', // missing ~ 800k: USDT, USDC.e, wBTC
     },
     {
       chain: 'ethereum',
@@ -69,7 +69,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xAd16eDCF7DEB7e90096A259c81269d811544B6B6'),
       sinceTimestamp: new UnixTime(1709295323),
-      tokens: '*', // e.g. pufETH, WBTC, ezETH, weETH, ARPA, CYBER wstETH
+      tokens: '*', // missing ~5M: ARPA, CYBER, BEL
     },
     {
       chain: 'mantapacific',
@@ -83,7 +83,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x44a65dc12865a1e5249b45b4868f32b0e37168ff'),
       sinceTimestamp: new UnixTime(1709295839),
-      tokens: '*',
+      tokens: '*', // missing ~3M: wUSDM, USDC, USDT
     },
     {
       chain: 'mantle',
@@ -97,7 +97,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2'),
       sinceTimestamp: new UnixTime(1709296907),
-      tokens: '*',
+      tokens: '*', // missing ~12M: wMNT, mETH, USDT, USDC
     },
     {
       chain: 'zksync2',
@@ -111,7 +111,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08'),
       sinceTimestamp: new UnixTime(1709297040),
-      tokens: '*',
+      tokens: '*', // missing ~700K: wBTC, DAI, USDC.e, USDT
     },
     {
       chain: 'arbitrum',
@@ -125,7 +125,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585'),
       sinceTimestamp: new UnixTime(1709296973),
-      tokens: '*',
+      tokens: '*', // missing ~3M: USDT, wBTC, wstETH, USDC.e
     },
     {
       chain: 'blast',
@@ -139,7 +139,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b'),
       sinceTimestamp: new UnixTime(1710427013),
-      tokens: '*',
+      tokens: '*', // missing 300k BAJA
     },
     {
       chain: 'base',
@@ -153,7 +153,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x80d12A78EfE7604F00ed07aB2f16F643301674D5'),
       sinceTimestamp: new UnixTime(1711098033),
-      tokens: '*',
+      tokens: '*', // missing 100k USDC
     },
   ],
 })
