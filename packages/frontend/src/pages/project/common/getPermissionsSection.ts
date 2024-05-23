@@ -41,9 +41,17 @@ export function getPermissionsSection(
   return (
     project.permissions && {
       ...section,
-      permissions: project.permissions.map((p) =>
-        toTechnologyContract(project, p),
-      ),
+      permissions: project.permissions.map((p) => {
+        const entry = toTechnologyContract(project, p)
+        return {
+          ...entry,
+          // Plus one because the first address is set to `address` and is not present in the array
+          name:
+            entry.links.length > 0
+              ? `${entry.name} (${entry.links.length + 1})`
+              : entry.name,
+        }
+      }),
     }
   )
 }
