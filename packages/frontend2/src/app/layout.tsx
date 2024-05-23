@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
+import PlausibleProvider from 'next-plausible'
 import { TRPCReactProvider } from '~/trpc/react'
+import { env } from '~/env'
 import './globals.css'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
@@ -28,7 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <PlausibleProvider
+          domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+          enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
+        >
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </PlausibleProvider>
       </body>
     </html>
   )

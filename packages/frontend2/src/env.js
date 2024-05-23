@@ -1,6 +1,10 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+const coerceBoolean = z.string().transform((val) => {
+  return val !== 'false' && val !== '0'
+})
+
 export const env = createEnv({
   /**
    * Server-only environment variables.
@@ -18,7 +22,10 @@ export const env = createEnv({
   /**
    * Environment variables exposed to the client (should be prefixed with `NEXT_PUBLIC_`)
    */
-  client: {},
+  client: {
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
+    NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
+  },
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -27,6 +34,8 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     FALLBACK_REWRITE_DESTINATION: process.env.FALLBACK_REWRITE_DESTINATION,
+    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
+    NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
   },
 
   /**

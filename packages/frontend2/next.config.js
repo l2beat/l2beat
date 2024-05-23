@@ -1,4 +1,5 @@
 import { env } from './src/env.js'
+import { withPlausibleProxy } from 'next-plausible'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -17,5 +18,11 @@ const nextConfig = {
   },
 }
 
+function createNextConfig() {
+  const plugins = [withPlausibleProxy()]
+
+  return plugins.reduce((config, plugin) => plugin(config), nextConfig)
+}
+
 // biome-ignore lint/style/noDefaultExport: config file
-export default nextConfig
+export default createNextConfig
