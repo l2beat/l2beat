@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
 import { Roboto } from 'next/font/google'
 import { env } from '~/env'
@@ -22,13 +23,15 @@ export const metadata: Metadata = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={roboto.className}>
         <PlausibleProvider
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
