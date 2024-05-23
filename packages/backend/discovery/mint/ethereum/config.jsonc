@@ -20,20 +20,6 @@
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]
     },
-    "L2OutputOracle": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ]
-    },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
