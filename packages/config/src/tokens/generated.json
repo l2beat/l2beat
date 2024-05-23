@@ -5170,6 +5170,20 @@
       }
     },
     {
+      "id": "mantle:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1688314886,
+      "coingeckoListingTimestamp": 1688314886,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 5000,
+      "type": "CBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "mantle:susde-staked-usde",
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
