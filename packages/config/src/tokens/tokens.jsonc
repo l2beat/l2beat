@@ -84,6 +84,10 @@
       "address": "0x0b38210ea11411557c13457D4dA7dC6ea731B88a"
     },
     {
+      "symbol": "ARPA",
+      "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a"
+    },
+    {
       "symbol": "AUDIO",
       "address": "0x18aAA7115705e8be94bfFEBDE57Af9BFc265B998"
     },
@@ -110,6 +114,10 @@
     {
       "symbol": "BAT",
       "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+    },
+    {
+      "symbol": "BEL",
+      "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14"
     },
     {
       "symbol": "BFC",
@@ -251,6 +259,10 @@
     {
       "symbol": "cWBTC",
       "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a"
+    },
+    {
+      "symbol": "CYBER",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9"
     },
     {
       "symbol": "DAI",
@@ -747,6 +759,10 @@
     {
       "symbol": "PSTAKE",
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
+    },
+    {
+      "symbol": "pufETH",
+      "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72"
     },
     {
       "symbol": "Puff",
@@ -1425,6 +1441,12 @@
   ],
   "optimism": [
     {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
+    {
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
       "type": "EBV",
@@ -1716,6 +1738,12 @@
   ],
   "mantapacific": [
     {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
+    {
       "symbol": "MANTA",
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "type": "NMV",
@@ -1744,6 +1772,12 @@
   ],
   "mantle": [
     {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
+    {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -1767,6 +1801,12 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
@@ -1963,6 +2003,12 @@
   ],
   "blast": [
     {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
+    {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
       "coingeckoId": "renzo-restaked-eth",
@@ -2089,6 +2135,12 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "ETH",
+      "type": "CBV",
+      "formula": "totalSupply", // formula does not matter here
+      "category": "ether"
+    },
     {
       "symbol": "USDC",
       "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",

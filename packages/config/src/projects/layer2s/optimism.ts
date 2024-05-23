@@ -234,12 +234,16 @@ export const optimism: Layer2 = opStackL2({
         batchSize: 150,
         sinceBlock: 4286263,
         version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
       {
         sinceBlock: 0,
         batchSize: 150,
         address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
         version: 'optimism',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'optimistic-ethereum',

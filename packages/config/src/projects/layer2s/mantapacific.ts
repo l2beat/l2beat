@@ -59,6 +59,8 @@ export const mantapacific: Layer2 = opStackL2({
         batchSize: 150,
         address: EthereumAddress('0x9731502B98F65BBb573D0106ECd9E4097dbcCD30'),
         version: '2',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'manta-pacific',
