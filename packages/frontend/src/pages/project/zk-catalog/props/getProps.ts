@@ -7,6 +7,7 @@ import { getCollectionEntry } from '../../../../content/getCollection'
 import { getProofVerification } from '../../../../utils/zk-catalog/getProofVerification'
 import { hasTrustedSetup } from '../../../../utils/zk-catalog/hasTrustedSetup'
 import { Wrapped } from '../../../Page'
+import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../../../zk-catalog/props/getZkCatalogView'
 import {
   ZkCatalogProjectDetails,
   ZkCatalogProjectPageProps,
@@ -22,6 +23,7 @@ export function getProps(
     props: {
       navbar: getNavbarProps(config, 'zk-catalog'),
       details: getZkCatalogProjectDetails(project, verifiersApiResponse),
+      askForVerificationLink: ZK_CATALOG_ASK_FOR_VERIFICATION_LINK,
       footer: getFooterProps(config),
     },
     wrapper: {

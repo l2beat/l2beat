@@ -4,6 +4,9 @@ import { hasTrustedSetup } from '../../../utils/zk-catalog/hasTrustedSetup'
 import { Project } from '../../../utils/zk-catalog/types'
 import { ZkCatalogViewProps } from '../view/ZkCatalogView'
 
+export const ZK_CATALOG_ASK_FOR_VERIFICATION_LINK =
+  'https://forms.gle/Ga3qpd5qnminA5rz5'
+
 export function getZkCatalogView(
   projects: Project[],
   verifiersApiResponse: VerifiersApiResponse,
@@ -22,5 +25,6 @@ export function getZkCatalogView(
         ...proofVerification,
       }
     }),
+    askForVerificationLink: ZK_CATALOG_ASK_FOR_VERIFICATION_LINK,
   }
 }
