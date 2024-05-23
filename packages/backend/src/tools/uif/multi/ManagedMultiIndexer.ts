@@ -46,6 +46,17 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
+  override setInitialState(
+    safeHeight: number,
+    configHash?: string | undefined,
+  ): Promise<void> {
+    return this.options.indexerService.setInitialState(
+      this.indexerId,
+      safeHeight,
+      configHash,
+    )
+  }
+
   override async multiInitialize(): Promise<SavedConfiguration<T>[]> {
     return await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
