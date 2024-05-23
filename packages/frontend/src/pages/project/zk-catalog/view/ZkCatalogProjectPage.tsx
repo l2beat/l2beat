@@ -84,13 +84,15 @@ function Header(props: ZkCatalogProjectPageProps) {
     <header className="mt-8">
       <div>
         <ProjectHeader {...props.details} />
-        <Link
-          href={props.details.linkToMainProjectDetails}
-          showArrow
-          textClassName="mt-1 md:mt-0"
-        >
-          View project's detail page
-        </Link>
+        {props.details.linkToMainProjectDetails ? (
+          <Link
+            href={props.details.linkToMainProjectDetails}
+            showArrow
+            textClassName="mt-1 md:mt-0"
+          >
+            View project's detail page
+          </Link>
+        ) : undefined}
       </div>
       <HorizontalSeparator className="md:hidden mt-6 mb-5" />
       <div className="flex flex-col md:grid gap-1 md:mt-8 grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 md:p-6">
