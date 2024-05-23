@@ -1,7 +1,12 @@
 import React from 'react'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
-import { ChevronDownIcon } from '../../../../components/icons'
+import { ChevronDownIcon, InfoIcon } from '../../../../components/icons'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import { EM_DASH } from '../../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
@@ -82,7 +87,6 @@ export function Verifiers(props: Props) {
                 <EtherscanLink
                   address={item.contractAddress.toString()}
                   className="break-all"
-                  truncate={false}
                 />
               </div>
               <div>
@@ -95,15 +99,13 @@ export function Verifiers(props: Props) {
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
                 </p>
-                <Markdown>{item.description}</Markdown>
+                <Markdown className="text-xs">{item.description}</Markdown>
               </div>
               <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
-                <div>
-                  <Link href={props.askForVerificationLink}>
-                    Ask for verification
-                  </Link>
-                </div>
+                <Link href={props.askForVerificationLink}>
+                  Ask for verification
+                </Link>
               ) : null}
             </td>
             <td
@@ -112,15 +114,11 @@ export function Verifiers(props: Props) {
             >
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
-                  Last used
-                </p>
-                <LastUsedCell days={item.lastUsedDaysAgo} />
-              </div>
-              <div>
-                <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
                 </p>
-                <Markdown>{item.description}</Markdown>
+                <Markdown className="text-xs font-medium text-zinc-900/80 dark:text-white/80">
+                  {item.description}
+                </Markdown>
               </div>
               <SubVerifiersTable verifier={item} />
             </td>
@@ -145,16 +143,46 @@ function SubVerifiersTable({
               Name
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Arithmetization
+              <div className="flex items-center gap-1.5">
+                <span>Arithmetization</span>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="fill-current md:size-3.5" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Shows how the computation is represented mathematically.
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              PCS
+              <div className="flex items-center gap-1.5">
+                <span>PCS</span>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="fill-current md:size-3.5" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Shows what Polynomial Commitment Scheme is used.
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
               Proof system
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Trusted setup
+              <div className="flex items-center gap-1.5">
+                <span>Trusted setup</span>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="fill-current md:size-3.5" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Shows if the proof system requires a trusted setup.
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </th>
             <th />
           </tr>

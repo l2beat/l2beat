@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
@@ -67,8 +68,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
     configurationIds: string[],
     currentHeight: number | null,
+    trx?: Knex.Transaction,
   ) {
-    const knex = await this.knex()
+    const knex = await this.knex(trx)
 
     return knex('indexer_configurations')
       .where('indexer_id', indexerId)

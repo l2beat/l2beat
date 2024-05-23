@@ -4,6 +4,7 @@ import { expect, mockObject } from 'earl'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
 import { IndexerStateRepository } from './IndexerStateRepository'
+import { mockDbMiddleware } from './multi/MultiIndexer.test'
 
 describe(IndexerService.name, () => {
   describe(IndexerService.prototype.setSafeHeight.name, () => {
@@ -158,11 +159,16 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.updateSavedConfigurations('indexer', ['a', 'b'], 123)
+    await indexerService.updateSavedConfigurations(
+      'indexer',
+      ['a', 'b'],
+      123,
+      mockDbMiddleware,
+    )
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123, undefined)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {

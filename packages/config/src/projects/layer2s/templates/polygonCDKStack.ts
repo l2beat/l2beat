@@ -65,6 +65,7 @@ export interface PolygonCDKStackConfig {
   rollupVerifierContract: ContractParameters
   upgradesAndGovernance?: string
   stateValidation?: ScalingProjectStateValidation
+  associatedTokens?: string[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -152,6 +153,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
     },
     config: {
+      associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,
       transactionApi:
         templateVars.transactionApi ??

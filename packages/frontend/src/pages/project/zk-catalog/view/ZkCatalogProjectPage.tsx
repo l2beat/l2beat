@@ -10,6 +10,12 @@ import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
+import { InfoIcon } from '../../../../components/icons'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
@@ -78,32 +84,32 @@ function Header(props: ZkCatalogProjectPageProps) {
     <header className="mt-8">
       <div>
         <ProjectHeader {...props.details} />
-        <Link
-          href={props.details.linkToMainProjectDetails}
-          showArrow
-          textClassName="mt-1 md:mt-0"
-        >
-          View project's detail page
-        </Link>
+        {props.details.linkToMainProjectDetails ? (
+          <Link
+            href={props.details.linkToMainProjectDetails}
+            showArrow
+            textClassName="mt-1 md:mt-0"
+          >
+            View project's detail page
+          </Link>
+        ) : undefined}
       </div>
       <HorizontalSeparator className="md:hidden mt-6 mb-5" />
       <div className="flex flex-col md:grid gap-1 md:mt-8 grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 md:p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
-        <HeaderItem title="Aggregation">
-          {props.details.aggregation ? (
-            <span className="text-green-700 dark:text-green-450">Yes</span>
-          ) : (
-            <span className="text-red-700 dark:text-red-300">No</span>
-          )}
+        <HeaderItem
+          title="Aggregation"
+          tooltip="Shows if recursive proof aggregation is used."
+        >
+          {props.details.aggregation ? 'Yes' : 'No'}
         </HeaderItem>
-        <HeaderItem title="Trusted setup">
-          {props.details.hasTrustedSetup ? (
-            <span className="text-green-700 dark:text-green-450">Yes</span>
-          ) : (
-            <span className="text-red-700 dark:text-red-300">No</span>
-          )}
+        <HeaderItem
+          title="Trusted setup"
+          tooltip="Shows if a trusted setup is used anywhere in the proving stack."
+        >
+          {props.details.hasTrustedSetup ? 'Yes' : 'No'}
         </HeaderItem>
       </div>
     </header>
@@ -112,15 +118,25 @@ function Header(props: ZkCatalogProjectPageProps) {
 
 function HeaderItem({
   title,
+  tooltip,
   children,
 }: {
   title: string
+  tooltip?: string
   children: ReactNode
 }) {
   return (
     <div className="flex justify-between md:block items-baseline">
-      <h3 className="md:mb-2 text-xs text-gray-600 dark:text-gray-50">
+      <h3 className="flex items-center gap-1.5 md:mb-2 text-xs text-gray-600 dark:text-gray-50">
         {title}
+        {tooltip ? (
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="fill-current md:size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        ) : null}
       </h3>
       <span className="text-lg font-bold">{children}</span>
     </div>
