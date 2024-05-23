@@ -61,8 +61,9 @@ export class DiscoveryEngine {
         if (skipReason !== undefined) {
           this.logger.log(skipReason)
           delete toAnalyze[address]
+        } else {
+          count++
         }
-        count++
       }
 
       // remove resolved addresses that need to be analyzed again
