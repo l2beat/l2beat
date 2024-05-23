@@ -113,42 +113,4 @@ describeDatabase(IndexerStateRepository.name, (database) => {
       expect(indexerState).toEqual({ ...record })
     })
   })
-
-  describe(IndexerStateRepository.prototype.setConfigHash.name, () => {
-    it('updates the safe height of given indexer', async () => {
-      const BEFORE = '0x12345'
-      const AFTER = '0x54321'
-      const record = {
-        indexerId: 'indexer1',
-        safeHeight: 123,
-        minTimestamp: UnixTime.now(),
-        configHash: BEFORE,
-      }
-      await repository.addOrUpdate(record)
-
-      const updated = await repository.setConfigHash('indexer1', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
-
-      expect(updated).toEqual(1)
-      expect(indexerState).toEqual({ ...record, configHash: AFTER })
-    })
-
-    it('does not update if indexer not found', async () => {
-      const BEFORE = '0x12345'
-      const AFTER = '0x54321'
-      const record = {
-        indexerId: 'indexer1',
-        safeHeight: 123,
-        minTimestamp: UnixTime.now(),
-        configHash: BEFORE,
-      }
-      await repository.addOrUpdate(record)
-
-      const updated = await repository.setConfigHash('indexer2', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
-
-      expect(updated).toEqual(0)
-      expect(indexerState).toEqual({ ...record })
-    })
-  })
 })
