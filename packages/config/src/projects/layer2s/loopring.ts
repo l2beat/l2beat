@@ -386,7 +386,7 @@ export const loopring: Layer2 = {
       {
         title: 'Verification Keys Generation',
         description:
-          'Groth16 requires a circuit specific trusted setup, so they run their own ceremony. The first phase is run using Powers of Tau ceremony. Some of the instructions on how to regenerate the verification keys can be found [here](https://github.com/Loopring/trusted_setup/tree/loopring-3.6.2)',
+          'Groth16 requires a circuit specific trusted setup, so they run their own ceremony. The first phase is run using Powers of Tau ceremony. Some of the instructions on how to regenerate the verification keys can be found [here](https://github.com/Loopring/trusted_setup/tree/loopring-3.6.2).',
       },
     ],
     proofVerification: {
