@@ -207,34 +207,18 @@ export const Milestones = z.array(
   }),
 )
 export type TokenInfo = z.infer<typeof TokenInfo>
-export const TokenInfo = z.discriminatedUnion('type', [
-  z.object({
-    type: z.literal('regular'),
-    projectId: z.string(),
-    assetId: z.string(),
-    symbol: z.string(),
-  }),
-  z.object({
-    type: z.literal('CBV'),
-    projectId: z.string(),
-    assetId: z.string(),
-    symbol: z.string(),
-  }),
-  z.object({
-    type: z.literal('EBV'),
-    projectId: z.string(),
-    assetId: z.string(),
-    symbol: z.string(),
-    chainId: z.number(),
-  }),
-  z.object({
-    type: z.literal('NMV'),
-    projectId: z.string(),
-    assetId: z.string(),
-    symbol: z.string(),
-    chainId: z.number(),
-  }),
-])
+export const TokenInfo = z.object({
+  type: z.union([
+    z.literal('regular'),
+    z.literal('CBV'),
+    z.literal('EBV'),
+    z.literal('NMV'),
+  ]),
+  projectId: z.string(),
+  chain: z.string(),
+  address: z.string(),
+  symbol: z.string(),
+})
 
 export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.discriminatedUnion('type', [
