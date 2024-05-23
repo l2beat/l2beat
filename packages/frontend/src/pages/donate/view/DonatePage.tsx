@@ -82,7 +82,7 @@ function Header(props: HeaderProps) {
               {props.networks.map((network) => (
                 <Link
                   key={network.name}
-                  className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
+                  className="flex justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
                   textClassName="text-sm font-medium"
                   href={network.linkURL}
                   underline={false}

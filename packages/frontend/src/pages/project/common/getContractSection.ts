@@ -19,6 +19,7 @@ import {
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
 import { languageJoin } from '../../../utils/utils'
+import { getUsedInProjects } from '../common/getUsedInProjects'
 import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
   TechnologyContract,
@@ -309,6 +310,9 @@ function makeTechnologyContract(
       }
     }
   }
+  const implementationAddresses = links
+    .filter((c) => !c.isAdmin)
+    .map((c) => c.address)
 
   let description = item.description
 
@@ -378,11 +382,18 @@ function makeTechnologyContract(
     addresses.includes(ca.containingContract.toString()),
   )
 
+  const usedInProjects = getUsedInProjects(
+    project,
+    addresses,
+    implementationAddresses,
+  )
+
   const result: TechnologyContract = {
     name: item.name,
     addresses,
     description,
     links,
+    usedInProjects,
     etherscanUrl,
     chain,
     implementationHasChanged,

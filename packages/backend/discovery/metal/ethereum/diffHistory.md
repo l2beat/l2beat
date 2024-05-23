@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x5e94d8cd56a33ab9fceba0ec4e0fd45714f65a12
+
+# Diff at Wed, 22 May 2024 20:09:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@bac4efad06804152ae97853892e122a801bbc509 block: 19918744
+- current block number: 19927710
+
+## Description
+
+ConduitMultisig update.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+      values.getOwners.6:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners.5:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.getOwners.4:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.getOwners.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getOwners.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.getOwners.0:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x945f32bd03147da666809aa29cce279673ba1992
+
+# Diff at Tue, 21 May 2024 14:01:54 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19781431
+- current block number: 19918744
+
+## Description
+
+Name change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19781431 (main branch discovery), not current.
+
+```diff
+    contract MetalMultisig (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      name:
+-        "MetalMultisig"
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ProxyAdminOwner"
++        "ConduitMultisig"
+    }
+```
+
 Generated with discovered.json: 0x9bd81dfc1056a71d240cdbab98badebd5ecd7362
 
 # Diff at Wed, 24 Apr 2024 05:49:16 GMT:

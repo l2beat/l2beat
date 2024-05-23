@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import {
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
@@ -13,7 +13,7 @@ import { getTvlBreakdownHeader } from './getTvlBreakdownHeader'
 import { getTvlBreakdownView } from './getTvlBreakdownView'
 
 export function getProps(
-  project: Layer2,
+  project: Layer2 | Layer3,
   config: Config,
   pagesData: {
     tvlApiResponse: TvlApiResponse

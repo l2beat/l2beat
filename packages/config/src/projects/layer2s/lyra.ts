@@ -58,7 +58,7 @@ export const lyra: Layer2 = opStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'LyraMultisig',
+      'ConduitMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     ...discovery.getMultisigPermission(

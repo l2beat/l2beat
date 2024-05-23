@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { ScalingL2SummaryViewEntry } from '../../pages/scaling/summary/types'
+import {
+  ScalingL2SummaryViewEntry,
+  ScalingL3SummaryViewEntry,
+} from '../../pages/scaling/summary/types'
 import { Callout } from '../Callout'
 import { WarningBar } from '../WarningBar'
 import { Badge } from '../badge/Badge'
@@ -10,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
 
 export interface TotalCellProps {
-  project: ScalingL2SummaryViewEntry
+  project: ScalingL2SummaryViewEntry | ScalingL3SummaryViewEntry
 }
 
 export function TotalCell({ project }: TotalCellProps) {

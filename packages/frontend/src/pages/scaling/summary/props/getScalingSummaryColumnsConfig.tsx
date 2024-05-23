@@ -186,7 +186,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
   return columns
 }
 
-export function getLayer3sScalingSummaryColumnsConfig() {
+export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
   const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
@@ -216,6 +216,24 @@ export function getLayer3sScalingSummaryColumnsConfig() {
       tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purposes.join(', '),
     },
+    ...(layer3sTvl
+      ? [
+          {
+            name: 'Total',
+            tooltip:
+              'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+            align: 'right',
+            noPaddingRight: true,
+            headClassName: '-translate-x-[72px]',
+            getValue: (project) => <TotalCell project={project} />,
+            sorting: {
+              getOrderValue: (project) => project.tvl?.value,
+              rule: 'numeric',
+              defaultState: 'desc',
+            },
+          } as ColumnConfig<ScalingL3SummaryViewEntry>,
+        ]
+      : []),
   ]
 
   return columns

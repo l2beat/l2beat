@@ -114,7 +114,7 @@ export const blast: Layer2 = opStackL2({
       'This address is the owner of all upgradable contracts. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals and as a Challenger. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
     {
-      name: 'SystemConfig Owner.',
+      name: 'SystemConfig owner',
       description:
         'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],

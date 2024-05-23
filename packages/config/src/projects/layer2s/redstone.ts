@@ -89,7 +89,7 @@ export const redstone: Layer2 = opStackL2({
         'Owner of the DataAvailabilityChallenge contract. It can upgrade the contract params, potentially making the system insecure.',
     },
     {
-      name: 'SystemConfig owner.',
+      name: 'SystemConfig owner',
       description:
         'Account privileged to change System Config parameters such as Sequencer Address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],

@@ -19,6 +19,7 @@ export function getProps(
   const {
     tvlApiResponse,
     activityApiResponse,
+    tvlBreakdownApiResponse,
     verificationStatus,
     manuallyVerifiedContracts,
     implementationChange,
@@ -34,6 +35,7 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
+        tvlBreakdownApiResponse,
       ),
       projectDetails: getProjectDetails(
         project,
