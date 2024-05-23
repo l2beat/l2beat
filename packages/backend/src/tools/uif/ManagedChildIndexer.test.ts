@@ -44,7 +44,7 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toEqual(1)
+      expect(result).toEqual({ safeHeight: 1 })
     })
 
     it('returns minHeight - 1 if safeHeight not defined', async () => {
@@ -63,7 +63,7 @@ describe(ManagedChildIndexer.name, () => {
       const result = await indexer.initialize()
 
       expect(indexerService.getSafeHeight).toHaveBeenOnlyCalledWith('indexer')
-      expect(result).toEqual(99)
+      expect(result).toEqual({ safeHeight: 99 })
     })
   })
 

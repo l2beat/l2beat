@@ -32,7 +32,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
     assetUniqueIndexerId(this.indexerId)
   }
 
-  async initialize() {
+  async initialize(): Promise<{ safeHeight: number; configHash?: string }> {
     const indexerState = await this.options.indexerService.getIndexerState(
       this.indexerId,
     )
