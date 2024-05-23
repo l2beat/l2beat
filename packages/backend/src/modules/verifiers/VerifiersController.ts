@@ -105,7 +105,7 @@ export class VerifiersController {
             })),
           },
         )
-        verifiers.push(...l2.stateValidation?.proofVerification.verifiers)
+        verifiers.push(...l2.stateValidation.proofVerification.verifiers)
       }
     })
 
