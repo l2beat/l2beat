@@ -11,6 +11,7 @@ import { cn } from '../../../utils/cn'
 import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../project/components/sections/ContractsSection/EtherscanLink'
+import { LastUsedCell } from '../../project/zk-catalog/view/LastUsedCell'
 import { VerifiedCell } from '../../project/zk-catalog/view/VerifiedCell'
 import { VerifiedCountWithDetails } from '../../project/zk-catalog/view/VerifiedCountWithDetails'
 import { ZkCatalogViewEntry } from '../types'
@@ -107,10 +108,12 @@ function DetailsItem({
 
 function VerifierCard({
   verifier,
-}: { verifier: ZkCatalogViewEntry['verifiers'][number] }) {
+}: {
+  verifier: ZkCatalogViewEntry['verifiers'][number]
+}) {
   return (
     <div className="space-y-5 md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
-      <div className="grid lg:grid-cols-3 space-y-2 lg:space-y-0">
+      <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
           <EtherscanLink
@@ -120,6 +123,9 @@ function VerifierCard({
         </DetailsItem>
         <DetailsItem title="Verification status">
           <VerifiedCell verified={verifier.verified} />
+        </DetailsItem>
+        <DetailsItem title="Last used" className="lg:pl-10">
+          <LastUsedCell days={verifier.lastUsedDaysAgo} />
         </DetailsItem>
       </div>
       <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
@@ -160,7 +166,10 @@ function VerifierCard({
 function DetailsLink({
   slug,
   className,
-}: { slug: string; className?: string }) {
+}: {
+  slug: string
+  className?: string
+}) {
   return (
     <a
       href={`/zk-catalog/${slug}`}

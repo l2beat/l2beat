@@ -1,4 +1,3 @@
-import { ProofVerification } from '@l2beat/config'
 import React, { ReactNode } from 'react'
 
 import {
@@ -11,6 +10,7 @@ import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
+import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
 import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
@@ -22,7 +22,7 @@ export interface ZkCatalogProjectPageProps {
   footer: FooterProps
 }
 
-export interface ZkCatalogProjectDetails extends ProofVerification {
+export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string
   icon: string
   description: string
@@ -109,7 +109,10 @@ function Header(props: ZkCatalogProjectPageProps) {
 function HeaderItem({
   title,
   children,
-}: { title: string; children: ReactNode }) {
+}: {
+  title: string
+  children: ReactNode
+}) {
   return (
     <div className="flex justify-between md:block items-baseline">
       <h3 className="md:mb-2 text-xs text-gray-600 dark:text-gray-50">
