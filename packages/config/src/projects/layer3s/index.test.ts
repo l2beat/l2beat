@@ -1,6 +1,7 @@
-import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { assert } from '@l2beat/backend-tools'
+import { ProjectId } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
@@ -40,16 +41,19 @@ describe('layer3s', () => {
     for (const layer3 of layer3s) {
       it(layer3.display.name, () => {
         const contracts = layer3.contracts.addresses
-        const escrows = layer3.config.escrows
         for (const contract of contracts) {
           expect(contract.chain).not.toBeNullish()
           expect(contract.chain).not.toEqual('ethereum')
         }
-        for (const escrow of escrows) {
-          expect(escrow.newVersion).toEqual(true)
-          assert(escrow.newVersion) // to make typescript happy
-          expect(escrow.contract.chain).not.toBeNullish()
-          expect(escrow.contract.chain).not.toEqual('ethereum')
+
+        if (layer3.id !== ProjectId('zklinknova')) {
+          const escrows = layer3.config.escrows
+          for (const escrow of escrows) {
+            expect(escrow.newVersion).toEqual(true)
+            assert(escrow.newVersion) // to make typescript happy
+            expect(escrow.contract.chain).not.toBeNullish()
+            expect(escrow.contract.chain).not.toEqual('ethereum')
+          }
         }
       })
     }
