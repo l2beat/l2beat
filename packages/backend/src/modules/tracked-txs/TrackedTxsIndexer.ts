@@ -113,12 +113,13 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return [configurationsToSync, syncTo]
   }
 
-  override async initialize(): Promise<number> {
-    await this.doInitialize()
-    return await this.getSafeHeight()
+  override async initialize() {
+    await this.initializeConfigurations()
+    const safeHeight = await this.getInitialSafeHeight()
+    return { safeHeight: safeHeight }
   }
 
-  private async doInitialize(): Promise<void> {
+  private async initializeConfigurations(): Promise<void> {
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toChangeUntilTimestamp } =
       diffTrackedTxConfigurations(this.configs, databaseEntries)
@@ -135,7 +136,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
       await this.configRepository.addMany(toAdd, trx)
       await this.configRepository.deleteMany(toRemove, trx)
       await this.changeConfigurationsUntilTimestamp(toChangeUntilTimestamp, trx)
-      await this.initializeIndexerState(trx)
     })
     this.logger.info('Initialized')
   }
@@ -175,7 +175,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
   }
 
-  async initializeIndexerState(trx?: Knex.Transaction) {
+  async getInitialSafeHeight(trx?: Knex.Transaction) {
     const databaseEntriesAfterChanges = await this.configRepository.getAll(trx)
     const safeHeight = getSafeHeight(
       databaseEntriesAfterChanges,
@@ -186,27 +186,28 @@ export class TrackedTxsIndexer extends ChildIndexer {
       this.indexerId,
     )
 
-    if (indexerState === undefined) {
-      await this.stateRepository.addOrUpdate(
-        {
-          indexerId: this.indexerId,
-          safeHeight,
-          minTimestamp: this.minTimestamp,
-        },
-        trx,
+    if (indexerState !== undefined) {
+      // We prevent updating the minimum timestamp of the indexer.
+      // This functionality can be added in the future if needed.
+      assert(
+        indexerState.minTimestamp &&
+          this.minTimestamp.equals(indexerState.minTimestamp),
+        'Minimum timestamp of this indexer cannot be updated',
       )
-      return
     }
 
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
+    return safeHeight
+  }
 
-    await this.setSafeHeight(safeHeight, trx)
+  override async setInitialState(
+    safeHeight: number,
+    _configHash?: string | undefined,
+  ): Promise<void> {
+    await this.stateRepository.addOrUpdate({
+      indexerId: this.indexerId,
+      safeHeight,
+      minTimestamp: this.minTimestamp,
+    })
   }
 
   async getSafeHeight(): Promise<number> {
