@@ -4,8 +4,8 @@ import PlausibleProvider from 'next-plausible'
 import { Roboto } from 'next/font/google'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
-import './globals.css'
 import { ProgressBarProvider } from './_components/ProgressBarProvider'
+import './globals.css'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used
