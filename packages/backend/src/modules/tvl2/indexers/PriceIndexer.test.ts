@@ -5,8 +5,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
   removal,
   update,
@@ -62,6 +64,8 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -73,7 +77,12 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        configurations,
+        mockDbMiddleware,
+      )
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
 
@@ -95,12 +104,10 @@ describe(PriceIndexer.name, () => {
         new UnixTime(200),
       ])
 
-      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
-        price('a', 100),
-        price('a', 200),
-        price('b', 100),
-        price('b', 200),
-      ])
+      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith(
+        [price('a', 100), price('a', 200), price('b', 100), price('b', 200)],
+        undefined,
+      )
 
       expect(safeHeight).toEqual(adjustedTo)
     })
@@ -120,6 +127,8 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const parameters = {
@@ -130,7 +139,13 @@ describe(PriceIndexer.name, () => {
         update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        configurations,
+        mockDbMiddleware,
+      )
+
       expect(safeHeight).toEqual(to)
     })
   })
@@ -152,6 +167,8 @@ describe(PriceIndexer.name, () => {
         logger: Logger.SILENT,
         encode: () => '',
         decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[] =

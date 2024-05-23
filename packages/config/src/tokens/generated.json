@@ -77,6 +77,21 @@
       "formula": "locked"
     },
     {
+      "id": "aevo-aevo",
+      "name": "Aevo",
+      "coingeckoId": "aevo-exchange",
+      "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
+      "symbol": "AEVO",
+      "decimals": 18,
+      "deploymentTimestamp": 1706636159,
+      "coingeckoListingTimestamp": 1710288000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35893/large/aevo.png?1710138340",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",
@@ -287,6 +302,21 @@
       "formula": "locked"
     },
     {
+      "id": "arpa-arpa-token",
+      "name": "ARPA Token",
+      "coingeckoId": "arpa",
+      "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
+      "symbol": "ARPA",
+      "decimals": 18,
+      "deploymentTimestamp": 1555911970,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "audio-audius",
       "name": "Audius",
       "coingeckoId": "audius",
@@ -402,6 +432,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "bel-bella",
+      "name": "Bella",
+      "coingeckoId": "bella-protocol",
+      "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14",
+      "symbol": "BEL",
+      "decimals": 18,
+      "deploymentTimestamp": 1597392058,
+      "coingeckoListingTimestamp": 1600128000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12478/large/Bella.png?1696512296",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -942,6 +987,21 @@
       "coingeckoListingTimestamp": 1597363200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "cyber-cyberconnect",
+      "name": "CyberConnect",
+      "coingeckoId": "cyberconnect",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "symbol": "CYBER",
+      "decimals": 18,
+      "deploymentTimestamp": 1690863167,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31274/large/token.png?1715826754",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2094,7 +2154,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1625191817,
       "coingeckoListingTimestamp": 1639612800,
-      "category": "stablecoin",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1696520850",
       "chainId": 1,
       "type": "CBV",
@@ -2236,6 +2296,21 @@
       "formula": "locked"
     },
     {
+      "id": "mtl-metal",
+      "name": "Metal",
+      "coingeckoId": "metal",
+      "address": "0xF433089366899D83a9f26A773D59ec7eCF30355e",
+      "symbol": "MTL",
+      "decimals": 8,
+      "deploymentTimestamp": 1498739852,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/763/large/Metal.png?1696501916",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "meth-meth",
       "name": "mETH",
       "coingeckoId": "mantle-staked-ether",
@@ -2321,6 +2396,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4604/large/mxc.png?1696505179",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "myria-myria",
+      "name": "Myria",
+      "coingeckoId": "myria",
+      "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86",
+      "symbol": "MYRIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1679570339,
+      "coingeckoListingTimestamp": 1680739200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29273/large/myria.png?1696528226",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2786,6 +2876,21 @@
       "coingeckoListingTimestamp": 1675382400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/23952/large/TLOS.png?1705598803",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "pufeth-pufeth",
+      "name": "pufETH",
+      "coingeckoId": "pufeth",
+      "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+      "symbol": "pufETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706723327,
+      "coingeckoListingTimestamp": 1707696000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -4141,6 +4246,20 @@
       "formula": "locked"
     },
     {
+      "id": "optimism:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1636668000,
+      "coingeckoListingTimestamp": 1636668000,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 10,
+      "type": "CBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "optimism:exa-exactly-token",
       "name": "exactly",
       "coingeckoId": "exa",
@@ -4387,6 +4506,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "mantapacific:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1694223959,
+      "coingeckoListingTimestamp": 1694223959,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 169,
+      "type": "CBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "mantapacific:manta-manta",
       "name": "Manta",
       "coingeckoId": "manta-network",
@@ -4588,6 +4721,20 @@
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
       }
+    },
+    {
+      "id": "zksync2:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1676384520,
+      "coingeckoListingTimestamp": 1676384520,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 324,
+      "type": "CBV",
+      "formula": "totalSupply"
     },
     {
       "id": "zksync2:frax-frax",
@@ -5081,6 +5228,20 @@
         "bridge": "Socket",
         "slug": "socket"
       }
+    },
+    {
+      "id": "mantle:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1688314886,
+      "coingeckoListingTimestamp": 1688314886,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 5000,
+      "type": "CBV",
+      "formula": "totalSupply"
     },
     {
       "id": "mantle:susde-staked-usde",
@@ -6156,6 +6317,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "linea:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689775200,
+      "coingeckoListingTimestamp": 1689775200,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 59144,
+      "type": "CBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "linea:foxy-foxy",
       "name": "Foxy",
       "coingeckoId": "foxy",
@@ -6301,6 +6476,20 @@
       "chainId": 59144,
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "id": "blast:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1708809815,
+      "coingeckoListingTimestamp": 1708809815,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 81457,
+      "type": "CBV",
+      "formula": "totalSupply"
     },
     {
       "id": "blast:rseth-kelpdao-restaked-eth",

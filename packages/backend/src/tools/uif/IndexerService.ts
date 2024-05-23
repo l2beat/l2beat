@@ -1,3 +1,7 @@
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../peripherals/database/DatabaseMiddleware'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
@@ -59,16 +63,20 @@ export class IndexerService {
     }))
   }
 
-  async updateSavedConfigurations(
+  updateSavedConfigurations(
     indexerId: string,
     configurationIds: string[],
     currentHeight: number | null,
-  ): Promise<void> {
-    await this.indexerConfigurationRepository.updateSavedConfigurations(
-      indexerId,
-      configurationIds,
-      currentHeight,
-    )
+    dbMiddleware: DatabaseMiddleware,
+  ): void {
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      await this.indexerConfigurationRepository.updateSavedConfigurations(
+        indexerId,
+        configurationIds,
+        currentHeight,
+        trx,
+      )
+    })
   }
 
   async persistOnlyUsedConfigurations(

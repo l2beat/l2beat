@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockscoutV2Client } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { ApplicationModule } from '../ApplicationModule'
@@ -16,12 +15,8 @@ export function createVerifiersModule(
     return
   }
 
-  const blockscoutClient = peripherals.getClient(BlockscoutV2Client, {
-    url: config.verifiers.blockscoutApiUrl,
-  })
-
   const verifiersController = new VerifiersController({
-    blockscoutClient,
+    peripherals,
     projects: config.projects,
     logger,
   })

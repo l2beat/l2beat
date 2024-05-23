@@ -23,6 +23,7 @@ export interface ChainConfig {
       getContractCreation?: boolean
     }
   }
+  blockscoutV2ApiUrl?: string
   /**
    * Setting this value for a chain does not always equal to grabbing the
    * timestamp of the first block. For example Optimism had block 0 on

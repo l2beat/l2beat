@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
+import { ThemeProvider } from 'next-themes'
 import { Roboto } from 'next/font/google'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -22,19 +24,26 @@ export const metadata: Metadata = {
   ],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="en">
+    // We suppress the hydration warning because we're using the ThemeProvider,
+    // which causes a mismatch between the server and client render.
+    // This is completely fine and applies to the `html` tag only.
+    <html lang={locale} suppressHydrationWarning>
       <body className={roboto.className}>
         <PlausibleProvider
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
         >
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            <ThemeProvider attribute="class">{children}</ThemeProvider>
+          </TRPCReactProvider>
         </PlausibleProvider>
       </body>
     </html>
