@@ -24,7 +24,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -32,7 +32,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -40,7 +40,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -48,7 +48,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -56,7 +56,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -64,7 +64,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -72,7 +72,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -80,7 +80,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -88,7 +88,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -96,7 +96,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -104,7 +104,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -112,7 +112,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -120,7 +120,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -128,7 +128,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -136,7 +136,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -144,7 +144,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -152,7 +152,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
         ],
@@ -172,7 +172,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -180,7 +180,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -188,7 +188,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -196,7 +196,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -204,7 +204,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -212,7 +212,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -220,7 +220,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -228,7 +228,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -236,7 +236,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -244,7 +244,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -252,7 +252,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -260,7 +260,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -268,7 +268,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 13 + circuit specific',
+            trustedSetup: 'PPOT 13 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -276,7 +276,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -284,7 +284,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -292,7 +292,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
           {
@@ -300,7 +300,7 @@ export const worldcoin: ZkCatalogProject = {
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS',
             mainPCS: 'KZG',
-            trustedSetup: 'PPOT AU 14 + circuit specific',
+            trustedSetup: 'PPOT 14 + circuit specific',
             link: 'https://github.com/semaphore-protocol/semaphore/blob/main/packages/circuits/src/semaphore.circom',
           },
         ],
