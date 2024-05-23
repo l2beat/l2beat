@@ -2386,6 +2386,21 @@
       "formula": "locked"
     },
     {
+      "id": "myria-myria",
+      "name": "Myria",
+      "coingeckoId": "myria",
+      "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86",
+      "symbol": "MYRIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1679570339,
+      "coingeckoListingTimestamp": 1680739200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29273/large/myria.png?1696528226",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "usdn-neutrino-usd",
       "name": "Neutrino USD",
       "coingeckoId": "neutrino",

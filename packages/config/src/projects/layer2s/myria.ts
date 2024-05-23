@@ -83,6 +83,7 @@ export const myria: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
+    associatedTokens: ['LYRA'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
