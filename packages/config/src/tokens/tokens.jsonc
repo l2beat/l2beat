@@ -84,6 +84,10 @@
       "address": "0x0b38210ea11411557c13457D4dA7dC6ea731B88a"
     },
     {
+      "symbol": "ARPA",
+      "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a"
+    },
+    {
       "symbol": "AUDIO",
       "address": "0x18aAA7115705e8be94bfFEBDE57Af9BFc265B998"
     },
@@ -110,6 +114,10 @@
     {
       "symbol": "BAT",
       "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+    },
+    {
+      "symbol": "BEL",
+      "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14"
     },
     {
       "symbol": "BFC",
@@ -251,6 +259,10 @@
     {
       "symbol": "cWBTC",
       "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a"
+    },
+    {
+      "symbol": "CYBER",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9"
     },
     {
       "symbol": "DAI",

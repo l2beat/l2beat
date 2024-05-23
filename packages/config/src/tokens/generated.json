@@ -287,6 +287,21 @@
       "formula": "locked"
     },
     {
+      "id": "arpa-arpa-token",
+      "name": "ARPA Token",
+      "coingeckoId": "arpa",
+      "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
+      "symbol": "ARPA",
+      "decimals": 18,
+      "deploymentTimestamp": 1555911970,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "audio-audius",
       "name": "Audius",
       "coingeckoId": "audius",
@@ -402,6 +417,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "bel-bella",
+      "name": "Bella",
+      "coingeckoId": "bella-protocol",
+      "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14",
+      "symbol": "BEL",
+      "decimals": 18,
+      "deploymentTimestamp": 1597392058,
+      "coingeckoListingTimestamp": 1600128000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12478/large/Bella.png?1696512296",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -942,6 +972,21 @@
       "coingeckoListingTimestamp": 1597363200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "cyber-cyberconnect",
+      "name": "CyberConnect",
+      "coingeckoId": "cyberconnect",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "symbol": "CYBER",
+      "decimals": 18,
+      "deploymentTimestamp": 1690863167,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31274/large/token.png?1715826754",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
