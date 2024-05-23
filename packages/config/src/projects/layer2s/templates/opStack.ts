@@ -498,7 +498,9 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     riskView: makeBridgeCompatible({
       stateValidation: {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: `${formatSeconds(FINALIZATION_PERIOD_SECONDS)} challenge period`,
+        secondLine: `${formatSeconds(
+          FINALIZATION_PERIOD_SECONDS,
+        )} challenge period`,
       },
       dataAvailability: {
         ...riskViewDA(daProvider),
