@@ -38,13 +38,13 @@ export const mint: Layer2 = opStackL2({
   upgradeability,
   rpcUrl: 'https://rpc.mintchain.io',
   genesisTimestamp: new UnixTime(1715608931),
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   milestones: [
     {
-      name: 'Mint Blockchain Dev Mainnet Launch',
+      name: 'Mint Mainnet Launch',
       link: 'https://x.com/Mint_Blockchain/status/1790760551565676997',
       date: '2024-05-15T00:00:00Z',
-      description: 'Mint Dev Mainnet is Now Live.',
+      description: 'Mint Mainnet is Now Live.',
     },
   ],
   nonTemplatePermissions: [
