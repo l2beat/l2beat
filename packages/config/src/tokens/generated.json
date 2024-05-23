@@ -2296,6 +2296,21 @@
       "formula": "locked"
     },
     {
+      "id": "mtl-metal",
+      "name": "Metal",
+      "coingeckoId": "metal",
+      "address": "0xF433089366899D83a9f26A773D59ec7eCF30355e",
+      "symbol": "MTL",
+      "decimals": 8,
+      "deploymentTimestamp": 1498739852,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/763/large/Metal.png?1696501916",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "meth-meth",
       "name": "mETH",
       "coingeckoId": "mantle-staked-ether",
