@@ -1,4 +1,5 @@
-import { withPlausibleProxy } from 'next-plausible'
+import createNextIntlPlugin from 'next-intl/plugin'
+import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
 import { env } from './src/env.js'
 
 /** @type {import('next').NextConfig} */
@@ -19,7 +20,7 @@ const nextConfig = {
 }
 
 function createNextConfig() {
-  const plugins = [withPlausibleProxy()]
+  const plugins = [createPlausibleProxyPlugin(), createNextIntlPlugin()]
 
   return plugins.reduce((config, plugin) => plugin(config), nextConfig)
 }
