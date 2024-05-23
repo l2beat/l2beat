@@ -102,6 +102,7 @@ export function getTokens(
       const address = token?.address
       const iconUrl = token?.iconUrl ?? ''
 
+      // TODO: this is just temporary, so CI passes
       assert(chain, 'Chain not defined')
       assert(address, 'Address not defined')
 
