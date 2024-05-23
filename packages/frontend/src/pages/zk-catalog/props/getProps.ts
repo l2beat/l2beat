@@ -1,10 +1,14 @@
+import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { Config } from '../../../build/config'
 import { Wrapped } from '../../Page'
 import { getDefaultPageMetadata } from '../../metadata'
 import { ZkCatalogPageProps } from '../view/ZkCatalogPage'
 import { getZkCatalogView } from './getZkCatalogView'
 
-export function getProps(config: Config): Wrapped<ZkCatalogPageProps> {
+export function getProps(
+  config: Config,
+  verifiersApiResponse: VerifiersApiResponse,
+): Wrapped<ZkCatalogPageProps> {
   const projects = [
     ...config.zkCatalogProjects,
     ...config.layer2s.filter((l2) => l2.stateValidation?.proofVerification),
@@ -13,7 +17,7 @@ export function getProps(config: Config): Wrapped<ZkCatalogPageProps> {
 
   return {
     props: {
-      view: getZkCatalogView(projects),
+      view: getZkCatalogView(projects, verifiersApiResponse),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

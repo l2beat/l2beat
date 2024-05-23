@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 19825954,
+  "blockNumber": 19926669,
   "configHash": "0x9d1d662ad983afd5978b78813d758cb07749f6d129cd5949c40cfa4ec34a6bfa",
   "version": 4,
   "contracts": [
@@ -126,7 +126,7 @@
         "GUARDIAN": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "L2_ORACLE": "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19825946],
+        "params": [1000000000, 490798, 19926590],
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
         "version": "1.7.2"
@@ -151,7 +151,7 @@
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": true
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "resourceConfig": [
           20000000,
@@ -161,7 +161,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 684000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279131273430256651056",
         "sequencerInbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xB18AD28cB78fD2eAfAc6941c24c5135515B796f0",
@@ -221,7 +221,7 @@
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
         ],
         "getThreshold": 4,
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -240,10 +240,10 @@
         "CHALLENGER": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1144800,
-        "latestOutputIndex": 52,
-        "nextBlockNumber": 1166400,
-        "nextOutputIndex": 53,
+        "latestBlockNumber": 1749600,
+        "latestOutputIndex": 80,
+        "nextBlockNumber": 1771200,
+        "nextOutputIndex": 81,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -265,7 +265,7 @@
       "sinceTimestamp": 1712862119,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632871",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648073",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

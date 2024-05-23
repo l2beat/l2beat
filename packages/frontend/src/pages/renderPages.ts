@@ -37,6 +37,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     finalityApiResponse,
     l2CostsApiResponse,
     implementationChange,
+    verifiersApiResponse,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -121,9 +122,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  if (config.features.zkCatalog) {
-    pages.push(getZkCatalogPage(config))
-    pages.push(...getZkCatalogProjectPages(config))
+  if (config.features.zkCatalog && verifiersApiResponse) {
+    pages.push(getZkCatalogPage(config, verifiersApiResponse))
+    pages.push(...getZkCatalogProjectPages(config, verifiersApiResponse))
   }
 
   outputPages(config, pages)

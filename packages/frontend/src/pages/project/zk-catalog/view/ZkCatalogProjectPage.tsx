@@ -1,10 +1,10 @@
-import { ProofVerification } from '@l2beat/config'
 import React, { ReactNode } from 'react'
 
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
+import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
 import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
@@ -12,9 +12,10 @@ import { Verifiers } from './Verifiers'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails
+  askForVerificationLink: string
 }
 
-export interface ZkCatalogProjectDetails extends ProofVerification {
+export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string
   icon: string
   description: string
@@ -31,7 +32,10 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
       </div>
       <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
         <Section title="List of verifiers">
-          <Verifiers items={props.details.verifiers} />
+          <Verifiers
+            items={props.details.verifiers}
+            askForVerificationLink={props.askForVerificationLink}
+          />
         </Section>
         <Section title="Description">
           <Markdown>{props.details.description}</Markdown>

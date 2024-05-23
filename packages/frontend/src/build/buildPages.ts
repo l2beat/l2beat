@@ -1,13 +1,5 @@
 import Bugsnag from '@bugsnag/js'
 import { getChainNames } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  FinalityApiResponse,
-  ImplementationChangeReportApiResponse,
-  L2CostsApiResponse,
-  LivenessApiResponse,
-  ProjectAssetsBreakdownApiResponse,
-} from '@l2beat/shared-pure'
 
 import { HttpClient } from '../../../shared/build'
 import { renderPages } from '../pages/renderPages'
@@ -28,6 +20,7 @@ import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { getCommonFeatures } from './config/getCommonFeatures'
+import { fetchVerifiersApi } from './api/fetchVerifiersApi'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -65,14 +58,35 @@ async function main() {
       finalityApiResponse,
       implementationChange,
       l2CostsApiResponse,
+      verifiersApiResponse,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, config.features),
-      config.features.activity ? fetchActivityApi(config.backend, http) : undefined,
-      config.features.tvlBreakdown ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http, config.features) : undefined,
-      config.features.liveness ? fetchLivenessApi(config.backend, http) : undefined,
-      config.features.finality ? fetchFinalityApi(config.backend, http) : undefined,
-      config.features.implementationChange ? fetchImplementationChangeReport(config.backend, http) : undefined,
-      config.features.costsPage ? fetchL2CostsApi(config.backend, http) : undefined
+      config.features.activity
+        ? fetchActivityApi(config.backend, http)
+        : undefined,
+      config.features.tvlBreakdown
+        ? fetchTvlBreakdownApi(
+            config.backend,
+            config.backend.apiUrl,
+            http,
+            config.features,
+          )
+        : undefined,
+      config.features.liveness
+        ? fetchLivenessApi(config.backend, http)
+        : undefined,
+      config.features.finality
+        ? fetchFinalityApi(config.backend, http)
+        : undefined,
+      config.features.implementationChange
+        ? fetchImplementationChangeReport(config.backend, http)
+        : undefined,
+      config.features.costsPage
+        ? fetchL2CostsApi(config.backend, http)
+        : undefined,
+      config.features.zkCatalog
+        ? fetchVerifiersApi(config.backend, http)
+        : undefined,
     ])
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)
@@ -97,6 +111,7 @@ async function main() {
       finalityApiResponse,
       l2CostsApiResponse,
       implementationChange,
+      verifiersApiResponse,
     }
     await renderPages(config, pagesData)
     console.timeEnd('[BUILDING PAGES]')
