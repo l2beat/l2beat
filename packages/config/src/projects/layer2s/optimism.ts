@@ -223,6 +223,7 @@ export const optimism: Layer2 = opStackL2({
       url: 'https://api-optimistic.etherscan.io/api',
       type: 'etherscan',
     },
+    blockscoutV2ApiUrl: 'https://optimism.blockscout.com/api/v2',
     // ~ Timestamp of block number 138 on Optimism
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138

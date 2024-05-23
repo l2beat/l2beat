@@ -236,9 +236,7 @@ export function makeConfig(
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
-    verifiers: flags.isEnabled('verifiers') && {
-      blockscoutApiUrl: env.string('BLOCKSCOUT_API_URL'),
-    },
+    verifiers: flags.isEnabled('verifiers'),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {
