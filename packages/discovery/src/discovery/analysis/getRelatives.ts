@@ -13,24 +13,20 @@ export function getRelatives(
   fields?: { [key: string]: DiscoveryContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}
-
+  for (const known of knownRelatives ?? []) {
+    result[known.toString()] = new Set()
+  }
   for (const param of parameters) {
     if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
       continue
     }
-    const addresses = getAddresses(param.value)
-    const withKnownRelatives = addresses.concat(knownRelatives ?? [])
-    const deduplicated = withKnownRelatives.filter(
-      (address, index, self) => self.indexOf(address) === index,
-    )
-    const withoutIgnored = deduplicated.filter(
+    const addresses = getAddresses(param.value).filter(
       (address) => !ignoredAddresses?.includes(address),
     )
     const template = fields?.[param.field]?.target?.handler ?? undefined
-    for (const address of withoutIgnored) {
-      const addressStr = address.toString()
-      const curTemplates = result[addressStr] ?? new Set()
-      result[addressStr] = curTemplates
+    for (const address of addresses) {
+      const curTemplates = result[address.toString()] ?? new Set()
+      result[address.toString()] = curTemplates
 
       if (template !== undefined) {
         curTemplates.add(template)

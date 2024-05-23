@@ -69,7 +69,7 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-    _templates: Set<string>, // TODO
+    _suggestedTemplates: Set<string>, // TODO
   ): Promise<{
     analysis: Analysis
     relatives: AddressesWithTemplates
