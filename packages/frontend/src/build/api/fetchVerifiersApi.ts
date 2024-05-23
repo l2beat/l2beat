@@ -12,7 +12,7 @@ export async function fetchVerifiersApi(
   http: JsonHttpClient,
 ): Promise<VerifiersApiResponse> {
   if (backend.mock) {
-    return getVerifiersApiResponse()
+    return getMockVerifiersApiResponse()
   }
 
   const url = backend.apiUrl + '/api/verifiers'
@@ -20,7 +20,7 @@ export async function fetchVerifiersApi(
   return VerifiersApiResponse.parse(json)
 }
 
-function getVerifiersApiResponse(): VerifiersApiResponse {
+function getMockVerifiersApiResponse(): VerifiersApiResponse {
   const now = UnixTime.now().add(-400, 'days')
   const verifierAddress: EthereumAddress[] = []
 

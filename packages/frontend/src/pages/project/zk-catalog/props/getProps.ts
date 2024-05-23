@@ -42,21 +42,15 @@ function getZkCatalogProjectDetails(
 
   const proofVerification = getProofVerification(project, verifiersApiResponse)
 
-  const baseDetails = {
+  return {
     title: project.display.name,
     icon: `/icons/${project.display.slug}.png`,
-    linkToMainProjectDetails: undefined,
+    linkToMainProjectDetails:
+      project.type === 'zk-catalog'
+        ? `/scaling/projects/${project.display.slug}`
+        : undefined,
     hasTrustedSetup: hasTrustedSetup(proofVerification.verifiers),
     description: descriptionEntry.content,
     ...proofVerification,
-  }
-
-  if (project.type === 'zk-catalog') {
-    return baseDetails
-  }
-
-  return {
-    ...baseDetails,
-    linkToMainProjectDetails: `/scaling/projects/${project.display.slug}`,
   }
 }

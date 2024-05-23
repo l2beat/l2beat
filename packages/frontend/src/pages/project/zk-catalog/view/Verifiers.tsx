@@ -89,7 +89,7 @@ export function Verifiers(props: Props) {
               </div>
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
-                  Descriptions
+                  Description
                 </p>
                 <Markdown>{item.description}</Markdown>
               </div>
