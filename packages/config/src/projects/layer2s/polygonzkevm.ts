@@ -69,7 +69,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
     },
   },
-  associatedTokens: ['POL'],
+  associatedTokens: ['POL', 'MATIC'],
   discovery,
   transactionApi: {
     type: 'rpc',
