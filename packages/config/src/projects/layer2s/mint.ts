@@ -60,4 +60,12 @@ export const mint: Layer2 = opStackL2({
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
+  milestones: [
+    {
+      name: 'Mint Mainnet Launch',
+      link: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
+      date: '2024-05-14T00:00:00Z',
+      description: 'Mint Mainnet is now live.',
+    },
+  ],
 })
