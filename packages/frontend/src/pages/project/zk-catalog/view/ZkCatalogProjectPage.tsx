@@ -92,18 +92,10 @@ function Header(props: ZkCatalogProjectPageProps) {
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
         <HeaderItem title="Aggregation">
-          {props.details.aggregation ? (
-            <span className="text-green-700 dark:text-green-450">Yes</span>
-          ) : (
-            <span className="text-red-700 dark:text-red-300">No</span>
-          )}
+          {props.details.aggregation ? 'Yes' : 'No'}
         </HeaderItem>
         <HeaderItem title="Trusted setup">
-          {props.details.hasTrustedSetup ? (
-            <span className="text-green-700 dark:text-green-450">Yes</span>
-          ) : (
-            <span className="text-red-700 dark:text-red-300">No</span>
-          )}
+          {props.details.hasTrustedSetup ? 'Yes' : 'No'}
         </HeaderItem>
       </div>
     </header>
