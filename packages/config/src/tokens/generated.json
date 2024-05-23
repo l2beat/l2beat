@@ -4126,6 +4126,20 @@
       "formula": "locked"
     },
     {
+      "id": "optimism:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1636668000,
+      "coingeckoListingTimestamp": 1636668000,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 10,
+      "type": "CBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "optimism:exa-exactly-token",
       "name": "exactly",
       "coingeckoId": "exa",
@@ -6139,6 +6153,20 @@
       "chainId": 42766,
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "id": "linea:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689775200,
+      "coingeckoListingTimestamp": 1689775200,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 59144,
+      "type": "CBV",
+      "formula": "totalSupply"
     },
     {
       "id": "linea:foxy-foxy",
