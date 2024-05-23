@@ -31,8 +31,3 @@ export interface ConfigurationRange<T> {
   to: number
   configurations: Configuration<T>[]
 }
-
-export interface DatabaseMiddleware {
-  add: (cb: () => Promise<void>) => void
-  execute: () => Promise<void>
-}

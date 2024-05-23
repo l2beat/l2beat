@@ -4,13 +4,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
+import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
-  DatabaseMiddleware,
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../../tools/uif/multi/types'

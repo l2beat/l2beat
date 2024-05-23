@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
-  DatabaseMiddleware,
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../../tools/uif/multi/types'

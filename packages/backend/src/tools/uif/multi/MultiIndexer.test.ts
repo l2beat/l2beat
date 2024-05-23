@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, } from 'earl'
+import { expect, mockFn } from 'earl'
 
 import { MultiIndexer } from './MultiIndexer'
 import {
@@ -485,7 +485,12 @@ class TestMultiIndexer extends MultiIndexer<null> {
     configurations: Configuration<null>[] | undefined,
     private readonly _saved: SavedConfiguration<null>[],
   ) {
-    super(Logger.SILENT, [], async () => Promise.resolve(mockDbMiddleware), configurations)
+    super(
+      Logger.SILENT,
+      [],
+      async () => Promise.resolve(mockDbMiddleware),
+      configurations,
+    )
   }
 
   getSafeHeight =

@@ -1,9 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
+import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration, DatabaseMiddleware, SavedConfiguration } from './types'
+import { Configuration, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]

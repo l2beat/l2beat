@@ -1,7 +1,10 @@
-import { Knex } from 'knex'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../peripherals/database/KnexMiddleware'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
-import { DatabaseMiddleware, SavedConfiguration } from './multi/types'
+import { SavedConfiguration } from './multi/types'
 
 export class IndexerService {
   constructor(
@@ -66,7 +69,7 @@ export class IndexerService {
     currentHeight: number | null,
     dbMiddleware: DatabaseMiddleware,
   ): void {
-    dbMiddleware.add(async (trx?: Knex.Transaction) => {
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
       await this.indexerConfigurationRepository.updateSavedConfigurations(
         indexerId,
         configurationIds,

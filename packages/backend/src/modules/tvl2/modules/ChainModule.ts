@@ -14,10 +14,10 @@ import { groupBy } from 'lodash'
 
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { KnexMiddleware } from '../../../tools/uif/KnexMiddleware'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import {

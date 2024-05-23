@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
 
+import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
   Configuration,
   ConfigurationRange,
-  DatabaseMiddleware,
   RemovalConfiguration,
   SavedConfiguration,
   UpdateConfiguration,

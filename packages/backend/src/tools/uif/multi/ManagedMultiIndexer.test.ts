@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { DatabaseMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { describeDatabase } from '../../../test/database'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
-import { KnexMiddleware } from '../KnexMiddleware'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
@@ -34,7 +34,8 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        createDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -49,7 +50,8 @@ describe(ManagedMultiIndexer.name, () => {
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
-        createDatabaseMiddleware: async () => mockObject<KnexMiddleware>({}),
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       }
       new TestIndexer({
         ...common,
