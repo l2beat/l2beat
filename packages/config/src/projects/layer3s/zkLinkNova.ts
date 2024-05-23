@@ -71,15 +71,5 @@ export const zklinknova: Layer3 = underReviewL3({
       sinceTimestamp: new UnixTime(1709295323),
       tokens: '*', // e.g. pufETH, WBTC, ezETH, weETH, ARPA, CYBER wstETH
     },
-    // {
-    //   chain: 'arbitrum',
-    //   includeInTotal: false,
-    //   ...discovery.getEscrowDetails({
-    //     address: EthereumAddress('0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b'),
-    //     tokens: '*',
-    //     description:
-    //       'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-    //   }),
-    // },
   ],
 })
