@@ -67,6 +67,8 @@ export function getTvl2Config(
       100,
     ),
     projects,
+    projectsExcludedFromApi:
+      env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
   }
 
   return tvl2Config

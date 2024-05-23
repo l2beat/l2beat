@@ -5,11 +5,13 @@ import { ChevronDownIcon } from '../../../../components/icons'
 import { EM_DASH } from '../../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
+import { LastUsedCell } from './LastUsedCell'
 import { VerifiedCell } from './VerifiedCell'
 import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
   items: ZkCatalogProjectDetails['verifiers']
+  askForVerificationLink: string
 }
 
 export function Verifiers(props: Props) {
@@ -25,6 +27,9 @@ export function Verifiers(props: Props) {
           </th>
           <th className="pr-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
             Verification status
+          </th>
+          <th className="pr-4 py-2 text-start text-xs font-semibold uppercase text-gray-500 dark:text-gray-50 hidden md:table-cell">
+            Last used
           </th>
           <th />
         </tr>
@@ -49,7 +54,13 @@ export function Verifiers(props: Props) {
               />
             </td>
             <td className="pr-4">
-              <VerifiedCell verified={item.verified} />
+              <VerifiedCell
+                verified={item.verified}
+                askForVerificationLink={props.askForVerificationLink}
+              />
+            </td>
+            <td className="pr-4 hidden md:table-cell">
+              <LastUsedCell days={item.lastUsedDaysAgo} />
             </td>
             <td className="pr-4">
               <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
@@ -76,6 +87,12 @@ export function Verifiers(props: Props) {
               </div>
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
+                  Last used
+                </p>
+                <LastUsedCell days={item.lastUsedDaysAgo} />
+              </div>
+              <div>
+                <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
                 </p>
                 <Markdown>{item.description}</Markdown>
@@ -83,14 +100,22 @@ export function Verifiers(props: Props) {
               <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
                 <div>
-                  <Link>Ask for verification</Link>
+                  <Link href={props.askForVerificationLink}>
+                    Ask for verification
+                  </Link>
                 </div>
               ) : null}
             </td>
             <td
-              colSpan={4}
+              colSpan={5}
               className="hidden md:table-cell px-4 pb-5 mt-1 w-[90%] space-y-5"
             >
+              <div>
+                <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
+                  Last used
+                </p>
+                <LastUsedCell days={item.lastUsedDaysAgo} />
+              </div>
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
@@ -108,7 +133,9 @@ export function Verifiers(props: Props) {
 
 function SubVerifiersTable({
   verifier,
-}: { verifier: ZkCatalogProjectDetails['verifiers'][number] }) {
+}: {
+  verifier: ZkCatalogProjectDetails['verifiers'][number]
+}) {
   return (
     <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)] lg:w-full">
       <table className="w-full border-collapse">

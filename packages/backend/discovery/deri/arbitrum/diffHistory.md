@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x13f3e1cccf1d53a54a60f806647a4ca27d876af9
+
+# Diff at Thu, 23 May 2024 06:41:36 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@45012f9c9629c7256c2c901ee618dd1c18eaaafa block: 211900051
+- current block number: 214125753
+
+## Description
+
+The required stake is raised from 0.1 to 0.3 ETH. There is only one whitelisted validator who has 0.1 stake and as not confirmed any node since May-21-2024 09:09:22 AM.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.currentRequiredStake:
+-        "100000000000000000"
+
+          100000000000000000
++        "300000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xefe932767cda34d32df48f810919d7198c6c2a82
 
 # Diff at Wed, 31 Jan 2024 08:03:25 GMT:
