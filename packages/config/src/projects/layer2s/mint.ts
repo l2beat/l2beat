@@ -46,6 +46,7 @@ export const mint: Layer2 = opStackL2({
   },
   transactionApi: {
     type: 'rpc',
+    defaultUrl: 'https://rpc.mintchain.io',
     startBlock: 1,
     defaultCallsPerMinute: 800,
     assessCount: subtractOne,
