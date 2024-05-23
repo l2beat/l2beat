@@ -59,7 +59,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -105,7 +105,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -142,7 +142,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [update('a', 100, null, false)]
@@ -172,7 +172,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -207,7 +207,7 @@ describe(ChainAmountIndexer.name, () => {
         encode: () => '',
         decode: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
-        newDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
+        createDatabaseMiddleware: async () => mockObject<DatabaseMiddleware>({}),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

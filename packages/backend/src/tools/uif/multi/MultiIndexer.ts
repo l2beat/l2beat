@@ -20,7 +20,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
-    private readonly newDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
+    private readonly createDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
     configurations?: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -169,7 +169,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const dbMiddleware = await this.newDatabaseMiddleware()
+    const dbMiddleware = await this.createDatabaseMiddleware()
     const newHeight = await this.multiUpdate(
       from,
       adjustedTo,

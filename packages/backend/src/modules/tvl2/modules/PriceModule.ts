@@ -63,7 +63,7 @@ export function createPriceModule(
         encode,
         decode,
         syncOptimizer,
-        newDatabaseMiddleware: async () =>
+        createDatabaseMiddleware: async () =>
           new KnexMiddleware(await peripherals.database.getKnex()),
       }),
   )
