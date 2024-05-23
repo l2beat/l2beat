@@ -51,9 +51,18 @@ export class DiscoveryEngine {
         }
       }
 
-      // TODO: Use shouldSkip(), where does the error info go?
-      if (count > config.maxAddresses || depth > config.maxDepth) {
-        console.log('limits exceeded')
+      for (const address of Object.keys(toAnalyze)) {
+        const skipReason = shouldSkip(
+          EthereumAddress(address),
+          config,
+          depth,
+          count,
+        )
+        if (skipReason !== undefined) {
+          this.logger.log(skipReason)
+          delete toAnalyze[address]
+        }
+        count++
       }
 
       // remove resolved addresses that need to be analyzed again
@@ -77,7 +86,6 @@ export class DiscoveryEngine {
           )
           resolved.push(analysis)
 
-          count += Object.keys(relatives).length
           for (const [address, suggestedTemplates] of Object.entries(
             relatives,
           )) {
