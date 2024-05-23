@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn } from 'earl'
 
-import { MultiIndexer, getDefaultDatabaseMiddleware } from './MultiIndexer'
+import { MultiIndexer } from './MultiIndexer'
 import {
   Configuration,
   RemovalConfiguration,
@@ -485,7 +485,7 @@ class TestMultiIndexer extends MultiIndexer<null> {
     configurations: Configuration<null>[] | undefined,
     private readonly _saved: SavedConfiguration<null>[],
   ) {
-    super(Logger.SILENT, [], configurations, async () => TestDbMiddleware)
+    super(Logger.SILENT, [], async () => TestDbMiddleware, configurations)
   }
 
   getSafeHeight =
@@ -545,4 +545,17 @@ function removal(
   return { id, properties: null, from, to }
 }
 
-const TestDbMiddleware = getDefaultDatabaseMiddleware()
+export const getTestDbMiddleware = () => ({
+  queue: [] as (() => Promise<void>)[],
+  add(cb: () => Promise<void>) {
+    this.queue.push(cb)
+  },
+  async execute() {
+    for (const cb of this.queue) {
+      await cb()
+    }
+    this.queue = []
+  },
+})
+
+const TestDbMiddleware = getTestDbMiddleware()

@@ -11,7 +11,8 @@ import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
-import { MultiIndexer, getDefaultDatabaseMiddleware } from './MultiIndexer'
+import { MultiIndexer } from './MultiIndexer'
+import { getTestDbMiddleware } from './MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -358,4 +359,4 @@ function removal(
   return { id: id.repeat(12), properties: '', from, to }
 }
 
-const TestDbMiddleware = getDefaultDatabaseMiddleware()
+const TestDbMiddleware = getTestDbMiddleware()

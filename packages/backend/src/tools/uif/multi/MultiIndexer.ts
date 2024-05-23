@@ -12,19 +12,6 @@ import {
   UpdateConfiguration,
 } from './types'
 
-export const getDefaultDatabaseMiddleware = () => ({
-  queue: [] as (() => Promise<void>)[],
-  add(cb: () => Promise<void>) {
-    this.queue.push(cb)
-  },
-  async execute() {
-    for (const cb of this.queue) {
-      await cb()
-    }
-    this.queue = []
-  },
-})
-
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private configurations: Configuration<T>[] = []
@@ -33,10 +20,8 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
+    private readonly newDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
     configurations?: Configuration<T>[],
-    private readonly newDatabaseMiddleware?: () => Promise<
-      DatabaseMiddleware | undefined
-    >,
     options?: IndexerOptions,
   ) {
     super(logger, parents, options)
@@ -184,8 +169,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const dbMiddleware =
-      (await this.newDatabaseMiddleware?.()) ?? getDefaultDatabaseMiddleware()
+    const dbMiddleware = await this.newDatabaseMiddleware()
     const newHeight = await this.multiUpdate(
       from,
       adjustedTo,
