@@ -59,6 +59,7 @@ export const mantle: Layer2 = opStackL2({
       ],
     },
   },
+  associatedTokens: ['MNT'],
   discovery,
   display: {
     name: 'Mantle',

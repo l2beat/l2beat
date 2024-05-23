@@ -77,6 +77,21 @@
       "formula": "locked"
     },
     {
+      "id": "aevo-aevo",
+      "name": "Aevo",
+      "coingeckoId": "aevo-exchange",
+      "address": "0xB528edBef013aff855ac3c50b381f253aF13b997",
+      "symbol": "AEVO",
+      "decimals": 18,
+      "deploymentTimestamp": 1706636159,
+      "coingeckoListingTimestamp": 1710288000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35893/large/aevo.png?1710138340",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",
@@ -2139,7 +2154,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1625191817,
       "coingeckoListingTimestamp": 1639612800,
-      "category": "stablecoin",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1696520850",
       "chainId": 1,
       "type": "CBV",
@@ -2281,6 +2296,21 @@
       "formula": "locked"
     },
     {
+      "id": "mtl-metal",
+      "name": "Metal",
+      "coingeckoId": "metal",
+      "address": "0xF433089366899D83a9f26A773D59ec7eCF30355e",
+      "symbol": "MTL",
+      "decimals": 8,
+      "deploymentTimestamp": 1498739852,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/763/large/Metal.png?1696501916",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "meth-meth",
       "name": "mETH",
       "coingeckoId": "mantle-staked-ether",
@@ -2366,6 +2396,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4604/large/mxc.png?1696505179",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "myria-myria",
+      "name": "Myria",
+      "coingeckoId": "myria",
+      "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86",
+      "symbol": "MYRIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1679570339,
+      "coingeckoListingTimestamp": 1680739200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29273/large/myria.png?1696528226",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

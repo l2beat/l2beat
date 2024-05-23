@@ -13,6 +13,7 @@ const upgradeability = {
 
 export const lyra: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  associatedTokens: ['LYRA'],
   discovery,
   display: {
     name: 'Lyra',

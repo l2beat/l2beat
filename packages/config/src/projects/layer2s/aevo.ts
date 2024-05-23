@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  associatedTokens: ['AEVO'],
   discovery,
   display: {
     name: 'Aevo',
