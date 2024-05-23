@@ -6,7 +6,7 @@ import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryEngine } from './DiscoveryEngine.1'
 
-describe.only(DiscoveryEngine.name, () => {
+describe(DiscoveryEngine.name, () => {
   const BLOCK_NUMBER = 1234
   const A = EthereumAddress.random()
   const B = EthereumAddress.random()
