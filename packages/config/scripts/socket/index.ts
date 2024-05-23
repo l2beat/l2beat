@@ -1,13 +1,13 @@
 import * as fs from 'fs'
-import axios from 'axios'
 import * as dotenv from 'dotenv'
 import { ethers } from 'ethers'
 import pLimit from 'p-limit'
 
 dotenv.config()
 
-const ETHERSCAN_API_KEY = process.env.ETHEREUM_ETHERSCAN_API_KEY
-const RPC_URL = process.env.ETHEREUM_RPC_URL
+const ETHERSCAN_API_KEY: string | undefined =
+  process.env.ETHEREUM_ETHERSCAN_API_KEY
+const RPC_URL: string | undefined = process.env.ETHEREUM_RPC_URL
 
 if (!ETHERSCAN_API_KEY || !RPC_URL) {
   throw new Error('Missing environment variables')
@@ -16,8 +16,7 @@ if (!ETHERSCAN_API_KEY || !RPC_URL) {
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
 const limit = pLimit(2)
 
-// copypaste plugs from discovered.json here:
-const plugs = [
+const plugs: string[] = [
   '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
   '0x200AF8FCdD5246D70B369A98143Ac8930A077B7A',
   '0x22d8360eB04F46195c7B02A66658C375948d8A99',
@@ -110,7 +109,7 @@ interface Result {
   hubOrBridge: string | null
   siblingChainSlug: number | string | null
   tokens: TokenInfo[]
-  owner: string | null // Added owner field
+  owner: string | null
   tags?: string[]
 }
 
@@ -139,22 +138,37 @@ async function getTokenInfoFromEtherscan(
     console.log(
       `Fetching token transactions for ${contractAddress} from Etherscan`,
     )
-    const { data } = await axios.get('https://api.etherscan.io/api', {
-      params: {
-        module: 'account',
-        action: 'tokentx',
-        contractaddress: contractAddress,
-        page: 1,
-        offset: 5,
-        apikey: ETHERSCAN_API_KEY,
-      },
-    })
+    const response = await fetch(
+      `https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=${contractAddress}&page=1&offset=5&apikey=${ETHERSCAN_API_KEY}`,
+    )
 
-    if (data.status === '1' && data.result.length > 0) {
-      const { tokenName, tokenSymbol } = data.result[0]
-      return { tokenName, tokenSymbol }
+    // Define the expected response type
+    interface EtherscanResponse {
+      status: string
+      result: { tokenName: string; tokenSymbol: string }[]
+    }
+
+    const data: unknown = await response.json()
+
+    // Check if data is of type EtherscanResponse
+    if (
+      typeof data === 'object' &&
+      data !== null &&
+      'status' in data &&
+      'result' in data &&
+      Array.isArray((data as EtherscanResponse).result)
+    ) {
+      const typedData = data as EtherscanResponse
+
+      if (typedData.status === '1' && typedData.result.length > 0) {
+        const { tokenName, tokenSymbol } = typedData.result[0]
+        return { tokenName, tokenSymbol }
+      } else {
+        console.error(`No token transactions found for ${contractAddress}`)
+        return null
+      }
     } else {
-      console.error(`No token transactions found for ${contractAddress}`)
+      console.error(`Unexpected response format for ${contractAddress}`)
       return null
     }
   } catch (error) {
@@ -201,7 +215,7 @@ async function exploreContract(address: string): Promise<Result> {
     'function siblingChainSlug() view returns (uint32)',
     'function token__() view returns (address)',
     'function token() view returns (address)',
-    'function owner() view returns (address)', // Added owner function to ABI
+    'function owner() view returns (address)',
   ]
 
   const contract = new ethers.Contract(address, abi, provider)
@@ -220,7 +234,7 @@ async function exploreContract(address: string): Promise<Result> {
     hubOrBridge: (hub as string) || (bridge as string) || null,
     siblingChainSlug,
     tokens: [],
-    owner: owner as string | null, // Include owner in result
+    owner: owner as string | null,
   }
 
   const hubOrBridgeAddress = hub || bridge
@@ -354,7 +368,6 @@ async function main(): Promise<void> {
     (key) => initialAddressesByProject[key].length > 0,
   )
 
-  // Deduplication step
   const deduplicateArray = (arr: string[]) => Array.from(new Set(arr))
   projectKeys.forEach((key) => {
     initialAddressesByProject[key] = deduplicateArray(
