@@ -5,6 +5,7 @@ import { Roboto } from 'next/font/google'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import './globals.css'
+import { ProgressBarProvider } from './_components/ProgressBarProvider'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used
@@ -37,7 +38,9 @@ export default async function RootLayout({
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
         >
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            <ProgressBarProvider>{children}</ProgressBarProvider>
+          </TRPCReactProvider>
         </PlausibleProvider>
       </body>
     </html>
