@@ -79,6 +79,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
@@ -189,6 +190,7 @@ export const layer2s: Layer2[] = [
   rise,
   rss3,
   scroll,
+  sophon,
   sorare,
   specular,
   starknet,
