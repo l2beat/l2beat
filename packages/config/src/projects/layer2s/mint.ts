@@ -22,7 +22,7 @@ export const mint: Layer2 = opStackL2({
       'Mint is the L2 blockchain for NFT Industry, powered by the OP Stack.',
     purposes: ['Universal', 'NFT'],
     links: {
-      websites: ['https://www.mintchain.io'],
+      websites: ['https://mintchain.io'],
       apps: ['https://bridge.mintchain.io'],
       documentation: ['https://docs.mintchain.io'],
       explorers: ['https://explorer.mintchain.io'],
