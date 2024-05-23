@@ -1,9 +1,16 @@
 import Link from 'next/link'
+import { ClassNameValue } from 'tailwind-merge'
+import { cn } from '~/utils/cn'
 
-export function Footer() {
+export function Footer({ className }: { className?: ClassNameValue }) {
   return (
-    <footer className="py-8">
-      <div className="max-w-[1176px] mx-auto flex grid-cols-2 flex-col gap-4 px-4 md:grid md:px-12 font-medium text-xs text-zinc-500 dark:text-gray-50">
+    <footer className="py-8 w-full flex justify-center">
+      <div
+        className={cn(
+          'flex flex-row w-full gap-4 px-[8px] justify-between font-medium text-xs text-zinc-500 dark:text-gray-50',
+          className,
+        )}
+      >
         <p className="text-center md:text-left">
           Made with ❤️ by{' '}
           <Link
