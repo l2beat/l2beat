@@ -311,7 +311,7 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258',
         ),
-        chainId: ChainId.OPTIMISM,
+        chainId: ChainId.ETHEREUM,
         verified: 'no',
         subVerifiers: [
           {
@@ -329,7 +329,7 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0xFC1c26E964F791f81a33F49D91f79456891AA1c1',
         ),
-        chainId: ChainId.OPTIMISM,
+        chainId: ChainId.ETHEREUM,
         verified: 'no',
         subVerifiers: [
           {
@@ -347,7 +347,7 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0xE44c83b9e1971A24EC698829297A0C4026B0CeF9',
         ),
-        chainId: ChainId.OPTIMISM,
+        chainId: ChainId.ETHEREUM,
         verified: 'no',
         subVerifiers: [
           {
@@ -365,7 +365,7 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1',
         ),
-        chainId: ChainId.OPTIMISM,
+        chainId: ChainId.ETHEREUM,
         verified: 'no',
         subVerifiers: [
           {
@@ -383,7 +383,7 @@ export const worldcoin: ZkCatalogProject = {
         contractAddress: EthereumAddress(
           '0x43B68ccBa7FC726540768fD1537c3179283140ed',
         ),
-        chainId: ChainId.OPTIMISM,
+        chainId: ChainId.ETHEREUM,
         verified: 'no',
         subVerifiers: [
           {
