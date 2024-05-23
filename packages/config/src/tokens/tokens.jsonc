@@ -22,6 +22,10 @@
       "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
     },
     {
+      "symbol": "AEVO",
+      "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -567,8 +571,7 @@
     },
     {
       "symbol": "LYRA",
-      "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
-      "category": "stablecoin"
+      "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf"
     },
     {
       "symbol": "LYXe",
@@ -627,12 +630,20 @@
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
     },
     {
+      "symbol": "MTL",
+      "address": "0xF433089366899D83a9f26A773D59ec7eCF30355e"
+    },
+    {
       "symbol": "MUTE",
       "address": "0xA49d7499271aE71cd8aB9Ac515e6694C755d400c"
     },
     {
       "symbol": "MXC",
       "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
+    },
+    {
+      "symbol": "MYRIA",
+      "address": "0xA0Ef786Bf476fE0810408CaBA05E536aC800ff86"
     },
     {
       "symbol": "NEXO",

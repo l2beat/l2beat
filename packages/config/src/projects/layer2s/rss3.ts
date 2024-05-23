@@ -53,6 +53,7 @@ export const rss3: Layer2 = opStackL2({
     },
     bridge: { type: 'None' },
   },
+  associatedTokens: ['RSS3'],
   discovery,
   display: {
     shortName: 'RSS3',
