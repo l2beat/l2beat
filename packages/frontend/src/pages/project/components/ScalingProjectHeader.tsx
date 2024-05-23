@@ -138,7 +138,7 @@ export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
       showTvlBreakdown={
         props.showTvlBreakdown &&
         !props.isUpcoming &&
-        props.tvlBreakdown &&
+        !!props.tvlBreakdown &&
         !props.tvlBreakdown.empty
       }
       isUpcoming={props.isUpcoming}

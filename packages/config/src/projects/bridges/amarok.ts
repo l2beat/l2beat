@@ -6,6 +6,16 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('amarok')
 
+const mainnetSpokedelayBlocks = discovery.getContractValue<number>(
+  'MainnetSpokeConnector',
+  'delayBlocks',
+)
+
+const mainnetSpokedisputeBlocks = discovery.getContractValue<number>(
+  'MainnetSpokeConnector',
+  'disputeBlocks',
+)
+
 export const amarok: Bridge = {
   type: 'bridge',
   id: ProjectId('amarok'),
@@ -13,17 +23,14 @@ export const amarok: Bridge = {
     name: 'Connext',
     slug: 'connext',
     description:
-      'Connext is a multilayered system that aggregates various native AMBs in an Hub-and-Spoke architecture with Ethereum being the Hub receiving\
+      'Connext is a multilayered system that aggregates various native AMBs in a Hub-and-Spoke architecture with Ethereum being the Hub receiving\
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
     category: 'Liquidity Network',
     links: {
       apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
       websites: ['https://blog.connext.network/'],
       documentation: ['https://docs.connext.network/'],
-      repositories: [
-        'https://github.com/connext',
-        'https://github.com/CoinHippo-Labs/connext-bridge',
-      ],
+      repositories: ['https://github.com/connext/monorepo'],
       socialMedia: [
         'https://twitter.com/ConnextNetwork',
         'https://discord.gg/connext',
@@ -76,47 +83,46 @@ export const amarok: Bridge = {
       'Base',
       'Linea',
       'Metis',
+      'PolygonZkEVM',
+      'xLayer',
+      'Wormhole',
+      'Mantle',
+      'Mode',
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
-      the messages are sent through the Connext Sequencer. In this mode the Connext sequencer or any permissioned actor periodically submits an\
-      aggregate root. This triggers a ${discovery.getContractValue<number>(
-        'MainnetSpokeConnector',
-        'disputeBlocks',
-      )} blocks window where any watcher can turn the system back into Slow Mode thus invalidating the proposed root.\
-      Only the owner can set the system back into Optimistic Mode. In Slow Mode messages from various domains are aggregated into one message\
-      root and are periodically sent to Ethereum using native AMBs. Note that for Optimistic Rollups (Arbitrum, Optimism)\
-      the AMB is only used as a transport layer, but 7-day delay is being ignored. Upon being delivered to Ethereum these message roots are\
-      subsequently aggregated again into a root-of-root of messages before being delivered to their destination domains. Each message can be optimistically fast-forwarded by a network of Routers that will\
-      front liquidity (if the message is a token transfer) or post a bond (if the message is a xChain call). Upon receiving the message root via native AMBs Connext bridge will\
-      reconciles messages and return bond to the Routers. There is a configurable delay programmed into the RootManager contract and the SpokeConnectors\
-      receiving messages. During the delay period a whitelisted set of Watchers can pause the bridge if the fraudulent message passed via AMB is detected.`,
+      description: `
+      The bridge can operate in one of two modes: Optimistic or Native. In both modes, so-called routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination. The routers are reimbursed after the message has arrived at the destination through one of the two modes.
+      
+      In optimistic mode the messages (bridging transactions) go through the central Connext sequencer, who reads them from the source chains, then sequences them and calculates an aggregate root offchain. This aggregate root can be proposed by a relayer at the destination triggering a \`disputeBlocks\` window where any watcher can turn the system back into native mode, invalidating the proposed root. Only the owner can set the system back into optimistic mode. Non-invalidated roots get finalized after \`disputeBlocks\`. In summary, optimistic mode skips the hub domain (Ethereum in the case of an L2-to-L2 transfer) and native arbitrary message bridges (AMBs) completely.
+      
+      In native mode, messages from various spoke domains are aggregated and periodically sent to Ethereum (hub domain) using the native (non-Connext) AMBs. When delivered to the hub domain, these message roots are aggregated again into a root-of-root of messages before being delivered to their destination (spoke domains). A custom \`delayBlocks\` value can be set individually in message-receiving Connext contracts to grant a time delay in which Connext-permissioned watchers could invalidate a potentially fraudulent message from the AMBs.
+      
+      In the case of a Connext router having accelerated a message by fronting liquidity, they will have to wait a certain time to get their liquidity back. In native mode, this is the time it takes to pass the message via AMBs and then verify / invalidate it during the \`delayBlocks\` period. In optimistic mode, it is the time to pass it via the offchain sequencer and finalize / dispute it during the \`disputeBlocks\` period. In both cases this reconciliation of funds for the router takes longer than the bridging for the user, while native mode has the longest delay for reconciliation.
+      
+      Although the values can be different for every message-receiving contract on each chain, current examples are ${mainnetSpokedelayBlocks} blocks for \`delayBlocks\` and ${mainnetSpokedisputeBlocks} blocks for \`disputeBlocks\` on the MainnetSpokeConnector on Ethereum.`,
       references: [],
       risks: [],
     },
     validation: {
-      name: 'Validation via Native AMBs',
-      description:
-        'Messages on the source chain are send perdiodically to the Ethereum chain via native AMB. Once they arrive on Etherum, they can be send from Ethereum, again\
-        via native AMB, to the destination chain. Token transfers can be fronted by Routers providing liquidity. Similarly arbitrary messages can be sped up. Watchers provide\
-        additional protection in case native AMB gets compromised and forges the message. For optimistic rollups (Optimism, Arbitrum) their native AMB is used but\
-        7-day dispute window is ignored. For BSC (Binance Chain) MultiChain AMB is used.',
+      name: 'Validation',
+      description: `
+      For speed, users mainly depend on the bids of routers to fulfill their bridging transactions at the destination. But ultimately, after a message has been passed to the destination via the optimistic or native way and the delay period has passed for watchers to invalidate it, there is no router needed to execute at the destination. This means that the users are ultimately dependent on the correct functioning of the sequencer or the AMBs, and the watchers. Note that for Optimistic Rollups (Arbitrum, Optimism) the AMB is (during Connext native mode) only used  as a transport layer, and the 7-day optimistic challenge period is ignored.`,
       references: [],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'watchers disconnect certain connectors or pause the whole bridge for no reason.',
+          text: 'watchers disconnect certain connectors or pause the whole bridge.',
           isCritical: false,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'native AMBs that Connext uses allow for passing forged messages and this is not caught by Watchers.',
+          text: 'native AMBs that Connext uses or the centralized sequencer (in optimistic mode) forges messages and this is not caught by the watchers.',
           isCritical: false,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'connectors to optimistic rollups (Optimism, Arbitrum) receive a fraudulent message within 7-day fraud-proof window.',
+          text: 'connectors to optimistic rollups receive a fraudulent message within 7-day fraud-proof window and this is not caught by the watchers.',
           isCritical: true,
         },
       ],
@@ -147,7 +153,11 @@ export const amarok: Bridge = {
       ),
       discovery.getContractDetails(
         'PolygonZkHubConnector',
-        'Contract for sending/receiving messages from mainnet to PolygonZKEVM via PolygonZKEVM AMB.',
+        'Contract for sending/receiving messages from mainnet to PolygonZkEVM via PolygonZkEVM AMB (shared PolygonZkEVMBridge).',
+      ),
+      discovery.getContractDetails(
+        'xLayerZkHubConnector',
+        'Contract for sending/receiving messages from mainnet to PolygonZkEVM via X Layer AMB (shared PolygonZkEVMBridge).',
       ),
       discovery.getContractDetails(
         'GnosisHubConnector',
@@ -205,13 +215,13 @@ export const amarok: Bridge = {
     {
       name: 'Watchers',
       description:
-        'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules receiving messages. They can also remove connector from the RootManager. List of watchers is maintained by the Connext MultiSig.',
+        'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules receiving messages. They can also remove connectors from the RootManager. List of watchers is maintained by the Connext MultiSig.',
       accounts: discovery.getPermissionedAccounts('WatcherManager', 'WATCHERS'),
     },
     {
-      name: 'Sequencers',
+      name: 'Sequencer',
       description:
-        'Permissioned set of actors that sequence routers request to forward liquidity.',
+        'Permissioned actor that collects bids from all chains, aggregates them and randomly selects router(s) to fulfill them. The sequencer will post batches of these bids to a relayer network, which will submit them to the destination chain',
       accounts: discovery.getPermissionedAccounts(
         'ConnextBridge',
         'SEQUENCERS',
@@ -220,13 +230,13 @@ export const amarok: Bridge = {
     {
       name: 'Relayers',
       description:
-        'Permissioned set of actors who can perform certain bridge operations.',
+        'Permissioned set of actors who can perform certain bridge operations as a service.',
       accounts: discovery.getPermissionedAccounts('ConnextBridge', 'RELAYERS'),
     },
     {
       name: 'Routers',
       description:
-        'Permissioned set of actors who can forward liquidity and speed-up message delivery.',
+        'Permissioned set of actors who can front liquidity, speeding up message delivery.',
       accounts: discovery.getPermissionedAccounts('ConnextBridge', 'ROUTERS'),
     },
   ],
@@ -239,7 +249,9 @@ export const amarok: Bridge = {
     },
     sourceUpgradeability: {
       value: 'YES',
-      description: 'Connext can be upgraded by 3/3 MultiSig',
+      description: `Connext can be upgraded by a ${discovery.getMultisigStats(
+        'Connext Multisig',
+      )} MultiSig`,
       sentiment: 'bad',
     },
   },

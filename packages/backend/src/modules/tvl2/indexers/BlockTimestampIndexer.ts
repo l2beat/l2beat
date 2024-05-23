@@ -66,10 +66,12 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
         new UnixTime(targetHeight),
       )
 
-    this.logger.info('Deleted block timestamps after height', {
-      targetHeight,
-      deletedRecords,
-    })
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted block timestamps after height', {
+        targetHeight,
+        deletedRecords,
+      })
+    }
 
     return Promise.resolve(targetHeight)
   }

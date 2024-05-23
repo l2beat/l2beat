@@ -25,6 +25,7 @@ export function getProps(
         tvl,
         verificationStatus,
         implementationChange,
+        config.features,
       ),
       footer: getFooterProps(config),
       milestones: config.milestones,

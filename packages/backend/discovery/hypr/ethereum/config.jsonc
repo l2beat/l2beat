@@ -9,7 +9,7 @@
   "names": {
     "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586": "SystemConfig",
     "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD": "L2OutputOracle",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "LyraMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
     "0x9f6F58F07863D72C47D001066C65528C27D3AE19": "L1CrossDomainMessenger",
     "0x1bBde518ad01BaABFE30020407A7630FB17B545d": "L1StandardBridge",
     "0xba1ac896F3b7cB273daE94bF9A6291A432e826c7": "OptimismPortal",
@@ -44,7 +44,7 @@
         }
       }
     },
-    "LyraMultisig": {
+    "ConduitMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {

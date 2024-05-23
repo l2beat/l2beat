@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x940faef00f64ffdef8e782429009677653fbae56
+
+# Diff at Wed, 22 May 2024 17:36:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eae7b47a410c2b8cc7e6a7d7a0bc841a31c6e83 block: 19883593
+- current block number: 19926951
+
+## Description
+
+A new Executor is added (a multisig) but the old EOA admin is still not removed.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ReyaMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/ReyaMultisig/GnosisSafe.sol     | 952 +++++++++++++++++++++
+ .../.flat/ReyaMultisig/GnosisSafeProxy.p.sol       |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
 Generated with discovered.json: 0x5664902f67add10c7d67f86c907fb3ea7ec5ecd3
 
 # Diff at Tue, 14 May 2024 09:35:12 GMT:

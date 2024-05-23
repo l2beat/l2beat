@@ -24,7 +24,7 @@
     "0x99a2A31300816C1FA3f40818AC9280fe7271F878": "OneStepProverHostIo",
     "0xDf94F0474F205D086dbc2e66D69a856FCf520622": "OneStepProver0",
     "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d": "ProxyAdmin",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "OwnerMultisig"
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig"
   },
   "overrides": {
     "ChallengeManager": {
@@ -104,7 +104,7 @@
     "L1WETHGateway": {
       "ignoreMethods": ["l1Weth"]
     },
-    "OwnerMultisig": {
+    "ConduitMultisig": {
       "ignoreMethods": ["nonce"]
     }
   }

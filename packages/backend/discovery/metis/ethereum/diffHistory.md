@@ -1,3 +1,104 @@
+Generated with discovered.json: 0xb72bf22b68e9abc639c06a6aa3a966735a461fe3
+
+# Diff at Wed, 22 May 2024 16:35:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eae7b47a410c2b8cc7e6a7d7a0bc841a31c6e83 block: 19866806
+- current block number: 19926649
+
+## Description
+
+One new signer (`0x1577D2b835f561BD021E3219Cd786181D0e17ff5`) is added to Metis Multisig and RewardEscrowerMultisig, which also gains another signer from Metis Multisig.
+
+## Watched changes
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      upgradeability.threshold:
+-        "4 of 8 (50%)"
++        "4 of 9 (44%)"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.8:
++        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.7:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "0xB961047013F974C5b6B6F8dA4402379525316550"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.6:
+-        "0xB961047013F974C5b6B6F8dA4402379525316550"
++        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.5:
+-        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.4:
+-        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.3:
+-        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.2:
+-        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.1:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.0:
+-        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: Escrows staking rewards for Sequencers.
+      upgradeability.threshold:
+-        "2 of 2 (100%)"
++        "2 of 4 (50%)"
+      values.getOwners.3:
++        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
+      values.getOwners.2:
++        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
+      values.getOwners.1:
+-        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
++        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+      values.getOwners.0:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19866806 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "RewardEscrowerMultisig"
+    }
+```
+
 Generated with discovered.json: 0xe1b1004c8e1e55d7df21acfdc86aae2a9e021b38
 
 # Diff at Tue, 14 May 2024 07:37:14 GMT:

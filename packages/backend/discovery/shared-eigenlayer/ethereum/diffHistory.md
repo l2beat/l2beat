@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x8f9ce594b2465cace083d6d2b19b27dcc05313bf
+
+# Diff at Wed, 22 May 2024 14:05:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19840826
+- current block number: 19925898
+
+## Description
+
+EigenPod implementation change:
+      - Changed verification that the withdrawal credentials of validator(s) owned by the podOwner are pointed to the eigenPod contract.
+            - Removed check that the provided timestamp of stateRoot being proven is after the `mostRecentWithdrawalTimestamp` (the latest timestamp at which the pod owner withdrew the balance of the pod).
+            - After the M2 upgrade, `mostRecentWithdrawalTimestamp` will be 0 for any pods deployed. If this is non-zero, now the SC checks that the proof timestamp is from the epoch AFTER `activateRestaking` was called.
+
+## Watched changes
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: None
+      values.implementation:
+-        "0x8bA40dA60f0827d027F029aCEE62609F0527a255"
++        "0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0x8bA40dA60f0827d027F029aCEE62609F0527a255)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0x28144C53bA98B4e909Df5bC7cA33eAf0404cFfcc)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@19840826 => .flat}/EigenPod.sol | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x6189cb1db1c4577bb39dda1ac4b6ae7b87d6dcbe
 
 # Diff at Tue, 30 Apr 2024 08:41:32 GMT:
