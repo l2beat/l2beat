@@ -10,6 +10,12 @@ import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
 import { PageContent } from '../../../../components/PageContent'
+import { InfoIcon } from '../../../../components/icons'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../components/tooltip/Tooltip'
 import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
@@ -91,10 +97,16 @@ function Header(props: ZkCatalogProjectPageProps) {
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
-        <HeaderItem title="Aggregation">
+        <HeaderItem
+          title="Aggregation"
+          tooltip="Shows if recursive proof aggregation is used."
+        >
           {props.details.aggregation ? 'Yes' : 'No'}
         </HeaderItem>
-        <HeaderItem title="Trusted setup">
+        <HeaderItem
+          title="Trusted setup"
+          tooltip="Shows if a trusted setup is used anywhere in the proving stack."
+        >
           {props.details.hasTrustedSetup ? 'Yes' : 'No'}
         </HeaderItem>
       </div>
@@ -104,15 +116,25 @@ function Header(props: ZkCatalogProjectPageProps) {
 
 function HeaderItem({
   title,
+  tooltip,
   children,
 }: {
   title: string
+  tooltip?: string
   children: ReactNode
 }) {
   return (
     <div className="flex justify-between md:block items-baseline">
-      <h3 className="md:mb-2 text-xs text-gray-600 dark:text-gray-50">
+      <h3 className="flex items-center gap-1.5 md:mb-2 text-xs text-gray-600 dark:text-gray-50">
         {title}
+        {tooltip ? (
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="fill-current md:size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        ) : null}
       </h3>
       <span className="text-lg font-bold">{children}</span>
     </div>
