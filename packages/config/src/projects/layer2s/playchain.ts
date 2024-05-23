@@ -7,9 +7,9 @@ export const playchain: Layer2 = upcomingL2({
     name: 'PlayChain',
     slug: 'playchain',
     description:
-      'PlayChain is a Layer 2 solution built on the ZK Stack leveraging zkEVM. It serves as a Hyperchain allowing anyone to build gaming apps (gApps) on top of their favourite AAA games.',
+      'PlayChain is a Layer 2 solution built on the ZK Stack leveraging zkEVM in Validium mode. It serves as a Hyperchain allowing anyone to build gaming apps (gApps) on top of their favourite AAA games.',
     purposes: ['Gaming', 'Universal'],
-    category: 'ZK Rollup',
+    category: 'Validium',
     provider: 'ZK Stack',
     links: {
       websites: ['https://playfi.ai/'],

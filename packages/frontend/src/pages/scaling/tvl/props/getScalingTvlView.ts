@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import {
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
@@ -14,7 +14,7 @@ import { ScalingTvlViewEntry } from '../types'
 import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 
 export function getScalingTvlView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ScalingTvlViewProps {
@@ -37,7 +37,7 @@ export function getScalingTvlView(
 
 function getScalingTvlViewEntry(
   tvlApiResponse: TvlApiResponse,
-  project: Layer2,
+  project: Layer2 | Layer3,
   isVerified?: boolean,
   hasImplementationChanged?: boolean,
 ): ScalingTvlViewEntry {
@@ -46,6 +46,7 @@ function getScalingTvlViewEntry(
   const { parts, partsWeeklyChange } = getDetailedTvlWithChange(charts)
 
   return {
+    type: project.type,
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
@@ -82,12 +83,13 @@ function getScalingTvlViewEntry(
     cbvChange: partsWeeklyChange.canonical,
     nmvChange: partsWeeklyChange.native,
     tokens: getTokens(project.id, tvlApiResponse, true),
-    stage: project.stage,
+    stage:
+      project.type === 'layer3' ? { stage: 'NotApplicable' } : project.stage,
   }
 }
 
 function getIncludedProjects(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   tvlApiResponse: TvlApiResponse,
 ) {
   return projects.filter(

@@ -8,6 +8,7 @@ import {
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
   VerificationStatus,
+  VerifiersApiResponse,
 } from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
 
@@ -43,4 +44,5 @@ export interface PagesData {
   finalityApiResponse: FinalityApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
+  verifiersApiResponse: VerifiersApiResponse | undefined
 }

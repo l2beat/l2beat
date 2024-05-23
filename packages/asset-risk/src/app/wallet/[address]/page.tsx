@@ -1,13 +1,13 @@
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
-import groupBy from 'lodash/groupBy'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
-import { getChain } from '~/utils/chains'
-
-import { ChainAssetRiskCard } from './_components/ChainAssetRiskCard'
+import { ScalingProjectRisk, layer2s } from '@l2beat/config'
+import { getChain, getChainStage } from '~/utils/chains'
+import { DetailsHeader } from './_components/DetailsHeader'
+import { Disclaimer } from './_components/Disclaimer'
+import { TokensTable } from './_components/table/TokensTable'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
@@ -161,76 +161,63 @@ export default async function Page({ params: { address } }: Props) {
     )
   ).flat()
 
-  const successes = tokens.filter(({ balance }) => balance !== null)
-  const errors = tokens.filter(({ balance }) => balance === null)
-
   const hasPositiveBalance = <T extends { balance?: bigint | null }>(
     token: T,
   ): token is T & { balance: bigint } => !!token.balance
 
-  const grouped = Object.entries(
-    groupBy(tokens.filter(hasPositiveBalance), 'chain.id'),
-  )
+  const tokensToDisplay = tokens.filter(hasPositiveBalance).map((token) => {
+    const chain = layer2s.find(
+      (l2) => l2.chainConfig?.chainId === token.chain.id,
+    )
+    if (!chain)
+      return {
+        ...token,
+        chain: {
+          ...token.chain,
+          risks: [],
+          stage: undefined,
+        },
+      }
+
+    let risks: ScalingProjectRisk[] = []
+    risks = chain.technology
+      ? [
+          chain.technology.stateCorrectness,
+          chain.technology.newCryptography,
+          chain.technology.dataAvailability,
+          chain.technology.operator,
+          chain.technology.forceTransactions,
+          ...chain.technology.exitMechanisms,
+          chain.technology.massExit,
+          ...(chain.technology.otherConsiderations ?? []),
+        ].flatMap((choice) => choice?.risks ?? [])
+      : []
+
+    const stage = getChainStage(token.chain.id)
+
+    return {
+      ...token,
+      chain: {
+        ...token.chain,
+        risks,
+        stage,
+      },
+    }
+  })
 
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
-    <main className="max-w-[1296px] px-4 md:px-12 mx-auto py-10">
-      <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-8">
-          <div>
-            <Link href="/">&lt; Back</Link>
-          </div>
-          <div className="flex flex-row gap-16 justify-between">
-            <div>
-              <h1 className="mb-1 text-3xl font-bold">
-                {vanityAddress}&apos;s Asset Risk
-              </h1>
-              <p className="text-gray-500 dark:text-gray-600k">
-                Risk score assessment for {vanityAddress}, based on{' '}
-                {tokens.length} known tokens. We successfully got info for{' '}
-                {successes.length} of them, while {errors.length} errored. Risk
-                is very important lorem ipsum dolor sit amet. Risk is very
-                important lorem ipsum dolor sit amet. Risk is very important
-                lorem ipsum dolor sit amet.
-              </p>
-            </div>
-            <div className="dark:bg-zinc-900 bg-gray-100 h-32 w-32 flex-shrink-0 rounded-lg items-center justify-center flex">
-              risk score?
-            </div>
-          </div>
-          <div className="px-4 py-6 md:p-10 dark:bg-zinc-900 bg-gray-100 rounded-lg">
-            risk breakdown?
-          </div>
-        </div>
-        <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t" />
-        <div className="flex flex-col gap-8">
-          {Object.keys(grouped).length === 0 && (
-            <p>You don&apos;t have any known tokens</p>
-          )}
-          {grouped.map(([chainIdString, tokens]) => {
-            const chainId = Number(chainIdString)
-            return (
-              <ChainAssetRiskCard
-                key={chainId}
-                id={chainId}
-                name={tokens[0]?.chain.name ?? ''}
-                tokens={tokens}
-              />
-            )
-          })}
-          {errors.length > 0 && (
-            <div className="text-center text-xs py-4">
-              Errors:{' '}
-              {errors
-                .map(
-                  ({ token, chain }) =>
-                    `${token.name} on ${chain.name} (${token.id})`,
-                )
-                .join(', ')}
-            </div>
-          )}
-        </div>
+    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto py-10">
+      <div className="flex flex-col gap-6">
+        <DetailsHeader
+          // TODO: Replace with real data when we have it
+          dolarValue={0}
+          tokens={tokensToDisplay}
+          walletAddress={vanityAddress}
+        />
+        <TokensTable tokens={tokensToDisplay} />
+        <Disclaimer />
       </div>
     </main>
   )

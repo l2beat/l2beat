@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x8724bdf39e5592f45a6dc62e2b6ee9b4a53c3e4e
+
+# Diff at Wed, 22 May 2024 14:05:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c032520e456d0e6bee8b65e420ff7dba9f36bd48 block: 19840892
+- current block number: 19925902
+
+## Description
+
+Registry coordinator:
+    - Ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
+
+eigenDAServiceManager:
+    - New EjectionManager contract
+    - quorumNumbersRequired - second quorum (EIGEN token) now active
+
+EjectionManager:
+- used to eject validators from quorum
+- permissioned, only ejectors and owner can eject operators
+- operators to eject are external input provided by ejector
+    Ejection spec parameters: 
+        - Max 200 operators for each quorum. When the global operator cap (200) is reached for the quorum, the joining operator must have more than 1.1X the quorum weight of the current lowest-weighted operator in order to replace that operator.
+        - RateLimitWindow and max EjectableStakePercent. There is a time delta (7 days) to track ejection over. SC checks that system cannot eject more than ejectableStakePercent (33.33%) of total stake in this time delta.
+
+
+## Watched changes
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      values.ejector:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+    }
+```
+
+```diff
+    contract eigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
++        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
+      implementations.0:
+-        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
++        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
+      values.quorumNumbersRequired:
+-        "0x00"
++        "0x0001"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+```
+
+## Source code changes
+
+```diff
+.../.flat/EjectionManager/EjectionManager.sol      | 583 +++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 630 +++++++++++++++++++++
+ .../EigenDAServiceManager.sol                      |   2 +-
+ 3 files changed, 1214 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19840892 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4e479e1b2a0b36502a85f604c53bafd929ceeeb2
 
 # Diff at Fri, 10 May 2024 16:41:41 GMT:
