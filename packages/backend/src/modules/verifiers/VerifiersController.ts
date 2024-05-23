@@ -99,10 +99,12 @@ export class VerifiersController {
         this.logger.debug(
           `Found l2 project with verifiers: ${l2.display.name}`,
           {
-            verifiers: verifiers.map((v) => ({
-              address: v.contractAddress.toString(),
-              chain: v.chainId.toString(),
-            })),
+            verifiers: l2.stateValidation.proofVerification.verifiers.map(
+              (v) => ({
+                address: v.contractAddress.toString(),
+                chain: v.chainId.toString(),
+              }),
+            ),
           },
         )
         verifiers.push(...l2.stateValidation.proofVerification.verifiers)
@@ -111,7 +113,7 @@ export class VerifiersController {
 
     zks.forEach((zk) => {
       this.logger.debug(`Found zk project with verifiers: ${zk.display.name}`, {
-        verifiers: verifiers.map((v) => ({
+        verifiers: zk.proofVerification.verifiers.map((v) => ({
           address: v.contractAddress.toString(),
           chain: v.chainId.toString(),
         })),
