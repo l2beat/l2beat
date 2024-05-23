@@ -70,9 +70,17 @@ export class BlobClient {
     const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
 
     const response = await this.call(endpoint)
-    const parsed = BlockSidecarSchema.parse(response)
+    const parsed = BlockSidecarSchema.safeParse(response)
+    if (!parsed.success) {
+      this.logger.error('Error downloading block sidecar', {
+        blockNumber,
+        error: parsed.error,
+        response,
+      })
+      throw parsed.error
+    }
 
-    return parsed.data
+    return parsed.data.data
   }
 
   private async call(endpoint: string) {
@@ -91,11 +99,19 @@ export class BlobClient {
 
   private async getTransaction(txHash: string) {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
-    const parsed = TxWithBlobsSchema.parse(result)
+    const parsed = TxWithBlobsSchema.safeParse(result)
+    if (!parsed.success) {
+      this.logger.error('Error downloading transaction', {
+        txHash,
+        error: parsed.error,
+        result,
+      })
+      throw parsed.error
+    }
 
     return {
-      blockNumber: Number(parsed.blockNumber),
-      blobVersionedHashes: parsed.blobVersionedHashes,
+      blockNumber: Number(parsed.data.blockNumber),
+      blobVersionedHashes: parsed.data.blobVersionedHashes,
     }
   }
 
@@ -106,7 +122,6 @@ export class BlobClient {
       false,
     ])
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
-
     if (!parsed.success) {
       this.logger.error('Error downloading block', {
         blockNumber,
@@ -133,18 +148,37 @@ export class BlobClient {
         params,
       }),
     })
-
     const json = (await response.json()) as unknown
-    const parsed = RpcResultSchema.parse(json)
-    return parsed.result
+    const parsed = RpcResultSchema.safeParse(json)
+    if (!parsed.success) {
+      this.logger.error('Error calling RPC', {
+        method,
+        params,
+        error: parsed.error,
+        json,
+      })
+      throw parsed.error
+    }
+
+    return parsed.data.result
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id
   // if you know a better way, please fix it
   private async getBeaconBlockId(blockNumber: number) {
     const childBlock = await this.getBlock(blockNumber + 1)
-    const parsedBlock = BlockWithParentBeaconBlockRootSchema.parse(childBlock)
-    return parsedBlock.parentBeaconBlockRoot
+    const parsedBlock =
+      BlockWithParentBeaconBlockRootSchema.safeParse(childBlock)
+    if (!parsedBlock.success) {
+      this.logger.error('Error getting beacon block id', {
+        blockNumber,
+        error: parsedBlock.error,
+        childBlock,
+      })
+      throw parsedBlock.error
+    }
+
+    return parsedBlock.data.parentBeaconBlockRoot
   }
 }
 
