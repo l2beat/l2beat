@@ -5,9 +5,12 @@ import { CircleQuestionMark } from '../../../../components/icons/symbols/CircleQ
 import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
 import { VerifiedIcon } from '../../../../components/icons/symbols/VerifiedIcon'
 
-export function VerifiedCell({
-  verified,
-}: { verified: 'yes' | 'no' | 'failed' }) {
+interface Props {
+  verified: 'yes' | 'no' | 'failed'
+  askForVerificationLink: string
+}
+
+export function VerifiedCell({ verified, askForVerificationLink }: Props) {
   switch (verified) {
     case 'yes':
       return (
@@ -20,9 +23,10 @@ export function VerifiedCell({
       return (
         <span className="flex items-center text-sm md:text-base">
           <CircleQuestionMark className="mr-1.5" />
-          {/* TODO: Ask for link */}
           Not verified
-          <Link className="ml-4 hidden md:inline">Ask for verification</Link>
+          <Link className="ml-4 hidden md:inline" href={askForVerificationLink}>
+            Ask for verification
+          </Link>
         </span>
       )
     case 'failed':

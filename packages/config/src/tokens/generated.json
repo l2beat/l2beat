@@ -3646,6 +3646,21 @@
       "formula": "locked"
     },
     {
+      "id": "topia-topia",
+      "name": "TOPIA",
+      "coingeckoId": "hytopia",
+      "address": "0xcccCb68e1A848CBDB5b60a974E07aAE143ed40C3",
+      "symbol": "TOPIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1684349891,
+      "coingeckoListingTimestamp": 1692144000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31283/large/HYCHAIN_Avatar_Circle.png?1710500962",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "trac-trace-token",
       "name": "Trace Token",
       "coingeckoId": "origintrail",

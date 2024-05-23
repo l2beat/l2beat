@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 19918775,
+  "blockNumber": 19927728,
   "configHash": "0x1556cca6a43d40327c72021678db58a02c5dcb18b6d8b1c8301d3657294568c5",
   "version": 4,
   "contracts": [
@@ -52,7 +52,7 @@
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
-        "threshold": "3 of 5 (60%)"
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -60,14 +60,16 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "getOwners": [
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 3,
-        "nonce": 33,
+        "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -151,10 +153,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 13591800,
-        "latestOutputIndex": 7550,
-        "nextBlockNumber": 13593600,
-        "nextOutputIndex": 7551,
+        "latestBlockNumber": 13645800,
+        "latestOutputIndex": 7580,
+        "nextBlockNumber": 13647600,
+        "nextOutputIndex": 7581,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -231,7 +233,9 @@
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5",
     "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
     "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": [
