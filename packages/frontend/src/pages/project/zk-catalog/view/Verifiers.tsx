@@ -82,7 +82,6 @@ export function Verifiers(props: Props) {
                 <EtherscanLink
                   address={item.contractAddress.toString()}
                   className="break-all"
-                  truncate={false}
                 />
               </div>
               <div>
@@ -99,23 +98,15 @@ export function Verifiers(props: Props) {
               </div>
               <SubVerifiersTable verifier={item} />
               {item.verified === 'no' ? (
-                <div>
-                  <Link href={props.askForVerificationLink}>
-                    Ask for verification
-                  </Link>
-                </div>
+                <Link href={props.askForVerificationLink}>
+                  Ask for verification
+                </Link>
               ) : null}
             </td>
             <td
               colSpan={5}
               className="hidden md:table-cell px-4 pb-5 mt-1 w-[90%] space-y-5"
             >
-              <div>
-                <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
-                  Last used
-                </p>
-                <LastUsedCell days={item.lastUsedDaysAgo} />
-              </div>
               <div>
                 <p className="text-gray-500 dark:text-gray-50 text-xs mb-2 font-medium">
                   Description
