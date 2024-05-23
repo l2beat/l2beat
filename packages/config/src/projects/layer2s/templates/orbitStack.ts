@@ -1,5 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, assert, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
 import {
@@ -526,12 +526,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         }),
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
+        ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
           challengeWindowSeconds,
         ),
+        secondLine: `${formatSeconds(challengeWindowSeconds)} challenge period`,
+      },
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
           ? (() => {
