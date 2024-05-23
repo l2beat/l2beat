@@ -2154,7 +2154,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1625191817,
       "coingeckoListingTimestamp": 1639612800,
-      "category": "stablecoin",
+      "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1696520850",
       "chainId": 1,
       "type": "CBV",
