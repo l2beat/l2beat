@@ -2,7 +2,17 @@ import * as fs from 'fs'
 import * as dotenv from 'dotenv'
 import { ethers } from 'ethers'
 import pLimit from 'p-limit'
-import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery' // Adjust the import path as needed
+import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
+/**
+ *
+ * TLDR: Run socket discovery, then this with 'yarn update-socket' and copy the results to the config.jsonc and socket.ts files.
+ *
+ * This script reads the socket plugs list from discovery and creates two files of the discovery results:
+ * 1) socket-crawl-result.json: The discovery results grouped by sibling chain slug and ranked by TVL, including non-standard plugs and vaults and vault owners
+ * 2) socket-crawl-copypasta.txt: A copy-paste suggestion for the config.jsonc and socket.ts files. This file excludes 0 TVL vaults and nonstandard plugs
+ * The script should be easily extendable when functions on the plugs or vaults change, like they have done in the past.
+ *
+ */
 
 dotenv.config()
 
@@ -15,7 +25,7 @@ if (!ETHERSCAN_API_KEY || !RPC_URL) {
 }
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-const limit = pLimit(2)
+const limit = pLimit(2) // concurrency: X calls at a time
 
 const chainSlugToName: Record<string, string> = {
   1: 'Ethereum',
@@ -85,6 +95,7 @@ async function getContractValue(
   }
 }
 
+// this is a hacky way to get the token ticker from etherscan
 async function getTokenInfoFromEtherscan(
   contractAddress: string,
 ): Promise<{ tokenName: string; tokenSymbol: string } | null> {
@@ -96,7 +107,6 @@ async function getTokenInfoFromEtherscan(
       `https://api.etherscan.io/api?module=account&action=tokentx&contractaddress=${contractAddress}&page=1&offset=5&apikey=${ETHERSCAN_API_KEY}`,
     )
 
-    // Define the expected response type
     interface EtherscanResponse {
       status: string
       result: { tokenName: string; tokenSymbol: string }[]
@@ -104,7 +114,6 @@ async function getTokenInfoFromEtherscan(
 
     const data: unknown = await response.json()
 
-    // Check if data is of type EtherscanResponse
     if (
       typeof data === 'object' &&
       data !== null &&
@@ -285,6 +294,7 @@ async function main(): Promise<void> {
   )
   console.log('Results written to socket-crawl-result.json')
 
+  // The rest below is for the copy-paste suggestion file for config.jsonc and socket.ts
   const copypasta: string[] = []
   const initialAddressesByProject: { [key: string]: string[] } = {}
   const namesByProject: { [key: string]: { [address: string]: string } } = {}
