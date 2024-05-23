@@ -1,8 +1,8 @@
 'use client'
 
-import SunIcon from '~/icons/sun.svg'
-import MoonIcon from '~/icons/moon.svg'
 import { useTheme } from 'next-themes'
+import MoonIcon from '~/icons/moon.svg'
+import SunIcon from '~/icons/sun.svg'
 
 export interface DarkThemeToggleProps {
   withText?: boolean
