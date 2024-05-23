@@ -47,8 +47,8 @@ function getZkCatalogProjectDetails(
     icon: `/icons/${project.display.slug}.png`,
     linkToMainProjectDetails:
       project.type === 'zk-catalog'
-        ? `/scaling/projects/${project.display.slug}`
-        : undefined,
+        ? undefined
+        : `/scaling/projects/${project.display.slug}`,
     hasTrustedSetup: hasTrustedSetup(proofVerification.verifiers),
     description: descriptionEntry.content,
     ...proofVerification,
