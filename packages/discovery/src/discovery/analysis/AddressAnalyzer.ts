@@ -17,7 +17,7 @@ import {
   SourceCodeService,
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
-import { getRelatives } from './getRelatives'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -129,7 +129,7 @@ export class AddressAnalyzer {
           ? { template: overrides.extends, reason: 'byExtends' }
           : undefined,
       },
-      relatives: getRelatives(
+      relatives: getRelativesWithSuggestedTemplates(
         results,
         overrides?.ignoreRelatives,
         proxy?.relatives,

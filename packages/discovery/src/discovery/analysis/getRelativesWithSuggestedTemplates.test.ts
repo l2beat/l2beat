@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getRelatives } from './getRelatives'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
-describe(getRelatives.name, () => {
+describe(getRelativesWithSuggestedTemplates.name, () => {
   const ADDRESS_A = EthereumAddress.random()
   const ADDRESS_B = EthereumAddress.random()
   const ADDRESS_C = EthereumAddress.random()
@@ -11,7 +11,7 @@ describe(getRelatives.name, () => {
   const ADDRESS_E = EthereumAddress.random()
 
   it('returns addresses found in values', () => {
-    const relatives = getRelatives([
+    const relatives = getRelativesWithSuggestedTemplates([
       { field: 'a', value: ADDRESS_A.toString() },
       { field: 'b', value: [ADDRESS_B.toString(), ADDRESS_C.toString()] },
       {
@@ -30,7 +30,7 @@ describe(getRelatives.name, () => {
   })
 
   it('deduplicated addresses', () => {
-    const relatives = getRelatives([
+    const relatives = getRelativesWithSuggestedTemplates([
       { field: 'a', value: ADDRESS_A.toString() },
       { field: 'b', value: ADDRESS_A.toString() },
       { field: 'c', value: ADDRESS_B.toString() },
@@ -40,7 +40,7 @@ describe(getRelatives.name, () => {
   })
 
   it('ignores fields with ignoreRelative', () => {
-    const relatives = getRelatives([
+    const relatives = getRelativesWithSuggestedTemplates([
       { field: 'a', value: ADDRESS_A.toString() },
       { field: 'b', value: ADDRESS_B.toString(), ignoreRelative: true },
       { field: 'c', value: ADDRESS_C.toString() },
@@ -50,7 +50,7 @@ describe(getRelatives.name, () => {
   })
 
   it('ignores fields in the ignoreFields array', () => {
-    const relatives = getRelatives(
+    const relatives = getRelativesWithSuggestedTemplates(
       [
         { field: 'a', value: ADDRESS_A.toString() },
         { field: 'b', value: ADDRESS_B.toString() },
@@ -63,7 +63,7 @@ describe(getRelatives.name, () => {
   })
 
   it('includes known relatives', () => {
-    const relatives = getRelatives(
+    const relatives = getRelativesWithSuggestedTemplates(
       [
         { field: 'a', value: ADDRESS_A.toString() },
         { field: 'b', value: ADDRESS_B.toString() },
@@ -76,7 +76,7 @@ describe(getRelatives.name, () => {
   })
 
   it('ignores ignored addresses', () => {
-    const relatives = getRelatives(
+    const relatives = getRelativesWithSuggestedTemplates(
       [
         { field: 'a', value: ADDRESS_A.toString() },
         { field: 'b', value: ADDRESS_B.toString() },
@@ -91,7 +91,7 @@ describe(getRelatives.name, () => {
   })
 
   it('follows all rules at the same time', () => {
-    const relatives = getRelatives(
+    const relatives = getRelativesWithSuggestedTemplates(
       [
         { field: 'first', value: ADDRESS_A.toString() },
         { field: 'second', value: ADDRESS_B.toString() },

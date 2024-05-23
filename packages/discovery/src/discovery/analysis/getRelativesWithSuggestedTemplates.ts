@@ -5,7 +5,7 @@ import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
 import { AddressesWithTemplates } from './AddressAnalyzer'
 
-export function getRelatives(
+export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
   ignoredFields?: string[],
   knownRelatives?: EthereumAddress[],
