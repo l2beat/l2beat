@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 import PlausibleProvider from 'next-plausible'
-import { TRPCReactProvider } from '~/trpc/react'
+import { Roboto } from 'next/font/google'
 import { env } from '~/env'
+import { TRPCReactProvider } from '~/trpc/react'
 import './globals.css'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })

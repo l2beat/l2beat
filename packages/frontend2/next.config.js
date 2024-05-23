@@ -1,5 +1,5 @@
-import { env } from './src/env.js'
 import { withPlausibleProxy } from 'next-plausible'
+import { env } from './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
