@@ -325,6 +325,7 @@ export const arbitrum: Layer2 = {
           ],
         },
       ],
+      secondLine: `${formatSeconds(challengeWindowSeconds)} challenge period`,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
