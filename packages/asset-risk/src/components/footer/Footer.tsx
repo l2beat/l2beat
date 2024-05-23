@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="py-8">
       <div className="max-w-[1176px] mx-auto flex grid-cols-2 flex-col gap-4 px-4 md:grid md:px-12 font-medium text-xs text-zinc-500 dark:text-gray-50">
         <p className="text-center md:text-left">
-          Made with ❤️ by the{' '}
+          Made with ❤️ by{' '}
           <Link
             href={'https://l2beat.com'}
             target="_blank"

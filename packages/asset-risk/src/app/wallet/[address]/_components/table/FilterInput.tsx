@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction } from 'react'
 import { LensIcon } from '~/app/assets/LensIcon'
 import { cn } from '~/utils/cn'
 
 interface FilterInputProps {
   filter?: string
-  setFilter?: Dispatch<SetStateAction<string>>
+  setFilter?: (value: string) => void
 }
 
 export function FilterInput(props: FilterInputProps) {
