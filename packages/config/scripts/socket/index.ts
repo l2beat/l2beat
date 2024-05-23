@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as dotenv from 'dotenv'
 import { ethers } from 'ethers'
 import pLimit from 'p-limit'
+import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery' // Adjust the import path as needed
 
 dotenv.config()
 
@@ -15,53 +16,6 @@ if (!ETHERSCAN_API_KEY || !RPC_URL) {
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
 const limit = pLimit(2)
-
-const plugs: string[] = [
-  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
-  '0x200AF8FCdD5246D70B369A98143Ac8930A077B7A',
-  '0x22d8360eB04F46195c7B02A66658C375948d8A99',
-  '0xA621Bc5A9d13D39eb098865B723CEee71BB5C181',
-  '0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa',
-  '0xCf814e58f1649F94d37E51f730D6bF72409fA09c',
-  '0xf71A92D4bEFc2e18671c3b20377d45729790e880',
-  '0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166',
-  '0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B',
-  '0x02D53793b18d032Cd94d745F7586C6F66F83f8e3',
-  '0x3553c0102684c20e2f8192d6F013c7242710b4b3',
-  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444',
-  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4',
-  '0x68411d61adF1341A6392C87A93941FdD3EE7DF8E',
-  '0x8F4e67C61232167584333e23D7d67BD73d80a4F5',
-  '0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660',
-  '0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5',
-  '0xdCcFb24f983586144c085426dbfa3414045E19a3',
-  '0x6A769e25081396a49a6702758d0830920ac1163A',
-  '0x2Dba37E679358125BaB2132dDF5133d7d66F7D06',
-  '0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF',
-  '0x998d7C2257591cC38383B4F91474c5346111f2E6',
-  '0x223033E1F905eEd161a7B2EBeb786a158156fb8D',
-  '0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D',
-  '0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3',
-  '0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508',
-  '0x3f66F272d33B764960779a301c4183306ae50e10',
-  '0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D',
-  '0xb1178803A726e2077947754de9f2f0cbdA29A60F',
-  '0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27',
-  '0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1',
-  '0x83C6d6597891Ad48cF5e0BA901De55120C37C6bE',
-  '0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252',
-  '0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff',
-  '0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96',
-  '0x73E0d4953c356a5Ca3A3D172739128776B2920b5',
-  '0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff',
-  '0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8',
-  '0xF5992B6A0dEa32dCF6BE7bfAf762A4D94f139Ea7',
-  '0xE274dB6b891159547FbDC18b07412EE7F4B8d767',
-  '0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67',
-  '0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0',
-  '0xdE9D8c2d465669c661672d7945D4d4f5407d22E2',
-  '0x32295769ea702BA9337EE5B65c6b42aFF75FEC62',
-]
 
 const chainSlugToName: Record<string, string> = {
   1: 'Ethereum',
@@ -266,6 +220,13 @@ async function exploreContract(address: string): Promise<Result> {
 
 async function main(): Promise<void> {
   console.log('Starting contract exploration')
+
+  const discovery = new ProjectDiscovery('socket')
+  const plugs: string[] = discovery.getContractValue<string[]>(
+    'Socket',
+    'plugs',
+  )
+
   const results = await Promise.all(
     plugs.map((address) => limit(() => exploreContract(address))),
   )
