@@ -411,8 +411,8 @@ export const loopring: Layer2 = {
             {
               name: 'BlockVerifier',
               proofSystem: 'Groth16',
-              mainArithmetization: 'R1CS',
-              mainPCS: 'KZG',
+              mainArithmetization: 'R1CS+QAP',
+              mainPCS: 'N/A',
               trustedSetup: 'Powers of Tau 18',
               link: 'https://etherscan.io/address/0x6150343E0F43A17519c0327c41eDd9eBE88D01ef#code',
             },
