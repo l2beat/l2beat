@@ -100,7 +100,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
       sinceTimestamp: new UnixTime(1709279309),
-      tokens: ['MNT'],
+      tokens: ['ETH'], // actually MNT, but we do not support CBV yet
     },
     {
       chain: 'mantle',
