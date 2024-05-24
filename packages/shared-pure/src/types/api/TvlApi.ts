@@ -46,6 +46,9 @@ export type TvlApiCharts = z.infer<typeof TvlApiCharts>
 export const TvlApiToken = z.object({
   assetId: branded(z.string(), AssetId),
   chainId: branded(z.number(), ChainId),
+  // TODO(L2B-5614): Make both required
+  address: z.string().optional(),
+  chain: z.string().optional(),
   assetType: branded(z.string(), AssetType),
   usdValue: z.number(),
 })

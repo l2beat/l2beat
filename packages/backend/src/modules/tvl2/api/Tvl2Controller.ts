@@ -385,6 +385,8 @@ export class Tvl2Controller {
       const source = convertSourceName(config.source)
       breakdown[source].push({
         assetId: priceConfig.assetId,
+        address: config.address.toString(),
+        chain: config.chain,
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: convertSourceName(config.source),
         usdValue: asNumber(value, 2),
