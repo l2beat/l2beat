@@ -68,6 +68,7 @@
   "kroma": true,
   "layer2finance": true,
   "layer2financezk": false,
+  "lens": true,
   "lightlink": true,
   "linea": true,
   "lisk": true,
