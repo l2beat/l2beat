@@ -5,8 +5,6 @@ const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
 })
 
-const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
-
 export const env = createEnv({
   /**
    * Server-only environment variables.
