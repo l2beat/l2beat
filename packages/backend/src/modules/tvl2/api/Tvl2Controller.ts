@@ -150,6 +150,10 @@ export class Tvl2Controller {
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
       const values = valuesByProject[project.id.toString()]
+      if (!values) {
+        continue
+      }
+
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
       const valueSums = new Map<number, Values>()
