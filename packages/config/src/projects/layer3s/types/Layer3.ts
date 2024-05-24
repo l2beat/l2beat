@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import {
-    ChainConfig,
+  ChainConfig,
   DataAvailabilityWithSentiment,
   KnowledgeNugget,
   Layer3Provider,

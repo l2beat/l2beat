@@ -109,12 +109,7 @@ export function opStackCommon(
   templateVars: OpStackConfigCommon,
 ): Omit<
   Layer2,
-  | 'type'
-  | 'display'
-  | 'config'
-  | 'isArchived'
-  | 'stage'
-  | 'riskView'
+  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),

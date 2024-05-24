@@ -94,12 +94,7 @@ export function orbitStackCommon(
   explorerLinkFormat: string,
 ): Omit<
   Layer2,
-  | 'type'
-  | 'display'
-  | 'config'
-  | 'isArchived'
-  | 'stage'
-  | 'riskView'
+  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
