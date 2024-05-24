@@ -61,6 +61,14 @@ const chainSlugToName: Record<string, string> = {
   1399904803: 'XAI Testnet',
 }
 
+const ownerAddressToName: Record<string, string> = {
+  '0x246d38588b16Dd877c558b245e6D5a711C649fCF': 'LyraMultisig',
+  '0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82': 'KintoMultisig',
+  '0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF': 'HookOwnerEOA',
+  '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
+  // Add more owner addresses and their corresponding names here to get them integrated in the output
+}
+
 interface TokenInfo {
   token: string
   tokenName?: string
@@ -321,11 +329,13 @@ async function main(): Promise<void> {
             ignoreMethodsByProject[slugName][name] = {
               ignoreMethods: ['token', 'token__', 'hook__'],
             }
+            const ownerName =
+              ownerAddressToName[result.owner || ''] || 'Unknown Owner'
             escrowsByProject[slugName].push(
               `discovery.getEscrowDetails({
                 address: EthereumAddress('${hubOrBridge}'),
                 name: '${name}',
-                description: 'Socket Vault associated with ${slugName}.',
+                description: 'Socket Vault associated with ${slugName} and owned by ${ownerName}.',
                 tokens: ['${token.tokenSymbol}'],
               }),`,
             )
