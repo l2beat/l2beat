@@ -1112,6 +1112,21 @@
       "formula": "locked"
     },
     {
+      "id": "dht-dhedge-dao-token",
+      "name": "dHedge DAO Token",
+      "coingeckoId": "dhedge-dao",
+      "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84",
+      "symbol": "DHT",
+      "decimals": 18,
+      "deploymentTimestamp": 1599730531,
+      "coingeckoListingTimestamp": 1600300800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12508/large/dht.png?1696512323",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "xdb-digitalbits",
       "name": "digitalbits",
       "coingeckoId": "digitalbits",
@@ -1751,6 +1766,36 @@
       "coingeckoListingTimestamp": 1640131200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17362/large/V2QDNoLg_400x400.jpg?1696516913",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "hair-hairdao-token",
+      "name": "HairDAO Token",
+      "coingeckoId": "hairdao",
+      "address": "0x9Ce115f0341ae5daBC8B477b74E83db2018A6f42",
+      "symbol": "HAIR",
+      "decimals": 18,
+      "deploymentTimestamp": 1675927343,
+      "coingeckoListingTimestamp": 1680048000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29620/large/LinkedIn_Logo.jpg?1696528556",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "han-hanchain",
+      "name": "HanChain",
+      "coingeckoId": "hanchain",
+      "address": "0x0c90C57aaf95A3A87eadda6ec3974c99D786511F",
+      "symbol": "HAN",
+      "decimals": 18,
+      "deploymentTimestamp": 1643167031,
+      "coingeckoListingTimestamp": 1663718400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27374/large/logo_200.png?1696526418",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2756,6 +2801,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4130/large/phantasma.png?1696504758",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "pt-phemex-token",
+      "name": "Phemex Token",
+      "coingeckoId": "phemex",
+      "address": "0xbBb32f99e6F2Cb29337EeBAA43C5069386DE6e6c",
+      "symbol": "PT",
+      "decimals": 18,
+      "deploymentTimestamp": 1701159047,
+      "coingeckoListingTimestamp": 1701388800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33314/large/phemex_logo.png?1701959611",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -4246,6 +4306,44 @@
       "formula": "locked"
     },
     {
+      "id": "optimism:alusd-alchemix-usd",
+      "name": "Alchemix USD",
+      "coingeckoId": "alchemix-usd",
+      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
+      "symbol": "alUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1653955245,
+      "coingeckoListingTimestamp": 1616112000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
+      "id": "optimism:usx-dforce-usd",
+      "name": "dForce USD",
+      "coingeckoId": "token-dforce-usd",
+      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
+      "symbol": "USX",
+      "decimals": 18,
+      "deploymentTimestamp": 1637931555,
+      "coingeckoListingTimestamp": 1627516800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17422/large/usx_32.png?1696516969",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "cBridge (Celer)",
+        "slug": "cbridge"
+      }
+    },
+    {
       "id": "optimism:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",
@@ -4270,6 +4368,21 @@
       "coingeckoListingTimestamp": 1691539200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "optimism:extra-extra-finance",
+      "name": "Extra Finance",
+      "coingeckoId": "extra-finance",
+      "address": "0x2dAD3a13ef0C6366220f989157009e501e7938F8",
+      "symbol": "EXTRA",
+      "decimals": 18,
+      "deploymentTimestamp": 1684751172,
+      "coingeckoListingTimestamp": 1689292800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30973/large/Ex_logo-white-blue_ring_288x.png?1696529812",
       "chainId": 10,
       "type": "NMV",
       "formula": "circulatingSupply"
@@ -4419,6 +4532,55 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "optimism:tbtc-optimism-tbtc-v2",
+      "name": "Optimism tBTC v2",
+      "coingeckoId": "tbtc",
+      "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "symbol": "tBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1681389587,
+      "coingeckoListingTimestamp": 1600819200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "chainId": 10,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
+      "id": "optimism:pika-pika",
+      "name": "Pika",
+      "coingeckoId": "pika-protocol",
+      "address": "0x9A601C5bb360811d96A23689066af316a30c3027",
+      "symbol": "PIKA",
+      "decimals": 18,
+      "deploymentTimestamp": 1684988192,
+      "coingeckoListingTimestamp": 1685318400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30279/large/Pika_protocol.png?1696529185",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "optimism:kite-protocol-token",
+      "name": "Protocol Token",
+      "coingeckoId": "kite",
+      "address": "0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404",
+      "symbol": "KITE",
+      "decimals": 18,
+      "deploymentTimestamp": 1707709067,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35343/large/_KITE.png?1708317581",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "optimism:sfrax-staked-frax",
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
@@ -4467,6 +4629,25 @@
       "coingeckoListingTimestamp": 1647561600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "chainId": 10,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "optimism:tarot-tarot",
+      "name": "Tarot",
+      "coingeckoId": "tarot-2",
+      "address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
+      "symbol": "TAROT",
+      "decimals": 18,
+      "deploymentTimestamp": 1690228449,
+      "coingeckoListingTimestamp": 1695081600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31800/large/TAROT.jpg?1696530615",
       "chainId": 10,
       "type": "NMV",
       "formula": "totalSupply",
@@ -6598,6 +6779,60 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "zklinknova:btct-btct",
+      "name": "BTCT",
+      "coingeckoId": "bitcoin-trc20",
+      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+      "symbol": "BTCT",
+      "decimals": 18,
+      "deploymentTimestamp": 1714820378,
+      "coingeckoListingTimestamp": 1626048000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16999/large/9486.png?1696516564",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "TRON Foundation"
+      }
+    },
+    {
+      "id": "zklinknova:solvbtc.m-free-bridged-solvbtc",
+      "name": "Free Bridged SolvBTC",
+      "coingeckoId": "solv-btc",
+      "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
+      "symbol": "SolvBTC.m",
+      "decimals": 18,
+      "deploymentTimestamp": 1715238151,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36800/large/SOLV_BTC.jpg?1712469500",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
+      "id": "zklinknova:m-btc-merlin-btc",
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1715322228,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
       }
     }
   ]

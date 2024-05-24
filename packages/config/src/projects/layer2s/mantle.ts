@@ -164,6 +164,12 @@ export const mantle: Layer2 = opStackL2({
       date: '2024-03-15T00:00:00.00Z',
       description: 'Mantle completes Mainnet v2 Tectonic Upgrade.',
     },
+    {
+      name: 'MNT token migration begins',
+      link: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
+      date: '2023-07-11T00:00:00.00Z',
+      description: 'User can exchange their BIT tokens to MNT tokens.',
+    },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
 })

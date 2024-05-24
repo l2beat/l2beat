@@ -4,7 +4,6 @@ import { Layer3 } from './types'
 
 export const zklinknova: Layer3 = underReviewL3({
   id: 'zklinknova',
-  // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
   hostChain: ProjectId('linea'),
   display: {
     name: 'zkLink Nova',
@@ -27,6 +26,17 @@ export const zklinknova: Layer3 = underReviewL3({
         'https://t.me/zkLinkorg',
       ],
     },
+  },
+  rpcUrl: 'https://rpc.zklink.io',
+  chainConfig: {
+    name: 'zklinknova',
+    chainId: 810180,
+    explorerUrl: 'https://explorer.zklink.io',
+    explorerApi: {
+      url: 'https://explorer-api.zklink.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1709273393),
   },
   escrows: [
     {
@@ -90,7 +100,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
       sinceTimestamp: new UnixTime(1709279309),
-      tokens: ['ETH'],
+      tokens: ['ETH'], // actually MNT, but we do not support CBV yet
     },
     {
       chain: 'mantle',
