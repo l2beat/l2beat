@@ -14,9 +14,17 @@ export const env = createEnv({
       .enum(['development', 'test', 'production'])
       .default('development'),
     FALLBACK_REWRITE_DESTINATION: z
-      .string()
-      .url()
-      .default('http://localhost:8080'),
+      .enum(['local', 'vercel-mock', 'vercel-staging', 'vercel-production'])
+      .transform(
+        (val) =>
+          ({
+            local: 'http://localhost:8080',
+            'vercel-mock': 'https://l2beat-mock.vercel.app',
+            'vercel-staging': 'https://l2beat-staging.vercel.app',
+            'vercel-production': 'https://l2beat-production.vercel.app',
+          })[val],
+      )
+      .default('local'),
   },
 
   /**
