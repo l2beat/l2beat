@@ -74,7 +74,10 @@ export const paradex: Layer2 = {
 
     links: {
       websites: ['https://paradex.trade/'],
-      apps: ['https://app.paradex.trade'],
+      apps: [
+        'https://app.paradex.trade',
+        'https://paradex.trade/stats',
+      ],
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],
       repositories: ['https://github.com/tradeparadex'],
