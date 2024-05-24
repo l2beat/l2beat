@@ -5,6 +5,8 @@ const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
 })
 
+const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
+
 export const env = createEnv({
   /**
    * Server-only environment variables.
@@ -28,7 +30,7 @@ export const env = createEnv({
     FEATURE_FLAG_ASSET_RISKS: coerceBoolean.optional().default('0'),
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
-    FLAGS_SECRET: z.string().base64().optional(),
+    FLAGS_SECRET: base64url.optional(),
   },
 
   /**
