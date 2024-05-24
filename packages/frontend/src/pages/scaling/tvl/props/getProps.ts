@@ -14,7 +14,7 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       tvlView: getScalingTvlView(
-        [...config.layer2s, ...config.layer3s],
+        [...config.layer2s, ...(config.features.layer3sTvl ? config.layer3s: [])],
         pagesData.tvlApiResponse,
         pagesData.implementationChange,
       ),

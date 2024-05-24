@@ -48,6 +48,7 @@ export function getScalingSummaryView(
         tvlApiResponse,
         verificationStatus.projects[project.id.toString()],
         hasImplementationChanged,
+        {layer3sTvl}
       )
     }),
     layer3sTvl,
@@ -120,8 +121,9 @@ function getScalingL2SummaryEntry(
 function getScalingL3SummaryEntry(
   project: Layer3,
   tvlApiResponse: TvlApiResponse,
-  isVerified?: boolean,
-  hasImplementationChanged?: boolean,
+  isVerified: boolean | undefined,
+  hasImplementationChanged: boolean | undefined,
+  { layer3sTvl }: { layer3sTvl: boolean },
 ): ScalingL3SummaryViewEntry {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 
@@ -151,7 +153,7 @@ function getScalingL3SummaryEntry(
         ? 'Multiple'
         : layer2s.find((l) => l.id === project.hostChain)?.display.name,
     tvl:
-      stats && escrowsConfigured(project)
+      layer3sTvl && stats && escrowsConfigured(project)
         ? {
             value: stats.latestTvl,
             displayValue: formatUSD(stats.latestTvl),
@@ -159,9 +161,9 @@ function getScalingL3SummaryEntry(
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     sevenDayChange:
-      stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
     oneDayChange:
-      stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
   }
 }
 
