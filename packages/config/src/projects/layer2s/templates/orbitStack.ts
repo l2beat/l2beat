@@ -99,7 +99,6 @@ export function orbitStackCommon(
   | 'config'
   | 'isArchived'
   | 'stage'
-  | 'chainConfig'
   | 'riskView'
 > {
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
@@ -371,6 +370,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.nonTemplateRiskView?.destinationToken ??
         RISK_VIEW.NATIVE_AND_CANONICAL(),
     }),
+    chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: unionBy(
@@ -524,7 +524,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
-    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(

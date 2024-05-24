@@ -114,7 +114,6 @@ export function opStackCommon(
   | 'config'
   | 'isArchived'
   | 'stage'
-  | 'chainConfig'
   | 'riskView'
 > {
   const sequencerInbox = EthereumAddress(
@@ -409,6 +408,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
             },
     },
+    chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
@@ -476,7 +476,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ],
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
