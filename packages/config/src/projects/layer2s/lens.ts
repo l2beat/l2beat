@@ -12,7 +12,7 @@ export const lens: Layer2 = upcomingL2({
     category: 'Validium',
     provider: 'ZK Stack',
     links: {
-      websites: ['https://www.lens.xyz'],
+      websites: ['https://lens.xyz'],
       apps: [],
       documentation: ['https://docs.lens.xyz'],
       explorers: ['https://momoka.lens.xyz'],
