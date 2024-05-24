@@ -10,7 +10,7 @@ import { stack } from './stack'
 import { syndicateframe } from './syndicateframe'
 import { Layer3 } from './types'
 import { xai } from './xai'
-import { zklinknova } from './zkLinkNova'
+import { zklinknova } from './zklinknova'
 
 export * from './types'
 

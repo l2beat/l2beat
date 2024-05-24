@@ -6599,6 +6599,60 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "zklinknova:btct-btct",
+      "name": "BTCT",
+      "coingeckoId": "bitcoin-trc20",
+      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+      "symbol": "BTCT",
+      "decimals": 18,
+      "deploymentTimestamp": 1714820378,
+      "coingeckoListingTimestamp": 1626048000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16999/large/9486.png?1696516564",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "TRON Foundation"
+      }
+    },
+    {
+      "id": "zklinknova:solvbtc.m-free-bridged-solvbtc",
+      "name": "Free Bridged SolvBTC",
+      "coingeckoId": "solv-btc",
+      "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
+      "symbol": "SolvBTC.m",
+      "decimals": 18,
+      "deploymentTimestamp": 1715238151,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36800/large/SOLV_BTC.jpg?1712469500",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
+      "id": "zklinknova:m-btc-merlin-btc",
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1715322228,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 810180,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
     }
   ]
 }
