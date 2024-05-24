@@ -43,7 +43,7 @@ export function getProps(
         manuallyVerifiedContracts,
         implementationChange,
         charts,
-        config.features
+        config.features,
       ),
       footer: getFooterProps(config),
     },

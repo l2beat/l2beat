@@ -18,7 +18,7 @@ export function getProjectTvlBreakdownPages(
   },
 ) {
   const included = getIncludedProjectsTvlBreakdown(
-    [...config.layer2s, ...(config.features.layer3sTvl ? config.layer3s: [])],
+    [...config.layer2s, ...(config.features.layer3sTvl ? config.layer3s : [])],
     pagesData.tvlApiResponse,
     pagesData.tvlBreakdownApiResponse,
   )

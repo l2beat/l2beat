@@ -26,7 +26,7 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   implementationChange?: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
-  tvlBreakdownApiResponse?: ProjectAssetsBreakdownApiResponse,  
+  tvlBreakdownApiResponse?: ProjectAssetsBreakdownApiResponse,
 ): ScalingProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   const tvlBreakdownProject =

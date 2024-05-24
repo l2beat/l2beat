@@ -48,7 +48,7 @@ export function getScalingSummaryView(
         tvlApiResponse,
         verificationStatus.projects[project.id.toString()],
         hasImplementationChanged,
-        {layer3sTvl}
+        { layer3sTvl },
       )
     }),
     layer3sTvl,
@@ -161,9 +161,13 @@ function getScalingL3SummaryEntry(
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
     sevenDayChange:
-      layer3sTvl && stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.sevenDayChange
+        : undefined,
     oneDayChange:
-      layer3sTvl && stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.oneDayChange
+        : undefined,
   }
 }
 

@@ -34,7 +34,7 @@ export function getProjectDetails(
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   charts: ProjectDetailsCharts,
-  {layer3sTvl}: { layer3sTvl: boolean },
+  { layer3sTvl }: { layer3sTvl: boolean },
 ) {
   const isUpcoming = project.isUpcoming
 
