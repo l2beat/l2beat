@@ -124,6 +124,7 @@ export function orbitStackCommon(
       ),
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
+    chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
@@ -365,7 +366,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.nonTemplateRiskView?.destinationToken ??
         RISK_VIEW.NATIVE_AND_CANONICAL(),
     }),
-    chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: unionBy(
