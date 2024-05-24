@@ -747,7 +747,6 @@ export const starknet: Layer2 = {
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
-              link: 'https://etherscan.io/address/0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF#code',
             },
             {
               name: 'RecursiveVerifier',
@@ -760,6 +759,7 @@ export const starknet: Layer2 = {
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
+              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet',
             },
           ],
         },

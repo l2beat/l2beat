@@ -579,7 +579,6 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Aztec ceremony',
-              link: 'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code',
             },
             {
               name: 'RecursiveVerifier',

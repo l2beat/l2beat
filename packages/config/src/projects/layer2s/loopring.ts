@@ -414,7 +414,7 @@ export const loopring: Layer2 = {
               mainArithmetization: 'R1CS+QAP',
               mainPCS: 'N/A',
               trustedSetup: 'Powers of Tau 18',
-              link: 'https://etherscan.io/address/0x6150343E0F43A17519c0327c41eDd9eBE88D01ef#code',
+              link: 'https://github.com/Loopring/protocol3-circuits.git',
             },
           ],
         },
