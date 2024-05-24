@@ -7,9 +7,9 @@ export async function GET(request: NextRequest) {
  
   return NextResponse.json<ApiData>({
     definitions: {
-      assetRisks: {
+      'asset-risks': {
         description: 'Controls whether the asset risks feature is enabled.',
-        origin: 'https://l2beat.com/asset-risks',
+        origin: '/asset-risks',
         options: [
           { value: false, label: 'Off' },
           { value: true, label: 'On' },
