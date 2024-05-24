@@ -7,7 +7,7 @@ RUN cd /src/ && \
   yarn build:backend
 RUN mkdir /dist/ && \
   cd /dist/ && \
-  wget https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \
+  wget -q https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \
   tar -xf difft-$ARCH-unknown-linux-gnu.tar.gz && \
   rm -f difft-$ARCH-unknown-linux-gnu.tar.gz
 
