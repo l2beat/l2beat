@@ -34,7 +34,7 @@ export const zklinknova: Layer3 = underReviewL3({
     explorerUrl: 'https://explorer.zklink.io',
     explorerApi: {
       url: 'https://explorer-api.zklink.io/api',
-      type: 'blockscout', // is the api compatible??
+      type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1709273393),
   },
