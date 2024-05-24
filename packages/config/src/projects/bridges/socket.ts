@@ -264,7 +264,7 @@ export const socket: Bridge = {
     {
       name: 'HookOwnerEOA',
       description:
-        'EOA that owns the Socket WETH Vault associated with hook.xyz.',
+        'EOA that owns the Socket Vaults associated with hook.xyz.',
       accounts: [discovery.getPermissionedAccount('WETH Vault Hook', 'owner')],
     },
   ],
