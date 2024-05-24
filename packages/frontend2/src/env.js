@@ -28,7 +28,7 @@ export const env = createEnv({
     FEATURE_FLAG_ASSET_RISKS: coerceBoolean.optional(),
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
-    FLAGS_SECRET: z.string().optional(),
+    FLAGS_SECRET: z.string().base64().optional(),
   },
 
   /**
