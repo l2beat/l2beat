@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf6c4a97980541fc70a3ad7b3ee2b52fa9338e04f
+
+# Diff at Mon, 20 May 2024 15:20:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@97bea89f161f8e4e9ebb3b4ef7fb3fcb3f90924f block: 211899420
+- current block number: 213233578
+
+## Description
+
+Discovery of Molten L3 by Caldera showed that `0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF` is likely a Caldera Multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 211899420 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutorMemberGnosisSafeL2 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      name:
+-        "UpgradeExecutorMemberGnosisSafeL2"
++        "Caldera Multisig"
+    }
+```
+
 Generated with discovered.json: 0x7245a07dfe953ecc4b697834241e5f6b302ccc1e
 
 # Diff at Thu, 25 Apr 2024 21:21:55 GMT:

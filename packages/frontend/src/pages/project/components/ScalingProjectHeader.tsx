@@ -6,6 +6,7 @@ import {
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { WarningBar } from '../../../components/WarningBar'
 import { UpcomingBadge } from '../../../components/badge/UpcomingBadge'
 import {
   TokenBreakdown,
@@ -14,7 +15,7 @@ import {
 import { ProjectSummaryStat } from '../../../components/header/ProjectSummary'
 import { TvlStats } from '../../../components/header/TvlSummary'
 import { StatWithChange } from '../../../components/header/stats/StatWithChange'
-import { InfoIcon } from '../../../components/icons'
+import { InfoIcon, RoundedWarningIcon } from '../../../components/icons'
 import { StageBadge } from '../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../components/table/TypeCell'
@@ -60,10 +61,34 @@ export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
     {
       title: 'Tokens',
       value:
-        props.isUpcoming || !props.tvlBreakdown || props.tvlBreakdown.empty ? (
+        props.isUpcoming || !props.tvlBreakdown ? (
           <UpcomingBadge />
         ) : (
-          <TokenBreakdown {...props.tvlBreakdown} />
+          <Tooltip>
+            <TooltipTrigger className="flex items-center gap-1">
+              <TokenBreakdown {...props.tvlBreakdown} className="opacity-80" />
+              {props.tvlBreakdown.warning && (
+                <RoundedWarningIcon
+                  sentiment={props.tvlBreakdown.warningSeverity}
+                />
+              )}
+            </TooltipTrigger>
+            <TooltipContent>
+              {props.tvlBreakdown.label}
+              {props.tvlBreakdown.warning && (
+                <WarningBar
+                  className="mt-2"
+                  text={props.tvlBreakdown.warning}
+                  icon={RoundedWarningIcon}
+                  color={
+                    props.tvlBreakdown.warningSeverity === 'warning'
+                      ? 'yellow'
+                      : 'red'
+                  }
+                />
+              )}
+            </TooltipContent>
+          </Tooltip>
         ),
     },
     {
@@ -136,10 +161,7 @@ export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
       tvlBreakdownHref={props.tvlBreakdownHref}
       tvlWarning={props.tvlWarning}
       showTvlBreakdown={
-        props.showTvlBreakdown &&
-        !props.isUpcoming &&
-        !!props.tvlBreakdown &&
-        !props.tvlBreakdown.empty
+        props.showTvlBreakdown && !props.isUpcoming && !!props.tvlBreakdown
       }
       isUpcoming={props.isUpcoming}
       isArchived={props.isArchived}

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
 
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
@@ -19,6 +20,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
+    private readonly createDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
     configurations?: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -83,6 +85,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: UpdateConfiguration<T>[],
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number>
 
   /**
@@ -111,6 +114,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract updateCurrentHeight(
     configurationIds: string[],
     currentHeight: number,
+    dbMiddleware?: DatabaseMiddleware,
   ): Promise<void>
 
   /**
@@ -137,6 +141,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     const oldSafeHeight = (await this.getSafeHeight()) ?? safeHeight
 
     this.saved = new Map(toSave.map((c) => [c.id, c]))
+    // TODO: should we remove data in a transaction?
     if (toRemove.length > 0) {
       await this.removeData(toRemove)
     }
@@ -163,7 +168,14 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       to: adjustedTo,
       configurations: configurations.length,
     })
-    const newHeight = await this.multiUpdate(from, adjustedTo, configurations)
+
+    const dbMiddleware = await this.createDatabaseMiddleware()
+    const newHeight = await this.multiUpdate(
+      from,
+      adjustedTo,
+      configurations,
+      dbMiddleware,
+    )
     if (newHeight < from || newHeight > adjustedTo) {
       throw new Error(
         'Programmer error, returned height must be between from and to (both inclusive).',
@@ -176,9 +188,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
         newHeight,
       )
       if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight)
+        await this.updateCurrentHeight(updatedIds, newHeight, dbMiddleware)
       }
     }
+
+    await dbMiddleware.execute()
 
     return newHeight
   }

@@ -6,8 +6,6 @@ import { Roboto, Roboto_Serif } from 'next/font/google'
 
 import { ReactQueryProvider } from '~/components/ReactQueryProvider'
 import { Web3Provider } from '~/components/Web3Provider'
-import { Footer } from '~/components/footer/Footer'
-import { Navbar } from '~/components/navbar/Navbar'
 import { cn } from '~/utils/cn'
 
 const roboto = Roboto({
@@ -49,13 +47,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <Web3Provider>
-            <ThemeProvider attribute="class">
-              <div className="flex flex-col min-h-screen flex-1">
-                <Navbar />
-                {children}
-              </div>
-              <Footer />
-            </ThemeProvider>
+            <ThemeProvider attribute="class">{children}</ThemeProvider>
           </Web3Provider>
         </ReactQueryProvider>
       </body>

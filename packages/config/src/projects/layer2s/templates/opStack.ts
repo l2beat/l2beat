@@ -109,13 +109,7 @@ export function opStackCommon(
   templateVars: OpStackConfigCommon,
 ): Omit<
   Layer2,
-  | 'type'
-  | 'display'
-  | 'config'
-  | 'isArchived'
-  | 'stage'
-  | 'chainConfig'
-  | 'riskView'
+  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
@@ -409,6 +403,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
             },
     },
+    chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
@@ -476,7 +471,6 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             ],
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
@@ -496,7 +490,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
             mode: 'Transactions data (compressed)',
           }),
     riskView: makeBridgeCompatible({
-      stateValidation: RISK_VIEW.STATE_NONE,
+      stateValidation: {
+        ...RISK_VIEW.STATE_NONE,
+        secondLine: `${formatSeconds(
+          FINALIZATION_PERIOD_SECONDS,
+        )} challenge period`,
+      },
       dataAvailability: {
         ...riskViewDA(daProvider),
         sources: [

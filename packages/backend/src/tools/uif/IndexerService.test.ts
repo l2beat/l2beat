@@ -7,6 +7,7 @@ import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from './IndexerStateRepository'
+import { mockDbMiddleware } from './multi/MultiIndexer.test'
 
 describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {
@@ -198,11 +199,16 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.updateSavedConfigurations('indexer', ['a', 'b'], 123)
+    await indexerService.updateSavedConfigurations(
+      'indexer',
+      ['a', 'b'],
+      123,
+      mockDbMiddleware,
+    )
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123, undefined)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
