@@ -35,7 +35,7 @@ export function getChainTvlConfig(
     chain === 'ethereum'
       ? ProjectId.ETHEREUM
       : layer2s.find((layer2) => layer2.chainConfig?.name === chain)?.id ??
-        layer3s.find((layer2) => layer2.chainConfig?.name === chain)?.id
+        layer3s.find((layer3) => layer3.chainConfig?.name === chain)?.id
   if (!projectId) {
     throw new Error('Missing project for chain: ' + chain)
   }
