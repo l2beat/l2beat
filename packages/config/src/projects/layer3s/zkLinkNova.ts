@@ -10,7 +10,7 @@ export const zklinknova: Layer3 = underReviewL3({
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
-      'zkLink Nova is a multi-chain rollup infrastructure based on zero-knowledge technology.',
+      'zkLink Nova is the first zkEVM network to aggregate Ethereum rollups onto one Layer 3.',
     purposes: ['Universal'],
     category: 'Validium',
     provider: 'zkLink Nexus',
