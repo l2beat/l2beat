@@ -78,7 +78,10 @@ export const paradex: Layer2 = {
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],
       repositories: ['https://github.com/tradeparadex'],
-      socialMedia: ['https://twitter.com/tradeparadex'],
+      socialMedia: [
+        'https://twitter.com/tradeparadex',
+        'https://discord.com/invite/paradex',
+      ],
     },
     liveness: {
       explanation:
