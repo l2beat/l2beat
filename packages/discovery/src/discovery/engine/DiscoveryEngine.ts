@@ -8,6 +8,7 @@ import {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { removeAlreadyAnalyzed } from './filterAddressesToAnalyze'
 import { shouldSkip } from './shouldSkip'
 
 // Bump this value when the logic of discovery changes,
@@ -35,21 +36,7 @@ export class DiscoveryEngine {
     })
 
     while (Object.keys(toAnalyze).length > 0) {
-      for (const analysis of resolved) {
-        const address = analysis.address.toString()
-        const suggestedTemplates = toAnalyze[address] ?? new Set()
-        if (analysisCoversSuggestedTemplates(analysis, suggestedTemplates)) {
-          delete toAnalyze[address]
-        } else if (
-          analysis.type !== 'EOA' &&
-          analysis.extendedTemplate !== undefined
-        ) {
-          analysis.errors['@template'] = `Conflicting templates: ${Array.from(
-            suggestedTemplates,
-          ).join(', ')}`
-          delete toAnalyze[address]
-        }
-      }
+      removeAlreadyAnalyzed(toAnalyze, resolved)
 
       for (const address of Object.keys(toAnalyze)) {
         const skipReason = shouldSkip(
@@ -176,17 +163,4 @@ export class DiscoveryEngine {
       }
     }
   }
-}
-
-function analysisCoversSuggestedTemplates(
-  analysis: Analysis,
-  suggestedTemplates: Set<string>,
-): boolean {
-  return (
-    analysis.type === 'EOA' || // Templates suggestions don't make sense for EOAs
-    analysis.extendedTemplate?.reason === 'byExtends' || // Explicit template was set
-    suggestedTemplates.size === 0 || // We have nothing new to suggest
-    (suggestedTemplates.size === 1 &&
-      analysis.extendedTemplate?.template === Array.from(suggestedTemplates)[0]) // Exactly the same template was analyzed
-  )
 }
