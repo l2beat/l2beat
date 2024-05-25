@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryEngine } from './DiscoveryEngine.1'
+import { DiscoveryEngine } from './DiscoveryEngine'
 
 describe(DiscoveryEngine.name, () => {
   const BLOCK_NUMBER = 1234

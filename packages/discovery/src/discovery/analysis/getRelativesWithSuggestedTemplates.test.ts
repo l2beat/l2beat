@@ -20,13 +20,13 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       },
     ])
 
-    expect(relatives).toEqual([
-      ADDRESS_A,
-      ADDRESS_B,
-      ADDRESS_C,
-      ADDRESS_D,
-      ADDRESS_E,
-    ])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_B.toString()]: new Set(),
+      [ADDRESS_C.toString()]: new Set(),
+      [ADDRESS_D.toString()]: new Set(),
+      [ADDRESS_E.toString()]: new Set(),
+    })
   })
 
   it('deduplicated addresses', () => {
@@ -36,7 +36,10 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       { field: 'c', value: ADDRESS_B.toString() },
     ])
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_B])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_B.toString()]: new Set(),
+    })
   })
 
   it('ignores fields with ignoreRelative', () => {
@@ -46,7 +49,10 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       { field: 'c', value: ADDRESS_C.toString() },
     ])
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_C])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_C.toString()]: new Set(),
+    })
   })
 
   it('ignores fields in the ignoreFields array', () => {
@@ -59,7 +65,10 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       ['b'],
     )
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_C])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_C.toString()]: new Set(),
+    })
   })
 
   it('includes known relatives', () => {
@@ -72,7 +81,11 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       [ADDRESS_C],
     )
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_B, ADDRESS_C])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_B.toString()]: new Set(),
+      [ADDRESS_C.toString()]: new Set(),
+    })
   })
 
   it('ignores ignored addresses', () => {
@@ -87,7 +100,10 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       [ADDRESS_B],
     )
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_C])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_C.toString()]: new Set(),
+    })
   })
 
   it('follows all rules at the same time', () => {
@@ -104,6 +120,9 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       [ADDRESS_C],
     )
 
-    expect(relatives).toEqual([ADDRESS_A, ADDRESS_D])
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_D.toString()]: new Set(),
+    })
   })
 })
