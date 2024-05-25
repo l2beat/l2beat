@@ -39,7 +39,7 @@ describe(AddressAnalyzer.name, () => {
 
       expect(result).toEqual({
         analysis: { type: 'EOA', address },
-        relatives: [],
+        relatives: {},
       })
     })
 
@@ -139,7 +139,10 @@ describe(AddressAnalyzer.name, () => {
           matchingTemplates: {},
           extendedTemplate: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
 
@@ -238,7 +241,10 @@ describe(AddressAnalyzer.name, () => {
           matchingTemplates: {},
           extendedTemplate: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
 
@@ -335,7 +341,10 @@ describe(AddressAnalyzer.name, () => {
           matchingTemplates: {},
           extendedTemplate: undefined,
         },
-        relatives: [owner, admin],
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
+        },
       })
     })
   })

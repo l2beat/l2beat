@@ -47,11 +47,6 @@ export interface AnalyzedEOA {
   address: EthereumAddress
 }
 
-export interface RelativeAddress {
-  address: EthereumAddress
-  template?: string
-}
-
 export type AddressesWithTemplates = Record<string, Set<string>>
 
 export class AddressAnalyzer {
@@ -69,7 +64,7 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-    _suggestedTemplates: Set<string>, // TODO
+    _suggestedTemplates?: Set<string>, // TODO
   ): Promise<{
     analysis: Analysis
     relatives: AddressesWithTemplates
