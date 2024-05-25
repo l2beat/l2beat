@@ -190,17 +190,17 @@ export const blast: Layer2 = opStackL2({
       description: 'Blast Network announces its upgrade to support blobs.',
     },
     {
-      name: 'Blast Network Launch',
-      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
-      date: '2024-02-29T00:00:00Z',
-      description: 'Blast Network is live on mainnet.',
-    },
-    {
       name: 'Blast upgrades to censor exploiter',
       link: 'https://x.com/miszke_eth/status/1772946372309737970',
       date: '2024-03-26T00:00:00Z',
       description:
         'The Munchables exploiter is prohibited from forcing transactions.',
+    },
+    {
+      name: 'Blast Network Launch',
+      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
+      date: '2024-02-29T00:00:00Z',
+      description: 'Blast Network is live on mainnet.',
     },
   ],
 })
