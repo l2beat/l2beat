@@ -35,7 +35,7 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
         activityApiResponse,
-        tvlBreakdownApiResponse,
+        config.features.layer3sTvl ? tvlBreakdownApiResponse : undefined,
       ),
       projectDetails: getProjectDetails(
         project,
@@ -43,6 +43,7 @@ export function getProps(
         manuallyVerifiedContracts,
         implementationChange,
         charts,
+        config.features,
       ),
       footer: getFooterProps(config),
     },

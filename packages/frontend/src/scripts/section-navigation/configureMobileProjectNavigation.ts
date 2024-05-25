@@ -51,6 +51,7 @@ export function configureMobileProjectNavigation() {
       sections,
       topItem: summaryItem,
       onHighlight: (item) => {
+        highlightItem(item)
         scrollToItem(item)
       },
     })

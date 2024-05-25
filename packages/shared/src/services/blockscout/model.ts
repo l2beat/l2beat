@@ -72,7 +72,7 @@ export const BlockscoutInternalTransaction = z.object({
   index: z.number(),
   success: z.boolean(),
   timestamp: stringAs((s) => UnixTime.fromDate(new Date(s))),
-  to: BlockscoutAddressParam,
+  to: z.nullable(BlockscoutAddressParam),
   transaction_hash: z.string(),
   type: z.string(),
   value: z.string(),
@@ -84,5 +84,5 @@ export type BlockscoutGetInternalTransactionsResponse = z.infer<
 
 export const BlockscoutGetInternalTransactionsResponse = z.object({
   items: z.array(BlockscoutInternalTransaction),
-  next_page_params: BlockscoutNextPageParams,
+  next_page_params: z.nullable(BlockscoutNextPageParams),
 })

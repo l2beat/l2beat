@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -362,6 +367,59 @@ export const loopring: Layer2 = {
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'ZK Circuits',
+        description:
+          'Loopring utilizes Groth16 for their proving system. The source code of the circuits can be found [here](https://github.com/Loopring/protocol3-circuits).',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+        ],
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'Groth16 requires a circuit specific trusted setup, so they run their own ceremony. The first phase is run using Powers of Tau ceremony. Some of the instructions on how to regenerate the verification keys can be found [here](https://github.com/Loopring/trusted_setup/tree/loopring-3.6.2).',
+      },
+    ],
+    proofVerification: {
+      aggregation: false,
+      requiredTools: [
+        {
+          name: 'Custom tool',
+          version: 'v3.6.2',
+          link: 'https://github.com/Loopring/trusted_setup/tree/loopring-3.6.2',
+        },
+      ],
+      verifiers: [
+        {
+          name: 'LoopringVerifier',
+          description: 'Loopring utilizes Groth16 for their proving system.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x6150343E0F43A17519c0327c41eDd9eBE88D01ef',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'BlockVerifier',
+              proofSystem: 'Groth16',
+              mainArithmetization: 'R1CS+QAP',
+              mainPCS: 'N/A',
+              trustedSetup: 'Powers of Tau 18',
+              link: 'https://github.com/Loopring/protocol3-circuits.git',
+            },
+          ],
+        },
+      ],
+    },
   },
   milestones: [
     {

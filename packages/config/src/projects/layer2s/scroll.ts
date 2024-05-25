@@ -1,4 +1,5 @@
 import {
+  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -391,6 +392,109 @@ export const scroll: Layer2 = {
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
       'Blocks are grouped into chunks and chunks are grouped into batches. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/ChunkCodec.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll/blob/develop/contracts/src/libraries/codec/BatchHeaderV0Codec.sol#L7).',
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          'The prover code can be found [here](https://github.com/scroll-tech/scroll-prover).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'Scroll circuits are based on the Halo2 proof system and are designed to replicate the behavior of the EVM. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/zkevm-circuits) while the code for the aggregation circuits can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.5/aggregator).',
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'SNARK verification keys can be generated and checked against Ethereum verifier contract using [this guide](https://github.com/scroll-tech/scroll-prover#verifier-contract). The system requires a trusted setup.',
+      },
+    ],
+    proofVerification: {
+      aggregation: true,
+      requiredTools: [
+        {
+          name: 'Custom tool',
+          version: 'v0.10.3',
+          link: 'https://github.com/scroll-tech/scroll-prover/tree/v0.10.3?tab=readme-ov-file#verifier-contract',
+        },
+      ],
+      verifiers: [
+        {
+          name: 'ScrollVerifierV0',
+          description:
+            'Halo2 + KZG verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x585DfaD7bF4099E011D185E266907A8ab60DAD2D',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'ZkEvmVerifierV0',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+            },
+            {
+              name: 'RecursiveVerifier',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
+            },
+            {
+              name: 'MainVerifier',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/zkevm-circuits',
+            },
+          ],
+        },
+        {
+          name: 'ScrollVerifierV1',
+          description:
+            'Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'ZkEvmVerifierV1',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+            },
+            {
+              name: 'RecursiveVerifier',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
+            },
+            {
+              name: 'MainVerifier',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
+            },
+          ],
+        },
+      ],
+    },
   },
   contracts: {
     addresses: [

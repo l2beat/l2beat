@@ -59,6 +59,7 @@ export const mantle: Layer2 = opStackL2({
       ],
     },
   },
+  associatedTokens: ['MNT'],
   discovery,
   display: {
     name: 'Mantle',
@@ -100,6 +101,8 @@ export const mantle: Layer2 = opStackL2({
         batchSize: 150,
         sinceBlock: 304717,
         version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'mantle',
@@ -160,6 +163,12 @@ export const mantle: Layer2 = opStackL2({
       link: 'https://www.mantle.xyz/blog/announcements/mantle-completes-mainnet-v2-tectonic-upgrade',
       date: '2024-03-15T00:00:00.00Z',
       description: 'Mantle completes Mainnet v2 Tectonic Upgrade.',
+    },
+    {
+      name: 'MNT token migration begins',
+      link: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
+      date: '2023-07-11T00:00:00.00Z',
+      description: 'User can exchange their BIT tokens to MNT tokens.',
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],

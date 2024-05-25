@@ -102,6 +102,10 @@ export const reya: Layer2 = orbitStackL2({
       description:
         "EOA address that can upgrade the rollup's smart contract system and gain access to all funds.",
     },
+    ...discovery.getMultisigPermission(
+      'ReyaMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
   ],
   milestones: [
     // {

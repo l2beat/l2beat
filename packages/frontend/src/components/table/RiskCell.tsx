@@ -31,35 +31,39 @@ export function RiskCell({ item }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex items-center gap-1">
-          <SentimentText sentiment={item.sentiment}>{item.value}</SentimentText>
-          {item.warning && (
-            <RoundedWarningIcon
-              className={cn(
-                'size-5',
-                sentimentToFillColor(item.warning.sentiment),
-              )}
-            />
-          )}
-        </div>
-
-        {item.secondLine &&
-          (item.secondSentiment ? (
-            <SentimentText
-              sentiment={item.secondSentiment}
-              className="block text-xs leading-none"
-            >
-              {item.secondLine}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1">
+            <SentimentText sentiment={item.sentiment}>
+              {item.value}
             </SentimentText>
-          ) : (
-            <span
-              className={
-                'block text-xs leading-none text-gray-550 dark:text-gray-500'
-              }
-            >
-              {item.secondLine}
-            </span>
-          ))}
+            {item.warning && (
+              <RoundedWarningIcon
+                className={cn(
+                  'size-5',
+                  sentimentToFillColor(item.warning.sentiment),
+                )}
+              />
+            )}
+          </div>
+
+          {item.secondLine &&
+            (item.secondSentiment ? (
+              <SentimentText
+                sentiment={item.secondSentiment}
+                className="block text-xs leading-none"
+              >
+                {item.secondLine}
+              </SentimentText>
+            ) : (
+              <span
+                className={
+                  '-mt-1 mb-1 md:m-0 md:text-xs text-2xs md:leading-none text-gray-550 dark:text-gray-500'
+                }
+              >
+                {item.secondLine}
+              </span>
+            ))}
+        </div>
       </TooltipTrigger>
       <TooltipContent>
         {item.warning && (

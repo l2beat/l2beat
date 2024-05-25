@@ -150,6 +150,10 @@ export class Tvl2Controller {
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
       const values = valuesByProject[project.id.toString()]
+      if (!values) {
+        continue
+      }
+
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
       const valueSums = new Map<number, Values>()
@@ -385,6 +389,8 @@ export class Tvl2Controller {
       const source = convertSourceName(config.source)
       breakdown[source].push({
         assetId: priceConfig.assetId,
+        address: config.address.toString(),
+        chain: config.chain,
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: convertSourceName(config.source),
         usdValue: asNumber(value, 2),

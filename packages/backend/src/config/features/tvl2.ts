@@ -143,7 +143,7 @@ function getAmountsConfig(
           ),
           escrowAddress: escrow.address,
           project: project.projectId,
-          source: toSource(token.type),
+          source: 'canonical',
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
           symbol: token.symbol,
@@ -211,6 +211,13 @@ function getChainToProjectMapping(
   const chainToProject = new Map<string, ProjectId>()
 
   for (const project of layer2s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
+  for (const project of layer3s) {
     if (project.chainConfig) {
       const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
       chainToProject.set(chain, project.id)

@@ -53,6 +53,7 @@ export const rss3: Layer2 = opStackL2({
     },
     bridge: { type: 'None' },
   },
+  associatedTokens: ['RSS3'],
   discovery,
   display: {
     shortName: 'RSS3',
@@ -108,7 +109,7 @@ export const rss3: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1709858519),
   nonTemplatePermissions: [
     {
-      name: 'SystemConfig Owner.',
+      name: 'SystemConfig owner',
       description:
         'Account privileged to change System Config parameters such as sequencer address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],

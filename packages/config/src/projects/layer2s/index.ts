@@ -43,6 +43,7 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { lens } from './lens'
 import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -54,7 +55,6 @@ import { metal } from './metal'
 import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
-import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nil } from './nil'
@@ -80,6 +80,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
@@ -154,6 +155,7 @@ export const layer2s: Layer2[] = [
   kroma,
   layer2finance,
   layer2financezk,
+  lens,
   lightlink,
   linea,
   lisk,
@@ -165,7 +167,6 @@ export const layer2s: Layer2[] = [
   metis,
   mint,
   mode,
-  molten,
   morph,
   myria,
   nil,
@@ -191,6 +192,7 @@ export const layer2s: Layer2[] = [
   rise,
   rss3,
   scroll,
+  sophon,
   sorare,
   specular,
   starknet,

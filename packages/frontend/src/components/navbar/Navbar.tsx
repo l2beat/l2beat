@@ -82,10 +82,10 @@ export function Navbar(props: NavbarProps) {
             <MenuOpenIcon className="block" aria-label="Open menu" />
           </button>
           <div className="hidden h-full items-center gap-5 lg:flex">
-            <ul className="items-center gap-4 hidden xl:flex">
+            <ul className="items-center gap-4 hidden [@media(min-width:1320px)]:flex">
               <SocialLinks {...props.socialLinks} />
             </ul>
-            <VerticalBar className="hidden xl:block" />
+            <VerticalBar className="hidden [@media(min-width:1320px)]:block" />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
                 <PlainLink
