@@ -10,7 +10,7 @@ export function getRelativesWithSuggestedTemplates(
   ignoredFields?: string[],
   knownRelatives?: EthereumAddress[],
   ignoredAddresses?: EthereumAddress[],
-  fields?: { [key: string]: DiscoveryContractField },
+  fields?: { [field: string]: DiscoveryContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}
   for (const known of knownRelatives ?? []) {
@@ -23,7 +23,7 @@ export function getRelativesWithSuggestedTemplates(
     const addresses = getAddresses(param.value).filter(
       (address) => !ignoredAddresses?.includes(address),
     )
-    const template = fields?.[param.field]?.target?.handler ?? undefined
+    const template = fields?.[param.field]?.target?.template ?? undefined
     for (const address of addresses) {
       const curTemplates = result[address.toString()] ?? new Set()
       result[address.toString()] = curTemplates

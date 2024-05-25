@@ -106,6 +106,48 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
     })
   })
 
+  it('returns addresses found in values with proper suggested templates', () => {
+    const relatives = getRelativesWithSuggestedTemplates(
+      [
+        { field: 'a', value: ADDRESS_A.toString() },
+        { field: 'b', value: [ADDRESS_B.toString(), ADDRESS_C.toString()] },
+        {
+          field: 'c',
+          value: { d: ADDRESS_D.toString(), e: ADDRESS_E.toString() },
+        },
+        { field: 'd', value: ADDRESS_A.toString() },
+      ],
+      undefined,
+      undefined,
+      undefined,
+      {
+        a: {
+          target: {
+            template: 'template1',
+          },
+        },
+        b: {
+          target: {
+            template: 'template2',
+          },
+        },
+        d: {
+          target: {
+            template: 'template2',
+          },
+        },
+      },
+    )
+
+    expect(relatives).toEqual({
+      [ADDRESS_A.toString()]: new Set(['template1', 'template2']),
+      [ADDRESS_B.toString()]: new Set(['template2']),
+      [ADDRESS_C.toString()]: new Set(['template2']),
+      [ADDRESS_D.toString()]: new Set(),
+      [ADDRESS_E.toString()]: new Set(),
+    })
+  })
+
   it('follows all rules at the same time', () => {
     const relatives = getRelativesWithSuggestedTemplates(
       [
@@ -118,10 +160,27 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       ['second'],
       [ADDRESS_D],
       [ADDRESS_C],
+      {
+        first: {
+          target: {
+            template: 'template1',
+          },
+        },
+        second: {
+          target: {
+            template: 'template2',
+          },
+        },
+        third: {
+          target: {
+            template: 'template2',
+          },
+        },
+      },
     )
 
     expect(relatives).toEqual({
-      [ADDRESS_A.toString()]: new Set(),
+      [ADDRESS_A.toString()]: new Set(['template1', 'template2']),
       [ADDRESS_D.toString()]: new Set(),
     })
   })

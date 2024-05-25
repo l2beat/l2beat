@@ -22,7 +22,7 @@ export const DiscoveryContractField = z.object({
   severity: z.optional(ContractFieldSeverity).nullable(),
   target: z
     .object({
-      handler: z.string().nullable().optional(),
+      template: z.string().nullable().optional(),
     })
     .nullable()
     .optional(),
