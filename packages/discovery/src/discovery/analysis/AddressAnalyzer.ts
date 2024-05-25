@@ -36,10 +36,12 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
-  extendedTemplate?: {
-    template: string
-    reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
-  }
+  extendedTemplate?: ExtendedTemplate
+}
+
+export interface ExtendedTemplate {
+  template: string
+  reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
 }
 
 export interface AnalyzedEOA {
