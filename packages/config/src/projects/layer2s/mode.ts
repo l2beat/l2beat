@@ -65,7 +65,7 @@ export const mode: Layer2 = opStackL2({
       name: 'MODE token airdrop',
       link: 'https://mode.mirror.xyz/2Aom53lrot8KQ143u8lCfyYvTOkR7LJcIChoyP1Q4wI',
       date: '2024-05-07T00:00:00Z',
-      description: 'MODE token launched',
+      description: 'MODE token launched.',
     },
   ],
   finality: {
