@@ -8,7 +8,7 @@ import {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { removeAlreadyAnalyzed } from './filterAddressesToAnalyze'
+import { removeAnalyzedAddresses } from './removeAnalyzedAddresses'
 import { shouldSkip } from './shouldSkip'
 
 // Bump this value when the logic of discovery changes,
@@ -36,7 +36,7 @@ export class DiscoveryEngine {
     })
 
     while (Object.keys(toAnalyze).length > 0) {
-      removeAlreadyAnalyzed(toAnalyze, resolved)
+      removeAnalyzedAddresses(toAnalyze, resolved)
 
       for (const address of Object.keys(toAnalyze)) {
         const skipReason = shouldSkip(
