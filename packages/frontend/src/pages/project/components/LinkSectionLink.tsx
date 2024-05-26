@@ -31,8 +31,11 @@ export function LinkSectionLink({ href, name }: Props) {
     )
   }
   return (
-    <Link className="block truncate max-w-[-webkit-fill-available]" textClassName="max-w-[-webkit-fill-available]" href={href}>
-      <span className="truncate">{formatLink(href)}</span>
+    <Link 
+      className="block truncate max-w-[-webkit-fill-available]" 
+      textClassName="max-w-[-webkit-fill-available]" 
+      href={href}>
+        <span className="truncate">{formatLink(href)}</span>
     </Link>
   )
 }
