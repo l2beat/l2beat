@@ -10,6 +10,7 @@ import {
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { removeAnalyzedAddresses } from './removeAnalyzedAddresses'
 import { shouldSkip } from './shouldSkip'
+import { gatherReachableAddresses } from './gatherReachableAddresses'
 
 // Bump this value when the logic of discovery changes,
 // causing a difference in discovery output
@@ -28,6 +29,7 @@ export class DiscoveryEngine {
   ): Promise<Analysis[]> {
     let resolved: Analysis[] = []
     let toAnalyze: AddressesWithTemplates = {}
+    const addressRelatives: Record<string, EthereumAddress[]> = {}
     let depth = 0
     let count = 0
 
@@ -55,8 +57,22 @@ export class DiscoveryEngine {
 
       // remove resolved addresses that need to be analyzed again
       resolved = resolved.filter((x) => !(x.address.toString() in toAnalyze))
+      for (const address of Object.keys(addressRelatives)) {
+        const inResolved =
+          resolved.find((x) => x.address.toString() === address) !== undefined
+        if (!inResolved) {
+          delete addressRelatives[address]
+        }
+      }
 
-      const leftToAnalyze = Object.entries(toAnalyze)
+      // remove addresses to analyze that are no longer reachable from initial
+      const reachableAddresses = gatherReachableAddresses(
+        config.initialAddresses,
+        addressRelatives,
+      )
+      const leftToAnalyze = Object.entries(toAnalyze).filter(([address]) =>
+        reachableAddresses.has(EthereumAddress(address)),
+      )
       toAnalyze = {}
 
       await Promise.all(
@@ -76,6 +92,9 @@ export class DiscoveryEngine {
             templates,
           )
           resolved.push(analysis)
+          addressRelatives[address.toString()] = Object.keys(relatives).map(
+            (v) => EthereumAddress(v),
+          )
 
           for (const [address, suggestedTemplates] of Object.entries(
             relatives,
