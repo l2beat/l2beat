@@ -7,9 +7,9 @@ import {
   AnalyzedContract,
   ExtendedTemplate,
 } from '../analysis/AddressAnalyzer'
-import { removeAnalyzedAddresses } from './removeAnalyzedAddresses'
+import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 
-describe(removeAnalyzedAddresses.name, () => {
+describe(removeAlreadyAnalyzed.name, () => {
   const A = EthereumAddress.from('0xA')
   const B = EthereumAddress.from('0xB')
   const C = EthereumAddress.from('0xC')
@@ -50,7 +50,7 @@ describe(removeAnalyzedAddresses.name, () => {
       [G.toString()]: new Set(['newTemplateForG']),
       [H.toString()]: new Set([]),
     }
-    removeAnalyzedAddresses(toAnalyze, resolved)
+    removeAlreadyAnalyzed(toAnalyze, resolved)
     expect(toAnalyze).toEqual({
       [A.toString()]: new Set(['templateForA']),
       [G.toString()]: new Set(['newTemplateForG']),

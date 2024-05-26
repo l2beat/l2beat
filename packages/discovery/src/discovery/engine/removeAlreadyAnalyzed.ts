@@ -1,6 +1,6 @@
 import { AddressesWithTemplates, Analysis } from '../analysis/AddressAnalyzer'
 
-export function removeAnalyzedAddresses(
+export function removeAlreadyAnalyzed(
   toAnalyze: AddressesWithTemplates,
   resolved: Analysis[],
 ) {
