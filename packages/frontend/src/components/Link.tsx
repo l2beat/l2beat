@@ -61,7 +61,7 @@ export function Link<T extends React.ElementType = 'a'>({
       >
         <span
           className={cn(
-            'flex items-center gap-1',
+            'flex items-center gap-1 min-w-0',
             underline && 'underline',
             showArrow && 'transition-transform group-hover:-translate-x-px',
           )}
