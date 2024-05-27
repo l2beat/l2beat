@@ -1,9 +1,9 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 19730704,
+  "blockNumber": 19960612,
   "configHash": "0x150fd11b72d9b276dab0b43c60f2417401823f672a2bf8c70ec190bd26acdfb7",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "SystemConfig",
@@ -95,7 +95,7 @@
           "0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
         ],
         "getThreshold": 3,
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -113,7 +113,7 @@
       "sinceTimestamp": 1628792652,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676792",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292676827",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -160,7 +160,7 @@
         "L2_ORACLE": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741",
         "l2Oracle": "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 389211, 19726635],
+        "params": [1000000000, 389211, 19939582],
         "paused": false,
         "superchainConfig": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
         "SYSTEM_CONFIG": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
@@ -236,10 +236,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1510819,
-        "latestOutputIndex": 200,
-        "nextBlockNumber": 1512619,
-        "nextOutputIndex": 201,
+        "latestBlockNumber": 2898619,
+        "latestOutputIndex": 971,
+        "nextBlockNumber": 2900419,
+        "nextOutputIndex": 972,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,

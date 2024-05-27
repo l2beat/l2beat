@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4199407efdc5e9d74c9fa1778097b9954dc7557c
+
+# Diff at Mon, 27 May 2024 10:29:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@011cd3764a8f949073c8175767ddea56db743d79 block: 19730704
+- current block number: 19960612
+
+## Description
+
+Boba multisig withdraws ~18 ETH from their custom 'Lightbridge' contract and transfers it to an EOA in a second transaction. The Lightbridge is just an escrow controlled by BobaMultisig which currently allows ETH and BOBA to be bridged to Boba network as EBV. The new EOA seems to relay assets when users withdraw via the Lightbridge.
+
+## Watched changes
+
+```diff
+    contract BobaMultisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      values.nonce:
+-        6
++        8
+    }
+```
+
 Generated with discovered.json: 0x893ec7c805d61e5411a2ecf38febe0ae42fef7d3
 
 # Diff at Thu, 25 Apr 2024 06:50:54 GMT:
