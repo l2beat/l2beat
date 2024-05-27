@@ -1,6 +1,6 @@
 'use client'
 import { ConnectKitButton } from 'connectkit'
-import { cn } from '~/utils/cn'
+import { ChangeButton } from '~/components/ChangeButton'
 
 export function ChangeWalletButton({ wallet }: { wallet?: string }) {
   return (
@@ -9,15 +9,7 @@ export function ChangeWalletButton({ wallet }: { wallet?: string }) {
         return (
           isConnected &&
           (wallet ? wallet === address || wallet === ensName : true) && (
-            <button
-              className={cn(
-                'w-16 h-5 flex items-center justify-center border border-[#A3A3A3]',
-                'text-[#A3A3A3] text-2xs font-semibold rounded px-[8px] py-[4px] cursor-pointer uppercase',
-              )}
-              onClick={show}
-            >
-              Change
-            </button>
+            <ChangeButton show={show} />
           )
         )
       }}
