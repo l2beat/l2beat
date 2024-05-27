@@ -1,11 +1,10 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import NextLink from 'next/link'
-import React from 'react'
-import { type PropsFrom } from '~/types/PropsFrom'
+import React, { type ComponentProps } from 'react'
 
 interface LinkProps
   extends VariantProps<typeof linkVariants>,
-    PropsFrom<typeof NextLink> {
+    ComponentProps<typeof NextLink> {
   href: string
 }
 
