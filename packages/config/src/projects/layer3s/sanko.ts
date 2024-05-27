@@ -39,7 +39,7 @@ export const sanko: Layer3 = orbitStackL3({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
       sinceTimestamp: new UnixTime(1712958611),
-      tokens: ['*'],
+      tokens: '*',
     }),
   ],
   nonTemplatePermissions: [
