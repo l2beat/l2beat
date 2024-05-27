@@ -53,6 +53,13 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
       this.options.configHash &&
       this.options.configHash !== indexerState.configHash
     ) {
+      this.logger.info(
+        'Config hash change detected. Invalidating to minHeight',
+        {
+          minHeight,
+        },
+      )
+
       return {
         safeHeight: minHeight,
         configHash: this.options.configHash,
