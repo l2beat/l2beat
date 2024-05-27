@@ -8,9 +8,9 @@ import {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
-import { gatherReachableAddresses } from './gatherReachableAddresses'
 
 // Bump this value when the logic of discovery changes,
 // causing a difference in discovery output

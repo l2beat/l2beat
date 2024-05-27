@@ -8,13 +8,13 @@ import {
   flattenFirstSource,
   removeComments,
 } from '../../flatten/utils'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
   RawDiscoveryConfig,
 } from '../config/RawDiscoveryConfig'
 import { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
