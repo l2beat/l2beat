@@ -7,12 +7,12 @@ import {
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getTvlWarnings } from '../../../../utils/tvl/getTVLWarnings'
-import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { getProjectTvlTooltipText } from '../../../project/common/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { ScalingL2SummaryViewEntry, ScalingL3SummaryViewEntry } from '../types'
+import { getTvlWarnings } from '../../../../utils/tvl/getTVLWarnings'
+import { TvlStats, getTvlStats } from '../../../../utils/tvl/getTvlStats'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
 
 export function getScalingSummaryView(
@@ -160,6 +160,7 @@ function getScalingL3SummaryEntry(
           }
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlBreakdown: layer3sTvl ? stats?.tvlBreakdown : undefined,
     sevenDayChange:
       layer3sTvl && stats && escrowsConfigured(project)
         ? stats.sevenDayChange
