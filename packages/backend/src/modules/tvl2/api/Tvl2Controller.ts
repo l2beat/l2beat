@@ -692,6 +692,11 @@ export class Tvl2Controller {
     const amountConfigs = projectAmounts.filter(
       (x) => createAssetId(x) === assetId,
     )
+    assert(
+      amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
+      'Decimals mismatch!',
+    )
+    const decimals = amountConfigs[0].decimals
 
     const projectConfig = this.projects.find((x) => x.id === project)
     assert(projectConfig, 'Project not found!')
@@ -713,16 +718,21 @@ export class Tvl2Controller {
     )
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
+    const hourlyCutOff = getHourlyCutoff(lastHour)
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const timestamps = this.getTimestampsForProject(
+      projectConfig,
+      sixHourlyCutOff,
+      hourlyCutOff,
+      lastHour,
+    )
+
     const values = new Map<number, { amount: number; value: number }>()
-    for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
+    for (const timestamp of timestamps) {
       const priceUsd = pricesMap.get(Number(timestamp))
       assert(priceUsd, 'Programmer error ' + timestamp)
+      const amounts = amountsByTimestamp[timestamp.toNumber()] ?? []
       const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
-      assert(
-        amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
-        'Decimals mismatch',
-      )
-      const decimals = amountConfigs[0].decimals
       const usdValue = calculateValue({ amount, priceUsd, decimals })
       values.set(Number(timestamp), {
         amount: asNumber(amount, decimals),
@@ -732,8 +742,6 @@ export class Tvl2Controller {
 
     const start = new UnixTime(Math.min(...values.keys()))
     const end = new UnixTime(Math.max(...values.keys()))
-    const hourlyCutOff = getHourlyCutoff(lastHour)
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
 
     const dailyData: [UnixTime, number, number][] = []
     for (let curr = start; curr <= end; curr = curr.add(1, 'days')) {
