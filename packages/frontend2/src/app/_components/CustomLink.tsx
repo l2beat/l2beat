@@ -1,11 +1,7 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import NextLink from 'next/link'
 import React from 'react'
-import { isOutLink } from '../utils/isOutLink'
-
-type PropsFrom<TComponent> = TComponent extends React.FC<infer Props>
-  ? Props
-  : never
+import { type PropsFrom } from '~/types/PropsFrom'
 
 interface LinkProps
   extends VariantProps<typeof linkVariants>,
@@ -40,13 +36,9 @@ export function CustomLink({
   className,
   ...rest
 }: LinkProps) {
-  const outLink = isOutLink(href)
-
   return (
     <NextLink
       className={linkVariants({ variant, underline, className })}
-      target={outLink ? '_blank' : undefined}
-      rel={outLink ? 'noreferrer noopener' : undefined}
       href={href}
       {...rest}
     >

@@ -5,7 +5,7 @@ import { toDataURL } from 'qrcode'
 import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { ContentWrapper } from '../_components/ContentWrapper'
-import { CustomLink } from '../_components/CustomLink'
+import { OutLink } from '../_components/OutLink'
 
 export default async function DonatePage() {
   const gitcoinOption = await showGitcoinOption()
@@ -100,7 +100,7 @@ async function Header(props: HeaderProps) {
               </span>
               <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {props.networks.map((network) => (
-                  <CustomLink
+                  <OutLink
                     key={network.name}
                     className="flex justify-center items-center gap-1.5 text-sm rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-200 hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
                     href={network.linkURL}
@@ -108,7 +108,7 @@ async function Header(props: HeaderProps) {
                   >
                     {network.name}
                     <OutLinkIcon className="fill-current" />
-                  </CustomLink>
+                  </OutLink>
                 ))}
               </div>
             </div>
@@ -192,14 +192,14 @@ function DonateFundingSources() {
                   <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
                     {t.rich(`sources.${key}.description`, {
                       dydxLink: (children) => (
-                        <CustomLink href="https://dydx.l2beat.com">
+                        <OutLink href="https://dydx.l2beat.com">
                           {children}
-                        </CustomLink>
+                        </OutLink>
                       ),
                       starkexRepo: (children) => (
-                        <CustomLink href="https://github.com/l2beat/starkex-explorer">
+                        <OutLink href="https://github.com/l2beat/starkex-explorer">
                           {children}
-                        </CustomLink>
+                        </OutLink>
                       ),
                     })}
                   </td>
