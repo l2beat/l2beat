@@ -46,7 +46,7 @@ export function Breakdown() {
     <div className="flex flex-col mt-1">
       <div
         className={cn(
-          'h-[12px] md:h-[56px] w-full max-w-full md:my-0 relative',
+          'h-[14px] md:h-[56px] w-full max-w-full md:my-0 relative',
         )}
       >
         {groups.map((g, i) => {
@@ -69,7 +69,7 @@ export function Breakdown() {
           )
         })}
       </div>
-      <div className="flex md:hidden flex-col mt-8 text-sm w-min">
+      <div className="flex md:hidden flex-col mt-4 text-sm w-min">
         {groups.map((g, i) => (
           <div
             key={`breakdown-legend-${i}`}
@@ -138,8 +138,9 @@ function BreakdownItem({
       ref={parentRef}
       className={cn(
         'rounded-lg h-full last:mr-0 bg-gradient-to-r border',
-        'flex flex-col items-end justify-end py-[10px] px-3',
+        'flex flex-col items-end justify-end',
         'absolute overflow-hidden overflow-ellipsis',
+        'py-0 md:py-[10px] px-0 md:px-3',
         group.className,
       )}
       style={{
