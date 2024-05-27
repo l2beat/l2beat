@@ -1,4 +1,6 @@
+'use client'
 import { indexOf, max, sum } from 'lodash'
+import { useEffect, useRef } from 'react'
 import { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/formatNumber'
@@ -39,9 +41,14 @@ const CONFIG: BreakdownValue[] = [
 
 export function Breakdown() {
   const groups = getBreakdownGroups(CONFIG)
+
   return (
-    <div>
-      <div className={cn('h-[56px] w-full max-w-full md:my-0 relative')}>
+    <div className="flex flex-col mt-1">
+      <div
+        className={cn(
+          'h-[12px] md:h-[56px] w-full max-w-full md:my-0 relative',
+        )}
+      >
         {groups.map((g, i) => {
           const leftPercentage = groups
             .slice(0, i)
@@ -50,31 +57,109 @@ export function Breakdown() {
                 !prevStage.weight ? acc : acc + (prevStage.weight / 100) * 100,
               0,
             )
+
           return (
-            <div
+            <BreakdownItem
               key={`breakdown-group-${i}`}
-              className={cn(
-                'rounded-lg h-[56px] last:mr-0 bg-gradient-to-r border',
-                'flex flex-col items-end justify-end py-[10px] px-3',
-                'absolute',
-                g.className,
-              )}
-              style={{
-                width: `calc(${g.weight}%${i !== 0 ? ' + 12px' : ''})`,
-                left: `calc(${leftPercentage}%${i !== 0 ? ' - 12px' : ''})`,
-                zIndex: groups.length - i,
-              }}
-            >
-              <span className={cn('text-sm', g.valueClassName)}>
-                ${formatNumberWithCommas(g.value)}
-              </span>
-              <span className="text-sm font-semibold leading-[15px] whitespace-nowrap overflow-ellipsis">
-                {g.name}
-              </span>
-            </div>
+              group={g}
+              groupLength={groups.length}
+              index={i}
+              offset={leftPercentage}
+            />
           )
         })}
       </div>
+      <div className="flex md:hidden flex-col mt-8 text-sm w-min">
+        {groups.map((g, i) => (
+          <div
+            key={`breakdown-legend-${i}`}
+            className="flex items-center gap-1"
+          >
+            <div
+              className={cn(
+                'size-4 bg-gradient-to-r border rounded',
+                g.className,
+              )}
+            />
+            <span className="pl-1 text-pink-900 font-extrabold">
+              ${formatNumberWithCommas(g.value)}
+            </span>
+            <span className="text-zinc-500 font-medium">({g.weight}%)</span>
+            <span className="font-semibold text-zinc-800">{g.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function BreakdownItem({
+  group,
+  index,
+  groupLength,
+  offset,
+}: {
+  group: BreakdownGroup
+  index: number
+  groupLength: number
+  offset: number
+}) {
+  const parentRef = useRef<HTMLDivElement | null>(null)
+  const textRef = useRef<HTMLSpanElement | null>(null)
+  const valueRef = useRef<HTMLSpanElement | null>(null)
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      const containerWidth = parentRef.current?.clientWidth
+      const textWidth = textRef.current?.scrollWidth
+      const valueWidth = valueRef.current?.scrollWidth
+
+      if (textWidth && containerWidth && valueWidth) {
+        if (
+          textWidth > containerWidth - 32 ||
+          valueWidth > containerWidth - 32
+        ) {
+          textRef.current?.classList.add('opacity-0')
+          valueRef.current?.classList.add('opacity-0')
+        } else {
+          textRef.current?.classList.remove('opacity-0')
+          valueRef.current?.classList.remove('opacity-0')
+        }
+      }
+    }
+
+    checkOverflow()
+    window.addEventListener('resize', checkOverflow)
+    return () => window.removeEventListener('resize', checkOverflow)
+  }, [])
+
+  return (
+    <div
+      ref={parentRef}
+      className={cn(
+        'rounded-lg h-full last:mr-0 bg-gradient-to-r border',
+        'flex flex-col items-end justify-end py-[10px] px-3',
+        'absolute overflow-hidden overflow-ellipsis',
+        group.className,
+      )}
+      style={{
+        width: `calc(${group.weight}%${index !== 0 ? ' + 12px' : ''})`,
+        left: `calc(${offset}%${index !== 0 ? ' - 12px' : ''})`,
+        zIndex: groupLength - index,
+      }}
+    >
+      <span
+        ref={valueRef}
+        className={cn('text-sm hidden md:inline-block', group.valueClassName)}
+      >
+        ${formatNumberWithCommas(group.value)}
+      </span>
+      <span
+        ref={textRef}
+        className="text-sm font-semibold leading-[15px] whitespace-nowrap overflow-ellipsis hidden md:inline-block"
+      >
+        {group.name}
+      </span>
     </div>
   )
 }
