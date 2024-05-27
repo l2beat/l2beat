@@ -353,7 +353,7 @@ export const loopring: Layer2 = {
       ),
       discovery.getContractDetails(
         'ForcedWithdrawalAgent',
-        'Auxiliary contract allowing users to process fast withdrawals.',
+        'Auxiliary contract able to force withdrawals from L1 on behalf of users.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
