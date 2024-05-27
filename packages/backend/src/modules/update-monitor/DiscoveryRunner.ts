@@ -15,7 +15,6 @@ import { Gauge, Histogram } from 'prom-client'
 export interface DiscoveryRunnerOptions {
   logger: Logger
   injectInitialAddresses: boolean
-  runSanityCheck: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
@@ -58,16 +57,6 @@ export class DiscoveryRunner {
       options.maxRetries,
       options.retryDelayMs,
     )
-
-    if (options.runSanityCheck) {
-      const isSane = await this.isDiscoverySane(
-        discovery,
-        config,
-        blockNumber,
-        options,
-      )
-      if (!isSane) return
-    }
 
     return discovery
   }
