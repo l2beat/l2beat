@@ -152,7 +152,7 @@ describe(TrackedTxsIndexer.name, () => {
     })
   })
 
-  describe(TrackedTxsIndexer.prototype.start.name, () => {
+  describe(TrackedTxsIndexer.prototype.initialize.name, () => {
     it('initializes configurations and indexer state', async () => {
       const runtimeEntries = [
         getMockRuntimeConfigurations()[0],
@@ -207,7 +207,11 @@ describe(TrackedTxsIndexer.name, () => {
         },
       })
 
-      await trackedTxsIndexer.start()
+      const result = await trackedTxsIndexer.initialize()
+
+      expect(result).toEqual({
+        safeHeight: 1682899200,
+      })
 
       const { toAdd, toRemove, toChangeUntilTimestamp } =
         diffTrackedTxConfigurations(runtimeEntries, databaseEntries)
@@ -249,15 +253,7 @@ describe(TrackedTxsIndexer.name, () => {
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(2)
       expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
 
-      expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        trackedTxsIndexer.indexerId,
-        1682899200,
-        TRX,
-      )
-
-      // 1st during this.initialize() -> this.setSafeHeight()
-      // 2nd during super.start() -> this.getSafeHeight()
-      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(2)
+      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
     })
 
     it('indexer state undefined', async () => {
@@ -274,16 +270,13 @@ describe(TrackedTxsIndexer.name, () => {
         configs: [],
       })
 
-      await livenessIndexer.start()
+      const result = await livenessIndexer.initialize()
 
-      expect(stateRepository.addOrUpdate).toHaveBeenOnlyCalledWith(
-        {
-          indexerId: livenessIndexer.indexerId,
-          safeHeight: MIN_TIMESTAMP.toNumber(),
-          minTimestamp: MIN_TIMESTAMP,
-        },
-        TRX,
-      )
+      expect(result).toEqual({
+        safeHeight: MIN_TIMESTAMP.toNumber(),
+      })
+
+      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
     })
   })
 
