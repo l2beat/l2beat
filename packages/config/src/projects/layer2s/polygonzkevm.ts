@@ -254,7 +254,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG-fflonk',
               trustedSetup: 'Powers of Tau 28',
-              link: 'https://etherscan.io/address/0x0775e11309d75aA6b0967917fB0213C5673eDf81#code',
             },
             {
               name: 'RecursiveVerifier',

@@ -8,9 +8,13 @@
     "0xe11CEfF5034278dC62318e74aF6efBA57D54f3be": "WLDGrant",
     "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": "OpWorldID_One",
     "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": "OpWorldID_Zero",
-    "0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "WorldIDRouterV1"
+    "0x57f928158C3EE7CDad1e4D8642503c4D0201f611": "WorldIDRouterV1",
+    "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": "WLD token"
   },
   "overrides": {
+    "WLD token": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     "0x4200000000000000000000000000000000000010": {
       "ignoreDiscovery": true
     },
@@ -18,10 +22,12 @@
       "ignoreMethods": ["nullifierHashes"]
     },
     "WLDGrant": {
-      "ignoreMethods": ["getAmount"]
+      "ignoreMethods": ["getAmount"],
+      "ignoreInWatchMode": ["getCurrentId"]
     },
     "OpWorldID_One": {
-      "ignoreMethods": ["rootHistory"],
+      "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
+      "ignoreMethods": ["rootHistory", "latestRoot"],
       "fields": {
         "verifier": {
           "handler": {

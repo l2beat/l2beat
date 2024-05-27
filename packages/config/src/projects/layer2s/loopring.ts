@@ -353,7 +353,7 @@ export const loopring: Layer2 = {
       ),
       discovery.getContractDetails(
         'ForcedWithdrawalAgent',
-        'Auxiliary contract allowing users to process fast withdrawals.',
+        'Auxiliary contract able to force withdrawals from L1 on behalf of users.',
       ),
       discovery.getContractDetails('BlockVerifier', {
         description: 'zkSNARK Verifier based on ethsnarks library.',
@@ -411,10 +411,10 @@ export const loopring: Layer2 = {
             {
               name: 'BlockVerifier',
               proofSystem: 'Groth16',
-              mainArithmetization: 'R1CS',
-              mainPCS: 'KZG',
+              mainArithmetization: 'R1CS+QAP',
+              mainPCS: 'N/A',
               trustedSetup: 'Powers of Tau 18',
-              link: 'https://etherscan.io/address/0x6150343E0F43A17519c0327c41eDd9eBE88D01ef#code',
+              link: 'https://github.com/Loopring/protocol3-circuits.git',
             },
           ],
         },

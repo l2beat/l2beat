@@ -217,6 +217,13 @@ function getChainToProjectMapping(
     }
   }
 
+  for (const project of layer3s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
   return chainToProject
 }
 

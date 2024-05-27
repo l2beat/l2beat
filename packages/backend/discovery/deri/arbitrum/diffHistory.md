@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe27c45aa1fa1e8e953b3fd2fd42d53e971cb449f
+
+# Diff at Mon, 27 May 2024 07:16:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e3af44de7f5996e5fc7d7b401325abe876105664 block: 214125753
+- current block number: 215490223
+
+## Description
+
+Back to the initial required stake of 0,1 ETH.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.currentRequiredStake:
+-        "300000000000000000"
++        "100000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x13f3e1cccf1d53a54a60f806647a4ca27d876af9
 
 # Diff at Thu, 23 May 2024 06:41:36 GMT:

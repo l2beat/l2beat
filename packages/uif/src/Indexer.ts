@@ -255,13 +255,21 @@ export abstract class Indexer {
         this.dispatch({ type: 'UpdateSucceeded', from, newHeight })
         this.updateRetryStrategy.clear()
       }
-    } catch (e) {
+    } catch (error) {
       this.updateRetryStrategy.markAttempt()
       const fatal = !this.updateRetryStrategy.shouldRetry()
       if (fatal) {
-        this.logger.critical('Update failed', e)
+        this.logger.critical('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+        })
       } else {
-        this.logger.error('Update failed', e)
+        this.logger.error('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+        })
       }
       this.dispatch({ type: 'UpdateFailed', fatal })
     }

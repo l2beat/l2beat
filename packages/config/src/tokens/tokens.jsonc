@@ -286,6 +286,10 @@
       "address": "0x53C8395465A84955c95159814461466053DedEDE"
     },
     {
+      "symbol": "DHT",
+      "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84"
+    },
+    {
       "symbol": "DOLA",
       "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
     },
@@ -461,6 +465,14 @@
       "symbol": "GUSD",
       "address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
       "category": "stablecoin"
+    },
+    {
+      "symbol": "HAIR",
+      "address": "0x9Ce115f0341ae5daBC8B477b74E83db2018A6f42"
+    },
+    {
+      "symbol": "HAN",
+      "address": "0x0c90C57aaf95A3A87eadda6ec3974c99D786511F"
     },
     {
       "symbol": "HEART",
@@ -770,6 +782,10 @@
     {
       "symbol": "PSTAKE",
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
+    },
+    {
+      "symbol": "PT",
+      "address": "0xbBb32f99e6F2Cb29337EeBAA43C5069386DE6e6c"
     },
     {
       "symbol": "pufETH",
@@ -1581,6 +1597,64 @@
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "EXTRA",
+      "address": "0x2dAD3a13ef0C6366220f989157009e501e7938F8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "PIKA",
+      "address": "0x9A601C5bb360811d96A23689066af316a30c3027",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "KITE",
+      "address": "0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "alUSD",
+      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
+      "symbol": "tBTC",
+      "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
+      "symbol": "USX",
+      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "cBridge (Celer)",
+        "slug": "cbridge"
+      }
+    },
+    {
+      "symbol": "TAROT",
+      "address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
     }
   ],
   "base": [
@@ -2094,13 +2168,13 @@
       }
     },
     {
-      "symbol": "mBTC",
+      "symbol": "M-BTC",
       "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
       "coingeckoId": "merlin-s-seal-btc",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Free"
+        "bridge": "Free Bridge"
       }
     },
     {
@@ -2422,6 +2496,38 @@
         "slug": "socket"
       },
       "coingeckoId": "usd-coin"
+    }
+  ],
+  "zklinknova": [
+    {
+      "symbol": "BTCT",
+      "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "TRON Foundation"
+      },
+      "coingeckoId": "bitcoin-trc20"
+    },
+    {
+      "symbol": "SolvBTC.m",
+      "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      },
+      "coingeckoId": "solv-btc"
+    },
+    {
+      "symbol": "M-BTC",
+      "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      },
+      "coingeckoId": "merlin-s-seal-btc"
     }
   ]
 }
