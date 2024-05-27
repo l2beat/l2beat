@@ -67,7 +67,6 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
       align: 'right',
-      noPaddingRight: true,
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
@@ -222,7 +221,6 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
       tooltip:
         'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
       align: 'right',
-      noPaddingRight: true,
       headClassName: '!pr-4',
       getValue: (project) => <TotalCell project={project} className="pr-4" />,
       sorting: {
