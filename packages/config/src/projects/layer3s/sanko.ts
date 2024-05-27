@@ -45,6 +45,7 @@ export const sanko: Layer3 = orbitStackL3({
   nonTemplatePermissions: [
     {
       name: 'Sanko Admin EOA',
+      chain: 'arbitrum',
       accounts: [
         {
           address: discovery.getAccessControlField(
