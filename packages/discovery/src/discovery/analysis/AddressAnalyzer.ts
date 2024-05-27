@@ -37,6 +37,7 @@ export interface AnalyzedContract {
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
   extendedTemplate?: string
+  ignoreInWatchMode?: string[]
 }
 
 export interface AnalyzedEOA {
@@ -112,6 +113,7 @@ export class AddressAnalyzer {
         sourceBundles: sources.sources,
         matchingTemplates,
         extendedTemplate: overrides?.extends,
+        ignoreInWatchMode: overrides?.ignoreInWatchMode,
       },
       relatives: getRelatives(
         results,
