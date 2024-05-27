@@ -14,6 +14,7 @@ export class KnexMiddleware implements DatabaseMiddleware {
 
   add(cb: (tx?: Knex.Transaction) => Promise<void>) {
     this.queue.push(cb)
+    return Promise.resolve()
   }
 
   async execute() {
