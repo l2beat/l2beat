@@ -17,8 +17,6 @@ export const stringAsObjectOrUndefined = <
     return result.data as z.infer<T>
   })
 
-const LOCAL_STORAGE_PREFIX = 'l2beat'
-
 const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
   'gg-20-floating-banner-closed': strictBoolean,
@@ -41,14 +39,14 @@ export const LocalStorage = {
     const stringifiedValue =
       typeof value === 'string' ? value : JSON.stringify(value)
 
-    localStorage.setItem(`${LOCAL_STORAGE_PREFIX}-${key}`, stringifiedValue)
+    localStorage.setItem(key, stringifiedValue)
   },
 
   getItem: <T extends LocalStorageKeys>(
     key: T,
   ): LocalStorageKeyType<T> | undefined => {
     const keySchema = LocalStorageKeySchemas[key]
-    const value = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}-${key}`)
+    const value = localStorage.getItem(key)
     if (value === null) return undefined
 
     const result = keySchema.safeParse(value)
