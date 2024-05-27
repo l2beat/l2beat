@@ -11,6 +11,7 @@ export function diffContracts(
   before: ContractParameters,
   after: ContractParameters,
   ignoreInWatchMode: string[],
+  ignoreTopLevel: string[] = [],
 ): FieldDiff[] {
   const differences = diff(before, after)
 
@@ -65,8 +66,12 @@ export function diffContracts(
   }
 
   const filteredResult = result.filter((r) => {
+    console.log(r.key)
     if (r.key === undefined) {
       return true
+    }
+    if (ignoreTopLevel.includes(r.key)) {
+      return false
     }
     if (r.key.includes('values.')) {
       for (const i of ignoreInWatchMode) {
