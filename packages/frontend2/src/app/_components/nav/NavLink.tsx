@@ -1,17 +1,18 @@
+'use client'
+
+import React from 'react'
 import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
 import { cn } from '~/utils/cn'
 
 export type NavLinkProps = {
-  icon: React.FC<React.SVGProps<SVGElement>>
+  icon: React.ReactNode
   title: string
 } & ActiveLinkProps
 
-export function NavLink({
-  icon: Icon,
-  title,
-  href,
-  activeBehavior,
-}: NavLinkProps) {
+/**
+ * Navigation link component used inside NavLinkGroups of the new sidenav.
+ */
+export function NavLink({ icon, title, href, activeBehavior }: NavLinkProps) {
   const active = useActiveLink({ href, activeBehavior })
 
   return (
@@ -23,7 +24,7 @@ export function NavLink({
           active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
         )}
       >
-        <Icon />
+        {icon}
         <span className="font-semibold text-base leading-none xl:sidenav-collapsed:hidden">
           {title}
         </span>

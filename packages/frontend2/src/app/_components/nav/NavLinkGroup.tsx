@@ -3,6 +3,9 @@ export interface NavLinkGroupProps {
   children?: React.ReactNode
 }
 
+/**
+ * Group of nav links with a title used in the sidenav.
+ */
 export function NavLinkGroup({ title, children }: NavLinkGroupProps) {
   return (
     <div className="flex flex-col gap-2">

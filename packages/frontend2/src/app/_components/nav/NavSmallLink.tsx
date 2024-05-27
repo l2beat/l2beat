@@ -1,3 +1,5 @@
+'use client'
+
 import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
 import { cn } from '~/utils/cn'
 
@@ -7,6 +9,9 @@ export type NavSmallLinkProps = (
 ) &
   ActiveLinkProps
 
+/**
+ * Small navigation link component used for misc links without a category, should be used inside NavSmallLinkGroup.
+ */
 export function NavSmallLink({
   title,
   href,

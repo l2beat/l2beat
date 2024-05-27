@@ -1,17 +1,22 @@
+'use client'
+
 import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
 import { cn } from '~/utils/cn'
 
-export type NavMobileLinkProps = (
+export type MobileNavLinkProps = (
   | { title: string; children?: undefined }
   | { children: React.ReactNode; title?: undefined }
 ) &
   ActiveLinkProps
 
-export function NavMobileLink({
+/**
+ * Navigation link component used in the mobile navbar.
+ */
+export function MobileNavLink({
   title,
   href,
   activeBehavior,
-}: NavMobileLinkProps) {
+}: MobileNavLinkProps) {
   const active = useActiveLink({ href, activeBehavior })
 
   return (

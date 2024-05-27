@@ -4,6 +4,7 @@
     y="4.22182"
     width="20"
     height="2"
+    fill="currentColor"
     transform="rotate(45 5.63599 4.22182)"
   />
   <rect
@@ -11,6 +12,7 @@
     y="18.364"
     width="20"
     height="2"
+    fill="currentColor"
     transform="rotate(-45 4.2218 18.364)"
   />
 </svg>

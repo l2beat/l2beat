@@ -1,22 +1,24 @@
+'use client'
+
 import { usePathname } from 'next/navigation'
 
 export interface ActiveLinkProps {
   href: string
-  activeBehavior?: 'exact' | 'prefix' | ((path: string) => boolean)
+  activeBehavior?: { type: 'exact' } | { type: 'prefix'; prefix?: string }
 }
 
 export function useActiveLink({
   href,
-  activeBehavior = 'exact',
+  activeBehavior = { type: 'exact' },
 }: ActiveLinkProps) {
   const pathname = usePathname()
 
   const active =
-    activeBehavior === 'exact'
+    activeBehavior.type === 'exact'
       ? pathname === href
-      : activeBehavior === 'prefix'
-        ? pathname.startsWith(href)
-        : activeBehavior(pathname)
+      : activeBehavior.type === 'prefix'
+        ? pathname.startsWith(activeBehavior.prefix ?? href)
+        : false
 
   return active
 }

@@ -6,6 +6,7 @@ import { Roboto } from 'next/font/google'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import './globals.css'
+import Script from 'next/script'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used
@@ -37,6 +38,19 @@ export default async function RootLayout({
     // This is completely fine and applies to the `html` tag only.
     <html lang={locale} suppressHydrationWarning>
       <body className={roboto.className}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+const saved = localStorage.getItem('l2beat-sidenav-collapsed')
+
+if (saved === 'true') {
+  document.documentElement.classList.add('sidenav-collapsed')
+} else {
+  document.documentElement.classList.remove('sidenav-collapsed')
+}
+      `,
+          }}
+        />
         <PlausibleProvider
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
