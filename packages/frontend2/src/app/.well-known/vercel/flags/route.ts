@@ -15,6 +15,14 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
+      'gitcoin-option': {
+        description: 'Controls whether the gitcoin round is live',
+        origin: '/gitcoin-option',
+        options: [
+          { value: false, label: 'Off' },
+          { value: true, label: 'On' },
+        ],
+      },
     },
   })
 }
