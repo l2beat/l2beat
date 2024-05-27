@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2cb4d977ee5782999d1f6c1e94b3c655e2db0499
+Generated with discovered.json: 0x4d6ff733355fea27e32d71c819ef65601a504b1b
 
-# Diff at Mon, 27 May 2024 17:22:38 GMT:
+# Diff at Mon, 27 May 2024 17:59:42 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 215633124
+- current block number: 215641876
 
 ## Description
 
@@ -79,6 +79,12 @@ Initial discovery: Orbit stack L3 with AnyTrust 1/1 DAC and ArbOS v10.2. Native 
 
 ```diff
 +   Status: CREATED
+    contract L1OrbitGatewayRouter (0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OneStepProverHostIo (0x8D90460169D34d34a441F765A246a3C7f54C77C1)
     +++ description: None
 ```
@@ -92,6 +98,12 @@ Initial discovery: Orbit stack L3 with AnyTrust 1/1 DAC and ArbOS v10.2. Native 
 ```diff
 +   Status: CREATED
     contract ValidatorUtils (0x9e83136d4B3AD04C766591EA51712F9aEa3194C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitERC20Gateway (0xb4951c0C41CFceB0D195A95FE66280457A80a990)
     +++ description: None
 ```
 
