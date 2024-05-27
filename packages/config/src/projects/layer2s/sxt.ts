@@ -7,20 +7,25 @@ export const sxt: Layer2 = upcomingL2({
     name: 'Space and Time',
     slug: 'sxt',
     description:
-      "Space and Time (SxT) is a decentralized data warehouse that acts as the Verifiable Compute Layer for AI x Blockchain delivering sub-second ZK proofs onchain. Built on ZK Stack, the SxT chain will serve as the network's settlement layer and TVL hub.",
-    purposes: ['Universal', 'AI'],
+      "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT hyperchain will serve as a settlement layer and payment hub for data queries.",
+    purposes: ['AI', 'Information'],
     category: 'ZK Rollup',
     provider: 'ZK Stack',
     links: {
       websites: ['https://spaceandtime.io'],
-      apps: [],
+      apps: ['https://app.spaceandtime.ai'],
       documentation: ['https://docs.spaceandtime.io'],
       explorers: [],
-      repositories: [],
+      repositories: ['https://github.com/spaceandtimelabs'],
       socialMedia: [
-        'https://x.com/sophon', 
-        'https://discord.com/invite/spaceandtimeDB'
-        ],
+        'https://x.com/SpaceandTimeDB',
+        'https://discord.com/invite/spaceandtimeDB',
+        'https://linkedin.com/company/space-and-time-db/',
+        'https://youtube.com/channel/UCXJyE7ahmqCH11aO7L76PBA',
+        'https://t.me/spaceandtimedb',
+        'https://instagram.com/spaceandtimedb/',
+        'https://spaceandtime.io/blog',
+      ],
     },
   },
 })
