@@ -2,5 +2,82 @@
   "Example": {
     "serverComponent": "Server Component",
     "clientComponent": "Client Component"
+  },
+  "donate": {
+    "title": "Donate",
+    "description": "<p>Thank you for supporting L2BEAT's mission to bring education and transparency to the blockchain space.</p><p>We're committed to delivering accurate and reliable information. We strive to be an impartial and independent watchdog that acts in the best interest of users and the broader ecosystem while always remaining credibly neutral and faithful to reality and facts. We deliver data and tools that allow our community to educate themselves, transact securely, and make well-informed decisions.</p><p>Your support means a lot to our small, independent team. Thank you!</p>",
+    "donateThrough": {
+      "label": "Donate through"
+    },
+    "fundingSources": {
+      "title": "Funding sources",
+      "description": "As a public goods company, L2BEAT is financed in the open by the community. For transparency, we are providing L2BEAT's funding sources below.",
+      "classification": {
+        "description": "Those funding sources have been categorized based on the contribution amounts:",
+        "tiers": "<li><strong>Significant</strong>: Above 500,000 USD</li><li><strong>Medium</strong>: Between 100,000 USD and 500,000 USD</li><li><strong>Small</strong>: Below 100.000 USD</li>"
+      },
+      "sources": {
+        "ethereumFoundation": {
+          "title": "Ethereum Foundation",
+          "tier": "Significant",
+          "description": "Different grants in years 2021-2024"
+        },
+        "optimismRPGF": {
+          "title": "Optimism RPGF",
+          "tier": "Significant",
+          "description": "March 2023, January 2024"
+        },
+        "rewardsAndCompensation": {
+          "title": "Rewards & compensation for participating in L2 governance frameworks",
+          "tier": "Medium",
+          "description": "We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap and Connext, and more"
+        },
+        "gitcoin": {
+          "title": "Gitcoin",
+          "tier": "Medium",
+          "description": "Gitcoin rounds in 2022-2024"
+        },
+        "directCommunityDonations": {
+          "title": "Direct community donations",
+          "tier": "Small",
+          "description": "Via this page"
+        },
+        "l2Amsterdam": {
+          "title": "L2 Amsterdam (2022) conference sponsorships",
+          "tier": "Small",
+          "description": "<span><div>April 2022</div><div>Covered the costs of the conference</div></span>"
+        },
+        "l2Warsaw": {
+          "title": "L2 Warsaw (2023) conference sponsorships",
+          "tier": "Small",
+          "description": "<span><div>August 2023</div><div>Covered the costs of the conference</div></span>"
+        },
+        "l2Days": {
+          "title": "L2DAYS Istanbul (2023) conference sponsorships",
+          "tier": "Medium",
+          "description": "<span><div>November 2023</div><div>Covered the costs of the conference</div></span>"
+        },
+        "upgradeabilityReport": {
+          "title": "\"Upgradeability of Ethereum L2s\" report",
+          "tier": "Small",
+          "description": "Funded by Polygon Labs"
+        },
+        "starkexExplorer": {
+          "title": "Open-source explorer for StarkEx deployments",
+          "tier": "Medium",
+          "description": "<span>Live at <dydxLink>dydx.l2beat.com</dydxLink>, view the code <starkexRepo>here</starkexRepo>. Funded by StarkWare and dYdX</span>"
+        },
+        "layerZeroDashboard": {
+          "title": "LayerZero transparency dashboard",
+          "tier": "Medium",
+          "description": "Project in progress. Funded by LayerZero"
+        },
+        "dacs": {
+          "title": "DAC memberships",
+          "tier": "Small",
+          "description": "Discontinued"
+        }
+      }
+    }
   }
 }

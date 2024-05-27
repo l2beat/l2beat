@@ -6,6 +6,7 @@ const coerceBoolean = z.string().transform((val) => {
 })
 
 const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
+const featureFlag = coerceBoolean.optional().default('0')
 
 export const env = createEnv({
   /**
@@ -27,7 +28,8 @@ export const env = createEnv({
           })[val],
       )
       .default('local'),
-    FEATURE_FLAG_ASSET_RISKS: coerceBoolean.optional().default('0'),
+    FEATURE_FLAG_ASSET_RISKS: featureFlag,
+    FEATURE_FLAG_GITCOIN_OPTION: featureFlag,
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
     FLAGS_SECRET: base64url.optional(),
@@ -49,6 +51,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     FALLBACK_REWRITE_DESTINATION: process.env.FALLBACK_REWRITE_DESTINATION,
     FEATURE_FLAG_ASSET_RISKS: process.env.FEATURE_FLAG_ASSET_RISKS,
+    FEATURE_FLAG_GITCOIN_OPTION: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     FLAGS_SECRET: process.env.FLAGS_SECRET,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
