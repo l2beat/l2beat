@@ -8,6 +8,7 @@ import { http, createPublicClient, isAddress } from 'viem'
 import { mainnet } from 'viem/chains'
 import { normalize } from 'viem/ens'
 import { useDisconnect } from 'wagmi'
+import { ClipboardIcon } from '~/app/assets/ClipboardIcon'
 import { LensIcon } from '~/app/assets/LensIcon'
 import { cn } from '~/utils/cn'
 
@@ -47,19 +48,26 @@ export function AddressBar() {
       <ConnectKitButton.Custom>
         {({ isConnected, show, truncatedAddress, address, ensName }) => {
           return isConnected ? (
-            <div className="w-full flex flex-row gap-2">
+            <div className="w-full flex flex-row gap-2 h-14">
+              <div className="rounded-lg border border-pink-900 bg-purple-300 px-5 py-[14px] text-zinc-800 w-3/5 flex justify-between items-center">
+                <div className="flex flex-col">
+                  <span className="text-3xs font-medium uppercase leading-[10px]">
+                    Connected wallet
+                  </span>
+                  <span className="text-base font-bold">
+                    {ensName ?? truncatedAddress}
+                  </span>
+                </div>
+                <div className="cursor-pointer" onClick={() => disconnect()}>
+                  <ClipboardIcon />
+                </div>
+              </div>
               <Link
                 href={`/wallet/${address}`}
-                className="w-3/4 bg-pink-900 text-white font-medium text-base h-14 px-4 rounded-lg transition-colors flex items-center justify-center text-center"
+                className="w-2/5 bg-pink-900 text-white font-bold text-base px-4 rounded-lg transition-colors flex items-center justify-center"
               >
-                View report for {ensName ?? truncatedAddress}
+                View report
               </Link>
-              <button
-                onClick={() => disconnect()}
-                className="w-1/4 bg-pink-900 text-white font-medium text-2xs h-14 px-4 rounded-lg transition-colors flex items-center justify-center text-center"
-              >
-                Disconnect
-              </button>
             </div>
           ) : (
             <button
