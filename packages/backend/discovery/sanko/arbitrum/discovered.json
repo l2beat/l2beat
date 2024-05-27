@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 215628788,
+  "blockNumber": 215633124,
   "configHash": "0x73005762779afe566014090dfae52ced1b5d9a06c7504a3ae570c14693284f06",
   "version": 4,
   "contracts": [
@@ -91,7 +91,7 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 3191,
+        "delayedMessageCount": 3193,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
