@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "taiko",
+  "initialAddresses": ["0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"],
+  "names": {
+    "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC": "TaikoBridge",
+    "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager"
+  },
+  "overrides": {
+    "TaikoBridge": {
+      "ignoreMethods": [
+        "getMessageMinGasLimit", // too many values
+        "context", // Multicall failed
+        "proxiableUUID" // Multicall failed
+      ]
+    },
+    "L1SharedAddressManager": {
+      "ignoreMethods": ["proxiableUUID"]
+    }
+  }
+}
