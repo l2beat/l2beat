@@ -99,12 +99,11 @@ export function getTokens(
         }
       }
       const name = token?.name
-      const address = token?.address
+      const address = token?.address ?? 'native'
       const iconUrl = token?.iconUrl ?? ''
 
       // TODO: this is just temporary, so CI passes
       assert(chain, 'Chain not defined')
-      assert(address, 'Address not defined')
 
       if (symbol && name) {
         return {

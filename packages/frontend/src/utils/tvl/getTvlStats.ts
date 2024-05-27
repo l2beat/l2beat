@@ -56,5 +56,7 @@ export function unifyTokensResponse(
       chainId: token.chainId,
       assetType: token.assetType,
       usdValue: token.usdValue,
+      chain: token.chain,
+      address: token.address,
     }))
 }
