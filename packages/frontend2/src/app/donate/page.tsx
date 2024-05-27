@@ -137,7 +137,7 @@ async function Header(props: HeaderProps) {
   )
 }
 
-export function DonateFundingSources() {
+function DonateFundingSources() {
   const t = useTranslations('donate.fundingSources')
   const keys = [
     'ethereumFoundation',
