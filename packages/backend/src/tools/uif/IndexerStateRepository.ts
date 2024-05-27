@@ -87,7 +87,7 @@ function toRecord(row: IndexerStateRow): IndexerStateRecord {
   return {
     indexerId: row.indexer_id,
     safeHeight: row.safe_height,
-    configHash: row.config_hash ?? undefined,
+    configHash: row.config_hash,
     minTimestamp: row.min_timestamp
       ? UnixTime.fromDate(row.min_timestamp)
       : undefined,
