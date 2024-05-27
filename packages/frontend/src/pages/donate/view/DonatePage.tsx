@@ -50,7 +50,7 @@ function Header(props: HeaderProps) {
             transparency to the blockchain space.
           </p>
           <p className="mt-6">
-            We’re committed to delivering accurate and reliable information. We
+            We’re committed to delivering ac\rate and reliable information. We
             strive to be an impartial and independent watchdog that acts in the
             best interest of users and the broader ecosystem while always
             remaining credibly neutral and faithful to reality and facts. We

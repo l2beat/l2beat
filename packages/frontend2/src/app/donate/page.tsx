@@ -6,6 +6,12 @@ import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { ContentWrapper } from '../_components/ContentWrapper'
 import { OutLink } from '../_components/OutLink'
+import { getMetadata } from '../utils/getMetadata'
+
+export const metadata = getMetadata({
+  title: 'Donate - L2BEAT',
+  image: 'https://l2beat.com/meta-images/pages/og-donate.png',
+})
 
 export default async function DonatePage() {
   const gitcoinOption = await showGitcoinOption()
