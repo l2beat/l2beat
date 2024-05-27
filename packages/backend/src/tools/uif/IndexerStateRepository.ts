@@ -11,8 +11,8 @@ import { Database } from '../../peripherals/database/Database'
 export interface IndexerStateRow {
   indexer_id: string
   safe_height: number
-  config_hash?: string | undefined
-  min_timestamp: Date | undefined
+  config_hash: string | null
+  min_timestamp: Date | null
 }
 
 export interface IndexerStateRecord {
@@ -87,7 +87,7 @@ function toRecord(row: IndexerStateRow): IndexerStateRecord {
   return {
     indexerId: row.indexer_id,
     safeHeight: row.safe_height,
-    configHash: row.config_hash,
+    configHash: row.config_hash ?? undefined,
     minTimestamp: row.min_timestamp
       ? UnixTime.fromDate(row.min_timestamp)
       : undefined,
@@ -98,7 +98,7 @@ function toRow(record: IndexerStateRecord): IndexerStateRow {
   return {
     indexer_id: record.indexerId,
     safe_height: record.safeHeight,
-    config_hash: record.configHash,
-    min_timestamp: record.minTimestamp?.toDate(),
+    config_hash: record.configHash ?? null,
+    min_timestamp: record.minTimestamp?.toDate() ?? null,
   }
 }

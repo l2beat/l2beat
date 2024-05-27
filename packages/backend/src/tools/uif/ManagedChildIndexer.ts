@@ -61,7 +61,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
 
     assert(
       indexerState.configHash === this.options.configHash,
-      'Programmer error: configHash mismatch',
+      `Programmer error: configHash mismatch ${indexerState.configHash} !== ${this.options.configHash}`,
     )
 
     return {
