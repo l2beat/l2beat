@@ -10,9 +10,7 @@ import { DatabaseMiddleware } from './DatabaseMiddleware'
 export class KnexMiddleware implements DatabaseMiddleware {
   private readonly queue: ((tx?: Knex.Transaction) => Promise<void>)[] = []
   private executed = false
-  constructor(
-    private readonly repo: BaseRepository,
-  ) {}
+  constructor(private readonly repo: BaseRepository) {}
 
   add(cb: (tx?: Knex.Transaction) => Promise<void>) {
     this.queue.push(cb)

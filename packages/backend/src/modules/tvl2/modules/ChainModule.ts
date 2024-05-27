@@ -167,9 +167,7 @@ function createChainModule(
     decode,
     syncOptimizer,
     createDatabaseMiddleware: async () =>
-      new KnexMiddleware(
-      peripherals.getRepository(AmountRepository),
-      ),
+      new KnexMiddleware(peripherals.getRepository(AmountRepository)),
   })
 
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
