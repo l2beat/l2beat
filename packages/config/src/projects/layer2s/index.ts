@@ -87,6 +87,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swell } from './swell'
+import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -200,6 +201,7 @@ export const layer2s: Layer2[] = [
   stealthchain,
   superseed,
   swell,
+  sxt,
   taiko,
   tanx,
   ten,
