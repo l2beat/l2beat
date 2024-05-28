@@ -97,8 +97,9 @@ export function AddressForm() {
           placeholder="Input address or ENS name"
           className={cn(
             'h-14 w-full py-5 pl-5 pr-10',
-            'border border-gray-50 outline-none rounded-lg',
+            'border border-gray-50 outline-none rounded-lg transition-colors duration-100',
             'text-gray-500 placeholder:text-gray-50 font-medium',
+            'focus:bg-gray-100 focus:border-zinc-500 focus:placeholder:text-zinc-500 focus:text-zinc-800',
           )}
         />
         <div
@@ -107,7 +108,9 @@ export function AddressForm() {
         >
           <LensIcon className="fill-gray-50" />
         </div>
-        {error && <span className="text-brand-red">{error}</span>}
+        {error && (
+          <span className="text-red-600 text-xs font-medium">{error}</span>
+        )}
       </div>
     </div>
   )

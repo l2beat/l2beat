@@ -51,6 +51,7 @@ const config: Config = {
       },
       black: '#272A2F',
       red: {
+        600: '#C71414',
         700: '#D70000',
       },
       pink: {
