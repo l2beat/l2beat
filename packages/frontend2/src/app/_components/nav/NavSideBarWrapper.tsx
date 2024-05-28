@@ -12,7 +12,7 @@ export const NavSideBarWrapper = ({
   const [resizing, setResizing] = useState(false)
 
   const sharedSizeClasses = cn(
-    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-dvh',
+    'w-full xl:w-[240px] 2xl:w-[280px] h-dvh',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 
