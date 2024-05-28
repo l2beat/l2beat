@@ -289,23 +289,26 @@ describe(FinalityIndexer.name, () => {
     })
   })
 
-  describe(FinalityIndexer.prototype.start.name, () => {
+  describe(FinalityIndexer.prototype.initialize.name, () => {
     it('initializes indexer state', async () => {
-      const stateRepository = getMockStateRepository()
+      const safeHeight = MIN_TIMESTAMP.add(1, 'days')
+
+      const stateRepository = getMockStateRepository({
+        indexerId: 'finality_indexer',
+        safeHeight: safeHeight.toNumber(),
+        minTimestamp: MIN_TIMESTAMP,
+      })
       const finalityIndexer = getMockFinalityIndexer({
         stateRepository,
       })
 
-      await finalityIndexer.start()
+      const result = await finalityIndexer.initialize()
 
-      expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        finalityIndexer.indexerId,
-        MIN_TIMESTAMP.toNumber(),
-      )
+      expect(result).toEqual({
+        safeHeight: safeHeight.toNumber(),
+      })
 
-      // 1st during this.initialize() -> this.setSafeHeight()
-      // 2nd during super.start() -> this.getSafeHeight()
-      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(2)
+      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
     })
 
     it('indexer state undefined', async () => {
@@ -318,13 +321,13 @@ describe(FinalityIndexer.name, () => {
         stateRepository,
       })
 
-      await finalityIndexer.start()
+      const result = await finalityIndexer.initialize()
 
-      expect(stateRepository.addOrUpdate).toHaveBeenNthCalledWith(1, {
-        indexerId: finalityIndexer.indexerId,
+      expect(result).toEqual({
         safeHeight: MIN_TIMESTAMP.toNumber(),
-        minTimestamp: MIN_TIMESTAMP,
       })
+
+      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
     })
   })
 

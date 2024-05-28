@@ -94,13 +94,7 @@ export function orbitStackCommon(
   explorerLinkFormat: string,
 ): Omit<
   Layer2,
-  | 'type'
-  | 'display'
-  | 'config'
-  | 'isArchived'
-  | 'stage'
-  | 'chainConfig'
-  | 'riskView'
+  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -130,6 +124,7 @@ export function orbitStackCommon(
       ),
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
+    chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
@@ -524,7 +519,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
-    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(

@@ -45,9 +45,9 @@ describe(CoingeckoQueryService.name, () => {
         ).toHaveBeenOnlyCalledWith(
           CoingeckoId('weth'),
           'usd',
-          UnixTime.fromDate(new Date('2021-01-01')).add(-3, 'days'),
+          UnixTime.fromDate(new Date('2021-01-01')).add(-7, 'days'),
           UnixTime.fromDate(new Date('2021-01-01')).add(
-            MAX_DAYS_FOR_HOURLY_PRECISION - 3,
+            MAX_DAYS_FOR_HOURLY_PRECISION - 7,
             'days',
           ),
           undefined,

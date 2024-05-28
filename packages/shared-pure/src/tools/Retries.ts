@@ -1,7 +1,7 @@
 import { assert } from './assert'
 
-export type ShouldRetry<T> = (
-  job: { task: T; attempts: number },
+export type ShouldRetry = (
+  attempts: number,
   error?: unknown,
 ) => {
   shouldStop: boolean
@@ -16,9 +16,7 @@ interface ExponentialBackOffOpts {
   notifyAfterAttempts: number // use Infinity to avoid notifications
 }
 
-export function exponentialBackOff<T>(
-  opts: ExponentialBackOffOpts,
-): ShouldRetry<T> {
+export function exponentialBackOff(opts: ExponentialBackOffOpts): ShouldRetry {
   const maxAttempts = opts.maxAttempts
   assert(maxAttempts > 0, 'maxAttempts needs to be a positive number')
   const maxDistanceMs = opts.maxDistanceMs
@@ -29,7 +27,7 @@ export function exponentialBackOff<T>(
     'notifyAfterAttempts needs to be a positive number',
   )
 
-  return ({ attempts }: { attempts: number }) => {
+  return (attempts: number) => {
     const distance = Math.pow(2, attempts) * opts.stepMs
 
     if (attempts === maxAttempts) {
@@ -47,8 +45,8 @@ export function exponentialBackOff<T>(
   }
 }
 
-export function maxAttempts<T>(max: number): ShouldRetry<T> {
-  return ({ attempts }) => {
+export function maxAttempts(max: number): ShouldRetry {
+  return (attempts) => {
     return {
       shouldStop: attempts >= max,
       notify: false,
@@ -56,7 +54,7 @@ export function maxAttempts<T>(max: number): ShouldRetry<T> {
   }
 }
 
-function always<T>(): ShouldRetry<T> {
+function always(): ShouldRetry {
   return () => {
     return {
       shouldStop: false,

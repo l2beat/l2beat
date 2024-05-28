@@ -4,21 +4,20 @@ import { Layer3 } from './types'
 
 export const zklinknova: Layer3 = underReviewL3({
   id: 'zklinknova',
-  // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
   hostChain: ProjectId('linea'),
   display: {
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
-      'zkLink Nova is a multi-chain rollup infrastructure based on zero-knowledge technology.',
+      'zkLink Nova is a Layer 3 zkEVM Rollup network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
     purposes: ['Universal'],
     category: 'Validium',
     provider: 'zkLink Nexus',
     links: {
-      websites: ['https://zk.link'],
-      apps: ['https://playground-nexus.zk.link'],
-      documentation: ['https://docs.zk.link'],
-      explorers: ['https://scan-nexus.zk.link'],
+      websites: ['https://zklink.io', 'https://zk.link'],
+      apps: ['https://app.zklink.io', 'https://portal.zklink.io'],
+      documentation: ['https://docs.zklink.io'],
+      explorers: ['https://explorer.zklink.io'],
       repositories: ['https://github.com/zkLinkProtocol'],
       socialMedia: [
         'https://blog.zk.link',
@@ -27,6 +26,17 @@ export const zklinknova: Layer3 = underReviewL3({
         'https://t.me/zkLinkorg',
       ],
     },
+  },
+  rpcUrl: 'https://rpc.zklink.io',
+  chainConfig: {
+    name: 'zklinknova',
+    chainId: 810180,
+    explorerUrl: 'https://explorer.zklink.io',
+    explorerApi: {
+      url: 'https://explorer-api.zklink.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1709273393),
   },
   escrows: [
     {
@@ -90,7 +100,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
       sinceTimestamp: new UnixTime(1709279309),
-      tokens: ['ETH'],
+      tokens: ['ETH'], // actually MNT, but we do not support CBV yet
     },
     {
       chain: 'mantle',

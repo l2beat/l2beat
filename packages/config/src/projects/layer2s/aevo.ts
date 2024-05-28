@@ -49,6 +49,7 @@ export const aevo: Layer2 = opStackL2({
   },
   transactionApi: {
     type: 'rpc',
+    defaultUrl: 'https://l2-aevo-mainnet-prod-0.t.conduit.xyz/',
     startBlock: 1,
     defaultCallsPerMinute: 800,
     assessCount: subtractOne,
