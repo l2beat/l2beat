@@ -141,6 +141,7 @@ export class ProjectDiscovery {
 
     return {
       address,
+      chain: this.chain,
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
