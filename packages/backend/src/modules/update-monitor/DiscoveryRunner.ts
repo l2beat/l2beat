@@ -4,18 +4,16 @@ import {
   DiscoveryConfig,
   DiscoveryEngine,
   DiscoveryProvider,
-  diffDiscovery,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { isEqual, isError } from 'lodash'
+import { isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
   injectInitialAddresses: boolean
-  runSanityCheck: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
@@ -58,16 +56,6 @@ export class DiscoveryRunner {
       options.maxRetries,
       options.retryDelayMs,
     )
-
-    if (options.runSanityCheck) {
-      const isSane = await this.isDiscoverySane(
-        discovery,
-        config,
-        blockNumber,
-        options,
-      )
-      if (!isSane) return
-    }
 
     return discovery
   }
@@ -130,39 +118,6 @@ export class DiscoveryRunner {
     }
 
     return discovery
-  }
-
-  // 3rd party APIs are unstable, so we do a sanity check before sending
-  // notifications, which makes the same request again and compares the
-  // results.
-  async isDiscoverySane(
-    discovery: DiscoveryOutput,
-    projectConfig: DiscoveryConfig,
-    blockNumber: number,
-    options: DiscoveryRunnerOptions,
-  ) {
-    const secondDiscovery = await this.discoverWithRetry(
-      projectConfig,
-      blockNumber,
-      options.logger,
-      options.maxRetries,
-      options.retryDelayMs,
-    )
-
-    if (!isEqual(discovery, secondDiscovery)) {
-      const diff = diffDiscovery(
-        discovery.contracts,
-        secondDiscovery.contracts,
-        projectConfig,
-      )
-      options.logger.warn(`[${
-        projectConfig.name
-      }] Sanity check failed | ${blockNumber}\n
-      potential-diff ${JSON.stringify(diff)}}`)
-      return false
-    }
-
-    return true
   }
 
   // There was a case connected with Amarok (better described in L2B-1521)

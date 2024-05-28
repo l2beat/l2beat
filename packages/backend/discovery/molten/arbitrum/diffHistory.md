@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xaeff0ff09760399fcb811931e82568d3e968fb35
+
+# Diff at Fri, 24 May 2024 14:47:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ecd40c9c4c424d8e9d4fb926e97ec9da24272f20 block: 213847288
+- current block number: 214575697
+
+## Description
+
+Ignored the feeOwner Multisig for the MOLTEN token.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 213847288 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xFF93c3662B447Ec4577B51b08C6689A5518417D9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x88f7271bdc94a8918dadae580fdd5b16a6b44397
 
 # Diff at Wed, 22 May 2024 11:01:31 GMT:

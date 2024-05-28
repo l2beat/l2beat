@@ -88,14 +88,13 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
     dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      this.logger.info('Saving amounts for timestamp into DB', {
+        timestamp: timestamp.toNumber(),
+        escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+        totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+          .length,
+      })
       await this.$.amountRepository.addMany(nonZeroAmounts, trx)
-    })
-
-    this.logger.info('Saving amounts for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
-      escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
-      totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
-        .length,
     })
 
     return timestamp.toNumber()

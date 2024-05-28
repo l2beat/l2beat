@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 119822353,
-  "configHash": "0xf496fb824b778917145ce74ff7f6b39542e56bfe7aeaabf802a5dd1896073371",
+  "blockNumber": 120597605,
+  "configHash": "0x5def1b5565f1247f6622afd0605cb640f85241299993c9ecd062fa3ca528931e",
   "version": 4,
   "contracts": [
     {
@@ -194,7 +194,6 @@
       "values": {
         "getTreeDepth": 30,
         "isLocal": false,
-        "latestRoot": "20915762964411057304698085615437664390231699052784062947202998090988652794869",
         "owner": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
         "rootHistoryExpiry": 604800,
         "verifier": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
@@ -252,7 +251,7 @@
       }
     },
     {
-      "name": "OptimismMintableERC20",
+      "name": "WLD token",
       "address": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
       "upgradeability": {
         "type": "immutable"
@@ -268,9 +267,10 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "164769154184841153889873435",
+        "totalSupply": "194138751574449735300556168",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20"
     },
     {
       "name": "WLDGrant",
@@ -281,7 +281,7 @@
       "sinceTimestamp": 1710076379,
       "values": {
         "calculateId": [],
-        "getCurrentId": 33
+        "getCurrentId": 34
       },
       "derivedName": "WLDGrant"
     },

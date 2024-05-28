@@ -38,9 +38,9 @@ export type TaskQueueEventTracker = EventTracker<
   'started' | 'success' | 'error' | 'retry'
 >
 
-export interface TaskQueueOpts<T> {
+export interface TaskQueueOpts {
   workers?: number
-  shouldRetry?: ShouldRetry<T>
+  shouldRetry?: ShouldRetry
   eventTracker?: TaskQueueEventTracker
   metricsId: string
   shouldStopAfterFailedRetries?: boolean
@@ -54,7 +54,7 @@ export class TaskQueue<T> {
   private readonly queue: Job<T>[] = []
   private busyWorkers = 0
   private readonly workers: number
-  private readonly shouldRetry: ShouldRetry<T>
+  private readonly shouldRetry: ShouldRetry
   private readonly eventTracker?: TaskQueueEventTracker
   private readonly shouldStopAfterFailedRetries
   private stopped = false
@@ -62,7 +62,7 @@ export class TaskQueue<T> {
   constructor(
     executeTask: Task<T>,
     private readonly logger: Logger,
-    opts: TaskQueueOpts<T>,
+    opts: TaskQueueOpts,
   ) {
     this.workers = opts.workers ?? 1
     assert(
@@ -149,7 +149,7 @@ export class TaskQueue<T> {
 
   private handleFailure(job: Job<T>, error: unknown) {
     job.attempts++
-    const result = this.shouldRetry(job, error)
+    const result = this.shouldRetry(job.attempts, error)
 
     if (result.notify) {
       this.logger.error(error, { job })

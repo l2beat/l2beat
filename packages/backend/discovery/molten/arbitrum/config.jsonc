@@ -20,7 +20,8 @@
   },
   "overrides": {
     "Molten Token": {
-      "ignoreRelatives": ["lzEndpoint"]
+      "ignoreRelatives": ["lzEndpoint", "feeOwner", "owner"],
+      "ignoreInWatchMode": ["circulatingSupply", "totalSupply"]
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
