@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x51136b6d079d7151b3d5c3f023e9af85bb850f5e
+Generated with discovered.json: 0xc2b6513ea8149b7ed78a1a929fe0021cb2e63c20
 
-# Diff at Tue, 28 May 2024 12:55:00 GMT:
+# Diff at Tue, 28 May 2024 14:37:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19968497
+- current block number: 19969004
 
 ## Description
 
@@ -20,6 +20,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract TierProvider (0x4cffe56C947E26D07C14020499776DB3e9AE3a23)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
     +++ description: None
 ```
 
@@ -43,7 +49,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
     +++ description: None
 ```
 

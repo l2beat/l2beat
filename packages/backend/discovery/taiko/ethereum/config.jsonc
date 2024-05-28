@@ -47,7 +47,29 @@
             "args": [],
             "expectRevert": true
           }
-        }
+        },
+        // Harcoded values for verifier names, is there a better way?
+        "verifier_TIER_SGX" :{
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": ["0x746965725f736778000000000000000000000000000000000000000000000000", "false"]
+          }
+        },
+        "verifier_TIER_GUARDIAN_MINORITY" :{
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000", "false"]
+          }
+        },
+        "verifier_TIER_GUARDIAN" :{
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": ["0x746965725f677561726469616e00000000000000000000000000000000000000", "false"]
+          }
+        },
       }
     },
     "L1RollupAddressManager": {
