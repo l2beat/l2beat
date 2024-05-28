@@ -117,7 +117,7 @@ export const AggregateDetailedTvlResponse = z.object({
   daily: AggregateDetailedTvlChart,
 })
 const TokenTvlChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.string(), z.literal('usd')]),
+  types: z.tuple([z.literal('timestamp'), z.string(), z.literal('valueUsd')]),
   data: z.array(z.tuple([z.number(), z.number(), z.number()])),
 })
 
