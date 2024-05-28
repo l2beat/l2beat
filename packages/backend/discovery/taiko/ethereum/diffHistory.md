@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc170c830eb9b10d3c9816a738c58332ce3ff3181
+Generated with discovered.json: 0x4df13168eec11d968aaed1a0b67f735961a20121
 
-# Diff at Tue, 28 May 2024 09:39:03 GMT:
+# Diff at Tue, 28 May 2024 12:28:05 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19967522
+- current block number: 19968364
 
 ## Description
 
@@ -14,6 +14,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a)
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+```
+
+```diff
++   Status: CREATED
+    contract TierProvider (0x4cffe56C947E26D07C14020499776DB3e9AE3a23)
     +++ description: None
 ```
 
@@ -21,6 +27,12 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
 ```
 
 ```diff
