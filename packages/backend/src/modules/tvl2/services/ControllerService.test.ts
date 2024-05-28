@@ -8,28 +8,8 @@ import { filterSources, filterTimestamps } from './ControllerService'
 describe(filterSources.name, () => {
   it('filters out additional values', () => {
     const values = [
-      {
-        projectId: ProjectId('project'),
-        timestamp: UnixTime.ZERO,
-        dataSource: 'coingecko',
-        canonical: 0n,
-        canonicalForTotal: 0n,
-        external: 0n,
-        externalForTotal: 0n,
-        native: 0n,
-        nativeForTotal: 0n,
-      },
-      {
-        projectId: ProjectId('project'),
-        timestamp: UnixTime.ZERO,
-        dataSource: 'arbitrum',
-        canonical: 0n,
-        canonicalForTotal: 0n,
-        external: 0n,
-        externalForTotal: 0n,
-        native: 0n,
-        nativeForTotal: 0n,
-      },
+      value(UnixTime.ZERO, 'coingecko'),
+      value(UnixTime.ZERO, 'arbitrum'),
     ]
     const valuesByTimestamp: Dictionary<ValueRecord[]> = {
       [UnixTime.ZERO.toString()]: values,
@@ -53,19 +33,7 @@ describe(filterSources.name, () => {
   })
 
   it('throw when missing data source', () => {
-    const values = [
-      {
-        projectId: ProjectId('project'),
-        timestamp: UnixTime.ZERO,
-        dataSource: 'coingecko',
-        canonical: 0n,
-        canonicalForTotal: 0n,
-        external: 0n,
-        externalForTotal: 0n,
-        native: 0n,
-        nativeForTotal: 0n,
-      },
-    ]
+    const values = [value(UnixTime.ZERO, 'coingecko')]
     const valuesByTimestamp: Dictionary<ValueRecord[]> = {
       [UnixTime.ZERO.toString()]: values,
     }
@@ -86,7 +54,45 @@ describe(filterSources.name, () => {
 })
 
 describe(filterTimestamps.name, () => {
-  const values: ValueRecord[] = [{}]
-  const sixHourlyCutOff: UnixTime = new UnixTime(5)
-  const hourlyCutOff: UnixTime = new UnixTime(10)
+  it('filters out not needed data', () => {
+    const start = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+    const sixHourlyCutOff = start.add(7, 'days')
+    const hourlyCutOff = start.add(14, 'days')
+
+    const values: ValueRecord[] = [
+      value(start),
+      value(start.add(1, 'days')),
+      value(sixHourlyCutOff.add(1, 'days').add(6, 'hours')),
+      value(hourlyCutOff.add(1, 'days').add(1, 'hours')),
+
+      // to filter out
+      value(sixHourlyCutOff.add(-1, 'days').add(6, 'hours')),
+      value(hourlyCutOff.add(-1, 'days').add(1, 'hours')),
+    ]
+
+    const filteredValues = filterTimestamps(
+      values,
+      sixHourlyCutOff,
+      hourlyCutOff,
+    )
+
+    expect(filteredValues).toEqual(values.slice(0, 4))
+  })
 })
+
+function value(
+  timestamp: UnixTime,
+  dataSource: 'coingecko' | 'arbitrum' = 'coingecko',
+) {
+  return {
+    projectId: ProjectId('project'),
+    timestamp,
+    dataSource,
+    canonical: 0n,
+    canonicalForTotal: 0n,
+    external: 0n,
+    externalForTotal: 0n,
+    native: 0n,
+    nativeForTotal: 0n,
+  }
+}
