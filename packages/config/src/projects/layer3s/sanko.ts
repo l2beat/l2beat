@@ -31,7 +31,7 @@ export const sanko: Layer3 = orbitStackL3({
   },
   nativeToken: 'DMT',
   associatedTokens: ['DMT'],
-  rpcUrl: 'https://sanko.calderachain.xyz/http',
+  rpcUrl: 'https://mainnet.sanko.xyz',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
