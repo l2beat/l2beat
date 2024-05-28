@@ -22,22 +22,11 @@ export class ControllerService {
       projects.map((p) => p.id),
     )
 
-    const sixHourlyCutOff = this.$.syncOptimizer.sixHourlyCutOff
-    const hourlyCutOff = this.$.syncOptimizer.hourlyCutOff
-
-    const valuesToSync = values.filter((value) => {
-      if (value.timestamp.isFull('day')) {
-        return true
-      }
-
-      if (value.timestamp.isFull('six hours')) {
-        return value.timestamp.gte(sixHourlyCutOff)
-      }
-
-      if (value.timestamp.isFull('hour')) {
-        return value.timestamp.gte(hourlyCutOff)
-      }
-    })
+    const valuesToSync = filterTimestamps(
+      values,
+      this.$.syncOptimizer.sixHourlyCutOff,
+      this.$.syncOptimizer.hourlyCutOff,
+    )
 
     const valuesByProject = groupBy(valuesToSync, 'projectId')
 
@@ -48,7 +37,7 @@ export class ControllerService {
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const filteredValues = filterValues(vv, project)
+      const filteredValues = filterSources(vv, project)
 
       // TODO: Interpolate here
       assert(
@@ -68,15 +57,19 @@ export class ControllerService {
     return {
       valuesByProjectByTimestamp,
       dailyStart: minTimestamp,
-      sixHourlyStart: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf(
-        'day',
+      sixHourlyStart: UnixTime.max(
+        this.$.syncOptimizer.sixHourlyCutOff,
+        minTimestamp,
+      ).toEndOf('day'),
+      hourlyStart: UnixTime.max(
+        this.$.syncOptimizer.hourlyCutOff,
+        minTimestamp,
       ),
-      hourlyStart: UnixTime.max(hourlyCutOff, minTimestamp),
     }
   }
 }
 
-export function filterValues(
+export function filterSources(
   vv: Dictionary<ValueRecord[]>,
   project: ApiProject,
 ) {
@@ -94,6 +87,26 @@ export function filterValues(
       ]
     }),
   )
+}
+
+export function filterTimestamps(
+  values: ValueRecord[],
+  sixHourlyCutOff: UnixTime,
+  hourlyCutOff: UnixTime,
+) {
+  return values.filter((value) => {
+    if (value.timestamp.isFull('day')) {
+      return true
+    }
+
+    if (value.timestamp.isFull('six hours')) {
+      return value.timestamp.gte(sixHourlyCutOff)
+    }
+
+    if (value.timestamp.isFull('hour')) {
+      return value.timestamp.gte(hourlyCutOff)
+    }
+  })
 }
 
 function getConfiguredSources(

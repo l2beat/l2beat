@@ -3,9 +3,9 @@ import { expect } from 'earl'
 import { Dictionary } from 'lodash'
 import { ApiProject } from '../api/Tvl2Controller'
 import { ValueRecord } from '../repositories/ValueRepository'
-import { filterValues } from './ControllerService'
+import { filterSources, filterTimestamps } from './ControllerService'
 
-describe(filterValues.name, () => {
+describe(filterSources.name, () => {
   it('filters out additional values', () => {
     const values = [
       {
@@ -45,7 +45,7 @@ describe(filterValues.name, () => {
       ]),
     }
 
-    const filteredValues = filterValues(valuesByTimestamp, project)
+    const filteredValues = filterSources(valuesByTimestamp, project)
 
     expect(filteredValues).toEqual({
       [UnixTime.ZERO.toString()]: values.slice(0, 1),
@@ -81,6 +81,12 @@ describe(filterValues.name, () => {
       ]),
     }
 
-    expect(() => filterValues(valuesByTimestamp, project)).toThrow()
+    expect(() => filterSources(valuesByTimestamp, project)).toThrow()
   })
+})
+
+describe(filterTimestamps.name, () => {
+  const values: ValueRecord[] = [{}]
+  const sixHourlyCutOff: UnixTime = new UnixTime(5)
+  const hourlyCutOff: UnixTime = new UnixTime(10)
 })
