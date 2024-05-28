@@ -1,12 +1,12 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19961890,
-  "configHash": "0xd856f447e2fecb694114425eeaa084adfbba89766d6627ac30d92a2456e84aa1",
+  "blockNumber": 19962066,
+  "configHash": "0x00eaefa16f1e9e087a9fc396b66b4c91517fb1eeb0c7d8f92d315f715b53c314",
   "version": 4,
   "contracts": [
     {
-      "name": "GnosisSafe",
+      "name": "TaikoAdmin",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "upgradeability": {
         "type": "gnosis safe",
@@ -28,7 +28,8 @@
         "getThreshold": 3,
         "nonce": 16,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "TaikoBridge",
@@ -47,7 +48,7 @@
         "impl": "0x02F21B4C3d4dbfF70cE851741175a727c8D782Be",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 1159,
+        "nextMessageId": 1365,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"

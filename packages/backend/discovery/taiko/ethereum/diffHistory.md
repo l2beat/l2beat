@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x18b793961e04fc241ab6f7490828811689971620
+Generated with discovered.json: 0xabb3947032c1a4d4d4efdf5f3849299d85f20a35
 
-# Diff at Mon, 27 May 2024 14:45:58 GMT:
+# Diff at Mon, 27 May 2024 15:21:22 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19961890
+- current block number: 19962066
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F)
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F)
     +++ description: None
 ```
 
