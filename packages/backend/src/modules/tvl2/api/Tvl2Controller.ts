@@ -730,8 +730,11 @@ export class Tvl2Controller {
     const values = new Map<number, { amount: number; value: number }>()
     for (const timestamp of timestamps) {
       const priceUsd = pricesMap.get(Number(timestamp))
-      assert(priceUsd, 'Programmer error ' + timestamp)
-      const amounts = amountsByTimestamp[timestamp.toNumber()] ?? []
+      const amounts = amountsByTimestamp[timestamp.toNumber()]
+      if (!priceUsd || !amounts) {
+        values.set(Number(timestamp), { amount: 0, value: 0 })
+        continue
+      }
       const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
       const usdValue = calculateValue({ amount, priceUsd, decimals })
       values.set(Number(timestamp), {

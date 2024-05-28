@@ -743,19 +743,19 @@ export const starknet: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'GpsStatementVerifier',
+              name: 'Final circuit',
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',

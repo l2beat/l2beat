@@ -22,7 +22,7 @@ describe(MultiIndexer.name, () => {
       )
 
       const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual(300)
+      expect(newHeight).toEqual({ safeHeight: 300 })
 
       expect(testIndexer.removeData).toHaveBeenOnlyCalledWith([
         removal('c', 100, 300),
@@ -40,7 +40,7 @@ describe(MultiIndexer.name, () => {
       )
 
       const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual(Infinity)
+      expect(newHeight).toEqual({ safeHeight: Infinity })
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
       expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
@@ -56,7 +56,7 @@ describe(MultiIndexer.name, () => {
       )
 
       const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual(99)
+      expect(newHeight).toEqual({ safeHeight: 99 })
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
       expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
@@ -76,7 +76,7 @@ describe(MultiIndexer.name, () => {
       )
 
       const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual(300)
+      expect(newHeight).toEqual({ safeHeight: 300 })
 
       expect(testIndexer.removeData).toHaveBeenCalledWith([
         removal('b', 100, 199),
@@ -119,7 +119,7 @@ describe(MultiIndexer.name, () => {
         [saved('a', 100, 200, 150)],
       )
       testIndexer.getSafeHeight.resolvesTo(130)
-      expect(await testIndexer.initialize()).toEqual(130)
+      expect(await testIndexer.initialize()).toEqual({ safeHeight: 130 })
     })
 
     it('getSafeHeight higher than saved configs', async () => {
@@ -128,7 +128,7 @@ describe(MultiIndexer.name, () => {
         [saved('a', 100, 200, 150)],
       )
       testIndexer.getSafeHeight.resolvesTo(160)
-      expect(await testIndexer.initialize()).toEqual(150)
+      expect(await testIndexer.initialize()).toEqual({ safeHeight: 150 })
     })
   })
 
@@ -349,7 +349,7 @@ describe(MultiIndexer.name, () => {
           saved('c', 100, 500, 500),
         ],
       )
-      expect(await testIndexer.initialize()).toEqual(99)
+      expect(await testIndexer.initialize()).toEqual({ safeHeight: 99 })
 
       expect(await testIndexer.update(100, 500)).toEqual(250)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
@@ -397,7 +397,7 @@ describe(MultiIndexer.name, () => {
       ]
 
       const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual(99)
+      expect(newHeight).toEqual({ safeHeight: 99 })
     })
   })
 
@@ -498,6 +498,9 @@ class TestMultiIndexer extends MultiIndexer<null> {
 
   setSafeHeight =
     mockFn<MultiIndexer<null>['setSafeHeight']>().resolvesTo(undefined)
+
+  setInitialState =
+    mockFn<MultiIndexer<null>['setInitialState']>().resolvesTo(undefined)
 
   override multiInitialize(): Promise<SavedConfiguration<null>[]> {
     return Promise.resolve(this._saved)

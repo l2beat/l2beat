@@ -1,4 +1,4 @@
-import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
@@ -228,7 +228,6 @@ function getMockIndexerStateRepository(data: UnixTime) {
     findIndexerState: async () => {
       return {
         id: 1,
-        configHash: Hash256.random(),
         indexerId: 'liveness_indexer',
         safeHeight: data.toNumber(),
       }
