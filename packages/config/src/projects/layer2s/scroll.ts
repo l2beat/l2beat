@@ -434,14 +434,14 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'ZkEvmVerifierV0',
+              name: 'Final circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -449,7 +449,7 @@ export const scroll: Layer2 = {
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',

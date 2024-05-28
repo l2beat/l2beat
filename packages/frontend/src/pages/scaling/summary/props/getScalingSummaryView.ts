@@ -143,6 +143,7 @@ function getScalingL3SummaryEntry(
     provider: project.display.provider,
     category: project.display.category,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
@@ -160,6 +161,7 @@ function getScalingL3SummaryEntry(
           }
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlBreakdown: layer3sTvl ? stats?.tvlBreakdown : undefined,
     sevenDayChange:
       layer3sTvl && stats && escrowsConfigured(project)
         ? stats.sevenDayChange

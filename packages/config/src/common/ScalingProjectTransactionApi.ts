@@ -4,13 +4,13 @@ export type AssessCount = (count: number, blockNumber: number) => number
 
 export interface SimpleTransactionApi<T extends string> {
   type: T
-  defaultUrl?: string
+  defaultUrl: string
   defaultCallsPerMinute?: number
 }
 
 export interface RpcTransactionApi {
   type: 'rpc'
-  defaultUrl?: string
+  defaultUrl: string
   defaultCallsPerMinute?: number
   assessCount?: AssessCount
   startBlock?: number

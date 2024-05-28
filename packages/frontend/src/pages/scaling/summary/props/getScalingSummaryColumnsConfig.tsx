@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { compact } from 'lodash'
 import { StageCell } from '../../../../components/stages/StageCell'
 import { NumberCell } from '../../../../components/table/NumberCell'
 import { RosetteCell } from '../../../../components/table/RosetteCell'
@@ -66,8 +67,6 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
       align: 'right',
-      noPaddingRight: true,
-      headClassName: '-translate-x-[72px]',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
@@ -187,7 +186,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
 }
 
 export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
-  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = [
+  const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = compact([
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
       name: 'Type',
@@ -216,25 +215,21 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
       tooltip: 'Functionality supported by this project.',
       getValue: (project) => project.purposes.join(', '),
     },
-    ...(layer3sTvl
-      ? [
-          {
-            name: 'Total',
-            tooltip:
-              'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-            align: 'right',
-            noPaddingRight: true,
-            headClassName: '-translate-x-[72px]',
-            getValue: (project) => <TotalCell project={project} />,
-            sorting: {
-              getOrderValue: (project) => project.tvl?.value,
-              rule: 'numeric',
-              defaultState: 'desc',
-            },
-          } as ColumnConfig<ScalingL3SummaryViewEntry>,
-        ]
-      : []),
-  ]
+
+    layer3sTvl && {
+      name: 'Total',
+      tooltip:
+        'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+      align: 'right',
+      headClassName: '!pr-4',
+      getValue: (project) => <TotalCell project={project} className="pr-4" />,
+      sorting: {
+        getOrderValue: (project) => project.tvl?.value,
+        rule: 'numeric',
+        defaultState: 'desc',
+      },
+    },
+  ])
 
   return columns
 }

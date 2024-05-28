@@ -72,7 +72,10 @@ const nextConfig = {
 }
 
 function createNextConfig() {
-  const plugins = [createPlausibleProxyPlugin(), createNextIntlPlugin()]
+  const plugins = [
+    createPlausibleProxyPlugin(),
+    createNextIntlPlugin('./src/i18n.tsx'),
+  ]
 
   return plugins.reduce((config, plugin) => plugin(config), nextConfig)
 }
