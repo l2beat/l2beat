@@ -3,15 +3,15 @@ import { type Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { toDataURL } from 'qrcode'
+import { ContentWrapper } from '~/app/_components/ContentWrapper'
+import { OutLink } from '~/app/_components/OutLink'
 import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
-import { ContentWrapper } from '../_components/ContentWrapper'
-import { OutLink } from '../_components/OutLink'
 
 export const metadata: Metadata = {
   title: 'Donate - L2BEAT',
   openGraph: {
-    url: 'https://l2beat.com/donate',
+    url: '/donate',
   },
 }
 
