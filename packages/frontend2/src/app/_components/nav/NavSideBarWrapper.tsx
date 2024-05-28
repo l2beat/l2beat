@@ -1,15 +1,18 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
 import { useMobileNav } from './MobileNavContext'
+import { NavSideBarCollapseToggle } from './NavSideBarCollapseToggle'
 
 export const NavSideBarWrapper = ({
   children,
   legacyNav,
 }: { children: React.ReactNode; legacyNav?: boolean }) => {
   const { open } = useMobileNav()
+  const ref = useRef<HTMLDivElement>(null)
   const [resizing, setResizing] = useState(false)
+  const [overflows, setOverflows] = useState(false)
 
   const sharedSizeClasses = cn(
     'w-full xl:w-[240px] 2xl:w-[280px] h-screen [@supports(height:100dvh)]:h-dvh',
@@ -22,6 +25,9 @@ export const NavSideBarWrapper = ({
     const onResize = () => {
       clearTimeout(timeout)
       setResizing(true)
+      setOverflows(
+        (ref.current?.scrollHeight ?? 0) > (ref.current?.clientHeight ?? 0),
+      )
       timeout = setTimeout(() => setResizing(false), 300)
     }
 
@@ -31,7 +37,7 @@ export const NavSideBarWrapper = ({
       clearTimeout(timeout)
       window.removeEventListener('resize', onResize)
     }
-  }, [])
+  }, [ref])
 
   return (
     <div
@@ -49,7 +55,24 @@ export const NavSideBarWrapper = ({
           resizing && 'transition-none',
         )}
       >
-        {children}
+        <div
+          className={cn(
+            'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-clip flex-1 flex flex-col gap-8',
+            sharedSizeClasses,
+          )}
+          ref={ref}
+        >
+          {children}
+        </div>
+
+        <div
+          className={cn(
+            'p-6 border-t border-transparent hidden xl:block xl:sidenav-collapsed:ml-1 transition-colors duration-300 ease-out',
+            overflows && 'border-gray-300 dark:border-gray-850',
+          )}
+        >
+          <NavSideBarCollapseToggle />
+        </div>
       </div>
     </div>
   )
