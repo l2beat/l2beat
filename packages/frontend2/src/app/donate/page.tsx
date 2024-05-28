@@ -1,4 +1,5 @@
 import { compact } from 'lodash'
+import { type Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { toDataURL } from 'qrcode'
@@ -6,12 +7,13 @@ import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { ContentWrapper } from '../_components/ContentWrapper'
 import { OutLink } from '../_components/OutLink'
-import { getMetadata } from '../utils/getMetadata'
 
-export const metadata = getMetadata({
+export const metadata: Metadata = {
   title: 'Donate - L2BEAT',
-  image: 'https://l2beat.com/meta-images/pages/og-donate.png',
-})
+  openGraph: {
+    url: 'https://l2beat.com/donate',
+  },
+}
 
 const UPDATED_AT = new Date(Date.UTC(2024, 0))
 const SIGNIFICANT_VALUE = 500000
