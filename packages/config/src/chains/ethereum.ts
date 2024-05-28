@@ -10,6 +10,7 @@ export const ethereum: ChainConfig = {
     url: 'https://api.etherscan.io/api',
     type: 'etherscan',
   },
+  blockscoutV2ApiUrl: 'https://eth.blockscout.com/api/v2',
   // Deployment of the first L2
   minTimestampForTvl: UnixTime.fromDate(new Date('2019-11-14T00:00:00Z')),
   multicallContracts: [

@@ -25,6 +25,7 @@ import {
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -63,6 +64,8 @@ export interface PolygonCDKStackConfig {
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
   upgradesAndGovernance?: string
+  stateValidation?: ScalingProjectStateValidation
+  associatedTokens?: string[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -150,6 +153,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
     },
     config: {
+      associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.nonTemplateEscrows,
       transactionApi:
         templateVars.transactionApi ??
@@ -459,6 +463,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
     },
     stateDerivation: templateVars.stateDerivation,
+    stateValidation: templateVars.stateValidation,
     permissions: [
       {
         name: 'ProxyAdminOwner',

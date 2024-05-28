@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x68a28fba5e0d68fd23b6e1a7df4f76e418d42ff5
+
+# Diff at Mon, 20 May 2024 14:11:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@468df776367f9a83cbc1e0ea8de4f8ff7cb613dd block: 19760239
+- current block number: 19911646
+
+## Description
+
+Added the Lido wstETH escrow together with its admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19760239 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETHescrowLidoProxyAdmin (0xCC2C53556Bc75217cf698721b29071d6f12628A9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xba389f739fa3b1f9c960dd3e199d54a43f2cbc6e
 
 # Diff at Mon, 29 Apr 2024 10:01:53 GMT:

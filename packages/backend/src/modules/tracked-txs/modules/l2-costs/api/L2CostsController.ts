@@ -6,12 +6,10 @@ import {
   L2CostsProjectApiCharts,
   TrackedTxsConfigSubtype,
   UnixTime,
-  cacheAsyncFunction,
   notUndefined,
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
-import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
@@ -58,31 +56,10 @@ export interface L2CostsControllerDeps {
 }
 
 export class L2CostsController {
-  private readonly taskQueue: TaskQueue<void>
   private readonly logger: Logger
-  getCachedL2CostsApiResponse: () => Promise<L2CostsApiResponse>
 
   constructor(private readonly $: L2CostsControllerDeps) {
     this.logger = $.logger ? $.logger.for(this) : Logger.SILENT
-
-    const cached = cacheAsyncFunction(() => this.getL2Costs())
-    this.getCachedL2CostsApiResponse = cached.call
-    this.taskQueue = new TaskQueue(
-      cached.refetch,
-      this.logger.for('taskQueue'),
-      { metricsId: L2CostsController.name },
-    )
-  }
-
-  start() {
-    this.taskQueue.addToFront()
-    this.logger.info('Caching: initial caching scheduled')
-
-    const thirtyMinutes = 30 * 60 * 1000
-    setInterval(() => {
-      this.taskQueue.addIfEmpty()
-      this.logger.info('Caching: refetch scheduled')
-    }, thirtyMinutes)
   }
 
   async getL2Costs(): Promise<L2CostsApiResponse> {

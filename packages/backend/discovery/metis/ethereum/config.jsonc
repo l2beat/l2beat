@@ -14,9 +14,14 @@
     "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "LockingPool",
     "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager",
     "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "LockingInfo",
-    "0x735Aad08c5eF7620b6422E85613f8335Ec07b573": "EquilibriaStakingPool"
+    "0x735Aad08c5eF7620b6422E85613f8335Ec07b573": "EquilibriaStakingPool",
+    "0x62478E4eeb4070fE399866aB05e821AB97200947": "RewardEscrowerMultisig"
   },
   "overrides": {
+    "RewardEscrowerMultisig": {
+      "description": "Escrows staking rewards for Sequencers.",
+      "ignoreInWatchMode": ["nonce"]
+    },
     "EquilibriaStakingPool": {
       // StakingPool owner deployed by Equilibria Finance
       "ignoreDiscovery": true
@@ -292,12 +297,10 @@
       "ignoreInWatchMode": ["nonce"],
       "fields": {
         "getOwners": {
-          "description": "Metis Multisig signers as array",
           "severity": "LOW",
           "type": "PERMISSION"
         },
         "getThreshold": {
-          "description": "Multisig threshold",
           "severity": "HIGH",
           "type": "PERMISSION"
         }

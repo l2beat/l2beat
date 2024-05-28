@@ -1,7 +1,8 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import { TvlApiToken } from '@l2beat/shared-pure'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
+import { Square } from '../../components/Square'
 import { TokenBreakdownProps } from '../../components/breakdown/TokenBreakdown'
 import { formatPercent } from '../utils'
 
@@ -65,15 +66,38 @@ function getTVLBreakdownLabel(
   if (breakdown.empty) {
     return <span>No tokens</span>
   }
-  const toLabel = (text: string, x: number) =>
-    x === 0 ? null : <div>{`${text} – ${(x * 100).toFixed(2)}%`}</div>
 
   return (
     <div>
-      {toLabel(associatedTokens.join(' and '), breakdown.associated)}
-      {toLabel('Ether', breakdown.ether)}
-      {toLabel('Stablecoins', breakdown.stable)}
-      {toLabel('Other', breakdown.other)}
+      <Row value={breakdown.associated}>
+        <Square variant="associated" size="small" />
+        <span>{associatedTokens.join(' and ')}</span>
+      </Row>
+      <Row value={breakdown.ether}>
+        <Square variant="ether" size="small" />
+        <span>Ether</span>
+      </Row>
+      <Row value={breakdown.stable}>
+        <Square variant="stable" size="small" />
+        <span>Stablecoins</span>
+      </Row>
+      <Row value={breakdown.other}>
+        <Square variant="other" size="small" />
+        <span>Other</span>
+      </Row>
+    </div>
+  )
+}
+
+function Row({ children, value }: { children: ReactNode; value: number }) {
+  if (value === 0) {
+    return null
+  }
+
+  return (
+    <div className="flex justify-between items-center gap-x-6">
+      <span className="flex items-center gap-1">{children}</span>
+      <span className="font-semibold">{(value * 100).toFixed(2)}%</span>
     </div>
   )
 }

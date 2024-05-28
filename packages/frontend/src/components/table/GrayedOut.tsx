@@ -5,7 +5,11 @@ export function GrayedOut(props: {
   grayOut: boolean
 }) {
   if (props.grayOut) {
-    return <div className="*:!text-gray-500">{props.children}</div>
+    return (
+      <div className="[&_*]:!text-gray-500 [&_*]:!fill-gray-500">
+        {props.children}
+      </div>
+    )
   }
   return props.children
 }

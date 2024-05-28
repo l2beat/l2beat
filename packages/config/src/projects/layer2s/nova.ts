@@ -44,6 +44,7 @@ const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
   discovery,
+  associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

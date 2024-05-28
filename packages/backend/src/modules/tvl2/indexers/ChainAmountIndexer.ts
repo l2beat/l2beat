@@ -1,6 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { assert } from '@l2beat/backend-tools'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../../peripherals/database/DatabaseMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -35,6 +39,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
@@ -82,13 +87,14 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    await this.$.amountRepository.addMany(nonZeroAmounts)
-
-    this.logger.info('Saved amounts for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
-      escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
-      totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
-        .length,
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      this.logger.info('Saving amounts for timestamp into DB', {
+        timestamp: timestamp.toNumber(),
+        escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+        totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+          .length,
+      })
+      await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
     return timestamp.toNumber()
@@ -118,12 +124,14 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
           new UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted amounts for configuration', {
-        id: configuration.id,
-        from: configuration.from,
-        to: configuration.to,
-        deletedRecords,
-      })
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted amounts for configuration', {
+          id: configuration.id,
+          from: configuration.from,
+          to: configuration.to,
+          deletedRecords,
+        })
+      }
     }
   }
 }

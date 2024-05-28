@@ -10,6 +10,7 @@ import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
@@ -62,6 +63,8 @@ export function createPriceModule(
         encode,
         decode,
         syncOptimizer,
+        createDatabaseMiddleware: async () =>
+          new KnexMiddleware(peripherals.getRepository(PriceRepository)),
       }),
   )
 

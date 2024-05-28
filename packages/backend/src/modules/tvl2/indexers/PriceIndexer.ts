@@ -3,6 +3,10 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import {
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../../peripherals/database/DatabaseMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -35,6 +39,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+    dbMiddleware: DatabaseMiddleware,
   ): Promise<number> {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
@@ -76,13 +81,15 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    await this.$.priceRepository.addMany(optimizedPrices)
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      this.logger.info('Saving prices into DB', {
+        from,
+        to: adjustedTo.toNumber(),
+        configurationsToSync: configurationsToSync.length,
+        prices: optimizedPrices.length,
+      })
 
-    this.logger.info('Saved prices into DB', {
-      from,
-      to: adjustedTo.toNumber(),
-      configurationsToSync: configurationsToSync.length,
-      prices: optimizedPrices.length,
+      await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 
     return adjustedTo.toNumber()
@@ -92,11 +99,21 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[],
   ): Promise<void> {
     for (const configuration of configurations) {
-      await this.$.priceRepository.deleteByConfigInTimeRange(
-        configuration.id,
-        new UnixTime(configuration.from),
-        new UnixTime(configuration.to),
-      )
+      const deletedRecords =
+        await this.$.priceRepository.deleteByConfigInTimeRange(
+          configuration.id,
+          new UnixTime(configuration.from),
+          new UnixTime(configuration.to),
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          deletedRecords,
+        })
+      }
     }
   }
 }

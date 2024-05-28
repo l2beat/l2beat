@@ -23,7 +23,13 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
     const logger = $.logger.tag($.tag)
     const name = 'block_timestamp_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name,
+      logger,
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      configHash: $.minHeight.toString(),
+    })
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -66,10 +72,12 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
         new UnixTime(targetHeight),
       )
 
-    this.logger.info('Deleted block timestamps after height', {
-      targetHeight,
-      deletedRecords,
-    })
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted block timestamps after height', {
+        targetHeight,
+        deletedRecords,
+      })
+    }
 
     return Promise.resolve(targetHeight)
   }

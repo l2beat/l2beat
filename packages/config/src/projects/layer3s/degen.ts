@@ -33,7 +33,7 @@ export const degen: Layer3 = orbitStackL3({
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.degen.tips',
-    defaultCallsPerMinute: 900,
+    defaultCallsPerMinute: 5000,
     assessCount: subtractOne,
     startBlock: 1,
   },
@@ -83,4 +83,5 @@ export const degen: Layer3 = orbitStackL3({
         'The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.',
     }),
   ],
+  associatedTokens: ['DEGEN'],
 })

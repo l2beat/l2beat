@@ -2,6 +2,7 @@ import { assert, Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   EthereumAddress,
   Hash256,
+  Retries,
   UnixTime,
   stringAs,
   stringAsInt,
@@ -21,6 +22,13 @@ export interface EtherscanUnsupportedMethods {
   getContractCreation?: boolean
 }
 
+const shouldRetry = Retries.exponentialBackOff({
+  stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
+  maxAttempts: 10,
+  maxDistanceMs: Infinity,
+  notifyAfterAttempts: Infinity,
+})
+
 export class EtherscanLikeClient {
   protected readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
@@ -35,7 +43,9 @@ export class EtherscanLikeClient {
     protected readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
     protected readonly logger = Logger.SILENT,
   ) {
-    this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.callWithRetries = this.rateLimiter.wrap(
+      this.callWithRetries.bind(this),
+    )
   }
 
   /**
@@ -68,7 +78,7 @@ export class EtherscanLikeClient {
 
     while (current.gte(this.minTimestamp)) {
       try {
-        const result = await this.call('block', 'getblocknobytime', {
+        const result = await this.callWithRetries('block', 'getblocknobytime', {
           timestamp: current.toString(),
           closest: 'before',
         })
@@ -94,7 +104,7 @@ export class EtherscanLikeClient {
   }
 
   async getContractSource(address: EthereumAddress): Promise<ContractSource> {
-    const response = await this.call('contract', 'getsourcecode', {
+    const response = await this.callWithRetries('contract', 'getsourcecode', {
       address: address.toString(),
     })
 
@@ -113,9 +123,13 @@ export class EtherscanLikeClient {
       return undefined
     }
 
-    const response = await this.call('contract', 'getcontractcreation', {
-      contractaddresses: address.toString(),
-    })
+    const response = await this.callWithRetries(
+      'contract',
+      'getcontractcreation',
+      {
+        contractaddresses: address.toString(),
+      },
+    )
 
     const tx = ContractCreatorAndCreationTxHashResult.parse(response)[0]
 
@@ -125,7 +139,7 @@ export class EtherscanLikeClient {
   }
 
   async getFirstTxTimestamp(address: EthereumAddress): Promise<UnixTime> {
-    const response = await this.call('account', 'txlist', {
+    const response = await this.callWithRetries('account', 'txlist', {
       address: address.toString(),
       startblock: '0',
       endblock: '999999999',
@@ -144,7 +158,7 @@ export class EtherscanLikeClient {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
-    const response = await this.call('account', 'txlist', {
+    const response = await this.callWithRetries('account', 'txlist', {
       address: address.toString(),
       startblock: '0',
       endblock: blockNumber.toString(),
@@ -172,7 +186,28 @@ export class EtherscanLikeClient {
     }))
   }
 
-  async call(
+  async callWithRetries(
+    module: string,
+    action: string,
+    params: Record<string, string>,
+  ): Promise<unknown> {
+    let attempts = 0
+    while (true) {
+      try {
+        return await this.callRaw(module, action, params)
+      } catch (error) {
+        attempts++
+        const result = shouldRetry(attempts, error)
+        if (result.shouldStop) {
+          throw error
+        }
+        this.logger.warn('Retrying', { attempts, error })
+        await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
+      }
+    }
+  }
+
+  private async callRaw(
     module: string,
     action: string,
     params: Record<string, string>,

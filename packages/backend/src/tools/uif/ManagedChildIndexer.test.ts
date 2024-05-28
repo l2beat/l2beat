@@ -31,7 +31,10 @@ describe(ManagedChildIndexer.name, () => {
   describe(ManagedChildIndexer.prototype.initialize.name, () => {
     it('returns safe height', async () => {
       const indexerService = mockObject<IndexerService>({
-        getSafeHeight: async () => 1,
+        getIndexerState: async () => ({
+          indexerId: 'indexer',
+          safeHeight: 1,
+        }),
       })
 
       const indexer = new TestIndexer({
@@ -44,12 +47,12 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(result).toEqual(1)
+      expect(result).toEqual({ safeHeight: 1, configHash: undefined })
     })
 
     it('returns minHeight - 1 if safeHeight not defined', async () => {
       const indexerService = mockObject<IndexerService>({
-        getSafeHeight: async () => undefined,
+        getIndexerState: async () => undefined,
       })
 
       const indexer = new TestIndexer({
@@ -62,8 +65,34 @@ describe(ManagedChildIndexer.name, () => {
 
       const result = await indexer.initialize()
 
-      expect(indexerService.getSafeHeight).toHaveBeenOnlyCalledWith('indexer')
-      expect(result).toEqual(99)
+      expect(result).toEqual({ safeHeight: 99, configHash: undefined })
+    })
+
+    it('invalidates on config change', async () => {
+      const indexerService = mockObject<IndexerService>({
+        getIndexerState: async () => ({
+          indexerId: 'indexer',
+          safeHeight: 111,
+          configHash: 'old-hash',
+        }),
+      })
+
+      const minHeight = 100
+      const indexer = new TestIndexer({
+        parents: [],
+        name: 'indexer',
+        minHeight: minHeight,
+        configHash: 'new-hash',
+        indexerService,
+        logger: Logger.SILENT,
+      })
+
+      const result = await indexer.initialize()
+
+      expect(result).toEqual({
+        safeHeight: minHeight - 1,
+        configHash: 'new-hash',
+      })
     })
   })
 

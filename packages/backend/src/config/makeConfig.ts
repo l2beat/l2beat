@@ -128,7 +128,7 @@ export function makeConfig(
       cache: {
         tvl: flags.isEnabled('cache', 'tvl'),
         liveness: flags.isEnabled('cache', 'liveness'),
-        l2costs: flags.isEnabled('cache', 'l2costs'),
+        verifiers: flags.isEnabled('cache', 'verifiers'),
       },
     },
     health: {
@@ -236,6 +236,7 @@ export function makeConfig(
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
+    verifiers: flags.isEnabled('verifiers'),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {

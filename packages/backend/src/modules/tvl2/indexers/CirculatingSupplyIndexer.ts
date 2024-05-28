@@ -24,7 +24,13 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     const logger = $.logger.tag($.configuration.coingeckoId.toString())
     const name = 'circulating_supply_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name,
+      logger,
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      configHash: $.minHeight.toString(),
+    })
     this.configurationId = createAmountId($.configuration)
   }
 
@@ -66,10 +72,12 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       new UnixTime(targetHeight),
     )
 
-    this.logger.info('Deleted records', {
-      targetHeight,
-      deletedRecords,
-    })
+    if (deletedRecords > 0) {
+      this.logger.info('Deleted records', {
+        targetHeight,
+        deletedRecords,
+      })
+    }
 
     return targetHeight
   }

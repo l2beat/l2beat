@@ -1,6 +1,7 @@
 export interface InitializedAction {
   type: 'Initialized'
   safeHeight: number
+  configHash?: string
   childCount: number
 }
 

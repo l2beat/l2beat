@@ -61,17 +61,15 @@ export class UpdateMonitor {
       await this.updateChain(runner, timestamp)
     }
 
-    const reminders = await this.generateDailyReminder()
+    const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<
-    Record<string, DailyReminderChainEntry[]>
-  > {
+  generateDailyReminder(): Record<string, DailyReminderChainEntry[]> {
     const result: Record<string, DailyReminderChainEntry[]> = {}
 
     for (const runner of this.discoveryRunners) {
-      const projectConfigs = await this.configReader.readAllConfigsForChain(
+      const projectConfigs = this.configReader.readAllConfigsForChain(
         runner.chain,
       )
 
@@ -84,7 +82,7 @@ export class UpdateMonitor {
           continue
         }
 
-        const committed = await this.configReader.readDiscovery(
+        const committed = this.configReader.readDiscovery(
           projectConfig.name,
           runner.chain,
         )
@@ -118,7 +116,7 @@ export class UpdateMonitor {
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
 
-    const projectConfigs = await this.configReader.readAllConfigsForChain(
+    const projectConfigs = this.configReader.readAllConfigsForChain(
       runner.chain,
     )
 
@@ -180,7 +178,6 @@ export class UpdateMonitor {
     )
     const discovery = await runner.run(projectConfig, blockNumber, {
       logger: this.logger,
-      runSanityCheck: true,
       injectInitialAddresses: true,
     })
 
@@ -191,7 +188,7 @@ export class UpdateMonitor {
       discovery,
     )
 
-    const deployedDiscovered = await this.configReader.readDiscovery(
+    const deployedDiscovered = this.configReader.readDiscovery(
       projectConfig.name,
       projectConfig.chain,
     )
@@ -248,7 +245,7 @@ export class UpdateMonitor {
         chain: runner.chain,
         project: projectConfig.name,
       })
-      previousDiscovery = await this.configReader.readDiscovery(
+      previousDiscovery = this.configReader.readDiscovery(
         projectConfig.name,
         runner.chain,
       )
@@ -267,7 +264,6 @@ export class UpdateMonitor {
 
     return await runner.run(projectConfig, previousDiscovery.blockNumber, {
       logger: this.logger,
-      runSanityCheck: true,
       injectInitialAddresses: true,
     })
   }
@@ -294,7 +290,7 @@ export class UpdateMonitor {
       await this.updateNotifier.handleUpdate(
         projectConfig.name,
         diff,
-        await this.configReader.readConfig(projectConfig.name, chain),
+        this.configReader.readConfig(projectConfig.name, chain),
         blockNumber,
         this.chainConverter.toChainId(chain),
         dependents,

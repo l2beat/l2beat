@@ -55,7 +55,6 @@ const meta = {
           value: 0,
         },
         tvlBreakdown: {
-          empty: true,
           associated: 0,
           ether: 0,
           stable: 0,
@@ -137,7 +136,6 @@ const meta = {
           value: 0,
         },
         tvlBreakdown: {
-          empty: true,
           associated: 0,
           ether: 0,
           stable: 0,
@@ -199,7 +197,6 @@ const meta = {
           value: 0,
         },
         tvlBreakdown: {
-          empty: true,
           associated: 0,
           ether: 0,
           stable: 0,
@@ -261,7 +258,6 @@ const meta = {
           value: 0,
         },
         tvlBreakdown: {
-          empty: true,
           associated: 0,
           ether: 0,
           stable: 0,
@@ -321,7 +317,6 @@ const meta = {
           value: 0,
         },
         tvlBreakdown: {
-          empty: true,
           associated: 0,
           ether: 0,
           stable: 0,
@@ -387,7 +382,6 @@ const meta = {
           value: 2100000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.0853887859117437,
           ether: 0.31752242264719316,
           stable: 0.1754928641590603,
@@ -454,7 +448,6 @@ const meta = {
           value: 318000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0,
           ether: 0.16329741189789196,
           stable: 0.09245415103824679,
@@ -520,7 +513,6 @@ const meta = {
           value: 238000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.4465246475306472,
           ether: 0.24771855202884424,
           stable: 0.3005893110458202,
@@ -588,7 +580,6 @@ const meta = {
           value: 65600,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.5028382192182544,
           ether: 0.15792256558799808,
           stable: 0.3392392151937476,
@@ -654,7 +645,6 @@ const meta = {
           value: 42920,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.06320958328246715,
           ether: 0.7138106119132178,
           stable: 0.20433552298670088,
@@ -721,7 +711,6 @@ const meta = {
           value: 3800,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0,
           ether: 0.2848073348246637,
           stable: 0.6173923774115967,
@@ -787,7 +776,6 @@ const meta = {
           value: 5680000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.25000137161168967,
           ether: 0.33752308646138407,
           stable: 0.3418472246673708,
@@ -877,7 +865,6 @@ const meta = {
           value: 1650000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.20059416417864723,
           ether: 0.30997784466438966,
           stable: 0.31273438344767346,
@@ -944,7 +931,6 @@ const meta = {
           value: 347000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0,
           ether: 0,
           stable: 1,
@@ -1010,7 +996,6 @@ const meta = {
           value: 236000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0,
           ether: 0.6048822341283192,
           stable: 0.3648893886142565,
@@ -1076,7 +1061,6 @@ const meta = {
           value: 108000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.5396893906261344,
           ether: 0.05179250906979395,
           stable: 0.40452030240916287,
@@ -1143,7 +1127,6 @@ const meta = {
           value: 106000000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.5495338969521688,
           ether: 0.2699220974322546,
           stable: 0.1378002128537851,
@@ -1229,7 +1212,6 @@ const meta = {
           value: 95740000,
         },
         tvlBreakdown: {
-          empty: false,
           associated: 0.6996537656690529,
           ether: 0.14096022461913743,
           stable: 0.011848942787376374,

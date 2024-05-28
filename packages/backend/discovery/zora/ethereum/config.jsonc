@@ -20,15 +20,14 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ProxyAdminOwner" // Conduit Multisig
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig" // Conduit Multisig
   },
   "overrides": {
-    "ProxyAdminOwner": {
+    "ConduitMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "OptimismPortal": {
-      "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+      "extends": "opstack/OptimismPortal"
     },
     "L2OutputOracle": {
       "extends": "opstack/L2OutputOracle"
@@ -37,37 +36,10 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "extends": "opstack/L1CrossDomainMessenger"
     },
     "SystemConfig": {
-      "fields": {
-        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
-        "batcherHash": {
-          "handler": {
-            "type": "call",
-            "method": "function batcherHash() view returns (address)",
-            "args": []
-          }
-        },
-        "opStackDA": {
-          "handler": {
-            "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "sequencerInbox": {
-          "handler": {
-            "type": "opStackSequencerInbox",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "gasLimit": {
-          "description": "Gas limit for blocks on L2.",
-          "severity": "LOW"
-        }
-      },
-      "ignoreInWatchMode": ["scalar"]
+      "extends": "opstack/SystemConfig"
     }
   }
 }

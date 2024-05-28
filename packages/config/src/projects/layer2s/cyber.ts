@@ -21,6 +21,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const cyber: Layer2 = opStackL2({
+  associatedTokens: ['CYBER'],
   discovery,
   display: {
     name: 'Cyber',
