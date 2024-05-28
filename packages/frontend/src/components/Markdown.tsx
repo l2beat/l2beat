@@ -2,6 +2,7 @@ import MarkdownIt from 'markdown-it'
 import React from 'react'
 
 import { cn } from '../utils/cn'
+import { glossaryPlugin } from '../utils/markdown/glossaryPlugin'
 import { outLinksPlugin } from '../utils/markdown/outLinksPlugin'
 
 export interface MarkdownProps {
@@ -13,7 +14,9 @@ export interface MarkdownProps {
 const markdown = MarkdownIt({
   html: true,
   typographer: true,
-}).use(outLinksPlugin)
+})
+  .use(glossaryPlugin)
+  .use(outLinksPlugin)
 
 export function Markdown(props: MarkdownProps) {
   const Comp = props.inline ? 'span' : 'div'
