@@ -5,7 +5,6 @@ export interface ZkCatalogProject {
   display: {
     slug: string
     name: string
-    shortDescription?: string
   }
   proofVerification: ProofVerification
 }

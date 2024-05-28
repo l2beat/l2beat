@@ -83,6 +83,13 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             />
           </AccordionTrigger>
           <AccordionContent className="border relative pt-3 md:pb-6 rounded-b-xl md:px-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 md:space-y-2">
+            {item.shortDescription ? (
+              <div className="px-5 my-7">
+                <DetailsItem title="Description">
+                  {item.shortDescription}
+                </DetailsItem>
+              </div>
+            ) : null}
             {item.verifiers.map((verifier) => (
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
@@ -134,7 +141,7 @@ function VerifierCard({
   askForVerificationLink: string
 }) {
   return (
-    <div className="md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
+    <div className="md:rounded-lg md:first:mt-7 md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
       <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
