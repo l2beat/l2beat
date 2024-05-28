@@ -163,7 +163,7 @@ function VerifierCard({
               <th>Arithmetization</th>
               <th>PCS</th>
               <th>Trusted setup</th>
-              <th>Link</th>
+              <th>Circuit source</th>
             </tr>
           </thead>
           <tbody>
@@ -177,9 +177,7 @@ function VerifierCard({
                 <td>{sV.mainArithmetization}</td>
                 <td>{sV.mainPCS}</td>
                 <td>{sV.trustedSetup ?? EM_DASH}</td>
-                <td>
-                  {sV.link ? <Link href={sV.link}>Source code</Link> : EM_DASH}
-                </td>
+                <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
               </tr>
             ))}
           </tbody>
