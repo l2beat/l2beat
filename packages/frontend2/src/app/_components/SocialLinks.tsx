@@ -1,11 +1,11 @@
 import { externalLinks } from '~/consts/external-links'
 
-import TwitterIcon from '~/icons/products/twitter.svg'
 import DiscordIcon from '~/icons/products/discord.svg'
 import GithubIcon from '~/icons/products/github.svg'
 import LinkedInIcon from '~/icons/products/linkedin.svg'
-import YouTubeIcon from '~/icons/products/youtube.svg'
 import MediumIcon from '~/icons/products/medium.svg'
+import TwitterIcon from '~/icons/products/twitter.svg'
+import YouTubeIcon from '~/icons/products/youtube.svg'
 
 export function SocialLinks() {
   const links = [

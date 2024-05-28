@@ -1,24 +1,24 @@
 import React, { type ReactNode } from 'react'
-import ActivityIcon from '~/icons/pages/activity.svg'
-import CostsIcon from '~/icons/pages/costs.svg'
-import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
-import FinalityIcon from '~/icons/pages/Finality'
-import LivenessIcon from '~/icons/pages/liveness.svg'
-import RiskIcon from '~/icons/pages/risk.svg'
-import SummaryIcon from '~/icons/pages/summary.svg'
-import TvlIcon from '~/icons/pages/tvl.svg'
-import { cn } from '~/utils/cn'
 import {
   showActivityPage,
   showCostsPage,
   showFinalityPage,
   showLivenessPage,
 } from '~/flags'
-import { type NavGroup } from './types'
+import FinalityIcon from '~/icons/pages/Finality'
+import ActivityIcon from '~/icons/pages/activity.svg'
+import CostsIcon from '~/icons/pages/costs.svg'
+import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
+import LivenessIcon from '~/icons/pages/liveness.svg'
+import RiskIcon from '~/icons/pages/risk.svg'
+import SummaryIcon from '~/icons/pages/summary.svg'
+import TvlIcon from '~/icons/pages/tvl.svg'
+import { cn } from '~/utils/cn'
 import { LegacyNavBar } from './LegacyNavBar'
 import { MobileNavBar } from './MobileNavBar'
-import { NavSideBar } from './NavSideBar'
 import { MobileNavProvider } from './MobileNavContext'
+import { NavSideBar } from './NavSideBar'
+import { type NavGroup } from './types'
 
 export async function NavLayout({
   children,

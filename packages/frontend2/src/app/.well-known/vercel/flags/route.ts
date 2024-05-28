@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json<ApiData>({
     definitions: {
-      'activity': {
+      activity: {
         description: 'Controls whether the activity feature is enabled.',
         origin: '/scaling/activity',
         options: [
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'costs': {
+      costs: {
         description: 'Controls whether the costs feature is enabled.',
         origin: '/scaling/costs',
         options: [
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'finality': {
+      finality: {
         description: 'Controls whether the finality feature is enabled.',
         origin: '/scaling/finality',
         options: [
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'glossary': {
+      glossary: {
         description: 'Controls whether the glossary feature is enabled.',
         origin: '/glossary',
         options: [
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'governance': {
+      governance: {
         description: 'Controls whether the governance feature is enabled.',
         origin: '/governance',
         options: [
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'hiring': {
+      hiring: {
         description: 'Controls whether the hiring feature is enabled.',
         origin: '/hiring',
         options: [
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
           { value: true, label: 'On' },
         ],
       },
-      'liveness': {
+      liveness: {
         description: 'Controls whether the liveness feature is enabled.',
         origin: '/scaling/liveness',
         options: [

@@ -3,10 +3,10 @@ import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
 import { Roboto } from 'next/font/google'
+import Script from 'next/script'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import './globals.css'
-import Script from 'next/script'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used

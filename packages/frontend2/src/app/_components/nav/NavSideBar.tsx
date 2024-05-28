@@ -1,25 +1,25 @@
-import { cn } from '~/utils/cn'
-import { NavSideBarWrapper } from './NavSideBarWrapper'
-import { type NavGroup } from './types'
-import { Logo } from '../Logo'
-import { DarkThemeToggle } from '../DarkThemeToggle'
-import { MobileNavTriggerClose } from './MobileNavTrigger'
-import { NavLinkGroup } from './NavLinkGroup'
-import { NavLink } from './NavLink'
-import { NavDivider } from './NavDivider'
-import { NavSmallLinkGroup } from './NavSmallLinkGroup'
-import { NavSmallLink } from './NavSmallLink'
+import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
 import {
-  showZkCatalog,
-  showGovernancePage,
   showGlossary,
+  showGovernancePage,
   showHiringBadge,
+  showZkCatalog,
 } from '~/flags'
+import { cn } from '~/utils/cn'
+import { DarkThemeToggle } from '../DarkThemeToggle'
+import { Logo } from '../Logo'
 import { SocialLinks } from '../SocialLinks'
 import { HiringBadge } from './HiringBadge'
+import { MobileNavTriggerClose } from './MobileNavTrigger'
+import { NavDivider } from './NavDivider'
+import { NavLink } from './NavLink'
+import { NavLinkGroup } from './NavLinkGroup'
 import { NavSideBarCollapseToggle } from './NavSideBarCollapseToggle'
-import Link from 'next/link'
+import { NavSideBarWrapper } from './NavSideBarWrapper'
+import { NavSmallLink } from './NavSmallLink'
+import { NavSmallLinkGroup } from './NavSmallLinkGroup'
+import { type NavGroup } from './types'
 
 export async function NavSideBar({
   groups,

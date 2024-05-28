@@ -1,8 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { cn } from '~/utils/cn'
 import { useMobileNav } from './MobileNavContext'
-import { useEffect, useState } from 'react'
 
 export const NavSideBarWrapper = ({
   children,

@@ -1,17 +1,17 @@
+import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
 import {
-  showZkCatalog,
-  showGovernancePage,
   showGlossary,
+  showGovernancePage,
   showHiringBadge,
+  showZkCatalog,
 } from '~/flags'
 import { DarkThemeToggle } from '../DarkThemeToggle'
 import { Logo } from '../Logo'
 import { SocialLinks } from '../SocialLinks'
 import { HiringBadge } from './HiringBadge'
-import { type NavGroup } from './types'
 import { LegacyNavLink } from './LegacyNavLink'
-import Link from 'next/link'
+import { type NavGroup } from './types'
 
 /**
  * Legacy nav bar component used on old-style pages *on xl screens*.
