@@ -90,6 +90,8 @@ export function createTvl2Module(
     config.tvl2.chainConverter,
     new ControllerService({
       valueRepository: peripherals.getRepository(ValueRepository),
+      amountRepository: peripherals.getRepository(AmountRepository),
+      priceRepository: peripherals.getRepository(PriceRepository),
       syncOptimizer,
       logger,
     }),

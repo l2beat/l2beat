@@ -16,7 +16,7 @@ import {
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import { Dictionary, groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Project } from '../../../model/Project'
@@ -575,34 +575,6 @@ export class Tvl2Controller {
     return result
   }
 
-  private getTimestampsForProject(
-    project: ApiProject,
-    sixHourlyCutOff: UnixTime,
-    hourlyCutOff: UnixTime,
-    lastHour: UnixTime,
-  ): UnixTime[] {
-    const timestamps: UnixTime[] = []
-
-    let t = project.minTimestamp.toEndOf('day')
-    timestamps.push(t)
-
-    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
-      t = t.add(1, 'days')
-      timestamps.push(t)
-    }
-
-    while (t.add(6, 'hours').lte(hourlyCutOff)) {
-      t = t.add(6, 'hours')
-      timestamps.push(t)
-    }
-
-    while (t.add(1, 'hours').lte(lastHour)) {
-      t = t.add(1, 'hours')
-      timestamps.push(t)
-    }
-    return timestamps
-  }
-
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
@@ -623,89 +595,40 @@ export class Tvl2Controller {
 
     const projectConfig = this.projects.find((x) => x.id === project)
     assert(projectConfig, 'Project not found!')
-
-    const amounts = await this.amountRepository.getByConfigIdsInRange(
-      amountConfigs.map((x) => x.configId),
-      projectConfig.minTimestamp,
-      lastHour,
-    )
     const priceConfig = this.priceConfigs.get(assetId)
     assert(priceConfig, 'PriceId not found!')
-    const prices = await this.priceRepository.getByConfigIdsInRange(
-      [priceConfig.priceId],
-      projectConfig.minTimestamp,
-      lastHour,
-    )
-    const pricesMap = new Map(
-      prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
-    )
-    const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const hourlyCutOff = getHourlyCutoff(lastHour)
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
-    const timestamps = this.getTimestampsForProject(
-      projectConfig,
-      sixHourlyCutOff,
-      hourlyCutOff,
-      lastHour,
-    )
-
-    const values = new Map<number, { amount: number; value: number }>()
-    for (const timestamp of timestamps) {
-      const priceUsd = pricesMap.get(Number(timestamp))
-      const amounts = amountsByTimestamp[timestamp.toNumber()]
-      if (!priceUsd || !amounts) {
-        values.set(Number(timestamp), { amount: 0, value: 0 })
-        continue
-      }
-      const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
-      const usdValue = calculateValue({ amount, priceUsd, decimals })
-      values.set(Number(timestamp), {
-        amount: asNumber(amount, decimals),
-        value: asNumber(usdValue, 2),
-      })
-    }
-
-    const start = new UnixTime(Math.min(...values.keys()))
-    const end = new UnixTime(Math.max(...values.keys()))
-
-    const dailyData: [UnixTime, number, number][] = []
-    for (let curr = start; curr <= end; curr = curr.add(1, 'days')) {
-      const value = values.get(curr.toNumber())
-      assert(
-        value !== undefined,
-        'Value not found for timestamp ' + curr.toString(),
+    const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
+      await this.controllerService.getPricesAndAmountsForToken(
+        amountConfigs.map((x) => x.configId),
+        priceConfig.priceId,
+        projectConfig.minTimestamp,
+        lastHour,
       )
-      dailyData.push([curr, value.amount, value.value])
-    }
 
-    const sixHourlyData: [UnixTime, number, number][] = []
-    for (
-      let curr = UnixTime.max(sixHourlyCutOff, start);
-      curr <= end;
-      curr = curr.add(6, 'hours')
-    ) {
-      const value = values.get(curr.toNumber())
-      assert(
-        value !== undefined,
-        'Value not found for timestamp ' + curr.toString(),
-      )
-      sixHourlyData.push([curr, value.amount, value.value])
-    }
+    const dailyData = getTokenChartData({
+      start: dailyStart,
+      end: lastHour,
+      step: [1, 'days'],
+      amountsAndPrices,
+      decimals,
+    })
 
-    const hourlyData: [UnixTime, number, number][] = []
-    for (
-      let curr = UnixTime.max(hourlyCutOff, start);
-      curr <= end;
-      curr = curr.add(1, 'hours')
-    ) {
-      const value = values.get(curr.toNumber())
-      assert(
-        value !== undefined,
-        'Value not found for timestamp ' + curr.toString(),
-      )
-      hourlyData.push([curr, value.amount, value.value])
-    }
+    const sixHourlyData = getTokenChartData({
+      start: sixHourlyStart,
+      end: lastHour,
+      step: [6, 'hours'],
+      amountsAndPrices,
+      decimals,
+    })
+
+    const hourlyData = getTokenChartData({
+      start: hourlyStart,
+      end: lastHour,
+      step: [1, 'hours'],
+      amountsAndPrices,
+      decimals,
+    })
 
     return {
       daily: {
@@ -790,6 +713,40 @@ function getChartData({
   return values
 }
 
+function getTokenChartData({
+  start,
+  end,
+  step,
+  amountsAndPrices,
+  decimals,
+}: {
+  start: UnixTime
+  end: UnixTime
+  step: [number, 'days' | 'hours']
+  amountsAndPrices: Dictionary<{ amount: bigint; price: number }>
+  decimals: number
+}) {
+  const data: [UnixTime, number, number][] = []
+  for (let curr = start; curr <= end; curr = curr.add(...step)) {
+    const amountAndPrice = amountsAndPrices[curr.toString()]
+    assert(
+      amountAndPrice !== undefined,
+      'Value not found for timestamp ' + curr.toString(),
+    )
+    const valueUsd = calculateValue({
+      amount: amountAndPrice.amount,
+      priceUsd: amountAndPrice.price,
+      decimals,
+    })
+    data.push([
+      curr,
+      asNumber(amountAndPrice.amount, decimals),
+      asNumber(valueUsd, 2),
+    ] as const)
+  }
+  return data
+}
+
 function getAmountConfigMap(config: Tvl2Config) {
   const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
   const amountConfigEntries = groupedEntries.map(([k, v]) => {
@@ -830,14 +787,6 @@ function convertSourceName(source: 'canonical' | 'external' | 'native') {
     case 'native':
       return 'NMV' as const
   }
-}
-
-function getSixHourlyCutoff(lastHour?: UnixTime) {
-  return (lastHour ?? UnixTime.now()).toNext('day').add(-90, 'days')
-}
-
-function getHourlyCutoff(lastHour?: UnixTime) {
-  return (lastHour ?? UnixTime.now()).add(-7, 'days')
 }
 
 function getChart(data: TvlApiChart['data']): TvlApiChart {
