@@ -69,23 +69,33 @@ export function Breakdown() {
           )
         })}
       </div>
-      <div className="flex md:hidden flex-col mt-4 text-sm w-min">
+      <div className="flex md:hidden flex-col mt-4 text-sm w-full">
         {groups.map((g, i) => (
           <div
             key={`breakdown-legend-${i}`}
-            className="flex items-center gap-1"
+            className="flex items-center justify-between w-full"
           >
-            <div
-              className={cn(
-                'size-4 bg-gradient-to-r border rounded',
-                g.className,
-              )}
-            />
-            <span className="pl-1 text-pink-900 font-extrabold">
-              ${formatNumberWithCommas(g.value)}
-            </span>
-            <span className="text-zinc-500 font-medium">({g.weight}%)</span>
-            <span className="font-semibold text-zinc-800">{g.name}</span>
+            <div className="flex items-center gap-1">
+              <div
+                className={cn(
+                  'size-4 bg-gradient-to-r border rounded',
+                  g.className,
+                )}
+              />
+              <span className="pl-1 text-pink-900 font-extrabold hidden sm:inline-block">
+                ${formatNumberWithCommas(g.value)}
+              </span>
+              <span className="text-zinc-500 font-medium hidden sm:inline-block">
+                ({g.weight}%)
+              </span>
+              <span className="font-semibold text-zinc-800">{g.name}</span>
+            </div>
+            <div className="block sm:hidden">
+              <span className="pl-1 text-pink-900 font-extrabold">
+                ${formatNumberWithCommas(g.value)}
+              </span>
+              <span className="text-zinc-500 font-medium">({g.weight}%)</span>
+            </div>
           </div>
         ))}
       </div>
