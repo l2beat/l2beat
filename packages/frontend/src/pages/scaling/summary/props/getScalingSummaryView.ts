@@ -143,6 +143,7 @@ function getScalingL3SummaryEntry(
     provider: project.display.provider,
     category: project.display.category,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
