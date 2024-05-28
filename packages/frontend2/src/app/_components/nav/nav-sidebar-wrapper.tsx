@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '~/utils/cn'
-import { useMobileNav } from './MobileNavContext'
-import { NavSideBarCollapseToggle } from './NavSideBarCollapseToggle'
+import { useMobileNav } from './mobile-nav-context'
+import { NavSideBarCollapseToggle } from './nav-sidebar-collapse-toggle'
 
 export const NavSideBarWrapper = ({
   children,
