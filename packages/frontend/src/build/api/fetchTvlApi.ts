@@ -40,6 +40,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         CBV: [
           {
             assetId: AssetId.ETH,
+            chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             assetType: AssetType('CBV'),
             usdValue: 100,
@@ -48,6 +49,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         EBV: [
           {
             assetId: AssetId.ETH,
+            chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             assetType: AssetType('EBV'),
             usdValue: 100,
@@ -56,6 +58,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         NMV: [
           {
             assetId: AssetId.ETH,
+            chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             assetType: AssetType('NMV'),
             usdValue: 100,
@@ -71,6 +74,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
         CBV: [
           {
             assetId: AssetId.ETH,
+            chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
             assetType: AssetType('CBV'),
             usdValue: 100,
