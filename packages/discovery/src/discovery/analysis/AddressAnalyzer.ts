@@ -43,7 +43,6 @@ export interface AnalyzedContract {
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
-  ignoreInWatchMode?: string[]
 }
 
 export interface AnalyzedEOA {
