@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
+import { type ActiveLinkProps, useActiveLink } from '~/hooks/use-active-link'
 import { cn } from '~/utils/cn'
 
 export type MobileNavLinkProps = (

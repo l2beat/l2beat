@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import React from 'react'
-import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
+import { type ActiveLinkProps, useActiveLink } from '~/hooks/use-active-link'
 import { cn } from '~/utils/cn'
 
 export type NavLinkProps = {
