@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import { Badge } from '../Badge'
+import { Badge } from '../badge'
 
 export function HiringBadge({ className }: { className?: string }) {
   return (

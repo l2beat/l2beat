@@ -6,20 +6,20 @@ import {
   showHiringBadge,
   showZkCatalog,
 } from '~/flags'
-import { DarkThemeToggle } from '../DarkThemeToggle'
-import { Logo } from '../Logo'
-import { SocialLinks } from '../SocialLinks'
-import { HiringBadge } from './HiringBadge'
-import { MobileNavTriggerClose } from './MobileNavTrigger'
-import { NavDivider } from './NavDivider'
-import { NavLink } from './NavLink'
-import { NavLinkGroup } from './NavLinkGroup'
-import { NavSideBarWrapper } from './NavSideBarWrapper'
-import { NavSmallLink } from './NavSmallLink'
-import { NavSmallLinkGroup } from './NavSmallLinkGroup'
+import { DarkThemeToggle } from '../dark-theme-toggle'
+import { Logo } from '../logo'
+import { SocialLinks } from '../social-links'
+import { HiringBadge } from './hiring-badge'
+import { MobileNavTriggerClose } from './mobile-nav-trigger'
+import { NavDivider } from './nav-divider'
+import { NavLink } from './nav-link'
+import { NavLinkGroup } from './nav-link-group'
+import { NavSideBarWrapper } from './nav-sidebar-wrapper'
+import { NavSmallLink } from './nav-small-link'
+import { NavSmallLinkGroup } from './nav-small-link-group'
 import { type NavGroup } from './types'
 
-export async function NavSideBar({
+export async function NavSidebar({
   groups,
   logoLink,
   legacyNav,
@@ -28,6 +28,12 @@ export async function NavSideBar({
   logoLink: string
   legacyNav: boolean
 }) {
+  const [zkCatalog, governance, hiringBadge, glossary] = await Promise.all([
+    showZkCatalog(),
+    showGovernancePage(),
+    showHiringBadge(),
+    showGlossary(),
+  ])
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row justify-between items-center">
@@ -64,11 +70,9 @@ export async function NavSideBar({
         <NavDivider />
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
-          {(await showZkCatalog()) && (
-            <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
-          )}
+          {zkCatalog && <NavSmallLink title="ZK Catalog" href="/zk-catalog" />}
           <NavSmallLink title="Donate" href={'/donate'} />
-          {(await showGovernancePage()) ? (
+          {governance ? (
             <NavSmallLink title="Governance" href={'/governance'} />
           ) : (
             <NavSmallLink
@@ -76,12 +80,10 @@ export async function NavSideBar({
               href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
             />
           )}
-          {(await showGlossary()) && (
-            <NavSmallLink title="Glossary" href="/glossary" />
-          )}
+          {glossary && <NavSmallLink title="Glossary" href="/glossary" />}
           <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
             Jobs
-            {(await showHiringBadge()) && <HiringBadge />}
+            {hiringBadge && <HiringBadge />}
           </NavSmallLink>
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>

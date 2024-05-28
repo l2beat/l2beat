@@ -1,5 +1,5 @@
-import { CustomLink } from './CustomLink'
-import { SocialLinks } from './SocialLinks'
+import { CustomLink } from './custom-link'
+import { SocialLinks } from './social-links'
 
 export function Footer() {
   return (

@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import { Logo } from '../Logo'
-import { MobileNavLink } from './MobileNavLink'
-import { MobileNavTabs } from './MobileNavTabs'
-import { MobileNavTriggerOpen } from './MobileNavTrigger'
+import { Logo } from '../logo'
+import { MobileNavLink } from './mobile-nav-link'
+import { MobileNavTabs } from './mobile-nav-tabs'
+import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { type NavGroup } from './types'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
  */
-export function MobileNavBar({
+export function MobileNavbar({
   groups,
   logoLink,
 }: { groups: NavGroup[]; logoLink: string }) {
