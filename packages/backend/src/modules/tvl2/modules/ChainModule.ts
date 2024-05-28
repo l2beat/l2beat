@@ -20,10 +20,7 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
-import {
-  BlockTimestampIndexer,
-  BlockTimestampProvider,
-} from '../indexers/BlockTimestampIndexer'
+import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
@@ -31,6 +28,7 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { BlockTimestampService } from '../services/BlockTimestampService'
 import { ValueService } from '../services/ValueService'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -91,7 +89,7 @@ function createChainModule(
   }
   logger = logger.tag(chain)
 
-  const provider: BlockTimestampProvider =
+  const blockTimestampProvider =
     chainConfig.config.blockNumberProviderConfig.type === 'etherscan'
       ? peripherals.getClient(EtherscanClient, {
           apiKey: chainConfig.config.blockNumberProviderConfig.etherscanApiKey,
@@ -105,6 +103,17 @@ function createChainModule(
           chainId: chainConfig.config.chainId,
         })
 
+  const rpcClient = peripherals.getClient(RpcClient, {
+    url: chainConfig.config.providerUrl,
+    callsPerMinute: chainConfig.config.providerCallsPerMinute,
+  })
+
+  const blockTimestampService = new BlockTimestampService({
+    blockTimestampProvider,
+    rpcClient,
+    logger,
+  })
+
   const blockTimestampIndexer = new BlockTimestampIndexer({
     logger,
     tag: chain,
@@ -112,17 +121,13 @@ function createChainModule(
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
     chain,
-    blockTimestampService: provider,
+    blockTimestampService,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
     syncOptimizer,
   })
 
-  const rpcClient = peripherals.getClient(RpcClient, {
-    url: chainConfig.config.providerUrl,
-    callsPerMinute: chainConfig.config.providerCallsPerMinute,
-  })
   const amountService = new AmountService({
     rpcClient: rpcClient,
     multicallClient: new MulticallClient(
