@@ -49,7 +49,11 @@ export default async function RootLayout({
     // - our restoreCollapsibleNavStateScript
     // which cause a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className="scroll-pt-16 scroll-smooth md:scroll-pt-8"
+      suppressHydrationWarning
+    >
       <body className={roboto.className}>
         <script {...restoreCollapsibleNavStateScript} />
         <PlausibleProvider
