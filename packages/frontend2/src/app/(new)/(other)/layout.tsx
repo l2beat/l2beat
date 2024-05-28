@@ -1,4 +1,4 @@
-import { Footer } from '~/app/_components/Footer'
+import { Footer } from '~/app/_components/footer'
 import { NavLayout } from '~/app/_components/nav/nav-layout'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
