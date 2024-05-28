@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../../../components/Accordion'
-import { Link } from '../../../components/Link'
 import { ChevronDownIcon, InfoIcon } from '../../../components/icons'
 import {
   Tooltip,
@@ -13,10 +12,10 @@ import {
   TooltipTrigger,
 } from '../../../components/tooltip/Tooltip'
 import { cn } from '../../../utils/cn'
-import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../project/components/sections/ContractsSection/EtherscanLink'
 import { LastUsedCell } from '../../project/zk-catalog/view/LastUsedCell'
+import { SubVerifiersTable } from '../../project/zk-catalog/view/SubVerifiersTable'
 import { VerifiedCell } from '../../project/zk-catalog/view/VerifiedCell'
 import { VerifiedCountWithDetails } from '../../project/zk-catalog/view/VerifiedCountWithDetails'
 import { ZkCatalogViewEntry } from '../types'
@@ -84,6 +83,13 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             />
           </AccordionTrigger>
           <AccordionContent className="border relative pt-3 md:pb-6 rounded-b-xl md:px-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 md:space-y-2">
+            {item.shortDescription ? (
+              <div className="px-5 my-7">
+                <DetailsItem title="Description">
+                  {item.shortDescription}
+                </DetailsItem>
+              </div>
+            ) : null}
             {item.verifiers.map((verifier) => (
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
@@ -135,7 +141,7 @@ function VerifierCard({
   askForVerificationLink: string
 }) {
   return (
-    <div className="md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
+    <div className="md:rounded-lg md:first:mt-7 md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
       <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
@@ -154,35 +160,10 @@ function VerifierCard({
           <LastUsedCell days={verifier.lastUsedDaysAgo} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto mt-7 whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="*:pr-4 text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
-              <th>Name</th>
-              <th>Proof system</th>
-              <th>Arithmetization</th>
-              <th>PCS</th>
-              <th>Trusted setup</th>
-              <th>Circuit source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {verifier.subVerifiers.map((sV) => (
-              <tr
-                key={`${verifier.name}-${sV.name}`}
-                className="*:pr-4 border-t h-8 border-gray-300 dark:border-gray-800 text-xs font-medium"
-              >
-                <td>{sV.name}</td>
-                <td>{sV.proofSystem}</td>
-                <td>{sV.mainArithmetization}</td>
-                <td>{sV.mainPCS}</td>
-                <td>{sV.trustedSetup ?? EM_DASH}</td>
-                <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <SubVerifiersTable
+        verifier={verifier}
+        className="w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] mt-7"
+      />
     </div>
   )
 }

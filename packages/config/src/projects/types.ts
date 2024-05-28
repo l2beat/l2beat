@@ -1,6 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 export interface ProofVerification {
+  shortDescription?: string
   aggregation: boolean
   verifiers: OnchainVerifier[]
   requiredTools: RequiredTool[]
