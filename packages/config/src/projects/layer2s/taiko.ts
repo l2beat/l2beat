@@ -1,13 +1,14 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { Layer2 } from './types'
 import { getStage } from './common/stages/getStage'
+import { Layer2 } from './types'
 
-export const taiko:  Layer2 = {
+export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   display: {
     name: 'Taiko',
     slug: 'taiko',
-    description: 'Taiko is an Ethereum-equivalent ZK Rollup on the Ethereum network. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
+    description:
+      'Taiko is an Ethereum-equivalent ZK Rollup on the Ethereum network. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
@@ -62,43 +63,43 @@ export const taiko:  Layer2 = {
     validatedBy: {
       description: '',
       sentiment: 'UnderReview',
-      value: ''
+      value: '',
     },
     sourceUpgradeability: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     destinationToken: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     stateValidation: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     dataAvailability: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     exitWindow: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     sequencerFailure: {
       description: '',
       sentiment: 'bad',
-      value: ''
+      value: '',
     },
     proposerFailure: {
       description: '',
       sentiment: 'bad',
-      value: ''
-    }
+      value: '',
+    },
   },
   stage: getStage(
     {
@@ -130,24 +131,24 @@ export const taiko:  Layer2 = {
       name: '',
       description: '.',
       references: [],
-      risks: []
+      risks: [],
     },
     operator: {
       name: '',
       description: '.',
       references: [],
-      risks: []
+      risks: [],
     },
     forceTransactions: {
       name: '',
       description: '.',
       references: [],
-      risks: []
+      risks: [],
     },
-    exitMechanisms: []
+    exitMechanisms: [],
   },
   contracts: {
     addresses: [],
-    risks: []
-  }
+    risks: [],
+  },
 }
