@@ -76,7 +76,46 @@
       }
     },
     "TierProvider":{
-      "ignoreMethods": ["getMinTier"] // too many values
+      "ignoreMethods": ["getMinTier"], // too many values
+      "fields": {
+        // active tier args from TierProvider.getTierIds
+        "TIER_SGX" :{
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [200],
+          }
+        },
+        "TIER_GUARDIAN_MINORITY" :{
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [900],
+          }
+        },
+        "TIER_GUARDIAN" :{
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [1000],
+          }
+        },
+        // INACTIVE
+        "TIER_OPTIMISTIC":{
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [100],
+          }
+        },
+        "TIER_SGX_ZKVM" :{
+          "handler": {
+            "type": "call",
+            "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
+            "args": [300],
+          }
+        },
+      }
     }
   }
 }
