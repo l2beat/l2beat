@@ -105,6 +105,10 @@
   @apply font-medium text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
 }
 
+.mdc a[data-link-role="glossary"] {
+  @apply font-medium text-blue-700 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550;
+}
+
 .mdc img {
   @apply dark:invert inline max-w-full align-[unset];
 }
