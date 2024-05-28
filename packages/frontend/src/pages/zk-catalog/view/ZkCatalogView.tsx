@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../../../components/Accordion'
-import { Link } from '../../../components/Link'
 import { ChevronDownIcon, InfoIcon } from '../../../components/icons'
 import {
   Tooltip,
@@ -13,10 +12,10 @@ import {
   TooltipTrigger,
 } from '../../../components/tooltip/Tooltip'
 import { cn } from '../../../utils/cn'
-import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../project/components/sections/ContractsSection/EtherscanLink'
 import { LastUsedCell } from '../../project/zk-catalog/view/LastUsedCell'
+import { SubVerifiersTable } from '../../project/zk-catalog/view/SubVerifiersTable'
 import { VerifiedCell } from '../../project/zk-catalog/view/VerifiedCell'
 import { VerifiedCountWithDetails } from '../../project/zk-catalog/view/VerifiedCountWithDetails'
 import { ZkCatalogViewEntry } from '../types'
@@ -154,35 +153,10 @@ function VerifierCard({
           <LastUsedCell days={verifier.lastUsedDaysAgo} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto mt-7 whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="*:pr-4 text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
-              <th>Name</th>
-              <th>Proof system</th>
-              <th>Arithmetization</th>
-              <th>PCS</th>
-              <th>Trusted setup</th>
-              <th>Circuit source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {verifier.subVerifiers.map((sV) => (
-              <tr
-                key={`${verifier.name}-${sV.name}`}
-                className="*:pr-4 border-t h-8 border-gray-300 dark:border-gray-800 text-xs font-medium"
-              >
-                <td>{sV.name}</td>
-                <td>{sV.proofSystem}</td>
-                <td>{sV.mainArithmetization}</td>
-                <td>{sV.mainPCS}</td>
-                <td>{sV.trustedSetup ?? EM_DASH}</td>
-                <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <SubVerifiersTable
+        verifier={verifier}
+        className="w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] mt-7"
+      />
     </div>
   )
 }
