@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
@@ -36,11 +36,16 @@ export const sanko: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
-      sinceTimestamp: new UnixTime(1712958611),
-      tokens: '*',
-    }),
+    {
+      chain: 'arbitrum',
+      includeInTotal: false,
+      ...discovery.getEscrowDetails({
+        address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
+        tokens: '*',
+        description:
+          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+      }),
+    },
   ],
   nonTemplatePermissions: [
     {
