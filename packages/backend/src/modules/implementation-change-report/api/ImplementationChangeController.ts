@@ -1,4 +1,4 @@
-import { ConfigReader, DiscoveryConfig, diffDiscovery } from '@l2beat/discovery'
+import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import {
   assert,
   ImplementationChangeReportApiResponse,
