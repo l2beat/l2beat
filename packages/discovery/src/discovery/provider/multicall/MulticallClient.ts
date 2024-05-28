@@ -1,10 +1,18 @@
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { DiscoveryProvider } from '../DiscoveryProvider'
 import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
+
+export interface CallProvider {
+  call(
+    address: EthereumAddress,
+    data: Bytes,
+    blockNumber: number,
+  ): Promise<Bytes>
+}
 
 export class MulticallClient {
   constructor(
-    private readonly provider: DiscoveryProvider,
+    private readonly provider: CallProvider,
     private readonly config: MulticallConfig,
   ) {}
 
