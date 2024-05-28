@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { type Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
@@ -24,6 +24,16 @@ export const metadata: Metadata = {
     { rel: 'apple-touch-icon', url: '/favicon.png' },
     { rel: 'mask-icon', url: '/mask-icon.svg' },
   ],
+  metadataBase: new URL('https://www.l2beat.com'),
+  openGraph: {
+    title: 'L2BEAT - The state of the layer two ecosystem',
+    description:
+      'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 }
 
 export default async function RootLayout({

@@ -184,23 +184,23 @@ function SubVerifiersTable({
                 </Tooltip>
               </div>
             </th>
-            <th />
+            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
+              Circuit source
+            </th>
           </tr>
         </thead>
         <tbody>
           {verifier.subVerifiers.map((sV) => (
             <tr
-              className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700"
+              className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700 *:pr-3"
               key={`${sV.proofSystem}-${sV.trustedSetup}`}
             >
-              <td className="pr-3">{sV.name}</td>
-              <td className="pr-3">{sV.proofSystem}</td>
-              <td className="pr-3">{sV.mainArithmetization}</td>
-              <td className="pr-3">{sV.mainPCS}</td>
-              <td className="pr-3">{sV.trustedSetup ?? EM_DASH}</td>
-              <td>
-                {sV.link ? <Link href={sV.link}>Source code</Link> : EM_DASH}
-              </td>
+              <td>{sV.name}</td>
+              <td>{sV.proofSystem}</td>
+              <td>{sV.mainArithmetization}</td>
+              <td>{sV.mainPCS}</td>
+              <td>{sV.trustedSetup ?? EM_DASH}</td>
+              <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
             </tr>
           ))}
         </tbody>
