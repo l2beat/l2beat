@@ -112,7 +112,7 @@ function createChainModule(
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
     chain,
-    blockTimestampProvider: provider,
+    blockTimestampService: provider,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
