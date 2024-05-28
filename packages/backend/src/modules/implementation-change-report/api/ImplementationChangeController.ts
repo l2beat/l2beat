@@ -59,7 +59,7 @@ export class ImplementationChangeController {
 
         const latestContracts = newDiscovery?.discovery?.contracts
         const diffs = latestContracts
-          ? diffDiscovery(discovery.contracts, latestContracts, config)
+          ? diffDiscovery(discovery.contracts, latestContracts)
           : []
         const implementationChanges = diffs.filter((diff) =>
           diff.diff?.some((f) => f.key && f.key.startsWith('implementation')),

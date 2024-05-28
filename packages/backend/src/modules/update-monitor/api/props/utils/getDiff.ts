@@ -18,7 +18,7 @@ export async function getDiff(
 
   let diff: DiscoveryDiff[] = []
   if (db?.discovery.contracts) {
-    diff = diffDiscovery(discovery.contracts, db.discovery.contracts, config)
+    diff = diffDiscovery(discovery.contracts, db.discovery.contracts)
   }
   return diff
 }
