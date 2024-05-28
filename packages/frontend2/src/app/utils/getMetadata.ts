@@ -1,5 +1,4 @@
 import { type Metadata } from 'next'
-import { headers } from 'next/headers'
 
 interface MetadataParams extends Metadata {
   title: string
@@ -8,8 +7,6 @@ interface MetadataParams extends Metadata {
 }
 
 export function getMetadata(params: MetadataParams): Metadata {
-  const url = headers().get('referer') ?? undefined
-
   return {
     ...params,
     title: params.title,
@@ -22,7 +19,8 @@ export function getMetadata(params: MetadataParams): Metadata {
     },
     openGraph: {
       images: [params.image],
-      url,
+      // TODO: Do we need URL?
+      // url
       ...params.openGraph,
     },
   }
