@@ -6,6 +6,7 @@ const coerceBoolean = z.string().transform((val) => {
 })
 
 const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
+const featureFlag = coerceBoolean.optional()
 
 export const env = createEnv({
   /**
@@ -27,15 +28,16 @@ export const env = createEnv({
           })[val],
       )
       .default('local'),
-    FEATURE_FLAG_ACTIVITY: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_ASSET_RISKS: coerceBoolean.optional().default('0'),
-    FEATURE_FLAG_COSTS: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_FINALITY: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_GLOSSARY: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_GOVERNANCE: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_HIRING: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_LIVENESS: coerceBoolean.optional().default('1'),
-    FEATURE_FLAG_ZK_CATALOG: coerceBoolean.optional().default('0'),
+    FEATURE_FLAG_ACTIVITY: featureFlag.default('true'),
+    FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
+    FEATURE_FLAG_COSTS: featureFlag.default('true'),
+    FEATURE_FLAG_FINALITY: featureFlag.default('true'),
+    FEATURE_FLAG_GLOSSARY: featureFlag.default('true'),
+    FEATURE_FLAG_GOVERNANCE: featureFlag.default('true'),
+    FEATURE_FLAG_HIRING: featureFlag.default('true'),
+    FEATURE_FLAG_LIVENESS: featureFlag.default('true'),
+    FEATURE_FLAG_ZK_CATALOG: featureFlag.default('false'),
+    FEATURE_FLAG_GITCOIN_OPTION: featureFlag.default('false'),
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
     FLAGS_SECRET: base64url.optional(),
@@ -65,6 +67,7 @@ export const env = createEnv({
     FEATURE_FLAG_HIRING: process.env.FEATURE_FLAG_HIRING,
     FEATURE_FLAG_LIVENESS: process.env.FEATURE_FLAG_LIVENESS,
     FEATURE_FLAG_ZK_CATALOG: process.env.FEATURE_FLAG_ZK_CATALOG,
+    FEATURE_FLAG_GITCOIN_OPTION: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     FLAGS_SECRET: process.env.FLAGS_SECRET,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,

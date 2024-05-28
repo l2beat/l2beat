@@ -45,3 +45,8 @@ export const showZkCatalog = flag({
   key: 'zk-catalog',
   decide: () => env.FEATURE_FLAG_ZK_CATALOG,
 })
+
+export const showGitcoinOption = flag({
+  key: 'gitcoin-option',
+  decide: () => env.FEATURE_FLAG_GITCOIN_OPTION,
+})

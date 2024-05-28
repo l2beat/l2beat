@@ -8,7 +8,7 @@ interface LinkProps
   href: string
 }
 
-// TODO: Make sure this is compatible with markdown.css
+// Make sure this is compatible with markdown.css
 const linkVariants = cva(
   'font-medium transition-colors duration-300 ease-out',
   {
