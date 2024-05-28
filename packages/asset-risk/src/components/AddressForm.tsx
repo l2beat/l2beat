@@ -12,7 +12,7 @@ import { ClipboardIcon } from '~/app/assets/ClipboardIcon'
 import { LensIcon } from '~/app/assets/LensIcon'
 import { cn } from '~/utils/cn'
 
-export function AddressBar() {
+export function AddressForm() {
   const [address, setAddress] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
@@ -48,8 +48,8 @@ export function AddressBar() {
       <ConnectKitButton.Custom>
         {({ isConnected, show, truncatedAddress, address, ensName }) => {
           return isConnected ? (
-            <div className="w-full flex flex-row gap-2 h-14">
-              <div className="rounded-lg border border-pink-900 bg-purple-300 px-5 py-[14px] text-zinc-800 w-3/5 flex justify-between items-center">
+            <div className="w-full flex flex-col sm:flex-row gap-2">
+              <div className="rounded-lg border border-pink-900 bg-purple-300 px-5 py-[14px] text-zinc-800 w-full sm:w-3/5 flex justify-between items-center h-14">
                 <div className="flex flex-col">
                   <span className="text-3xs font-medium uppercase leading-[10px]">
                     Connected wallet
@@ -64,7 +64,7 @@ export function AddressBar() {
               </div>
               <Link
                 href={`/wallet/${address}`}
-                className="w-2/5 bg-pink-900 text-white font-bold text-base px-4 rounded-lg transition-colors flex items-center justify-center"
+                className="w-full sm:w-2/5 bg-pink-900 text-white font-bold text-base px-4 rounded-lg transition-colors flex items-center justify-center  h-14"
               >
                 View report
               </Link>

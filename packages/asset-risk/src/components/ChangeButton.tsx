@@ -1,7 +1,7 @@
 'use client'
 import { cn } from '~/utils/cn'
 
-export function ChangeButton({ show }: { show: (() => void) | undefined }) {
+export function ChangeButton({ show }: { show?: () => void }) {
   return (
     <button
       className={cn(
