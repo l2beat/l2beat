@@ -138,6 +138,7 @@ describe(AddressAnalyzer.name, () => {
           sourceBundles: sources.sources,
           matchingTemplates: {},
           extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
         relatives: [owner, admin],
       })
@@ -237,6 +238,7 @@ describe(AddressAnalyzer.name, () => {
           sourceBundles: sources.sources,
           matchingTemplates: {},
           extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
         relatives: [owner, admin],
       })
@@ -334,6 +336,7 @@ describe(AddressAnalyzer.name, () => {
           sourceBundles: sources.sources,
           matchingTemplates: {},
           extendedTemplate: undefined,
+          ignoreInWatchMode: undefined,
         },
         relatives: [owner, admin],
       })
