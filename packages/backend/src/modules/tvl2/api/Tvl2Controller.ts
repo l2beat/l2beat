@@ -136,13 +136,15 @@ export class Tvl2Controller {
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPrices = await this.getEthPrices()
 
-    const projectIds = this.projects.map((x) => x.id)
-    const values = await this.valueRepository.getForProjects(projectIds)
-
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
-    const hourlyCutOff = getHourlyCutoff(lastHour)
-
-    const valuesByProject = groupBy(values, 'projectId')
+    const {
+      valuesByProjectByTimestamp,
+      hourlyStart,
+      sixHourlyStart,
+      dailyStart,
+    } = await this.controllerService.getValuesForProjects(
+      this.projects,
+      lastHour,
+    )
 
     const aggregates = {
       layer3: new Map<number, Values>(),
@@ -152,16 +154,12 @@ export class Tvl2Controller {
 
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      const values = valuesByProject[project.id.toString()]
-      if (!values) {
-        continue
-      }
-
-      const valuesByTimestamp = groupBy(values, 'timestamp')
+      const valuesByTimestamp =
+        valuesByProjectByTimestamp[project.id.toString()]
 
       const valueSums = new Map<number, Values>()
-      for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
-        const sum = value.reduce(
+      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
+        const sum = values.reduce(
           (acc, curr) => {
             acc.canonical += curr.canonical
             acc.external += curr.external
@@ -172,7 +170,7 @@ export class Tvl2Controller {
         )
         valueSums.set(Number(timestamp), sum)
 
-        const resultForTotal = value.reduce(
+        const resultForTotal = values.reduce(
           (acc, curr) => {
             acc.canonical += curr.canonicalForTotal
             acc.external += curr.externalForTotal
@@ -192,19 +190,9 @@ export class Tvl2Controller {
           aggregateSum.native += resultForTotal.native
         }
       }
-
-      const minValueTimestamp = new UnixTime(Math.min(...valueSums.keys()))
-      const maxValueTimestamp = new UnixTime(Math.max(...valueSums.keys()))
-
-      const minTimestamp = UnixTime.max(
-        minValueTimestamp,
-        project.minTimestamp,
-      ).toEndOf('day')
-      const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
-
       const dailyData = getChartData({
-        start: minTimestamp,
-        end: maxTimestamp,
+        start: UnixTime.max(dailyStart, project.minTimestamp).toEndOf('day'),
+        end: lastHour,
         step: [1, 'days'],
         aggregatedValues: valueSums,
         ethPrices,
@@ -212,8 +200,10 @@ export class Tvl2Controller {
       })
 
       const sixHourlyData = getChartData({
-        start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
-        end: maxTimestamp,
+        start: UnixTime.max(sixHourlyStart, project.minTimestamp).toEndOf(
+          'six hours',
+        ),
+        end: lastHour,
         step: [6, 'hours'],
         aggregatedValues: valueSums,
         ethPrices,
@@ -221,8 +211,8 @@ export class Tvl2Controller {
       })
 
       const hourlyData = getChartData({
-        start: UnixTime.max(hourlyCutOff, minTimestamp),
-        end: maxTimestamp,
+        start: UnixTime.max(hourlyStart, project.minTimestamp).toEndOf('hour'),
+        end: lastHour,
         step: [1, 'hours'],
         aggregatedValues: valueSums,
         ethPrices,
@@ -240,7 +230,7 @@ export class Tvl2Controller {
       const value = aggregates[type]
       const minTimestamp = this.minTimestamp[type]
       const dailyData = getChartData({
-        start: minTimestamp,
+        start: UnixTime.max(dailyStart, minTimestamp).toEndOf('day'),
         end: lastHour,
         step: [1, 'days'],
         aggregatedValues: value,
@@ -248,7 +238,7 @@ export class Tvl2Controller {
         chartId: type,
       })
       const sixHourlyData = getChartData({
-        start: sixHourlyCutOff,
+        start: UnixTime.max(sixHourlyStart, minTimestamp).toEndOf('six hours'),
         end: lastHour,
         step: [6, 'hours'],
         aggregatedValues: value,
@@ -256,7 +246,7 @@ export class Tvl2Controller {
         chartId: type,
       })
       const hourlyData = getChartData({
-        start: hourlyCutOff,
+        start: UnixTime.max(hourlyStart, minTimestamp).toEndOf('hour'),
         end: lastHour,
         step: [1, 'hours'],
         aggregatedValues: value,
@@ -291,7 +281,7 @@ export class Tvl2Controller {
 
       // The following is backward-compatibility layer
       // as AssetId does a worse job of identifying tokens
-      // check for repetitions in breakdown
+      // This loop will check for repetitions in breakdown
       // and sum their values
       for (const value of Object.values(breakdown)) {
         const assetMap = new Map()
