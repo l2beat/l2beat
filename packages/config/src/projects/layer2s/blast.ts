@@ -184,10 +184,10 @@ export const blast: Layer2 = opStackL2({
   },
   milestones: [
     {
-      name: 'Blast Announces Upgrade To Support Blobs',
-      link: 'https://x.com/Blast_L2/status/1793686918506623032',
-      date: '2024-05-27T21:00:00Z',
-      description: 'Blast Network announces its upgrade to support blobs.',
+      name: 'Blast Network Launch',
+      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
+      date: '2024-02-29T00:00:00Z',
+      description: 'Blast Network is live on mainnet.',
     },
     {
       name: 'Blast upgrades to censor exploiter',
@@ -197,10 +197,10 @@ export const blast: Layer2 = opStackL2({
         'The Munchables exploiter is prohibited from forcing transactions.',
     },
     {
-      name: 'Blast Network Launch',
-      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
-      date: '2024-02-29T00:00:00Z',
-      description: 'Blast Network is live on mainnet.',
+      name: 'Blast Announces Upgrade To Support Blobs',
+      link: 'https://x.com/Blast_L2/status/1793686918506623032',
+      date: '2024-05-27T21:00:00Z',
+      description: 'Blast Network announces its upgrade to support blobs.',
     },
   ],
 })
