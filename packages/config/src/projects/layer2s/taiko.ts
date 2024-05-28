@@ -26,6 +26,7 @@ export const taiko: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['TKO'],
   escrows: [
     {
       // ETH bridge
