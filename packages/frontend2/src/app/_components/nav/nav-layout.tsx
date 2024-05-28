@@ -14,10 +14,10 @@ import RiskIcon from '~/icons/pages/risk.svg'
 import SummaryIcon from '~/icons/pages/summary.svg'
 import TvlIcon from '~/icons/pages/tvl.svg'
 import { cn } from '~/utils/cn'
-import { LegacyNavBar } from './LegacyNavBar'
-import { MobileNavBar } from './MobileNavBar'
-import { MobileNavProvider } from './MobileNavContext'
-import { NavSideBar } from './NavSideBar'
+import { LegacyNavbar } from './legacy-navbar'
+import { MobileNavProvider } from './mobile-nav-context'
+import { MobileNavbar } from './mobile-navbar'
+import { NavSidebar } from './nav-sidebar'
 import { type NavGroup } from './types'
 
 export async function NavLayout({
@@ -117,9 +117,9 @@ export async function NavLayout({
           legacyNav && 'xl:flex-col',
         )}
       >
-        {!!legacyNav && <LegacyNavBar logoLink={logoLink} groups={groups} />}
-        <MobileNavBar logoLink={logoLink} groups={groups} />
-        <NavSideBar
+        {!!legacyNav && <LegacyNavbar logoLink={logoLink} groups={groups} />}
+        <MobileNavbar logoLink={logoLink} groups={groups} />
+        <NavSidebar
           logoLink={logoLink}
           groups={groups}
           legacyNav={!!legacyNav}

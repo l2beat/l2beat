@@ -6,18 +6,18 @@ import {
   showHiringBadge,
   showZkCatalog,
 } from '~/flags'
-import { DarkThemeToggle } from '../DarkThemeToggle'
-import { Logo } from '../Logo'
-import { SocialLinks } from '../SocialLinks'
-import { HiringBadge } from './HiringBadge'
-import { LegacyNavLink } from './LegacyNavLink'
+import { DarkThemeToggle } from '../dark-theme-toggle'
+import { Logo } from '../logo'
+import { SocialLinks } from '../social-links'
+import { HiringBadge } from './hiring-badge'
+import { LegacyNavLink } from './legacy-nav-link'
 import { type NavGroup } from './types'
 
 /**
  * Legacy nav bar component used on old-style pages *on xl screens*.
  * Everywhere else, the new sidenav is used.
  */
-export async function LegacyNavBar({
+export async function LegacyNavbar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
