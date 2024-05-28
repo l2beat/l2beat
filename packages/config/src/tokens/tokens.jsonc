@@ -1961,6 +1961,12 @@
       "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "NILE",
+      "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "zkfair": [
