@@ -17,6 +17,7 @@ export function getProofVerification(
 
   return {
     ...proofVerification,
+    shortDescription: proofVerification.shortDescription,
     verifiers: proofVerification.verifiers.map((verifier) => ({
       ...verifier,
       lastUsedDaysAgo: getVerifierLastUsedDaysAgo(

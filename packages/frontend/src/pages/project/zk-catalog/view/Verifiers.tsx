@@ -1,16 +1,12 @@
 import React from 'react'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
-import { ChevronDownIcon, InfoIcon } from '../../../../components/icons'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '../../../../components/tooltip/Tooltip'
-import { EM_DASH } from '../../../../utils/constants'
+import { ChevronDownIcon } from '../../../../components/icons'
+import {} from '../../../../components/tooltip/Tooltip'
 import { getExplorerUrlByChainId } from '../../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../components/sections/ContractsSection/EtherscanLink'
 import { LastUsedCell } from './LastUsedCell'
+import { SubVerifiersTable } from './SubVerifiersTable'
 import { VerifiedCell } from './VerifiedCell'
 import { ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
@@ -101,7 +97,10 @@ export function Verifiers(props: Props) {
                 </p>
                 <Markdown className="text-xs">{item.description}</Markdown>
               </div>
-              <SubVerifiersTable verifier={item} />
+              <SubVerifiersTable
+                verifier={item}
+                className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)]"
+              />
               {item.verified === 'no' ? (
                 <Link href={props.askForVerificationLink}>
                   Ask for verification
@@ -120,91 +119,14 @@ export function Verifiers(props: Props) {
                   {item.description}
                 </Markdown>
               </div>
-              <SubVerifiersTable verifier={item} />
+              <SubVerifiersTable
+                verifier={item}
+                className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)]"
+              />
             </td>
           </tr>
         </tbody>
       ))}
     </table>
-  )
-}
-
-function SubVerifiersTable({
-  verifier,
-}: {
-  verifier: ZkCatalogProjectDetails['verifiers'][number]
-}) {
-  return (
-    <div className="overflow-x-auto whitespace-pre pb-1.5 w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_128px)] lg:w-full">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b border-gray-200 dark:border-zinc-700 align-bottom text-left">
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Name
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              <div className="flex items-center gap-1.5">
-                <span>Arithmetization</span>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="fill-current md:size-3.5" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Shows how the computation is represented mathematically.
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              <div className="flex items-center gap-1.5">
-                <span>PCS</span>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="fill-current md:size-3.5" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Shows what Polynomial Commitment Scheme is used.
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Proof system
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              <div className="flex items-center gap-1.5">
-                <span>Trusted setup</span>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <InfoIcon className="fill-current md:size-3.5" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Shows if the proof system requires a trusted setup.
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Circuit source
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {verifier.subVerifiers.map((sV) => (
-            <tr
-              className="h-8 text-sm border-b last:border-none border-gray-200 dark:border-zinc-700 *:pr-3"
-              key={`${sV.proofSystem}-${sV.trustedSetup}`}
-            >
-              <td>{sV.name}</td>
-              <td>{sV.proofSystem}</td>
-              <td>{sV.mainArithmetization}</td>
-              <td>{sV.mainPCS}</td>
-              <td>{sV.trustedSetup ?? EM_DASH}</td>
-              <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
   )
 }
