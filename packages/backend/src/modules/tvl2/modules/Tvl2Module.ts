@@ -14,6 +14,7 @@ import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
+import { ControllerService } from '../services/ControllerService'
 import { IdConverter } from '../utils/IdConverter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
@@ -87,6 +88,11 @@ export function createTvl2Module(
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(ValueRepository),
     config.tvl2.chainConverter,
+    new ControllerService({
+      valueRepository: peripherals.getRepository(ValueRepository),
+      syncOptimizer,
+      logger,
+    }),
     config.tvl2.projects,
     config.tvl2,
   )

@@ -25,6 +25,7 @@ import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
+import { ControllerService } from '../services/ControllerService'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
@@ -52,7 +53,7 @@ type Values = {
 }
 type ValuesMap = Map<number, Values>
 
-type ApiProject = {
+export interface ApiProject {
   id: ProjectId
   minTimestamp: UnixTime
   type: Project['type']
@@ -81,6 +82,7 @@ export class Tvl2Controller {
     private readonly priceRepository: PriceRepository,
     private readonly valueRepository: ValueRepository,
     private readonly chainConverter: ChainConverter,
+    private readonly controllerService: ControllerService,
     projects: Project[],
     config: Tvl2Config,
   ) {
@@ -528,46 +530,30 @@ export class Tvl2Controller {
     const ethPrices = await this.getEthPrices()
 
     const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
-    const projectIds = projects.map((x) => x.id)
-
-    const values = await this.valueRepository.getForProjects(projectIds)
-
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
-    const hourlyCutOff = getHourlyCutoff(lastHour)
-
-    const valuesByProject = groupBy(values, 'projectId')
+    const {
+      valuesByProjectByTimestamp,
+      sixHourlyStart,
+      hourlyStart,
+      dailyStart,
+    } = await this.controllerService.getValuesForProjects(projects, lastHour)
 
     const aggregate = new Map<number, Values>()
     for (const project of projects) {
-      const projectValues = valuesByProject[project.id.toString()]
-      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+      const valuesByTimestamp =
+        valuesByProjectByTimestamp[project.id.toString()]
 
-      const timestamps = this.getTimestampsForProject(
-        project,
-        sixHourlyCutOff,
-        hourlyCutOff,
-        lastHour,
-      )
+      for (const [_timestamp, values] of Object.entries(valuesByTimestamp)) {
+        const timestamp = new UnixTime(+_timestamp)
 
-      for (const timestamp of timestamps) {
-        const values = valuesByTimestamp[timestamp.toString()] ?? []
-        const configuredSources = this.getConfiguredSources(
-          values,
-          project,
-          timestamp,
+        const sum = values.reduce(
+          (acc, curr) => {
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
+          },
+          { canonical: 0n, external: 0n, native: 0n },
         )
-
-        const sum = values
-          .filter((x) => configuredSources.includes(x.dataSource))
-          .reduce(
-            (acc, curr) => {
-              acc.canonical += curr.canonical
-              acc.external += curr.external
-              acc.native += curr.native
-              return acc
-            },
-            { canonical: 0n, external: 0n, native: 0n },
-          )
 
         const aggregateSum = aggregate.get(Number(timestamp))
         if (!aggregateSum) {
@@ -580,21 +566,9 @@ export class Tvl2Controller {
       }
     }
 
-    const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()))
-    const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()))
-    const projectsMinTimestamp = this.projects
-      .map((x) => x.minTimestamp)
-      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
-
-    const minTimestamp = UnixTime.max(
-      minValueTimestamp,
-      projectsMinTimestamp,
-    ).toEndOf('day')
-    const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
-
     const dailyData = getChartData({
-      start: minTimestamp,
-      end: maxTimestamp,
+      start: dailyStart,
+      end: lastHour,
       step: [1, 'days'],
       aggregatedValues: aggregate,
       ethPrices,
@@ -602,8 +576,8 @@ export class Tvl2Controller {
     })
 
     const sixHourlyData = getChartData({
-      start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
-      end: maxTimestamp,
+      start: sixHourlyStart,
+      end: lastHour,
       step: [6, 'hours'],
       aggregatedValues: aggregate,
       ethPrices,
@@ -611,8 +585,8 @@ export class Tvl2Controller {
     })
 
     const hourlyData = getChartData({
-      start: UnixTime.max(hourlyCutOff, minTimestamp),
-      end: maxTimestamp,
+      start: hourlyStart,
+      end: lastHour,
       step: [1, 'hours'],
       aggregatedValues: aggregate,
       ethPrices,
