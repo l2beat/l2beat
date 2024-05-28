@@ -37,4 +37,20 @@ export const taiko: Layer2 = underReviewL2({
       tokens: '*',
     },
   ],
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.mainnet.taiko.xyz',
+    defaultCallsPerMinute: 500,
+    startBlock: 1,
+  },
+  chainConfig: {
+    name: 'taiko',
+    chainId: 167000,
+    explorerUrl: 'https://taikoscan.io',
+    explorerApi: {
+      url: 'https://taikoscan.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1716620627),
+  },
 })
