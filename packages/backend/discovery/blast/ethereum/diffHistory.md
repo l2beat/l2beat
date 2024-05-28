@@ -1,4 +1,33 @@
-Generated with discovered.json: 0x13d723b541bc407b7486918d02b9b758bb7beba0
+Generated with discovered.json: 0x4aae1613d57de7e3527114f668b01cb0dba6ccf3
+
+# Diff at Tue, 28 May 2024 05:57:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 19531453
+- current block number: 19966417
+
+## Description
+
+Blast uses blobs.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.owner:
+-        "0x7c4682F89313810582fb77CF6A4A388A6C77f3aF"
++        "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05"
+    }
+```
+
+Generated with discovered.json: 0x0c410f5f03c4e57c70159f8c31458a9b0ce17204
 
 # Diff at Thu, 28 Mar 2024 08:36:10 GMT:
 
