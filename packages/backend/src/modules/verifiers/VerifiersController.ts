@@ -12,12 +12,15 @@ import { BlockscoutV2Client } from '@l2beat/shared'
 import {
   assert,
   ChainId,
+  UnixTime,
+  VerifierStatus,
   VerifiersApiResponse,
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 import { Project } from '../../model/Project'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 
 export interface VerifiersControllerDeps {
   peripherals: Peripherals
@@ -29,9 +32,13 @@ export class VerifiersController {
   private readonly taskQueue: TaskQueue<void>
   private readonly logger: Logger
   getCachedVerifierStatuses: () => Promise<VerifiersApiResponse>
+  private readonly verifierStatusRepository: VerifierStatusRepository
 
   constructor(private readonly $: VerifiersControllerDeps) {
     this.logger = $.logger ? $.logger.for(this) : Logger.SILENT
+    this.verifierStatusRepository = $.peripherals.getRepository(
+      VerifierStatusRepository,
+    )
 
     const cached = cacheAsyncFunction(() => this.getVerifierStatuses())
     this.getCachedVerifierStatuses = cached.call
@@ -64,24 +71,21 @@ export class VerifiersController {
           verifier.contractAddress,
         )
         txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
-        return {
+        const lastUsed = txs[0].timestamp
+
+        this.verifierStatusRepository.addOrUpdate({
           address: verifier.contractAddress.toString(),
-          timestamp: txs[0].timestamp,
-        }
-      } catch (error) {
-        this.logger.warn(
-          `Failed to get internal transactions for verifier contract`,
-          {
-            error,
-            address: verifier.contractAddress.toString(),
-            chain: verifier.chainId.toString(),
-          },
-        )
+          chainId: verifier.chainId,
+          lastUsed,
+          lastUpdated: UnixTime.now(),
+        })
 
         return {
           address: verifier.contractAddress.toString(),
-          timestamp: null,
+          timestamp: lastUsed,
         }
+      } catch (error) {
+        return this.handleError(verifier, error)
       }
     })
 
@@ -139,5 +143,58 @@ export class VerifiersController {
     return this.$.peripherals.getClient(BlockscoutV2Client, {
       url: chain.blockscoutV2ApiUrl,
     })
+  }
+
+  async handleError(
+    verifier: OnchainVerifier,
+    error: Error,
+  ): Promise<VerifierStatus> {
+    this.logger.warn(
+      `Failed to get internal transactions for verifier contract`,
+      {
+        error,
+        address: verifier.contractAddress.toString(),
+        chain: verifier.chainId.toString(),
+      },
+    )
+
+    const savedStatus = await this.verifierStatusRepository.findVerifierStatus(
+      verifier.contractAddress.toString(),
+      verifier.chainId,
+    )
+
+    if (!savedStatus) {
+      return {
+        address: verifier.contractAddress.toString(),
+        timestamp: null,
+      }
+    }
+
+    const secondsInDay = 60 * 60 * 24
+    const lastUpdatedDaysAgo = Math.floor(
+      (UnixTime.now().toNumber() - savedStatus.lastUpdated.toNumber()) /
+        secondsInDay,
+    )
+
+    if (lastUpdatedDaysAgo > 1) {
+      this.logger.warn(
+        `Found saved status for verifier contract, but it is outdated`,
+        {
+          address: verifier.contractAddress.toString(),
+          chain: verifier.chainId.toString(),
+          lastUpdated: savedStatus.lastUpdated,
+        },
+      )
+
+      return {
+        address: verifier.contractAddress.toString(),
+        timestamp: null,
+      }
+    }
+
+    return {
+      address: verifier.contractAddress.toString(),
+      timestamp: savedStatus.lastUsed,
+    }
   }
 }

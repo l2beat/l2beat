@@ -22,12 +22,14 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { Peripherals } from '../../peripherals/Peripherals'
 import {
   VerifiersController,
   VerifiersControllerDeps,
 } from './VerifiersController'
+import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 
 const zkVerfifierAddress = EthereumAddress.random()
 const zksMock: ZkCatalogProject[] = [
@@ -103,6 +105,9 @@ describe(VerifiersController.name, () => {
       const controller = createVeririferController({
         peripherals: mockObject<Peripherals>({
           getClient: getClientMock,
+          getRepository: mockFn().returns(
+            mockObject<VerifierStatusRepository>(),
+          ),
         }),
       })
 
@@ -130,16 +135,32 @@ describe(VerifiersController.name, () => {
 
   describe(VerifiersController.prototype.getVerifierStatuses.name, () => {
     it('correctly fetches verifier statuses', async () => {
-      const timestamp = UnixTime.now()
-      const controller = createVeririferController()
+      const lastUsed = UnixTime.now().add(-2, 'hours')
+      const lastUpdated = UnixTime.now().add(-1, 'hours')
+
+      const time = install()
+      time.setSystemTime(lastUpdated.toDate())
+
+      const verifierStatusRepositoryMock = mockObject<VerifierStatusRepository>(
+        {
+          addOrUpdate: mockFn().resolvesTo(''),
+        },
+      )
+
+      const controller = createVeririferController({
+        peripherals: mockObject<Peripherals>({
+          getRepository: mockFn().returns(verifierStatusRepositoryMock),
+        }),
+      })
+
       controller.getBlockscoutClient = mockFn().returns(
         mockObject<BlockscoutV2Client>({
           getInternalTransactions: mockFn().resolvesTo([
             mockObject<BlockscoutInternalTransaction>({
-              timestamp: timestamp.add(-1, 'hours'),
+              timestamp: lastUsed.add(-1, 'hours'),
             }),
             mockObject<BlockscoutInternalTransaction>({
-              timestamp,
+              timestamp: lastUsed,
             }),
           ]),
         }),
@@ -151,16 +172,32 @@ describe(VerifiersController.name, () => {
 
       const result = await controller.getVerifierStatuses()
 
+      expect(verifierStatusRepositoryMock.addOrUpdate).toHaveBeenCalledWith({
+        address: zkVerfifierAddress.toString(),
+        chainId: ChainId.ETHEREUM,
+        lastUsed,
+        lastUpdated,
+      })
+
       expect(result).toEqual([
         {
           address: zkVerfifierAddress.toString(),
-          timestamp,
+          timestamp: lastUsed,
         },
       ])
+
+      time.uninstall()
     })
 
-    it('return null if status fetch fails', async () => {
+    it('returns saved status if fetch fails', async () => {
       const controller = createVeririferController()
+
+      const savedStatus = {
+        address: zkVerfifierAddress.toString(),
+        timestamp: UnixTime.now(),
+      }
+
+      controller.handleError = mockFn().resolvesTo(savedStatus)
 
       controller.getBlockscoutClient = mockFn().returns(
         mockObject<BlockscoutV2Client>({
@@ -176,12 +213,7 @@ describe(VerifiersController.name, () => {
 
       const result = await controller.getVerifierStatuses()
 
-      expect(result).toEqual([
-        {
-          address: zkVerfifierAddress.toString(),
-          timestamp: null,
-        },
-      ])
+      expect(result).toEqual([savedStatus])
     })
 
     it('throws if no verifiers found', async () => {
@@ -195,9 +227,88 @@ describe(VerifiersController.name, () => {
   })
 })
 
+describe(VerifiersController.prototype.handleError.name, () => {
+  it('returns saved status if available', async () => {
+    const verifier = zksMock[0].proofVerification.verifiers[0]
+    const savedStatus = {
+      address: verifier.contractAddress.toString(),
+      chainId: verifier.chainId,
+      lastUsed: UnixTime.now(),
+      lastUpdated: UnixTime.now(),
+    }
+
+    const verifierStatusRepositoryMock = mockObject<VerifierStatusRepository>({
+      findVerifierStatus: mockFn().resolvesTo(savedStatus),
+    })
+
+    const controller = createVeririferController({
+      peripherals: mockObject<Peripherals>({
+        getRepository: mockFn().returns(verifierStatusRepositoryMock),
+      }),
+    })
+
+    const result = await controller.handleError(verifier, new Error('Failed'))
+
+    expect(result).toEqual({
+      address: verifier.contractAddress.toString(),
+      timestamp: savedStatus.lastUsed,
+    })
+  })
+
+  it('returns null if saved status if not available', async () => {
+    const verifier = zksMock[0].proofVerification.verifiers[0]
+
+    const verifierStatusRepositoryMock = mockObject<VerifierStatusRepository>({
+      findVerifierStatus: mockFn().resolvesTo(undefined),
+    })
+
+    const controller = createVeririferController({
+      peripherals: mockObject<Peripherals>({
+        getRepository: mockFn().returns(verifierStatusRepositoryMock),
+      }),
+    })
+
+    const result = await controller.handleError(verifier, new Error('Failed'))
+
+    expect(result).toEqual({
+      address: verifier.contractAddress.toString(),
+      timestamp: null,
+    })
+  })
+
+  it('returns null if saved status older than a day', async () => {
+    const verifier = zksMock[0].proofVerification.verifiers[0]
+    const savedStatus = {
+      address: verifier.contractAddress.toString(),
+      chainId: verifier.chainId,
+      lastUsed: UnixTime.now(),
+      lastUpdated: UnixTime.now().add(-2, 'days'),
+    }
+
+    const verifierStatusRepositoryMock = mockObject<VerifierStatusRepository>({
+      findVerifierStatus: mockFn().resolvesTo(savedStatus),
+    })
+
+    const controller = createVeririferController({
+      peripherals: mockObject<Peripherals>({
+        getRepository: mockFn().returns(verifierStatusRepositoryMock),
+      }),
+    })
+
+    const result = await controller.handleError(verifier, new Error('Failed'))
+
+    expect(result).toEqual({
+      address: verifier.contractAddress.toString(),
+      timestamp: null,
+    })
+  })
+})
+
 function createVeririferController(deps?: Partial<VerifiersControllerDeps>) {
   return new VerifiersController({
-    peripherals: mockObject<Peripherals>(),
+    peripherals: mockObject<Peripherals>({
+      getRepository: mockFn().returns(mockObject<VerifierStatusRepository>()),
+    }),
     projects: [],
     logger: Logger.SILENT,
     ...deps,
