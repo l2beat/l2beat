@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0b8b96cd701f713f7fbfe5c110e91309ee7036ae
+
+# Diff at Mon, 27 May 2024 09:50:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e3af44de7f5996e5fc7d7b401325abe876105664 block: 19916570
+- current block number: 19960423
+
+## Description
+
+A new manager is added to the ForcedWithdrawalAgent contract.
+
+## Watched changes
+
+```diff
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      values.managers.4:
+-        "0xaFF7719a5BEAFb7e9BF47d7d0b1f073433D7024E"
++        "0x59F3163ab39B8B90DAF57508bC1fAECB2F2cD374"
+    }
+```
+
 Generated with discovered.json: 0x9ba584bd2266fe0463e7d6a8904f6aeefdcb0b04
 
 # Diff at Tue, 21 May 2024 06:44:00 GMT:

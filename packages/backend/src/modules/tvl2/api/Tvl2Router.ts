@@ -53,7 +53,11 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
             ? 'native'
             : EthereumAddress(ctx.query.address)
 
-        ctx.body = await controller.getTokenChart({ chain, address }, project)
+        ctx.body = await controller.getTokenChart(
+          { chain, address },
+          project,
+          clock.getLastHour().add(-1, 'hours'),
+        )
       },
     ),
   )

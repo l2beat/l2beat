@@ -56,7 +56,9 @@ if (saved === 'true') {
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
         >
           <TRPCReactProvider>
-            <ThemeProvider attribute="class">{children}</ThemeProvider>
+            <ThemeProvider attribute="class" storageKey="l2beat-theme">
+              {children}
+            </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
       </body>

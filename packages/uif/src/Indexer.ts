@@ -8,6 +8,7 @@ import { getInitialState } from './reducer/getInitialState'
 import { indexerReducer } from './reducer/indexerReducer'
 import { IndexerAction } from './reducer/types/IndexerAction'
 import {
+  InitializeStateEffect,
   InvalidateEffect,
   NotifyReadyEffect,
   SetSafeHeightEffect,
@@ -51,9 +52,27 @@ export abstract class Indexer {
    * with `setInterval(() => this.requestTick(), 1000)`.
    *
    * @returns The height that the indexer has synced up to or the target height
-   * for the entire system if this is a root indexer.
+   * for the entire system if this is a root indexer. Optionally it can return
+   * a config hash that will be saved in the state. Config hash can be used e.g.
+   * to detect changes in the indexer configuration between restarts.
    */
-  abstract initialize(): Promise<number>
+  abstract initialize(): Promise<{ safeHeight: number; configHash?: string }>
+
+  /**
+   * This method will be called with the results of `initialize`, only once during the
+   * indexer's lifetime (see finishInitialization.ts). It is expected to save the height and the config hash of indexer
+   * (most likely to the database) and update state in memory. In most cases the interaction
+   * with DB should be handled via upsert method.
+   *
+   * @param safeHeight Height returned from `initialize` method
+   *
+   * @param configHash Config hash returned from `initialize` method
+   */
+
+  abstract setInitialState(
+    safeHeight: number,
+    configHash?: string,
+  ): Promise<void>
 
   /**
    * Saves the height (most likely to a database). The height given is the
@@ -152,10 +171,10 @@ export abstract class Indexer {
     assert(!this.started, 'Indexer already started')
     this.started = true
     this.logger.info('Starting...')
-    const height = await this.initialize()
+    const initializedState = await this.initialize()
     this.dispatch({
       type: 'Initialized',
-      safeHeight: height,
+      ...initializedState,
       childCount: this.children.length,
     })
   }
@@ -199,6 +218,8 @@ export abstract class Indexer {
           return void this.executeUpdate(effect)
         case 'Invalidate':
           return void this.executeInvalidate(effect)
+        case 'InitializeState':
+          return void this.executeInitializeState(effect)
         case 'SetSafeHeight':
           return void this.executeSetSafeHeight(effect)
         case 'NotifyReady':
@@ -234,13 +255,21 @@ export abstract class Indexer {
         this.dispatch({ type: 'UpdateSucceeded', from, newHeight })
         this.updateRetryStrategy.clear()
       }
-    } catch (e) {
+    } catch (error) {
       this.updateRetryStrategy.markAttempt()
       const fatal = !this.updateRetryStrategy.shouldRetry()
       if (fatal) {
-        this.logger.critical('Update failed', e)
+        this.logger.critical('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+        })
       } else {
-        this.logger.error('Update failed', e)
+        this.logger.error('Update failed', {
+          error,
+          from,
+          to: effect.targetHeight,
+        })
       }
       this.dispatch({ type: 'UpdateFailed', fatal })
     }
@@ -273,6 +302,16 @@ export abstract class Indexer {
       }
       this.dispatch({ type: 'InvalidateFailed', fatal })
     }
+  }
+
+  private async executeInitializeState(
+    effect: InitializeStateEffect,
+  ): Promise<void> {
+    this.logger.info('Initializing state', {
+      safeHeight: effect.safeHeight,
+      configHash: effect.configHash,
+    })
+    await this.setInitialState(effect.safeHeight, effect.configHash)
   }
 
   private executeScheduleRetryInvalidate(): void {

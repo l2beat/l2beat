@@ -6,6 +6,7 @@ import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestam
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
 import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerStateRow } from '../../tools/uif/IndexerStateRepository'
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
@@ -224,12 +225,6 @@ declare module 'knex/types/tables' {
     value: string
     chain: string
     block_number: number
-  }
-
-  interface IndexerStateRow {
-    indexer_id: string
-    safe_height: number
-    min_timestamp: Date | undefined
   }
 
   interface TvlCleanerRow {
