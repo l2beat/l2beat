@@ -2,9 +2,14 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "taiko",
-  "initialAddresses": ["0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"],
+  "initialAddresses": [
+    "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+    "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+  ],
   "names": {
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC": "TaikoBridge",
+    "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "TaikoL1Contract",
+    "0x579f40D0BE111b823962043702cabe6Aaa290780": "L1RollupAddressManager",
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
     "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager"
   },
@@ -18,6 +23,16 @@
     },
     "L1SharedAddressManager": {
       "ignoreMethods": ["proxiableUUID"]
+    },
+    "TaikoL1Contract": {
+      "ignoreMethods": [
+        "proxiableUUID" // Multicall failed
+      ]
+    },
+    "L1RollupAddressManager":{
+      "ignoreMethods": [
+        "proxiableUUID" // Multicall failed
+      ]
     }
   }
 }

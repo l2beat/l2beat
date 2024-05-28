@@ -1,15 +1,27 @@
-Generated with discovered.json: 0xad464dd3309a016bf483f4809f54e55926451634
+Generated with discovered.json: 0xc170c830eb9b10d3c9816a738c58332ce3ff3181
 
-# Diff at Tue, 28 May 2024 07:13:40 GMT:
+# Diff at Tue, 28 May 2024 09:39:03 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19966800
+- current block number: 19967522
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED
