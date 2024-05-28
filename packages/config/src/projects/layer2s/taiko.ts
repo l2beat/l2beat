@@ -1,3 +1,4 @@
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -24,4 +25,11 @@ export const taiko: Layer2 = underReviewL2({
       rollupCodes: 'https://rollup.codes/taiko',
     },
   },
+  escrows: [
+    {
+      address: EthereumAddress('0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC'),
+      sinceTimestamp: new UnixTime(1714550603),
+      tokens: '*',
+    },
+  ],
 })
