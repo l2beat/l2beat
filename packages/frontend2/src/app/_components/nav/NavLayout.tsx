@@ -29,10 +29,12 @@ export async function NavLayout({
   logoLink: string
   legacyNav?: boolean
 }) {
-  const showLiveness = await showLivenessPage()
-  const showFinality = await showFinalityPage()
-  const showActivity = await showActivityPage()
-  const showCosts = await showCostsPage()
+  const [liveness, finality, activity, costs] = await Promise.all([
+    showLivenessPage(),
+    showFinalityPage(),
+    showActivityPage(),
+    showCostsPage(),
+  ])
 
   const groups: NavGroup[] = [
     {
@@ -66,25 +68,25 @@ export async function NavLayout({
           title: 'Liveness',
           icon: <LivenessIcon />,
           href: '/scaling/liveness',
-          enabled: showLiveness,
+          enabled: liveness,
         },
         {
           title: 'Finality',
           icon: <FinalityIcon />,
           href: '/scaling/finality',
-          enabled: showFinality,
+          enabled: finality,
         },
         {
           title: 'Activity',
           icon: <ActivityIcon />,
           href: '/scaling/activity',
-          enabled: showActivity,
+          enabled: activity,
         },
         {
           title: 'Costs',
           icon: <CostsIcon />,
           href: '/scaling/costs',
-          enabled: showCosts,
+          enabled: costs,
         },
       ],
     },

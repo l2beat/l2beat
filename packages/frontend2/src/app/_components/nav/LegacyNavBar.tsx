@@ -21,6 +21,13 @@ export async function LegacyNavBar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
+  const [zkCatalog, governance, hiringBadge, glossary] = await Promise.all([
+    showZkCatalog(),
+    showGovernancePage(),
+    showHiringBadge(),
+    showGlossary(),
+  ])
+
   return (
     <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
@@ -49,11 +56,11 @@ export async function LegacyNavBar({
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700 hidden 2xl:block" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
-            {(await showZkCatalog()) && (
+            {zkCatalog && (
               <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
             )}
             <LegacyNavLink title="Donate" href={'/donate'} />
-            {(await showGovernancePage()) ? (
+            {governance ? (
               <LegacyNavLink title="Governance" href={'/governance'} />
             ) : (
               <LegacyNavLink
@@ -61,12 +68,10 @@ export async function LegacyNavBar({
                 href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
               />
             )}
-            {(await showGlossary()) && (
-              <LegacyNavLink title="Glossary" href="/glossary" />
-            )}
+            {glossary && <LegacyNavLink title="Glossary" href="/glossary" />}
             <LegacyNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
-              {(await showHiringBadge()) && <HiringBadge />}
+              {hiringBadge && <HiringBadge />}
             </LegacyNavLink>
             <LegacyNavLink title="FAQ" href="/faq" />
           </ul>

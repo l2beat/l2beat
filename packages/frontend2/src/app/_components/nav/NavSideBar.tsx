@@ -31,7 +31,7 @@ export async function NavSideBar({
   legacyNav: boolean
 }) {
   const sharedSizeClasses = cn(
-    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]',
+    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-dvh',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 
