@@ -24,6 +24,7 @@ export const taiko: Layer2 = underReviewL2({
       ],
       rollupCodes: 'https://rollup.codes/taiko',
     },
+    activityDataSource: 'Blockchain RPC',
   },
   escrows: [
     {
