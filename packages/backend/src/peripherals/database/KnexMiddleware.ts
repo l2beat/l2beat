@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
+import { BaseRepository } from './BaseRepository'
 import { DatabaseMiddleware } from './DatabaseMiddleware'
 
 /**
@@ -9,23 +10,20 @@ import { DatabaseMiddleware } from './DatabaseMiddleware'
 export class KnexMiddleware implements DatabaseMiddleware {
   private readonly queue: ((tx?: Knex.Transaction) => Promise<void>)[] = []
   private executed = false
-  constructor(private readonly knex: Knex) {}
+  constructor(private readonly repo: BaseRepository) {}
 
   add(cb: (tx?: Knex.Transaction) => Promise<void>) {
     this.queue.push(cb)
+    return Promise.resolve()
   }
 
   async execute() {
     assert(!this.executed, 'Already executed')
-    const tx = await this.knex.transaction()
-    try {
+    await this.repo.runInTransaction(async (trx) => {
       for (const cb of this.queue) {
-        await cb(tx)
+        await cb(trx)
       }
-      await tx.commit()
-    } catch (e) {
-      await tx.rollback()
-      throw e
-    }
+    })
+    this.executed = true
   }
 }

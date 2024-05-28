@@ -15,6 +15,7 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { AmountId, createAmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId, createPriceId } from '../utils/createPriceId'
+import { getValuesConfigHash } from '../utils/getValuesConfigHash'
 
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -37,7 +38,8 @@ export class ValueIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ValueIndexerDeps) {
     const logger = $.logger.tag($.tag)
     const name = 'value_indexer'
-    super({ ...$, name, logger })
+    const configHash = getValuesConfigHash($.amountConfigs, $.priceConfigs)
+    super({ ...$, name, logger, configHash })
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)
@@ -88,6 +90,13 @@ export class ValueIndexer extends ManagedChildIndexer {
     )
 
     await this.$.valueRepository.addOrUpdateMany(values)
+
+    this.logger.info('Saved values into DB', {
+      from,
+      to,
+      timestamps: timestamps.length,
+      values: values.length,
+    })
 
     return timestamps[timestamps.length - 1].toNumber()
   }

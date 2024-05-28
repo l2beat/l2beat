@@ -6,6 +6,7 @@ import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestam
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
 import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerStateRow } from '../../tools/uif/IndexerStateRepository'
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
@@ -226,16 +227,17 @@ declare module 'knex/types/tables' {
     block_number: number
   }
 
-  interface IndexerStateRow {
-    indexer_id: string
-    safe_height: number
-    min_timestamp: Date | undefined
-  }
-
   interface TvlCleanerRow {
     repository_name: string
     hourly_cleaned_until: Date
     six_hourly_cleaned_until: Date
+  }
+
+  interface VerifierStatusRow {
+    address: string
+    chain_id: number
+    last_used: Date
+    last_updated: Date
   }
 
   interface Tables {
@@ -266,12 +268,14 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    l2_costs_prices: L2CostsPricesRow
     aggregated_l2_costs: AggregatedL2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
     values: ValueRow
+    verifier_state: VerifierStatusRow
   }
 }
 
