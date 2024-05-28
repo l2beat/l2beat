@@ -8,7 +8,7 @@ export const taiko: Layer2 = underReviewL2({
     name: 'Taiko',
     slug: 'taiko',
     description:
-      'Taiko is a decentralized, Ethereum-equivalent ZK Rollup that has been developed on the Ethereum network. At present, Taiko is deployed on the Sepolia testnet for further testing and optimization.',
+      'Taiko is an Ethereum-equivalent ZK Rollup on the Ethereum network. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
@@ -28,6 +28,11 @@ export const taiko: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC'),
+      sinceTimestamp: new UnixTime(1714550603),
+      tokens: '*',
+    },
+    {
+      address: EthereumAddress('0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab'),
       sinceTimestamp: new UnixTime(1714550603),
       tokens: '*',
     },
