@@ -731,7 +731,7 @@ export class Tvl2Controller {
     for (const timestamp of timestamps) {
       const priceUsd = pricesMap.get(Number(timestamp))
       const amounts = amountsByTimestamp[timestamp.toNumber()]
-      if(!priceUsd || !amounts) {
+      if (!priceUsd || !amounts) {
         values.set(Number(timestamp), { amount: 0, value: 0 })
         continue
       }
