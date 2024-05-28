@@ -27,7 +27,6 @@ export async function getDashboardProjects(
     const diff: DiscoveryDiff[] = await getDiff(
       updateMonitorRepository,
       discovery,
-      config,
       chainId,
     )
 

@@ -36,12 +36,14 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
-  extendedTemplate?: ExtendedTemplate
+  extendedTemplate?: ExtendedTemplate,
+  ignoreInWatchMode?: string[]
 }
 
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
+  ignoreInWatchMode?: string[]
 }
 
 export interface AnalyzedEOA {
@@ -146,6 +148,7 @@ export class AddressAnalyzer {
         sourceBundles: sources.sources,
         matchingTemplates,
         extendedTemplate,
+        ignoreInWatchMode: overrides?.ignoreInWatchMode,
       },
       relatives: getRelativesWithSuggestedTemplates(
         results,
@@ -176,7 +179,7 @@ export class AddressAnalyzer {
       abis,
       contract.address,
       contract.implementations,
-      overrides.ignoreInWatchMode,
+      contract.ignoreInWatchMode,
     )
 
     const { values: newValues, errors } = await this.handlerExecutor.execute(
@@ -194,7 +197,7 @@ export class AddressAnalyzer {
 
     const prevRelevantValues = getRelevantValues(
       contract.values ?? {},
-      overrides.ignoreInWatchMode ?? [],
+      contract.ignoreInWatchMode ?? [],
     )
 
     if (!isEqual(newValues, prevRelevantValues)) {

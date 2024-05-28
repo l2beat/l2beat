@@ -1,4 +1,4 @@
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
+import { ConfigReader } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
@@ -38,13 +38,6 @@ describe(ImplementationChangeController.name, () => {
         if (chian === 'ethereum') return ['optimism', 'arbitrum']
         if (chian === 'arbitrum') return ['arbitrum']
         return []
-      },
-      readConfig: (name: string, chain: string) => {
-        return new DiscoveryConfig({
-          name,
-          chain,
-          initialAddresses: [],
-        })
       },
       readDiscovery: (name: string, chain: string) => {
         const result = {
@@ -103,9 +96,6 @@ describe(ImplementationChangeController.name, () => {
         if (chian === 'ethereum') return ['optimism', 'arbitrum']
         if (chian === 'arbitrum') return ['arbitrum']
         return []
-      },
-      readConfig: () => {
-        return {} as DiscoveryConfig
       },
       readDiscovery: () => {
         return {} as DiscoveryOutput

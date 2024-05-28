@@ -58,7 +58,6 @@ export class UpdateMonitorController {
     const diff: DiscoveryDiff[] = await getDiff(
       this.updateMonitorRepository,
       discovery,
-      config,
       this.chainConverter.toChainId(chain),
     )
 
