@@ -6,7 +6,7 @@ const coerceBoolean = z.string().transform((val) => {
 })
 
 const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
-const featureFlag = coerceBoolean.optional().default('0')
+const featureFlag = coerceBoolean.optional()
 
 export const env = createEnv({
   /**
@@ -28,8 +28,16 @@ export const env = createEnv({
           })[val],
       )
       .default('local'),
-    FEATURE_FLAG_ASSET_RISKS: featureFlag,
-    FEATURE_FLAG_GITCOIN_OPTION: featureFlag,
+    FEATURE_FLAG_ACTIVITY: featureFlag.default('true'),
+    FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
+    FEATURE_FLAG_COSTS: featureFlag.default('true'),
+    FEATURE_FLAG_FINALITY: featureFlag.default('true'),
+    FEATURE_FLAG_GLOSSARY: featureFlag.default('true'),
+    FEATURE_FLAG_GOVERNANCE: featureFlag.default('true'),
+    FEATURE_FLAG_HIRING: featureFlag.default('true'),
+    FEATURE_FLAG_LIVENESS: featureFlag.default('true'),
+    FEATURE_FLAG_ZK_CATALOG: featureFlag.default('false'),
+    FEATURE_FLAG_GITCOIN_OPTION: featureFlag.default('false'),
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
     FLAGS_SECRET: base64url.optional(),
@@ -50,7 +58,15 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     FALLBACK_REWRITE_DESTINATION: process.env.FALLBACK_REWRITE_DESTINATION,
+    FEATURE_FLAG_ACTIVITY: process.env.FEATURE_FLAG_ACTIVITY,
     FEATURE_FLAG_ASSET_RISKS: process.env.FEATURE_FLAG_ASSET_RISKS,
+    FEATURE_FLAG_COSTS: process.env.FEATURE_FLAG_COSTS,
+    FEATURE_FLAG_FINALITY: process.env.FEATURE_FLAG_FINALITY,
+    FEATURE_FLAG_GLOSSARY: process.env.FEATURE_FLAG_GLOSSARY,
+    FEATURE_FLAG_GOVERNANCE: process.env.FEATURE_FLAG_GOVERNANCE,
+    FEATURE_FLAG_HIRING: process.env.FEATURE_FLAG_HIRING,
+    FEATURE_FLAG_LIVENESS: process.env.FEATURE_FLAG_LIVENESS,
+    FEATURE_FLAG_ZK_CATALOG: process.env.FEATURE_FLAG_ZK_CATALOG,
     FEATURE_FLAG_GITCOIN_OPTION: process.env.FEATURE_FLAG_GITCOIN_OPTION,
     FLAGS_SECRET: process.env.FLAGS_SECRET,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,

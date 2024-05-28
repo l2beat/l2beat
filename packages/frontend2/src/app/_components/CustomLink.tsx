@@ -9,23 +9,26 @@ interface LinkProps
 }
 
 // Make sure this is compatible with markdown.css
-const linkVariants = cva('font-medium', {
-  variants: {
-    variant: {
-      primary: 'text-blue-700 hover:!text-blue-500 dark:text-blue-400',
-      danger: 'text-red-300 hover:text-red-700',
-      plain: 'text-black dark:text-white',
+const linkVariants = cva(
+  'font-medium transition-colors duration-300 ease-out',
+  {
+    variants: {
+      variant: {
+        primary: 'text-blue-700 hover:!text-blue-550 dark:text-blue-500',
+        danger: 'text-red-300 hover:text-red-700',
+        plain: 'text-black dark:text-white',
+      },
+      underline: {
+        true: 'underline',
+        false: 'no-underline',
+      },
     },
-    underline: {
-      true: 'underline',
-      false: 'no-underline',
+    defaultVariants: {
+      variant: 'primary',
+      underline: true,
     },
   },
-  defaultVariants: {
-    variant: 'primary',
-    underline: true,
-  },
-})
+)
 
 export function CustomLink({
   variant,
