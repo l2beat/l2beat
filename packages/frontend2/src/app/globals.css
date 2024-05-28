@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
+}
