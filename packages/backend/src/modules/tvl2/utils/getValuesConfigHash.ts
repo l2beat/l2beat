@@ -22,7 +22,7 @@ export function getValuesConfigHash(
     input.push(valueId)
   }
 
-  // Hash should not change if researcher changes order of tokens
+  // Hash should not change if order of tokens changes
   const sortedInput = input.sort((a, b) => a.localeCompare(b))
 
   const hash = createHash('sha1').update(sortedInput.join('')).digest('hex')
