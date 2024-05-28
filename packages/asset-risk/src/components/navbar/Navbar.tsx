@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import {} from '../Drawer'
 import { Logo } from '../Logo'
 import { InputWallet } from './InputWallet'
+import { NavbarDrawerTrigger } from './NavbarDrawerTrigger'
 import { ScannerName } from './ScannerName'
 import { WalletDrawer } from './WalletDrawer'
 import { WalletInfo } from './WalletInfo'
@@ -26,7 +26,9 @@ export function Navbar() {
             <WalletInfo />
           </div>
           <div className="inline-block md:hidden">
-            <WalletDrawer />
+            <WalletDrawer>
+              <NavbarDrawerTrigger />
+            </WalletDrawer>
           </div>
         </nav>
       </div>
