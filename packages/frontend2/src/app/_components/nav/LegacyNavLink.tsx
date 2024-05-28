@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
 
@@ -18,7 +19,7 @@ export function LegacyNavLink({
   const pathname = usePathname()
   return (
     <li className="h-full">
-      <a
+      <Link
         className={cn(
           'flex h-full items-center font-medium',
           large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
@@ -29,7 +30,7 @@ export function LegacyNavLink({
         target={href.startsWith('http') ? '_blank' : undefined}
       >
         {children ?? title}
-      </a>
+      </Link>
     </li>
   )
 }

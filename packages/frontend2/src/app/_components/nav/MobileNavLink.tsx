@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { type ActiveLinkProps, useActiveLink } from '~/utils/active-link'
 import { cn } from '~/utils/cn'
 
@@ -20,7 +21,7 @@ export function MobileNavLink({
   const active = useActiveLink({ href, activeBehavior })
 
   return (
-    <a href={href}>
+    <Link href={href}>
       <li
         className={cn(
           'flex flex-col justify-center h-full relative px-2 font-medium text-base md:px-4 md:text-lg',
@@ -32,6 +33,6 @@ export function MobileNavLink({
           <div className="absolute bottom-0 w-full h-[3px] left-0 bg-pink-900" />
         )}
       </li>
-    </a>
+    </Link>
   )
 }

@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { type NavGroup } from './types'
 import { cn } from '~/utils/cn'
+import Link from 'next/link'
 
 /**
  * Second navbar displayed under the main navbar on mobile.
@@ -20,7 +21,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
           {currentGroup.links
             .filter((link) => link.enabled)
             .map((link) => (
-              <a href={link.href} key={link.href}>
+              <Link href={link.href} key={link.href}>
                 <div
                   className={cn(
                     'rounded-[4px] border border-[#AB3BD2] text-xs font-semibold px-4 py-[0.53125rem] whitespace-nowrap m-auto leading-none',
@@ -30,7 +31,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
                 >
                   {link.title}
                 </div>
-              </a>
+              </Link>
             ))}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Logo } from '../Logo'
 import { MobileNavLink } from './MobileNavLink'
 import { MobileNavTabs } from './MobileNavTabs'
@@ -17,9 +18,9 @@ export function MobileNavBar({
         {/* Left side */}
         <div className="flex flex-row gap-4">
           <div className="py-4">
-            <a href={logoLink}>
+            <Link href={logoLink}>
               <Logo className="h-8 w-auto" />
-            </a>
+            </Link>
           </div>
           <ul className="flex flex-row">
             <MobileNavLink

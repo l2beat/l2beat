@@ -8,7 +8,7 @@ export function NavDivider({ className }: NavDividerProps) {
   return (
     <div
       className={cn(
-        'h-px w-full bg-gray-300 dark:bg-gray-850 xl:sidenav-collapsed:hidden',
+        'h-px w-full bg-gray-300 dark:bg-gray-850 xl:sidenav-collapsed:hidden transition-colors duration-300 ease-out',
         className,
       )}
     />

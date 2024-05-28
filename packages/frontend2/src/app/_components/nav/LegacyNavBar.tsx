@@ -11,6 +11,7 @@ import { SocialLinks } from '../SocialLinks'
 import { HiringBadge } from './HiringBadge'
 import { type NavGroup } from './types'
 import { LegacyNavLink } from './LegacyNavLink'
+import Link from 'next/link'
 
 /**
  * Legacy nav bar component used on old-style pages *on xl screens*.
@@ -25,9 +26,9 @@ export async function LegacyNavBar({
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex py-4 items-center">
           <li className="mr-8">
-            <a href={logoLink}>
+            <Link href={logoLink}>
               <Logo className="h-8 w-auto" />
-            </a>
+            </Link>
           </li>
           {groups.map(
             (group) =>
