@@ -19,7 +19,6 @@ export function getZkCatalogView(
       )
       return {
         name: project.display.name,
-        shortName: project.display.shortName,
         slug: project.display.slug,
         hasTrustedSetup: hasTrustedSetup(proofVerification.verifiers),
         ...proofVerification,
