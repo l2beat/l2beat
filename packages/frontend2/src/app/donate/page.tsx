@@ -13,6 +13,10 @@ export const metadata = getMetadata({
   image: 'https://l2beat.com/meta-images/pages/og-donate.png',
 })
 
+const UPDATED_AT = new Date(Date.UTC(2024, 0))
+const SIGNIFICANT_VALUE = 500000
+const SMALL_VALUE = 100000
+
 export default async function DonatePage() {
   const gitcoinOption = await showGitcoinOption()
 
@@ -145,19 +149,19 @@ async function Header(props: HeaderProps) {
 
 function DonateFundingSources() {
   const t = useTranslations('donate.fundingSources')
-  const keys = [
-    'ethereumFoundation',
-    'optimismRPGF',
-    'rewardsAndCompensation',
-    'gitcoin',
-    'directCommunityDonations',
-    'l2Amsterdam',
-    'l2Warsaw',
-    'l2Days',
-    'upgradeabilityReport',
-    'starkexExplorer',
-    'layerZeroDashboard',
-    'dacs',
+  const entries = [
+    { key: 'ethereumFoundation', tier: 'significant' },
+    { key: 'optimismRPGF', tier: 'significant' },
+    { key: 'rewardsAndCompensation', tier: 'medium' },
+    { key: 'gitcoin', tier: 'medium' },
+    { key: 'directCommunityDonations', tier: 'small' },
+    { key: 'l2Amsterdam', tier: 'small' },
+    { key: 'l2Warsaw', tier: 'small' },
+    { key: 'l2Days', tier: 'medium' },
+    { key: 'upgradeabilityReport', tier: 'small' },
+    { key: 'starkexExplorer', tier: 'medium' },
+    { key: 'layerZeroDashboard', tier: 'medium' },
+    { key: 'dacs', tier: 'small' },
   ] as const
 
   return (
@@ -173,7 +177,10 @@ function DonateFundingSources() {
         <div className="mt-2 text-base leading-normal">
           <p>{t('classification.description')}</p>
           <ul className="ml-6 mt-2 list-disc">
-            {t.rich('classification.tiers')}
+            {t.rich('classification.tiers', {
+              significantValue: SIGNIFICANT_VALUE,
+              smallValue: SMALL_VALUE,
+            })}
           </ul>
         </div>
       </div>
@@ -181,22 +188,26 @@ function DonateFundingSources() {
         <table>
           <thead>
             <tr className="h-14 border-b border-b-gray-200 text-left text-sm text-gray-50 dark:border-b-gray-800">
-              <th className="min-w-[300px] md:pl-4">Source / Project</th>
-              <th className="md:pl-4">Tier</th>
-              <th className="md:pl-4">Description</th>
+              <th className="min-w-[300px] md:pl-4">
+                {t('table.columns.source')}
+              </th>
+              <th className="md:pl-4">{t('table.columns.tier')}</th>
+              <th className="md:pl-4">{t('table.columns.description')}</th>
             </tr>
           </thead>
           <tbody>
-            {keys.map((key, i) => {
+            {entries.map((entry) => {
               return (
                 <tr
                   className="h-14 border-b border-b-gray-200 text-base last:border-b-0 dark:border-b-gray-800"
-                  key={i}
+                  key={entry.key}
                 >
-                  <td className="pr-4 md:px-4">{t(`sources.${key}.title`)}</td>
-                  <td className="pr-4 md:px-4">{t(`sources.${key}.tier`)}</td>
+                  <td className="pr-4 md:px-4">
+                    {t(`table.sources.${entry.key}.title`)}
+                  </td>
+                  <td className="pr-4 md:px-4">{t(`tier.${entry.tier}`)}</td>
                   <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
-                    {t.rich(`sources.${key}.description`, {
+                    {t.rich(`table.sources.${entry.key}.description`, {
                       dydxLink: (children) => (
                         <OutLink href="https://dydx.l2beat.com">
                           {children}
@@ -215,7 +226,9 @@ function DonateFundingSources() {
           </tbody>
         </table>
       </div>
-      <div className="mt-8 font-bold">Last updated: January 2024</div>
+      <div className="mt-8 font-bold">
+        {t('lastUpdated', { updateDate: UPDATED_AT })}
+      </div>
     </section>
   )
 }
