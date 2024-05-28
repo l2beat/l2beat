@@ -1,5 +1,0 @@
-{
-  "term": "State root",
-  "definition": "A cryptographic hash succinctly representing a state using a Merkle tree.",
-  "isSpicy": false
-}

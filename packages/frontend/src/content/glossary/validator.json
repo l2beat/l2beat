@@ -1,5 +1,0 @@
-{
-  "term": "Validator",
-  "definition": "In the context of L2s, a Validator is an actor that validates the correctness of state transitions. For optimistic rollups this corresponds to challengers, and for ZK rollups this corresponds to the onchain verifier",
-  "isSpicy": false
-}

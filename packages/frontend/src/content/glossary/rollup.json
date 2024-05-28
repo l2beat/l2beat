@@ -1,5 +1,0 @@
-{
-  "term": "Rollup",
-  "definition": "A blockchain that inherits consensus and data availability from another blockchain called L1. Rollups enable trust minimized bridges with the base layer via proof systems, either optimistic or zero-knowledge. A rollup without a bridge, or without considering the bridge, is called a sovereign rollup.",
-  "isSpicy": true
-}

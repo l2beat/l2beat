@@ -1,5 +1,0 @@
-{
-  "term": "Optimistic rollup",
-  "definition": "A rollup that optimistically updates state with the possibility of fraud proofs being generated to revert faulty state roots.",
-  "isSpicy": false
-}

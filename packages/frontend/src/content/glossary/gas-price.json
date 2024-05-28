@@ -1,5 +1,0 @@
-{
-  "term": "Gas price",
-  "definition": "Price of one unit of gas specified in a transaction. The token used to pay for gas is usually Ether, but rollups can use other custom tokens.",
-  "isSpicy": false
-}

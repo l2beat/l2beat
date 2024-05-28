@@ -1,7 +1,0 @@
-node_modules
-build
-cache
-broadcast
-.env
-*.env
-config.hints.jsonc

@@ -1,5 +1,0 @@
-{
-  "term": "Blobspace",
-  "definition": "The storage area within Ethereum’s Beacon nodes where blobs are published by rollups and ephemerally stored.",
-  "isSpicy": false
-}

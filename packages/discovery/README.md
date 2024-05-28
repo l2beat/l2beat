@@ -1,1 +1,0 @@
-# @l2beat/discovery
