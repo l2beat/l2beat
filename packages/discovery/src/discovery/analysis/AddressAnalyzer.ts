@@ -36,7 +36,7 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
-  extendedTemplate?: ExtendedTemplate,
+  extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
 }
 
