@@ -147,7 +147,7 @@ export class VerifiersController {
 
   async handleError(
     verifier: OnchainVerifier,
-    error: Error,
+    error: unknown,
   ): Promise<VerifierStatus> {
     this.logger.warn(
       `Failed to get internal transactions for verifier contract`,
