@@ -5,7 +5,7 @@ import {
   showFinalityPage,
   showLivenessPage,
 } from '~/flags'
-import FinalityIcon from '~/icons/pages/Finality'
+import FinalityIcon from '~/icons/pages/finality'
 import ActivityIcon from '~/icons/pages/activity.svg'
 import CostsIcon from '~/icons/pages/costs.svg'
 import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
