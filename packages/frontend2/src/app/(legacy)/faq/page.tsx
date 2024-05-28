@@ -1,6 +1,16 @@
+import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { getFaqItems } from './get-faq-items'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
+import { getFaqItems } from './get-faq-items'
+
+export const metadata: Metadata = {
+  title: 'FAQ - L2BEAT',
+  description:
+    'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+  openGraph: {
+    url: '/faq',
+  },
+}
 
 export default async function Page() {
   const faqItems = getFaqItems()

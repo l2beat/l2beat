@@ -26,9 +26,6 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL('https://www.l2beat.com'),
   openGraph: {
-    title: 'L2BEAT - The state of the layer two ecosystem',
-    description:
-      'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     type: 'website',
   },
   twitter: {
