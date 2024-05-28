@@ -161,6 +161,7 @@ function getScalingL3SummaryEntry(
           }
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlBreakdown: layer3sTvl ? stats?.tvlBreakdown : undefined,
     sevenDayChange:
       layer3sTvl && stats && escrowsConfigured(project)
         ? stats.sevenDayChange
