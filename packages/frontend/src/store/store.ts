@@ -22,6 +22,7 @@ export const useStore = create<State & Actions>()(
       pressed: {
         leftMouseButton: false,
         middleMouseButton: false,
+        ctrlKey: false,
         shiftKey: false,
         spaceKey: false,
       },

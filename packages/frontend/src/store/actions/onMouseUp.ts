@@ -1,8 +1,11 @@
 import { State } from '../State'
-import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from '../utils/constants'
+import {
+  CLICKED_LEFT_MOUSE_BUTTON,
+  CLICKED_MIDDLE_MOUSE_BUTTON,
+} from '../utils/constants'
 
 export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
-  if (event.button === LEFT_MOUSE_BUTTON) {
+  if (event.button === CLICKED_LEFT_MOUSE_BUTTON) {
     let selectedNodeIds = state.selectedNodeIds
     if (state.mouseUpAction?.type === 'DeselectOne') {
       const removeId = state.mouseUpAction.id
@@ -20,7 +23,7 @@ export function onMouseUp(state: State, event: MouseEvent): Partial<State> {
     }
   }
 
-  if (event.button === MIDDLE_MOUSE_BUTTON) {
+  if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON) {
     return {
       pressed: { ...state.pressed, middleMouseButton: false },
       mouseMoveAction:

@@ -1,6 +1,9 @@
 import { isResizeHandle } from '../../view/ResizeHandle'
 import { State } from '../State'
-import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from '../utils/constants'
+import {
+  CLICKED_LEFT_MOUSE_BUTTON,
+  CLICKED_MIDDLE_MOUSE_BUTTON,
+} from '../utils/constants'
 import { toViewCoordinates } from '../utils/coordinates'
 import { reverseIter } from '../utils/reverseIter'
 
@@ -27,7 +30,7 @@ export function onMouseDown(
     }
   }
 
-  if (event.button === LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
+  if (event.button === CLICKED_LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
     if (state.pressed.spaceKey) {
       const [x, y] = [event.clientX, event.clientY]
       return {
@@ -93,10 +96,12 @@ export function onMouseDown(
     }
   }
 
-  if (event.button === MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
+  if (event.button === CLICKED_MIDDLE_MOUSE_BUTTON && !state.mouseMoveAction) {
+    const [x, y] = [event.clientX, event.clientY]
     return {
       pressed: { ...state.pressed, middleMouseButton: true },
       mouseMoveAction: 'pan',
+      mouseMove: { startX: x, startY: y, currentX: x, currentY: y },
     }
   }
 

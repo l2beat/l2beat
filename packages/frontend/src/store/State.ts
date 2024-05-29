@@ -15,6 +15,7 @@ export interface State {
     readonly middleMouseButton: boolean
     readonly shiftKey: boolean
     readonly spaceKey: boolean
+    readonly ctrlKey: boolean
   }
   readonly resizingNode?: {
     readonly id: string

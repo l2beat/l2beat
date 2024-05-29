@@ -1,5 +1,9 @@
 import { Box, State } from '../State'
-import { LEFT_MOUSE_BUTTON, NODE_WIDTH } from '../utils/constants'
+import {
+  HELD_LEFT_MOUSE_BUTTON_MASK,
+  HELD_MIDDLE_MOUSE_BUTTON_MASK,
+  NODE_WIDTH,
+} from '../utils/constants'
 import { toViewCoordinates } from '../utils/coordinates'
 import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -13,7 +17,12 @@ export function onMouseMove(
     return {}
   }
 
-  if (state.pressed.leftMouseButton && event.button === LEFT_MOUSE_BUTTON) {
+  const isLeftMouse =
+    state.pressed.leftMouseButton && event.buttons & HELD_LEFT_MOUSE_BUTTON_MASK
+  const isMiddleMouse =
+    state.pressed.middleMouseButton &&
+    event.buttons & HELD_MIDDLE_MOUSE_BUTTON_MASK
+  if (isLeftMouse || isMiddleMouse) {
     switch (state.mouseMoveAction) {
       case undefined: {
         return { ...state, mouseUpAction: undefined }
