@@ -53,21 +53,21 @@
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f736778000000000000000000000000000000000000000000000000", "false"]
+            "args": ["0x746965725f736778000000000000000000000000000000000000000000000000", "false"] // bytes32("tier_sgx")
           }
         },
         "verifier_TIER_GUARDIAN_MINORITY" :{
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000", "false"]
+            "args": ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000", "false"] // bytes32("tier_guardian_minority")
           }
         },
         "verifier_TIER_GUARDIAN" :{
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f677561726469616e00000000000000000000000000000000000000", "false"]
+            "args": ["0x746965725f677561726469616e00000000000000000000000000000000000000", "false"] // bytes32("tier_guardian")
           }
         },
       }
@@ -100,7 +100,14 @@
     "TierProvider": {
       "ignoreMethods": ["getMinTier"], // too many values
       "fields": {
-        // active tier args from TierProvider.getTierIds
+        "active_tiers" : {
+          "handler": {
+            "type": "array",
+            "method": "getTier",
+            "indices": "{{ getTierIds }}",
+            "pickFields": ["verifierName"]
+          }
+        },
         "TIER_SGX": {
           "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
           "handler": {
@@ -134,6 +141,7 @@
             "args": [100]
           }
         },
+        // INACTIVE
         "TIER_SGX_ZKVM": {
           "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof",
           "handler": {
