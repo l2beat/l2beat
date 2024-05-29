@@ -41,8 +41,6 @@ export function linkGlossaryTerms(sourceText: string): string {
       )
     }
 
-    term.includes('dac') && console.dir({ pattern, term })
-
     // Replace glossary terms with links, avoiding existing markdown links
     text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
       // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
