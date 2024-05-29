@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     { rel: 'apple-touch-icon', url: '/favicon.png' },
     { rel: 'mask-icon', url: '/mask-icon.svg' },
   ],
-  metadataBase: new URL('https://www.l2beat.com'),
+  metadataBase: new URL('https://l2beat.com'),
   openGraph: {
     type: 'website',
   },
