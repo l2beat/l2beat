@@ -13,7 +13,7 @@ export function ZkCatalogPage(props: ZkCatalogPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent>
+      <PageContent className="w-full">
         <header className="text-left md:text-center mt-[72px]">
           <h1 className="text-6xl font-extrabold">ZK Catalog</h1>
           <p className="mx-auto text-base font-medium mt-6 max-w-[994px]">

@@ -14,7 +14,7 @@ export function getZkCatalogPage(
   return {
     slug: '/zk-catalog',
     page: (
-      <PageWrapper {...wrapper} bodyClassName="min-h-screen">
+      <PageWrapper {...wrapper} bodyClassName="min-h-screen flex flex-col">
         <ZkCatalogPage {...props} />
       </PageWrapper>
     ),
