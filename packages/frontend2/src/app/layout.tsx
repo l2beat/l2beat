@@ -7,7 +7,7 @@ import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
-import './globals.css'
+import './styles/globals.css'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used

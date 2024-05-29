@@ -1,7 +1,9 @@
+import { isArray } from 'lodash'
 import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { Markdown } from '~/app/_components/markdown'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
-import { getFaqItems } from './get-faq-items'
+import { faqItems } from './faq-items'
 
 export const metadata: Metadata = {
   title: 'FAQ - L2BEAT',
@@ -13,8 +15,6 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const faqItems = getFaqItems()
-
   return (
     <>
       <Header />
@@ -32,23 +32,28 @@ export default async function Page() {
             ))}
           </div>
           <article className="lg:ml-16">
-            {faqItems.map((item) => (
-              <section
-                className="mt-12"
-                id={questionToId(item.question)}
-                key={questionToId(item.question)}
-              >
-                <a
-                  href={`#${questionToId(item.question)}`}
-                  className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
+            {faqItems.map((item) => {
+              const answer = isArray(item.answer)
+                ? item.answer.join('\n\n')
+                : item.answer
+              return (
+                <section
+                  className="mt-12"
+                  id={questionToId(item.question)}
+                  key={questionToId(item.question)}
                 >
-                  {item.question}
-                </a>
-                <span className="text-lg text-gray-850 dark:text-white">
-                  {item.answer}
-                </span>
-              </section>
-            ))}
+                  <a
+                    href={`#${questionToId(item.question)}`}
+                    className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
+                  >
+                    {item.question}
+                  </a>
+                  <Markdown className="text-lg text-gray-850 dark:text-white">
+                    {answer}
+                  </Markdown>
+                </section>
+              )
+            })}
           </article>
         </div>
       </ContentWrapper>
