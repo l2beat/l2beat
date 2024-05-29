@@ -48,12 +48,24 @@ export class ControllerService {
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const filteredValues = filterValues(vv, project)
-
-      // TODO: Interpolate here
       assert(
         vv[lastHour.toString()],
         `Missing value for last hour for ${projectId}, timestamp: ${lastHour.toString}`,
+      )
+
+      const filteredValues = Object.fromEntries(
+        Object.entries(vv).map(([timestamp, values]) => {
+          const configuredSources = getConfiguredSources(
+            values,
+            project,
+            new UnixTime(+timestamp),
+          )
+
+          return [
+            timestamp,
+            values.filter((v) => configuredSources.includes(v.dataSource)),
+          ]
+        }),
       )
 
       valuesByProjectByTimestamp[projectId] = filteredValues
@@ -76,26 +88,6 @@ export class ControllerService {
   }
 }
 
-export function filterValues(
-  vv: Dictionary<ValueRecord[]>,
-  project: ApiProject,
-) {
-  return Object.fromEntries(
-    Object.entries(vv).map(([timestamp, values]) => {
-      const configuredSources = getConfiguredSources(
-        values,
-        project,
-        new UnixTime(+timestamp),
-      )
-
-      return [
-        timestamp,
-        values.filter((v) => configuredSources.includes(v.dataSource)),
-      ]
-    }),
-  )
-}
-
 function getConfiguredSources(
   values: ValueRecord[],
   project: ApiProject,
@@ -110,7 +102,6 @@ function getConfiguredSources(
     (s) => !valuesSources.includes(s),
   )
 
-  // TODO: Interpolate here
   assert(
     missingSources.length === 0,
     `Missing data sources [${missingSources.join(
