@@ -69,6 +69,7 @@ export default async function Page({ params: { address } }: Props) {
     await Promise.all(
       groupedTokens.map(async ([chainId, arr]) => {
         const chain = getChain(chainId)
+        if (!chain) return []
 
         const publicClient = createPublicClient({
           chain,

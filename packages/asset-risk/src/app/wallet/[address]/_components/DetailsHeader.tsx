@@ -3,6 +3,7 @@ import { Card } from '~/components/Card'
 import { ChangeWalletButton } from '~/components/ChangeWalletButton'
 import { formatAddress } from '~/utils/formatAddress'
 import { formatNumberWithCommas } from '~/utils/formatNumber'
+import { Breakdown } from './Breakdown'
 import { Token } from './table/TokensTable'
 
 interface DetailsHeaderProps {
@@ -52,6 +53,12 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             <ChangeWalletButton wallet={props.walletAddress} />
           </span>
         </div>
+      </div>
+      <div>
+        <span className="text-zinc-500 text-xs font-bold">
+          Breakdown of assets by stages
+        </span>
+        <Breakdown />
       </div>
     </Card>
   )
