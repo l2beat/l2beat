@@ -1,17 +1,20 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
-
-interface SyncOptimizerOptions {
-  removeHourlyAfterDays: number
-  removeSixHourlyAfterDays: number
-}
-
 export class SyncOptimizer {
-  constructor(
-    private readonly clock: Clock,
-    private readonly options: SyncOptimizerOptions,
-  ) {}
+  private readonly sixHourlyCutoffDays = 90
+  private readonly hourlyCutoffDays = 7
+  private readonly gracePeriodDays = 3
+
+  constructor(private readonly clock: Clock) {}
+
+  get sixHourlyCutOff() {
+    return this.clock.getLastHour().add(-this.sixHourlyCutoffDays, 'days')
+  }
+
+  get hourlyCutOff() {
+    return this.clock.getLastHour().add(-this.hourlyCutoffDays, 'days')
+  }
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
     return timestamp.equals(this.getTimestampToSync(timestamp.toNumber()))
@@ -19,18 +22,14 @@ export class SyncOptimizer {
 
   getTimestampToSync(_timestamp: number): UnixTime {
     const timestamp = new UnixTime(_timestamp)
-    const lastHour = this.clock.getLastHour()
 
-    const hourlyCutOff = lastHour.add(
-      -this.options.removeHourlyAfterDays,
-      'days',
-    )
+    const hourlyCutOff = this.hourlyCutOff.add(-this.gracePeriodDays, 'days')
     if (timestamp.gte(hourlyCutOff)) {
       return timestamp.toEndOf('hour')
     }
 
-    const sixHourlyCutOff = lastHour.add(
-      -this.options.removeSixHourlyAfterDays,
+    const sixHourlyCutOff = this.sixHourlyCutOff.add(
+      -this.gracePeriodDays,
       'days',
     )
     if (timestamp.gte(sixHourlyCutOff)) {
@@ -38,17 +37,5 @@ export class SyncOptimizer {
     }
 
     return timestamp.toEndOf('day')
-  }
-
-  get sixHourlyCutOff() {
-    return this.clock
-      .getLastHour()
-      .add(-this.options.removeSixHourlyAfterDays, 'days')
-  }
-
-  get hourlyCutOff() {
-    return this.clock
-      .getLastHour()
-      .add(-this.options.removeHourlyAfterDays, 'days')
   }
 }

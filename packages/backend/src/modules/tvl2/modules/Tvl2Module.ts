@@ -42,10 +42,7 @@ export function createTvl2Module(
     configurationsRepository,
   )
 
-  const syncOptimizer = new SyncOptimizer(clock, {
-    removeHourlyAfterDays: 10,
-    removeSixHourlyAfterDays: 93,
-  })
+  const syncOptimizer = new SyncOptimizer(clock)
 
   const idConverter = new IdConverter(config.tvl2.prices)
 
