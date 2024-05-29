@@ -13,24 +13,15 @@ const termToId = new Map(
   ),
 )
 
-export function createGlossaryLink(id: string, term: string) {
-  const href = `/glossary#${id}`
+const glossaryTerms = [...termToId.keys()].map(escapeRegExp)
 
-  return `[${term}](${href})`
-}
-
-function getAllLinksOffsets(text: string) {
-  const p = /\[([^\]]+)\]\(([^)]+)\)/g
-  return [...text.matchAll(p)].map((match) => ({
-    start: match.index,
-    end: match.index + match[0].length,
-  }))
-}
+/**
+ * \\b: Word boundary to ensure whole word matching.
+ * (${glossaryTerms.join('|')}): Matches any term in the glossary.
+ */
+const pattern = new RegExp(`\\b(${glossaryTerms.join('|')})\\b`, 'gi')
 
 export function linkGlossaryTerms(text: string): string {
-  const glossaryTerms = Array.from(termToId.keys())
-  const pattern = new RegExp(`\\b(${glossaryTerms.join('|')})\\b`, 'gi')
-
   const linkOffsets = getAllLinksOffsets(text)
 
   const isWithinExistingLink = (position: number) => {
@@ -55,10 +46,6 @@ export function linkGlossaryTerms(text: string): string {
   })
 }
 
-function isGlossaryLink(href: string | null) {
-  return href?.includes('/glossary#')
-}
-
 export function glossaryPlugin(md: MarkdownIt) {
   const defaultRender =
     md.renderer.rules.link_open ??
@@ -73,4 +60,27 @@ export function glossaryPlugin(md: MarkdownIt) {
     }
     return defaultRender(tokens, index, options, env, self)
   }
+}
+
+function createGlossaryLink(id: string, term: string) {
+  const href = `/glossary#${id}`
+
+  return `[${term}](${href})`
+}
+
+// Escape special characters in the term to use it in a regex pattern
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+}
+
+function getAllLinksOffsets(text: string) {
+  const p = /\[([^\]]+)\]\(([^)]+)\)/g
+  return [...text.matchAll(p)].map((match) => ({
+    start: match.index,
+    end: match.index + match[0].length,
+  }))
+}
+
+function isGlossaryLink(href: string | null) {
+  return href?.includes('/glossary#')
 }
