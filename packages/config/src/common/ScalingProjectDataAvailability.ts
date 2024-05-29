@@ -22,6 +22,7 @@ export type DataAvailabilityLayer =
   | 'FraxtalDA'
   | 'RedstoneDA'
   | 'EigenDA'
+  | 'NearDA'
 
 export type DataAvailabilityBridge =
   | { type: 'None' }

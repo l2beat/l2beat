@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xf3b6fd6cd2c4aeea131c796901324cf5b8f3c185
+
+# Diff at Wed, 22 May 2024 16:40:05 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eae7b47a410c2b8cc7e6a7d7a0bc841a31c6e83 block: 19825954
+- current block number: 19926669
+
+## Description
+
+Fee change for the L2 fee calculation. The new scalar value is [encoded](https://specs.optimism.io/protocol/exec-engine.html#ecotone-l1-cost-fee-changes-eip-4844-da).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: None
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279131273430256651056"
+    }
+```
+
+```diff
+    contract RollupOwnerMultisig (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.nonce:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x5cc273f3a6946a11fc5da2bff31e3aedf40a9af9
 
 # Diff at Wed, 08 May 2024 14:32:16 GMT:

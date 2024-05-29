@@ -48,6 +48,7 @@ export function getScalingSummaryView(
         tvlApiResponse,
         verificationStatus.projects[project.id.toString()],
         hasImplementationChanged,
+        { layer3sTvl },
       )
     }),
     layer3sTvl,
@@ -120,8 +121,9 @@ function getScalingL2SummaryEntry(
 function getScalingL3SummaryEntry(
   project: Layer3,
   tvlApiResponse: TvlApiResponse,
-  isVerified?: boolean,
-  hasImplementationChanged?: boolean,
+  isVerified: boolean | undefined,
+  hasImplementationChanged: boolean | undefined,
+  { layer3sTvl }: { layer3sTvl: boolean },
 ): ScalingL3SummaryViewEntry {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
 
@@ -134,6 +136,9 @@ function getScalingL3SummaryEntry(
       project.config.associatedTokens ?? [],
     )
   }
+  const associatedTokens = project.config.associatedTokens ?? []
+  const tvlWarnings = getTvlWarnings(apiProject, associatedTokens, project)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -141,27 +146,34 @@ function getScalingL3SummaryEntry(
     provider: project.display.provider,
     category: project.display.category,
     warning: project.display.warning,
+    redWarning: project.display.redWarning,
     hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     purposes: project.display.purposes,
+    tvlWarnings,
     hostChainName:
       project.hostChain === 'Multiple'
         ? 'Multiple'
         : layer2s.find((l) => l.id === project.hostChain)?.display.name,
     tvl:
-      stats && escrowsConfigured(project)
+      layer3sTvl && stats && escrowsConfigured(project)
         ? {
             value: stats.latestTvl,
             displayValue: formatUSD(stats.latestTvl),
           }
         : undefined,
     tvlTooltip: getProjectTvlTooltipText(project.config),
+    tvlBreakdown: layer3sTvl ? stats?.tvlBreakdown : undefined,
     sevenDayChange:
-      stats && escrowsConfigured(project) ? stats.sevenDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.sevenDayChange
+        : undefined,
     oneDayChange:
-      stats && escrowsConfigured(project) ? stats.oneDayChange : undefined,
+      layer3sTvl && stats && escrowsConfigured(project)
+        ? stats.oneDayChange
+        : undefined,
   }
 }
 

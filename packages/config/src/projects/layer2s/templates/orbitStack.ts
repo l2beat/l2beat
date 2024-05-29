@@ -1,5 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
 import {
@@ -26,6 +26,7 @@ import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { VALUES } from '../../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
@@ -93,13 +94,7 @@ export function orbitStackCommon(
   explorerLinkFormat: string,
 ): Omit<
   Layer2,
-  | 'type'
-  | 'display'
-  | 'config'
-  | 'isArchived'
-  | 'stage'
-  | 'chainConfig'
-  | 'riskView'
+  'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -129,6 +124,7 @@ export function orbitStackCommon(
       ),
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
+    chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness: templateVars.nonTemplateTechnology
         ?.stateCorrectness ?? {
@@ -446,6 +442,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     upgradeDelay: 'No delay',
   }
 
+  const category = postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL),
@@ -454,10 +452,24 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
       provider: 'Arbitrum',
-      category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
+      category,
       finality: {
         finalizationPeriod: challengeWindowSeconds,
       },
+      liveness: postsToExternalDA
+        ? undefined
+        : {
+            warnings: {
+              stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+            },
+            explanation: `${
+              templateVars.display.name
+            } is an ${category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+              selfSequencingDelay,
+            )}. The state root gets finalized ${formatSeconds(
+              challengeWindowBlocks * assumedBlockTime,
+            )} after it has been posted.`,
+          },
     },
     stage: postsToExternalDA
       ? {
@@ -507,14 +519,14 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
-    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
+        ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
           challengeWindowSeconds,
         ),
+        secondLine: `${formatSeconds(challengeWindowSeconds)} challenge period`,
+      },
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
           ? (() => {

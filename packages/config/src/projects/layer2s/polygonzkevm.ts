@@ -69,6 +69,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
     },
   },
+  associatedTokens: ['POL', 'MATIC'],
   discovery,
   transactionApi: {
     type: 'rpc',
@@ -248,26 +249,23 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'FflonkVerifier',
+              name: 'Final wrap',
               proofSystem: 'fflonk',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG-fflonk',
               trustedSetup: 'Powers of Tau 28',
-              link: 'https://etherscan.io/address/0x0775e11309d75aA6b0967917fB0213C5673eDf81#code',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',
-              trustedSetup: 'No',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',
-              trustedSetup: 'No',
             },
           ],
         },

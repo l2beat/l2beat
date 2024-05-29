@@ -17,13 +17,14 @@
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
     "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
     "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter",
-    "0xb3a4e39F0CD9aBAc5d866f023C18e73224667Fee": "Optimism_Adapter",
-    "0xd881A21F17B83AefFd11cc2e7363740449eb8069": "Arbitrum_Adapter",
+    "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": "Optimism_Adapter",
+    "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426": "Arbitrum_Adapter",
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Arbitrum_Bridge",
     "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515": "Arbitrum_Old_Bridge",
-    "0xD9948AE3405FE03A52A18F119EF72221DCdCc4df": "Base_Adapter",
+    "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": "Base_Adapter",
     "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
-    "0xB130E3056D5C692300d66c12C10ffA2073d9424D": "Polygon_Adapter"
+    "0xb4AeF0178f5725392A26eE18684C2aB62adc912e": "Polygon_Adapter",
+    "0xf1B59868697f3925b72889ede818B9E7ba0316d0": "Mode_Adapter"
   },
   "overrides": {
     "HubPool": {
@@ -149,6 +150,15 @@
         "L1_MATIC",
         "L1_WETH",
         "ROOT_CHAIN_MANAGER",
+        "usdcToken"
+      ]
+    },
+    "Mode_Adapter": {
+      "ignoreRelatives": [
+        "cctpTokenMessenger",
+        "L1_STANDARD_BRIDGE",
+        "L1_WETH",
+        "MESSENGER",
         "usdcToken"
       ]
     },

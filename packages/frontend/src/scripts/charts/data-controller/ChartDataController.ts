@@ -122,13 +122,14 @@ export class ChartDataController {
     }
   }
 }
-
 export function getChartUrl<T extends ChartType>(chartType: T) {
   switch (chartType.type) {
     case 'scaling-tvl':
     case 'scaling-detailed-tvl':
       return chartType.filteredSlugs
-        ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
+        ? `/api/tvl2/aggregate?projectSlugs=${chartType.filteredSlugs.join(
+            ',',
+          )}`
         : '/api/tvl/scaling.json'
     case 'scaling-activity':
       return chartType.filteredSlugs

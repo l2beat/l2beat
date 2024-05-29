@@ -1,8 +1,8 @@
-import { ProofVerification } from '@l2beat/config'
+import { ZkCatalogProofVerification } from '../../utils/zk-catalog/types'
 
-export interface ZkCatalogViewEntry extends ProofVerification {
+export interface ZkCatalogViewEntry extends ZkCatalogProofVerification {
   name: string
-  shortName: string | undefined
   slug: string
+  shortDescription: string | undefined
   hasTrustedSetup: boolean
 }

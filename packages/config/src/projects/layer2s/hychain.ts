@@ -28,6 +28,7 @@ export const hychain: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['TOPIA'],
   transactionApi: {
     type: 'rpc',
     startBlock: 1,

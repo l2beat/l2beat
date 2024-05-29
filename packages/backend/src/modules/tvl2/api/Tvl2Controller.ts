@@ -9,6 +9,7 @@ import {
   NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  TokenTvlApiCharts,
   TvlApiChart,
   TvlApiCharts,
   TvlApiProject,
@@ -94,12 +95,16 @@ export class Tvl2Controller {
     )
     this.priceConfigs = getPriceConfigIds(config)
     this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
-      const config = this.amountConfig.get(id)
-      if (!config) {
+      if (config.projectsExcludedFromApi.includes(id.toString())) {
         return []
       }
-      assert(config, 'Config not found: ' + id.toString())
-      const minTimestamp = config
+
+      const amounts = this.amountConfig.get(id)
+      if (!amounts) {
+        return []
+      }
+      assert(amounts, 'Config not found: ' + id.toString())
+      const minTimestamp = amounts
         .map((x) => x.sinceTimestamp)
         .reduce((a, b) => UnixTime.min(a, b))
 
@@ -107,7 +112,7 @@ export class Tvl2Controller {
         string,
         { name: string; minTimestamp: UnixTime }
       >()
-      for (const amount of config) {
+      for (const amount of amounts) {
         const name =
           amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
 
@@ -146,6 +151,10 @@ export class Tvl2Controller {
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
       const values = valuesByProject[project.id.toString()]
+      if (!values) {
+        continue
+      }
+
       const valuesByTimestamp = groupBy(values, 'timestamp')
 
       const valueSums = new Map<number, Values>()
@@ -381,6 +390,8 @@ export class Tvl2Controller {
       const source = convertSourceName(config.source)
       breakdown[source].push({
         assetId: priceConfig.assetId,
+        address: config.address.toString(),
+        chain: config.chain,
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: convertSourceName(config.source),
         usdValue: asNumber(value, 2),
@@ -672,51 +683,121 @@ export class Tvl2Controller {
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
-  ) {
+    lastHour: UnixTime,
+  ): Promise<TokenTvlApiCharts> {
     const projectAmounts = this.amountConfig.get(project)
-    if (!projectAmounts) return
+    assert(projectAmounts)
 
     const assetId = createAssetId(token)
     const amountConfigs = projectAmounts.filter(
       (x) => createAssetId(x) === assetId,
     )
+    assert(
+      amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
+      'Decimals mismatch!',
+    )
+    const decimals = amountConfigs[0].decimals
 
-    const amounts = await this.amountRepository.getDailyByConfigId(
+    const projectConfig = this.projects.find((x) => x.id === project)
+    assert(projectConfig, 'Project not found!')
+
+    const amounts = await this.amountRepository.getByConfigIdsInRange(
       amountConfigs.map((x) => x.configId),
+      projectConfig.minTimestamp,
+      lastHour,
     )
     const priceConfig = this.priceConfigs.get(assetId)
     assert(priceConfig, 'PriceId not found!')
-    const prices = await this.priceRepository.getDailyByConfigId(
-      priceConfig.priceId,
+    const prices = await this.priceRepository.getByConfigIdsInRange(
+      [priceConfig.priceId],
+      projectConfig.minTimestamp,
+      lastHour,
     )
     const pricesMap = new Map(
       prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
-
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const values: [number, number][] = []
-    for (const [timestamp, amounts] of Object.entries(amountsByTimestamp)) {
-      const price = pricesMap.get(Number(timestamp))
-      assert(price, 'Programmer error ' + timestamp)
-      const value = amounts.reduce((acc, curr) => {
-        // not a fan of this solution,
-        // but sometimes there's multiple amountConfigs
-        const amountConfig = amountConfigs.find(
-          (x) => x.configId === curr.configId,
-        )
-        assert(amountConfig, 'Amount config not found')
-        const value = calculateValue({
-          amount: curr.amount,
-          priceUsd: price,
-          decimals: amountConfig.decimals,
-        })
-        return acc + value
-      }, 0n)
-      values.push([Number(timestamp), asNumber(value, 2)])
+    const hourlyCutOff = getHourlyCutoff(lastHour)
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const timestamps = this.getTimestampsForProject(
+      projectConfig,
+      sixHourlyCutOff,
+      hourlyCutOff,
+      lastHour,
+    )
+
+    const values = new Map<number, { amount: number; value: number }>()
+    for (const timestamp of timestamps) {
+      const priceUsd = pricesMap.get(Number(timestamp))
+      const amounts = amountsByTimestamp[timestamp.toNumber()]
+      if (!priceUsd || !amounts) {
+        values.set(Number(timestamp), { amount: 0, value: 0 })
+        continue
+      }
+      const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
+      const usdValue = calculateValue({ amount, priceUsd, decimals })
+      values.set(Number(timestamp), {
+        amount: asNumber(amount, decimals),
+        value: asNumber(usdValue, 2),
+      })
     }
 
-    return values
+    const start = new UnixTime(Math.min(...values.keys()))
+    const end = new UnixTime(Math.max(...values.keys()))
+
+    const dailyData: [UnixTime, number, number][] = []
+    for (let curr = start; curr <= end; curr = curr.add(1, 'days')) {
+      const value = values.get(curr.toNumber())
+      assert(
+        value !== undefined,
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      dailyData.push([curr, value.amount, value.value])
+    }
+
+    const sixHourlyData: [UnixTime, number, number][] = []
+    for (
+      let curr = UnixTime.max(sixHourlyCutOff, start);
+      curr <= end;
+      curr = curr.add(6, 'hours')
+    ) {
+      const value = values.get(curr.toNumber())
+      assert(
+        value !== undefined,
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      sixHourlyData.push([curr, value.amount, value.value])
+    }
+
+    const hourlyData: [UnixTime, number, number][] = []
+    for (
+      let curr = UnixTime.max(hourlyCutOff, start);
+      curr <= end;
+      curr = curr.add(1, 'hours')
+    ) {
+      const value = values.get(curr.toNumber())
+      assert(
+        value !== undefined,
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      hourlyData.push([curr, value.amount, value.value])
+    }
+
+    return {
+      daily: {
+        types: ['timestamp', 'amount', 'valueUsd'],
+        data: dailyData,
+      },
+      sixHourly: {
+        types: ['timestamp', 'amount', 'valueUsd'],
+        data: sixHourlyData,
+      },
+      hourly: {
+        types: ['timestamp', 'amount', 'valueUsd'],
+        data: hourlyData,
+      },
+    }
   }
 
   private getMinTimestamp(type: Project['type']) {

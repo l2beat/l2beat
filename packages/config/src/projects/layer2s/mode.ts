@@ -61,6 +61,12 @@ export const mode: Layer2 = opStackL2({
       date: '2024-01-31T00:00:00Z',
       description: 'Mode Network is live on mainnet.',
     },
+    {
+      name: 'MODE token airdrop',
+      link: 'https://mode.mirror.xyz/2Aom53lrot8KQ143u8lCfyYvTOkR7LJcIChoyP1Q4wI',
+      date: '2024-05-07T00:00:00Z',
+      description: 'MODE token launched.',
+    },
   ],
   finality: {
     type: 'OPStack-blob',
@@ -72,7 +78,7 @@ export const mode: Layer2 = opStackL2({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
+      'ConduitMultisig',
       'Owner of the ProxyAdmin: it can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. Also designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
     ),
     discovery.contractAsPermissioned(

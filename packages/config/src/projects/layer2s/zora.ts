@@ -74,7 +74,7 @@ export const zora: Layer2 = opStackL2({
   knowledgeNuggets: [],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
+      'ConduitMultisig',
       'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
     ),
     discovery.contractAsPermissioned(

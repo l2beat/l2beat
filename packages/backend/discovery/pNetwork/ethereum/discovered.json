@@ -1,9 +1,9 @@
 {
   "name": "pNetwork",
   "chain": "ethereum",
-  "blockNumber": 19767570,
+  "blockNumber": 19926484,
   "configHash": "0xa0ac3a5ffd7b460eb42b5cc31d11ea09532fb9ae142ca25fa017970859818606",
-  "version": 3,
+  "version": 4,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -55,7 +55,7 @@
         "proxyType": 2,
         "supportRequiredPct": "510000000000000000",
         "token": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-        "votesLength": 38
+        "votesLength": 39
       },
       "derivedName": "DandelionVoting"
     },
@@ -143,7 +143,7 @@
         "paused": false,
         "relayHubVersion": "1.0.0",
         "symbol": "PNT",
-        "totalSupply": "87975228709640845629432729"
+        "totalSupply": "87973007722997040030171772"
       }
     },
     {
@@ -291,7 +291,7 @@
         "parentToken": "0x0000000000000000000000000000000000000000",
         "symbol": "daoPNT",
         "tokenFactory": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
-        "totalSupply": "10446763335672816766674312",
+        "totalSupply": "8997474003833274459090308",
         "transfersEnabled": false,
         "version": "MMT_0.1"
       },
@@ -308,17 +308,17 @@
       "implementations": ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"],
       "sinceTimestamp": 1664208803,
       "values": {
-        "currentMonthNumber": 3,
-        "currentMonthWithdrawnAmount": "1600000000000000000000000",
+        "currentMonthNumber": 4,
+        "currentMonthWithdrawnAmount": "1000000000000000000000000",
         "currentYearNumber": 0,
-        "currentYearWithdrawnAmount": "3960000000000000000000000",
+        "currentYearWithdrawnAmount": "4960000000000000000000000",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xdb94fb7fdbffd548b5e058fcd76cc73c6bfae4843b728c540043b00b4ff00049",
         "inflationOwner": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
         "isWhitelistingEnabled": true,
         "maxWithdrawableAmounts": [
-          "335504574192816912588654",
-          "15395045741928169125886545"
+          "935504574192816912588654",
+          "14395045741928169125886545"
         ],
         "monthlyRateCap": 200,
         "monthlyWithdrawableLimit": "1935504574192816912588654",
@@ -326,7 +326,7 @@
         "PNT_INIT_TOTAL_SUPPLY": "96775228709640845629432729",
         "RATE_DIVISOR": 10000,
         "symbol": "ethPNT",
-        "totalSupply": "12760000000000000000000000",
+        "totalSupply": "13760000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
       },

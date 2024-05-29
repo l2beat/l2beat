@@ -1,23 +1,25 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryStackItem } from './DiscoveryStack'
 
 export function shouldSkip(
-  item: DiscoveryStackItem,
+  address: EthereumAddress,
   config: DiscoveryConfig,
+  depth: number,
+  counter: number,
 ): string | undefined {
-  if (config.overrides.get(item.address).ignoreDiscovery) {
+  if (config.overrides.get(address).ignoreDiscovery) {
     return 'Address ignored'
   }
 
-  if (config.isInSharedModules(item.address)) {
+  if (config.isInSharedModules(address)) {
     return 'Part of a shared module'
   }
 
-  if (item.depth > config.maxDepth) {
-    return `Error: Depth ${item.depth} exceeded max = ${config.maxDepth}`
+  if (depth > config.maxDepth) {
+    return `Error: Depth ${depth} exceeded max = ${config.maxDepth}`
   }
 
-  if (item.counter > config.maxAddresses) {
-    return `Error: Total addresses ${item.counter} exceeded max = ${config.maxAddresses}`
+  if (counter > config.maxAddresses) {
+    return `Error: Total addresses ${counter} exceeded max = ${config.maxAddresses}`
   }
 }

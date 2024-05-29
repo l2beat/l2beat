@@ -41,6 +41,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
+  readonly verifiers: boolean
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
@@ -57,6 +58,7 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
+    readonly verifiers: boolean
   }
 }
 
@@ -94,6 +96,7 @@ export interface Tvl2Config {
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
+  readonly projectsExcludedFromApi: string[]
 }
 
 export interface TrackedTxsConfig {

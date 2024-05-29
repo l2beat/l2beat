@@ -1,12 +1,13 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 export interface ProofVerification {
+  shortDescription?: string
   aggregation: boolean
   verifiers: OnchainVerifier[]
   requiredTools: RequiredTool[]
 }
 
-interface OnchainVerifier {
+export interface OnchainVerifier {
   name: string
   description: string
   contractAddress: EthereumAddress
@@ -15,13 +16,13 @@ interface OnchainVerifier {
   subVerifiers: SubVerifier[]
 }
 
-interface RequiredTool {
+export interface RequiredTool {
   name: string
   version: `v${string}`
   link?: string
 }
 
-interface SubVerifier {
+export interface SubVerifier {
   name: string
   proofSystem: string
   mainArithmetization: string

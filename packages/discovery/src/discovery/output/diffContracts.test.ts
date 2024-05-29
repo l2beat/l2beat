@@ -38,16 +38,21 @@ describe(diffContracts.name, () => {
         admin: NEW_ADMIN,
         implementation: IMPLEMENTATION,
       },
+      ignoreInWatchMode: ['E', 'F'],
       values: {
         A: false,
         C: 1,
         D: [1, 2, 3, 4],
         E: 'ignoreMePlease',
+        'E.2': 'ignoreMeToo',
         F: 'ignoreMePlease',
+        'A.F': 'dontIgnoreMe',
       },
     }
-    const ignoreInWatchMode = ['E', 'F']
-    const result = diffContracts(committed, discovered, ignoreInWatchMode)
+    const ignoreInWatchMode =
+      discovered.ignoreInWatchMode?.map((i) => `values.${i}`) ?? []
+    const ignore = ['ignoreInWatchMode', ...ignoreInWatchMode]
+    const result = diffContracts(committed, discovered, ignore)
 
     expect(result).toEqual([
       {
@@ -63,6 +68,7 @@ describe(diffContracts.name, () => {
       { key: 'values.A', before: 'true', after: 'false' },
       { key: 'values.B', before: 'true' },
       { key: 'values.D.3', after: '4' },
+      { key: 'values.A.F', after: '"dontIgnoreMe"' },
     ])
   })
 })
