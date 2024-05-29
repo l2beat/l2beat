@@ -1,3 +1,4 @@
+import withVercelToolbar from '@vercel/toolbar/plugins/next'
 import createNextIntlPlugin from 'next-intl/plugin'
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
 import { env } from './src/env.js'
@@ -75,6 +76,7 @@ function createNextConfig() {
   const plugins = [
     createPlausibleProxyPlugin(),
     createNextIntlPlugin('./src/i18n.tsx'),
+    withVercelToolbar(),
   ]
 
   return plugins.reduce((config, plugin) => plugin(config), nextConfig)

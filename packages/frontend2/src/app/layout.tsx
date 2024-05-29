@@ -1,3 +1,4 @@
+import { VercelToolbar } from '@vercel/toolbar/next'
 import { type Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
@@ -42,6 +43,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const locale = await getLocale()
+  const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
     // We suppress the hydration warning here because we're using:
@@ -62,6 +64,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
+        {shouldInjectToolbar && <VercelToolbar />}
       </body>
     </html>
   )
