@@ -9,6 +9,7 @@ import {
 export type Project = Layer2 | Layer3 | ZkCatalogProject
 
 export interface ZkCatalogProofVerification {
+  shortDescription: string | undefined
   aggregation: boolean
   verifiers: ZkCatalogOnchainVerifier[]
   requiredTools: RequiredTool[]

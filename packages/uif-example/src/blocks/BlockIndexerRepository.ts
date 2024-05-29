@@ -9,4 +9,13 @@ export class BlockIndexerRepository {
     this.height = height
     return await Promise.resolve()
   }
+
+  async upsert(record: {
+    indexerId: string
+    height: number
+    configHash?: string
+  }): Promise<void> {
+    this.height = record.height
+    return await Promise.resolve()
+  }
 }

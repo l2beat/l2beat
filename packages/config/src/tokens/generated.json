@@ -6834,6 +6834,21 @@
       "bridgedUsing": {
         "bridge": "Free Bridge"
       }
+    },
+    {
+      "id": "linea:nile-nile-exchange",
+      "name": "Nile Exchange",
+      "coingeckoId": "nile",
+      "address": "0xaaaac83751090c6ea42379626435f805ddf54dc8",
+      "symbol": "NILE",
+      "decimals": 18,
+      "deploymentTimestamp": 1705968000,
+      "coingeckoListingTimestamp": 1709078400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34828/standard/nile.png",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ]
 }

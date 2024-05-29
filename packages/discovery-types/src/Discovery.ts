@@ -23,6 +23,7 @@ export interface ContractParameters {
   implementations?: EthereumAddress[]
   values?: Record<string, ContractValue>
   errors?: Record<string, string>
+  ignoreInWatchMode?: string[]
 }
 
 export type ContractValue =

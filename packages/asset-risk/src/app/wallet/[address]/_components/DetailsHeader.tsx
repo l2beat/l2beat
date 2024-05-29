@@ -2,6 +2,7 @@ import { isAddress } from 'viem'
 import { Card } from '~/components/Card'
 import { formatAddress } from '~/utils/formatAddress'
 import { formatNumberWithCommas } from '~/utils/formatNumber'
+import { Breakdown } from './Breakdown'
 import { ChangeWalletButton } from './ChangeWalletButton'
 import { Token } from './table/TokensTable'
 
@@ -52,6 +53,12 @@ export function DetailsHeader(props: DetailsHeaderProps) {
             <ChangeWalletButton wallet={props.walletAddress} />
           </span>
         </div>
+      </div>
+      <div>
+        <span className="text-zinc-500 text-xs font-bold">
+          Breakdown of assets by stages
+        </span>
+        <Breakdown />
       </div>
     </Card>
   )

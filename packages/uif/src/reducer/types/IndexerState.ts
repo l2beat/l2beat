@@ -28,4 +28,5 @@ export interface IndexerState {
   readonly updateBlocked: boolean
   readonly invalidateBlocked: boolean
   readonly tickBlocked: boolean
+  readonly configHash?: string
 }

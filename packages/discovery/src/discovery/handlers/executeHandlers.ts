@@ -1,5 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
+
+import { getErrorMessage } from '../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { MulticallClient } from '../provider/multicall/MulticallClient'
@@ -48,7 +50,7 @@ export async function executeHandlers(
           }
           return result
         } catch (e) {
-          throw new Error(`Error executing handler: ${x.field} | Error: ${e}`)
+          return { field: x.field, error: getErrorMessage(e) }
         }
       }),
     )

@@ -227,9 +227,9 @@ describe(FunctionSelectorDecoder.name, () => {
       expect(provider.getMetadata).toHaveBeenCalledTimes(5)
       expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
       expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation3)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation2)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation3)
+      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation1)
     })
   })
 

@@ -5478,7 +5478,7 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-5.0.0.tgz#21413001973106cda1c3a9b91eedd4ccd5469d76"
   integrity sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==
 
-"@types/lodash@^4.14.167", "@types/lodash@^4.14.191", "@types/lodash@^4.14.198", "@types/lodash@^4.17.0":
+"@types/lodash@^4.14.167", "@types/lodash@^4.14.191", "@types/lodash@^4.14.198", "@types/lodash@^4.17.0", "@types/lodash@^4.17.4":
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.4.tgz#0303b64958ee070059e3a7184048a55159fe20b7"
   integrity sha512-wYCP26ZLxaT3R39kiN2+HcJ4kTd3U1waI/cY7ivWYqFP6pW3ZNpvi6Wd6PHZx7T/t8z0vlkXMg3QYLa7DZ/IJQ==
@@ -5599,7 +5599,7 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.12.tgz#12bb1e2be27293c1406acb6af1c3f3a1481d98c6"
   integrity sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==
 
-"@types/qrcode@^1.4.2":
+"@types/qrcode@^1.4.2", "@types/qrcode@^1.5.5":
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/@types/qrcode/-/qrcode-1.5.5.tgz#993ff7c6b584277eee7aac0a20861eab682f9dac"
   integrity sha512-CdfBi/e3Qk+3Z/fXYShipBT13OJ2fDO2Q2w5CIP5anLTLIndQG9z6P1cnm+8zCWSpm5dnxMFd/uREtb0EXuQzg==
@@ -7618,7 +7618,7 @@ clsx@^1.2.1:
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
-clsx@^2.1.0:
+clsx@^2.1.0, clsx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.1.1.tgz#eed397c9fd8bd882bfb18deab7102049a2f32999"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
@@ -14317,7 +14317,7 @@ qrcode-terminal-nooctal@^0.12.1:
   resolved "https://registry.yarnpkg.com/qrcode-terminal-nooctal/-/qrcode-terminal-nooctal-0.12.1.tgz#45016aca0d82b2818de7af0a06d072ad671fbe2e"
   integrity sha512-jy/kkD0iIMDjTucB+5T6KBsnirlhegDH47vHgrj5MejchSQmi/EAMM0xMFeePgV9CJkkAapNakpVUWYgHvtdKg==
 
-qrcode@1.5.3, qrcode@^1.5.0, qrcode@^1.5.1:
+qrcode@1.5.3, qrcode@^1.5.0, qrcode@^1.5.1, qrcode@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.3.tgz#03afa80912c0dccf12bc93f615a535aad1066170"
   integrity sha512-puyri6ApkEHYiVl4CFzo1tDkAZ+ATcnbJrJ6RiBM1Fhctdn/ix9MTE3hRph33omisEbC/2fcfemsseiKgBPKZg==

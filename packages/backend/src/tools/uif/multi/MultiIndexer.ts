@@ -128,7 +128,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    */
   abstract getSafeHeight(): Promise<number | undefined>
 
-  async initialize(): Promise<number> {
+  async initialize() {
     const previouslySaved = await this.multiInitialize()
 
     this.configurations = await this.getInitialConfigurations()
@@ -147,7 +147,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     }
     await this.setSavedConfigurations(toSave)
 
-    return Math.min(safeHeight, oldSafeHeight)
+    return { safeHeight: Math.min(safeHeight, oldSafeHeight) }
   }
 
   async update(from: number, to: number): Promise<number> {

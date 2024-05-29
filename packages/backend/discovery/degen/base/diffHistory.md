@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc30d97b2c62e49cb891cf19047ba38cb3a0d7615
+
+# Diff at Mon, 27 May 2024 17:47:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@dbc274621a752b9a0e3943e430166c617d1edd06 block: 14543033
+- current block number: 15021326
+
+## Description
+
+Updated the SequencerInbox template, no onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14543033 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        false
+    }
+```
+
 Generated with discovered.json: 0xaf54a96131f4555110c26941ac4b68c40625933a
 
 # Diff at Tue, 14 May 2024 07:08:06 GMT:

@@ -249,20 +249,20 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'FflonkVerifier',
+              name: 'Final wrap',
               proofSystem: 'fflonk',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG-fflonk',
               trustedSetup: 'Powers of Tau 28',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',

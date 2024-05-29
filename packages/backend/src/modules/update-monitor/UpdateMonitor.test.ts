@@ -723,7 +723,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       await updateMonitor.update(timestamp)
-      const result = await updateMonitor.generateDailyReminder()
+      const result = updateMonitor.generateDailyReminder()
 
       expect(Object.entries(result).length).toEqual(runners.length)
       expect(result).toEqual({
@@ -780,7 +780,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       await updateMonitor.update(timestamp)
-      const result = await updateMonitor.generateDailyReminder()
+      const result = updateMonitor.generateDailyReminder()
 
       expect(Object.entries(result).length).toEqual(1)
       expect(result[PROJECT_A].length).toEqual(2)
@@ -828,7 +828,7 @@ describe(UpdateMonitor.name, () => {
       )
 
       await updateMonitor.update(timestamp)
-      const result = await updateMonitor.generateDailyReminder()
+      const result = updateMonitor.generateDailyReminder()
 
       expect(Object.entries(result).length).toEqual(0)
     })
@@ -909,6 +909,5 @@ const mockDiff: DiscoveryDiff[] = [
 
 const OPTIONS: DiscoveryRunnerOptions = {
   logger: Logger.SILENT.for('UpdateMonitor'),
-  runSanityCheck: true,
   injectInitialAddresses: true,
 }

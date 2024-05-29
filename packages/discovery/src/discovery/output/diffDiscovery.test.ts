@@ -2,7 +2,6 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { diffDiscovery } from './diffDiscovery'
 
 describe(diffDiscovery.name, () => {
@@ -25,6 +24,7 @@ describe(diffDiscovery.name, () => {
           admin: ADMIN,
           implementation: IMPLEMENTATION,
         },
+        ignoreInWatchMode: ['B'],
         values: {
           A: true,
           //ignores fields included in ignore in watch mode
@@ -74,6 +74,7 @@ describe(diffDiscovery.name, () => {
           admin: ADMIN,
           implementation: IMPLEMENTATION,
         },
+        ignoreInWatchMode: ['B'],
         values: {
           A: false,
           B: 'itChanged',
@@ -112,18 +113,8 @@ describe(diffDiscovery.name, () => {
         values: {},
       },
     ]
-    const config = new DiscoveryConfig({
-      name: '',
-      chain: 'ethereum',
-      initialAddresses: [],
-      overrides: {
-        [ADDRESS_A.toString()]: {
-          ignoreInWatchMode: ['B'],
-        },
-      },
-    })
 
-    const result = diffDiscovery(committed, discovered, config)
+    const result = diffDiscovery(committed, discovered)
 
     expect(result).toEqual([
       {
