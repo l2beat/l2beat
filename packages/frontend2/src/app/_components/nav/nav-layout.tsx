@@ -107,6 +107,17 @@ export async function NavLayout({
         },
       ],
     },
+    {
+      title: 'Data Availability',
+      links: [
+        {
+          title: 'Summary',
+          icon: <SummaryIcon />,
+          href: '/data-availability',
+          enabled: true,
+        },
+      ],
+    },
   ]
 
   return (
