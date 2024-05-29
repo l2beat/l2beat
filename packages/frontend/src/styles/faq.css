@@ -1,7 +1,0 @@
-.faq strong {
-  @apply font-bold text-yellow-700 dark:text-yellow-300
-}
-
-.faq ul {
-  @apply list-inside list-disc pl-4
-}
