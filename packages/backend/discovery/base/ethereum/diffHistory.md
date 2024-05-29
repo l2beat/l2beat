@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xc1355c527c2a1eb878b3551991fd884894a63382
+
+# Diff at Wed, 29 May 2024 08:09:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4844a9bf46315ea8d6de75161e4361325faaa106 block: 19566961
+- current block number: 19974223
+
+## Description
+
+Gas limit on L2 is raised further. With a block time of 2s and elasticity of 10x, this currently puts Base at 3,75 GGas/s on average. This is 3x Ethereum Mainnet's 1,25 GGas/s and has a much higher surge scaling buffer. (elasticity)
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        75000000
+    }
+```
+
 Generated with discovered.json: 0xaa51ff292601beab89225f2adc6e62ead95a27de
 
 # Diff at Tue, 02 Apr 2024 08:35:50 GMT:
