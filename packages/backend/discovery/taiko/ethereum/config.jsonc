@@ -81,6 +81,27 @@
               "false"
             ] // bytes32("tier_guardian")
           }
+        },
+        // Proposers
+        "proposer_block_1": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x70726f706f7365725f6f6e650000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("proposer_one"); vitalik.eth
+          }
+        },
+        "proposer": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x70726f706f736572000000000000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("proposer");
+          }
         }
       }
     },

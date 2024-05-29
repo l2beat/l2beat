@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19975585,
-  "configHash": "0x1dbc1c1c77c5bb9c9d71b057d211e72e7e5de39df41f73609deeb9901f00fcd3",
+  "blockNumber": 19976108,
+  "configHash": "0x433c0ec91c6b57ad0b8cb27c7bc1de19c50d9d5bab058c6d0400c5b8ebce5a6f",
   "version": 4,
   "contracts": [
     {
@@ -27,8 +27,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 3645, 1716986459],
-          [7214, 3647, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 3902, 1716992543],
+          [7432, 3916, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -36,13 +36,15 @@
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proposer": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
+        "proposer_block_1": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         "proxiableUUID": "EXPECT_REVERT",
-        "slotA": [19923613, 1716358991, 3645, 1716986459],
-        "slotB": [7214, 3647, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 3902, 1716992543],
+        "slotB": [7432, 3916, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 3645, 1716986459],
-          [7214, 3647, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 3902, 1716992543],
+          [7432, 3916, false, 0, 0, 0, 1716571955]
         ],
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
@@ -239,8 +241,8 @@
           ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
           ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
           ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716986471],
-          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1716986423]
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716992711],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1716992807]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
@@ -268,7 +270,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 2881,
+        "nextMessageId": 2984,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -335,6 +337,7 @@
     }
   ],
   "eoas": [
+    "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
     "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
     "0x085Bf649bef6b9e97C73822724eD33553C20a1CA",
     "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
@@ -352,6 +355,7 @@
     "0xC57230B9A1BD4f882c40C9f549a27034474e5962",
     "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
     "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
+    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
     "0xf02099f42d499028Ca52a5205d4E21001f5E3525"
   ],
   "abis": {
