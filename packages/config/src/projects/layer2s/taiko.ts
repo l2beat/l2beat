@@ -95,7 +95,7 @@ export const taiko: Layer2 = {
       value: 'No mechanism', // based rollup sequencing
     },
     proposerFailure: {
-      description: 'Currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+      description: 'Only the whitelisted proposer can advance the state on L1, so in the event of failure the withdrawals are frozen.',
       sentiment: 'bad',
       value: 'No mechanism',
     },
