@@ -79,7 +79,7 @@ export const taiko: Layer2 = {
     stateValidation: {
       description: 'Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians. This can lead to a state being proven as valid when it is not.',
       sentiment: 'bad',
-      value: 'No proof system',
+      value: 'SGX Proofs',
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
