@@ -32,6 +32,7 @@ export function Markdown(props: MarkdownProps) {
 
   if (props.ignoreGlossary) {
     const rendered = render(stripped)
+
     return (
       <Comp
         className={cn('mdc', props.className)}
