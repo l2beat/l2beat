@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6890d0d61e53889a889b7b86778403a6408d5a49
+
+# Diff at Wed, 29 May 2024 14:58:14 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19531603
+- current block number: 19976259
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531603 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
 Generated with discovered.json: 0x738db2dd660800d0d4677bb76f9739d2c25bd55a
 
 # Diff at Thu, 28 Mar 2024 09:05:42 GMT:

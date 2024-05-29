@@ -1,13 +1,19 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 19910333,
+  "blockNumber": 19976276,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
   "version": 4,
   "contracts": [
     {
       "name": "L2OutputOracle",
       "address": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
+      "ignoreInWatchMode": [
+        "latestBlockNumber",
+        "latestOutputIndex",
+        "nextBlockNumber",
+        "nextOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095",
@@ -19,10 +25,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11158200,
-        "latestOutputIndex": 6199,
-        "nextBlockNumber": 11160000,
-        "nextOutputIndex": 6200,
+        "latestBlockNumber": 11556000,
+        "latestOutputIndex": 6420,
+        "nextBlockNumber": 11557800,
+        "nextOutputIndex": 6421,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -80,6 +86,7 @@
     {
       "name": "KromaPortal",
       "address": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x381F53695230BAF83a39D1a08304D233A35730Fa",
@@ -91,7 +98,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491822, 19910326],
+        "params": [1000000000, 200000, 19976270],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -114,6 +121,7 @@
     {
       "name": "SystemConfig",
       "address": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
+      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
@@ -171,6 +179,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x675924D68200F2C967Ba12349d5d510676C7214c",
@@ -180,7 +189,7 @@
       "sinceTimestamp": 1693880591,
       "values": {
         "MESSAGE_VERSION": 0,
-        "messageNonce": 2234,
+        "messageNonce": 2860,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -348,6 +357,7 @@
     {
       "name": "SpectrumCore",
       "address": "0x88b6bBb148748C18B377A57c9d4E6c714AF28078",
+      "ignoreInWatchMode": ["getGlobalSnap"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x89792dDc14209A3156d90F5e4A34F4c532bB4EC6",
@@ -381,9 +391,9 @@
             "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
             2000000000000000
           ],
-          ["606122178834415694335"],
+          ["1121056277580669528788"],
           ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          [["606122178834415694335"]]
+          [["1121056277580669528788"]]
         ],
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
@@ -397,7 +407,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
       },
       "implementations": ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"],
       "sinceTimestamp": 1715582603,
@@ -414,7 +424,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
       },
       "implementations": ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"],
       "sinceTimestamp": 1715574731,
@@ -428,6 +438,7 @@
     {
       "name": "UpgradeGovernor",
       "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
+      "ignoreInWatchMode": ["clock"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3",
@@ -437,7 +448,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 19910333,
+        "clock": 19976276,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -469,7 +480,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0114fd85c342F39e22E2c8e1Be512ade856309C0",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
       },
       "implementations": ["0x0114fd85c342F39e22E2c8e1Be512ade856309C0"],
       "sinceTimestamp": 1715574791,
@@ -483,6 +494,7 @@
     {
       "name": "SecurityCouncilToken",
       "address": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+      "ignoreInWatchMode": ["clock", "ownerOf"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C",
@@ -491,7 +503,7 @@
       "implementations": ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 19910333,
+        "clock": 19976276,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -532,6 +544,7 @@
     {
       "name": "spETH",
       "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
@@ -567,7 +580,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "583477823194431717848"
+        "totalSupply": "1078444498852167076944"
       },
       "derivedName": "SPETH"
     },
@@ -584,6 +597,7 @@
     {
       "name": "ValidatorPool",
       "address": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
+      "ignoreInWatchMode": ["nextValidator", "validatorCount"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4",
@@ -594,7 +608,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x66012996Bcf10777Dd0323966452febf9B5Bb821",
+        "nextValidator": "0xcfBA39c653cae1C2d8271Ca17752a557335eba3B",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -602,7 +616,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 304,
+        "validatorCount": 358,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
       },
@@ -610,6 +624,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x000000000000000000000000000000000000dEaD",
     "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
@@ -620,7 +635,6 @@
     "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
     "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80",
     "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db",
-    "0x66012996Bcf10777Dd0323966452febf9B5Bb821",
     "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
     "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
     "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
@@ -628,6 +642,7 @@
     "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
     "0xbDeE962137373A755a71C716E01B9946B1a27686",
+    "0xcfBA39c653cae1C2d8271Ca17752a557335eba3B",
     "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
     "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
     "0xfF00000000000000000000000000000000000255"
