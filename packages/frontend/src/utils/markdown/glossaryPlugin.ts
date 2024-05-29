@@ -13,13 +13,11 @@ const termToId = new Map(
   ),
 )
 
-const glossaryTerms = [...termToId.keys()].map(escapeRegExp)
+const glossaryTerms = [...termToId.keys()]
+  .sort((a, b) => b.length - a.length)
+  .map(escapeRegExp)
 
-/**
- * \\b: Word boundary to ensure whole word matching.
- * (${glossaryTerms.join('|')}): Matches any term in the glossary.
- */
-const pattern = new RegExp(`\\b(${glossaryTerms.join('|')})\\b`, 'gi')
+const pattern = new RegExp(glossaryTerms.join('|'), 'gi')
 
 export function linkGlossaryTerms(text: string): string {
   const linkOffsets = getAllLinksOffsets(text)
@@ -38,6 +36,7 @@ export function linkGlossaryTerms(text: string): string {
     if (isWithinExistingLink(offset)) {
       return matchedTerm // Don't replace if within an existing link
     }
+
     const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
 
     return glossaryTermId
