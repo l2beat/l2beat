@@ -199,7 +199,7 @@ export const blast: Layer2 = opStackL2({
     {
       name: 'Blast Announces Upgrade To Support Blobs',
       link: 'https://x.com/Blast_L2/status/1793686918506623032',
-      date: '2024-05-27T21:00:00Z',
+      date: '2024-05-27T00:00:00Z',
       description: 'Blast Network announces its upgrade to support blobs.',
     },
   ],
