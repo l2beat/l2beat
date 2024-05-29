@@ -1,34 +1,33 @@
 'use client'
+
 import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { formatAddress } from '~/utils/formatAddress'
 import { ChangeButton } from '../ChangeButton'
+import { DrawerTrigger } from '../Drawer'
 
-export function WalletInfo() {
+export function NavbarDrawerTrigger() {
   return (
     <ConnectKitButton.Custom>
-      {({ isConnected, show, address, ensName }) => {
+      {({ isConnected, address, ensName }) => {
         return isConnected ? (
-          <div className="flex items-center gap-2">
-            {address && (
-              <Jazzicon diameter={28} seed={jsNumberForAddress(address)} />
-            )}
+          <div className="flex items-center gap-3">
             <Link
               className="font-medium text-sm text-black"
               href={`/wallet/${address}`}
             >
               {ensName ?? (address && formatAddress(address))}
             </Link>
-            <ChangeButton show={show} />
+            <DrawerTrigger>
+              <ChangeButton />
+            </DrawerTrigger>
           </div>
         ) : (
-          <button
-            onClick={show}
-            className="w-full h-10 bg-pink-900 text-white font-bold text-xs px-8 rounded-lg"
-          >
-            Connect a wallet
-          </button>
+          <DrawerTrigger>
+            <button className="px-6 py-2 bg-pink-900 text-white text-xs font-bold rounded">
+              Scan assets
+            </button>
+          </DrawerTrigger>
         )
       }}
     </ConnectKitButton.Custom>

@@ -1,9 +1,9 @@
 import { isAddress } from 'viem'
 import { Card } from '~/components/Card'
-import { ChangeWalletButton } from '~/components/ChangeWalletButton'
 import { formatAddress } from '~/utils/formatAddress'
 import { formatNumberWithCommas } from '~/utils/formatNumber'
 import { Breakdown } from './Breakdown'
+import { ChangeWalletButton } from './ChangeWalletButton'
 import { Token } from './table/TokensTable'
 
 interface DetailsHeaderProps {
