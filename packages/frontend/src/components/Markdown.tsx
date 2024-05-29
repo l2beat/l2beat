@@ -1,6 +1,8 @@
 import MarkdownIt from 'markdown-it'
 import React from 'react'
 
+import { getCollection } from '../content/getCollection'
+import { getGlossaryEntry } from '../pages/glossary/props/getGlossaryEntry'
 import { cn } from '../utils/cn'
 import {
   glossaryPlugin,
@@ -8,6 +10,8 @@ import {
 } from '../utils/markdown/glossaryPlugin'
 import { outLinksPlugin } from '../utils/markdown/outLinksPlugin'
 
+const glossary = getCollection('glossary')
+const glossaryTerms = glossary.map(getGlossaryEntry)
 export interface MarkdownProps {
   children: string
   inline?: boolean
@@ -44,7 +48,7 @@ export function Markdown(props: MarkdownProps) {
 
   // Markdown-it does not support pre-render hooks and token rerendering so
   // we have to the do linking of glossary terms here explicitly.
-  const glossaryLinked = linkGlossaryTerms(stripped)
+  const glossaryLinked = linkGlossaryTerms(glossaryTerms)(stripped)
   const rendered = render(glossaryLinked)
 
   return (

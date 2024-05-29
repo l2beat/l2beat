@@ -1,67 +1,68 @@
 import MarkdownIt from 'markdown-it'
-import { getCollection } from '../../content/getCollection'
-import { getGlossaryEntry } from '../../pages/glossary/props/getGlossaryEntry'
+import { GlossaryEntry } from '../../pages/glossary/props/getGlossaryEntry'
 
-const glossary = getCollection('glossary')
-const entries = glossary.map(getGlossaryEntry)
+export function linkGlossaryTerms(
+  glossary: GlossaryEntry[],
+  ignoreDelimiter = ':',
+) {
+  const ignorePattern = new RegExp(
+    `${ignoreDelimiter}([a-zA-Z\\s]+)${ignoreDelimiter}`,
+    'gi',
+  )
 
-const termToId = new Map(
-  entries.flatMap((entry) =>
-    [entry.term]
-      .concat(entry.match ?? [])
-      .map((term) => [term.toLowerCase(), entry.id]),
-  ),
-)
+  const termToId = new Map(
+    glossary.flatMap((entry) =>
+      [entry.term]
+        .concat(entry.match ?? [])
+        .map((term) => [term.toLowerCase(), entry.id]),
+    ),
+  )
 
-const glossaryTerms = [...termToId.keys()].sort((a, b) => b.length - a.length)
-const IGNORE_DELIMITER = ':'
-const ignorePattern = new RegExp(
-  `${IGNORE_DELIMITER}(\\w+)${IGNORE_DELIMITER}`,
-  'gi',
-)
+  const glossaryTerms = [...termToId.keys()].sort((a, b) => b.length - a.length)
 
-export function linkGlossaryTerms(sourceText: string): string {
-  let text = sourceText
+  return (sourceText: string) => {
+    let text = sourceText
 
-  for (const term of glossaryTerms) {
-    const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
+    for (const term of glossaryTerms) {
+      const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
 
-    const linkOffsets = getAllLinksOffsets(text)
+      const linkOffsets = getAllLinksOffsets(text)
 
-    const isWithinExistingLink = (position: number) => {
-      return linkOffsets.some(
-        (link) => position >= link.start && position <= link.end,
-      )
-    }
-
-    const isIgnored = (position: number) => {
-      return (
-        text.at(position - 1) === IGNORE_DELIMITER &&
-        text.at(position + term.length) === IGNORE_DELIMITER
-      )
-    }
-
-    // Replace glossary terms with links, avoiding existing markdown links
-    text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
-      // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
-      const offset = maybeOffset.at(-2)
-
-      if (isWithinExistingLink(offset) || isIgnored(offset)) {
-        return matchedTerm // Don't replace if within an existing link
+      const isWithinExistingLink = (position: number) => {
+        return linkOffsets.some(
+          (link) => position >= link.start && position <= link.end,
+        )
       }
 
-      const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
+      const isIgnored = (position: number) => {
+        return (
+          text.at(position - 1) === ignoreDelimiter &&
+          text.at(position + term.length) === ignoreDelimiter
+        )
+      }
 
-      return glossaryTermId
-        ? createGlossaryLink(glossaryTermId, matchedTerm)
-        : matchedTerm
-    })
+      // Replace glossary terms with links, avoiding existing markdown links
+      text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
+        // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
+        const offset = maybeOffset.at(-2)
+
+        if (isWithinExistingLink(offset) || isIgnored(offset)) {
+          return matchedTerm // Don't replace if within an existing link
+        }
+
+        const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
+
+        return glossaryTermId
+          ? createGlossaryLink(glossaryTermId, matchedTerm)
+          : matchedTerm
+      })
+    }
+
+    // Get rid of the ignore delimiters
+    text = text.replace(ignorePattern, '$1')
+
+    return text
   }
-
-  // Get rid of the ignore delimiters
-  text = text.replace(ignorePattern, '$1')
-
-  return text
 }
 
 export function glossaryPlugin(md: MarkdownIt) {
