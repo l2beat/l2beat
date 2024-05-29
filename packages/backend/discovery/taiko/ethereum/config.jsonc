@@ -102,6 +102,16 @@
               "false"
             ] // bytes32("proposer");
           }
+        },
+        "sgx_watchdog": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x7367785f7761746368646f670000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("sgx_watchdog");
+          }
         }
       }
     },

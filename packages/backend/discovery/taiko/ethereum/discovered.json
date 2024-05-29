@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19976108,
-  "configHash": "0x433c0ec91c6b57ad0b8cb27c7bc1de19c50d9d5bab058c6d0400c5b8ebce5a6f",
+  "blockNumber": 19976329,
+  "configHash": "0x6bea480544c5c49c7277da5e068ef1e947eb66f6c4f840d3f267c0e5e3456036",
   "version": 4,
   "contracts": [
     {
@@ -27,8 +27,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 3902, 1716992543],
-          [7432, 3916, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 4008, 1716995171],
+          [7526, 4023, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -39,12 +39,13 @@
         "proposer": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
         "proposer_block_1": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         "proxiableUUID": "EXPECT_REVERT",
-        "slotA": [19923613, 1716358991, 3902, 1716992543],
-        "slotB": [7432, 3916, false, 0, 0, 0, 1716571955],
+        "sgx_watchdog": "0x0000000000000000000000000000000000000000",
+        "slotA": [19923613, 1716358991, 4008, 1716995171],
+        "slotB": [7526, 4023, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 3902, 1716992543],
-          [7432, 3916, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 4008, 1716995171],
+          [7526, 4023, false, 0, 0, 0, 1716571955]
         ],
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
@@ -241,8 +242,8 @@
           ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
           ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
           ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716992711],
-          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1716992807]
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716995423],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1716995507]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
@@ -270,7 +271,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 2984,
+        "nextMessageId": 3021,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
