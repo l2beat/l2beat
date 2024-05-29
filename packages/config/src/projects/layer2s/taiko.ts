@@ -29,13 +29,13 @@ export const taiko: Layer2 = {
   config: {
     escrows: [
       {
-        // ETH bridge
+        // Shared ETH bridge
         address: EthereumAddress('0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC'),
         sinceTimestamp: new UnixTime(1714550603),
         tokens: ['ETH'],
       },
       {
-        // ERC20 vault
+        // Shared ERC20 vault
         address: EthereumAddress('0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab'),
         sinceTimestamp: new UnixTime(1714550603),
         tokens: '*',

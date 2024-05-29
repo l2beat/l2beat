@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19974408,
-  "configHash": "0xe6dbf67feb385d7c26e3a364d67930b617975ad0e2db4b7fc9bde677389cb24b",
+  "blockNumber": 19975585,
+  "configHash": "0x1dbc1c1c77c5bb9c9d71b057d211e72e7e5de39df41f73609deeb9901f00fcd3",
   "version": 4,
   "contracts": [
     {
@@ -27,8 +27,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 3144, 1716972107],
-          [6619, 3150, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 3645, 1716986459],
+          [7214, 3647, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -37,12 +37,12 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
-        "slotA": [19923613, 1716358991, 3144, 1716972107],
-        "slotB": [6619, 3150, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 3645, 1716986459],
+        "slotB": [7214, 3647, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 3144, 1716972107],
-          [6619, 3150, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 3645, 1716986459],
+          [7214, 3647, false, 0, 0, 0, 1716571955]
         ],
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
@@ -60,29 +60,12 @@
       "values": {
         "active_tiers": [
           [
-            "0x746965725f736778000000000000000000000000000000000000000000000000",
-            "250000000000000000000",
-            "1640000000000000000000",
-            1440,
-            60,
-            8
+            "0x746965725f736778000000000000000000000000000000000000000000000000"
           ],
           [
-            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
-            "500000000000000000000",
-            "3280000000000000000000",
-            1440,
-            2880,
-            16
+            "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"
           ],
-          [
-            "0x746965725f677561726469616e00000000000000000000000000000000000000",
-            0,
-            0,
-            60,
-            2880,
-            16
-          ]
+          ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
         ],
         "getTierIds": [200, 900, 1000],
         "TIER_GUARDIAN": [
@@ -129,7 +112,7 @@
       "derivedName": "TierProviderV2"
     },
     {
-      "name": "GuardianProver",
+      "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -145,7 +128,10 @@
           "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
           "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
           "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-          "0xC384B679c028787166b9B3725aC14A60da205861"
+          "0xC384B679c028787166b9B3725aC14A60da205861",
+          "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+          "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
+          "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
         ],
         "impl": "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c",
         "inNonReentrant": false,
@@ -156,12 +142,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "provingAutoPauseEnabled": false,
+        "proxiableUUID": "EXPECT_REVERT",
         "version": 1
       },
-      "errors": {
-        "guardians": "Too many values. Update configuration to explore fully",
-        "proxiableUUID": "Multicall failed"
-      }
+      "derivedName": "GuardianProver"
     },
     {
       "name": "L1RollupAddressManager",
@@ -255,18 +239,17 @@
           ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
           ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
           ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716972239]
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1716986471],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1716986423]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT"
       },
-      "errors": {
-        "instances": "Too many values. Update configuration to explore fully",
-        "proxiableUUID": "Multicall failed"
-      }
+      "derivedName": "SgxVerifier"
     },
     {
       "name": "TaikoBridge",
@@ -285,7 +268,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 2774,
+        "nextMessageId": 2881,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -310,7 +293,10 @@
           "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
           "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
           "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-          "0xC384B679c028787166b9B3725aC14A60da205861"
+          "0xC384B679c028787166b9B3725aC14A60da205861",
+          "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+          "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
+          "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
         ],
         "impl": "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c",
         "inNonReentrant": false,
@@ -321,12 +307,10 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "provingAutoPauseEnabled": false,
+        "proxiableUUID": "EXPECT_REVERT",
         "version": 1
       },
-      "errors": {
-        "guardians": "Too many values. Update configuration to explore fully",
-        "proxiableUUID": "Multicall failed"
-      }
+      "derivedName": "GuardianProver"
     },
     {
       "name": "L1SharedAddressManager",
@@ -354,14 +338,18 @@
     "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
     "0x085Bf649bef6b9e97C73822724eD33553C20a1CA",
     "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
+    "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
+    "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6",
     "0x3777c454aF69C87df961E92dA99fCF96EdB30683",
     "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
     "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3",
     "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
     "0x584240b6296210BdF93E2221aBD69BDb312Dc8af",
+    "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
     "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87",
     "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
     "0xC384B679c028787166b9B3725aC14A60da205861",
+    "0xC57230B9A1BD4f882c40C9f549a27034474e5962",
     "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
     "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
     "0xf02099f42d499028Ca52a5205d4E21001f5E3525"

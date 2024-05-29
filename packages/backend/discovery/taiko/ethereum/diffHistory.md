@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfa46d3619ff889faba651dd4570154e7dde320ba
+Generated with discovered.json: 0xc08256711f413097891ecca09481fde52e2ac1f7
 
-# Diff at Wed, 29 May 2024 08:44:51 GMT:
+# Diff at Wed, 29 May 2024 12:41:40 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19974408
+- current block number: 19975585
 
 ## Description
 
@@ -25,8 +25,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
-    +++ description: None
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
+    +++ description: Verifier contract for blocks proven by Guardian minority.
 ```
 
 ```diff
@@ -50,7 +50,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
-    +++ description: None
+    +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
@@ -62,7 +62,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
-    +++ description: None
+    +++ description: Verifier contract for Guardian proven blocks.
 ```
 
 ```diff

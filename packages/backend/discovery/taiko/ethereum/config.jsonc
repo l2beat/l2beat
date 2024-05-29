@@ -15,7 +15,10 @@
     "0x4cffe56C947E26D07C14020499776DB3e9AE3a23": "TierProvider",
     "0x579f40D0BE111b823962043702cabe6Aaa290780": "L1RollupAddressManager",
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
-    "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager"
+    "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager",
+    "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81": "SgxVerifier",
+    "0x579A8d63a2Db646284CBFE31FE5082c9989E985c": "GuardianMinorityProver",
+    "0xE3D777143Ea25A6E031d1e921F396750885f43aC": "GuardianProver"
   },
   "overrides": {
     "TaikoBridge": {
@@ -49,27 +52,36 @@
           }
         },
         // Harcoded values for verifier names, is there a better way?
-        "verifier_TIER_SGX" :{
+        "verifier_TIER_SGX": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f736778000000000000000000000000000000000000000000000000", "false"] // bytes32("tier_sgx")
+            "args": [
+              "0x746965725f736778000000000000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("tier_sgx")
           }
         },
-        "verifier_TIER_GUARDIAN_MINORITY" :{
+        "verifier_TIER_GUARDIAN_MINORITY": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000", "false"] // bytes32("tier_guardian_minority")
+            "args": [
+              "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+              "false"
+            ] // bytes32("tier_guardian_minority")
           }
         },
-        "verifier_TIER_GUARDIAN" :{
+        "verifier_TIER_GUARDIAN": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": ["0x746965725f677561726469616e00000000000000000000000000000000000000", "false"] // bytes32("tier_guardian")
+            "args": [
+              "0x746965725f677561726469616e00000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("tier_guardian")
           }
-        },
+        }
       }
     },
     "L1RollupAddressManager": {
@@ -100,7 +112,7 @@
     "TierProvider": {
       "ignoreMethods": ["getMinTier"], // too many values
       "fields": {
-        "active_tiers" : {
+        "active_tiers": {
           "handler": {
             "type": "array",
             "method": "getTier",
@@ -148,6 +160,64 @@
             "type": "call",
             "method": "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
             "args": [300]
+          }
+        }
+      }
+    },
+    "SgxVerifier": {
+      "description": "Verifier contract for SGX proven blocks.",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "instances": {
+          "handler": {
+            "type": "array",
+            "method": "instances",
+            "length": "{{ nextInstanceId }}"
+          }
+        }
+      }
+    },
+    "GuardianMinorityProver": {
+      "description": "Verifier contract for blocks proven by Guardian minority.",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "guardians": {
+          "handler": {
+            "type": "array",
+            "method": "guardians"
+          }
+        }
+      }
+    },
+    "GuardianProver": {
+      "description": "Verifier contract for Guardian proven blocks.",
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        },
+        "guardians": {
+          "handler": {
+            "type": "array",
+            "method": "guardians"
           }
         }
       }
