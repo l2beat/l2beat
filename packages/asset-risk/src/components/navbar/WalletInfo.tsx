@@ -18,7 +18,7 @@ export function WalletInfo() {
               className="font-medium text-sm text-black"
               href={`/wallet/${address}`}
             >
-              {ensName ? ensName : address ? formatAddress(address) : null}
+              {ensName ?? (address && formatAddress(address))}
             </Link>
             <ChangeButton show={show} />
           </div>

@@ -104,7 +104,7 @@ const supportedChains = [
 export function getChain(chainId: number) {
   const chain = supportedChains.find((chain) => chain.id === chainId)
   if (!chain) {
-    return
+    return null
   }
   return chain
 }

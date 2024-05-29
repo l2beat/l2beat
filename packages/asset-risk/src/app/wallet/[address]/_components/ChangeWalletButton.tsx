@@ -10,7 +10,7 @@ export function ChangeWalletButton({ wallet }: { wallet?: string }) {
       {({ isConnected, show, address, ensName }) => {
         return (
           isConnected &&
-          (wallet ? wallet === address || wallet === ensName : true) && (
+          (!wallet || wallet === address || wallet === ensName) && (
             <>
               <div className="hidden md:flex items-center">
                 <ChangeButton show={show} />
