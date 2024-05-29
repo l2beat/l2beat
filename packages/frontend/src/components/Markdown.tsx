@@ -12,6 +12,7 @@ export interface MarkdownProps {
   children: string
   inline?: boolean
   className?: string
+  ignoreGlossary?: boolean
 }
 
 const markdown = MarkdownIt({
@@ -23,18 +24,26 @@ const markdown = MarkdownIt({
 
 export function Markdown(props: MarkdownProps) {
   const Comp = props.inline ? 'span' : 'div'
+  const render = props.inline ? markdown.renderInline : markdown.render
 
   // This is a hack to remove leading spaces, to prevent the appearance of
   // unwanted code blocks. Use backticks instead.
   const stripped = props.children.replace(/(^|\n)(?:\t|\s{4})(.+)/g, '$1$2')
 
-  // Markdown-it does not support pre-render hooks and token rerendering so
-  // we have to the linking of glossary terms here explicitly.
-  const children = linkGlossaryTerms(stripped)
+  if (props.ignoreGlossary) {
+    const rendered = render(stripped)
+    return (
+      <Comp
+        className={cn('mdc', props.className)}
+        dangerouslySetInnerHTML={{ __html: rendered }}
+      />
+    )
+  }
 
-  const rendered = props.inline
-    ? markdown.renderInline(children)
-    : markdown.render(children)
+  // Markdown-it does not support pre-render hooks and token rerendering so
+  // we have to the do linking of glossary terms here explicitly.
+  const glossaryLinked = linkGlossaryTerms(stripped)
+  const rendered = render(glossaryLinked)
 
   return (
     <Comp
