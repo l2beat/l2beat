@@ -42,15 +42,22 @@ export class ValueService {
       timestamps[0],
       timestamps[timestamps.length - 1],
     )
+    // If Indexer is not detecting sinceTimestamp change there is a possibility
+    // that we have "dead" amount records, we need to filter them out
+    const filteredAmounts = amounts.filter((x) => {
+      const amountConfig = amountConfigs.get(x.configId)
+      assert(amountConfig, 'Config not found')
+      return amountConfig.sinceTimestamp.lte(x.timestamp)
+    })
+    const amountsByTimestamp = groupBy(
+      filteredAmounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      'timestamp',
+    )
+
     const prices = await this.$.priceRepository.getByConfigIdsInRange(
       Array.from(priceConfigIds.values()),
       timestamps[0],
       timestamps[timestamps.length - 1],
-    )
-
-    const amountsByTimestamp = groupBy(
-      amounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
-      'timestamp',
     )
     const pricesByTimestamp = groupBy(
       prices.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
