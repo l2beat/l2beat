@@ -13,9 +13,9 @@ export const myshell: Layer2 = upcomingL2({
     provider: 'OP Stack',
     links: {
       websites: ['https://myshell.ai/'],
-      apps: [''],
+      apps: [],
       documentation: ['https://docs.myshell.ai/'],
-      explorers: [''],
+      explorers: [],
       repositories: [],
       socialMedia: [
         'https://twitter.com/myshell_ai',
