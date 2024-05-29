@@ -14,13 +14,17 @@ const termToId = new Map(
 )
 
 const glossaryTerms = [...termToId.keys()].sort((a, b) => b.length - a.length)
-const ignorePattern = new RegExp(`:(\w+):`, 'gi')
+const IGNORE_DELIMITER = ':'
+const ignorePattern = new RegExp(
+  `${IGNORE_DELIMITER}(\\w+)${IGNORE_DELIMITER}`,
+  'gi',
+)
 
 export function linkGlossaryTerms(sourceText: string): string {
   let text = sourceText
 
   for (const term of glossaryTerms) {
-    const pattern = new RegExp(`\\b${escapeRegExp(term)}`, 'gi')
+    const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
 
     const linkOffsets = getAllLinksOffsets(text)
 
@@ -32,9 +36,12 @@ export function linkGlossaryTerms(sourceText: string): string {
 
     const isIgnored = (position: number) => {
       return (
-        text.at(position - 1) === ':' && text.at(position + term.length) === ':'
+        text.at(position - 1) === IGNORE_DELIMITER &&
+        text.at(position + term.length) === IGNORE_DELIMITER
       )
     }
+
+    term.includes('dac') && console.dir({ pattern, term })
 
     // Replace glossary terms with links, avoiding existing markdown links
     text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
@@ -52,6 +59,9 @@ export function linkGlossaryTerms(sourceText: string): string {
         : matchedTerm
     })
   }
+
+  // Get rid of the ignore delimiters
+  text = text.replace(ignorePattern, '$1')
 
   return text
 }
