@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { DATA_ON_CHAIN, TECHNOLOGY_DATA_AVAILABILITY } from '../../common'
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -76,29 +77,27 @@ export const taiko: Layer2 = {
       value: '',
     },
     stateValidation: {
-      description: '',
+      description: 'Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians. This can lead to a state being proven as valid when it is not.',
       sentiment: 'bad',
-      value: '',
+      value: 'No proof system',
     },
     dataAvailability: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
+      ...DATA_ON_CHAIN,
     },
     exitWindow: {
-      description: '',
+      description: 'The system is designed to allow users to force transaction by proposing a block directly on L1. However, only one permissioned proposer is currently allowed to propose blocks.',
       sentiment: 'bad',
-      value: '',
+      value: 'None',
     },
     sequencerFailure: {
-      description: '',
+      description: 'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       sentiment: 'bad',
-      value: '',
+      value: 'No mechanism', // based rollup sequencing
     },
     proposerFailure: {
-      description: '',
+      description: 'Currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       sentiment: 'bad',
-      value: '',
+      value: 'No mechanism',
     },
   },
   stage: getStage(
