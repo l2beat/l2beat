@@ -15,16 +15,21 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
+  const faqItemsWithId = faqItems.map((item) => ({
+    ...item,
+    id: questionToId(item.question),
+  }))
+
   return (
     <>
       <Header />
       <ContentWrapper>
         <div className="flex">
           <div className="mt-12 hidden w-72 shrink-0 flex-col gap-4 lg:flex">
-            {faqItems.map((item) => (
+            {faqItemsWithId.map((item) => (
               <a
-                key={questionToId(item.question)}
-                href={`#${questionToId(item.question)}`}
+                key={item.id}
+                href={`#${item.id}`}
                 className="text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
               >
                 {item.question}
@@ -32,18 +37,14 @@ export default async function Page() {
             ))}
           </div>
           <article className="lg:ml-16">
-            {faqItems.map((item) => {
+            {faqItemsWithId.map((item) => {
               const answer = isArray(item.answer)
                 ? item.answer.join('\n\n')
                 : item.answer
               return (
-                <section
-                  className="mt-12"
-                  id={questionToId(item.question)}
-                  key={questionToId(item.question)}
-                >
+                <section className="mt-12" id={item.id} key={item.id}>
                   <a
-                    href={`#${questionToId(item.question)}`}
+                    href={`#${item.id}`}
                     className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
                   >
                     {item.question}

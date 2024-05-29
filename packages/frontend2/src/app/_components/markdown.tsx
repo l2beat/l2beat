@@ -1,8 +1,8 @@
 import MarkdownIt from 'markdown-it'
 import React from 'react'
 
-import { cn } from '../utils/cn'
-import { outLinksPlugin } from '../utils/markdown/outLinksPlugin'
+import { cn } from '~/utils/cn'
+import { outLinksPlugin } from '../../utils/markdown/outlinks-plugin'
 
 export interface MarkdownProps {
   children: string

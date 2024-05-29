@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 import ChevronIcon from '~/icons/chevron.svg'
-import { cn } from '../utils/cn'
+import { cn } from '~/utils/cn'
 
 const DEFAULT_SCROLL_OFFSET = 600
 
