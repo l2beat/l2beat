@@ -66,7 +66,7 @@ describe(linkGlossaryTerms.name, () => {
   })
 
   it('should remove ignore delimiters from multi-words', () => {
-    const input = 'JavaScript is :TypeScript but on steroids:.'
+    const input = 'TypeScript is :JavaScript but on steroids:.'
     const output = linkTerms(input)
     expect(output).not.toInclude(':')
   })
