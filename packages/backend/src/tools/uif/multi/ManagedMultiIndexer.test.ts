@@ -314,8 +314,8 @@ async function initializeMockIndexer(
     indexerService,
     configurations,
     logger: Logger.SILENT,
-    encode: (v) => v,
-    decode: (v) => v,
+    serializeConfiguration: (v) => v,
+    deserializeConfiguration: (v) => v,
     createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
   })
   return indexer

@@ -163,8 +163,8 @@ function createChainModule(
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    encode,
-    decode,
+    serializeConfiguration,
+    deserializeConfiguration,
     syncOptimizer,
     createDatabaseMiddleware: async () =>
       new KnexMiddleware(peripherals.getRepository(AmountRepository)),
@@ -220,7 +220,7 @@ function createChainModule(
   }
 }
 
-function encode(value: EscrowEntry | TotalSupplyEntry): string {
+function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
   switch (value.type) {
     case 'escrow':
       return JSON.stringify({
@@ -248,6 +248,8 @@ function encode(value: EscrowEntry | TotalSupplyEntry): string {
   }
 }
 
-function decode(value: string): EscrowEntry | TotalSupplyEntry {
+function deserializeConfiguration(
+  value: string,
+): EscrowEntry | TotalSupplyEntry {
   return z.union([EscrowEntry, TotalSupplyEntry]).parse(JSON.parse(value))
 }
