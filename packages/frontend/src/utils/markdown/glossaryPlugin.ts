@@ -13,36 +13,47 @@ const termToId = new Map(
   ),
 )
 
-const glossaryTerms = [...termToId.keys()]
-  .sort((a, b) => b.length - a.length)
-  .map(escapeRegExp)
+const glossaryTerms = [...termToId.keys()].sort((a, b) => b.length - a.length)
+const ignorePattern = new RegExp(`:(\w+):`, 'gi')
 
-const pattern = new RegExp(glossaryTerms.join('|'), 'gi')
+export function linkGlossaryTerms(sourceText: string): string {
+  let text = sourceText
 
-export function linkGlossaryTerms(text: string): string {
-  const linkOffsets = getAllLinksOffsets(text)
+  for (const term of glossaryTerms) {
+    const pattern = new RegExp(`\\b${escapeRegExp(term)}`, 'gi')
 
-  const isWithinExistingLink = (position: number) => {
-    return linkOffsets.some(
-      (link) => position >= link.start && position <= link.end,
-    )
-  }
+    const linkOffsets = getAllLinksOffsets(text)
 
-  // Replace glossary terms with links, avoiding existing markdown links
-  return text.replace(pattern, (matchedTerm, ...maybeOffset) => {
-    // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
-    const offset = maybeOffset.at(-2)
-
-    if (isWithinExistingLink(offset)) {
-      return matchedTerm // Don't replace if within an existing link
+    const isWithinExistingLink = (position: number) => {
+      return linkOffsets.some(
+        (link) => position >= link.start && position <= link.end,
+      )
     }
 
-    const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
+    const isIgnored = (position: number) => {
+      return (
+        text.at(position - 1) === ':' && text.at(position + term.length) === ':'
+      )
+    }
 
-    return glossaryTermId
-      ? createGlossaryLink(glossaryTermId, matchedTerm)
-      : matchedTerm
-  })
+    // Replace glossary terms with links, avoiding existing markdown links
+    text = text.replace(pattern, (matchedTerm, ...maybeOffset) => {
+      // Since we are using a regex with a single capture group, the last two arguments are the offset and the full string, rest of the arguments are the matched term where the amount of terms is unknown and potentially empty
+      const offset = maybeOffset.at(-2)
+
+      if (isWithinExistingLink(offset) || isIgnored(offset)) {
+        return matchedTerm // Don't replace if within an existing link
+      }
+
+      const glossaryTermId = termToId.get(matchedTerm.toLowerCase())
+
+      return glossaryTermId
+        ? createGlossaryLink(glossaryTermId, matchedTerm)
+        : matchedTerm
+    })
+  }
+
+  return text
 }
 
 export function glossaryPlugin(md: MarkdownIt) {
