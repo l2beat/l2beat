@@ -85,7 +85,7 @@ export const taiko: Layer2 = {
       ...DATA_ON_CHAIN,
     },
     exitWindow: {
-      description: 'The system is designed to allow users to force transaction by proposing a block directly on L1. However, only one permissioned proposer is currently allowed to propose blocks.',
+      description: 'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
       sentiment: 'bad',
       value: 'None',
     },
