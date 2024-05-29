@@ -19,5 +19,6 @@ export function getInitialState(parentCount: number): IndexerState {
     updateBlocked: false,
     invalidateBlocked: false,
     tickBlocked: false,
+    configHash: undefined,
   }
 }

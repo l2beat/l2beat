@@ -434,15 +434,14 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'ZkEvmVerifierV0',
+              name: 'Final circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
-              link: 'https://etherscan.io/address/0x585DfaD7bF4099E011D185E266907A8ab60DAD2D#code',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -450,7 +449,7 @@ export const scroll: Layer2 = {
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.9.5/aggregator',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -475,7 +474,6 @@ export const scroll: Layer2 = {
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
-              link: 'https://etherscan.io/address/0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247#code',
             },
             {
               name: 'RecursiveVerifier',
@@ -483,6 +481,7 @@ export const scroll: Layer2 = {
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
             },
             {
               name: 'MainVerifier',

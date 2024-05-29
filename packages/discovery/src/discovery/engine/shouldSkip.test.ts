@@ -17,7 +17,7 @@ describe(shouldSkip.name, () => {
         },
       },
     })
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -56,7 +56,7 @@ describe(shouldSkip.name, () => {
       },
       configReader,
     )
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -68,7 +68,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxDepth: 1,
     })
-    const result = shouldSkip({ address, depth: 2, counter: 1 }, config)
+    const result = shouldSkip(address, config, 2, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -80,7 +80,7 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxAddresses: 1,
     })
-    const result = shouldSkip({ address, depth: 0, counter: 2 }, config)
+    const result = shouldSkip(address, config, 0, 2)
     expect(result).not.toEqual(undefined)
   })
 
@@ -91,7 +91,7 @@ describe(shouldSkip.name, () => {
       chain: 'ethereum',
       initialAddresses: [],
     })
-    const result = shouldSkip({ address, depth: 0, counter: 1 }, config)
+    const result = shouldSkip(address, config, 0, 1)
     expect(result).toEqual(undefined)
   })
 })

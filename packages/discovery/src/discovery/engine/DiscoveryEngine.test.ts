@@ -4,21 +4,23 @@ import { expect, mockFn, mockObject } from 'earl'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 describe(DiscoveryEngine.name, () => {
   const BLOCK_NUMBER = 1234
-  const A = EthereumAddress.random()
-  const B = EthereumAddress.random()
-  const C = EthereumAddress.random()
-  const D = EthereumAddress.random()
+  const A = EthereumAddress.from('0xA')
+  const B = EthereumAddress.from('0xB')
+  const C = EthereumAddress.from('0xC')
+  const D = EthereumAddress.from('0xD')
+  // const strA = A.toString()
+  const strB = B.toString()
+  const strC = C.toString()
+  const strD = D.toString()
 
   it('can perform a discovery', async () => {
-    const config = new DiscoveryConfig({
-      name: 'test',
-      chain: 'ethereum',
-      initialAddresses: [A],
-      overrides: { [B.toString()]: { ignoreDiscovery: true } },
+    const config = generateFakeConfig([A], {
+      [B.toString()]: { ignoreDiscovery: true },
     })
 
     const discoveryLogger = mockObject<DiscoveryLogger>({
@@ -34,15 +36,15 @@ describe(DiscoveryEngine.name, () => {
     addressAnalyzer.analyze
       .resolvesToOnce({
         analysis: { type: 'EOA', address: A },
-        relatives: [B, C],
+        relatives: { [strB]: new Set(), [strC]: new Set() },
       })
       .resolvesToOnce({
         analysis: { type: 'EOA', address: C },
-        relatives: [B, D],
+        relatives: { [strB]: new Set(), [strD]: new Set() },
       })
       .resolvesToOnce({
         analysis: { type: 'EOA', address: D },
-        relatives: [],
+        relatives: {},
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
@@ -54,9 +56,20 @@ describe(DiscoveryEngine.name, () => {
       { type: 'EOA', address: D },
     ])
 
-    expect(discoveryLogger.log).toHaveBeenCalledTimes(4)
-    expect(discoveryLogger.logSkip).toHaveBeenCalledTimes(1)
+    expect(discoveryLogger.log).toHaveBeenCalledTimes(5)
     expect(discoveryLogger.logRelatives).toHaveBeenCalledTimes(0)
     expect(discoveryLogger.flushServer).toHaveBeenCalledTimes(1)
   })
 })
+
+const generateFakeConfig = (
+  initialAddresses: EthereumAddress[],
+  overrides: RawDiscoveryConfig['overrides'],
+): DiscoveryConfig => {
+  return new DiscoveryConfig({
+    name: 'test',
+    chain: 'ethereum',
+    initialAddresses,
+    overrides: overrides ?? {},
+  })
+}

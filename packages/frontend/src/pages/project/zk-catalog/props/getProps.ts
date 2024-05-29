@@ -12,7 +12,6 @@ import {
   ZkCatalogProjectDetails,
   ZkCatalogProjectPageProps,
 } from '../view/ZkCatalogProjectPage'
-import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   project: Layer2 | Layer3 | ZkCatalogProject,
@@ -27,7 +26,12 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      metadata: getPageMetadata(project),
+      metadata: {
+        title: `${project.display.name} - ZK Catalog`,
+        description: `${project.display.name} detailed research regarding zero-knowledge technology.`,
+        image: `https://l2beat.com/meta-images/projects/${project.display.slug}.png`,
+        url: `https://l2beat.com/zk-catalog/${project.display.slug}`,
+      },
       banner: config.features.banner,
     },
   }

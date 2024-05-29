@@ -8,7 +8,7 @@ The circuit is written in circom and the keys are generated using the snarkjs li
 
 ### Verification process
 
-The procedure is explained for the semaphore circuit of size 30, but the same applies to the other sizes. Note that every subverifier should be verified to consider the contract secure, because it is sufficient for one to be malicious to break the security of the system. A script that semi-automatically performs the verification process can be found [here](https://github.com/lucadonnoh/WLD-vkeys-verifier/tree/main). If you perform the verification manually, make sure to install the needed tools with the correct versions, as the verification fails with the latest ones.
+The procedure is explained for the semaphore circuit of size 30. While, as mentioned, the verifier contains the verification keys for all semaphore sizes from 16 to 32, the verification is always called with size 30 as the param is hardcoded, which can be verified [here](https://optimistic.etherscan.io/address/0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d#code#F2#L24) for OPWorldID_One and [here](https://optimistic.etherscan.io/address/0x42FF98C4E85212a5D31358ACbFe76a621b50fC02#code#F2#L26) for OPWorldID_Zero. To verify that the value 30 is actually the one used it is sufficient to look at one transaction for each of them. A script that semi-automatically performs the verification process from this point on can be found [here](https://github.com/lucadonnoh/WLD-vkeys-verifier/tree/main). If you perform the verification manually, make sure to install the needed tools with the correct versions, as the verification fails with the latest ones.
 
 ![Semaphore verification process](/images/zk-catalog/semaphore-verification.png)
 
@@ -36,13 +36,11 @@ We can now extract the verification keys from the zkey file:
 
 `snarkjs zkev semaphore30_final.zkey verification_key30.json`
 
-Now it's time to compare the onchain verification keys to the generated ones. Download the corresponding onchain verifier either manually or using the following command:
+Now it's time to compare the onchain verification keys to the generated ones. Download the corresponding onchain verifier either manually or using the following command using [Foundry](https://book.getfoundry.sh/):
 
 `cast etherscan-source 0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF --etherscan-api-key "${ETHERSCAN_API_KEY}" --chain optimism > SemaphoreVerifier.sol`
 
 The `_getVerificationKey` function shows how the verification keys are fetched. In particular, the `alpha1`, `beta2` and `gamma2` values are hardcoded in the function (because size-independent) while the `delta2` and `IC` values are fetched from the `VK_POINTS` array depending on the size.
-
-The verification should be repeated for each size.
 
 ## Semaphore Merkle Tree Batcher (SMTB)
 

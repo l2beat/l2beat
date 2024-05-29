@@ -87,6 +87,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swell } from './swell'
+import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -96,6 +97,7 @@ import { Layer2 } from './types'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
+import { xpla } from './xpla'
 import { zentachain } from './zentachain'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
@@ -199,14 +201,16 @@ export const layer2s: Layer2[] = [
   stealthchain,
   superseed,
   swell,
+  sxt,
   taiko,
   tanx,
   ten,
   termstructure,
   tradable,
   world,
-  xlayer,
   xchain,
+  xlayer,
+  xpla,
   zentachain,
   zircuit,
   zkcandy,

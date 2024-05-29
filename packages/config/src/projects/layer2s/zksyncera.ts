@@ -574,22 +574,21 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'PlonkVerifier',
+              name: 'Final wrap',
               proofSystem: 'Plonk SNARK',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Aztec ceremony',
-              link: 'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',

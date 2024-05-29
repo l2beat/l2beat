@@ -14,49 +14,6 @@ const ADDRESS = EthereumAddress.random()
 
 describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.run.name, () => {
-    it('runs discovery twice', async () => {
-      const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const runner = new DiscoveryRunner(
-        mockObject<DiscoveryProvider>({}),
-        engine,
-        mockObject<ConfigReader>({}),
-        'ethereum',
-      )
-      await runner.run(getMockConfig(), 1, {
-        logger: Logger.SILENT,
-        runSanityCheck: true,
-        injectInitialAddresses: false,
-      })
-
-      expect(engine.discover).toHaveBeenCalledTimes(2)
-    })
-
-    it('run success but sanity check throws an error', async () => {
-      const engine = mockObject<DiscoveryEngine>({
-        discover: mockFn()
-          .resolvesToOnce([])
-          .throwsOnce(new Error('sanity call errored'))
-          .resolvesToOnce([]),
-      })
-      const runner = new DiscoveryRunner(
-        mockObject<DiscoveryProvider>({}),
-        engine,
-        mockObject<ConfigReader>({}),
-        'ethereum',
-      )
-
-      await expect(() =>
-        runner.run(getMockConfig(), 1, {
-          logger: Logger.SILENT,
-          runSanityCheck: true,
-          injectInitialAddresses: false,
-          maxRetries: 10,
-          retryDelayMs: 10,
-        }),
-      ).not.toBeRejected()
-      expect(engine.discover).toHaveBeenCalledTimes(3)
-    })
-
     it('injects initial addresses', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const configReader = mockObject<ConfigReader>({
@@ -73,7 +30,6 @@ describe(DiscoveryRunner.name, () => {
 
       await runner.run(getMockConfig(), 1, {
         logger: Logger.SILENT,
-        runSanityCheck: false,
         injectInitialAddresses: true,
       })
 
@@ -105,7 +61,6 @@ describe(DiscoveryRunner.name, () => {
       )
       await runner.run(sourceConfig, 1, {
         logger: Logger.SILENT,
-        runSanityCheck: true,
         injectInitialAddresses: true,
       })
 
@@ -129,7 +84,6 @@ describe(DiscoveryRunner.name, () => {
 
         await runner.run(getMockConfig(), 1, {
           logger: Logger.SILENT,
-          runSanityCheck: false,
           injectInitialAddresses: false,
           maxRetries: 2,
           retryDelayMs: 10,
@@ -156,7 +110,6 @@ describe(DiscoveryRunner.name, () => {
           async () =>
             await runner.run(getMockConfig(), 1, {
               logger: Logger.SILENT,
-              runSanityCheck: false,
               injectInitialAddresses: false,
               maxRetries: 1,
               retryDelayMs: 10,

@@ -2,6 +2,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
+  ChainConfig,
   ScalingProjectEscrow,
   ScalingProjectTransactionApi,
   TECHNOLOGY,
@@ -14,12 +15,12 @@ export interface UnderReviewConfigCommon {
   id: string
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
+  chainConfig?: ChainConfig
   transactionApi?: ScalingProjectTransactionApi
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
-  chainConfig?: Layer2['chainConfig']
   associatedTokens?: string[]
 }
 
@@ -87,5 +88,6 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
+    chainConfig: templateVars.chainConfig,
   }
 }
