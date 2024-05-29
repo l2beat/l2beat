@@ -30,7 +30,7 @@ export function BridgedUsingCell(props: BridgedUsingCellProps) {
       {token?.bridgedUsing?.warning && (
         <Tooltip>
           <TooltipTrigger>
-            <RoundedWarningIcon className="size-4" sentiment={'warning'} />
+            <RoundedWarningIcon className="size-4" sentiment="bad" />
           </TooltipTrigger>
           <TooltipContent>
             <div className="space-y-2">{token.bridgedUsing.warning}</div>
