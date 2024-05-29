@@ -106,7 +106,7 @@
 }
 
 .mdc a[data-link-role="glossary"] {
-  @apply underline decoration-dotted md:underline-offset-2
+  @apply underline decoration-dotted md:underline-offset-2 decoration-blue-700 dark:decoration-blue-500;
 }
 
 .mdc img {
