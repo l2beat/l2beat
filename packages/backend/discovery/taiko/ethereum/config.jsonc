@@ -32,9 +32,7 @@
         "getMessageMinGasLimit", // too many values
         "context" // Multicall failed
       ],
-      "ignoreInWatchMode": [
-        "nextMessageId"
-      ],
+      "ignoreInWatchMode": ["nextMessageId"],
       "fields": {
         "proxiableUUID": {
           "handler": {
