@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x1d9d1ba1794af0136ca6780f18b6d2ba227505ea
+Generated with discovered.json: 0x2726b1d1d2b1da6f8d513611015f51d5d0ab40f0
 
-# Diff at Thu, 30 May 2024 10:36:56 GMT:
+# Diff at Thu, 30 May 2024 11:25:44 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19982104
+- current block number: 19982351
 
 ## Description
 
@@ -74,6 +74,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab)
     +++ description: None
 ```
 

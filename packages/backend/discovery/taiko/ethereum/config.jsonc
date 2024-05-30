@@ -3,13 +3,15 @@
   "chain": "ethereum",
   "name": "taiko",
   "initialAddresses": [
-    "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+    "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC", // shared
+    "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab", // shared
     "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
     "0x4cffe56C947E26D07C14020499776DB3e9AE3a23"
   ],
   "names": {
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC": "TaikoBridge",
+    "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "SharedERC20Vault",
     "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "TaikoL1Contract",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ProverSetProxy",
     "0x4cffe56C947E26D07C14020499776DB3e9AE3a23": "TierProvider",
@@ -30,6 +32,18 @@
         "getMessageMinGasLimit", // too many values
         "context" // Multicall failed
       ],
+      "fields": {
+        "proxiableUUID": {
+          "handler": {
+            "type": "call",
+            "method": "function proxiableUUID() view returns (bytes32)",
+            "args": [],
+            "expectRevert": true
+          }
+        }
+      }
+    },
+    "SharedERC20Vault": {
       "fields": {
         "proxiableUUID": {
           "handler": {

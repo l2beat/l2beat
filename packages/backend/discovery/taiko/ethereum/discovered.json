@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19982104,
-  "configHash": "0x8a1df87bfc8f3dd4fed7f12fa7c842b9a4e9c0e2da9062fe18e4bbd70d53fe76",
+  "blockNumber": 19982351,
+  "configHash": "0xf02d2c666658c0141cf7121a3528981ed60169c892512dd2bc736cf11ebfa117",
   "version": 4,
   "contracts": [
     {
@@ -46,8 +46,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 6862, 1717064951],
-          [10561, 6873, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 6998, 1717068251],
+          [10711, 7002, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -65,12 +65,12 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 6862, 1717064951],
-        "slotB": [10561, 6873, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 6998, 1717068251],
+        "slotB": [10711, 7002, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 6862, 1717064951],
-          [10561, 6873, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 6998, 1717068251],
+          [10711, 7002, false, 0, 0, 0, 1716571955]
         ],
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -96,7 +96,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1717065323,
+        "clock": 1717068323,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -348,6 +348,30 @@
       "derivedName": "AutomataDcapV3Attestation"
     },
     {
+      "name": "SharedERC20Vault",
+      "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x4F750D13005444407D44dAA30922128db0374ca1",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0x4F750D13005444407D44dAA30922128db0374ca1"],
+      "sinceTimestamp": 1714550603,
+      "values": {
+        "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+        "impl": "0x4F750D13005444407D44dAA30922128db0374ca1",
+        "inNonReentrant": false,
+        "lastUnpausedAt": 0,
+        "MIN_MIGRATION_DELAY": 7776000,
+        "name": "0x65726332305f7661756c74000000000000000000000000000000000000000000",
+        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT"
+      },
+      "derivedName": "ERC20Vault"
+    },
+    {
       "name": "TaikoAdmin",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "upgradeability": {
@@ -416,8 +440,8 @@
           ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
           ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
           ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1717065287],
-          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1717065323]
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1717068311],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1717068251]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
@@ -445,7 +469,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 3942,
+        "nextMessageId": 3990,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -740,6 +764,70 @@
       "function getMinTier(uint256) pure returns (uint16)",
       "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
       "function getTierIds() pure returns (uint16[] tiers_)"
+    ],
+    "0x4F750D13005444407D44dAA30922128db0374ca1": [
+      "error ETH_TRANSFER_FAILED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error VAULT_BTOKEN_BLACKLISTED()",
+      "error VAULT_CTOKEN_MISMATCH()",
+      "error VAULT_INSURFICIENT_FEE()",
+      "error VAULT_INVALID_AMOUNT()",
+      "error VAULT_INVALID_CTOKEN()",
+      "error VAULT_INVALID_NEW_BTOKEN()",
+      "error VAULT_INVALID_TOKEN()",
+      "error VAULT_INVALID_TO_ADDR()",
+      "error VAULT_LAST_MIGRATION_TOO_CLOSE()",
+      "error VAULT_PERMISSION_DENIED()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event BridgedTokenChanged(uint256 indexed srcChainId, address indexed ctoken, address btokenOld, address btokenNew, string ctokenSymbol, string ctokenName, uint8 ctokenDecimal)",
+      "event BridgedTokenDeployed(uint256 indexed srcChainId, address indexed ctoken, address indexed btoken, string ctokenSymbol, string ctokenName, uint8 ctokenDecimal)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event TokenReceived(bytes32 indexed msgHash, address indexed from, address indexed to, uint64 srcChainId, address ctoken, address token, uint256 amount)",
+      "event TokenReleased(bytes32 indexed msgHash, address indexed from, address ctoken, address token, uint256 amount)",
+      "event TokenSent(bytes32 indexed msgHash, address indexed from, address indexed to, uint64 destChainId, address ctoken, address token, uint256 amount)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function MIN_MIGRATION_DELAY() view returns (uint256)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function bridgedToCanonical(address btoken) view returns (uint64 chainId, address addr, uint8 decimals, string symbol, string name)",
+      "function btokenDenylist(address btoken) view returns (bool denied)",
+      "function canonicalToBridged(uint256 chainId, address ctoken) view returns (address btoken)",
+      "function changeBridgedToken(tuple(uint64 chainId, address addr, uint8 decimals, string symbol, string name) _ctoken, address _btokenNew) returns (address btokenOld_)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _addressManager)",
+      "function lastMigrationStart(uint256 chainId, address ctoken) view returns (uint256 timestamp)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function name() pure returns (bytes32)",
+      "function onMessageInvocation(bytes _data) payable",
+      "function onMessageRecalled(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes32 _msgHash) payable",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function sendToken(tuple(uint64 destChainId, address destOwner, address to, uint64 fee, address token, uint32 gasLimit, uint256 amount) _op) payable returns (tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message_)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x500735343372Dd6c9B84dBc7a75babf4479742B9": [
       "error FUNC_NOT_IMPLEMENTED()",
@@ -1109,6 +1197,12 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": [
       "constructor(address _singleton)"

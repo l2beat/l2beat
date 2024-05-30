@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
+  EXITS,
   FRONTRUNNING_RISK,
   RISK_VIEW,
   makeBridgeCompatible,
@@ -168,13 +169,13 @@ export const taiko: Layer2 = {
       ],
     },
     exitMechanisms: [
-      // to do: add exit mechanism
+      // to do: double check exit mechanism
       {
-        name: 'Exit',
-        description: `.`,
+        name: 'Regular exit',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
         risks: [],
         references: [],
-      },
+      }
     ],
   },
   contracts: {
