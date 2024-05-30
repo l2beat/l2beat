@@ -1,7 +1,7 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 215641876,
+  "blockNumber": 216537364,
   "configHash": "0xdd9bb837e819f84b14a6a1c4123e804d873f5c6fa611773cc0d17677ed8d2140",
   "version": 4,
   "contracts": [
@@ -47,6 +47,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1d182075d07744D71E37f77f1654165f6DAFad08",
@@ -55,7 +56,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1712958598,
       "values": {
-        "batchCount": 677,
+        "batchCount": 702,
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "dacKeyset": {
@@ -70,13 +71,18 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3183
+        "totalDelayedMessagesRead": 3388
       },
       "derivedName": "SequencerInbox"
     },
     {
       "name": "Bridge",
       "address": "0x2f285781B8d58678a3483de52D618198E4d27532",
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xC5Db571093C4600559e239497d147476F7543b15",
@@ -91,12 +97,12 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 3196,
+        "delayedMessageCount": 3389,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 677,
-        "sequencerReportedSubMessageCount": 82634
+        "sequencerMessageCount": 702,
+        "sequencerReportedSubMessageCount": 94937
       },
       "derivedName": "ERC20Bridge"
     },
@@ -151,6 +157,7 @@
     {
       "name": "Caldera Multisig",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -169,7 +176,7 @@
           "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
         ],
         "getThreshold": 3,
-        "nonce": 1,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -216,10 +223,7 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
-              "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
-            ]
+            "members": ["0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
@@ -258,6 +262,11 @@
     {
       "name": "RollupProxy",
       "address": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276",
@@ -278,12 +287,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 534,
+        "firstUnresolvedNode": 544,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 533,
-        "latestNodeCreated": 559,
+        "latestConfirmed": 543,
+        "latestNodeCreated": 569,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -378,6 +387,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x02867114B27d686f3565E2060424e985a1E565f5",
     "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
     "0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a",
