@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x71c562e43fc5ffc5206bcb9a6f7ae3dd45ebe676
+
+# Diff at Wed, 29 May 2024 15:05:45 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19831219
+- current block number: 19976298
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19831219 (main branch discovery), not current.
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
+    }
+```
+
 Generated with discovered.json: 0x2ba241edec2c6159161163d4edcd345d773b403a
 
 # Diff at Thu, 09 May 2024 08:14:02 GMT:
