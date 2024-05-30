@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19982170,
+  "blockNumber": 19982475,
   "configHash": "0x6cba85c2f2b6ccf53cd0ff0ffc4fb2276ab73dac5738dc6f3b9897fe827ee6ec",
   "version": 4,
   "contracts": [
@@ -14,8 +14,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xd4e6160000000000",
-        "get_deposit_root": "0x2e7a4a60261b4bc09158a1406159f7d726300e59a7aaddc507c8802f7fa2d779"
+        "get_deposit_count": "0x1ae7160000000000",
+        "get_deposit_root": "0xed655db0af0bfedb220d080ae5228548bf7c7b3344dcb6196a2190cda53f019d"
       },
       "derivedName": "DepositContract"
     },
@@ -206,7 +206,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "199093604779422172014234"
+        "totalSupply": "198360266646901485751031"
       },
       "derivedName": "frxETH"
     },
@@ -253,10 +253,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 5124600,
-        "latestOutputIndex": 2846,
-        "nextBlockNumber": 5126400,
-        "nextOutputIndex": 2847,
+        "latestBlockNumber": 5126400,
+        "latestOutputIndex": 2847,
+        "nextBlockNumber": 5128200,
+        "nextOutputIndex": 2848,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -367,11 +367,11 @@
         "lastRewardAmount": "103923000000000000000",
         "lastSync": 1717034507,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1087709552896923148",
+        "pricePerShare": "1087714024630704981",
         "rewardsCycleEnd": 1717632000,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "156875665544757752569054",
+        "totalAssets": "156876310483667497118362",
         "totalSupply": "144225694374888038726616"
       },
       "derivedName": "sfrxETH"
