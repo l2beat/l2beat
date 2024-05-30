@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbd82eb4331890cf9d7fc3b35ff388acb8d95e2b3
+
+# Diff at Thu, 30 May 2024 10:48:45 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@765e34e8ea83c27680317d1368831e27e3399064 block: 19875788
+- current block number: 19982170
+
+## Description
+
+One signer of fraxtal Multisig is replaced and L2 fee calculation is switched to [post-Ecotone encoding](https://specs.optimism.io/protocol/system_config.html#ecotone-scalar-overhead-uint256uint256-change).
+
+## Watched changes
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
++++ description: Signers of the multisig, high severity if threshold changes
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.0:
+-        "0x892D3076fb9Ac7Cb2B9cF25F051A275E69D460e3"
++        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+    }
+```
+
 Generated with discovered.json: 0xb4e392b5d9341f4a7fce949f64679f35dd02550b
 
 # Diff at Wed, 15 May 2024 13:50:16 GMT:
