@@ -73,7 +73,7 @@ export const taiko: Layer2 = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.hekla.taiko.xyz/'],
+      apps: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
       explorers: ['https://hekla.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
