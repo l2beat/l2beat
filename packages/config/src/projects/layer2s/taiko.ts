@@ -178,7 +178,7 @@ export const taiko: Layer2 = {
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After proof is submitted anyone - within cooldown window, for SGX tier is ${SGXcooldownWindow} - can contest by submitting a bond. Proving a block is not required to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
-        If noone challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
+        If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [],
       risks: [
         {
