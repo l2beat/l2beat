@@ -312,7 +312,7 @@ export const taiko: Layer2 = {
       name: 'ProposerBlockOne',
       accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
       description:
-        'The authorized proposer of blocks one, harcoded to vitalik.eth address.',
+        'The authorized proposer of block one, hardcoded to vitalik.eth address.',
     },
   ],
   milestones: [
