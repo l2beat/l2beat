@@ -176,8 +176,8 @@ export const taiko: Layer2 = {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian multisig (from lowest to highest).
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After proof is submitted anyone - within cooldown window, for SGX tier is ${SGXcooldownWindow} - can contest by submitting a bond. Proving a block is not required to submit a contestation.
-        When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
+        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. It is not required to provide a proof for the block to submit a contestation.
+        When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [],
       risks: [
