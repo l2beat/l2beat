@@ -2,6 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DATA_ON_CHAIN } from '../../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+
+const discovery = new ProjectDiscovery('taiko')
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -78,7 +81,9 @@ export const taiko: Layer2 = {
     },
     stateValidation: {
       description:
-        'Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians. This can lead to a state being proven as valid when it is not.',
+        `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
+        Each proof goes through a cooling window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
+        The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
       value: 'SGX Proofs',
     },
@@ -135,8 +140,8 @@ export const taiko: Layer2 = {
       description:
         `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of 1 hour, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After proof is submitted anyone within cooldown window for SGX tier (24 hours) can contest by submitting a bond. They don't need to prove anything
-        When someone contests, "higher" tier has to step in to prove the contested block. Decision of the hishest tier (currently the 6/8 Guardian multisig) is considered final.
+        After proof is submitted anyone - within cooldown window, for SGX tier is 24 hours - can contest by submitting a bond. Proving a block is not required to submit a contestation.
+        When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
         If noone challenges the original SGX proof, it finalizes after 24 hours (the cooldown window).`,
       references: [],
       risks: [],
@@ -144,14 +149,14 @@ export const taiko: Layer2 = {
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
       description:
-        'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
+        'All the data that is used to construct the system state is published on chain in the form of blobs. This ensures that it will be available for enough time.',
       references: [],
       risks: [],
     },
     operator: {
       name: 'The system has a centralized proposer',
       description:
-        'Currently, the system has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+        'Although designed for permissionless block proposals, the system currently has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       references: [],
       risks: [],
     },
@@ -165,10 +170,31 @@ export const taiko: Layer2 = {
     exitMechanisms: [],
   },
   contracts: {
-    addresses: [],
+    addresses: [
+      discovery.getContractDetails('TaikoL1Contract', {
+        description: "This contract provides functionalities for proposing, proving, and verifying blocks.",
+      }),
+      discovery.getContractDetails('SgxVerifier', {
+        description: "Verifier contract for SGX proven blocks.",
+      }),
+      discovery.getContractDetails('GuardianMinorityProver', {
+        description: "Verifier contract for blocks proven by Guardian multisig minority.",
+      }),
+      discovery.getContractDetails('GuardianProver', {
+        description: "Verifier contract for Guardian multisig proven blocks.",
+      }),
+      discovery.getContractDetails('TaikoToken', {
+        description: "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+      }),
+    ],
     risks: [],
   },
-  permissions: [],
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'TaikoAdmin',
+      'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
+    ),
+  ],
   milestones: [
     {
       name: 'Taiko Mainnet Launch',
