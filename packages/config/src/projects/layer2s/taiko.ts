@@ -1,5 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DATA_ON_CHAIN } from '../../common'
+import { DATA_ON_CHAIN, FRONTRUNNING_RISK, RISK_VIEW, makeBridgeCompatible } from '../../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -63,22 +63,7 @@ export const taiko: Layer2 = {
     minTimestampForTvl: new UnixTime(1716620627),
   },
   type: 'layer2',
-  riskView: {
-    validatedBy: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    sourceUpgradeability: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    destinationToken: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
+  riskView: makeBridgeCompatible({
     stateValidation: {
       description:
         `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
@@ -108,7 +93,9 @@ export const taiko: Layer2 = {
       sentiment: 'good',
       value: 'Self propose',
     },
-  },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
   stage: getStage(
     {
       stage0: {
@@ -144,7 +131,12 @@ export const taiko: Layer2 = {
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
         If noone challenges the original SGX proof, it finalizes after 24 hours (the cooldown window).`,
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'a malicious block is proven by a compromised SGX instance or approved by Guardians.',
+        },
+      ],
     },
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
@@ -158,16 +150,28 @@ export const taiko: Layer2 = {
       description:
         'Although designed for permissionless block proposals, the system currently has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       references: [],
-      risks: [],
+      risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
       name: `Users can't force any transaction`,
       description:
         'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
       references: [],
-      risks: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the operator refuses to include their transactions.',
+        },
+      ],
     },
-    exitMechanisms: [],
+    exitMechanisms: [
+      {
+        name: 'Exit',
+        description: ``,
+        risks: [],
+        references: [],
+      }
+    ],
   },
   contracts: {
     addresses: [
