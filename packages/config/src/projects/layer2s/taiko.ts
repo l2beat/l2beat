@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DATA_ON_CHAIN } from '../../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { DATA_ON_CHAIN, TECHNOLOGY_DATA_AVAILABILITY } from '../../common'
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -77,7 +77,8 @@ export const taiko: Layer2 = {
       value: '',
     },
     stateValidation: {
-      description: 'Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians. This can lead to a state being proven as valid when it is not.',
+      description:
+        'Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians. This can lead to a state being proven as valid when it is not.',
       sentiment: 'bad',
       value: 'SGX Proofs',
     },
@@ -85,17 +86,20 @@ export const taiko: Layer2 = {
       ...DATA_ON_CHAIN,
     },
     exitWindow: {
-      description: 'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
+      description:
+        'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
       sentiment: 'bad',
       value: 'None',
     },
     sequencerFailure: {
-      description: 'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+      description:
+        'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       sentiment: 'bad',
       value: 'No mechanism', // based rollup sequencing
     },
     proposerFailure: {
-      description: 'Only the whitelisted proposer can advance the state on L1, so in the event of failure the withdrawals are frozen.',
+      description:
+        'Only the whitelisted proposer can advance the state on L1, so in the event of failure the withdrawals are frozen.',
       sentiment: 'bad',
       value: 'No mechanism',
     },
