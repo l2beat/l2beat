@@ -1,8 +1,13 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DATA_ON_CHAIN, FRONTRUNNING_RISK, RISK_VIEW, makeBridgeCompatible } from '../../common'
+import {
+  DATA_ON_CHAIN,
+  FRONTRUNNING_RISK,
+  RISK_VIEW,
+  makeBridgeCompatible,
+} from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -65,8 +70,7 @@ export const taiko: Layer2 = {
   type: 'layer2',
   riskView: makeBridgeCompatible({
     stateValidation: {
-      description:
-        `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
+      description: `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
         Each proof goes through a cooling window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
         The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
@@ -124,8 +128,7 @@ export const taiko: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'Multi-tier proof system',
-      description:
-        `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
+      description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of 1 hour, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After proof is submitted anyone - within cooldown window, for SGX tier is 24 hours - can contest by submitting a bond. Proving a block is not required to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
@@ -160,7 +163,7 @@ export const taiko: Layer2 = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'the operator refuses to include their transactions.',
+          text: 'the proposer refuses to include their transactions.',
         },
       ],
     },
@@ -170,25 +173,46 @@ export const taiko: Layer2 = {
         description: ``,
         risks: [],
         references: [],
-      }
+      },
     ],
   },
   contracts: {
     addresses: [
       discovery.getContractDetails('TaikoL1Contract', {
-        description: "This contract provides functionalities for proposing, proving, and verifying blocks.",
+        description:
+          'This contract provides functionalities for proposing, proving, and verifying blocks.',
+      }),
+      discovery.getContractDetails('L1RollupAddressManager', {
+        description:
+          'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
+      }),
+      discovery.getContractDetails('TierProvider', {
+        description: 'Contract managing the multi-tier proof system.',
       }),
       discovery.getContractDetails('SgxVerifier', {
-        description: "Verifier contract for SGX proven blocks.",
+        description: 'Verifier contract for SGX proven blocks.',
       }),
       discovery.getContractDetails('GuardianMinorityProver', {
-        description: "Verifier contract for blocks proven by Guardian multisig minority.",
+        description:
+          'Verifier contract for blocks proven by Guardian multisig minority.',
       }),
       discovery.getContractDetails('GuardianProver', {
-        description: "Verifier contract for Guardian multisig proven blocks.",
+        description: 'Verifier contract for Guardian multisig proven blocks.',
+      }),
+      discovery.getContractDetails('ProverSet', {
+        description:
+          "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
+      }),
+      discovery.getContractDetails('SignalService', {
+        description:
+          'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
+      }),
+      discovery.getContractDetails('AutomataDcapV3Attestation', {
+        description: 'Contract managing SGX attestation certificates.',
       }),
       discovery.getContractDetails('TaikoToken', {
-        description: "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+        description:
+          "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
       }),
     ],
     risks: [],
@@ -198,14 +222,14 @@ export const taiko: Layer2 = {
       'TaikoAdmin',
       'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
     ),
+    // to do: add watchers and watchdogs
   ],
   milestones: [
     {
       name: 'Taiko Mainnet Launch',
       link: '',
       date: '2024-05-27T00:00:00.00Z',
-      description: ''
-        
+      description: '',
     },
   ],
 }
