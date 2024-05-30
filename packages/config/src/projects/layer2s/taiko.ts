@@ -275,6 +275,18 @@ export const taiko: Layer2 = {
       'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
     ),
     {
+      name: 'GuardianProvers',
+      description:
+        'Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      accounts: discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
+    },
+    {
+      name: 'GuardianMinorityProver',
+      description:
+        'Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig.',
+      accounts: discovery.getPermissionedAccounts('GuardianMinorityProver', 'guardians'),
+    },
+    {
       name: 'ChainWatchdog',
       accounts: [{ address: EthereumAddress(chainWatchdog), type: 'MultiSig' }],
       description: 'The chain watchdog role can pause proving of blocks.',
