@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
   FRONTRUNNING_RISK,
@@ -16,6 +21,16 @@ const chainWatchdog = discovery.getContractValue<string>(
   'chain_watchdog',
 )
 
+const proposer = discovery.getContractValue<string>(
+  'TaikoL1Contract',
+  'proposer',
+)
+
+const proposerOne = discovery.getContractValue<string>(
+  'TaikoL1Contract',
+  'proposer_one',
+)
+
 // const TIER_SGX = discovery.getContractValue<string[]>(
 //   'TierProvider',
 //   'TIER_SGX',
@@ -23,7 +38,7 @@ const chainWatchdog = discovery.getContractValue<string>(
 
 // const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[2])
 
-const SGXcooldownWindow = formatSeconds(24*60*60)
+const SGXcooldownWindow = formatSeconds(24 * 60 * 60)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -229,6 +244,12 @@ export const taiko: Layer2 = {
         description:
           "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
       }),
+      discovery.getContractDetails('TaikoBridge', {
+        description: 'Shared bridge for Taiko chains for bridged ETH.',
+      }),
+      discovery.getContractDetails('SharedERC20Vault', {
+        description: 'Shared vault for Taiko chains for bridged ERC20 tokens.',
+      }),
     ],
     risks: [],
   },
@@ -239,11 +260,25 @@ export const taiko: Layer2 = {
     ),
     {
       name: 'ChainWatchdog',
-      accounts: [{address: EthereumAddress(chainWatchdog), type: 'MultiSig'}],
-      description:
-        'The chain watchdog role can pause proving of blocks.',
+      accounts: [{ address: EthereumAddress(chainWatchdog), type: 'MultiSig' }],
+      description: 'The chain watchdog role can pause proving of blocks.',
     },
-
+    {
+      name: 'Proposer',
+      accounts: [
+        {
+          address: EthereumAddress(proposer),
+          type: 'EOA',
+        },
+      ],
+      description: 'The authorized proposer of blocks on the TaikoL1 contract.',
+    },
+    {
+      name: 'ProposerBlockOne',
+      accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
+      description:
+        'The authorized proposer of blocks one, harcoded to vitalik.eth address.',
+    },
   ],
   milestones: [
     {
