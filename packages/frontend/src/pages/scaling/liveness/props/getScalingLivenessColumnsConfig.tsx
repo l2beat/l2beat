@@ -132,7 +132,7 @@ export function getScalingLivenessColumnsConfig() {
             !project.data?.syncStatus.isSynced ||
             project.slug === 'linea' ||
             project.slug === 'starknet' ||
-            project.slug == 'scroll'
+            project.slug === 'scroll'
           }
         />
       ),
