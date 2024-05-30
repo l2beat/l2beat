@@ -31,14 +31,12 @@ const proposerOne = discovery.getContractValue<string>(
   'proposer_one',
 )
 
-// const TIER_SGX = discovery.getContractValue<string[]>(
-//   'TierProvider',
-//   'TIER_SGX',
-// )
+const TIER_SGX = discovery.getContractValue<string[]>(
+  'TierProvider',
+  'TIER_SGX',
+) 
 
-// const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[2])
-
-const SGXcooldownWindow = formatSeconds(24 * 60 * 60)
+const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3])*60) // value in minutes
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
