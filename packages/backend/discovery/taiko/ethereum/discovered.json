@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19981029,
-  "configHash": "0x41ae1e43d0355c66ea0b42ff8ed5ae5a00c8f3a139de9597ad5c47e700dde272",
+  "blockNumber": 19982104,
+  "configHash": "0x8a1df87bfc8f3dd4fed7f12fa7c842b9a4e9c0e2da9062fe18e4bbd70d53fe76",
   "version": 4,
   "contracts": [
     {
@@ -46,8 +46,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 6360, 1717052183],
-          [9991, 6366, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 6862, 1717064951],
+          [10561, 6873, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -65,12 +65,12 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 6360, 1717052183],
-        "slotB": [9991, 6366, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 6862, 1717064951],
+        "slotB": [10561, 6873, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 6360, 1717052183],
-          [9991, 6366, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 6862, 1717064951],
+          [10561, 6873, false, 0, 0, 0, 1716571955]
         ],
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -96,7 +96,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1717052363,
+        "clock": 1717065323,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -292,7 +292,7 @@
       "derivedName": "L1RollupAddressManager"
     },
     {
-      "name": "ProverSet",
+      "name": "ProverSetProxy",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -416,8 +416,8 @@
           ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
           ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
           ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1717052363],
-          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1717052363]
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1717065287],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1717065323]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
@@ -445,7 +445,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 3816,
+        "nextMessageId": 3942,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",

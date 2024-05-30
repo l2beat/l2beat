@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0f309a89d37c893fc7dff67d5813997991069dcf
+Generated with discovered.json: 0x1d9d1ba1794af0136ca6780f18b6d2ba227505ea
 
-# Diff at Thu, 30 May 2024 06:59:43 GMT:
+# Diff at Thu, 30 May 2024 10:36:56 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19981029
+- current block number: 19982104
 
 ## Description
 
@@ -44,7 +44,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ProverSet (0x500735343372Dd6c9B84dBc7a75babf4479742B9)
-    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+    +++ description: None
 ```
 
 ```diff
@@ -67,7 +67,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
     +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
 ```
 

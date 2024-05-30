@@ -95,7 +95,7 @@ export const taiko: Layer2 = {
       description:
         'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks.',
       sentiment: 'good',
-      value: 'Self propose',
+      value: 'Self proving',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -168,9 +168,10 @@ export const taiko: Layer2 = {
       ],
     },
     exitMechanisms: [
+      // to do: add exit mechanism
       {
         name: 'Exit',
-        description: ``,
+        description: `.`,
         risks: [],
         references: [],
       },
@@ -199,7 +200,7 @@ export const taiko: Layer2 = {
       discovery.getContractDetails('GuardianProver', {
         description: 'Verifier contract for Guardian multisig proven blocks.',
       }),
-      discovery.getContractDetails('ProverSet', {
+      discovery.getContractDetails('ProverSetProxy', {
         description:
           "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
       }),
@@ -227,9 +228,9 @@ export const taiko: Layer2 = {
   milestones: [
     {
       name: 'Taiko Mainnet Launch',
-      link: '',
+      link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
-      description: '',
+      description: 'Taiko is deployed on Ethereym mainnet.',
     },
   ],
 }
