@@ -93,7 +93,7 @@ export const taiko: Layer2 = {
     },
     proposerFailure: {
       description:
-        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks.',
+        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks. However, the TaikoAdmin multisig can delete SGX instance without delay, which would prevent valid SGX proofs from being accepted.',
       sentiment: 'good',
       value: 'Self proving',
     },
