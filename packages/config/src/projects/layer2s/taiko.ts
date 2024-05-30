@@ -100,7 +100,7 @@ export const taiko: Layer2 = {
     proposerFailure: {
       description:
         'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks.',
-      sentiment: 'bad',
+      sentiment: 'good',
       value: 'Self propose',
     },
   },
@@ -130,21 +130,35 @@ export const taiko: Layer2 = {
     },
   ),
   technology: {
+    stateCorrectness: {
+      name: 'Multi-tier proof system',
+      description:
+        `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
+        When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of 1 hour, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        After proof is submitted anyone within cooldown window for SGX tier (24 hours) can contest by submitting a bond. They don't need to prove anything
+        When someone contests, "higher" tier has to step in to prove the contested block. Decision of the hishest tier (currently the 6/8 Guardian multisig) is considered final.
+        If noone challenges the original SGX proof, it finalizes after 24 hours (the cooldown window).`,
+      references: [],
+      risks: [],
+    },
     dataAvailability: {
       name: 'All data required for proofs is published on chain',
-      description: 'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
+      description:
+        'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
       references: [],
       risks: [],
     },
     operator: {
       name: 'The system has a centralized proposer',
-      description: 'Currently, the system has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+      description:
+        'Currently, the system has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       references: [],
       risks: [],
     },
     forceTransactions: {
       name: `Users can't force any transaction`,
-      description: 'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
+      description:
+        'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
       references: [],
       risks: [],
     },
@@ -154,4 +168,14 @@ export const taiko: Layer2 = {
     addresses: [],
     risks: [],
   },
+  permissions: [],
+  milestones: [
+    {
+      name: 'Taiko Mainnet Launch',
+      link: '',
+      date: '2024-05-27T00:00:00.00Z',
+      description: ''
+        
+    },
+  ],
 }
