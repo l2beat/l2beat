@@ -1361,6 +1361,16 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "MOLTEN",
+      "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "MOZ",
       "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
       "type": "NMV",

@@ -31,6 +31,8 @@ export const molten: Layer3 = orbitStackL3({
       ],
     },
   },
+  nativeToken: 'MOLTEN',
+  associatedTokens: ['MOLTEN'],
   rpcUrl: 'https://molten.calderachain.xyz/http',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
