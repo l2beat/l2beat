@@ -34,9 +34,27 @@ const proposerOne = discovery.getContractValue<string>(
 const TIER_SGX = discovery.getContractValue<string[]>(
   'TierProvider',
   'TIER_SGX',
-) 
+)
 
-const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3])*60) // value in minutes
+const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
+  'GuardianMinorityProver',
+  'minGuardians',
+)
+const NumGuardiansMinorityProver = discovery.getContractValue<string[]>(
+  'GuardianMinorityProver',
+  'numGuardians',
+)
+
+const GuardianProverMinSigners = discovery.getContractValue<string[]>(
+  'GuardianProver',
+  'minGuardians',
+)
+const NumGuardiansProver = discovery.getContractValue<string[]>(
+  'GuardianProver',
+  'numGuardians',
+)
+
+const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -155,7 +173,7 @@ export const taiko: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'Multi-tier proof system',
-      description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
+      description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian multisig (from lowest to highest).
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of 1 hour, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After proof is submitted anyone - within cooldown window, for SGX tier is ${SGXcooldownWindow} - can contest by submitting a bond. Proving a block is not required to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
