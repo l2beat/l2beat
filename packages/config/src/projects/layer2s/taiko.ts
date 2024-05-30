@@ -1,7 +1,6 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
-  EXITS,
   FRONTRUNNING_RISK,
   RISK_VIEW,
   makeBridgeCompatible,
@@ -11,6 +10,20 @@ import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('taiko')
+
+const chainWatchdog = discovery.getContractValue<string>(
+  'TaikoL1Contract',
+  'chain_watchdog',
+)
+
+// const TIER_SGX = discovery.getContractValue<string[]>(
+//   'TierProvider',
+//   'TIER_SGX',
+// )
+
+// const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[2])
+
+const SGXcooldownWindow = formatSeconds(24*60*60)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -72,7 +85,7 @@ export const taiko: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       description: `Taiko uses a multi-tier proof system to validate the state. However, current tier proofs include either SGX (secure-enclave) execution verification, or approval by a minimum number of Guardians. State validation through the Zk-proof tier is not yet active. 
-        Each proof goes through a cooling window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
+        Each proof goes through a cooldown window allowing for contestation. Contested blocks require proof from a higher level tier. If no contestation is made, or the block has been proven by the highest tier, the proof is considered valid.
         The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
       value: 'SGX Proofs',
@@ -95,7 +108,7 @@ export const taiko: Layer2 = {
     proposerFailure: {
       description:
         'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks. However, the TaikoAdmin multisig can delete SGX instance without delay, which would prevent valid SGX proofs from being accepted.',
-      sentiment: 'good',
+      sentiment: 'warning',
       value: 'Self proving',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -131,9 +144,9 @@ export const taiko: Layer2 = {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX, 1/8 Guardian multisig and 6/8 Guardian multisig (from lowest to highest).
         When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of 1 hour, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After proof is submitted anyone - within cooldown window, for SGX tier is 24 hours - can contest by submitting a bond. Proving a block is not required to submit a contestation.
+        After proof is submitted anyone - within cooldown window, for SGX tier is ${SGXcooldownWindow} - can contest by submitting a bond. Proving a block is not required to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the 6/8 Guardian multisig) is considered final.
-        If noone challenges the original SGX proof, it finalizes after 24 hours (the cooldown window).`,
+        If noone challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [],
       risks: [
         {
@@ -175,7 +188,7 @@ export const taiko: Layer2 = {
         description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
         risks: [],
         references: [],
-      }
+      },
     ],
   },
   contracts: {
@@ -224,7 +237,13 @@ export const taiko: Layer2 = {
       'TaikoAdmin',
       'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
     ),
-    // to do: add watchers and watchdogs
+    {
+      name: 'ChainWatchdog',
+      accounts: [{address: EthereumAddress(chainWatchdog), type: 'MultiSig'}],
+      description:
+        'The chain watchdog role can pause proving of blocks.',
+    },
+
   ],
   milestones: [
     {
