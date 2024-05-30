@@ -233,15 +233,16 @@ export const taiko: Layer2 = {
       discovery.getContractDetails('TaikoL1Contract', {
         description:
           'This contract provides functionalities for proposing, proving, and verifying blocks.',
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('L1RollupAddressManager', {
         description:
           'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('TierProvider', {
-        description: 'Contract managing the multi-tier proof system. Can be changed through L1RollupAddressManager.',
+        description:
+          'Contract managing the multi-tier proof system. Can be changed through L1RollupAddressManager.',
       }),
       discovery.getContractDetails('SgxVerifier', {
         description: 'Verifier contract for SGX proven blocks.',
@@ -250,7 +251,7 @@ export const taiko: Layer2 = {
       discovery.getContractDetails('GuardianMinorityProver', {
         description:
           'Verifier contract for blocks proven by Guardian multisig minority.',
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('GuardianProver', {
         description: 'Verifier contract for Guardian multisig proven blocks.',
@@ -259,12 +260,12 @@ export const taiko: Layer2 = {
       discovery.getContractDetails('ProverSetProxy', {
         description:
           "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {
         description:
           'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('AutomataDcapV3Attestation', {
         description: 'Contract managing SGX attestation certificates.',
@@ -273,7 +274,7 @@ export const taiko: Layer2 = {
       discovery.getContractDetails('TaikoToken', {
         description:
           "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
-          ...upgradesTaikoMultisig,
+        ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('TaikoBridge', {
         description: 'Shared bridge for Taiko chains for bridged ETH.',
