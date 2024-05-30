@@ -131,20 +131,20 @@ export const taiko: Layer2 = {
   ),
   technology: {
     dataAvailability: {
-      name: '',
-      description: '.',
+      name: 'All data required for proofs is published on chain',
+      description: 'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
       references: [],
       risks: [],
     },
     operator: {
-      name: '',
-      description: '.',
+      name: 'The system has a centralized proposer',
+      description: 'Currently, the system has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       references: [],
       risks: [],
     },
     forceTransactions: {
-      name: '',
-      description: '.',
+      name: `Users can't force any transaction`,
+      description: 'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
       references: [],
       risks: [],
     },
