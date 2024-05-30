@@ -230,7 +230,7 @@ export const taiko: Layer2 = {
       name: 'Taiko Mainnet Launch',
       link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
-      description: 'Taiko is deployed on Ethereym mainnet.',
+      description: 'Taiko is deployed on Ethereum mainnet.',
     },
   ],
 }
