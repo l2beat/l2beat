@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 19983331,
-  "configHash": "0xf02d2c666658c0141cf7121a3528981ed60169c892512dd2bc736cf11ebfa117",
+  "blockNumber": 19985265,
+  "configHash": "0xe20f649bf145e3b7cc4cf8eac9f74b4896a4a5988843d662c5daa58cb4ec66f7",
   "version": 4,
   "contracts": [
     {
@@ -16,10 +16,11 @@
     {
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"],
       "sinceTimestamp": 1714550627,
@@ -46,8 +47,8 @@
           16
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 7447, 1717079903],
-          [11249, 7456, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 8412, 1717103531],
+          [12297, 8416, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944",
         "inNonReentrant": false,
@@ -65,12 +66,12 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 7447, 1717079903],
-        "slotB": [11249, 7456, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 8412, 1717103531],
+        "slotB": [12297, 8416, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 7447, 1717079903],
-          [11249, 7456, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 8412, 1717103531],
+          [12297, 8416, false, 0, 0, 0, 1716571955]
         ],
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -87,16 +88,17 @@
     {
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+      "ignoreInWatchMode": ["clock"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"],
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1717080203,
+        "clock": 1717103663,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -216,7 +218,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xe226fAd08E2f0AE68C32Eb5d8210fFeDB736Fb0d",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0xe226fAd08E2f0AE68C32Eb5d8210fFeDB736Fb0d"],
       "sinceTimestamp": 1714550627,
@@ -239,7 +241,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"],
       "sinceTimestamp": 1714550627,
@@ -275,7 +277,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"],
       "sinceTimestamp": 1714550615,
@@ -297,7 +299,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x500735343372Dd6c9B84dBc7a75babf4479742B9",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x500735343372Dd6c9B84dBc7a75babf4479742B9"],
       "sinceTimestamp": 1716217559,
@@ -320,7 +322,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"],
       "sinceTimestamp": 1714550639,
@@ -353,7 +355,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x4F750D13005444407D44dAA30922128db0374ca1",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x4F750D13005444407D44dAA30922128db0374ca1"],
       "sinceTimestamp": 1714550603,
@@ -403,7 +405,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"],
       "sinceTimestamp": 1714550603,
@@ -425,7 +427,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xf381868DD6B2aC8cca468D63B42F9040DE2257E9",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"],
       "sinceTimestamp": 1714550627,
@@ -436,12 +438,12 @@
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
         "instances": [
-          ["0x085Bf649bef6b9e97C73822724eD33553C20a1CA", 1715680091],
-          ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af", 1716802247],
-          ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3", 1716625511],
-          ["0x3777c454aF69C87df961E92dA99fCF96EdB30683", 1716720623],
-          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525", 1717080191],
-          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962", 1717080167]
+          ["0x085Bf649bef6b9e97C73822724eD33553C20a1CA"],
+          ["0x584240b6296210BdF93E2221aBD69BDb312Dc8af"],
+          ["0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3"],
+          ["0x3777c454aF69C87df961E92dA99fCF96EdB30683"],
+          ["0xf02099f42d499028Ca52a5205d4E21001f5E3525"],
+          ["0xC57230B9A1BD4f882c40C9f549a27034474e5962"]
         ],
         "lastUnpausedAt": 0,
         "nextInstanceId": 6,
@@ -455,10 +457,11 @@
     {
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+      "ignoreInWatchMode": ["nextMessageId"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"],
       "sinceTimestamp": 1714550603,
@@ -469,7 +472,7 @@
         "impl": "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 4067,
+        "nextMessageId": 4144,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -483,7 +486,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"],
       "sinceTimestamp": 1714550627,
@@ -519,7 +522,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "implementations": ["0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"],
       "sinceTimestamp": 1714550603,
@@ -537,6 +540,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
     "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
     "0x085Bf649bef6b9e97C73822724eD33553C20a1CA",
