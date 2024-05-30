@@ -15,7 +15,7 @@ export const molten: Layer3 = orbitStackL3({
       'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',
     purposes: ['DeFi'],
     links: {
-      websites: ['https://unidex.exchange/molten-network'],
+      websites: ['https://moltennetwork.com/'],
       apps: [
         'https://molten.calderabridge.xyz/',
         'https://leverage.unidex.exchange/',
@@ -24,7 +24,7 @@ export const molten: Layer3 = orbitStackL3({
       explorers: ['https://molten.calderaexplorer.xyz'],
       repositories: [],
       socialMedia: [
-        'https://x.com/moltenl2',
+        'https://x.com/moltenl3',
         'https://discord.gg/moltennetwork',
         'https://mirror.xyz/unidexexchange.eth',
         'https://t.me/unidexfinance',
