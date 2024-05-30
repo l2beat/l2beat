@@ -8,6 +8,7 @@ import {
   DATA_ON_CHAIN,
   FRONTRUNNING_RISK,
   RISK_VIEW,
+  addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -64,6 +65,11 @@ const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in min
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data',
+  }),
   display: {
     name: 'Taiko',
     slug: 'taiko',
