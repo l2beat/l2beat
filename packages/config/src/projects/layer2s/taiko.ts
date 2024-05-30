@@ -63,7 +63,7 @@ export const taiko: Layer2 = {
   riskView: {
     validatedBy: {
       description: '',
-      sentiment: 'UnderReview',
+      sentiment: 'bad',
       value: '',
     },
     sourceUpgradeability: {
@@ -99,9 +99,9 @@ export const taiko: Layer2 = {
     },
     proposerFailure: {
       description:
-        'Only the whitelisted proposer can advance the state on L1, so in the event of failure the withdrawals are frozen.',
+        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover can create proofs for proposed blocks.',
       sentiment: 'bad',
-      value: 'No mechanism',
+      value: 'Self propose',
     },
   },
   stage: getStage(
