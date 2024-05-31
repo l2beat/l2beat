@@ -1,7 +1,7 @@
 import { isArray } from 'lodash'
 import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Markdown } from '~/app/_components/markdown'
+import { Markdown } from '~/app/_components/markdown/markdown'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
 import { faqItems } from './faq-items'
 
@@ -24,7 +24,7 @@ export default async function Page() {
     <>
       <Header />
       <ContentWrapper>
-        <div className="flex">
+        <main className="flex">
           <div className="mt-12 hidden w-72 shrink-0 flex-col gap-4 lg:flex">
             {faqItemsWithId.map((item) => (
               <a
@@ -56,7 +56,7 @@ export default async function Page() {
               )
             })}
           </article>
-        </div>
+        </main>
       </ContentWrapper>
       <ScrollToTopButton />
     </>

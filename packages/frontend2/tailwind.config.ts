@@ -195,8 +195,13 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-        'roboto-serif': ['Roboto Serif', 'Roboto', 'Arial'],
+        sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
+        'roboto-serif': [
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {
@@ -212,7 +217,7 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant, e }) {
+    plugin(function ({ addVariant }) {
       addVariant('sidenav-collapsed', '.sidenav-collapsed &')
     }),
   ],

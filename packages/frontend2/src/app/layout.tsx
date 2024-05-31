@@ -2,17 +2,12 @@ import { VercelToolbar } from '@vercel/toolbar/next'
 import { type Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
-import { Roboto } from 'next/font/google'
 import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
 import '../styles/globals.css'
-
-const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
-// NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used
-// on government pages and thus should be loaded in some other layout
-// after we migrate them.
+import { roboto } from './fonts'
 
 export const metadata: Metadata = {
   title: 'L2BEAT - The state of the layer two ecosystem',
@@ -51,14 +46,18 @@ export default async function RootLayout({
       className="scroll-pt-16 scroll-smooth md:scroll-pt-8"
       suppressHydrationWarning
     >
-      <body className={roboto.className}>
+      <body className={roboto.variable}>
         <script {...restoreCollapsibleNavStateScript} />
         <PlausibleProvider
           domain={env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
         >
           <TRPCReactProvider>
-            <ThemeProvider attribute="class" storageKey="l2beat-theme">
+            <ThemeProvider
+              attribute="class"
+              storageKey="l2beat-theme"
+              disableTransitionOnChange
+            >
               {children}
             </ThemeProvider>
           </TRPCReactProvider>

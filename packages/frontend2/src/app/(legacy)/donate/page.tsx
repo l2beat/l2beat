@@ -58,7 +58,9 @@ export default async function Page() {
         networks={networks}
       />
       <ContentWrapper className="leading-[1.15]">
-        <DonateFundingSources />
+        <main>
+          <DonateFundingSources />
+        </main>
       </ContentWrapper>
     </div>
   )
