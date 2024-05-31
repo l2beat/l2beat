@@ -4630,7 +4630,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
       "chainId": 10,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -6207,7 +6207,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17569/large/JoeToken.png?1703732357",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -6419,7 +6419,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
