@@ -93,6 +93,7 @@ function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
     ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
     type: value.type,
     coingeckoId: value.coingeckoId.toString(),
+    assetId: value.assetId.toString(),
   })
 }
 
