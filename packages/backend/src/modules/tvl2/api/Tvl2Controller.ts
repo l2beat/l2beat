@@ -478,6 +478,8 @@ export class Tvl2Controller {
             amount: amountAsNumber.toString(),
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
           })
           break
         case 'native':

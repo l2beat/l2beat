@@ -34,5 +34,8 @@ export function Value(props: ValueProps) {
 }
 
 function renderValue({ value }: DashboardContractFieldValue) {
+  if (value === null) {
+    return 'null'
+  }
   return isObject(value) ? JSON.stringify(value) : value.toString()
 }

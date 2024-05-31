@@ -59,9 +59,9 @@ export async function LegacyNavbar({
             {zkCatalog && (
               <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
             )}
-            <LegacyNavLink title="Donate" href={'/donate'} />
+            <LegacyNavLink title="Donate" href="/donate" />
             {governance ? (
-              <LegacyNavLink title="Governance" href={'/governance'} />
+              <LegacyNavLink title="Governance" href="/governance" />
             ) : (
               <LegacyNavLink
                 title="Governance"
