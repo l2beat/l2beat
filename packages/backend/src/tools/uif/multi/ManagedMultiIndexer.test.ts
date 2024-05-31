@@ -32,8 +32,8 @@ describe(ManagedMultiIndexer.name, () => {
         configurations: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        serializeConfiguration: (v: string) => v,
-        deserializeConfiguration: (blob: string) => blob,
+        encode: (v: string) => v,
+        decode: (blob: string) => blob,
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       }
@@ -48,8 +48,8 @@ describe(ManagedMultiIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        serializeConfiguration: (v: string) => v,
-        deserializeConfiguration: (blob: string) => blob,
+        encode: (v: string) => v,
+        decode: (blob: string) => blob,
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       }
@@ -314,8 +314,8 @@ async function initializeMockIndexer(
     indexerService,
     configurations,
     logger: Logger.SILENT,
-    serializeConfiguration: (v) => v,
-    deserializeConfiguration: (v) => v,
+    encode: (v) => v,
+    decode: (v) => v,
     createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
   })
   return indexer
