@@ -1,6 +1,5 @@
 import { VercelToolbar } from '@vercel/toolbar/next'
 import { type Metadata } from 'next'
-import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
 import { ThemeProvider } from 'next-themes'
 import { Roboto } from 'next/font/google'
@@ -39,7 +38,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const locale = await getLocale()
   const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
@@ -49,7 +47,7 @@ export default async function RootLayout({
     // which cause a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
     <html
-      lang={locale}
+      lang="en-us"
       className="scroll-pt-16 scroll-smooth md:scroll-pt-8"
       suppressHydrationWarning
     >

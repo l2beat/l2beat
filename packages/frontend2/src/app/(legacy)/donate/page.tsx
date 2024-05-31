@@ -1,12 +1,11 @@
 import { compact } from 'lodash'
 import { type Metadata } from 'next'
-import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
 import { toDataURL } from 'qrcode'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { OutLink } from '~/app/_components/out-link'
 import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
+import { fundingSources } from './funding-sources'
 
 export const metadata: Metadata = {
   title: 'Donate - L2BEAT',
@@ -14,10 +13,6 @@ export const metadata: Metadata = {
     url: '/donate',
   },
 }
-
-const UPDATED_AT = new Date(Date.UTC(2024, 0))
-const SIGNIFICANT_VALUE = 500000
-const SMALL_VALUE = 100000
 
 export default async function Page() {
   const gitcoinOption = await showGitcoinOption()
@@ -79,14 +74,31 @@ interface HeaderProps {
 }
 
 async function Header(props: HeaderProps) {
-  const t = await getTranslations('donate')
   return (
     <header className="bg-pure-white py-24 dark:bg-zinc-900">
       <ContentWrapper className="flex items-center justify-center leading-[1.15]">
         <div className="grid md:grid-cols-12">
           <div className="relative leading-normal md:col-span-7">
-            <h1 className="text-6xl font-bold">{t('title')}</h1>
-            <div className="space-y-6 mt-6">{t.rich('description')}</div>
+            <h1 className="text-6xl font-bold">Donate</h1>
+            <div className="space-y-6 mt-6">
+              <p>
+                Thank you for supporting L2BEAT&apos;s mission to bring
+                education and transparency to the blockchain space.
+              </p>
+              <p>
+                We&apos;re committed to delivering accurate and reliable
+                information. We strive to be an impartial and independent
+                watchdog that acts in the best interest of users and the broader
+                ecosystem while always remaining credibly neutral and faithful
+                to reality and facts. We deliver data and tools that allow our
+                community to educate themselves, transact securely, and make
+                well-informed decisions.
+              </p>
+              <p>
+                Your support means a lot to our small, independent team. Thank
+                you!
+              </p>
+            </div>
             <div className="relative my-12 flex items-center justify-center md:hidden">
               <div className="z-10 flex flex-col items-center justify-center">
                 <div className="size-[184px] rounded-xl bg-white p-3">
@@ -108,7 +120,7 @@ async function Header(props: HeaderProps) {
 
             <div className="relative z-10 mt-6">
               <span className="text-sm text-purple-100 dark:text-pink-200 uppercase">
-                {t('donateThrough.label')}
+                Donate through
               </span>
               <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {props.networks.map((network) => (
@@ -150,22 +162,6 @@ async function Header(props: HeaderProps) {
 }
 
 function DonateFundingSources() {
-  const t = useTranslations('donate.fundingSources')
-  const entries = [
-    { key: 'ethereumFoundation', tier: 'significant' },
-    { key: 'optimismRPGF', tier: 'significant' },
-    { key: 'rewardsAndCompensation', tier: 'medium' },
-    { key: 'gitcoin', tier: 'medium' },
-    { key: 'directCommunityDonations', tier: 'small' },
-    { key: 'l2Amsterdam', tier: 'small' },
-    { key: 'l2Warsaw', tier: 'small' },
-    { key: 'l2Days', tier: 'medium' },
-    { key: 'upgradeabilityReport', tier: 'small' },
-    { key: 'starkexExplorer', tier: 'medium' },
-    { key: 'layerZeroDashboard', tier: 'medium' },
-    { key: 'dacs', tier: 'small' },
-  ] as const
-
   return (
     <section id="funding-sources" className="mt-16 md:mt-20">
       <div className="rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900">
@@ -173,16 +169,28 @@ function DonateFundingSources() {
           className="mb-6 text-2xl font-bold md:text-3xl md:leading-normal"
           href="#funding-sources"
         >
-          {t('title')}
+          Funding sources
         </a>
-        <p className="mt-6 text-base">{t('description')}</p>
+        <p className="mt-6 text-base">
+          As a public goods company, L2BEAT is financed in the open by the
+          community. For transparency, we are providing L2BEAT&apos;s funding
+          sources below.
+        </p>
         <div className="mt-2 text-base leading-normal">
-          <p>{t('classification.description')}</p>
+          <p>
+            Those funding sources have been categorized based on the
+            contribution amounts:
+          </p>
           <ul className="ml-6 mt-2 list-disc">
-            {t.rich('classification.tiers', {
-              significantValue: SIGNIFICANT_VALUE,
-              smallValue: SMALL_VALUE,
-            })}
+            <li>
+              <strong>Significant</strong>: Above 500,000 USD
+            </li>
+            <li>
+              <strong>Medium</strong>: Between 100,000 USD and 500,000 USD
+            </li>
+            <li>
+              <strong>Small</strong>: Below 100.000 USD
+            </li>
           </ul>
         </div>
       </div>
@@ -190,37 +198,22 @@ function DonateFundingSources() {
         <table>
           <thead>
             <tr className="h-14 border-b border-b-gray-200 text-left text-sm text-gray-50 dark:border-b-gray-800">
-              <th className="min-w-[300px] md:pl-4">
-                {t('table.columns.source')}
-              </th>
-              <th className="md:pl-4">{t('table.columns.tier')}</th>
-              <th className="md:pl-4">{t('table.columns.description')}</th>
+              <th className="min-w-[300px] md:pl-4">Source / Project</th>
+              <th className="md:pl-4">Tier</th>
+              <th className="md:pl-4">Description</th>
             </tr>
           </thead>
           <tbody>
-            {entries.map((entry) => {
+            {fundingSources.map((item) => {
               return (
                 <tr
                   className="h-14 border-b border-b-gray-200 text-base last:border-b-0 dark:border-b-gray-800"
-                  key={entry.key}
+                  key={item.source}
                 >
-                  <td className="pr-4 md:px-4">
-                    {t(`table.sources.${entry.key}.title`)}
-                  </td>
-                  <td className="pr-4 md:px-4">{t(`tier.${entry.tier}`)}</td>
+                  <td className="pr-4 md:px-4">{item.source}</td>
+                  <td className="pr-4 md:px-4">{item.tier}</td>
                   <td className="whitespace-pre pr-4 md:whitespace-normal md:px-4">
-                    {t.rich(`table.sources.${entry.key}.description`, {
-                      dydxLink: (children) => (
-                        <OutLink href="https://dydx.l2beat.com">
-                          {children}
-                        </OutLink>
-                      ),
-                      starkexRepo: (children) => (
-                        <OutLink href="https://github.com/l2beat/starkex-explorer">
-                          {children}
-                        </OutLink>
-                      ),
-                    })}
+                    {item.description}
                   </td>
                 </tr>
               )
@@ -228,9 +221,7 @@ function DonateFundingSources() {
           </tbody>
         </table>
       </div>
-      <div className="mt-8 font-bold">
-        {t('lastUpdated', { updateDate: UPDATED_AT })}
-      </div>
+      <div className="mt-8 font-bold">Last updated: January 2024</div>
     </section>
   )
 }
