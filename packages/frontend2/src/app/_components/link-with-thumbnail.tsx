@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Image from 'next/image'
 import ArrowRightIcon from '~/icons/arrow-right.svg'
 import { cn } from '~/utils/cn'
 import { PlainLink } from './plain-link'
@@ -27,7 +28,7 @@ export function LinkWithThumbnail({
         props.className,
       )}
     >
-      <img
+      <Image
         src={props.src}
         alt={`Thumbnail of ${props.title}`}
         className={cn(
