@@ -20,7 +20,7 @@ export const NavSideBarWrapper = ({
   )
 
   useEffect(() => {
-    let timeout: Timer
+    let timeout: NodeJS.Timeout
 
     const onResize = () => {
       clearTimeout(timeout)
