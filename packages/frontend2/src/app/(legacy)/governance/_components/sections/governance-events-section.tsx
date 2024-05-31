@@ -53,7 +53,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           type={event.highlighted ? 'plain' : 'primary'}
         >
           {hostname}
-          {<OutLinkIcon />}
+          <OutLinkIcon />
         </CustomLink>
       </div>
       <div>
