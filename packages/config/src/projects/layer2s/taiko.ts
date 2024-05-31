@@ -119,7 +119,7 @@ export const taiko: Layer2 = {
     chainId: 167000,
     explorerUrl: 'https://taikoscan.io',
     explorerApi: {
-      url: 'https://api.taikoscan.io/api',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/167000/etherscan/api',
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1716620627),
