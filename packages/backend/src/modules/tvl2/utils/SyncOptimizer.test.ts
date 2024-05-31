@@ -104,11 +104,52 @@ describe(SyncOptimizer.name, () => {
       getLastHour: () => LAST_HOUR,
     })
 
-    it('only daily timestamps range', () => {
+    it('respects maxTimestamps', () => {
       const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
-      // hourly timestamp older than daily cutoff
-      const start = LAST_HOUR.add(-(DAILY_CUTOFF + 7), 'days')
+      const start = LAST_HOUR.add(-7, 'hours')
+      const timestampToSync = syncOptimizer.getTimestampsToSync(
+        start.toNumber(),
+        start.add(365, 'days').toNumber(),
+        7,
+      )
+
+      expect(timestampToSync).toEqual([
+        start,
+        start.add(1, 'hours'),
+        start.add(2, 'hours'),
+        start.add(3, 'hours'),
+        start.add(4, 'hours'),
+        start.add(5, 'hours'),
+        start.add(6, 'hours'),
+      ])
+    })
+
+    it('respects to', () => {
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+
+      const start = LAST_HOUR.add(-7, 'hours')
+      const timestampToSync = syncOptimizer.getTimestampsToSync(
+        start.toNumber(),
+        start.add(6, 'hours').toNumber(),
+        1000,
+      )
+
+      expect(timestampToSync).toEqual([
+        start,
+        start.add(1, 'hours'),
+        start.add(2, 'hours'),
+        start.add(3, 'hours'),
+        start.add(4, 'hours'),
+        start.add(5, 'hours'),
+        start.add(6, 'hours'),
+      ])
+    })
+
+    it('complex case', () => {
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+
+      const start = LAST_HOUR.add(-(DAILY_CUTOFF + 2), 'days')
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
         start.add(365, 'days').toNumber(),
@@ -119,32 +160,10 @@ describe(SyncOptimizer.name, () => {
         start,
         start.add(1, 'days'),
         start.add(2, 'days'),
-        start.add(3, 'days'),
-        start.add(4, 'days'),
-        start.add(5, 'days'),
-        start.add(6, 'days'),
-      ])
-    })
-
-    it('only sixHourly timestamps range', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
-
-      // hourly timestamp older than daily cutoff
-      const start = LAST_HOUR.add(-(SIX_HOURLY_CUTOFF + 7), 'days')
-      const timestampToSync = syncOptimizer.getTimestampsToSync(
-        start.toNumber(),
-        start.add(365, 'days').toNumber(),
-        7,
-      )
-
-      expect(timestampToSync).toEqual([
-        start,
-        start.add(6, 'hours'),
-        start.add(12, 'hours'),
-        start.add(18, 'hours'),
-        start.add(24, 'hours'),
-        start.add(30, 'hours'),
-        start.add(36, 'hours'),
+        start.add(2, 'days').add(6, 'hours'),
+        start.add(2, 'days').add(12, 'hours'),
+        start.add(2, 'days').add(18, 'hours'),
+        start.add(2, 'days').add(24, 'hours'),
       ])
     })
   })
