@@ -62,7 +62,7 @@ function Header() {
 
   return (
     <FullPageHeader>
-      <div className="flex items-center gap-10">
+      <div className="flex justify-between w-full gap-10">
         <div className="leading-normal lg:max-w-[585px]">
           <h1 className="text-5xl font-bold md:text-6xl">Governance</h1>
           <p className="mt-6 text-lg md:text-base">
