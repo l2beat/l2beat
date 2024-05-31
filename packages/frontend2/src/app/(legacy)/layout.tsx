@@ -4,7 +4,7 @@ import { NavLayout } from '../_components/nav/nav-layout'
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <NavLayout logoLink="/" legacyNav>
-      <main className="min-h-screen pb-20">{children}</main>
+      <div className="min-h-screen pb-20">{children}</div>
       <Footer />
     </NavLayout>
   )

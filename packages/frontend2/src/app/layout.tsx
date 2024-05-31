@@ -60,7 +60,11 @@ export default async function RootLayout({
           enabled={env.NEXT_PUBLIC_PLAUSIBLE_ENABLED}
         >
           <TRPCReactProvider>
-            <ThemeProvider attribute="class" storageKey="l2beat-theme">
+            <ThemeProvider
+              attribute="class"
+              storageKey="l2beat-theme"
+              disableTransitionOnChange
+            >
               {children}
             </ThemeProvider>
           </TRPCReactProvider>

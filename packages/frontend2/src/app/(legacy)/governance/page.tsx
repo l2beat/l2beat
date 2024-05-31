@@ -2,11 +2,19 @@ import { chunk } from 'lodash'
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import React from 'react'
+import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { CustomLink } from '~/app/_components/custom-link'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { getCollection } from '~/content/getCollection'
 import OutLinkIcon from '~/icons/outlink.svg'
-import { GovernanceHeaderIllustration } from './_components/governance-header-illustration'
+import { GovernanceHeaderIllustration } from './_assets/governance-header'
+import { GovernanceEventsSection } from './_components/sections/governance-events-section'
+import { OfficeHoursSection } from './_components/sections/office-hours-section'
+import { OurApproachSection } from './_components/sections/our-approach-section'
+import { OurMissionSection } from './_components/sections/our-mission-section'
+import { RecentPublicationsSection } from './_components/sections/recent-publications-section'
+import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'
+import { getGovernancePublicationEntry } from './_utils/get-governance-publication-entry'
 
 export const metadata: Metadata = {
   title: 'Governance - L2BEAT',
@@ -18,10 +26,33 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
+  const publications = getCollection('publications')
+    .sort((a, b) => b.data.publishedOn.getTime() - a.data.publishedOn.getTime())
+    .slice(0, 4)
+  const publicationEntries = publications.map(getGovernancePublicationEntry)
+
+  const events = getCollection('events')
+  const eventEntries = getGovernanceEventEntries(events).slice(0, 8)
+
   return (
-    <div>
+    <>
       <Header />
-    </div>
+      <ContentWrapper className="md:px-6 lg:px-12">
+        <main className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+          <RecentPublicationsSection
+            publications={publicationEntries}
+            className="lg:col-span-5"
+          />
+          <OfficeHoursSection className="lg:col-span-3" />
+          <GovernanceEventsSection
+            events={eventEntries}
+            className="lg:col-span-full"
+          />
+          <OurApproachSection className="lg:col-span-4" />
+          <OurMissionSection className="lg:col-span-4" />
+        </main>
+      </ContentWrapper>
+    </>
   )
 }
 
