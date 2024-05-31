@@ -82,12 +82,14 @@ describe(ValueService.name, () => {
     )
 
     expect(result).toEqual([
-      valueRecord(100),
-      valueRecord(200, {
+      valueRecord({ timestamp: new UnixTime(100) }),
+      valueRecord({
+        timestamp: new UnixTime(200),
         canonical: 200n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 200n * 10n ** BigInt(USD_DECIMALS),
       }),
-      valueRecord(300, {
+      valueRecord({
+        timestamp: new UnixTime(300),
         canonical: 300n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 300n * 10n ** BigInt(USD_DECIMALS),
         external: 300n * 10n ** BigInt(USD_DECIMALS),
