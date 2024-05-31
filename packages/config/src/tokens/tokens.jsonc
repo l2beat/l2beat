@@ -120,6 +120,10 @@
       "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
     },
     {
+      "symbol": "BAG",
+      "address": "0x808688c820ab080a6ff1019f03e5ec227d9b522b"
+    },
+    {
       "symbol": "BEL",
       "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14"
     },
@@ -1341,7 +1345,7 @@
     {
       "symbol": "JOE",
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1416,7 +1420,7 @@
     {
       "symbol": "STG",
       "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -1588,7 +1592,7 @@
     {
       "symbol": "STG",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
