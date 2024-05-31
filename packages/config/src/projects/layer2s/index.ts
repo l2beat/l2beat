@@ -57,6 +57,7 @@ import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
 import { myria } from './myria'
+import { myshell } from './myshell'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -171,6 +172,7 @@ export const layer2s: Layer2[] = [
   mode,
   morph,
   myria,
+  myshell,
   nil,
   nova,
   oev,

@@ -51,6 +51,7 @@ const config: Config = {
       },
       black: '#272A2F',
       red: {
+        600: '#C71414',
         700: '#D70000',
       },
       pink: {
@@ -61,6 +62,7 @@ const config: Config = {
         300: '#D3D5D9',
         500: '#5F6470',
         700: '#393C43',
+        800: '#272A2F',
         900: '#1D1E22',
       },
       orange: { 600: '#F94A24' },
@@ -69,8 +71,10 @@ const config: Config = {
       },
       green: {
         300: '#4EAB58',
-
         450: '#50E35F',
+      },
+      purple: {
+        300: '#F1D6FF',
       },
     },
     screens: {

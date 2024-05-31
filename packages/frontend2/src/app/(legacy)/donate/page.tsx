@@ -19,7 +19,7 @@ const UPDATED_AT = new Date(Date.UTC(2024, 0))
 const SIGNIFICANT_VALUE = 500000
 const SMALL_VALUE = 100000
 
-export default async function DonatePage() {
+export default async function Page() {
   const gitcoinOption = await showGitcoinOption()
 
   const donateAddress = '0x41626BA92c0C2a1aD38fC83920300434082B1870'

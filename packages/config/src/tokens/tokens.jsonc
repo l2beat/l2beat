@@ -937,7 +937,7 @@
     },
     {
       "symbol": "spETH",
-      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
       "coingeckoId": "wrapped-eeth" // 1:1 backed by it, spETH currently not on CG
     },
     {
@@ -1359,6 +1359,16 @@
       "address": "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MOLTEN",
+      "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "MOZ",

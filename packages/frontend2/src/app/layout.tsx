@@ -1,3 +1,4 @@
+import { VercelToolbar } from '@vercel/toolbar/next'
 import { type Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
 import PlausibleProvider from 'next-plausible'
@@ -7,7 +8,7 @@ import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
-import './globals.css'
+import '../styles/globals.css'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 // NOTE(piotradamczyk): Not configuring Roboto Sans here as it's only used
@@ -24,11 +25,8 @@ export const metadata: Metadata = {
     { rel: 'apple-touch-icon', url: '/favicon.png' },
     { rel: 'mask-icon', url: '/mask-icon.svg' },
   ],
-  metadataBase: new URL('https://www.l2beat.com'),
+  metadataBase: new URL('https://l2beat.com'),
   openGraph: {
-    title: 'L2BEAT - The state of the layer two ecosystem',
-    description:
-      'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     type: 'website',
   },
   twitter: {
@@ -42,6 +40,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const locale = await getLocale()
+  const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
     // We suppress the hydration warning here because we're using:
@@ -49,7 +48,11 @@ export default async function RootLayout({
     // - our restoreCollapsibleNavStateScript
     // which cause a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className="scroll-pt-16 scroll-smooth md:scroll-pt-8"
+      suppressHydrationWarning
+    >
       <body className={roboto.className}>
         <script {...restoreCollapsibleNavStateScript} />
         <PlausibleProvider
@@ -62,6 +65,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
+        {shouldInjectToolbar && <VercelToolbar />}
       </body>
     </html>
   )
