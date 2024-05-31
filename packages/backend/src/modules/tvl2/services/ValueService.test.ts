@@ -12,8 +12,6 @@ import { AmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId } from '../utils/createPriceId'
 import { ValueService } from './ValueService'
-const DECIMALS = 18
-const USD_DECIMALS = 2
 
 describe(ValueService.name, () => {
   it(ValueService.prototype.calculateTvlForTimestamps.name, async () => {
@@ -21,7 +19,7 @@ describe(ValueService.name, () => {
       getByConfigIdsInRange: async () => [
         amount('a', 200),
         amount('a', 300),
-        amount('b', 200), // this should be filtered out due to sinceTimestamp
+        amount('b', 200), // this should be filtered out due to sinceTimestamp of CONFIG_B
         amount('b', 300),
       ],
     })
@@ -29,7 +27,7 @@ describe(ValueService.name, () => {
       getByConfigIdsInRange: async () => [
         price('a', 200),
         price('a', 300),
-        price('b', 200), // this should be filtered out due to sinceTimestamp
+        price('b', 200),
         price('b', 300),
       ],
     })
@@ -105,6 +103,9 @@ describe(ValueService.name, () => {
     )
   })
 })
+
+const DECIMALS = 18
+const USD_DECIMALS = 2
 
 function amount(configId: string, timestamp: number) {
   return {
