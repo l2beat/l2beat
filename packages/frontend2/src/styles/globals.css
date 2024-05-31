@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import './markdown.css';
+@import './article.css';
 
 body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;

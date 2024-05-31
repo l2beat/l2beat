@@ -1,7 +1,7 @@
 import { isArray } from 'lodash'
 import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { Markdown } from '~/app/_components/markdown'
+import { Markdown } from '~/app/_components/markdown/markdown'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
 import { faqItems } from './faq-items'
 
