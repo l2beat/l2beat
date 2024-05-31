@@ -144,7 +144,7 @@ export const taiko: Layer2 = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned proposer who can propose blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+        'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned sequencer who can propose blocks. This is a single point of failure and can lead to the system being halted if the sequencer fails to propose blocks on L1.',
       sentiment: 'bad',
       value: 'No mechanism', // based rollup sequencing
     },
@@ -152,7 +152,7 @@ export const taiko: Layer2 = {
       description:
         'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks. However, the TaikoAdmin multisig can delete SGX instances and revoke certificates without delay, which would prevent valid SGX proofs from being accepted.',
       sentiment: 'warning',
-      value: 'Self proving',
+      value: 'Self propose',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -186,7 +186,7 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the proposer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        When proposing a block, the sequencer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
@@ -206,9 +206,9 @@ export const taiko: Layer2 = {
       risks: [],
     },
     operator: {
-      name: 'The system has a centralized proposer',
+      name: 'The system has a centralized sequencer',
       description:
-        'Although designed for permissionless block proposals, the system currently has a single proposer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
+        'Although designed for permissionless block proposals, the system currently has a single sequencer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
       references: [],
       risks: [FRONTRUNNING_RISK],
     },
@@ -220,7 +220,7 @@ export const taiko: Layer2 = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'the proposer refuses to include their transactions.',
+          text: 'the sequencer refuses to include their transactions.',
         },
       ],
     },
@@ -238,7 +238,7 @@ export const taiko: Layer2 = {
     addresses: [
       discovery.getContractDetails('TaikoL1Contract', {
         description:
-          'This contract provides functionalities for proposing, proving, and verifying blocks.',
+          'This contract provides functionalities for sequencing, proving, and verifying blocks.',
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('L1RollupAddressManager', {
@@ -322,20 +322,21 @@ export const taiko: Layer2 = {
       description: 'The chain watchdog role can pause proving of blocks.',
     },
     {
-      name: 'Proposer',
+      name: 'Sequencer',
       accounts: [
         {
           address: EthereumAddress(proposer),
           type: 'EOA',
         },
       ],
-      description: 'The authorized proposer of blocks on the TaikoL1 contract.',
+      description:
+        'The authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract.',
     },
     {
-      name: 'ProposerBlockOne',
+      name: 'SequencerBlockOne',
       accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
       description:
-        'The authorized proposer of block one, hardcoded to vitalik.eth address.',
+        'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
     },
   ],
   milestones: [
