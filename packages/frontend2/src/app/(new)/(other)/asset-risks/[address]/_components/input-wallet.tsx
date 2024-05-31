@@ -19,12 +19,12 @@ export function InputWallet() {
       name: normalize(address),
     })
     if (ensAddress) {
-      router.push(`/wallet/${ensAddress}`)
+      router.push(`/asset-risks/${ensAddress}`)
       setAddress('')
     } else if (!isAddress(address)) {
       return
     } else {
-      router.push(`/wallet/${address}`)
+      router.push(`/asset-risks/${address}`)
     }
   }
 

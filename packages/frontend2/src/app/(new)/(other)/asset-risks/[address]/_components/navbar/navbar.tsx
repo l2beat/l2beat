@@ -15,7 +15,7 @@ export function Navbar() {
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-8">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">
-              <Link href="/">
+              <Link href="/asset-risks">
                 <div className="flex flex-row gap-2 items-center">
                   <Image
                     src={SmallLogo}
