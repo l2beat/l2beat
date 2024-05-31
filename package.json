@@ -27,7 +27,7 @@
     "test:exclude-backend": "turbo run test --filter=!backend",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
-    "heroku-postbuild": "yarn build:backend",
+    "heroku-postbuild": "yarn build:backend && yarn install --production",
     "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
