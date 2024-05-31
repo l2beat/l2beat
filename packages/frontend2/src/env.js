@@ -20,7 +20,7 @@ export const env = createEnv({
       .transform(
         (val) =>
           ({
-            local: 'http://localhost:8080',
+            local: 'http://127.0.0.1:8080',
             'vercel-mock': 'https://l2beat-mock.vercel.app',
             'vercel-staging': 'https://l2beat-staging.vercel.app',
             'vercel-production': 'https://l2beat-production.vercel.app',
