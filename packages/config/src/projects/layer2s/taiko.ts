@@ -330,7 +330,7 @@ export const taiko: Layer2 = {
         },
       ],
       description:
-        'The authorized sequencer (proposer) of blocks on the TaikoL1 contract.',
+        'The authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract.',
     },
     {
       name: 'ProposerBlockOne',
