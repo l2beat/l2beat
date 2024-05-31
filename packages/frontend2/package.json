@@ -33,10 +33,11 @@
     "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-jazzicon": "^1.0.4",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
-    "wagmi": "^2.9.7",
+    "wagmi": "^2.7.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

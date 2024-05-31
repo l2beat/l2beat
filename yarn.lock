@@ -1729,18 +1729,6 @@
     preact "^10.16.0"
     sha.js "^2.4.11"
 
-"@coinbase/wallet-sdk@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-4.0.2.tgz#403b2194ecc9bcf8b8fd217ec5cd6529013b58f4"
-  integrity sha512-WMUeFbtS0rn8zavjAmNhFWq1r3TV7E5KuSij1Sar0/XuOC+nhj96uqSlIApAHdhuScoKZBq39VYsAQCHzOC6/w==
-  dependencies:
-    buffer "^6.0.3"
-    clsx "^1.2.1"
-    eventemitter3 "^5.0.1"
-    keccak "^3.0.3"
-    preact "^10.16.0"
-    sha.js "^2.4.11"
-
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
@@ -6053,32 +6041,10 @@
     "@walletconnect/modal" "2.6.2"
     cbw-sdk "npm:@coinbase/wallet-sdk@3.9.3"
 
-"@wagmi/connectors@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-5.0.6.tgz#9894800f2303118e4804fe5f6eb196876ac9158a"
-  integrity sha512-eyn2pw9QBKfvNOVZis72GqZw4neo7Ktut7Jt4NSiR/umncWJKpKrni3exLHAJw2+mDTDWtUTHs9YL56ov2tWLw==
-  dependencies:
-    "@coinbase/wallet-sdk" "4.0.2"
-    "@metamask/sdk" "0.20.3"
-    "@safe-global/safe-apps-provider" "0.18.1"
-    "@safe-global/safe-apps-sdk" "8.1.0"
-    "@walletconnect/ethereum-provider" "2.13.0"
-    "@walletconnect/modal" "2.6.2"
-    cbw-sdk "npm:@coinbase/wallet-sdk@3.9.3"
-
 "@wagmi/core@2.10.3":
   version "2.10.3"
   resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.10.3.tgz#5184c94e2368b984d9ff8911bb83a3c9a92dc7d5"
   integrity sha512-Sx5tWFzbLnwJk/aYPsaG8o4SQ8pVs5ucV5AVyPzA9Ibg3+J1P7qxOcfwPDXSNk67vmCGyZWlmBF/IwQChOJYbQ==
-  dependencies:
-    eventemitter3 "5.0.1"
-    mipd "0.0.5"
-    zustand "4.4.1"
-
-"@wagmi/core@2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.10.4.tgz#13113dc5a9817e731671cb7cb457f2571e98aa24"
-  integrity sha512-X/PW4zckkSQ/y4LwkQ5cwLKv551I6kVorH3VsTQghxYt0Vj9K5/XhCCRQg5Q200u6fiUCJ+2WjpmhZu3XYNU9w==
   dependencies:
     eventemitter3 "5.0.1"
     mipd "0.0.5"
@@ -17375,15 +17341,6 @@ wagmi@^2.7.0:
   dependencies:
     "@wagmi/connectors" "5.0.3"
     "@wagmi/core" "2.10.3"
-    use-sync-external-store "1.2.0"
-
-wagmi@^2.9.7:
-  version "2.9.7"
-  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-2.9.7.tgz#3b1b1cd7865c1cb2da15a4e8c4c1bd36aa881519"
-  integrity sha512-IZ9Npgs9Te12kdrWousnYJfjzl3JaiyAarXGxJOdEiLB2eia8mMacob4XExg3Mn538ZP9ufsg7VAgWnGaK74lw==
-  dependencies:
-    "@wagmi/connectors" "5.0.6"
-    "@wagmi/core" "2.10.4"
     use-sync-external-store "1.2.0"
 
 wait-for-expect@^3.0.2:
