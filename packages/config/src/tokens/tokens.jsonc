@@ -2549,5 +2549,14 @@
       },
       "coingeckoId": "merlin-s-seal-btc"
     }
+  ],
+  "taiko": [
+    {
+      "symbol": "USDC",
+      "address": "0x07d83526730c7438048D55A4fc0b850e2aaB6f0b",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
+    }
   ]
 }
