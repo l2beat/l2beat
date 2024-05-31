@@ -81,7 +81,7 @@ export const taiko: Layer2 = {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
-      explorers: ['https://hekla.taikoscan.network/'],
+      explorers: ['https://taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',
@@ -119,7 +119,7 @@ export const taiko: Layer2 = {
     chainId: 167000,
     explorerUrl: 'https://taikoscan.io',
     explorerApi: {
-      url: 'https://taikoscan.io/api',
+      url: 'https://api.taikoscan.io/api',
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1716620627),
