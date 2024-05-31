@@ -81,7 +81,7 @@ export const taiko: Layer2 = {
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
-      explorers: ['https://taikoscan.network/'],
+      explorers: ['https://taikoscan.io','https://taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',
