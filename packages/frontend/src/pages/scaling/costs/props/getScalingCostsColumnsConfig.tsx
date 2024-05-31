@@ -113,7 +113,7 @@ export function getScalingCostsColumnsConfig() {
         ) : (
           <span className="pr-4">{EM_DASH}</span>
         ),
-      headClassName: '!pr-4',
+      headClassName: '!pr-4 text-wrap',
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({

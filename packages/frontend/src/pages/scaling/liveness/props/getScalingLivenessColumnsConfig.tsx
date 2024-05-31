@@ -108,6 +108,7 @@ export function getScalingLivenessColumnsConfig() {
       name: 'Type',
       tooltip: <TypeColumnTooltip showOnlyRollupsDefinitions />,
       shortName: 'Type',
+      className: 'hidden 2xl:table-cell',
       getValue: (project) => (
         <TypeCell provider={project.provider} disableColors>
           {project.category}

@@ -66,7 +66,6 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
       align: 'right',
-      noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
@@ -81,6 +80,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       minimalWidth: true,
       headClassName: '!pr-4',
+      className: 'hidden 2xl:table-cell',
       getValue: (project) =>
         project.tvlBreakdown ? (
           <NumberCell className="pr-4">
