@@ -32,6 +32,7 @@ export interface ValueIndexerDeps
 }
 
 export class ValueIndexer extends ManagedChildIndexer {
+  // Maps used for performance optimization
   private readonly amountConfigs: Map<AmountId, AmountConfigEntry>
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
@@ -39,6 +40,7 @@ export class ValueIndexer extends ManagedChildIndexer {
     const logger = $.logger.tag($.tag)
     const name = 'value_indexer'
     const configHash = getValuesConfigHash($.amountConfigs, $.priceConfigs)
+
     super({ ...$, name, logger, configHash })
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)
@@ -95,19 +97,14 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 
   private getTimestampsToSync(from: number, to: number) {
-    const timestamps: UnixTime[] = []
+    const start = Math.max(from, this.$.minHeight)
+    const end = Math.min(to, this.$.maxHeight)
 
-    let current = Math.max(from, this.$.minHeight)
-    const last = Math.min(to, this.$.maxHeight)
-    while (
-      this.$.syncOptimizer.getTimestampToSync(current).toNumber() <= last &&
-      timestamps.length < this.$.maxTimestampsToProcessAtOnce
-    ) {
-      const newTimestamp = this.$.syncOptimizer.getTimestampToSync(current)
-      timestamps.push(newTimestamp)
-      current = newTimestamp.toNumber() + 1
-    }
-    return timestamps
+    return this.$.syncOptimizer.getTimestampsToSync(
+      start,
+      end,
+      this.$.maxTimestampsToProcessAtOnce,
+    )
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
