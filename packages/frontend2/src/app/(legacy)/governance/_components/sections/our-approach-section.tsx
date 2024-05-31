@@ -25,7 +25,7 @@ export function OurApproachSection({ className }: Props) {
         Voting should just be the cherry on top of a great community-driven
         process.
       </p>
-      <p className="mt-4 text-base md:text-sm">
+      <div className="mt-4 text-base md:text-sm">
         As a governance delegate, we hold the following core values:
         <ul className="ml-6 mt-2 list-disc text-base md:text-sm">
           <li>
@@ -49,7 +49,7 @@ export function OurApproachSection({ className }: Props) {
             better serve our community.
           </li>
         </ul>
-      </p>
+      </div>
     </GovernanceCard>
   )
 }
