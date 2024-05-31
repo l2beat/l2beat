@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "scroll",
+  "name": "stargatev2",
+  "initialAddresses": ["0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038"],
+  "names": {
+    "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessaging"
+  },
+  "overrides": {
+    "TokenMessaging": {
+      "ignoreRelatives": ["endpoint", "oApp", "owner"],
+      "fields": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        },
+        "pools": {
+          "handler": {
+            "type": "array",
+            "method": "stargateImpls",
+            "startIndex": 1,
+            "length": "{{ maxAssetId }}",
+            "ignoreRelative": true
+          }
+        }
+      }
+    }
+  }
+}
