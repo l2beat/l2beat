@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import {
+  AssetId,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   EthereumAddress,
@@ -98,6 +99,7 @@ function encode(value: CoingeckoPriceConfigEntry): string {
     ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
     type: value.type,
     coingeckoId: value.coingeckoId.toString(),
+    assetId: value.assetId.toString(),
   })
 }
 
@@ -110,6 +112,7 @@ function decode(value: string): CoingeckoPriceConfigEntry {
     untilTimestamp?: number
     type: string
     coingeckoId: string
+    assetId?: string
   }
 
   return {
@@ -121,5 +124,6 @@ function decode(value: string): CoingeckoPriceConfigEntry {
     } ?? {}),
     type: obj.type,
     coingeckoId: CoingeckoId(obj.coingeckoId),
+    ...(obj.assetId ? { assetId: AssetId(obj.assetId) } : {}),
   } as CoingeckoPriceConfigEntry
 }
