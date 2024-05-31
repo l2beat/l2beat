@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { cn } from '../utils/cn'
-import { PageContent } from './PageContent'
+import { ContentWrapper } from './content-wrapper'
 
 interface Props {
   children: React.ReactNode
   className?: string
-  pageContentClassName?: string
+  contentWrapperClassName?: string
 }
 
 export function FullPageHeader(props: Props) {
@@ -14,14 +14,14 @@ export function FullPageHeader(props: Props) {
     <header
       className={cn('bg-pure-white py-24 dark:bg-zinc-900', props.className)}
     >
-      <PageContent
+      <ContentWrapper
         className={cn(
           'flex items-center justify-center',
-          props.pageContentClassName,
+          props.contentWrapperClassName,
         )}
       >
         {props.children}
-      </PageContent>
+      </ContentWrapper>
     </header>
   )
 }
