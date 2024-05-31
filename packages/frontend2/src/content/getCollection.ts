@@ -57,7 +57,7 @@ function getDataCollection<T extends DataCollectionKey>(
   key: T,
 ): DataCollectionEntry<T>[] {
   const collection = collections[key]
-  const fileNames = readdirSync(path.join(DIR_PATH, key))
+  const fileNames = readdirSync(path.join(process.cwd(), DIR_PATH, key))
 
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(collection.extension))
@@ -93,7 +93,7 @@ function getContentCollection<T extends ContentCollectionKey>(
   key: T,
 ): ContentCollectionEntry<T>[] {
   const contentEntry = collections[key]
-  const fileNames = readdirSync(path.join(DIR_PATH, key))
+  const fileNames = readdirSync(path.join(process.cwd(), DIR_PATH, key))
   const parsedFiles = fileNames
     .filter((fileName) => fileName.endsWith(contentEntry.extension))
     .map((fileName) => fileName.replace(`.${contentEntry.extension}`, ''))
