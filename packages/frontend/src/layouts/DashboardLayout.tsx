@@ -14,9 +14,12 @@ export interface DashboardLayoutProps {
 
 export function DashboardLayout(props: DashboardLayoutProps) {
   const { path } = usePageBuildContext()
-  const scalingOrBridges = ['/scaling', '/bridges'].some((p) =>
-    path.startsWith(p),
-  )
+
+  // Enable new layout for /scaling and /bridges pages, but not for detailed project pages
+  const scalingOrBridges =
+    ['/scaling', '/bridges'].some((p) => path.startsWith(p)) &&
+    ['/scaling/projects', '/bridges/projects'].every((p) => !path.startsWith(p))
+
   return (
     <NavWrapper legacyNav={!scalingOrBridges}>
       <PageContent
