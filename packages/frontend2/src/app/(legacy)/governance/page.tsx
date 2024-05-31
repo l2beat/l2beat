@@ -37,8 +37,8 @@ export default function Page() {
   return (
     <>
       <Header />
-      <ContentWrapper className="md:px-6 lg:px-12">
-        <main className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+      <ContentWrapper className="md:px-6 lg:px-12" as="main">
+        <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
           <RecentPublicationsSection
             publications={publicationEntries}
             className="lg:col-span-5"
@@ -50,7 +50,7 @@ export default function Page() {
           />
           <OurApproachSection className="lg:col-span-4" />
           <OurMissionSection className="lg:col-span-4" />
-        </main>
+        </div>
       </ContentWrapper>
     </>
   )
