@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
 
-interface Params {
-  slug: string
-}
-
 interface Props {
-  params: Params
+  params: {
+    slug: string
+  }
 }
 
 export async function generateStaticParams() {

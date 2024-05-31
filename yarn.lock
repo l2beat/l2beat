@@ -5944,13 +5944,6 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@vercel/flags@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@vercel/flags/-/flags-2.5.0.tgz#31ffd4f9038ce24c33dd6e122b798869da33dba2"
-  integrity sha512-dGaPYLEfo45zlj67IC+qnzWhpNj4mgTxK3jbbGL3hNN3NH7sJ714ATMnA6FZdv57NCJnd5tJEK5CbaxzqH8avQ==
-  dependencies:
-    jose "5.2.1"
-
 "@vercel/toolbar@^0.1.15":
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/@vercel/toolbar/-/toolbar-0.1.15.tgz#d024597f3905d5df6bd13b271cbd20735c2ef661"
@@ -11878,11 +11871,6 @@ jiti@^1.20.0, jiti@^1.21.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.21.0.tgz#7c97f8fe045724e136a397f7340475244156105d"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
-
-jose@5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-5.2.1.tgz#ec3befe173896e592e2d9ef5f267d061ffb203c5"
-  integrity sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==
 
 js-sha3@0.8.0:
   version "0.8.0"
