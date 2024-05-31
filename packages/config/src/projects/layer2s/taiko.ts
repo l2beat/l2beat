@@ -322,7 +322,7 @@ export const taiko: Layer2 = {
       description: 'The chain watchdog role can pause proving of blocks.',
     },
     {
-      name: 'Proposer',
+      name: 'Sequencer',
       accounts: [
         {
           address: EthereumAddress(proposer),
@@ -333,10 +333,10 @@ export const taiko: Layer2 = {
         'The authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract.',
     },
     {
-      name: 'ProposerBlockOne',
+      name: 'SequencerBlockOne',
       accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
       description:
-        'The authorized proposer of block one, hardcoded to vitalik.eth address.',
+        'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
     },
   ],
   milestones: [
