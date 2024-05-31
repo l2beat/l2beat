@@ -35,6 +35,9 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       url: `/governance/publications/${publication.id}`,
+      images: [
+        `https://l2beat.com/meta-images/governance/publications/${publication.id}.png`,
+      ],
     },
   }
 }
