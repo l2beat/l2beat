@@ -12,8 +12,8 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   tag?: string
   indexerService: IndexerService
   configurations: Configuration<T>[]
-  serializeConfiguration: (value: T) => string
-  deserializeConfiguration: (blob: string) => T
+  encode: (value: T) => string
+  decode: (blob: string) => T
   logger: Logger
   updateRetryStrategy?: RetryStrategy
   createDatabaseMiddleware: () => Promise<DatabaseMiddleware>
@@ -67,7 +67,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   override async multiInitialize(): Promise<SavedConfiguration<T>[]> {
     return await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
-      this.options.deserializeConfiguration,
+      this.options.decode,
     )
   }
 
@@ -77,7 +77,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     await this.options.indexerService.upsertConfigurations(
       this.indexerId,
       configurations,
-      this.options.serializeConfiguration,
+      this.options.encode,
     )
     await this.options.indexerService.persistOnlyUsedConfigurations(
       this.indexerId,
