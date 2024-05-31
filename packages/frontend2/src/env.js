@@ -41,6 +41,7 @@ export const env = createEnv({
     // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
     // don't want to enforce it as it's only used in Vercel toolbar.
     FLAGS_SECRET: base64url.optional(),
+    ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   },
 
   /**
@@ -76,6 +77,7 @@ export const env = createEnv({
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
       process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
   },
 
   /**

@@ -25,7 +25,7 @@ export function AddressForm() {
 
   useModal({
     onConnect: ({ address }) => {
-      router.push(`/wallet/${address}`)
+      router.push(`asset-risks/${address}`)
     },
   })
 
@@ -39,7 +39,7 @@ export function AddressForm() {
       setError('Invalid address')
       return
     } else {
-      router.push(`/wallet/${address}`)
+      router.push(`asset-risks/${address}`)
     }
   }
 
@@ -63,7 +63,7 @@ export function AddressForm() {
                 </div>
               </div>
               <Link
-                href={`/wallet/${address}`}
+                href={`asset-risks/${address}`}
                 className="w-full sm:w-2/5 bg-pink-900 text-white font-bold text-base px-4 rounded-lg transition-colors flex items-center justify-center  h-14"
               >
                 View report
