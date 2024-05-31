@@ -62,8 +62,8 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<CoingeckoPriceConfigEntry>(),
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
@@ -125,8 +125,8 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<CoingeckoPriceConfigEntry>(),
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
@@ -165,8 +165,8 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<CoingeckoPriceConfigEntry>(),
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
