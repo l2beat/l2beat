@@ -34,7 +34,7 @@ export function AddressForm() {
       name: normalize(address),
     })
     if (ensAddress) {
-      router.push(`/wallet/${ensAddress}`)
+      router.push(`asset-risks/${ensAddress}`)
     } else if (!isAddress(address)) {
       setError('Invalid address')
       return
