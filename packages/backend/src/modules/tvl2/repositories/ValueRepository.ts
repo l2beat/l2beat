@@ -72,16 +72,6 @@ export class ValueRepository extends BaseRepository {
       .merge()
   }
 
-  async addOrUpdate(record: ValueRecord) {
-    const knex = await this.knex()
-    const row = toRow(record)
-    await knex('values')
-      .insert(row)
-      .onConflict(['project_id', 'timestamp', 'data_source'])
-      .merge()
-    return row.project_id
-  }
-
   // #region methods used only in tests
 
   async getAll(): Promise<ValueRecord[]> {
