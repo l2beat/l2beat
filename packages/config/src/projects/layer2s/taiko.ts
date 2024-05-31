@@ -8,6 +8,7 @@ import {
   DATA_ON_CHAIN,
   FRONTRUNNING_RISK,
   RISK_VIEW,
+  addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -64,6 +65,11 @@ const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in min
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data',
+  }),
   display: {
     name: 'Taiko',
     slug: 'taiko',
@@ -73,7 +79,7 @@ export const taiko: Layer2 = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.hekla.taiko.xyz/'],
+      apps: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
       explorers: ['https://hekla.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],

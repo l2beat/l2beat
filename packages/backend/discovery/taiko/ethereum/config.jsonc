@@ -32,6 +32,7 @@
         "getMessageMinGasLimit", // too many values
         "context" // Multicall failed
       ],
+      "ignoreInWatchMode": ["nextMessageId"],
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -369,7 +370,8 @@
             ] // bytes32("STATE_ROOT");
           }
         }
-      }
+      },
+      "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"]
     },
     "L1RollupAddressManager": {
       "fields": {
@@ -466,10 +468,12 @@
           "handler": {
             "type": "array",
             "method": "instances",
-            "length": "{{ nextInstanceId }}"
+            "length": "{{ nextInstanceId }}",
+            "pickFields": ["addr"]
           }
         }
-      }
+      },
+      "ignoreMethods": ["getPastTotalSupply"]
     },
     "GuardianMinorityProver": {
       "description": "Verifier contract for blocks proven by Guardian minority.",
@@ -532,7 +536,8 @@
             "expectRevert": true
           }
         }
-      }
+      },
+      "ignoreInWatchMode": ["clock"]
     },
     "AssignmentHook": {
       "fields": {
