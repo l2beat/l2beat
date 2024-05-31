@@ -38,6 +38,8 @@ export function LinkWithThumbnail({
           orientation === 'horizontal' &&
             'max-w-36 rounded-md transition-all group-hover:scale-105 md:max-w-48',
         )}
+        height={674}
+        width={1200}
       />
       <div
         className={cn(
