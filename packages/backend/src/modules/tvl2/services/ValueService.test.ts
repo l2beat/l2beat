@@ -7,28 +7,32 @@ import {
 import { expect, mockObject } from 'earl'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRecord } from '../repositories/ValueRepository'
 import { AmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId } from '../utils/createPriceId'
 import { ValueService } from './ValueService'
 
+import { MOCKS_FOR_TVL } from '../utils/test/mocks'
+
+const { amountRecord, priceRecord, valueRecord, DECIMALS, USD_DECIMALS } =
+  MOCKS_FOR_TVL
+
 describe(ValueService.name, () => {
   it(ValueService.prototype.calculateTvlForTimestamps.name, async () => {
     const amountRepository = mockObject<AmountRepository>({
       getByConfigIdsInRange: async () => [
-        amount('a', 200),
-        amount('a', 300),
-        amount('b', 200), // this should be filtered out due to sinceTimestamp of CONFIG_B
-        amount('b', 300),
+        amountRecord('a', 200),
+        amountRecord('a', 300),
+        amountRecord('b', 200), // this should be filtered out due to sinceTimestamp of CONFIG_B
+        amountRecord('b', 300),
       ],
     })
     const priceRepository = mockObject<PriceRepository>({
       getByConfigIdsInRange: async () => [
-        price('a', 200),
-        price('a', 300),
-        price('b', 200),
-        price('b', 300),
+        priceRecord('a', 200),
+        priceRecord('a', 300),
+        priceRecord('b', 200),
+        priceRecord('b', 300),
       ],
     })
 
@@ -78,12 +82,12 @@ describe(ValueService.name, () => {
     )
 
     expect(result).toEqual([
-      value(100),
-      value(200, {
+      valueRecord(100),
+      valueRecord(200, {
         canonical: 200n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 200n * 10n ** BigInt(USD_DECIMALS),
       }),
-      value(300, {
+      valueRecord(300, {
         canonical: 300n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 300n * 10n ** BigInt(USD_DECIMALS),
         external: 300n * 10n ** BigInt(USD_DECIMALS),
@@ -103,37 +107,3 @@ describe(ValueService.name, () => {
     )
   })
 })
-
-const DECIMALS = 18
-const USD_DECIMALS = 2
-
-function amount(configId: string, timestamp: number) {
-  return {
-    configId: configId,
-    timestamp: new UnixTime(timestamp),
-    amount: BigInt(timestamp) * 10n ** BigInt(DECIMALS),
-  }
-}
-
-function price(id: string, timestamp: number) {
-  return {
-    configId: id,
-    timestamp: new UnixTime(timestamp),
-    priceUsd: 1,
-  }
-}
-
-function value(timestamp: number, v?: Partial<ValueRecord>) {
-  return {
-    projectId: ProjectId('project'),
-    dataSource: 'chain',
-    timestamp: new UnixTime(timestamp),
-    canonical: 0n,
-    canonicalForTotal: 0n,
-    external: 0n,
-    externalForTotal: 0n,
-    native: 0n,
-    nativeForTotal: 0n,
-    ...v,
-  }
-}
