@@ -37,7 +37,8 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "vaul": "^0.9.1",
-    "wagmi": "^2.7.0",
+    "viem": "^2.9.28",
+    "wagmi": "^2.9.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {
