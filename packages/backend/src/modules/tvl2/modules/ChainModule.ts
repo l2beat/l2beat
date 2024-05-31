@@ -189,6 +189,13 @@ function createChainModule(
       priceRepository: peripherals.getRepository(PriceRepository),
     })
 
+    const minHeight = Math.min(
+      ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+    )
+    const maxHeight = Math.max(
+      ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+    )
+
     const indexer = new ValueIndexer({
       valueService,
       valueRepository: peripherals.getRepository(ValueRepository),
@@ -201,12 +208,8 @@ function createChainModule(
       tag: `${project}_${chain}`,
       indexerService,
       logger,
-      minHeight: amountConfigs
-        .reduce(
-          (prev, curr) => UnixTime.min(prev, curr.sinceTimestamp),
-          amountConfigs[0].sinceTimestamp,
-        )
-        .toNumber(),
+      minHeight,
+      maxHeight,
       maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 
