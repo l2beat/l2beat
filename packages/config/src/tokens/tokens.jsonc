@@ -1341,7 +1341,7 @@
     {
       "symbol": "JOE",
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1416,7 +1416,7 @@
     {
       "symbol": "STG",
       "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -1588,7 +1588,7 @@
     {
       "symbol": "STG",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
