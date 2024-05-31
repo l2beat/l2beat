@@ -18,8 +18,11 @@ interface Props {
 }
 
 async function getAddressDisplayName(address: Hex) {
+  const ethereumChain = getChain(1)
+  if (!ethereumChain) return address
+
   const ethereum = createPublicClient({
-    chain: getChain(1),
+    chain: ethereumChain,
     transport: http(),
   })
 
