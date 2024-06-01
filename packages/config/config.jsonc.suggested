@@ -1,0 +1,50 @@
+{
+  "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": {
+    "ignoreRelatives": [
+      "endpoint",
+      "getAddressConfig",
+      "lpToken",
+      "owner",
+      "token"
+    ],
+    "ignoreInWatchMode": [
+      "plannerFee",
+      "poolBalance",
+      "treasuryFee",
+      "tvl",
+      "getTransferGasLimit"
+    ]
+  },
+  "0x19cFCE47eD54a88614648DC3f19A5980097007dD": {
+    "ignoreRelatives": [
+      "endpoint",
+      "getAddressConfig",
+      "lpToken",
+      "owner",
+      "token"
+    ],
+    "ignoreInWatchMode": [
+      "plannerFee",
+      "poolBalance",
+      "treasuryFee",
+      "tvl",
+      "getTransferGasLimit"
+    ]
+  },
+  "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": {
+    "ignoreRelatives": [
+      "endpoint",
+      "getAddressConfig",
+      "lpToken",
+      "owner",
+      "token"
+    ],
+    "ignoreInWatchMode": [
+      "plannerFee",
+      "poolBalance",
+      "treasuryFee",
+      "tvl",
+      "getTransferGasLimit"
+    ]
+  }
+}

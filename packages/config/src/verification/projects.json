@@ -139,6 +139,7 @@
   "specular": true,
   "stack": true,
   "stargate": false,
+  "stargatev2": true,
   "starknet": true,
   "stealthchain": true,
   "superseed": true,

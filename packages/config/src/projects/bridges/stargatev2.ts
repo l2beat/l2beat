@@ -6,13 +6,15 @@ import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('stargatev2')
+const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
+// const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 
 export const stargatev2: Bridge = {
   type: 'bridge',
-  id: ProjectId('stargate'),
+  id: ProjectId('stargatev2'),
   display: {
-    name: 'StarGate (LayerZero)',
-    slug: 'stargate',
+    name: 'StarGate v2 (LayerZero)',
+    slug: 'stargatev2',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       apps: ['https://layerzeroscan.com/'],
@@ -103,9 +105,45 @@ export const stargatev2: Bridge = {
         }),
       },
       {
+        ...discovery.getEscrowDetails({
+          address: EthereumAddress(
+            '0x77b2043768d28E9C9aB44E1aBfC95944bcE57931',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate Liquidity pool for ETH on Ethereum.',
+        }),
+      },
+      {
+        ...discovery.getEscrowDetails({
+          address: EthereumAddress(
+            '0x933597a323Eb81cAe705C5bC29985172fd5A3973',
+          ),
+          tokens: ['USDT'],
+          description: 'Stargate Liquidity pool for USDT on Ethereum.',
+        }),
+      },
+      {
+        ...discovery.getEscrowDetails({
+          address: EthereumAddress(
+            '0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3',
+          ),
+          tokens: ['METIS'],
+          description: 'Stargate Liquidity pool for METIS on Ethereum.',
+        }),
+      },
+      {
+        ...discovery.getEscrowDetails({
+          address: EthereumAddress(
+            '0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D',
+          ),
+          tokens: ['mETH'],
+          description: 'Stargate Liquidity pool for mETH on Ethereum.',
+        }),
+      },
+      {
         chain: 'arbitrum',
         includeInTotal: false,
-        ...discovery.getEscrowDetails({
+        ...discovery_arbitrum.getEscrowDetails({
           address: EthereumAddress(
             '0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
           ),
@@ -114,27 +152,49 @@ export const stargatev2: Bridge = {
         }),
       },
       {
-        chain: 'optimism',
+        chain: 'arbitrum',
         includeInTotal: false,
-        ...discovery.getEscrowDetails({
+        ...discovery_arbitrum.getEscrowDetails({
           address: EthereumAddress(
             '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
           ),
-          tokens: ['USDC'],
-          description: 'Stargate Liquidity pool for USDC on Optimism.',
+          tokens: ['USDT'],
+          description: 'Stargate Liquidity pool for USDT on Arbitrum.',
         }),
       },
       {
-        chain: 'base',
+        chain: 'arbitrum',
         includeInTotal: false,
-        ...discovery.getEscrowDetails({
+        ...discovery_arbitrum.getEscrowDetails({
           address: EthereumAddress(
-            '0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
+            '0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F',
           ),
-          tokens: ['USDC'],
-          description: 'Stargate Liquidity pool for USDC on Base.',
+          tokens: ['ETH'],
+          description: 'Stargate Liquidity pool for ETH on Arbitrum.',
         }),
       },
+      // {
+      //   chain: 'optimism',
+      //   includeInTotal: false,
+      //   ...discovery_optimism.getEscrowDetails({
+      //     address: EthereumAddress(
+      //       '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
+      //     ),
+      //     tokens: ['USDC'],
+      //     description: 'Stargate Liquidity pool for USDC on Optimism.',
+      //   }),
+      // },
+      // {
+      //   chain: 'base',
+      //   includeInTotal: false,
+      //   ...discovery.getEscrowDetails({
+      //     address: EthereumAddress(
+      //       '0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
+      //     ),
+      //     tokens: ['USDC'],
+      //     description: 'Stargate Liquidity pool for USDC on Base.',
+      //   }),
+      // },
     ],
   },
   contracts: {

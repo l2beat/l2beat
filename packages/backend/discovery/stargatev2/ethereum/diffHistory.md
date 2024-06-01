@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9e5467d2a1ba1fbac094fd87e7f8c5c0aefbb37a
+Generated with discovered.json: 0xf7ee5edbec3a33fd166feedd54e58b820c6485b4
 
-# Diff at Fri, 31 May 2024 08:45:35 GMT:
+# Diff at Sat, 01 Jun 2024 16:46:19 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 19988708
+- current block number: 19998254
 
 ## Description
 
@@ -32,6 +32,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
     +++ description: None
 ```
 
@@ -92,7 +98,19 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980)
-    +++ description: batcher: bus, taxi, quotes
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
 ```
 
 ```diff
@@ -109,6 +127,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
     +++ description: None
 ```
@@ -116,6 +140,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
     +++ description: None
 ```
 

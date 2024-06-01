@@ -30,11 +30,90 @@
             "type": "array",
             "method": "stargateImpls",
             "startIndex": 1,
-            "length": "{{ maxAssetId }}",
-            "ignoreRelative": true
+            "length": "{{ maxAssetId }}"
           }
         }
       }
+    },
+    "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "0x933597a323Eb81cAe705C5bC29985172fd5A3973": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
     }
   }
 }
