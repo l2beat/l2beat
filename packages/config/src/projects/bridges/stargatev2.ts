@@ -77,17 +77,17 @@ export const stargatev2: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'All the configured required Verifiers or the Executor fail to facilitate the transaction.',
+          text: 'all the configured required Verifiers or the Executor fail to facilitate the transaction.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'All the configured required Verifiers collude to submit a fraudulent message.',
+          text: 'all the configured required Verifiers collude to submit a fraudulent message.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'The OApp owner (Stargate Multisig) changes the OApp configuration maliciously.',
+          text: 'the OApp owner (Stargate Multisig) changes the OApp configuration maliciously.',
           isCritical: true,
         },
       ],
@@ -127,7 +127,7 @@ export const stargatev2: Bridge = {
           address: EthereumAddress(
             '0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3',
           ),
-          tokens: ['METIS'],
+          tokens: ['Metis'],
           description: 'Stargate Liquidity pool for METIS on Ethereum.',
         }),
       },
