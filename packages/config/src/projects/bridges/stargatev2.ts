@@ -90,9 +90,18 @@ export const stargatev2: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description:
-        'Stargate is a Liquidity Network. It relies on liquidity providers to supply tokens to liquidity pools on each chain. \
-        Users can swap tokens between chains by transferring their tokens to a pool and receive token from the pool on the destination chain.',
+      description: `
+      On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations.
+      
+      While liquidity keeping all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination.
+      The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
+      
+      The Executor is only a relayer and depends on verifiers to verify the message coming from the source chain. These verifiers can be freely configured by the OApp owner (Stargate).
+      
+      Just like the assets themselves, so-called *credits* are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
+      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.
+      
+      For chains where a destination asset is not available, Stargate v2 offers a Token Bridge mode called Hydra that locks the asset at the source and mints a Stargate OFT (wrapped asset) at the destination.`,
       references: [],
       risks: [],
     },
@@ -140,7 +149,7 @@ export const stargatev2: Bridge = {
             '0xc026395860Db2d07ee33e05fE50ed7bD583189C7',
           ),
           tokens: ['USDC'],
-          description: 'Stargate Liquidity pool for USDC on Ethereum.',
+          description: 'Stargate liquidity pool for USDC on Ethereum.',
         }),
       },
       {
@@ -149,7 +158,7 @@ export const stargatev2: Bridge = {
             '0x77b2043768d28E9C9aB44E1aBfC95944bcE57931',
           ),
           tokens: ['ETH'],
-          description: 'Stargate Liquidity pool for ETH on Ethereum.',
+          description: 'Stargate liquidity pool for ETH on Ethereum.',
         }),
       },
       {
@@ -158,7 +167,7 @@ export const stargatev2: Bridge = {
             '0x933597a323Eb81cAe705C5bC29985172fd5A3973',
           ),
           tokens: ['USDT'],
-          description: 'Stargate Liquidity pool for USDT on Ethereum.',
+          description: 'Stargate liquidity pool for USDT on Ethereum.',
         }),
       },
       {
@@ -167,7 +176,7 @@ export const stargatev2: Bridge = {
             '0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3',
           ),
           tokens: ['Metis'],
-          description: 'Stargate Liquidity pool for METIS on Ethereum.',
+          description: 'Stargate liquidity pool for METIS on Ethereum.',
         }),
       },
       {
@@ -176,7 +185,7 @@ export const stargatev2: Bridge = {
             '0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D',
           ),
           tokens: ['mETH'],
-          description: 'Stargate Liquidity pool for mETH on Ethereum.',
+          description: 'Stargate liquidity pool for mETH on Ethereum.',
         }),
       },
       {
@@ -187,7 +196,7 @@ export const stargatev2: Bridge = {
             '0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
           ),
           tokens: ['USDC'],
-          description: 'Stargate Liquidity pool for USDC on Arbitrum.',
+          description: 'Stargate liquidity pool for USDC on Arbitrum.',
         }),
       },
       {
@@ -198,7 +207,7 @@ export const stargatev2: Bridge = {
             '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
           ),
           tokens: ['USDT'],
-          description: 'Stargate Liquidity pool for USDT on Arbitrum.',
+          description: 'Stargate liquidity pool for USDT on Arbitrum.',
         }),
       },
       {
@@ -209,7 +218,7 @@ export const stargatev2: Bridge = {
             '0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F',
           ),
           tokens: ['ETH'],
-          description: 'Stargate Liquidity pool for ETH on Arbitrum.',
+          description: 'Stargate liquidity pool for ETH on Arbitrum.',
         }),
       },
       // {
@@ -220,7 +229,7 @@ export const stargatev2: Bridge = {
       //       '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
       //     ),
       //     tokens: ['USDC'],
-      //     description: 'Stargate Liquidity pool for USDC on Optimism.',
+      //     description: 'Stargate liquidity pool for USDC on Optimism.',
       //   }),
       // },
       // {
@@ -231,7 +240,7 @@ export const stargatev2: Bridge = {
       //       '0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
       //     ),
       //     tokens: ['USDC'],
-      //     description: 'Stargate Liquidity pool for USDC on Base.',
+      //     description: 'Stargate liquidity pool for USDC on Base.',
       //   }),
       // },
     ],
