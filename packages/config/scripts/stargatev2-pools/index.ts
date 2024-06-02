@@ -1,17 +1,19 @@
 import * as fs from 'fs'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
+
 /**
  *
- * TLDR: Run socket discovery, then this with 'yarn update-socket' and copy the results to the config.jsonc and socket.ts files.
+ * -> give the desired chain as argument, output is in 'config.jsonc.suggested'
  *
- * This script reads the socket plugs list from discovery and creates two files of the discovery results:
- * 1) socket-crawl-result.json: The discovery results grouped by sibling chain slug and ranked by TVL, including non-standard plugs and vaults and vault owners
- * 2) socket-crawl-copypasta.txt: A copy-paste suggestion for the config.jsonc and socket.ts files. This file excludes 0 TVL vaults and nonstandard plugs
- * The script should be easily extendable when functions on the plugs or vaults change, like they have done in the past.
+ * This is a smol convenience script that reads the pools from
+ * the TokenMessaging contract in discovery and spits out config.jsonc
+ * snippets with the correct ignore fields. They can then be added to the stargate escrows.
  *
  */
 
-const discovery = new ProjectDiscovery('stargatev2', 'optimism')
+const chain = process.argv[2] || 'arbitrum' // Default to 'optimism' if no argument is provided
+const discovery = new ProjectDiscovery('stargatev2', chain)
+
 const pools: string[] = discovery.getContractValue<string[]>(
   'TokenMessaging',
   'pools',
