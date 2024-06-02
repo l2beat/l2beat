@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 20003717,
-  "configHash": "0x8cdeb4ea3386c7323446644c3a8d5e6972ac1aa27b0e61a99576a69d903b5a6b",
+  "blockNumber": 20004017,
+  "configHash": "0x4b8d257de00edba7d5e55d61c9f581f3ee355f6546889ac91a2b53fa9b00048c",
   "version": 4,
   "contracts": [
     {
@@ -50,6 +50,8 @@
       "sinceTimestamp": 1706307671,
       "values": {
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+        "delegatesCreditMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+        "delegatesTokenMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getReceiveLibrary": [
@@ -209,7 +211,7 @@
       }
     },
     {
-      "name": "StarGate Multisig",
+      "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "upgradeability": {
         "type": "gnosis safe",
@@ -353,14 +355,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": ["0x02e49c2c", 0],
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 7865201919106875,
-        "poolBalance": "8021197494000000000000",
+        "plannerFee": 8258028477041913,
+        "poolBalance": "8056786503000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 57321,
-        "tvl": "8424325840000000000000"
+        "treasuryFee": 59636,
+        "tvl": "8423142640000000000000"
       }
     },
     {
@@ -407,7 +409,7 @@
         "oftVersion": ["0x02e49c2c", 0],
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": 1412936547020603,
-        "poolBalance": 19962507445370,
+        "poolBalance": 19959406257424,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
@@ -518,13 +520,13 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": ["0x02e49c2c", 0],
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 576000597960359,
-        "poolBalance": 20375201913091,
+        "plannerFee": 583752091894778,
+        "poolBalance": 20373402072617,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 514988046,
+        "treasuryFee": 515007988,
         "tvl": 20887046541227
       }
     },

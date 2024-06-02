@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf0818523e593543eb8e30d4b1bf92390802db035
+Generated with discovered.json: 0x8bc00c4197b8684be9d42c03f28516cfa902f1fd
 
-# Diff at Sun, 02 Jun 2024 11:04:27 GMT:
+# Diff at Sun, 02 Jun 2024 12:05:01 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 20003717
+- current block number: 20004017
 
 ## Description
 
@@ -85,7 +85,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract StarGate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
     +++ description: None
 ```
 

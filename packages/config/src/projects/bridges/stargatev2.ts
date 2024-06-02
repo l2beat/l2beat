@@ -9,6 +9,14 @@ const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 // const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 
+const discoveredOAppOwners = [
+  discovery.getPermissionedAccount('CreditMessaging', 'owner'),
+  discovery.getPermissionedAccount('TokenMessaging', 'owner'),
+]
+const discoveredDelegates = [
+  discovery.getPermissionedAccount('EndpointV2', 'delegatesCreditMessaging'),
+  discovery.getPermissionedAccount('EndpointV2', 'delegatesTokenMessaging'),
+]
 const discoveredSendLib = <string>(
   discovery.getContractValue('EndpointV2', 'getSendLibrary')
 )
@@ -32,7 +40,7 @@ export const stargatev2: Bridge = {
   type: 'bridge',
   id: ProjectId('stargatev2'),
   display: {
-    name: 'StarGate v2 (LayerZero)',
+    name: 'Stargate v2 (LayerZero)',
     slug: 'stargatev2',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
@@ -49,7 +57,7 @@ export const stargatev2: Bridge = {
       ],
     },
     description:
-      'StarGate v2 is a Hybrid Bridge (mainly Liquidity Network) built on top of the Layer Zero messaging protocol.',
+      'Stargate v2 is a Hybrid Bridge (mainly Liquidity Network) built on top of the Layer Zero messaging protocol.',
     detailedDescription:
       'It uses liquidity pools on all supported chains, supports optional batching and a Token Bridge mode called Hydra that can mint tokens at the destination.',
     category: 'Hybrid',
@@ -83,7 +91,7 @@ export const stargatev2: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'StarGate is a Liquidity Network. It relies on liquidity providers to supply tokens to liquidity pools on each chain. \
+        'Stargate is a Liquidity Network. It relies on liquidity providers to supply tokens to liquidity pools on each chain. \
         Users can swap tokens between chains by transferring their tokens to a pool and receive token from the pool on the destination chain.',
       references: [],
       risks: [],
@@ -104,7 +112,7 @@ export const stargatev2: Bridge = {
       )
 
       return {
-        name: 'Layer Zero custom verification',
+        name: 'Layer Zero message verification',
         description:
           'The Layer Zero message protocol is used: For validation of messages from Stargate over Layer Zero, two verifiers are currently configured: Nethermind and Stargate.\
         If both verifiers agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
@@ -118,11 +126,6 @@ export const stargatev2: Bridge = {
           {
             category: 'Funds can be stolen if',
             text: 'both whitelisted Verifiers collude to submit a fraudulent message.',
-            isCritical: true,
-          },
-          {
-            category: 'Funds can be stolen if',
-            text: 'the OApp owner (Stargate Multisig) changes the OApp configuration maliciously.',
             isCritical: true,
           },
         ],
@@ -280,15 +283,26 @@ export const stargatev2: Bridge = {
       {
         category: 'Users can be censored if',
         text: "the permissioned Planner moves all credits away from the users' chain, preventing them from bridging.",
-        isCritical: true,
       },
     ],
   },
   permissions: [
-    ...discovery.getMultisigPermission(
-      'StarGate Multisig',
-      'Owner of all pools and the associated OApp, can create new pools and endpoints, set fees and modify the OApp configuration to change verifiers and executors.',
-    ),
+    ...(() => {
+      assert(
+        discoveredOAppOwners[0].address === discoveredOAppOwners[1].address &&
+          discoveredOAppOwners[1].address === discoveredDelegates[0].address &&
+          discoveredDelegates[0].address === discoveredDelegates[1].address &&
+          discoveredDelegates[1].address ===
+            discovery.getContract('Stargate Multisig').address,
+        'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
+      )
+      return [
+        ...discovery.getMultisigPermission(
+          'Stargate Multisig',
+          'Owner of all pools and the associated OApps, can create new pools and endpoints, set fees and modify the OApp configuration to change verifiers and executors.',
+        ),
+      ]
+    })(),
     ...discovery.getMultisigPermission(
       'LayerZero Multisig',
       'The owner of the Layer Zero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (Layer Zero fee collector).',

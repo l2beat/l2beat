@@ -9,7 +9,7 @@
     "0x1041D127b2d4BC700F0F563883bC689502606918"
   ],
   "names": {
-    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "StarGate Multisig",
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "Stargate Multisig",
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
     "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": "CreditMessaging",
     "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": "TokenMessaging",
@@ -43,6 +43,20 @@
           "handler": {
             "type": "call",
             "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110] // OApp (TokenMessaging), remoteEID (Arbitrum)
+          }
+        },
+        "delegatesTokenMessaging": {
+          "handler": {
+            "method": "delegates",
+            "type": "call",
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980"] // OApp (TokenMessaging)
+          }
+        },
+        "delegatesCreditMessaging": {
+          "handler": {
+            "method": "delegates",
+            "type": "call",
+            "args": ["0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"] // OApp (CreditMessaging)
           }
         }
       }
