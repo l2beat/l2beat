@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf7ee5edbec3a33fd166feedd54e58b820c6485b4
+Generated with discovered.json: 0xf0818523e593543eb8e30d4b1bf92390802db035
 
-# Diff at Sat, 01 Jun 2024 16:46:19 GMT:
+# Diff at Sun, 02 Jun 2024 11:04:27 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 19998254
+- current block number: 20003717
 
 ## Description
 
@@ -19,6 +19,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract  (0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7)
     +++ description: None
 ```
@@ -26,7 +32,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
-    +++ description: None
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
 ```
 
 ```diff
@@ -109,7 +115,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
     +++ description: None
 ```
 
@@ -122,7 +146,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
-    +++ description: None
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
 ```
 
 ```diff
@@ -134,7 +158,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
-    +++ description: None
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
 ```
 
 ```diff

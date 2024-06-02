@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,6 +8,25 @@ import { Bridge } from './types'
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 // const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
+
+const discoveredSendLib = <string>(
+  discovery.getContractValue('EndpointV2', 'getSendLibrary')
+)
+const discoveredReceiveLib = <[string, boolean]>(
+  discovery.getContractValue('EndpointV2', 'getReceiveLibrary')
+)
+const discoveredUlnConfig: [
+  number, // confirmations
+  number, // requiredDVNCount
+  number, // optionalDVNCount
+  number, // optionalDVNThreshold
+  string[], // requiredDVNs (addresses)
+  string[], // optionalDVNs (addresses)
+] = discovery.getContractValue('ReceiveUln302', 'getUlnConfig')
+const discoveredExecutorConfig: [number, string] = discovery.getContractValue(
+  'SendUln302',
+  'getExecutorConfig',
+)
 
 export const stargatev2: Bridge = {
   type: 'bridge',
@@ -69,29 +88,46 @@ export const stargatev2: Bridge = {
       references: [],
       risks: [],
     },
-    validation: {
-      name: 'Layer Zero DVN',
-      description:
-        'The Layer Zero message protocol is used: For validation of Stargate messages, two verifiers are currently configured: Nethermind and Stargate. If both verifiers agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.', // TODO: fetch verifiers from discovery
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'all the configured required Verifiers or the Executor fail to facilitate the transaction.',
-          isCritical: true,
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'all the configured required Verifiers collude to submit a fraudulent message.',
-          isCritical: true,
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'the OApp owner (Stargate Multisig) changes the OApp configuration maliciously.',
-          isCritical: true,
-        },
-      ],
-    },
+    validation: (() => {
+      assert(
+        discoveredUlnConfig[1] === 2 && // requiredDVNCount
+          discoveredUlnConfig[4][0] ===
+            '0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
+          discoveredUlnConfig[4][1] ===
+            '0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
+        'Update the verification and permissions section, the verification config of Stargate has changed.',
+      )
+      assert(
+        discoveredExecutorConfig[1] ===
+          '0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
+        'The configured Executor for Stargate changed: Review the risk and permissions section.',
+      )
+
+      return {
+        name: 'Layer Zero custom verification',
+        description:
+          'The Layer Zero message protocol is used: For validation of messages from Stargate over Layer Zero, two verifiers are currently configured: Nethermind and Stargate.\
+        If both verifiers agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'both whitelisted Verifiers or the Layer Zero Executor fail to facilitate the transaction.',
+            isCritical: true,
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'both whitelisted Verifiers collude to submit a fraudulent message.',
+            isCritical: true,
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the OApp owner (Stargate Multisig) changes the OApp configuration maliciously.',
+            isCritical: true,
+          },
+        ],
+      }
+    })(),
   },
   config: {
     escrows: [
@@ -199,32 +235,72 @@ export const stargatev2: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('TokenMessaging', 'OApp.'),
-      discovery.getContractDetails('CreditMessaging'),
+      discovery.getContractDetails(
+        'TokenMessaging',
+        "A Layer Zero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
+      ),
+      discovery.getContractDetails(
+        'CreditMessaging',
+        'A Layer Zero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
+      ),
     ],
-    risks: [],
+    ...(() => {
+      assert(
+        EthereumAddress(discoveredReceiveLib[0]) ===
+          discovery.getContract('ReceiveUln302').address &&
+          EthereumAddress(discoveredSendLib) ===
+            discovery.getContract('SendUln302').address,
+        "Update the contracts and risk section, the endpoint's message libraries have changed.",
+      )
+      return [
+        discovery.getContractDetails(
+          'EndpointV2',
+          'A contract that is part of the Layer Zero messaging protocol. The Stargate OApp owner can configure verification and execution settings here.',
+        ),
+        discovery.getContractDetails(
+          'Stargate Verifier',
+          'One out of the two verifier contracts that are currently registered to verify all cross chain messages.',
+        ),
+        discovery.getContractDetails(
+          'Nethermind Verifier',
+          'One out of the two verifier contracts that are currently registered to verify all cross chain messages.',
+        ),
+        discovery.getContractDetails(
+          'LayerZero Executor',
+          'Is trusted to execute verified messages at the destination for a fee. Jobs are assigned to this contract by the Layer Zero Endpoint.',
+        ),
+      ]
+    })(),
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'the OApp owner changes the configuration of the OApp to malicious verifiers and executors.',
+        isCritical: true,
+      },
+      {
+        category: 'Users can be censored if',
+        text: "the permissioned Planner moves all credits away from the users' chain, preventing them from bridging.",
+        isCritical: true,
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(
       'StarGate Multisig',
-      'Bridge owner, can create new pools, chainpaths, set fees.',
+      'Owner of all pools and the associated OApp, can create new pools and endpoints, set fees and modify the OApp configuration to change verifiers and executors.',
     ),
     ...discovery.getMultisigPermission(
       'LayerZero Multisig',
-      'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
+      'The owner of the Layer Zero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (Layer Zero fee collector).',
     ),
-    // {
-    //   accounts: [
-    //     {
-    //       address: EthereumAddress(
-    //         '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
-    //       ),
-    //       type: 'EOA',
-    //     },
-    //   ],
-    //   name: 'LayerZero Relayer Admin owner',
-    //   description: 'Can upgrade LayerZero relayer contract with no delay.',
-    // },
+    {
+      name: 'Planner',
+      accounts: [
+        discovery.getPermissionedAccount('CreditMessaging', 'planner'),
+      ],
+      description:
+        'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools.',
+    },
   ],
   knowledgeNuggets: [
     {
