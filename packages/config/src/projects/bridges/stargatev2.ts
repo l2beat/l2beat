@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 // const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
+const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
 
 const discoveredOAppOwners = [
   discovery.getPermissionedAccount('CreditMessaging', 'owner'),
@@ -253,6 +254,28 @@ export const stargatev2: Bridge = {
           ),
           tokens: ['ETH'],
           description: 'Stargate liquidity pool for USDC on Base.',
+        }),
+      },
+      {
+        chain: 'scroll',
+        includeInTotal: false,
+        ...discovery_scroll.getEscrowDetails({
+          address: EthereumAddress(
+            '0x3Fc69CC4A842838bCDC9499178740226062b14E4',
+          ),
+          tokens: ['USDC'],
+          description: 'Stargate liquidity pool for USDC on Scroll.',
+        }),
+      },
+      {
+        chain: 'scroll',
+        includeInTotal: false,
+        ...discovery_scroll.getEscrowDetails({
+          address: EthereumAddress(
+            '0xC2b638Cb5042c1B3c5d5C969361fB50569840583',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for ETH on Scroll.',
         }),
       },
     ],

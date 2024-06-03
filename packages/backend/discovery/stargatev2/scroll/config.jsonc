@@ -18,11 +18,42 @@
             "type": "array",
             "method": "stargateImpls",
             "startIndex": 1,
-            "length": "{{ maxAssetId }}",
-            "ignoreRelative": true
+            "length": "{{ maxAssetId }}"
           }
         }
       }
+    },
+    "0x3Fc69CC4A842838bCDC9499178740226062b14E4": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
+    },
+    "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": {
+      "ignoreRelatives": [
+        "endpoint",
+        "getAddressConfig",
+        "lpToken",
+        "owner",
+        "token"
+      ],
+      "ignoreInWatchMode": [
+        "plannerFee",
+        "poolBalance",
+        "treasuryFee",
+        "tvl",
+        "getTransferGasLimit"
+      ]
     }
   }
 }
