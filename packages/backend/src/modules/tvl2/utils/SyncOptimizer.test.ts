@@ -27,8 +27,8 @@ describe(SyncOptimizer.name, () => {
   })
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
     const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
-    const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
-    const DAILY_CUTOFF_WITH_GRACE_PERIOD = 93
+    const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
+    const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
     const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
     const CLOCK = mockObject<Clock>({
       getLastHour: () => LAST_HOUR,
@@ -39,7 +39,7 @@ describe(SyncOptimizer.name, () => {
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(
-        -(DAILY_CUTOFF_WITH_GRACE_PERIOD + 1),
+        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1),
         'days',
       ).add(1, 'hours')
       const timestampToSync = syncOptimizer.getTimestampToSync(
@@ -56,7 +56,7 @@ describe(SyncOptimizer.name, () => {
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(
-        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1),
+        -(HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1),
         'days',
       ).add(1, 'hours')
 
@@ -93,7 +93,7 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('respects maxTimestamps', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
       const start = LAST_HOUR.add(-7, 'hours')
       const timestampToSync = syncOptimizer.getTimestampsToSync(
@@ -114,7 +114,7 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('respects to', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
       const start = LAST_HOUR.add(-7, 'hours')
       const timestampToSync = syncOptimizer.getTimestampsToSync(
@@ -135,9 +135,13 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('complex case', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
+      const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
 
-      const start = LAST_HOUR.add(-(DAILY_CUTOFF + 2), 'days')
+      const start = LAST_HOUR.add(
+        -(HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2),
+        'days',
+      )
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
         start.add(365, 'days').toNumber(),
