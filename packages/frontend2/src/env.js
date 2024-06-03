@@ -37,6 +37,7 @@ export const env = createEnv({
     FEATURE_FLAG_HIRING: featureFlag.default('true'),
     FEATURE_FLAG_LIVENESS: featureFlag.default('true'),
     FEATURE_FLAG_ZK_CATALOG: featureFlag.default('false'),
+    ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   },
 
   /**
@@ -45,6 +46,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string().optional(),
   },
 
   /**
@@ -66,6 +68,9 @@ export const env = createEnv({
     FEATURE_FLAG_ZK_CATALOG: process.env.FEATURE_FLAG_ZK_CATALOG,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
+      process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
   },
 
   /**
