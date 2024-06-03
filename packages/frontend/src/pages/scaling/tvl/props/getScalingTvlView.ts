@@ -54,7 +54,7 @@ function getScalingTvlViewEntry(
   const tokensWithoutAssociated = getTokens(
     project.id,
     excludedTokensTvlApiResponse,
-    false,
+    true,
   )
 
   return {

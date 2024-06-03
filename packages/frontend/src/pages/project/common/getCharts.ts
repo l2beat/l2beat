@@ -36,6 +36,9 @@ export function getCharts(
     !!activityApiResponse?.projects[project.id.toString()]
   const hasCosts = !!costsApiResponse?.projects[project.id.toString()]
 
+  const isLayer2orLayer3 =
+    project.type === 'layer2' || project.type === 'layer3'
+
   return {
     tvl: hasTvl
       ? {
@@ -44,14 +47,9 @@ export function getCharts(
             project.type === 'bridge'
               ? { type: 'project-tvl', slug: project.display.slug }
               : { type: 'project-detailed-tvl', slug: project.display.slug },
-          tokens: getTokens(
-            project.id,
-            tvlApiResponse,
-            project.type === 'layer2',
-          ),
+          tokens: getTokens(project.id, tvlApiResponse, isLayer2orLayer3),
           tvlBreakdownHref:
-            (project.type === 'layer2' || project.type === 'layer3') &&
-            !project.isUpcoming
+            isLayer2orLayer3 && !project.isUpcoming
               ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
               : undefined,
           milestones: project.milestones,
