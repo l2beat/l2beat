@@ -13,18 +13,18 @@ export interface TotalValueProps {
 export function TotalValue({ project }: TotalValueProps) {
   const content = (
     <ExcludeAssociatedTokensWrapper>
-      <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+      <ExcludeAssociatedTokensWrapper.Included>
         <ValueWithPercentageCell
           value={project.data.tvl.displayValue}
           percentChange={project.data.tvl.change}
         />
-      </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-      <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+      </ExcludeAssociatedTokensWrapper.Included>
+      <ExcludeAssociatedTokensWrapper.Excluded>
         <ValueWithPercentageCell
           value={project.data.excludedAssociatedTokens.tvl.displayValue}
           percentChange={project.data.excludedAssociatedTokens.tvl.change}
         />
-      </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+      </ExcludeAssociatedTokensWrapper.Excluded>
     </ExcludeAssociatedTokensWrapper>
   )
 

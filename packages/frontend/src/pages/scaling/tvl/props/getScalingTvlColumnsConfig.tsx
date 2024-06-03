@@ -45,7 +45,7 @@ export function getScalingTvlColumnsConfig() {
       headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
-          <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+          <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
               value={project.data.cbv.displayValue}
               percentChange={project.data.cbv.change}
@@ -53,8 +53,8 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'CBV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-          <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Included>
+          <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
               value={project.data.excludedAssociatedTokens.cbv.displayValue}
               percentChange={project.data.excludedAssociatedTokens.cbv.change}
@@ -62,7 +62,7 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'CBV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Excluded>
         </ExcludeAssociatedTokensWrapper>
       ),
       sorting: {
@@ -87,7 +87,7 @@ export function getScalingTvlColumnsConfig() {
       headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
-          <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+          <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
               value={project.data.ebv.displayValue}
               percentChange={project.data.ebv.change}
@@ -95,8 +95,8 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'EBV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-          <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Included>
+          <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
               value={project.data.excludedAssociatedTokens.ebv.displayValue}
               percentChange={project.data.excludedAssociatedTokens.ebv.change}
@@ -104,7 +104,7 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'EBV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Excluded>
         </ExcludeAssociatedTokensWrapper>
       ),
       sorting: {
@@ -129,7 +129,7 @@ export function getScalingTvlColumnsConfig() {
       headClassName: getColumnHeaderUnderline('before:bg-pink-100'),
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
-          <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+          <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
               value={project.data.nmv.displayValue}
               percentChange={project.data.nmv.change}
@@ -137,8 +137,8 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'NMV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-          <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Included>
+          <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
               value={project.data.excludedAssociatedTokens.nmv.displayValue}
               percentChange={project.data.excludedAssociatedTokens.nmv.change}
@@ -146,7 +146,7 @@ export function getScalingTvlColumnsConfig() {
                 (t) => t.info.type === 'NMV',
               )}
             />
-          </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Excluded>
         </ExcludeAssociatedTokensWrapper>
       ),
       sorting: {

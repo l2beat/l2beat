@@ -22,15 +22,15 @@ export function TotalCell({ project, className }: TotalCellProps) {
   return (
     <div className={className}>
       <ExcludeAssociatedTokensWrapper>
-        <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+        <ExcludeAssociatedTokensWrapper.Included>
           <Content data={project.data} tvlTooltip={project.tvlTooltip} />
-        </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-        <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+        </ExcludeAssociatedTokensWrapper.Included>
+        <ExcludeAssociatedTokensWrapper.Excluded>
           <Content
             data={project?.data?.excludedTokens}
             tvlTooltip={project.tvlTooltip}
           />
-        </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+        </ExcludeAssociatedTokensWrapper.Excluded>
       </ExcludeAssociatedTokensWrapper>
     </div>
   )

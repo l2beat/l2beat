@@ -12,7 +12,7 @@ export function ExcludeAssociatedTokensWrapper({ children }: Props) {
   )
 }
 
-ExcludeAssociatedTokensWrapper.TokensIncludedView = function IncludedView({
+ExcludeAssociatedTokensWrapper.Included = function Included({
   children,
 }: Props) {
   return (
@@ -22,7 +22,7 @@ ExcludeAssociatedTokensWrapper.TokensIncludedView = function IncludedView({
   )
 }
 
-ExcludeAssociatedTokensWrapper.TokensExcludedView = function ExcludedView({
+ExcludeAssociatedTokensWrapper.Excluded = function Excluded({
   children,
 }: Props) {
   return (

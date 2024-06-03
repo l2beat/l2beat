@@ -87,7 +87,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       headClassName: '!pr-4',
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
-          <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+          <ExcludeAssociatedTokensWrapper.Included>
             {project.data?.marketShare ? (
               <NumberCell className="pr-4">
                 {project.data.marketShare.displayValue}
@@ -95,8 +95,8 @@ export function getActiveScalingSummaryColumnsConfig() {
             ) : (
               <span className="pr-4">—</span>
             )}
-          </ExcludeAssociatedTokensWrapper.TokensIncludedView>
-          <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Included>
+          <ExcludeAssociatedTokensWrapper.Excluded>
             {project.data?.excludedTokens?.marketShare ? (
               <NumberCell className="pr-4">
                 {project.data.excludedTokens.marketShare.displayValue}
@@ -104,7 +104,7 @@ export function getActiveScalingSummaryColumnsConfig() {
             ) : (
               <span className="pr-4">—</span>
             )}
-          </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+          </ExcludeAssociatedTokensWrapper.Excluded>
         </ExcludeAssociatedTokensWrapper>
       ),
       sorting: {
