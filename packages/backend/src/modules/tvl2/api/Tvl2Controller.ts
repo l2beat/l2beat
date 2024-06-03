@@ -852,24 +852,29 @@ export class Tvl2Controller {
       })),
     )
 
+    const ethPrices = await this.getEthPrices()
+
     for (const e of excluded) {
       if (e.includeInTotal) {
         tvl.combined.hourly = subtractTokenChart(
           tvl.combined.hourly,
           e.data.hourly,
           e.type,
+          ethPrices,
         )
 
         tvl.combined.sixHourly = subtractTokenChart(
           tvl.combined.sixHourly,
           e.data.sixHourly,
           e.type,
+          ethPrices,
         )
 
         tvl.combined.daily = subtractTokenChart(
           tvl.combined.daily,
           e.data.daily,
           e.type,
+          ethPrices,
         )
       }
       if (e.includeInTotal) {
@@ -877,18 +882,21 @@ export class Tvl2Controller {
           tvl[e.projectType].hourly,
           e.data.hourly,
           e.type,
+          ethPrices,
         )
 
         tvl[e.projectType].sixHourly = subtractTokenChart(
           tvl[e.projectType].sixHourly,
           e.data.sixHourly,
           e.type,
+          ethPrices,
         )
 
         tvl[e.projectType].daily = subtractTokenChart(
           tvl[e.projectType].daily,
           e.data.daily,
           e.type,
+          ethPrices,
         )
       }
       if (e.includeInTotal) {
@@ -900,17 +908,24 @@ export class Tvl2Controller {
           project.charts.hourly,
           e.data.hourly,
           e.type,
+          ethPrices,
         )
 
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         tvl.projects[e.project.toString()]!.charts.sixHourly =
-          subtractTokenChart(project.charts.sixHourly, e.data.sixHourly, e.type)
+          subtractTokenChart(
+            project.charts.sixHourly,
+            e.data.sixHourly,
+            e.type,
+            ethPrices,
+          )
 
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
           project.charts.daily,
           e.data.daily,
           e.type,
+          ethPrices,
         )
       }
     }
@@ -1099,6 +1114,7 @@ function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,
   tokenType: 'CBV' | 'EBV' | 'NMV',
+  ethPrices: Map<number, number>,
 ): TvlApiChart {
   const data = main.data.map((x) => {
     const tokenAt = token.data.find((d) => d[0].equals(x[0]))
@@ -1108,7 +1124,9 @@ function subtractTokenChart(
     }
     const tokenUsdValue = tokenAt[2]
     // TODO
-    const tokenEthValue = 0
+    const ethPriceAt = ethPrices.get(x[0].toNumber())
+    assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
+    const tokenEthValue = tokenUsdValue / ethPriceAt
 
     return [
       x[0],
@@ -1116,10 +1134,10 @@ function subtractTokenChart(
       tokenType === 'CBV' ? x[2] - tokenUsdValue : x[2],
       tokenType === 'EBV' ? x[3] - tokenUsdValue : x[3],
       tokenType === 'NMV' ? x[4] - tokenUsdValue : x[4],
-      x[5] - tokenEthValue,
-      tokenType === 'CBV' ? x[6] - tokenEthValue : x[6],
-      tokenType === 'EBV' ? x[7] - tokenEthValue : x[7],
-      tokenType === 'NMV' ? x[8] - tokenEthValue : x[8],
+      +(x[5] - tokenEthValue).toFixed(2),
+      tokenType === 'CBV' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
+      tokenType === 'EBV' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
+      tokenType === 'NMV' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
     ] as TvlApiChart['data'][0]
   })
 
