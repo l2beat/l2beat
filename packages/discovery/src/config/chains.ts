@@ -92,4 +92,28 @@ export const chains: ChainConfig[] = [
     multicall: getMulticall3Config(14),
     etherscanUrl: 'https://api.scrollscan.com/api',
   },
+  {
+    name: 'mantle',
+    multicall: getMulticall3Config(304717),
+    etherscanUrl:
+      'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+  },
+  {
+    name: 'metis',
+    multicall: getMulticall3Config(2338552),
+    etherscanUrl:
+      'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+  },
+  {
+    name: 'bobanetwork',
+    multicall: getMulticall3Config(446859),
+    etherscanUrl:
+      'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
+  },
+  {
+    name: 'mode',
+    multicall: getMulticall3Config(2465882),
+    etherscanUrl:
+      'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+  },
 ]
