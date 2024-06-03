@@ -73,7 +73,7 @@ interface ExcludedToken {
   type: 'canonical' | 'external' | 'native'
   includeInTotal: boolean
   project: ProjectId
-  projectType: 'layers2s' | 'bridges' | undefined
+  projectType: 'layers2s' | 'bridges'
 }
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
@@ -893,7 +893,7 @@ export class Tvl2Controller {
           ethPrices,
         )
       }
-      if (e.projectType && e.includeInTotal) {
+      if (e.includeInTotal) {
         tvl[e.projectType].hourly = subtractTokenChart(
           tvl[e.projectType].hourly,
           e.data.hourly,
@@ -915,35 +915,33 @@ export class Tvl2Controller {
           ethPrices,
         )
       }
-      if (e.includeInTotal) {
-        const project = tvl.projects[e.project.toString()]
-        assert(project, 'Project not found')
 
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
-          project.charts.hourly,
-          e.data.hourly,
-          e.type,
-          ethPrices,
-        )
+      const project = tvl.projects[e.project.toString()]
+      assert(project, 'Project not found')
 
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        tvl.projects[e.project.toString()]!.charts.sixHourly =
-          subtractTokenChart(
-            project.charts.sixHourly,
-            e.data.sixHourly,
-            e.type,
-            ethPrices,
-          )
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
+        project.charts.hourly,
+        e.data.hourly,
+        e.type,
+        ethPrices,
+      )
 
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
-          project.charts.daily,
-          e.data.daily,
-          e.type,
-          ethPrices,
-        )
-      }
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
+        project.charts.sixHourly,
+        e.data.sixHourly,
+        e.type,
+        ethPrices,
+      )
+
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
+        project.charts.daily,
+        e.data.daily,
+        e.type,
+        ethPrices,
+      )
     }
     return tvl
   }
@@ -1171,6 +1169,6 @@ function getType(
     case 'bridge':
       return 'bridges'
     case 'layer3':
-      return undefined
+      return 'layers2s'
   }
 }
