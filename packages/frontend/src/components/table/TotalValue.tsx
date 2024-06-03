@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ScalingTvlViewEntry } from '../../pages/scaling/tvl/types'
+import { ExcludeAssociatedTokensWrapper } from '../ExcludeAssociatedTokensWrapper'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { ValueWithPercentageCell } from './ValueWithPercentageCell'
@@ -11,10 +12,20 @@ export interface TotalValueProps {
 
 export function TotalValue({ project }: TotalValueProps) {
   const content = (
-    <ValueWithPercentageCell
-      value={project.tvl?.displayValue}
-      percentChange={project.tvlChange}
-    />
+    <ExcludeAssociatedTokensWrapper>
+      <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+        <ValueWithPercentageCell
+          value={project.data.tvl.displayValue}
+          percentChange={project.data.tvl.change}
+        />
+      </ExcludeAssociatedTokensWrapper.TokensIncludedView>
+      <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+        <ValueWithPercentageCell
+          value={project.data.excludedAssociatedTokens.tvl.displayValue}
+          percentChange={project.data.excludedAssociatedTokens.tvl.change}
+        />
+      </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+    </ExcludeAssociatedTokensWrapper>
   )
 
   if (project.tvlWarning) {

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
+import { ExcludeAssociatedTokensCheckbox } from '../../../../components/table/filters/checkboxes/ExcludeAssociatedTokensCheckbox'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { RowConfig } from '../../../../components/table/types'
 import { getScalingTvlColumnsConfig } from '../props/getScalingTvlColumnsConfig'
@@ -19,6 +20,7 @@ export function ScalingTvlView({ items }: ScalingTvlViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <ExcludeAssociatedTokensCheckbox />
       <ScalingFilters items={items} />
       <TableView
         items={items}
