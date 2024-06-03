@@ -137,7 +137,7 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
       }
 
       return chartType.excludeAssociatedTokens
-        ? '/api/tvl/scaling-excluded-tokens.json'
+        ? '/api/tvl/scaling-excluded-associated-tokens.json'
         : '/api/tvl/scaling.json'
     }
     case 'scaling-activity':
