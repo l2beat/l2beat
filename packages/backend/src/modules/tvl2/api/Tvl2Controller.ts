@@ -868,6 +868,7 @@ export class Tvl2Controller {
     return ethPrices
   }
 
+  // TODO: it is slow an can be optimized via querying for all tokens in a batch
   async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const tvl = await this.getTvl(lastHour)
 
