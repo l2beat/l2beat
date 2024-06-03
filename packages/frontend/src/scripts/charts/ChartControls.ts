@@ -246,7 +246,7 @@ export class ChartControls {
         'Invalid chart type',
       )
       this.updateChartType({
-        type: this.chartType?.type,
+        ...this.chartType,
         excludeAssociatedTokens,
       })
     })
