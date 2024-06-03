@@ -11,7 +11,7 @@ export const teva: Layer3 = underReviewL3({
     slug: 'teva',
     category: 'ZK Rollup',
     description:
-      'Teva Chain is a L3 gaming hyperchain on zkSync, powered by zkStack with custom DA',
+      'Teva Chain is a L3 gaming hyperchain on zkSync, powered by zkStack with custom DA.',
     purposes: ['Gaming'],
     provider: 'ZK Stack',
     links: {
