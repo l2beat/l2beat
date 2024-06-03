@@ -5,7 +5,6 @@ import {
   EscrowEntry,
   ProjectId,
   TotalSupplyEntry,
-  UnixTime,
   capitalizeFirstLetter,
   notUndefined,
 } from '@l2beat/shared-pure'
