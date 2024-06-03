@@ -132,6 +132,7 @@ export const taiko: Layer2 = {
         The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
       value: 'SGX Proofs',
+      secondLine: `${SGXcooldownWindow} challenge period`,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
