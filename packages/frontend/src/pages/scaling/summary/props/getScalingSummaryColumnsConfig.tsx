@@ -70,7 +70,11 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
-        getOrderValue: (project) => project.data?.tvl.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.tvl.value,
+          'excluded-associated-tokens': project.data?.excludedTokens?.tvl.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
         defaultState: 'desc',
       },
@@ -104,7 +108,12 @@ export function getActiveScalingSummaryColumnsConfig() {
         </ExcludeAssociatedTokensWrapper>
       ),
       sorting: {
-        getOrderValue: (project) => project.data?.marketShare.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.marketShare.value,
+          'excluded-associated-tokens':
+            project.data?.excludedTokens?.marketShare.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
       },
     },
@@ -239,7 +248,11 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
       headClassName: '!pr-4',
       getValue: (project) => <TotalCell project={project} className="pr-4" />,
       sorting: {
-        getOrderValue: (project) => project.data?.tvl.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.tvl.value,
+          'excluded-associated-tokens': project.data?.excludedTokens?.tvl.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
         defaultState: 'desc',
       },

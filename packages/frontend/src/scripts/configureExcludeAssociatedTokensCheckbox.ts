@@ -1,4 +1,5 @@
 import { makeQuery } from './query'
+import { setSortingArrowsOrderKey } from './table/configureSorting'
 
 export function configureExcludeAssociatedTokensCheckbox() {
   const { $, $$ } = makeQuery()
@@ -14,5 +15,13 @@ export function configureExcludeAssociatedTokensCheckbox() {
       }
       element.removeAttribute('data-associated-tokens-excluded')
     })
+    setSortingArrowsOrderKey(
+      'total',
+      value ? 'excluded-associated-tokens' : 'included-associated-tokens',
+    )
+    setSortingArrowsOrderKey(
+      'mkt-share',
+      value ? 'excluded-associated-tokens' : 'included-associated-tokens',
+    )
   })
 }
