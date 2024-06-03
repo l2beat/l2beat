@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { Tabs } from '../../../../components/Tabs'
 import { Layer3sIcon } from '../../../../components/icons'
