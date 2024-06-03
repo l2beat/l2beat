@@ -39,7 +39,7 @@ export function createApi(
     }
   }
 
-  // urlCharts.set('tvl/scaling-excluded-tokens', excludedTokensTvlApiResponse.layers2s)
+  urlCharts.set('tvl/scaling-excluded-associated-tokens', excludedTokensTvlApiResponse.layers2s)
 
   if (activityApiResponse) {
     urlCharts.set('activity/combined', activityApiResponse.combined)
