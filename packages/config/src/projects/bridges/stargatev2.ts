@@ -7,7 +7,7 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
-// const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
+const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
 const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
@@ -226,17 +226,39 @@ export const stargatev2: Bridge = {
           description: 'Stargate liquidity pool for ETH on Arbitrum.',
         }),
       },
-      // {
-      //   chain: 'optimism',
-      //   includeInTotal: false,
-      //   ...discovery_optimism.getEscrowDetails({
-      //     address: EthereumAddress(
-      //       '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
-      //     ),
-      //     tokens: ['USDC'],
-      //     description: 'Stargate liquidity pool for USDC on Optimism.',
-      //   }),
-      // },
+      {
+        chain: 'optimism',
+        includeInTotal: false,
+        ...discovery_optimism.getEscrowDetails({
+          address: EthereumAddress(
+            '0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
+          ),
+          tokens: ['USDC'],
+          description: 'Stargate liquidity pool for USDC on Optimism.',
+        }),
+      },
+      {
+        chain: 'optimism',
+        includeInTotal: false,
+        ...discovery_optimism.getEscrowDetails({
+          address: EthereumAddress(
+            '0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for ETH on Optimism.',
+        }),
+      },
+      {
+        chain: 'optimism',
+        includeInTotal: false,
+        ...discovery_optimism.getEscrowDetails({
+          address: EthereumAddress(
+            '0x19cFCE47eD54a88614648DC3f19A5980097007dD',
+          ),
+          tokens: ['USDT'],
+          description: 'Stargate liquidity pool for USDT on Optimism.',
+        }),
+      },
       {
         chain: 'base',
         includeInTotal: false,
