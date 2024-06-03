@@ -1160,9 +1160,7 @@ function subtractTokenChart(
     data,
   }
 }
-function getType(
-  type: 'layer2' | 'bridge' | 'layer3',
-): 'layers2s' | 'bridges' | undefined {
+function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
   switch (type) {
     case 'layer2':
       return 'layers2s'
