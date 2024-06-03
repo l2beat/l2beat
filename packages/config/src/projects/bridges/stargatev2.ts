@@ -62,7 +62,7 @@ export const stargatev2: Bridge = {
       ],
     },
     description:
-      'Stargate v2 is a Hybrid Bridge (mainly Liquidity Network) built on top of the Layer Zero messaging protocol.',
+      'Stargate v2 is a Hybrid Bridge (mainly Liquidity Network) built on top of the LayerZero messaging protocol.',
     detailedDescription:
       'It uses liquidity pools on all supported chains, supports optional batching and a Token Bridge mode called Hydra that can mint tokens at the destination.',
     category: 'Hybrid',
@@ -71,7 +71,7 @@ export const stargatev2: Bridge = {
     validatedBy: {
       value: 'Third Party',
       description:
-        'The Layer Zero message protocol is used: If all preconfigured verifiers agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
+        'The LayerZero message protocol is used: If all preconfigured verifiers agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
       sentiment: 'bad',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
@@ -98,16 +98,24 @@ export const stargatev2: Bridge = {
       description: `
       On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations.
       
-      While liquidity keeping all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination.
-      The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
+      While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
+      Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
       
-      The Executor is only a relayer and depends on verifiers to verify the message coming from the source chain. These verifiers can be freely configured by the OApp owner (Stargate).
+      The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
+      They are only a relayer and depend on verifiers to verify the message coming from the source chain. These verifiers can be freely configured by the OApp owner (Stargate).
       
       Just like the assets themselves, so-called *credits* are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
-      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.
-      
-      For chains where a destination asset is not available, Stargate v2 offers a Token Bridge mode called Hydra that locks the asset at the source and mints a Stargate OFT (wrapped asset) at the destination.`,
-      references: [],
+      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.`,
+      references: [
+        {
+          text: 'Stargate Docs: Modes of transport',
+          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/modes-of-transport-taxi-and-bus',
+        },
+        {
+          text: 'Stargate Docs: Credit allocation system',
+          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/credit-allocation-system',
+        },
+      ],
       risks: [],
     },
     validation: (() => {
@@ -126,15 +134,20 @@ export const stargatev2: Bridge = {
       )
 
       return {
-        name: 'Layer Zero message verification',
+        name: 'LayerZero messaging',
         description:
-          'The Layer Zero message protocol is used: For validation of messages from Stargate over Layer Zero, two verifiers are currently configured: Nethermind and Stargate.\
+          'The LayerZero message protocol is used: For validation of messages from Stargate over LayerZero, two verifiers are currently configured: Nethermind and Stargate.\
         If both verifiers agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
-        references: [],
+        references: [
+          {
+            text: 'LayerZero Docs: Security Stack',
+            href: 'https://docs.layerzero.network/v2/home/modular-security/security-stack-dvns',
+          },
+        ],
         risks: [
           {
             category: 'Users can be censored if',
-            text: 'both whitelisted Verifiers or the Layer Zero Executor fail to facilitate the transaction.',
+            text: 'both whitelisted Verifiers or the LayerZero Executor fail to facilitate the transaction.',
             isCritical: true,
           },
           {
@@ -145,6 +158,18 @@ export const stargatev2: Bridge = {
         ],
       }
     })(),
+    destinationToken: {
+      name: 'Destination Tokens',
+      description:
+        'Since Stargate is mainly a Liquidity Network, its liquidity pools at the destination are filled with tokens from canonical or other bridges than Stargate. As no new tokens are minted, the users do not inherit the risk of the Stargate bridge as soon as the bridging is complete. For chains where a destination asset is not available, Stargate v2 offers a Token Bridge mode called Hydra that locks the asset at the source and mints a Stargate OFT at the destination.',
+      references: [
+        {
+          text: 'Stargate Docs: Token Bridge mode (Hydra)',
+          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/token-types/hydra-ofts',
+        },
+      ],
+      risks: [],
+    },
   },
   config: {
     escrows: [
@@ -397,11 +422,11 @@ export const stargatev2: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'TokenMessaging',
-        "A Layer Zero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
+        "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
       ),
       discovery.getContractDetails(
         'CreditMessaging',
-        'A Layer Zero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
+        'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
       ),
     ],
     ...(() => {
@@ -415,7 +440,7 @@ export const stargatev2: Bridge = {
       return [
         discovery.getContractDetails(
           'EndpointV2',
-          'A contract that is part of the Layer Zero messaging protocol. The Stargate OApp owner can configure verification and execution settings here.',
+          'A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification and execution settings here.',
         ),
         discovery.getContractDetails(
           'Stargate Verifier',
@@ -427,7 +452,7 @@ export const stargatev2: Bridge = {
         ),
         discovery.getContractDetails(
           'LayerZero Executor',
-          'Is trusted to execute verified messages at the destination for a fee. Jobs are assigned to this contract by the Layer Zero Endpoint.',
+          'Is trusted to execute verified messages at the destination for a fee. Jobs are assigned to this contract by the LayerZero Endpoint.',
         ),
       ]
     })(),
@@ -462,7 +487,7 @@ export const stargatev2: Bridge = {
     })(),
     ...discovery.getMultisigPermission(
       'LayerZero Multisig',
-      'The owner of the Layer Zero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (Layer Zero fee collector).',
+      'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
     ),
     {
       name: 'Planner',
