@@ -10,6 +10,7 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 // const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
+const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
 
 const discoveredOAppOwners = [
   discovery.getPermissionedAccount('CreditMessaging', 'owner'),
@@ -276,6 +277,39 @@ export const stargatev2: Bridge = {
           ),
           tokens: ['ETH'],
           description: 'Stargate liquidity pool for ETH on Scroll.',
+        }),
+      },
+      {
+        chain: 'metis',
+        includeInTotal: false,
+        ...discovery_metis.getEscrowDetails({
+          address: EthereumAddress(
+            '0x36ed193dc7160D3858EC250e69D12B03Ca087D08',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for ETH on Metis.',
+        }),
+      },
+      {
+        chain: 'metis',
+        includeInTotal: false,
+        ...discovery_metis.getEscrowDetails({
+          address: EthereumAddress(
+            '0xD9050e7043102a0391F81462a3916326F86331F0',
+          ),
+          tokens: ['Metis'],
+          description: 'Stargate liquidity pool for METIS on Metis.',
+        }),
+      },
+      {
+        chain: 'metis',
+        includeInTotal: false,
+        ...discovery_metis.getEscrowDetails({
+          address: EthereumAddress(
+            '0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125',
+          ),
+          tokens: ['USDT'],
+          description: 'Stargate liquidity pool for USDT on Metis.',
         }),
       },
     ],
