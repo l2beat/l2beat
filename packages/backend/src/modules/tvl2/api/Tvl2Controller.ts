@@ -572,6 +572,7 @@ export class Tvl2Controller {
   async getAggregatedTvl(
     lastHour: UnixTime,
     projectSlugs: string[],
+    excludeAssociated: boolean,
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
@@ -667,10 +668,44 @@ export class Tvl2Controller {
       chartId: '/tvl/aggregate',
     })
 
+    const excluded = await Promise.all(
+      this.excludedTokens
+        .filter((e) => projectIds.includes(e.project))
+        .map(async (x) => ({
+          ...x,
+          data: await this.getTokenChart(x, x.project, lastHour),
+        })),
+    )
+
     const result: TvlApiCharts = {
       hourly: getChart(hourlyData),
       sixHourly: getChart(sixHourlyData),
       daily: getChart(dailyData),
+    }
+
+    if (excludeAssociated) {
+      for (const e of excluded) {
+        result.hourly = subtractTokenChart(
+          result.hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        result.sixHourly = subtractTokenChart(
+          result.sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        result.daily = subtractTokenChart(
+          result.daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
+      }
     }
 
     return result

@@ -41,6 +41,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
       z.object({
         query: z.object({
           projectSlugs: z.string(),
+          excludeAssociatedTokens: z.string().optional(),
         }),
       }),
       async (ctx) => {
@@ -48,9 +49,12 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
           .split(',')
           .map((slug) => slug.trim())
 
+        const excludeAssociated = ctx.query.excludeAssociatedTokens === 'true'
+
         const tvl = await controller.getAggregatedTvl(
           clock.getLastHour().add(-1, 'hours'),
           projectSlugs,
+          excludeAssociated,
         )
         ctx.body = tvl
       },
