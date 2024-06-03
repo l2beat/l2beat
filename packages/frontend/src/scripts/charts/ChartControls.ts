@@ -1,6 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import isEmpty from 'lodash/isEmpty'
 
+import { assert } from '@l2beat/shared-pure'
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { getCurrentTheme } from '../configureThemeToggle'
@@ -239,8 +240,13 @@ export class ChartControls {
 
     excludeAssociatedTokensCheckbox?.addEventListener('change', () => {
       const excludeAssociatedTokens = !!excludeAssociatedTokensCheckbox.checked
+      assert(
+        this.chartType?.type === 'scaling-detailed-tvl' ||
+          this.chartType?.type === 'scaling-tvl',
+        'Invalid chart type',
+      )
       this.updateChartType({
-        type: this.isDetailedTvl ? 'scaling-detailed-tvl' : 'scaling-tvl',
+        type: this.chartType?.type,
         excludeAssociatedTokens,
       })
     })
