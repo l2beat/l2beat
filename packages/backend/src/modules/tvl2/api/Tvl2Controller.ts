@@ -146,17 +146,6 @@ export class Tvl2Controller {
 
       const associatedAmounts = amounts.filter((x) => x.isAssociated === true)
 
-      if (associatedAmounts.length > 0) {
-        console.log(
-          associatedAmounts
-            .map(
-              (a) =>
-                `${a.project} - ${a.symbol} - ${a.source} - ${a.chain} - ${a.includeInTotal}`,
-            )
-            .join('\n'),
-        )
-      }
-
       return associatedAmounts.map((amount) => {
         return {
           address: amount.address,
