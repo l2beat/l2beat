@@ -32,8 +32,6 @@ describe(SyncOptimizer.name, () => {
     const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
     const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
     const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
-    const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
-    const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
     const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
     const CLOCK = mockObject<Clock>({
       getLastHour: () => LAST_HOUR,
@@ -133,9 +131,12 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('complex case', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
-      const start = LAST_HOUR.add(-(DAILY_CUTOFF + 2), 'days')
+      const start = LAST_HOUR.add(
+        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2),
+        'days',
+      )
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
         start.add(100_000, 'days').toNumber(),
