@@ -22,6 +22,7 @@ export const AmountConfigBase = z.object({
   includeInTotal: z.boolean(),
   decimals: z.number(),
   symbol: z.string(),
+  isAssociated: z.boolean(),
 })
 export type AmountConfigBase = z.infer<typeof AmountConfigBase>
 

@@ -14,6 +14,8 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
     ctx.body = tvl
   })
 
+  // If this endpoint is too slow and aggregation layer is to be implemented,
+  // remember to add "isAssociated" to createValueId.ts
   router.get('/api/tvl2-excluded', async (ctx) => {
     const excluded = await controller.getExcludedTvl(
       clock.getLastHour().add(-1, 'hours'),

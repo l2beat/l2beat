@@ -67,6 +67,14 @@ type ApiProject = {
   >
 }
 
+interface ExcludedToken {
+  address: EthereumAddress | 'native'
+  chain: string
+  type: 'canonical' | 'external' | 'native'
+  includeInTotal: boolean
+  project: ProjectId
+  projectType: 'layers2s' | 'bridges' | undefined
+}
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -75,6 +83,7 @@ export class Tvl2Controller {
   >
   private readonly priceConfigs: PriceConfigIdMap
   private readonly projects: ApiProject[]
+  private readonly excludedTokens: ExcludedToken[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
@@ -123,6 +132,41 @@ export class Tvl2Controller {
         }
       }
       return { id, minTimestamp, type, slug, sources }
+    })
+
+    this.excludedTokens = projects.flatMap(({ projectId: id, type }) => {
+      if (config.projectsExcludedFromApi.includes(id.toString())) {
+        return []
+      }
+
+      const amounts = this.amountConfig.get(id)
+      if (!amounts) {
+        return []
+      }
+
+      const associatedAmounts = amounts.filter((x) => x.isAssociated === true)
+
+      if (associatedAmounts.length > 0) {
+        console.log(
+          associatedAmounts
+            .map(
+              (a) =>
+                `${a.project} - ${a.symbol} - ${a.source} - ${a.chain} - ${a.includeInTotal}`,
+            )
+            .join('\n'),
+        )
+      }
+
+      return associatedAmounts.map((amount) => {
+        return {
+          address: amount.address,
+          chain: amount.chain,
+          type: amount.source,
+          includeInTotal: amount.includeInTotal,
+          project: id,
+          projectType: getType(type),
+        }
+      })
     })
 
     this.minTimestamp = {
@@ -827,26 +871,8 @@ export class Tvl2Controller {
   async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const tvl = await this.getTvl(lastHour)
 
-    const projects: {
-      address: EthereumAddress
-      chain: string
-      type: 'CBV' | 'EBV' | 'NMV'
-      includeInTotal: boolean
-      project: ProjectId
-      projectType: 'layers2s' | 'bridges'
-    }[] = [
-      {
-        address: EthereumAddress('0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766'),
-        chain: 'ethereum',
-        type: 'CBV',
-        includeInTotal: true,
-        project: ProjectId('starknet'),
-        projectType: 'layers2s',
-      },
-    ]
-
     const excluded = await Promise.all(
-      projects.map(async (x) => ({
+      this.excludedTokens.map(async (x) => ({
         ...x,
         data: await this.getTokenChart(x, x.project, lastHour),
       })),
@@ -877,7 +903,7 @@ export class Tvl2Controller {
           ethPrices,
         )
       }
-      if (e.includeInTotal) {
+      if (e.projectType && e.includeInTotal) {
         tvl[e.projectType].hourly = subtractTokenChart(
           tvl[e.projectType].hourly,
           e.data.hourly,
@@ -1113,7 +1139,7 @@ function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
 function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,
-  tokenType: 'CBV' | 'EBV' | 'NMV',
+  tokenType: 'canonical' | 'external' | 'native',
   ethPrices: Map<number, number>,
 ): TvlApiChart {
   const data = main.data.map((x) => {
@@ -1131,18 +1157,30 @@ function subtractTokenChart(
     return [
       x[0],
       x[1] - tokenUsdValue,
-      tokenType === 'CBV' ? x[2] - tokenUsdValue : x[2],
-      tokenType === 'EBV' ? x[3] - tokenUsdValue : x[3],
-      tokenType === 'NMV' ? x[4] - tokenUsdValue : x[4],
+      tokenType === 'canonical' ? x[2] - tokenUsdValue : x[2],
+      tokenType === 'external' ? x[3] - tokenUsdValue : x[3],
+      tokenType === 'native' ? x[4] - tokenUsdValue : x[4],
       +(x[5] - tokenEthValue).toFixed(2),
-      tokenType === 'CBV' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
-      tokenType === 'EBV' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
-      tokenType === 'NMV' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
+      tokenType === 'canonical' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
+      tokenType === 'external' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
+      tokenType === 'native' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
     ] as TvlApiChart['data'][0]
   })
 
   return {
     types: main.types,
     data,
+  }
+}
+function getType(
+  type: 'layer2' | 'bridge' | 'layer3',
+): 'layers2s' | 'bridges' | undefined {
+  switch (type) {
+    case 'layer2':
+      return 'layers2s'
+    case 'bridge':
+      return 'bridges'
+    case 'layer3':
+      return undefined
   }
 }
