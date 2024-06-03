@@ -59,17 +59,9 @@ export const rari: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplatePermissions: [
-    {
-      name: 'RollupOwner',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description: 'EOA that can execute upgrades via the UpgradeExecutor.',
-    },
     ...discovery.getMultisigPermission(
       'Caldera Multisig',
-      'Can execute upgrades via the UpgradeExecutor.',
+      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
     ),
   ],
   milestones: [

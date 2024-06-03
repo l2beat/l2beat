@@ -19,7 +19,7 @@ export function getWatched(
     discovery.contracts.find((c) => c.address === contract.address)?.values ??
     undefined
 
-  const ignoreInWatchMode = getIgnoreInWatchMode(config, contract)
+  const ignoreInWatchMode = contract.ignoreInWatchMode ?? []
 
   let watched: DashboardContractField[] | undefined = undefined
   if (values) {
@@ -34,11 +34,4 @@ export function getWatched(
       })
   }
   return watched
-}
-
-function getIgnoreInWatchMode(
-  config: DiscoveryConfig,
-  contract: ContractParameters,
-) {
-  return config.overrides.get(contract.address).ignoreInWatchMode ?? []
 }

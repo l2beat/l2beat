@@ -26,7 +26,10 @@ export const syndicateframe: Layer3 = opStackL3({
       repositories: [
         'https://github.com/WillPapper/syndicate-farcaster-frame-starter',
       ],
-      socialMedia: ['https://warpcast.com/syndicate'],
+      socialMedia: [
+        'https://warpcast.com/syndicate',
+        'https://x.com/syndicateio',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },

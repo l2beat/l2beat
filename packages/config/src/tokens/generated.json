@@ -377,6 +377,21 @@
       "formula": "locked"
     },
     {
+      "id": "bag-bag",
+      "name": "Bag",
+      "coingeckoId": "bag",
+      "address": "0x808688c820AB080A6Ff1019F03E5EC227D9b522B",
+      "symbol": "BAG",
+      "decimals": 18,
+      "deploymentTimestamp": 1706370095,
+      "coingeckoListingTimestamp": 1709251200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35417/large/BAG-coingecko.png?1709393428",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "bal-balancer",
       "name": "Balancer",
       "coingeckoId": "balancer",
@@ -3394,10 +3409,10 @@
       "id": "speth-spectrum-staked-eth",
       "name": "Spectrum Staked ETH",
       "coingeckoId": "wrapped-eeth",
-      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
       "symbol": "spETH",
       "decimals": 18,
-      "deploymentTimestamp": 1715574719,
+      "deploymentTimestamp": 1715574731,
       "coingeckoListingTimestamp": 1701648000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
@@ -4630,7 +4645,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
       "chainId": 10,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -6207,7 +6222,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17569/large/JoeToken.png?1703732357",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -6262,6 +6277,25 @@
       "chainId": 42161,
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:molten-molten",
+      "name": "Molten",
+      "coingeckoId": "molten-2",
+      "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+      "symbol": "MOLTEN",
+      "decimals": 18,
+      "deploymentTimestamp": 1708973862,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36726/large/moltenmesh.png?1712147407",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "id": "arbitrum:moz-mozaic-token",
@@ -6400,7 +6434,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
       "chainId": 42161,
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -6606,6 +6640,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "linea:nile-nile-exchange",
+      "name": "Nile Exchange",
+      "coingeckoId": "nile",
+      "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
+      "symbol": "NILE",
+      "decimals": 18,
+      "deploymentTimestamp": 1705968000,
+      "coingeckoListingTimestamp": 1709078400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34828/standard/nile.png",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "linea:ezeth-renzo-restaked-eth",
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
@@ -6742,6 +6791,21 @@
       "bridgedUsing": {
         "bridge": "Blast"
       }
+    },
+    {
+      "id": "taiko:usdc-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x07d83526730c7438048D55A4fc0b850e2aaB6f0b",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1716800531,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 167000,
+      "type": "NMV",
+      "formula": "totalSupply"
     },
     {
       "id": "scroll:rseth-kelpdao-restaked-eth",

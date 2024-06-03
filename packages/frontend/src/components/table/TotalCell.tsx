@@ -13,15 +13,16 @@ import { NumberCell } from './NumberCell'
 
 export interface TotalCellProps {
   project: ScalingL2SummaryViewEntry | ScalingL3SummaryViewEntry
+  className?: string
 }
 
-export function TotalCell({ project }: TotalCellProps) {
+export function TotalCell({ project, className }: TotalCellProps) {
   const anyBadWarnings = project.tvlWarnings?.some(
     (w) => w?.sentiment === 'bad',
   )
 
   return (
-    <div>
+    <div className={className}>
       {project.tvl ? (
         <Tooltip>
           <TooltipTrigger>

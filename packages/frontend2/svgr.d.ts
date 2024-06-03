@@ -5,7 +5,6 @@ declare module '*.svg' {
 }
 
 declare module '*.svg?url' {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const content: any
+  const content: string // it is not a string but we do this to avoid errors
   export default content
 }

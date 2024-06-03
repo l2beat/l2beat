@@ -233,6 +233,13 @@ declare module 'knex/types/tables' {
     six_hourly_cleaned_until: Date
   }
 
+  interface VerifierStatusRow {
+    address: string
+    chain_id: number
+    last_used: Date
+    last_updated: Date
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -261,12 +268,14 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    l2_costs_prices: L2CostsPricesRow
     aggregated_l2_costs: AggregatedL2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
     values: ValueRow
+    verifier_state: VerifierStatusRow
   }
 }
 

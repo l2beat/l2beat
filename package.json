@@ -7,12 +7,10 @@
     "yarn": ">=1.22.0 <2"
   },
   "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
+    "packages": ["packages/*"]
   },
   "scripts": {
-    "build": "turbo run build --filter=!asset-risk --filter=!frontend2",
+    "build": "turbo run build --filter=!asset-risk",
     "build:asset-risk": "turbo run build --filter=asset-risk",
     "build:backend": "turbo run build --filter=backend",
     "build:frontend": "turbo run build --filter=frontend",
@@ -29,7 +27,7 @@
     "test:exclude-backend": "turbo run test --filter=!backend",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
-    "heroku-postbuild": "yarn build:backend",
+    "heroku-postbuild": "yarn build:backend && yarn install --production",
     "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {

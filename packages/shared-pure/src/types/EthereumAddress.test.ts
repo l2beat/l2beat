@@ -61,4 +61,11 @@ describe(EthereumAddress.name, () => {
       ('0x' + '0'.repeat(40)) as unknown as EthereumAddress,
     )
   })
+
+  it('Properly converts a short string to ethereum address using .from', () => {
+    const address = EthereumAddress.from('0x1234567890abc')
+    expect(address.toString()).toEqual(
+      '0x0000000000000000000000000001234567890AbC',
+    )
+  })
 })

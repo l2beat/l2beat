@@ -1,13 +1,14 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 19532051,
-  "configHash": "0xa4445adce03eab1c846bf27fd9fdac6949e54027f96cc6a2ac65de88a9c7677a",
+  "blockNumber": 19973942,
+  "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
   "version": 4,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -37,22 +38,59 @@
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16",
+        "implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
       },
-      "implementations": ["0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"],
+      "implementations": ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"],
       "sinceTimestamp": 1692341159,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x0000000000000000000000000000000000000020"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x0000000000000000000000000000000000000020"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
         "getUpgradeActivationDelay": 0,
         "governors": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"],
-        "identify": "StarkWare_StarknetERC20Bridge_2022_1",
-        "implementation": "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "isFrozen": false,
         "isNotFinalized": true,
-        "maxDeposit": 500000000000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": 20000000000000,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -63,6 +101,12 @@
     {
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
@@ -89,16 +133,16 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 593,
+        "l1ToL2MessageNonce": 1052,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
         "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
-        "stateBlockHash": "1231017805099628001474741885483516536973405783462517230475576407543491736686",
-        "stateBlockNumber": 48556,
-        "stateRoot": "2121848406397378869423431735558179277770921901696156790283450592302584790603",
+        "stateBlockHash": "1288577259829761600856998918601454813687625810783901986064054512540425731782",
+        "stateBlockNumber": 60376,
+        "stateRoot": "614076424864742110765964266502775752616746334021834161048194462169648379404",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -106,6 +150,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000020",
     "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
     "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
@@ -172,38 +217,86 @@
       "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
       "function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)"
     ],
-    "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16": [
-      "event LogBridgeActivated()",
+    "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
       "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
       "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
       "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
       "event LogRemovedGovernor(address removedGovernor)",
-      "event LogSetL2TokenBridge(uint256 value)",
-      "event LogSetMaxDeposit(uint256 value)",
-      "event LogSetMaxTotalBalance(uint256 value)",
-      "event LogWithdrawal(address indexed recipient, uint256 amount)",
-      "function acceptGovernance()",
-      "function cancelNomination()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function assignLegacyProxyGovernor(address account)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
       "function deposit(uint256 amount, uint256 l2Recipient) payable",
-      "function depositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
       "function identify() pure returns (string)",
       "function initialize(bytes data)",
-      "function isActive() view returns (bool)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
       "function isFrozen() view returns (bool)",
-      "function isGovernor(address user) view returns (bool)",
-      "function maxDeposit() view returns (uint256)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function maxDeposit() pure returns (uint256)",
       "function maxTotalBalance() view returns (uint256)",
-      "function nominateNewGovernor(address newGovernor)",
-      "function removeGovernor(address governorForRemoval)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeLegacyProxyGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
       "function setL2TokenBridge(uint256 l2TokenBridge_)",
-      "function setMaxDeposit(uint256 maxDeposit_)",
-      "function setMaxTotalBalance(uint256 maxTotalBalance_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
       "function withdraw(uint256 amount, address recipient)",
-      "function withdraw(uint256 amount)"
+      "function withdraw(uint256 amount)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
