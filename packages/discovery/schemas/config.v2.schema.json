@@ -28,7 +28,8 @@
         "base",
         "polygonzkevm",
         "gnosis",
-        "sepolia"
+        "sepolia",
+        "scroll"
       ]
     },
     "initialAddresses": {

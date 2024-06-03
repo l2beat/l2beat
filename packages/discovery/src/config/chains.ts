@@ -82,10 +82,14 @@ export const chains: ChainConfig[] = [
     ),
     etherscanUrl: 'https://api-era.zksync.network/api',
   },
-
   {
     name: 'sepolia',
     multicall: getMulticall3Config(751532),
     etherscanUrl: 'https://api-sepolia.etherscan.io/api',
+  },
+  {
+    name: 'scroll',
+    multicall: getMulticall3Config(14),
+    etherscanUrl: 'https://api.scrollscan.com/api',
   },
 ]
