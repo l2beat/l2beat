@@ -115,6 +115,7 @@
       }
     },
     "MultipleVersionRollupVerifier": {
+      "description": "Used to update the verifier and keep track of current and old versions.",
       "ignoreMethods": ["getVerifier"],
       "fields": {
         "latestVerifier": {
@@ -132,6 +133,7 @@
       }
     },
     "ScrollOwner": {
+      "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
       "fields": {
         "accessControl": {
           "handler": {

@@ -1,9 +1,8 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
   EscrowEntry,
-  EthereumAddress,
   ProjectId,
   TotalSupplyEntry,
   UnixTime,
@@ -12,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
+import { z } from 'zod'
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
@@ -168,8 +168,8 @@ function createChainModule(
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
-    encode,
-    decode,
+    serializeConfiguration,
+    deserializeConfiguration,
     syncOptimizer,
     createDatabaseMiddleware: async () =>
       new KnexMiddleware(peripherals.getRepository(AmountRepository)),
@@ -228,7 +228,7 @@ function createChainModule(
   }
 }
 
-function encode(value: EscrowEntry | TotalSupplyEntry): string {
+function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
   switch (value.type) {
     case 'escrow':
       return JSON.stringify({
@@ -256,52 +256,8 @@ function encode(value: EscrowEntry | TotalSupplyEntry): string {
   }
 }
 
-// TODO: validate the config with zod
-function decode(value: string): EscrowEntry | TotalSupplyEntry {
-  const obj = JSON.parse(value) as {
-    type: string
-    address: string
-    escrowAddress: string | undefined
-    chain: string
-    project: string
-    source: string
-    sinceTimestamp: number
-    untilTimestamp?: number
-    includeInTotal: boolean
-  }
-
-  switch (obj.type) {
-    case 'escrow':
-      assert(obj.escrowAddress !== undefined, 'escrowAddress is required')
-      return {
-        address:
-          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-        escrowAddress: EthereumAddress(obj.escrowAddress),
-        chain: obj.chain,
-        project: ProjectId(obj.project),
-        source: obj.source,
-        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-        ...({
-          untilTimestamp:
-            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-        } ?? {}),
-        includeInTotal: obj.includeInTotal,
-      } as EscrowEntry
-    case 'totalSupply':
-      return {
-        address:
-          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-        chain: obj.chain,
-        project: ProjectId(obj.project),
-        source: obj.source,
-        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-        ...({
-          untilTimestamp:
-            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-        } ?? {}),
-        includeInTotal: obj.includeInTotal,
-      } as TotalSupplyEntry
-    default:
-      throw new Error('Unknown type')
-  }
+function deserializeConfiguration(
+  value: string,
+): EscrowEntry | TotalSupplyEntry {
+  return z.union([EscrowEntry, TotalSupplyEntry]).parse(JSON.parse(value))
 }

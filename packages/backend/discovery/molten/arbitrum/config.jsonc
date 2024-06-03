@@ -19,6 +19,9 @@
     "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80": "L1OrbitERC20Gateway"
   },
   "overrides": {
+    "Caldera Multisig": {
+      "ignoreMethods": ["nonce"]
+    },
     "Molten Token": {
       "ignoreRelatives": ["lzEndpoint", "feeOwner", "owner"],
       "ignoreInWatchMode": ["circulatingSupply", "totalSupply"]

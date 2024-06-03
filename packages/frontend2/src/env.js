@@ -5,7 +5,6 @@ const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
 })
 
-const base64url = z.string().regex(/^[a-zA-Z0-9_-]+$/)
 const featureFlag = coerceBoolean.optional()
 
 export const env = createEnv({
@@ -21,7 +20,7 @@ export const env = createEnv({
       .transform(
         (val) =>
           ({
-            local: 'http://localhost:8080',
+            local: 'http://127.0.0.1:8080',
             'vercel-mock': 'https://l2beat-mock.vercel.app',
             'vercel-staging': 'https://l2beat-staging.vercel.app',
             'vercel-production': 'https://l2beat-production.vercel.app',
@@ -38,9 +37,6 @@ export const env = createEnv({
     FEATURE_FLAG_HIRING: featureFlag.default('true'),
     FEATURE_FLAG_LIVENESS: featureFlag.default('true'),
     FEATURE_FLAG_ZK_CATALOG: featureFlag.default('false'),
-    // NOTE(piotradamczyk): Technically FLAGS_SECRET is required, but we
-    // don't want to enforce it as it's only used in Vercel toolbar.
-    FLAGS_SECRET: base64url.optional(),
   },
 
   /**
@@ -68,7 +64,6 @@ export const env = createEnv({
     FEATURE_FLAG_HIRING: process.env.FEATURE_FLAG_HIRING,
     FEATURE_FLAG_LIVENESS: process.env.FEATURE_FLAG_LIVENESS,
     FEATURE_FLAG_ZK_CATALOG: process.env.FEATURE_FLAG_ZK_CATALOG,
-    FLAGS_SECRET: process.env.FLAGS_SECRET,
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
   },

@@ -1,9 +1,9 @@
 import Link from 'next/link'
-
 import { Logo } from '../Logo'
-import { DarkThemeToggle } from './DarkThemeToggle'
 import { InputWallet } from './InputWallet'
+import { NavbarDrawerTrigger } from './NavbarDrawerTrigger'
 import { ScannerName } from './ScannerName'
+import { WalletDrawer } from './WalletDrawer'
 import { WalletInfo } from './WalletInfo'
 
 export function Navbar() {
@@ -21,10 +21,14 @@ export function Navbar() {
               </Link>
             </li>
           </ul>
-          <div className="flex items-center gap-3">
+          <div className="items-center gap-3 hidden md:flex">
             <InputWallet />
             <WalletInfo />
-            <DarkThemeToggle />
+          </div>
+          <div className="inline-block md:hidden">
+            <WalletDrawer>
+              <NavbarDrawerTrigger />
+            </WalletDrawer>
           </div>
         </nav>
       </div>

@@ -22,5 +22,5 @@
       }
     }
   },
-  "ignoreInWatchMode": ["scalar"]
+  "ignoreInWatchMode": ["scalar", "overhead"]
 }

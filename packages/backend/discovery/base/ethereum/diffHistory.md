@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xc786e1756e9e6064e46a72832b95c71d354efde0
+
+# Diff at Thu, 30 May 2024 10:40:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@765e34e8ea83c27680317d1368831e27e3399064 block: 19974223
+- current block number: 19982126
+
+## Description
+
+One new signer is added to the Guardian Multisig: `0x73565876170a336Fa02fDe34EeD03E3121f70bA6`.
+
+## Watched changes
+
+```diff
+    contract GuardianMultisig (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 8 (38%)"
++        "3 of 9 (33%)"
+      values.getOwners.8:
++        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.getOwners.7:
+-        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
++        "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2"
+      values.getOwners.6:
+-        "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2"
++        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
+      values.getOwners.5:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
+      values.getOwners.4:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+      values.getOwners.3:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.getOwners.2:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
+      values.getOwners.1:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.getOwners.0:
+-        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
++        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+    }
+```
+
 Generated with discovered.json: 0xc1355c527c2a1eb878b3551991fd884894a63382
 
 # Diff at Wed, 29 May 2024 08:09:22 GMT:

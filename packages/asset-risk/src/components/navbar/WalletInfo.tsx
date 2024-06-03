@@ -1,30 +1,36 @@
 'use client'
+import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
-import { useAccount, useEnsName } from 'wagmi'
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { formatAddress } from '~/utils/formatAddress'
-import { ChangeWalletButton } from '../ChangeWalletButton'
+import { ChangeButton } from '../ChangeButton'
 
 export function WalletInfo() {
-  const { isConnected, address } = useAccount()
-  const { data: ensAddress } = useEnsName({
-    address,
-  })
-
-  if (!isConnected) return null
-
   return (
-    <div className="flex items-center gap-3">
-      <Link
-        className="font-medium text-sm text-black"
-        href={`/wallet/${address}`}
-      >
-        {ensAddress
-          ? ensAddress
-          : address
-            ? formatAddress('0x8aEb2A694589a6ACaD9716d23198ed3784d4C50e')
-            : null}
-      </Link>
-      <ChangeWalletButton />
-    </div>
+    <ConnectKitButton.Custom>
+      {({ isConnected, show, address, ensName }) => {
+        return isConnected ? (
+          <div className="flex items-center gap-2">
+            {address && (
+              <Jazzicon diameter={28} seed={jsNumberForAddress(address)} />
+            )}
+            <Link
+              className="font-medium text-sm text-black"
+              href={`/wallet/${address}`}
+            >
+              {ensName ?? (address && formatAddress(address))}
+            </Link>
+            <ChangeButton show={show} />
+          </div>
+        ) : (
+          <button
+            onClick={show}
+            className="w-full h-10 bg-pink-900 text-white font-bold text-xs px-8 rounded-lg"
+          >
+            Connect a wallet
+          </button>
+        )
+      }}
+    </ConnectKitButton.Custom>
   )
 }
