@@ -4,6 +4,9 @@ import { env } from './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['assets.coingecko.com'],
+  },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async rewrites() {
     return {

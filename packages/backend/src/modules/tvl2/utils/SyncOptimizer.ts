@@ -38,4 +38,18 @@ export class SyncOptimizer {
 
     return timestamp.toEndOf('day')
   }
+
+  getTimestampsToSync(from: number, to: number, maxTimestamps: number) {
+    const timestamps: UnixTime[] = []
+
+    let current = this.getTimestampToSync(from)
+    const last = new UnixTime(to)
+
+    while (current.lte(last) && timestamps.length < maxTimestamps) {
+      timestamps.push(current)
+      current = this.getTimestampToSync(current.toNumber() + 1)
+    }
+
+    return timestamps
+  }
 }
