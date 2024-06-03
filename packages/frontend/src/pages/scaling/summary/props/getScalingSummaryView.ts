@@ -57,16 +57,14 @@ function getScalingL2SummaryEntry(
     excludedTokensTvlApiResponse.projects[project.id.toString()]
 
   const { tvl: aggregateTvl } = getTvlWithChange(tvlApiResponse.layers2s)
-
+  const { tvl: excludedAssociatedTokensTvl } = getTvlWithChange(
+    excludedTokensTvlApiResponse.layers2s,
+  )
   const stats = apiProject
     ? getTvlStats(apiProject, project.display.name, associatedTokens)
     : undefined
   const excludedTokensStats = excludedTokensApiProject
-    ? getTvlStats(
-        excludedTokensApiProject,
-        project.display.name,
-        associatedTokens,
-      )
+    ? getTvlStats(excludedTokensApiProject, project.display.name, [])
     : undefined
 
   return {
@@ -93,7 +91,7 @@ function getScalingL2SummaryEntry(
             tvlBreakdown: stats.tvlBreakdown,
             oneDayChange: stats.oneDayChange,
             sevenDayChange: stats.sevenDayChange,
-            tvlWarnings: getTvlWarnings(apiProject, associatedTokens, project),
+            tvlWarnings: getTvlWarnings(apiProject, project, associatedTokens),
             marketShare: {
               value: stats.latestTvl / aggregateTvl,
               displayValue: formatPercent(stats.latestTvl / aggregateTvl),
@@ -109,12 +107,17 @@ function getScalingL2SummaryEntry(
                   sevenDayChange: excludedTokensStats.sevenDayChange,
                   tvlWarnings: getTvlWarnings(
                     excludedTokensApiProject,
-                    associatedTokens,
                     project,
+                    [],
                   ),
                   marketShare: {
-                    value: 10,
-                    displayValue: '100%',
+                    value:
+                      excludedTokensStats.latestTvl /
+                      excludedAssociatedTokensTvl,
+                    displayValue: formatPercent(
+                      excludedTokensStats.latestTvl /
+                        excludedAssociatedTokensTvl,
+                    ),
                   },
                 }
               : undefined,
@@ -153,11 +156,7 @@ function getScalingL3SummaryEntry(
     : undefined
 
   const excludedTokensStats = excludedTokensApiProject
-    ? getTvlStats(
-        excludedTokensApiProject,
-        project.display.name,
-        associatedTokens,
-      )
+    ? getTvlStats(excludedTokensApiProject, project.display.name, [])
     : undefined
 
   return {
@@ -187,7 +186,7 @@ function getScalingL3SummaryEntry(
             tvlBreakdown: stats.tvlBreakdown,
             oneDayChange: stats.oneDayChange,
             sevenDayChange: stats.sevenDayChange,
-            tvlWarnings: getTvlWarnings(apiProject, associatedTokens, project),
+            tvlWarnings: getTvlWarnings(apiProject, project, associatedTokens),
             excludedTokens: excludedTokensStats
               ? {
                   tvl: {
@@ -199,8 +198,8 @@ function getScalingL3SummaryEntry(
                   sevenDayChange: excludedTokensStats.sevenDayChange,
                   tvlWarnings: getTvlWarnings(
                     excludedTokensApiProject,
-                    associatedTokens,
                     project,
+                    [],
                   ),
                 }
               : undefined,

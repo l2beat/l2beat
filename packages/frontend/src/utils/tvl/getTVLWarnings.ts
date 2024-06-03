@@ -11,8 +11,8 @@ import { unifyTokensResponse } from './getTvlStats'
 
 export function getTvlWarnings(
   apiProject: TvlApiResponse['projects'][string],
-  associatedTokens: string[],
   project: Layer2 | Layer3,
+  associatedTokens: string[],
 ): WarningWithSentiment[] {
   const total = apiProject?.charts.hourly.data.at(-1)?.[1] ?? 0
   const tokens = unifyTokensResponse(apiProject?.tokens)
