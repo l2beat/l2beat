@@ -89,7 +89,6 @@ function getScalingL2SummaryEntry(
               displayValue: formatUSD(stats.latestTvl),
             },
             tvlBreakdown: stats.tvlBreakdown,
-            oneDayChange: stats.oneDayChange,
             sevenDayChange: stats.sevenDayChange,
             tvlWarnings: getTvlWarnings(apiProject, project, associatedTokens),
             marketShare: {
@@ -103,7 +102,6 @@ function getScalingL2SummaryEntry(
                     displayValue: formatUSD(excludedTokensStats.latestTvl),
                   },
                   tvlBreakdown: excludedTokensStats.tvlBreakdown,
-                  oneDayChange: excludedTokensStats.oneDayChange,
                   sevenDayChange: excludedTokensStats.sevenDayChange,
                   tvlWarnings: getTvlWarnings(
                     excludedTokensApiProject,
@@ -184,7 +182,6 @@ function getScalingL3SummaryEntry(
               displayValue: formatUSD(stats.latestTvl),
             },
             tvlBreakdown: stats.tvlBreakdown,
-            oneDayChange: stats.oneDayChange,
             sevenDayChange: stats.sevenDayChange,
             tvlWarnings: getTvlWarnings(apiProject, project, associatedTokens),
             excludedTokens: excludedTokensStats
@@ -194,7 +191,6 @@ function getScalingL3SummaryEntry(
                     displayValue: formatUSD(excludedTokensStats.latestTvl),
                   },
                   tvlBreakdown: excludedTokensStats.tvlBreakdown,
-                  oneDayChange: excludedTokensStats.oneDayChange,
                   sevenDayChange: excludedTokensStats.sevenDayChange,
                   tvlWarnings: getTvlWarnings(
                     excludedTokensApiProject,

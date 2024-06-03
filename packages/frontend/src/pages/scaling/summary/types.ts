@@ -41,7 +41,6 @@ export interface TvlData {
   tvl: ValueWithDisplayValue
   tvlBreakdown: TokenBreakdownProps
   tvlWarnings: WarningWithSentiment[]
-  oneDayChange: string
   sevenDayChange: string
   excludedTokens: Omit<TvlData, 'excludedTokens'> | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
