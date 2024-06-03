@@ -10,7 +10,7 @@ import { type Token } from './tokens-table'
 
 export function RiskDetails({ token }: { token: Token }) {
   return (
-    <div className="flex flex-col border-t gap-5 border-t-gray-400">
+    <div className="flex flex-col border-t gap-5 pb-4 border-t-gray-400">
       <div className="grid grid-cols-4 pt-4">
         <div className="flex flex-col">
           <span className="text-zinc-500 text-xs font-bold">Token</span>

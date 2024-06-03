@@ -81,7 +81,7 @@ export function TableRow({
       {isOpen && (
         <tr
           className={cn(
-            'cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
+            'cursor-default border-b border-b-gray-200 dark:border-b-zinc-700',
             'hover:bg-black/[0.05] dark:hover:bg-white/[0.1]',
             'group-hover/body:bg-black/[0.05]',
           )}
