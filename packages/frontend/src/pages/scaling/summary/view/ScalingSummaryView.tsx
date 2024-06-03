@@ -71,6 +71,22 @@ export function ScalingSummaryView({
             icon: <ActiveIcon />,
           },
           {
+            id: 'layer3s',
+            name: 'Layer 3 projects',
+            shortName: 'Layer 3s',
+            content: (
+              <TableView
+                items={layer3sProjects}
+                rows={rows}
+                columnsConfig={getLayer3sScalingSummaryColumnsConfig(
+                  layer3sTvl,
+                )}
+              />
+            ),
+            itemsCount: layer3sProjects.length,
+            icon: <Layer3sIcon />,
+          },
+          {
             id: 'upcoming',
             name: 'Upcoming projects',
             shortName: 'Upcoming',
@@ -103,22 +119,6 @@ export function ScalingSummaryView({
             ),
             itemsCount: archivedProjects.length,
             icon: <ArchivedIcon />,
-          },
-          {
-            id: 'layer3s',
-            name: 'Layer 3 projects',
-            shortName: 'Layer 3s',
-            content: (
-              <TableView
-                items={layer3sProjects}
-                rows={rows}
-                columnsConfig={getLayer3sScalingSummaryColumnsConfig(
-                  layer3sTvl,
-                )}
-              />
-            ),
-            itemsCount: layer3sProjects.length,
-            icon: <Layer3sIcon />,
           },
         ]}
       />
