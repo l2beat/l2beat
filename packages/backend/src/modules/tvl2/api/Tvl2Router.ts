@@ -9,19 +9,31 @@ import { Tvl2Controller } from './Tvl2Controller'
 export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
-  router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getTvl(clock.getLastHour().add(-1, 'hours'))
-    ctx.body = tvl
-  })
-
-  // If this endpoint is too slow and aggregation layer is to be implemented,
-  // remember to add "isAssociated" to createValueId.ts
-  router.get('/api/tvl2-excluded', async (ctx) => {
-    const excluded = await controller.getExcludedTvl(
-      clock.getLastHour().add(-1, 'hours'),
-    )
-    ctx.body = excluded
-  })
+  router.get(
+    '/api/tvl2',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          excludeAssociatedTokens: z.string().optional(),
+        }),
+      }),
+      async (ctx) => {
+        // If this endpoint is too slow and aggregation layer is to be implemented,
+        // remember to add "isAssociated" to createValueId.ts
+        if (ctx.query.excludeAssociatedTokens === 'true') {
+          const excluded = await controller.getExcludedTvl(
+            clock.getLastHour().add(-1, 'hours'),
+          )
+          ctx.body = excluded
+        } else {
+          const tvl = await controller.getTvl(
+            clock.getLastHour().add(-1, 'hours'),
+          )
+          ctx.body = tvl
+        }
+      },
+    ),
+  )
 
   router.get(
     '/api/tvl2/aggregate',
