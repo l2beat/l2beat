@@ -11,7 +11,8 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
 const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
-const discovery_linea = new ProjectDiscovery('stargatev2', 'metis')
+const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
+const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
 const discoveredOAppOwners = [
   discovery.getPermissionedAccount('CreditMessaging', 'owner'),
@@ -322,6 +323,50 @@ export const stargatev2: Bridge = {
           ),
           tokens: ['ETH'],
           description: 'Stargate liquidity pool for ETH on Linea.',
+        }),
+      },
+      {
+        chain: 'mantle',
+        includeInTotal: false,
+        ...discovery_mantle.getEscrowDetails({
+          address: EthereumAddress(
+            '0x4c1d3Fc3fC3c177c3b633427c2F769276c547463',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for ETH on Mantle.',
+        }),
+      },
+      {
+        chain: 'mantle',
+        includeInTotal: false,
+        ...discovery_mantle.getEscrowDetails({
+          address: EthereumAddress(
+            '0xa81274AFac523D639DbcA2C32c1470f1600cCEBe',
+          ),
+          tokens: ['USDT'],
+          description: 'Stargate liquidity pool for USDT on Mantle.',
+        }),
+      },
+      {
+        chain: 'mantle',
+        includeInTotal: false,
+        ...discovery_mantle.getEscrowDetails({
+          address: EthereumAddress(
+            '0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC',
+          ),
+          tokens: ['USDC'],
+          description: 'Stargate liquidity pool for USDC on Mantle.',
+        }),
+      },
+      {
+        chain: 'mantle',
+        includeInTotal: false,
+        ...discovery_mantle.getEscrowDetails({
+          address: EthereumAddress(
+            '0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1',
+          ),
+          tokens: ['mETH'],
+          description: 'Stargate liquidity pool for mETH on Mantle.',
         }),
       },
     ],
