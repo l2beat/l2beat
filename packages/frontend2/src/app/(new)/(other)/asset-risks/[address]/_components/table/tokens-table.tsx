@@ -1,6 +1,6 @@
 'use client'
 
-import { type ScalingProjectRisk, type Stage } from '@l2beat/config'
+import { type Stage } from '@l2beat/config'
 import { type Dispatch, type SetStateAction, useState } from 'react'
 
 import {
@@ -9,6 +9,7 @@ import {
 } from '~/icons/sorting-arrows'
 import { cn } from '~/utils/cn'
 import { Card } from '../../../_components/card'
+import { type Risk } from '../../page'
 import { FilterInput } from './filter-input'
 import { TableRow } from './table-row'
 import {
@@ -25,11 +26,12 @@ export type Token = {
     symbol: string
     iconUrl?: string
     bridge?: string | null
+    address?: `0x${string}`
   }
   chain: {
     id: number
     name: string
-    risks: ScalingProjectRisk[]
+    risks: Risk[]
     stage:
       | 'Validium'
       | 'Optimium'
