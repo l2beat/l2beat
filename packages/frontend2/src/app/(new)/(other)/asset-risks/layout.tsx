@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
-import { Web3Provider } from './_components/web3-provider'
-import { showAssetRisks } from '~/flags'
 import { notFound } from 'next/navigation'
+import { showAssetRisks } from '~/flags'
+import { Web3Provider } from './_components/web3-provider'
 
 export const metadata: Metadata = {
   title: 'L2BEAT – Asset Risks',
