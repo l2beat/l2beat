@@ -22,5 +22,6 @@ export interface Token {
   bridgedUsing?: {
     bridge: string
     slug?: string
+    warning?: string
   }
 }

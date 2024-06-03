@@ -30,6 +30,7 @@ export const GeneratedToken = z.object({
     z.object({
       bridge: z.string(),
       slug: z.string().optional(),
+      warning: z.string().optional(),
     }),
   ),
 })
@@ -46,6 +47,7 @@ export const SourceEntry = z.object({
     .object({
       bridge: z.string(),
       slug: z.string().optional(),
+      warning: z.string().optional(),
     })
     .optional(),
 })

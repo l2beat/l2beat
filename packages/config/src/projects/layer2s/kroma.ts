@@ -151,14 +151,6 @@ export const kroma: Layer2 = {
         tokens: ['USDC'],
         description: 'Main entry point for users depositing USDC.',
       }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x88b6bBb148748C18B377A57c9d4E6c714AF28078'),
-        sinceTimestamp: new UnixTime(1715953739),
-        tokens: ['spETH'],
-        description: 'Escrow for the spETH custom gateway.',
-        upgradableBy: ['Spectrum EOA Admin'],
-        upgradeDelay: 'No delay',
-      }),
     ],
     transactionApi: {
       type: 'rpc',
