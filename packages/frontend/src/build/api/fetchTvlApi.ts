@@ -11,9 +11,8 @@ import {
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
-import console from 'console'
 
-interface Options { tvl2: boolean, excludedTokens?: boolean }
+interface Options { tvl2: boolean, excludeAssociatedTokens?: boolean }
 
 export async function fetchTvlApi(
   backend: Config['backend'],
@@ -31,8 +30,8 @@ export async function fetchTvlApi(
 
 function getUrl(backend: Config['backend'],opts: Options) {
   const url = new URL(`${backend.apiUrl}/api/${opts.tvl2 ? 'tvl2' : 'tvl'}`)
-  if(opts.excludedTokens){
-    url.searchParams.append("excludedTokens", opts.excludedTokens ? 'true' : 'false')
+  if(opts.excludeAssociatedTokens){
+    url.searchParams.set("excludeAssociatedTokens", opts.excludeAssociatedTokens ? 'true' : 'false')
   }
 
   return url.toString()

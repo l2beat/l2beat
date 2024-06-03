@@ -125,12 +125,21 @@ export class ChartDataController {
 export function getChartUrl<T extends ChartType>(chartType: T) {
   switch (chartType.type) {
     case 'scaling-tvl':
-    case 'scaling-detailed-tvl':
-      return chartType.filteredSlugs
-        ? `/api/tvl2/aggregate?projectSlugs=${chartType.filteredSlugs.join(
-            ',',
-          )}`
+    case 'scaling-detailed-tvl': {
+      if (chartType.filteredSlugs) {
+        const urlSearchParams = new URLSearchParams()
+
+        urlSearchParams.set('projectSlugs', chartType.filteredSlugs.join(','))
+        if (chartType.excludeAssociatedTokens) {
+          urlSearchParams.set('excludeAssociatedTokens', 'true')
+        }
+        return `/api/tvl2/aggregate?${urlSearchParams}`
+      }
+
+      return chartType.excludeAssociatedTokens
+        ? '/api/tvl/scaling-excluded-tokens.json'
         : '/api/tvl/scaling.json'
+    }
     case 'scaling-activity':
       return chartType.filteredSlugs
         ? `/api/activity/aggregate?projectSlugs=${chartType.filteredSlugs.join(

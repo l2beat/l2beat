@@ -39,16 +39,7 @@ export function createApi(
     }
   }
 
-  urlCharts.set('tvl/excluded-tokens/scaling', excludedTokensTvlApiResponse.layers2s)
-  urlCharts.set('tvl/excluded-tokens/bridges', excludedTokensTvlApiResponse.bridges)
-  urlCharts.set('tvl/excluded-tokens/combined', excludedTokensTvlApiResponse.combined)
-
-  for (const project of [...layer2s, ...bridges, ...layer3s]) {
-    const projectTvlData = excludedTokensTvlApiResponse.projects[project.id.toString()]
-    if (projectTvlData) {
-      urlCharts.set(`tvl/excluded-tokens/${project.display.slug}`, projectTvlData.charts)
-    }
-  }
+  // urlCharts.set('tvl/scaling-excluded-tokens', excludedTokensTvlApiResponse.layers2s)
 
   if (activityApiResponse) {
     urlCharts.set('activity/combined', activityApiResponse.combined)

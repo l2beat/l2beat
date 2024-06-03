@@ -62,7 +62,7 @@ async function main() {
       verifiersApiResponse,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2}),
-      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2, excludedTokens: true}),
+      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2, excludeAssociatedTokens: true}),
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,

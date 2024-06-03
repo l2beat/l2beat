@@ -53,7 +53,7 @@ function getScalingL2SummaryEntry(
 
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
-  const excludedApiProject =
+  const excludedTokensApiProject =
     excludedTokensTvlApiResponse.projects[project.id.toString()]
 
   const { tvl: aggregateTvl } = getTvlWithChange(tvlApiResponse.layers2s)
@@ -61,8 +61,12 @@ function getScalingL2SummaryEntry(
   const stats = apiProject
     ? getTvlStats(apiProject, project.display.name, associatedTokens)
     : undefined
-  const excludedTokensApiProject = excludedApiProject
-    ? getTvlStats(excludedApiProject, project.display.name, associatedTokens)
+  const excludedTokensStats = excludedTokensApiProject
+    ? getTvlStats(
+        excludedTokensApiProject,
+        project.display.name,
+        associatedTokens,
+      )
     : undefined
 
   return {
@@ -94,17 +98,17 @@ function getScalingL2SummaryEntry(
               value: stats.latestTvl / aggregateTvl,
               displayValue: formatPercent(stats.latestTvl / aggregateTvl),
             },
-            excludedTokens: excludedTokensApiProject
+            excludedTokens: excludedTokensStats
               ? {
                   tvl: {
-                    value: excludedTokensApiProject.latestTvl,
-                    displayValue: formatUSD(excludedTokensApiProject.latestTvl),
+                    value: excludedTokensStats.latestTvl,
+                    displayValue: formatUSD(excludedTokensStats.latestTvl),
                   },
-                  tvlBreakdown: excludedTokensApiProject.tvlBreakdown,
-                  oneDayChange: excludedTokensApiProject.oneDayChange,
-                  sevenDayChange: excludedTokensApiProject.sevenDayChange,
+                  tvlBreakdown: excludedTokensStats.tvlBreakdown,
+                  oneDayChange: excludedTokensStats.oneDayChange,
+                  sevenDayChange: excludedTokensStats.sevenDayChange,
                   tvlWarnings: getTvlWarnings(
-                    excludedApiProject,
+                    excludedTokensApiProject,
                     associatedTokens,
                     project,
                   ),
