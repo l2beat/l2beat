@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "mantle",
-  "blockNumber": 64645459,
+  "blockNumber": 64646015,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
   "version": 4,
   "contracts": [
@@ -126,7 +126,7 @@
         "oftVersion": ["0x02e49c2c", 0],
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": "20041910750159618423",
-        "poolBalance": 4714576153860,
+        "poolBalance": 4714153046745,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
@@ -168,13 +168,13 @@
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
         "oftVersion": ["0x02e49c2c", 0],
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "16083366092002712319",
-        "poolBalance": 4449075045513,
+        "plannerFee": "16103875917889191755",
+        "poolBalance": 4449174985512,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "treasuryFee": 477218362,
+        "treasuryFee": 477278363,
         "tvl": 3995904563341
       }
     },

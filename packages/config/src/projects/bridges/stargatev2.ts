@@ -354,7 +354,7 @@ export const stargatev2: Bridge = {
           address: EthereumAddress(
             '0x4c1d3Fc3fC3c177c3b633427c2F769276c547463',
           ),
-          tokens: ['ETH'],
+          tokens: ['WETH'],
           description: 'Stargate liquidity pool for ETH on Mantle.',
         }),
       },
@@ -363,7 +363,7 @@ export const stargatev2: Bridge = {
         includeInTotal: false,
         ...discovery_mantle.getEscrowDetails({
           address: EthereumAddress(
-            '0xa81274AFac523D639DbcA2C32c1470f1600cCEBe',
+            '0xB715B85682B731dB9D5063187C450095c91C57FC',
           ),
           tokens: ['USDT'],
           description: 'Stargate liquidity pool for USDT on Mantle.',
