@@ -69,7 +69,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => project.data?.tvl.value,
         rule: 'numeric',
         defaultState: 'desc',
       },
@@ -81,15 +81,15 @@ export function getActiveScalingSummaryColumnsConfig() {
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
-        project.tvlBreakdown ? (
+        project.data?.marketShare ? (
           <NumberCell className="pr-4">
-            {project.marketShare?.displayValue}
+            {project.data.marketShare.displayValue}
           </NumberCell>
         ) : (
           <span className="pr-4">—</span>
         ),
       sorting: {
-        getOrderValue: (project) => project.marketShare?.value,
+        getOrderValue: (project) => project.data?.marketShare.value,
         rule: 'numeric',
       },
     },
@@ -160,14 +160,14 @@ export function getArchivedScalingSummaryColumnsConfig() {
       getValue: (project) => (
         <>
           <NumberCell className="font-bold">
-            {project.tvl?.displayValue}
+            {project.data?.tvl.displayValue}
           </NumberCell>
           {!project.isArchived ? (
             <NumberCell
               signed
               className="ml-1 w-[72px] !text-base font-medium "
             >
-              {project.sevenDayChange}
+              {project.data?.sevenDayChange}
             </NumberCell>
           ) : (
             <span className="w-[72px]" />
@@ -175,7 +175,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
         </>
       ),
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => project.data?.tvl.value,
         rule: 'numeric',
         defaultState: 'desc',
       },
@@ -224,7 +224,7 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
       headClassName: '!pr-4',
       getValue: (project) => <TotalCell project={project} className="pr-4" />,
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => project.data?.tvl.value,
         rule: 'numeric',
         defaultState: 'desc',
       },

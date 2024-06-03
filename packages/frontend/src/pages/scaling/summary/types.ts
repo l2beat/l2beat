@@ -9,7 +9,17 @@ import {
 
 import { TokenBreakdownProps } from '../../../components/breakdown/TokenBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
+import { PagesData } from '../../Page'
 import { ValueWithDisplayValue } from '../../types'
+
+export interface SummaryPagesData
+  extends Pick<
+    PagesData,
+    | 'tvlApiResponse'
+    | 'excludedTokensTvlApiResponse'
+    | 'verificationStatus'
+    | 'implementationChange'
+  > {}
 
 export interface ScalingSummaryViewEntryBase {
   name: string
@@ -18,30 +28,37 @@ export interface ScalingSummaryViewEntryBase {
   category: ScalingProjectCategory
   warning?: string
   redWarning?: string
-  tvlWarnings?: WarningWithSentiment[]
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
   hasImplementationChanged?: boolean
   isUpcoming?: boolean
   purposes: ScalingProjectPurpose[]
-  tvl?: ValueWithDisplayValue
   tvlTooltip?: string
-  tvlBreakdown?: TokenBreakdownProps
-  oneDayChange?: string
-  sevenDayChange?: string
+}
+
+export interface TvlData {
+  tvl: ValueWithDisplayValue
+  tvlBreakdown: TokenBreakdownProps
+  tvlWarnings: WarningWithSentiment[]
+  oneDayChange: string
+  sevenDayChange: string
+  marketShare: ValueWithDisplayValue
+  excludedTokens: Omit<TvlData, 'excludedTokens'> | undefined
+  // NOTE: It is never to satisfy the type of the data in ProjectNameCell
+  syncStatus?: never
 }
 
 export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
   riskValues: RiskValues
+  data: TvlData | undefined
   stage: StageConfig
-  marketShare?: ValueWithDisplayValue
-  marketShareValue?: number
   provider?: Layer2Provider
 }
 
 export interface ScalingL3SummaryViewEntry extends ScalingSummaryViewEntryBase {
   hostChainName?: string
+  data: Omit<TvlData, 'marketShare'> | undefined
   provider?: Layer3Provider
   stage?: never
 }

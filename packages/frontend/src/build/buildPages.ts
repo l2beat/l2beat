@@ -52,6 +52,7 @@ async function main() {
 
     const [
       tvlApiResponse,
+      excludedTokensTvlApiResponse,
       activityApiResponse,
       tvlBreakdownApiResponse,
       livenessApiResponse,
@@ -60,7 +61,8 @@ async function main() {
       l2CostsApiResponse,
       verifiersApiResponse,
     ] = await Promise.all([
-      fetchTvlApi(config.backend, http, config.features),
+      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2}),
+      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2, excludedTokens: true}),
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,
@@ -100,9 +102,10 @@ async function main() {
     console.timeEnd('[SANITY CHECKS]')
 
     console.time('[BUILDING PAGES]')
-    createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
+    createApi(config, tvlApiResponse,excludedTokensTvlApiResponse,activityApiResponse, l2CostsApiResponse)
     const pagesData = {
       tvlApiResponse,
+      excludedTokensTvlApiResponse,
       activityApiResponse,
       verificationStatus,
       manuallyVerifiedContracts,

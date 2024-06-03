@@ -1,15 +1,21 @@
 import { TvlApiProject, TvlApiToken } from '@l2beat/shared-pure'
 
+import { TokenBreakdownProps } from '../../components/breakdown/TokenBreakdown'
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'
 
-export type TvlStats = ReturnType<typeof getTvlStats>
+export type TvlStats = {
+  latestTvl: number
+  tvlBreakdown: TokenBreakdownProps
+  oneDayChange: string
+  sevenDayChange: string
+}
 
 export function getTvlStats(
   tvlProject: TvlApiProject,
   name: string,
   associatedTokens: string[],
-) {
+): TvlStats {
   const { latestTvl, oneDayAgo, sevenDaysAgo } = getTvlRangeData(tvlProject)
 
   return {

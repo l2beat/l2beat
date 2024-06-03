@@ -17,18 +17,18 @@ export interface TotalCellProps {
 }
 
 export function TotalCell({ project, className }: TotalCellProps) {
-  const anyBadWarnings = project.tvlWarnings?.some(
+  const anyBadWarnings = project.data?.tvlWarnings.some(
     (w) => w?.sentiment === 'bad',
   )
 
   return (
     <div className={className}>
-      {project.tvl ? (
+      {project.data ? (
         <Tooltip>
           <TooltipTrigger>
             <div className="flex flex-col items-end">
               <div className="flex items-center gap-1">
-                {project.tvlWarnings?.length && project.tvl ? (
+                {project.data.tvlWarnings.length ? (
                   <RoundedWarningIcon
                     className="size-4"
                     sentiment={anyBadWarnings ? 'bad' : 'warning'}
@@ -36,26 +36,26 @@ export function TotalCell({ project, className }: TotalCellProps) {
                 ) : null}
                 <NumberCell
                   className="font-bold"
-                  tooltip={project.tvlWarnings ? undefined : project.tvlTooltip}
+                  tooltip={
+                    project.data.tvlWarnings ? undefined : project.tvlTooltip
+                  }
                 >
-                  {project.tvl?.displayValue}
+                  {project.data.tvl.displayValue}
                 </NumberCell>
                 <NumberCell signed className="ml-1 !text-base font-medium">
-                  {project.sevenDayChange}
+                  {project.data.sevenDayChange}
                 </NumberCell>
               </div>
-              {project.tvlBreakdown ? (
-                <TokenBreakdown
-                  {...project.tvlBreakdown}
-                  className="h-[3px] w-[180px]"
-                />
-              ) : null}
+              <TokenBreakdown
+                {...project.data.tvlBreakdown}
+                className="h-[3px] w-[180px]"
+              />
             </div>
           </TooltipTrigger>
           <TooltipContent>
             <div className="space-y-2">
-              {project.tvlBreakdown ? project.tvlBreakdown.label : null}
-              {project.tvlWarnings?.map((warning, i) => (
+              {project.data.tvlBreakdown.label}
+              {project.data.tvlWarnings.map((warning, i) => (
                 <WarningBar
                   key={`tvl-warning-${i}`}
                   icon={RoundedWarningIcon}
