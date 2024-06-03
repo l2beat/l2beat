@@ -997,7 +997,7 @@ export class Tvl2Controller {
           tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
             e.project.toString()
           ]!.tokens.CBV.filter(
-            (c) => c.address !== e.address && c.chain !== e.chain,
+            (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'external':
@@ -1005,7 +1005,7 @@ export class Tvl2Controller {
           tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
             e.project.toString()
           ]!.tokens.EBV.filter(
-            (c) => c.address !== e.address && c.chain !== e.chain,
+            (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'native':
@@ -1013,7 +1013,7 @@ export class Tvl2Controller {
           tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
             e.project.toString()
           ]!.tokens.NMV.filter(
-            (c) => c.address !== e.address && c.chain !== e.chain,
+            (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
       }
