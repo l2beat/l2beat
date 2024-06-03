@@ -144,7 +144,19 @@ export class Tvl2Controller {
         return []
       }
 
-      const associatedAmounts = amounts.filter((x) => x.isAssociated === true)
+      const uniqueTokens = new Map<string, string>()
+
+      const associatedAmounts = amounts
+        .filter((x) => x.isAssociated === true)
+        .filter((amount) => {
+          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
+          if (u) {
+            assert(amount.source === u, 'Type mismatch')
+            return false
+          }
+          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
+          return true
+        })
 
       return associatedAmounts.map((amount) => {
         return {
@@ -942,6 +954,34 @@ export class Tvl2Controller {
         e.type,
         ethPrices,
       )
+
+      // Remove token from breakdown
+      switch (e.type) {
+        case 'canonical':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.CBV.filter(
+            (c) => c.address !== e.address && c.chain !== e.chain,
+          )
+          break
+        case 'external':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.EBV.filter(
+            (c) => c.address !== e.address && c.chain !== e.chain,
+          )
+          break
+        case 'native':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.NMV.filter(
+            (c) => c.address !== e.address && c.chain !== e.chain,
+          )
+          break
+      }
     }
     return tvl
   }
