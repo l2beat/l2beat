@@ -8,6 +8,7 @@ import { Bridge } from './types'
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 // const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
+const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 
 const discoveredOAppOwners = [
   discovery.getPermissionedAccount('CreditMessaging', 'owner'),
@@ -232,17 +233,28 @@ export const stargatev2: Bridge = {
       //     description: 'Stargate liquidity pool for USDC on Optimism.',
       //   }),
       // },
-      // {
-      //   chain: 'base',
-      //   includeInTotal: false,
-      //   ...discovery.getEscrowDetails({
-      //     address: EthereumAddress(
-      //       '0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
-      //     ),
-      //     tokens: ['USDC'],
-      //     description: 'Stargate liquidity pool for USDC on Base.',
-      //   }),
-      // },
+      {
+        chain: 'base',
+        includeInTotal: false,
+        ...discovery_base.getEscrowDetails({
+          address: EthereumAddress(
+            '0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
+          ),
+          tokens: ['USDC'],
+          description: 'Stargate liquidity pool for USDC on Base.',
+        }),
+      },
+      {
+        chain: 'base',
+        includeInTotal: false,
+        ...discovery_base.getEscrowDetails({
+          address: EthereumAddress(
+            '0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for USDC on Base.',
+        }),
+      },
     ],
   },
   contracts: {
