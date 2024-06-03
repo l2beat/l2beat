@@ -8,6 +8,7 @@ import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
 import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
 import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
+import { ExcludeAssociatedTokensCheckbox } from '../../../../components/table/filters/checkboxes/ExcludeAssociatedTokensCheckbox'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { RowConfig } from '../../../../components/table/types'
 import {
@@ -50,6 +51,7 @@ export function ScalingSummaryView({
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
+      <ExcludeAssociatedTokensCheckbox />
       <ScalingFilters items={[...layer2s, ...layer3s]} />
       <Tabs
         items={[

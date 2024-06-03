@@ -198,10 +198,6 @@ function getScalingL3SummaryEntry(
                     associatedTokens,
                     project,
                   ),
-                  marketShare: {
-                    value: 10,
-                    displayValue: '100%',
-                  },
                 }
               : undefined,
           }

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { compact } from 'lodash'
+import { ExcludeAssociatedTokensWrapper } from '../../../../components/ExcludeAssociatedTokensWrapper'
 import { StageCell } from '../../../../components/stages/StageCell'
 import { NumberCell } from '../../../../components/table/NumberCell'
 import { RosetteCell } from '../../../../components/table/RosetteCell'
@@ -80,14 +81,28 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       minimalWidth: true,
       headClassName: '!pr-4',
-      getValue: (project) =>
-        project.data?.marketShare ? (
-          <NumberCell className="pr-4">
-            {project.data.marketShare.displayValue}
-          </NumberCell>
-        ) : (
-          <span className="pr-4">—</span>
-        ),
+      getValue: (project) => (
+        <ExcludeAssociatedTokensWrapper>
+          <ExcludeAssociatedTokensWrapper.TokensIncludedView>
+            {project.data?.marketShare ? (
+              <NumberCell className="pr-4">
+                {project.data.marketShare.displayValue}
+              </NumberCell>
+            ) : (
+              <span className="pr-4">—</span>
+            )}
+          </ExcludeAssociatedTokensWrapper.TokensIncludedView>
+          <ExcludeAssociatedTokensWrapper.TokensExcludedView>
+            {project.data?.excludedTokens?.marketShare ? (
+              <NumberCell className="pr-4">
+                {project.data.excludedTokens.marketShare.displayValue}
+              </NumberCell>
+            ) : (
+              <span className="pr-4">—</span>
+            )}
+          </ExcludeAssociatedTokensWrapper.TokensExcludedView>
+        </ExcludeAssociatedTokensWrapper>
+      ),
       sorting: {
         getOrderValue: (project) => project.data?.marketShare.value,
         rule: 'numeric',

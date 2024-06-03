@@ -43,7 +43,6 @@ export interface TvlData {
   tvlWarnings: WarningWithSentiment[]
   oneDayChange: string
   sevenDayChange: string
-  marketShare: ValueWithDisplayValue
   excludedTokens: Omit<TvlData, 'excludedTokens'> | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
@@ -51,14 +50,24 @@ export interface TvlData {
 
 export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
   riskValues: RiskValues
-  data: TvlData | undefined
+  // TODO: Clean up this mess
+  data:
+    | (TvlData & {
+        marketShare: ValueWithDisplayValue
+        excludedTokens:
+          | (Omit<TvlData, 'excludedTokens'> & {
+              marketShare: ValueWithDisplayValue
+            })
+          | undefined
+      })
+    | undefined
   stage: StageConfig
   provider?: Layer2Provider
 }
 
 export interface ScalingL3SummaryViewEntry extends ScalingSummaryViewEntryBase {
   hostChainName?: string
-  data: Omit<TvlData, 'marketShare'> | undefined
+  data: TvlData | undefined
   provider?: Layer3Provider
   stage?: never
 }
