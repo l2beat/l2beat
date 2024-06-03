@@ -269,7 +269,7 @@ export class ChartControls {
         this.chartDataController.showEmptyChart()
         return
       }
-      this.chartDataController.setChartType({
+      this.updateChartType({
         ...this.chartType,
         filteredSlugs,
       })
