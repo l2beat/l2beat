@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x46b03e9120fb191d6dc7e9e29ada0f5de7841449
+
+# Diff at Mon, 03 Jun 2024 08:06:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3f44aa4fafff6ecd52bf4dcc77df7a9b1884b765 block: 19985265
+- current block number: 20009991
+
+## Description
+
+Change in bridge implementation processMessage function: message Status and B_OUT_OF_ETH_QUOTA revert logic.
+
+## Watched changes
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.nonce:
+-        23
++        24
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+      implementations.0:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+      values.impl:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../TaikoBridge/Bridge.sol                         | 79 ++++++++++------------
+ 1 file changed, 37 insertions(+), 42 deletions(-)
+```
+
 Generated with discovered.json: 0x1de79ace616f10bb275665d3e223e2f7b9555b6c
 
 # Diff at Thu, 30 May 2024 21:14:50 GMT:
