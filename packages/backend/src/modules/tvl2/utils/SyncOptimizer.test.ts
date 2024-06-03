@@ -5,33 +5,33 @@ import { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
+  const LAST_HOUR = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+  const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
+  const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
+  const CLOCK = mockObject<Clock>({
+    getLastHour: () => LAST_HOUR,
+  })
+
   describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
-    const now = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-
-    const clock = mockObject<Clock>({
-      getLastHour: () => now,
-    })
-
-    const syncOptimizer = new SyncOptimizer(clock)
+    const syncOptimizer = new SyncOptimizer(CLOCK)
     it('return true if timestamp should be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(now.add(-1, 'hours'))
+      const result = syncOptimizer.shouldTimestampBeSynced(
+        LAST_HOUR.add(-1, 'hours'),
+      )
       expect(result).toEqual(true)
     })
 
     it('return false if timestamp should not be synced', () => {
       const result = syncOptimizer.shouldTimestampBeSynced(
-        now.add(365, 'days').add(-1, 'hours'),
+        LAST_HOUR.add(365, 'days').add(-1, 'hours'),
       )
       expect(result).toEqual(true)
     })
   })
+
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
-    const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
-    const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
-    const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
     const CLOCK = mockObject<Clock>({
-      getLastHour: () => LAST_HOUR,
+      getLastHour: () => LAST_HOUR.add(1, 'minutes'),
     })
 
     it('returns daily timestamp', () => {
@@ -85,20 +85,13 @@ describe(SyncOptimizer.name, () => {
   })
 
   describe(SyncOptimizer.prototype.getTimestampsToSync.name, () => {
-    const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-
-    const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
-    const CLOCK = mockObject<Clock>({
-      getLastHour: () => LAST_HOUR,
-    })
-
     it('respects maxTimestamps', () => {
       const syncOptimizer = new SyncOptimizer(CLOCK)
 
       const start = LAST_HOUR.add(-7, 'hours')
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
-        start.add(365, 'days').toNumber(),
+        start.add(100_000, 'days').toNumber(),
         7,
       )
 
@@ -120,7 +113,7 @@ describe(SyncOptimizer.name, () => {
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
         start.add(6, 'hours').toNumber(),
-        1000,
+        100_000,
       )
 
       expect(timestampToSync).toEqual([
@@ -136,15 +129,14 @@ describe(SyncOptimizer.name, () => {
 
     it('complex case', () => {
       const syncOptimizer = new SyncOptimizer(CLOCK)
-      const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
 
       const start = LAST_HOUR.add(
-        -(HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2),
+        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2),
         'days',
       )
       const timestampToSync = syncOptimizer.getTimestampsToSync(
         start.toNumber(),
-        start.add(365, 'days').toNumber(),
+        start.add(100_000, 'days').toNumber(),
         7,
       )
 
