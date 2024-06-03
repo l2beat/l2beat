@@ -6,6 +6,7 @@ import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
   const LAST_HOUR = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+  const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
   const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
   const CLOCK = mockObject<Clock>({
     getLastHour: () => LAST_HOUR,
@@ -29,12 +30,8 @@ describe(SyncOptimizer.name, () => {
   })
 
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
-    const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
-    const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
-    const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
     const CLOCK = mockObject<Clock>({
-      getLastHour: () => LAST_HOUR,
+      getLastHour: () => LAST_HOUR.add(1, 'minutes'),
     })
 
     it('returns daily timestamp', () => {
