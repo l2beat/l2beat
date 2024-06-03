@@ -1,6 +1,14 @@
 import { makeQuery } from './query'
 import { setSortingArrowsOrderKey } from './table/configureSorting'
 
+const SORTING_ARROW_NAMES = [
+  'total',
+  'mkt-share',
+  'canonical',
+  'external',
+  'native',
+]
+
 export function configureExcludeAssociatedTokensCheckbox() {
   const { $, $$ } = makeQuery()
   const checkbox = $<HTMLInputElement>('#exclude-associated-tokens-checkbox')
@@ -15,13 +23,11 @@ export function configureExcludeAssociatedTokensCheckbox() {
       }
       element.removeAttribute('data-associated-tokens-excluded')
     })
-    setSortingArrowsOrderKey(
-      'total',
-      value ? 'excluded-associated-tokens' : 'included-associated-tokens',
-    )
-    setSortingArrowsOrderKey(
-      'mkt-share',
-      value ? 'excluded-associated-tokens' : 'included-associated-tokens',
+    SORTING_ARROW_NAMES.forEach((name) =>
+      setSortingArrowsOrderKey(
+        name,
+        value ? 'excluded-associated-tokens' : 'included-associated-tokens',
+      ),
     )
   })
 }
