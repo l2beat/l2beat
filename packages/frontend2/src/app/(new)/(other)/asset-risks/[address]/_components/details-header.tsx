@@ -30,8 +30,8 @@ export function DetailsHeader(props: DetailsHeaderProps) {
         {`A total of ${risksCount} issues were found with an average of ${averageIssuesPerToken} issues per token. Your most valuable token has ${leastIssues} issues.`}
       </p>
       <p className="text-zinc-500 dark:text-gray-50 font-medium text-sm">
-        You can check the the risks associated with specific tokens by expanding
-        the rows.
+        You can check the risks associated with specific tokens by expanding the
+        rows.
       </p>
       <div className="grid grid-cols-1 md:gap-2 gap-3 md:grid-cols-4">
         <div className="flex flex-col gap-[5px] col-span-2">
