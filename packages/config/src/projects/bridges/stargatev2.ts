@@ -11,6 +11,7 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
 const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
+const discovery_linea = new ProjectDiscovery('stargatev2', 'metis')
 
 const discoveredOAppOwners = [
   discovery.getPermissionedAccount('CreditMessaging', 'owner'),
@@ -310,6 +311,17 @@ export const stargatev2: Bridge = {
           ),
           tokens: ['USDT'],
           description: 'Stargate liquidity pool for USDT on Metis.',
+        }),
+      },
+      {
+        chain: 'linea',
+        includeInTotal: false,
+        ...discovery_linea.getEscrowDetails({
+          address: EthereumAddress(
+            '0x81F6138153d473E8c5EcebD3DC8Cd4903506B075',
+          ),
+          tokens: ['ETH'],
+          description: 'Stargate liquidity pool for ETH on Linea.',
         }),
       },
     ],
