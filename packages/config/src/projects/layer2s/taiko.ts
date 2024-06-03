@@ -104,7 +104,7 @@ export const taiko: Layer2 = {
         // Shared ERC20 vault
         address: EthereumAddress('0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab'),
         sinceTimestamp: new UnixTime(1714550603),
-        tokens: ['ETH', 'LRC', 'UNI', 'WETH', 'USDT'], // temporary exclude USDC
+        tokens: '*',
       },
     ],
     transactionApi: {
