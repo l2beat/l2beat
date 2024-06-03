@@ -14,6 +14,13 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
     ctx.body = tvl
   })
 
+  router.get('/api/tvl2-excluded', async (ctx) => {
+    const excluded = await controller.getExcludedTvl(
+      clock.getLastHour().add(-1, 'hours'),
+    )
+    ctx.body = excluded
+  })
+
   router.get(
     '/api/tvl2/aggregate',
     withTypedContext(
