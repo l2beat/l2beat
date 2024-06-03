@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Checkbox } from '../../../Checkbox'
 import { cn } from '../../../../utils/cn'
+import { Checkbox } from '../../../Checkbox'
 
 export function ExcludeAssociatedTokensCheckbox({
   className,
