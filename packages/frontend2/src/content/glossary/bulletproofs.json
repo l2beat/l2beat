@@ -1,0 +1,5 @@
+{
+  "term": "Bulletproofs",
+  "definition": "A type of zero-knowledge proof that enables efficient range proofs and other mathematical proofs without requiring trusted setup.",
+  "isSpicy": false
+}

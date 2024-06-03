@@ -1,8 +1,7 @@
 import React from 'react'
 
-import { OverflowWrapper } from '../../../components/OverflowWrapper'
-import { cn } from '../../../utils/cn'
-import { startsWithNumber } from '../../../utils/startsWithLetterOrNumber'
+import { cn } from '~/utils/cn'
+import { startsWithNumber } from '~/utils/startsWithLetterOrNumber'
 
 const OPTIONS = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
@@ -14,15 +13,15 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const optionsWithEntry = getOptionsWithEntry(props.entries)
   return (
     <div data-role="alphabet-selector">
-      <OverflowWrapper within="full-page-header">
-        <ul className="flex gap-2">
-          {optionsWithEntry.map(({ char, entry }) => (
-            <li key={`alphabet-selector-${char}`}>
-              <Char char={char} href={entry ? `#${entry.id}` : undefined} />
-            </li>
-          ))}
-        </ul>
-      </OverflowWrapper>
+      {/* <OverflowWrapper within="full-page-header"> */}
+      <ul className="flex gap-2">
+        {optionsWithEntry.map(({ char, entry }) => (
+          <li key={`alphabet-selector-${char}`}>
+            <Char char={char} href={entry ? `#${entry.id}` : undefined} />
+          </li>
+        ))}
+      </ul>
+      {/* </OverflowWrapper> */}
     </div>
   )
 }
