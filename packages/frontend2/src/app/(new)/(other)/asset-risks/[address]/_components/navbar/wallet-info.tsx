@@ -16,7 +16,7 @@ export function WalletInfo() {
             )}
             <Link
               className="font-medium text-sm text-black"
-              href={`asset-risks/${address}`}
+              href={`/asset-risks/${address}`}
             >
               {ensName ?? (address && formatAddress(address))}
             </Link>

@@ -46,9 +46,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
-    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z
-      .string()
-      .default('00000000000000000000000000000000'),
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string().optional(),
   },
 
   /**

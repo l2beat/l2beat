@@ -7,6 +7,12 @@ import { mainnet } from 'wagmi/chains'
 
 import { env } from '~/env'
 
+const walletConnectProjectId = env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
+
+if (!walletConnectProjectId) {
+  throw new Error('Missing NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID')
+}
+
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
@@ -14,7 +20,7 @@ const config = createConfig(
     ssr: true,
 
     // Required API Keys
-    walletConnectProjectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    walletConnectProjectId,
 
     // Required App Info
     appName: 'L2BEAT',

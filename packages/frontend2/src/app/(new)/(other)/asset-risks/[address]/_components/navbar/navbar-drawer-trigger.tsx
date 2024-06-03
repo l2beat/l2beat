@@ -14,7 +14,7 @@ export function NavbarDrawerTrigger() {
           <div className="flex items-center gap-3">
             <Link
               className="font-medium text-sm text-black"
-              href={`asset-risks/${address}`}
+              href={`/asset-risks/${address}`}
             >
               {ensName ?? (address && formatAddress(address))}
             </Link>
