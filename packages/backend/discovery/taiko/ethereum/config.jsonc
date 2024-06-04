@@ -14,6 +14,7 @@
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "SharedERC20Vault",
     "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "TaikoL1Contract",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ProverSetProxy",
+    "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F": "TierRouter",
     "0x4cffe56C947E26D07C14020499776DB3e9AE3a23": "TierProvider",
     "0x579f40D0BE111b823962043702cabe6Aaa290780": "L1RollupAddressManager",
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
@@ -310,14 +311,14 @@
             ] // bytes32("taiko_token");
           }
         },
-        "tier_provider": {
+        "tier_router": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
             "args": [
-              "0x746965725f70726f766964657200000000000000000000000000000000000000",
+              "0x746965725f726f75746572000000000000000000000000000000000000000000",
               "false"
-            ] // bytes32("tier_provider");
+            ] // bytes32("tier_router");
           }
         },
         "tier_sgx_zkvm": {
@@ -372,6 +373,18 @@
         }
       },
       "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"]
+    },
+    "TierRouter": {
+      "ignoreMethods": ["getProvider"], // too many values
+      "fields": {
+        "tier_provider": {
+          "handler": {
+            "type": "call",
+            "method": "function getProvider(uint256 blockId) view returns (address)",
+            "args": [100] // dummy block - replace with current block when possible
+          }
+        }
+      }
     },
     "L1RollupAddressManager": {
       "fields": {
