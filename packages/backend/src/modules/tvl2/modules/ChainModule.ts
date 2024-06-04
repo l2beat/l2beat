@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
@@ -228,32 +228,55 @@ function createChainModule(
 }
 
 function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
-  switch (value.type) {
-    case 'escrow':
-      return JSON.stringify({
-        ...value,
-        address: value.address.toString(),
-        escrowAddress: value.escrowAddress.toString(),
-        chain: value.chain,
-        project: value.project.toString(),
-        source: value.source,
-        sinceTimestamp: value.sinceTimestamp.toNumber(),
-        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
-        includeInTotal: value.includeInTotal,
-        isAssociated: value.isAssociated,
-      })
-    case 'totalSupply':
-      return JSON.stringify({
-        ...value,
-        address: value.address.toString(),
-        chain: value.chain,
-        project: value.project.toString(),
-        source: value.source,
-        sinceTimestamp: value.sinceTimestamp.toNumber(),
-        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
-        includeInTotal: value.includeInTotal,
-        isAssociated: value.isAssociated,
-      })
+  if (value.type === 'escrow') {
+    const obj = {
+      ...getBaseEntry(value),
+      address: value.address.toString(),
+      escrowAddress: value.escrowAddress.toString(),
+      type: value.type,
+    }
+    assert(
+      Object.keys(obj).length === Object.keys(value).length,
+      `Programmer error: update serialization of amount entry: ${JSON.stringify(
+        obj,
+      )}`,
+    )
+
+    return JSON.stringify(obj)
+  }
+
+  if (value.type === 'totalSupply') {
+    const obj = {
+      ...getBaseEntry(value),
+      address: value.address.toString(),
+      type: value.type,
+    }
+    assert(
+      Object.keys(obj).length === Object.keys(value).length,
+      `Programmer error: update serialization of amount entry: ${JSON.stringify(
+        obj,
+      )}`,
+    )
+
+    return JSON.stringify(obj)
+  }
+
+  throw new Error('Unknown type')
+}
+
+function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
+  return {
+    chain: value.chain,
+    project: value.project.toString(),
+    source: value.source,
+    sinceTimestamp: value.sinceTimestamp.toNumber(),
+    ...(Object.keys(value).includes('untilTimestamp')
+      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      : {}),
+    includeInTotal: value.includeInTotal,
+    decimals: value.decimals,
+    symbol: value.symbol,
+    isAssociated: value.isAssociated,
   }
 }
 
