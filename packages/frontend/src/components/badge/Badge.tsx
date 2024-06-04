@@ -28,8 +28,8 @@ const badgeVariants = cva('font-medium text-center', {
       regular: 'px-1.5 py-1',
     },
     rounded: {
-        regular: 'rounded',
-        full: 'rounded-full',
+      regular: 'rounded',
+      full: 'rounded-full',
     },
   },
   defaultVariants: {

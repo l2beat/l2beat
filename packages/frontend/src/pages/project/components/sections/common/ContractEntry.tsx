@@ -127,7 +127,11 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
-            {sourceLayer && <Badge type="blue" rounded="full" className='leading-none'>{sourceLayer}</Badge>}
+            {sourceLayer && (
+              <Badge type="blue" rounded="full" className="leading-none">
+                {sourceLayer}
+              </Badge>
+            )}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
