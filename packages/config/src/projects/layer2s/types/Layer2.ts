@@ -57,8 +57,10 @@ export interface Layer2 {
   contracts: ScalingProjectContracts
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
-  /** List of permissioned addresses */
+  /** List of permissioned addresses on the host chain */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
+  /** List of permissioned addresses on the chain itself */
+  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */

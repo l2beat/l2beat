@@ -15,9 +15,12 @@ import { ContractsUpdated } from './ContractsUpdated'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
+  chainName: string
+  nativeChainName: string
   title: string
   sectionOrder: number
   contracts: TechnologyContract[]
+  nativeContracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
@@ -40,6 +43,10 @@ export function ContractsSection(props: ContractsSectionProps) {
 
   const [changedContracts, unchangedContracts] = partition(
     props.contracts,
+    (c) => c.implementationHasChanged,
+  )
+  const [changedNativeContracts, unchangedNativeContracts] = partition(
+    props.nativeContracts,
     (c) => c.implementationHasChanged,
   )
   const [changedEscrows, unchangedEscrows] = partition(
@@ -75,7 +82,8 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.contracts.length > 0 && (
         <>
           <h3 className="font-bold">
-            The system consists of the following smart contracts:
+            The system consists of the following smart contracts on the host
+            chain ({props.chainName}):
           </h3>
           <div className="my-4">
             {unchangedContracts.map((contract, i) => (
@@ -91,6 +99,33 @@ export function ContractsSection(props: ContractsSectionProps) {
             {changedContracts.length > 0 && (
               <ImplementationHasChangedContracts
                 contracts={changedContracts}
+                manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                verificationStatus={props.verificationStatus}
+              />
+            )}
+          </div>
+        </>
+      )}
+      {props.nativeContracts.length > 0 && (
+        <>
+          <h3 className="font-bold">
+            The system consists of the following smart contracts on{' '}
+            {props.nativeChainName}:
+          </h3>
+          <div className="my-4">
+            {unchangedNativeContracts.map((contract, i) => (
+              <React.Fragment key={i}>
+                <ContractEntry
+                  contract={contract}
+                  verificationStatus={props.verificationStatus}
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                  className="my-4"
+                />
+              </React.Fragment>
+            ))}
+            {changedNativeContracts.length > 0 && (
+              <ImplementationHasChangedContracts
+                contracts={changedNativeContracts}
                 manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                 verificationStatus={props.verificationStatus}
               />
