@@ -1,7 +1,6 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
-import { ETHEREUM_BALANCE_ENCODING } from '../../modules/tvl/balances/BalanceProvider'
 import {
   ERC20MulticallCodec,
   MulticallRequest,
@@ -9,7 +8,6 @@ import {
 } from './types'
 
 export const nativeAssetCodec: NativeAssetMulticallCodec = {
-  sinceBlock: ETHEREUM_BALANCE_ENCODING.sinceBlock,
   balance: {
     encode: encodeGetEthBalance,
     decode: decodeGetEthBalance,
