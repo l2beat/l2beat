@@ -173,14 +173,12 @@ describe(IndexerService.name, () => {
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
-        properties: null,
       },
       {
         id: 'b',
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
-        properties: null,
       },
     ])
   })

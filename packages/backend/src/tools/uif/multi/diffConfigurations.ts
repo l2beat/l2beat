@@ -6,7 +6,7 @@ import {
 
 export function diffConfigurations<T>(
   actual: Configuration<T>[],
-  saved: SavedConfiguration<null>[],
+  saved: Omit<SavedConfiguration<T>, 'properties'>[],
 ): {
   toRemove: RemovalConfiguration[]
   toSave: SavedConfiguration<T>[]

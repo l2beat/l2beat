@@ -63,7 +63,9 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  override async multiInitialize(): Promise<SavedConfiguration<null>[]> {
+  override async multiInitialize(): Promise<
+    Omit<SavedConfiguration<T>, 'properties'>[]
+  > {
     return await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
     )

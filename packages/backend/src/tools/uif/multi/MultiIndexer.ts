@@ -53,7 +53,9 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    *
    * @returns The configurations that were saved previously.
    */
-  abstract multiInitialize(): Promise<SavedConfiguration<null>[]>
+  abstract multiInitialize(): Promise<
+    Omit<SavedConfiguration<T>, 'properties'>[]
+  >
 
   /**
    * Implements the main data fetching process. It is up to the indexer to
