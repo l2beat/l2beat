@@ -30,6 +30,8 @@ export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   display: {
     name: 'Term Structure',
+    redWarning:
+      'Critical contracts can be upgraded by EOAs which could result in the loss of all funds.',
     slug: 'termstructure',
     description:
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
@@ -62,7 +64,7 @@ export const termstructure: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
-        sinceTimestamp: new UnixTime(1716235103),
+        sinceTimestamp: new UnixTime(1716263903),
         tokens: '*',
       }),
     ],
@@ -72,12 +74,12 @@ export const termstructure: Layer2 = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x955cdD2E56Ca2776a101a552A318d28fe311398D',
+            '0x09E01425780094a9754B2bd8A3298f73ce837CF9', // rollup diamond
           ),
           selector: '0x0d874ce4',
           functionSignature:
-            'function commitBlocks(tuple(uint32 blockNumber, uint64 l1RequestNum, bytes32 pendingRollupTxHash, bytes32 commitment, bytes32 stateRoot, uint256 timestamp) lastCommittedBlock, tuple(uint32 blockNumber, bytes32 newStateRoot, bytes32 newTsRoot, uint256 timestamp, uint16[] chunkIdDeltas, bytes publicData)[] newBlocks)',
-          sinceTimestampInclusive: new UnixTime(1716263831),
+            'function commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256), (uint32,bytes32,bytes32,uint256,uint16[],bytes)[])',
+          sinceTimestampInclusive: new UnixTime(1716461255), // first commitBlocks tx (https://etherscan.io/tx/0x0c7cc0163d206f60d11e069627502a84d2868a3274b016ec355f89464e8b3df7)
         },
       },
       {
@@ -92,8 +94,8 @@ export const termstructure: Layer2 = {
           ),
           selector: '0x70ab1eb6',
           functionSignature:
-            'function verifyBlocks(tuple(tuple(uint32 blockNumber, uint64 l1RequestNum, bytes32 pendingRollupTxHash, bytes32 commitment, bytes32 stateRoot, uint256 timestamp) storedBlock, tuple(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] commitment) proof)[] verifyingBlocks)',
-          sinceTimestampInclusive: new UnixTime(1716263831),
+            'function verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256), (uint256[2],uint256[2][2],uint256[2],uint256[1]) )[])',
+          sinceTimestampInclusive: new UnixTime(1716461255),
         },
       },
       {
@@ -108,14 +110,14 @@ export const termstructure: Layer2 = {
           ),
           selector: '0x632a5607',
           functionSignature:
-            'function executeBlocks(tuple(tuple(uint32 blockNumber, uint64 l1RequestNum, bytes32 pendingRollupTxHash, bytes32 commitment, bytes32 stateRoot, uint256 timestamp) storedBlock, bytes[] pendingRollupTxPubData)[] pendingBlocks)',
-          sinceTimestampInclusive: new UnixTime(1716263831),
+            'function executeBlocks(((uint32 blockNumber, uint64 l1RequestNum, bytes32 pendingRollupTxHash, bytes32 commitment, bytes32 stateRoot, uint256 timestamp) storedBlock, bytes[] pendingRollupTxPubData)[] pendingBlocks)',
+          sinceTimestampInclusive: new UnixTime(1716461255),
         },
       },
     ],
     finality: {
       type: 'zkSyncLite',
-      minTimestamp: new UnixTime(1716263831),
+      minTimestamp: new UnixTime(1716461255),
       lag: 0,
       stateUpdate: 'disabled',
     },
@@ -123,7 +125,7 @@ export const termstructure: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -320,16 +322,18 @@ export const termstructure: Layer2 = {
   stateDerivation: {
     nodeSoftware:
       'The software toolkit for evacuation is open-sourced, and the source code can be found [here](https://github.com/term-structure/Term-Structure-Evacuation-Kit).',
-    compressionScheme:
-      'No compression is used, transactions are always the same.',
+    compressionScheme: 'No compression is used.',
     genesisState:
       'There is no genesis file nor regenesis for Term Structure. By default, all accounts were empty at the beginning.',
     dataFormat: `The data format documentation can be found [here](https://github.com/term-structure/TS-Circom/blob/main/doc/DOC-raw.md#requests).`,
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'Multisig',
-      'This Multisig is the owner of zkTrueUp contract and therefore is allowed to perform upgrades for implementation contracts. It can also change the list of operators.',
+      'TermStructureMultisig',
+      'This Multisig is the owner of zkTrueUp contract and can therefore upgrade the rollup system, potentially gaining access to all funds. It can also change the list of operators.' +
+        (discovery.getMultisigStats('TermStructureMultisig') === '1 / 2'
+          ? "The multisig's current threshold makes each perticipant an independent admin."
+          : ''),
     ),
     {
       name: 'Operator',
@@ -390,8 +394,8 @@ export const termstructure: Layer2 = {
   milestones: [
     {
       name: 'Term Structure Mainnet launch',
-      link: 'https://ts.finance',
-      date: '2024-06-02T00:00:00Z',
+      link: 'https://x.com/TermStructLabs/status/1797433199985078402',
+      date: '2024-06-03T00:00:00Z',
       description:
         'Term Structure is live, bringing fixed-income borrowing and lending to Ethereum.',
     },

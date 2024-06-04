@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xaa688fda2002d50dcdbaa0781ed65c30a96d363d
+Generated with discovered.json: 0x7385a1d70af503a9ff4d64a713c79e405f0c3b3a
 
-# Diff at Fri, 31 May 2024 08:21:23 GMT:
+# Diff at Tue, 04 Jun 2024 12:52:59 GMT:
 
-- author: zkzoomer (<sergio@zkzoomer.io>)
-- current block number: 19988586
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- current block number: 20018580
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: zksync lite fork with considerable modifications.
 
 ## Initial discovery
 
@@ -61,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Multisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818)
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818)
     +++ description: None
 ```
 
