@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xb099389412788550f1adaec6b2a1120698adec68
+
+# Diff at Tue, 04 Jun 2024 05:03:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@706706295a49487100a144276621ec14caf86806 block: 19976259
+- current block number: 20016244
+
+## Description
+
+The AxelarGasService contract is upgraded, adding L2 gas estimator functions.
+
+### AxelarGasService
+
+The function `updateGasInfo()` is added, allowing a permissioned 'gas price oracle' to update the gas price for destination L2s.
+The new `payGas()` function then allows bridgers to pre-pay the gas for arbitrary contract calls at the destination.
+
+## Watched changes
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      implementations.0:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      values.implementation:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+    }
+```
+
+## Source code changes
+
+```diff
+.../AxelarGasService/AxelarGasService.sol          | 437 ++++++++++++++++++++-
+ 1 file changed, 426 insertions(+), 11 deletions(-)
+```
+
 Generated with discovered.json: 0x6890d0d61e53889a889b7b86778403a6408d5a49
 
 # Diff at Wed, 29 May 2024 14:58:14 GMT:
