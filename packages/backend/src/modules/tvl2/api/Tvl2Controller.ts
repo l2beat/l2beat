@@ -9,6 +9,7 @@ import {
   NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
+  TokenTvlApiChart,
   TokenTvlApiCharts,
   TvlApiChart,
   TvlApiCharts,
@@ -66,6 +67,15 @@ type ApiProject = {
   >
 }
 
+interface AssociatedToken {
+  address: EthereumAddress | 'native'
+  chain: string
+  type: 'canonical' | 'external' | 'native'
+  includeInTotal: boolean
+  project: ProjectId
+  projectType: 'layers2s' | 'bridges'
+}
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -74,6 +84,7 @@ export class Tvl2Controller {
   >
   private readonly priceConfigs: PriceConfigIdMap
   private readonly projects: ApiProject[]
+  private readonly associatedTokens: AssociatedToken[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
@@ -122,6 +133,42 @@ export class Tvl2Controller {
         }
       }
       return { id, minTimestamp, type, slug, sources }
+    })
+
+    this.associatedTokens = projects.flatMap(({ projectId: id, type }) => {
+      if (config.projectsExcludedFromApi.includes(id.toString())) {
+        return []
+      }
+
+      const amounts = this.amountConfig.get(id)
+      if (!amounts) {
+        return []
+      }
+
+      const uniqueTokens = new Map<string, string>()
+
+      const associatedAmounts = amounts
+        .filter((x) => x.isAssociated === true)
+        .filter((amount) => {
+          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
+          if (u) {
+            assert(amount.source === u, 'Type mismatch')
+            return false
+          }
+          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
+          return true
+        })
+
+      return associatedAmounts.map((amount) => {
+        return {
+          address: amount.address,
+          chain: amount.chain,
+          type: amount.source,
+          includeInTotal: amount.includeInTotal,
+          project: id,
+          projectType: getType(type),
+        }
+      })
     })
 
     this.minTimestamp = {
@@ -526,6 +573,7 @@ export class Tvl2Controller {
   async getAggregatedTvl(
     lastHour: UnixTime,
     projectSlugs: string[],
+    excludeAssociated: boolean,
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
@@ -625,6 +673,40 @@ export class Tvl2Controller {
       hourly: getChart(hourlyData),
       sixHourly: getChart(sixHourlyData),
       daily: getChart(dailyData),
+    }
+
+    if (excludeAssociated) {
+      const excluded = await Promise.all(
+        this.associatedTokens
+          .filter((e) => projectIds.includes(e.project))
+          .map(async (x) => ({
+            ...x,
+            data: await this.getTokenChart(x, x.project, lastHour),
+          })),
+      )
+
+      for (const e of excluded) {
+        result.hourly = subtractTokenChart(
+          result.hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        result.sixHourly = subtractTokenChart(
+          result.sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        result.daily = subtractTokenChart(
+          result.daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
+      }
     }
 
     return result
@@ -822,6 +904,123 @@ export class Tvl2Controller {
     )
     return ethPrices
   }
+
+  // TODO: it is slow an can be optimized via querying for all tokens in a batch
+  async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+    const tvl = await this.getTvl(lastHour)
+
+    const excluded = await Promise.all(
+      this.associatedTokens.map(async (x) => ({
+        ...x,
+        data: await this.getTokenChart(x, x.project, lastHour),
+      })),
+    )
+
+    const ethPrices = await this.getEthPrices()
+
+    for (const e of excluded) {
+      if (e.includeInTotal) {
+        tvl.combined.hourly = subtractTokenChart(
+          tvl.combined.hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl.combined.sixHourly = subtractTokenChart(
+          tvl.combined.sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl.combined.daily = subtractTokenChart(
+          tvl.combined.daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
+      }
+      if (e.includeInTotal) {
+        tvl[e.projectType].hourly = subtractTokenChart(
+          tvl[e.projectType].hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl[e.projectType].sixHourly = subtractTokenChart(
+          tvl[e.projectType].sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl[e.projectType].daily = subtractTokenChart(
+          tvl[e.projectType].daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
+      }
+
+      const project = tvl.projects[e.project.toString()]
+      assert(project, 'Project not found')
+
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
+        project.charts.hourly,
+        e.data.hourly,
+        e.type,
+        ethPrices,
+      )
+
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
+        project.charts.sixHourly,
+        e.data.sixHourly,
+        e.type,
+        ethPrices,
+      )
+
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
+        project.charts.daily,
+        e.data.daily,
+        e.type,
+        ethPrices,
+      )
+
+      // Remove token from breakdown
+      switch (e.type) {
+        case 'canonical':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.CBV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
+        case 'external':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.EBV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
+        case 'native':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.NMV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
+      }
+    }
+    return tvl
+  }
 }
 
 function getChartData({
@@ -998,5 +1197,52 @@ function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
           x[8] + shorterPadded[i][8],
         ] as TvlApiChart['data'][0],
     ),
+  }
+}
+
+function subtractTokenChart(
+  main: TvlApiChart,
+  token: TokenTvlApiChart,
+  tokenType: 'canonical' | 'external' | 'native',
+  ethPrices: Map<number, number>,
+): TvlApiChart {
+  const data = main.data.map((x) => {
+    const tokenAt = token.data.find((d) => d[0].equals(x[0]))
+
+    if (!tokenAt) {
+      return x
+    }
+    const tokenUsdValue = tokenAt[2]
+    // TODO
+    const ethPriceAt = ethPrices.get(x[0].toNumber())
+    assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
+    const tokenEthValue = tokenUsdValue / ethPriceAt
+
+    return [
+      x[0],
+      x[1] - tokenUsdValue,
+      tokenType === 'canonical' ? x[2] - tokenUsdValue : x[2],
+      tokenType === 'external' ? x[3] - tokenUsdValue : x[3],
+      tokenType === 'native' ? x[4] - tokenUsdValue : x[4],
+      +(x[5] - tokenEthValue).toFixed(2),
+      tokenType === 'canonical' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
+      tokenType === 'external' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
+      tokenType === 'native' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
+    ] as TvlApiChart['data'][0]
+  })
+
+  return {
+    types: main.types,
+    data,
+  }
+}
+function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
+  switch (type) {
+    case 'layer2':
+      return 'layers2s'
+    case 'bridge':
+      return 'bridges'
+    case 'layer3':
+      return 'layers2s'
   }
 }

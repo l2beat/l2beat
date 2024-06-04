@@ -15,3 +15,4 @@ export type Layer3Provider =
   | 'Cartesi Rollups'
   | 'zkLink Nexus'
   | 'Taiko'
+  | 'ZK Stack'

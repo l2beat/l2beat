@@ -87,8 +87,13 @@ function getAmountsConfig(
       if (token.symbol === 'ETH') {
         continue
       }
-      const project = chainToProject.get(chainConverter.toName(token.chainId))
-      assert(project, 'Project is required for token')
+      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, 'Project is required for token')
+
+      const project = projects.find((x) => x.projectId === projectId)
+      assert(project, 'Project not found')
+
+      const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
       switch (token.formula) {
         case 'totalSupply':
@@ -99,11 +104,12 @@ function getAmountsConfig(
             address: token.address,
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
-            project,
+            project: projectId,
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
+            isAssociated,
           })
           break
         case 'circulatingSupply':
@@ -113,11 +119,12 @@ function getAmountsConfig(
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
             coingeckoId: token.coingeckoId,
-            project,
+            project: projectId,
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
+            isAssociated,
           })
           break
         case 'locked':
@@ -129,6 +136,8 @@ function getAmountsConfig(
   for (const project of projects) {
     for (const escrow of project.escrows) {
       for (const token of escrow.tokens) {
+        const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+
         entries.push({
           type: 'escrow',
           address: token.address ?? 'native',
@@ -147,6 +156,7 @@ function getAmountsConfig(
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
           symbol: token.symbol,
+          isAssociated,
         })
       }
     }

@@ -240,6 +240,7 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
         sinceTimestamp: value.sinceTimestamp.toNumber(),
         ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
         includeInTotal: value.includeInTotal,
+        isAssociated: value.isAssociated,
       })
     case 'totalSupply':
       return JSON.stringify({
@@ -251,6 +252,7 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
         sinceTimestamp: value.sinceTimestamp.toNumber(),
         ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
         includeInTotal: value.includeInTotal,
+        isAssociated: value.isAssociated,
       })
   }
 }

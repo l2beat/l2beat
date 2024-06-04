@@ -22,6 +22,9 @@
     "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "RollupOwnerMultisig"
   },
   "overrides": {
+    "RollupOwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "L1UsdcBridge": {
       "ignoreRelatives": ["l1Usdc"]
     },
@@ -54,6 +57,7 @@
       "ignoreInWatchMode": ["messageNonce"]
     },
     "SystemConfig": {
+      "ignoreInWatchMode": ["scalar"],
       "fields": {
         // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
         "batcherHash": {

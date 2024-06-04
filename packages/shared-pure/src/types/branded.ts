@@ -34,3 +34,10 @@ export function stringAsInt(fallback?: number) {
     return res.success && s !== '' ? Number(res.data) : fallback
   }, z.number().int())
 }
+
+export function stringAsBoolean(fallback?: boolean) {
+  return z.preprocess((s) => {
+    const res = z.enum(['true', 'false', '1', '0']).safeParse(s)
+    return res.success ? ['true', '1'].includes(res.data) : fallback
+  }, z.boolean())
+}

@@ -13,7 +13,7 @@ export const sanko: Layer3 = orbitStackL3({
     slug: 'sanko',
     description:
       'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
-    purposes: ['Gaming', 'NFT'],
+    purposes: ['Gaming', 'NFT', 'Social'],
     links: {
       websites: ['https://sanko.xyz/'],
       apps: ['https://sanko.xyz/bridge'],

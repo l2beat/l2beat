@@ -104,7 +104,7 @@ export const taiko: Layer2 = {
         // Shared ERC20 vault
         address: EthereumAddress('0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab'),
         sinceTimestamp: new UnixTime(1714550603),
-        tokens: ['ETH', 'LRC', 'UNI', 'WETH', 'USDT'], // temporary exclude USDC
+        tokens: '*',
       },
     ],
     transactionApi: {
@@ -132,6 +132,7 @@ export const taiko: Layer2 = {
         The system allows for an invalid state to be proven by either a compromised SGX instance or compromised Guardians (the highest tier). This can lead to a state being proven as valid when it is not.`,
       sentiment: 'bad',
       value: 'SGX Proofs',
+      secondLine: `${SGXcooldownWindow} challenge period`,
     },
     dataAvailability: {
       ...DATA_ON_CHAIN,
