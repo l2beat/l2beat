@@ -8,7 +8,9 @@ Generated with discovered.json: 0x50d7c68a0cfe359169c15cbdedd07caa3894fff1
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Two contracts implementation changed, TaikoL1.sol, and Bridge.sol.
+- TaikoL1.sol: introduced B_TIER_ROUTER = bytes32("tier_router") to replace B_TIER_PROVIDER
+- Bridge.sol: Added a max proof size for a message to be processable by a relayer, an insufficent gas check, and added the B_TIER_ROUTER variable support.
 
 ## Watched changes
 
