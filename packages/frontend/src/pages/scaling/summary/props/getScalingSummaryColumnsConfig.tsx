@@ -211,7 +211,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
 
 export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
   const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = compact([
-    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    ...getProjectWithIndexColumns(),
     {
       name: 'Type',
       tooltip: <TypeColumnTooltip />,
