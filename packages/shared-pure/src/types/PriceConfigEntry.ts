@@ -1,8 +1,10 @@
 /*
                 ====== IMPORTANT NOTICE ======
 DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createPriceId" FUNCTION
-*/
 
+KEEP IN MIND THAT THIS TYPE WILL BE SERIALIZED AND STORED IN THE DATABASE
+WHEN ADDING A NEW FIELD MAKE SURE TO WRITE A DB MIGRATION OR MAKE FIELD OPTIONAL
+*/
 import { z } from 'zod'
 import { AssetId } from './AssetId'
 import { CoingeckoId } from './CoingeckoId'
