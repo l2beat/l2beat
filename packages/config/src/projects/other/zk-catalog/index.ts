@@ -1,6 +1,10 @@
 import { ZkCatalogProject } from './types/ZkCatalogProject'
-import { worldcoin } from './worldcoin'
+import { worldcoinsemaphore } from './worldcoinsemaphore'
+import { worldcoinsmtb } from './worldcoinsmtb'
 
 export * from './types'
 
-export const zkCatalogProjects: ZkCatalogProject[] = [worldcoin]
+export const zkCatalogProjects: ZkCatalogProject[] = [
+  worldcoinsemaphore,
+  worldcoinsmtb,
+]

@@ -1,0 +1,1 @@
+The official verification guide can be found [here](https://github.com/worldcoin/smtb-ceremony/blob/main/contribution_verification/VERIFICATION.md).
