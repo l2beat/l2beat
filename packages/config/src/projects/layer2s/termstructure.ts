@@ -332,7 +332,7 @@ export const termstructure: Layer2 = {
       'TermStructureMultisig',
       'This Multisig is the owner of zkTrueUp contract and can therefore upgrade the rollup system, potentially gaining access to all funds. It can also change the list of operators.' +
         (discovery.getMultisigStats('TermStructureMultisig') === '1 / 2'
-          ? "The multisig's current threshold makes each perticipant an independent admin."
+          ? " The multisig's current threshold makes each participant an independent admin."
           : ''),
     ),
     {
