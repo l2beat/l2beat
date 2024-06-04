@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x2b1c05174dac82517ca8bd894626a647c7cc0ba0
+
+# Diff at Tue, 04 Jun 2024 09:54:59 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@35cc9bbe2a9c9163e503882bcb76877c4909bbc9 block: 19118480
+- current block number: 20017695
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      implementations.0:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      values.implementation:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+    }
+```
+
+## Source code changes
+
+```diff
+.../AxelarGasService/AxelarGasService.sol          | 437 ++++++++++++++++++++-
+ 1 file changed, 426 insertions(+), 11 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19118480 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x39326bef78b592a1264c16dbe875593764d55da2
 
 # Diff at Fri, 26 Jan 2024 10:41:21 GMT:

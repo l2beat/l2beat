@@ -127,6 +127,14 @@ export const satellite: Bridge = {
       description:
         'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
     },
+    {
+      name: 'AxelarGasService Admin',
+      accounts: [
+        discovery.getPermissionedAccount('AxelarGasServiceOperators', 'owner'),
+      ],
+      description:
+        'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accmulated fees.',
+    },
   ],
   contracts: {
     addresses: [
@@ -146,6 +154,14 @@ export const satellite: Bridge = {
         'Multisig',
         `Admin Multisig setting mint limits. Acts as a ${mintLimiterThreshold}-of-${mintLimiterSigners.length} multisig.`,
       ),
+      {
+        ...discovery.getContractDetails(
+          'AxelarGasService',
+          'Allows users to pay for native gas at the destination with tokens or ETH. It also manages refunds.',
+        ),
+        upgradableBy: ['AxelarGasService Admin'],
+        upgradeDelay: 'none',
+      },
     ],
     risks: [],
   },
