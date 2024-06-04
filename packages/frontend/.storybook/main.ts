@@ -21,6 +21,10 @@ const config: StorybookConfig = {
   viteFinal(config, { configType }) {
     return mergeConfig(config, {
       // Remove once we migrate to react context for glossary
+      define: {
+        ...config.define,
+        process: {},
+      },
       resolve: {
         alias: {
           fs: 'memfs',
