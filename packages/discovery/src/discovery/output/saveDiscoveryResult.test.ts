@@ -21,6 +21,7 @@ describe(getSourceOutputPath.name, () => {
     abis: {},
     sourceBundles: [],
     matchingTemplates: {},
+    relatives: {},
   })
 
   const contractA = genAnalyzedContract('A')
