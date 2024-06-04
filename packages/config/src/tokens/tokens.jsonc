@@ -394,6 +394,7 @@
     },
     {
       "symbol": "FRAX",
+      "category": "stablecoin",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
     {
@@ -1202,6 +1203,7 @@
     {
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -1492,6 +1494,7 @@
     {
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2264,6 +2267,7 @@
     {
       "symbol": "FRAX",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2357,6 +2361,7 @@
     {
       "symbol": "FRAX",
       "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2370,6 +2375,7 @@
     {
       "symbol": "FRAX",
       "address": "0xfc00000000000000000000000000000000000001",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2438,6 +2444,7 @@
     {
       "symbol": "FRAX",
       "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
