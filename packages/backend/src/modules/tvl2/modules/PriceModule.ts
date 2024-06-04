@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -90,14 +90,6 @@ function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
     type: value.type,
     coingeckoId: value.coingeckoId.toString(),
   }
-
-  assert(
-    Object.keys(obj).length === Object.keys(value).length &&
-      Object.keys(obj).every((key) => Object.keys(value).includes(key)),
-    `Programmer error: update serialization of price entry: ${JSON.stringify(
-      obj,
-    )}`,
-  )
 
   return JSON.stringify(obj)
 }

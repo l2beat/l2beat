@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
@@ -232,12 +232,6 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
       escrowAddress: value.escrowAddress.toString(),
       type: value.type,
     }
-    assert(
-      Object.keys(obj).length === Object.keys(value).length,
-      `Programmer error: update serialization of amount entry: ${JSON.stringify(
-        obj,
-      )}`,
-    )
 
     return JSON.stringify(obj)
   }
@@ -248,13 +242,6 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
       address: value.address.toString(),
       type: value.type,
     }
-    assert(
-      Object.keys(obj).length === Object.keys(value).length &&
-        Object.keys(obj).every((key) => Object.keys(value).includes(key)),
-      `Programmer error: update serialization of amount entry: ${JSON.stringify(
-        obj,
-      )}`,
-    )
 
     return JSON.stringify(obj)
   }
