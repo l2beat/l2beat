@@ -16,6 +16,7 @@ const badgeVariants = cva('rounded font-medium text-center', {
       warning: 'text-black bg-yellow-500',
       brightYellow: 'bg-yellow-200 text-purple-700',
       purple: 'bg-pink-900 text-white',
+      blue: 'bg-blue-500 text-white',
     },
     size: {
       extraSmall: 'text-3xs',

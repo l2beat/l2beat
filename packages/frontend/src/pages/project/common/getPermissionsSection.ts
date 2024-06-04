@@ -25,13 +25,18 @@ export function getPermissionsSection(
   const section: ProjectDetailsPermissionsSection['props'] = {
     id: 'permissions',
     title: 'Permissions',
+    projectType: project.type === 'layer3' ? 'L3' : 'L2',
     verificationStatus,
     manuallyVerifiedContracts,
     isUnderReview: project.isUnderReview,
     permissions: [],
+    nativePermissions: [],
   }
 
-  if (project.permissions === 'UnderReview') {
+  if (
+    project.permissions === 'UnderReview' ||
+    project.nativePermissions === 'UnderReview'
+  ) {
     return {
       ...section,
       isUnderReview: true,
@@ -39,9 +44,20 @@ export function getPermissionsSection(
   }
 
   return (
-    project.permissions && {
+    (project.permissions || project.nativePermissions) && {
       ...section,
-      permissions: project.permissions.map((p) => {
+      permissions: (project.permissions ?? []).map((p) => {
+        const entry = toTechnologyContract(project, p)
+        return {
+          ...entry,
+          // Plus one because the first address is set to `address` and is not present in the array
+          name:
+            entry.links.length > 0
+              ? `${entry.name} (${entry.links.length + 1})`
+              : entry.name,
+        }
+      }),
+      nativePermissions: (project.nativePermissions ?? []).map((p) => {
         const entry = toTechnologyContract(project, p)
         return {
           ...entry,

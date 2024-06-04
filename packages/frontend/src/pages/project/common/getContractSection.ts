@@ -6,6 +6,7 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   isSingleAddress,
+  layer2s,
 } from '@l2beat/config'
 import {
   assert,
@@ -46,6 +47,21 @@ export function getContractSection(
     )
   })
 
+  const nativeContracts = project.contracts?.nativeAddresses?.map(
+    (contract) => {
+      const isUnverified = isContractUnverified(contract, verificationStatus)
+      const implementationChangeForProject =
+        implementationChange?.projects[project.id.toString()]
+      return makeTechnologyContract(
+        contract,
+        project,
+        isUnverified,
+        verificationStatus,
+        implementationChangeForProject,
+      )
+    },
+  )
+
   const escrows = project.config.escrows
     .filter((escrow) => escrow.newVersion && !escrow.isHistorical)
     .sort(moreTokensFirst)
@@ -78,9 +94,25 @@ export function getContractSection(
     })
   }
 
+  const getL3HostChain = (project: Layer3) => {
+    if (project.hostChain === 'Multiple') {
+      return 'Multiple'
+    }
+    return (
+      layer2s.find((l2) => l2.id === project.hostChain)?.display.name ??
+      'Unknown'
+    )
+  }
+
+  const chainName =
+    project.type === 'layer3' ? getL3HostChain(project) : 'Ethereum'
+
   return {
     id: 'contracts',
+    chainName,
+    nativeChainName: project.display.name,
     title: 'Smart contracts',
+    nativeContracts: nativeContracts ?? [],
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,

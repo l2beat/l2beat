@@ -8,6 +8,7 @@ import React from 'react'
 import { Callout, CalloutProps } from '../../../../../components/Callout'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
+import { Badge } from '../../../../../components/badge/Badge'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
@@ -56,6 +57,7 @@ export interface ContractEntryProps {
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
+  sourceBadge?: 'L1' | 'L2' | 'L3'
 }
 
 export function ContractEntry({
@@ -63,6 +65,7 @@ export function ContractEntry({
   verificationStatus,
   manuallyVerifiedContracts,
   className,
+  sourceBadge,
 }: ContractEntryProps) {
   const verificationStatusForChain =
     verificationStatus.contracts[contract.chain] ?? {}
@@ -124,6 +127,7 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
+            {sourceBadge && <Badge type="blue">L2</Badge>}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
