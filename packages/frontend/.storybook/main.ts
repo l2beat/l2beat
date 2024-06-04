@@ -1,5 +1,5 @@
-import type { StorybookConfig } from '@storybook/react-vite'
 import path from 'path'
+import type { StorybookConfig } from '@storybook/react-vite'
 import { mergeConfig } from 'vite'
 import turbosnap from 'vite-plugin-turbosnap'
 
