@@ -8,7 +8,7 @@ export interface BadgeProps extends VariantProps<typeof badgeVariants> {
   children: ReactNode
 }
 
-const badgeVariants = cva('rounded font-medium text-center', {
+const badgeVariants = cva('font-medium text-center', {
   variants: {
     type: {
       error: 'text-white bg-red-500',
@@ -27,10 +27,15 @@ const badgeVariants = cva('rounded font-medium text-center', {
       small: 'px-1.5 py-px',
       regular: 'px-1.5 py-1',
     },
+    rounded: {
+        regular: 'rounded',
+        full: 'rounded-full',
+    },
   },
   defaultVariants: {
     size: 'regular',
     padding: 'small',
+    rounded: 'regular',
   },
 })
 
@@ -42,6 +47,7 @@ export function Badge(props: BadgeProps) {
           type: props.type,
           size: props.size,
           padding: props.padding,
+          rounded: props.rounded,
         }),
         props.className,
       )}
