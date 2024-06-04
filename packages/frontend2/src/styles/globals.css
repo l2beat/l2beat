@@ -8,3 +8,51 @@
 body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
 }
+
+@layer components {
+  /* Masks for overflow wrapper */
+  .fade-out-to-left {
+    -webkit-mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    mask-image: linear-gradient(to left, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+  }
+
+  .fade-out-to-right {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, black 0px, black calc(100% - 30px), transparent 100%);
+  }
+  .fade-out-horizontal {
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
+    mask-image: linear-gradient(90deg, transparent, black 30px calc(100% - 30px), transparent) !important;
+  }
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scrollbar ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar ::-webkit-scrollbar-track {
+  @apply rounded-full bg-gray-200;
+}
+
+.dark .custom-scrollbar ::-webkit-scrollbar-track {
+  @apply rounded-full bg-zinc-800;
+}
+
+.custom-scrollbar ::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-gray-50;
+}
+
+.dark .custom-scrollbar ::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-zinc-500;
+}
