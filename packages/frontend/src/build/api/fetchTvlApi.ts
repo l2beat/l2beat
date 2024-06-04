@@ -31,7 +31,7 @@ export async function fetchTvlApi(
 function getUrl(backend: Config['backend'],opts: Options) {
   const url = new URL(`${backend.apiUrl}/api/${opts.tvl2 ? 'tvl2' : 'tvl'}`)
   if(opts.excludeAssociatedTokens){
-    url.searchParams.set("excludeAssociatedTokens", opts.excludeAssociatedTokens ? 'true' : 'false')
+    url.searchParams.set("excludeAssociatedTokens", 'true')
   }
 
   return url.toString()
