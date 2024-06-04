@@ -93,7 +93,8 @@ function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
   }
 
   assert(
-    Object.keys(obj).length === Object.keys(value).length,
+    Object.keys(obj).length === Object.keys(value).length &&
+      Object.keys(obj).every((key) => Object.keys(value).includes(key)),
     `Programmer error: update serialization of price entry: ${JSON.stringify(
       obj,
     )}`,

@@ -252,7 +252,8 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
       type: value.type,
     }
     assert(
-      Object.keys(obj).length === Object.keys(value).length,
+      Object.keys(obj).length === Object.keys(value).length &&
+        Object.keys(obj).every((key) => Object.keys(value).includes(key)),
       `Programmer error: update serialization of amount entry: ${JSON.stringify(
         obj,
       )}`,
