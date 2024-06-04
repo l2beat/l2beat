@@ -6,7 +6,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
-const l2Discovery = new ProjectDiscovery('worldcoin', 'optimism')
 
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
@@ -209,26 +208,10 @@ export const optimism: Layer2 = opStackL2({
       'This address is the owner of the following contracts: SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots.',
     ),
   ],
-  nonTemplateNativePermissions: [
-    ...l2Discovery.getMultisigPermission(
-      '0x0897316DFE7141DB1E182551c3e8077cf5dd9695',
-      "Yellow, black. Yellow, black. Yellow, black. Yellow, black. Ooh, black and yellow! Let's shake it up a little. Barry! Breakfast is ready! Coming! Hang on a second.",
-    ),
-  ],
   nonTemplateContracts: [
     discovery.getContractDetails('SuperchainConfig', {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...upgradeability,
-    }),
-  ],
-  nonTemplateNativeContracts: [
-    l2Discovery.getContractDetails('OpWorldID_Zero', {
-      description: [
-        'According to all known laws of aviation, there is no way a bee should be able to fly.',
-        'Its wings are too small to get its fat little body off the ground.',
-        "The bee, of course, flies anyway because bees don't care what humans think is impossible.",
-      ].join(' '),
       ...upgradeability,
     }),
   ],
