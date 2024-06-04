@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getNops", "getAllowList"],
+  "ignoreMethods": ["getNops", "getAllowList", "getStaticConfig", "getSupportedTokens"],
+  "ignoreRelatives": ["getSupportedTokens", "tokenAddresses", "linkToken"],
   "fields": {
     "tokenPools": {
       "handler": {
@@ -11,13 +12,21 @@
         "removeKey": "pool"
       }
     },
-    "tokenAddresses": {
-      "handler": {
-        "type": "call",
-        "method": "getSupportedTokens",
-        "args": [],
-        "ignoreRelative": true
-      }
-    }
+    //"linkToken": {
+    //  "handler": {
+    //    "type": "call",
+    //    "args": [],
+    //    "method": "getStaticConfig",
+    //    "pickFields": ["linkToken"],
+    //  }
+    //},
+    //"tokenAddresses": {
+    //  "handler": {
+    //    "type": "call",
+    //    "method": "getSupportedTokens",
+    //    "args": [],
+    //    "ignoreRelative": true
+    //  }
+    //}
   }
 }

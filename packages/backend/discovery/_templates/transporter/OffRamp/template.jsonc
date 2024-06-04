@@ -5,5 +5,18 @@
     "getSupportedTokens",
     "getDestinationTokens",
     "getAllowList"
-  ]
+  ],
+  "fields": {
+    "commitStore": {
+        "target": {
+          "template": "transporter/CommitStore"
+        },
+      "handler": {
+        "type": "call",
+        "method": "getStaticConfig",
+        "args": [],
+        "pickFields": ["commitStore"],
+      }
+    },
+  }
 }
