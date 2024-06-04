@@ -19,7 +19,14 @@
   },
   "overrides": {
     "ZkTrueUp": {
-      "ignoreMethods": ["getAaveV3Pool", "getPoseidonUnit2"],
+      "ignoreInWatchMode": [
+        "getAccountNum",
+        "getBlockNum",
+        "getBorrowFeeRate",
+        "getFundWeight",
+        "getL1RequestNum"
+      ],
+      "ignoreRelatives": ["getAaveV3Pool", "getWETH"],
       "fields": {
         "accessControl": {
           "handler": {
