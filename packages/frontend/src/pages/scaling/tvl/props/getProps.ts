@@ -1,13 +1,14 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { PagesData, Wrapped } from '../../../Page'
+import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
+import { TvlPagesData } from '../types'
 import { ScalingTvlPageProps } from '../view/ScalingTvlPage'
 import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
-  pagesData: PagesData,
+  pagesData: TvlPagesData,
 ): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
@@ -18,8 +19,7 @@ export function getProps(
           ...config.layer2s,
           ...(config.features.layer3sTvl ? config.layer3s : []),
         ],
-        pagesData.tvlApiResponse,
-        pagesData.implementationChange,
+        pagesData,
       ),
     },
     wrapper: {

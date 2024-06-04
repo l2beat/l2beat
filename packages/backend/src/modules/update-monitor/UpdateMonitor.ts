@@ -87,11 +87,7 @@ export class UpdateMonitor {
           runner.chain,
         )
 
-        const diff = diffDiscovery(
-          committed.contracts,
-          discovery.contracts,
-          projectConfig,
-        )
+        const diff = diffDiscovery(committed.contracts, discovery.contracts)
 
         const severityCounts = countSeverities(diff, projectConfig)
 
@@ -202,7 +198,6 @@ export class UpdateMonitor {
     const diff = diffDiscovery(
       prevSanitizedDiscovery.contracts,
       sanitizedDiscovery.contracts,
-      projectConfig,
       unverifiedContracts,
     )
 
@@ -276,7 +271,7 @@ export class UpdateMonitor {
     chain: string,
   ) {
     if (diff.length > 0) {
-      const dependents = await findDependents(
+      const dependents = findDependents(
         projectConfig.name,
         chain,
         this.configReader,

@@ -17,7 +17,7 @@ import {
   SourceCodeService,
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
-import { getRelatives } from './getRelatives'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -36,13 +36,21 @@ export interface AnalyzedContract {
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
   matchingTemplates: Record<string, number>
-  extendedTemplate?: string
+  extendedTemplate?: ExtendedTemplate
+  ignoreInWatchMode?: string[]
+}
+
+export interface ExtendedTemplate {
+  template: string
+  reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
 }
 
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
 }
+
+export type AddressesWithTemplates = Record<string, Set<string>>
 
 export class AddressAnalyzer {
   constructor(
@@ -59,14 +67,40 @@ export class AddressAnalyzer {
     overrides: ContractOverrides | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-  ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
+    suggestedTemplates?: Set<string>,
+  ): Promise<{
+    analysis: Analysis
+    relatives: AddressesWithTemplates
+  }> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: [] }
+      return { analysis: { type: 'EOA', address }, relatives: {} }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)
+
+    const templateErrors: Record<string, string> = {}
+    let extendedTemplate: ExtendedTemplate | undefined = undefined
+
+    if (overrides?.extends !== undefined) {
+      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+    } else if (suggestedTemplates !== undefined) {
+      const template = Array.from(suggestedTemplates)[0]
+      if (template !== undefined) {
+        overrides = this.templateService.applyTemplateOnContractOverrides(
+          overrides ?? { address },
+          template,
+        )
+        extendedTemplate = { template, reason: 'byReferrer' }
+      }
+      if (suggestedTemplates.size > 1) {
+        templateErrors['@template'] =
+          `Multiple templates suggested (${Array.from(suggestedTemplates).join(
+            ', ',
+          )})`
+      }
+    }
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
@@ -83,7 +117,8 @@ export class AddressAnalyzer {
 
     // Match templates only if there are no explicitly set
     const matchingTemplates =
-      overrides?.extends === undefined
+      overrides?.extends === undefined &&
+      (suggestedTemplates === undefined || suggestedTemplates.size === 0)
         ? this.templateService.findMatchingTemplates(sources)
         : {}
 
@@ -107,17 +142,19 @@ export class AddressAnalyzer {
         upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
         implementations: proxy?.implementations ?? [],
         values: values ?? {},
-        errors: errors ?? {},
+        errors: { ...templateErrors, ...(errors ?? {}) },
         abis: sources.abis,
         sourceBundles: sources.sources,
         matchingTemplates,
-        extendedTemplate: overrides?.extends,
+        extendedTemplate,
+        ignoreInWatchMode: overrides?.ignoreInWatchMode,
       },
-      relatives: getRelatives(
+      relatives: getRelativesWithSuggestedTemplates(
         results,
         overrides?.ignoreRelatives,
         proxy?.relatives,
         proxy?.implementations,
+        overrides?.fields,
       ),
     }
   }
@@ -141,7 +178,7 @@ export class AddressAnalyzer {
       abis,
       contract.address,
       contract.implementations,
-      overrides.ignoreInWatchMode,
+      contract.ignoreInWatchMode,
     )
 
     const { values: newValues, errors } = await this.handlerExecutor.execute(
@@ -159,7 +196,7 @@ export class AddressAnalyzer {
 
     const prevRelevantValues = getRelevantValues(
       contract.values ?? {},
-      overrides.ignoreInWatchMode ?? [],
+      contract.ignoreInWatchMode ?? [],
     )
 
     if (!isEqual(newValues, prevRelevantValues)) {

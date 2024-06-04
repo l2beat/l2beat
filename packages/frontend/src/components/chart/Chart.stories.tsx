@@ -143,6 +143,8 @@ const tokens = [
         type: 'EBV',
         assetId: '0xabac',
         chainId: 12,
+        chain: 'orbitrum',
+        address: '0xabac',
         projectId: 'arbitrum',
         symbol: x,
       },

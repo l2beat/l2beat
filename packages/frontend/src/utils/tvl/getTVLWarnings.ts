@@ -1,5 +1,6 @@
 import {
   Layer2,
+  Layer3,
   WarningWithSentiment,
   safeGetTokenByAssetId,
 } from '@l2beat/config'
@@ -10,8 +11,8 @@ import { unifyTokensResponse } from './getTvlStats'
 
 export function getTvlWarnings(
   apiProject: TvlApiResponse['projects'][string],
+  project: Layer2 | Layer3,
   associatedTokens: string[],
-  project: Layer2,
 ): WarningWithSentiment[] {
   const total = apiProject?.charts.hourly.data.at(-1)?.[1] ?? 0
   const tokens = unifyTokensResponse(apiProject?.tokens)

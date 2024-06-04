@@ -26,6 +26,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -57,6 +58,7 @@ import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
 import { myria } from './myria'
+import { myshell } from './myshell'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -141,6 +143,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  form,
   frame,
   fraxtal,
   fuel,
@@ -171,6 +174,7 @@ export const layer2s: Layer2[] = [
   mode,
   morph,
   myria,
+  myshell,
   nil,
   nova,
   oev,

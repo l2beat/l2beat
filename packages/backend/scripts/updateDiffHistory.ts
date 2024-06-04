@@ -64,13 +64,11 @@ async function updateDiffHistoryFile() {
   const diff = diffDiscovery(
     prevDiscovery?.contracts ?? [],
     curDiscovery.contracts,
-    config,
   )
 
   let configRelatedDiff = diffDiscovery(
     discoveryFromMainBranch?.contracts ?? [],
     prevDiscovery?.contracts ?? [],
-    config,
   )
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6ea41558b6463095ee91e573a5321bb9662fc286
+
+# Diff at Wed, 29 May 2024 14:54:44 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19926192
+- current block number: 19976242
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19926192 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
 Generated with discovered.json: 0x00e7d86c9c32ebac36ad2111ea5369e41a1d7770
 
 # Diff at Wed, 22 May 2024 15:04:33 GMT:

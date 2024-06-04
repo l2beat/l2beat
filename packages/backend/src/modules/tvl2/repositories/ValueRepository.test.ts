@@ -57,30 +57,6 @@ describeDatabase(ValueRepository.name, (database) => {
     })
   })
 
-  describe(ValueRepository.prototype.addOrUpdate.name, () => {
-    it('adds new row', async () => {
-      await repository.addOrUpdate(
-        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
-      )
-
-      const results = await repository.getAll()
-      expect(results).toEqual([saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3)])
-    })
-
-    it('updates existing row', async () => {
-      await repository.addOrUpdate(
-        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
-      )
-
-      await repository.addOrUpdate(
-        saved('a', UnixTime.ZERO, 'data_src', 4, 5, 6),
-      )
-
-      const results = await repository.getAll()
-      expect(results).toEqual([saved('a', UnixTime.ZERO, 'data_src', 4, 5, 6)])
-    })
-  })
-
   it(ValueRepository.prototype.deleteAll.name, async () => {
     await repository.addOrUpdateMany([
       saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),

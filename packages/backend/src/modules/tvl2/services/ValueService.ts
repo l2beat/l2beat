@@ -33,10 +33,25 @@ export class ValueService {
     priceConfigIds: Map<AssetId, PriceId>,
     timestamps: UnixTime[],
   ): Promise<ValueRecord[]> {
+    assert(timestamps.length > 0, 'Timestamps should not be empty')
+    assert(amountConfigs.size > 0, 'Configs should not be empty')
+    assert(priceConfigIds.size > 0, 'Price configs should not be empty')
+
     const amounts = await this.$.amountRepository.getByConfigIdsInRange(
       Array.from(amountConfigs.keys()),
       timestamps[0],
       timestamps[timestamps.length - 1],
+    )
+    // If Indexer is not detecting sinceTimestamp change there is a possibility
+    // that we have "dead" amount records, we need to filter them out
+    const filteredAmounts = amounts.filter((x) => {
+      const amountConfig = amountConfigs.get(x.configId)
+      assert(amountConfig, 'Config not found')
+      return amountConfig.sinceTimestamp.lte(x.timestamp)
+    })
+    const amountsByTimestamp = groupBy(
+      filteredAmounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
+      'timestamp',
     )
 
     const prices = await this.$.priceRepository.getByConfigIdsInRange(
@@ -44,35 +59,31 @@ export class ValueService {
       timestamps[0],
       timestamps[timestamps.length - 1],
     )
-
-    const results = new Map<number, Values>()
-
-    const amountsByTimestamp = groupBy(
-      amounts.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
-      'timestamp',
-    )
     const pricesByTimestamp = groupBy(
       prices.map((x) => ({ ...x, timestamp: x.timestamp.toNumber() })),
       'timestamp',
     )
 
-    for (const timestamp of timestamps) {
-      const amounts = amountsByTimestamp[timestamp.toNumber()] ?? []
-      const prices = pricesByTimestamp[timestamp.toNumber()]
-      const result = {
-        canonical: 0n,
-        canonicalForTotal: 0n,
-        external: 0n,
-        externalForTotal: 0n,
-        native: 0n,
-        nativeForTotal: 0n,
+    const results = new Map<number, Values>()
+
+    for (const timestamp of timestamps.map((t) => t.toNumber())) {
+      const result = createEmptyResult()
+
+      const amountsAtTimestamp = amountsByTimestamp[timestamp]
+      // It is possible that there are no amounts, we do not store zero values
+      if (!amountsAtTimestamp) {
+        results.set(timestamp, result)
+        continue
       }
-      for (const amount of amounts) {
+
+      const pricesAtTimestamp = pricesByTimestamp[timestamp]
+
+      for (const amount of amountsAtTimestamp) {
         const amountConfig = amountConfigs.get(amount.configId)
         assert(amountConfig, 'Config not found')
 
         const priceId = priceConfigIds.get(createAssetId(amountConfig))
-        const price = prices.find((x) => x.configId === priceId)
+        const price = pricesAtTimestamp.find((x) => x.configId === priceId)
         assert(price, 'Price not found')
 
         const value = calculateValue({
@@ -89,19 +100,38 @@ export class ValueService {
         }
       }
 
-      results.set(timestamp.toNumber(), result)
+      results.set(timestamp, result)
     }
 
-    return Array.from(results.entries()).map(([timestamp, value]) => ({
-      projectId: project,
-      timestamp: new UnixTime(timestamp),
-      dataSource: source,
-      native: value.native,
-      nativeForTotal: value.nativeForTotal,
-      canonical: value.canonical,
-      canonicalForTotal: value.canonicalForTotal,
-      external: value.external,
-      externalForTotal: value.externalForTotal,
-    }))
+    return toValueRecords(results, project, source)
   }
+}
+
+function createEmptyResult() {
+  return {
+    canonical: 0n,
+    canonicalForTotal: 0n,
+    external: 0n,
+    externalForTotal: 0n,
+    native: 0n,
+    nativeForTotal: 0n,
+  }
+}
+
+function toValueRecords(
+  results: Map<number, Values>,
+  project: ProjectId,
+  source: string,
+): ValueRecord[] | PromiseLike<ValueRecord[]> {
+  return Array.from(results.entries()).map(([timestamp, value]) => ({
+    projectId: project,
+    timestamp: new UnixTime(timestamp),
+    dataSource: source,
+    native: value.native,
+    nativeForTotal: value.nativeForTotal,
+    canonical: value.canonical,
+    canonicalForTotal: value.canonicalForTotal,
+    external: value.external,
+    externalForTotal: value.externalForTotal,
+  }))
 }

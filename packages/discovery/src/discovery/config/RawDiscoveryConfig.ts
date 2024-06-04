@@ -20,6 +20,12 @@ export const DiscoveryContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   description: z.string().nullable().optional(),
   severity: z.optional(ContractFieldSeverity).nullable(),
+  target: z
+    .object({
+      template: z.string().nullable().optional(),
+    })
+    .nullable()
+    .optional(),
   type: z
     .union([ValueType, z.array(ValueType)])
     .nullable()

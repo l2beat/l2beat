@@ -1,4 +1,4 @@
-import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
+import {} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import {
@@ -7,13 +7,12 @@ import {
 } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-
-export type BlockTimestampProvider = EtherscanClient | BlockscoutClient
 
 export interface BlockTimestampIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  blockTimestampProvider: BlockTimestampProvider
+  blockTimestampService: BlockTimestampService
   blockTimestampRepository: BlockTimestampRepository
   chain: string
   syncOptimizer: SyncOptimizer
@@ -44,7 +43,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     }
 
     const blockNumber =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
+      await this.$.blockTimestampService.getBlockNumberAtOrBefore(timestamp)
 
     this.logger.info('Fetched block number for timestamp', {
       timestamp: timestamp.toNumber(),

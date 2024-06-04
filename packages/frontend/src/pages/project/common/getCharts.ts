@@ -1,9 +1,9 @@
 import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
+  assert,
   ActivityApiResponse,
-  AssetId,
   AssetType,
-  ChainId,
+  EthereumAddress,
   L2CostsApiResponse,
   ProjectId,
   TvlApiResponse,
@@ -36,6 +36,9 @@ export function getCharts(
     !!activityApiResponse?.projects[project.id.toString()]
   const hasCosts = !!costsApiResponse?.projects[project.id.toString()]
 
+  const isLayer2orLayer3 =
+    project.type === 'layer2' || project.type === 'layer3'
+
   return {
     tvl: hasTvl
       ? {
@@ -44,14 +47,9 @@ export function getCharts(
             project.type === 'bridge'
               ? { type: 'project-tvl', slug: project.display.slug }
               : { type: 'project-detailed-tvl', slug: project.display.slug },
-          tokens: getTokens(
-            project.id,
-            tvlApiResponse,
-            project.type === 'layer2',
-          ),
+          tokens: getTokens(project.id, tvlApiResponse, isLayer2orLayer3),
           tvlBreakdownHref:
-            (project.type === 'layer2' || project.type === 'layer3') &&
-            !project.isUpcoming
+            isLayer2orLayer3 && !project.isUpcoming
               ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
               : undefined,
           milestones: project.milestones,
@@ -85,7 +83,7 @@ export function getTokens(
   const compatibleTokenList = unifyTokensResponse(tokens)
 
   return compatibleTokenList
-    .map(({ assetId, usdValue, assetType, chainId }) => {
+    .map(({ assetId, usdValue, assetType, chain }) => {
       const token = safeGetTokenByAssetId(assetId)
       let symbol = token?.symbol
       if (symbol === 'USDC' && assetType === 'CBV') {
@@ -99,22 +97,25 @@ export function getTokens(
         }
       }
       const name = token?.name
-      const address = token?.address
+      const address = token?.address ?? 'native'
       const iconUrl = token?.iconUrl ?? ''
+
+      // TODO: this is just temporary, so CI passes
+      assert(chain, 'Chain not defined')
 
       if (symbol && name) {
         return {
           address: address?.toString(),
           iconUrl,
           name,
-          info: getTokenInfo(
+          info: getTokenInfo({
             projectId,
-            assetId,
             assetType,
-            chainId,
+            address,
+            chain,
             symbol,
             isLayer2orLayer3,
-          ),
+          }),
           tvl: usdValue,
         }
       }
@@ -123,36 +124,37 @@ export function getTokens(
     .sort((a, b) => b.tvl - a.tvl)
 }
 
-function getTokenInfo(
-  projectId: ProjectId,
-  assetId: AssetId,
-  assetType: AssetType,
-  chainId: ChainId,
-  symbol: string,
-  isLayer2orLayer3: boolean,
-): TokenInfo {
+function getTokenInfo({
+  projectId,
+  assetType,
+  chain,
+  symbol,
+  address,
+  isLayer2orLayer3,
+}: {
+  projectId: ProjectId
+  assetType: AssetType
+  chain: string
+  symbol: string
+  address: EthereumAddress | 'native'
+  isLayer2orLayer3: boolean
+}): TokenInfo {
   if (!isLayer2orLayer3) {
     return {
       type: 'regular',
       projectId: projectId.toString(),
-      assetId: assetId.toString(),
       symbol,
+      chain,
+      address: address.toString(),
     }
   }
-  return assetType === 'CBV'
-    ? {
-        type: 'CBV',
-        projectId: projectId.toString(),
-        assetId: assetId.toString(),
-        symbol,
-      }
-    : {
-        type: assetType === 'EBV' ? 'EBV' : 'NMV',
-        projectId: projectId.toString(),
-        assetId: assetId.toString(),
-        chainId: chainId.valueOf(),
-        symbol,
-      }
+  return {
+    type: assetType,
+    projectId: projectId.toString(),
+    symbol,
+    chain,
+    address: address.toString(),
+  }
 }
 
 function notUndefined<T>(x: T | undefined): x is T {

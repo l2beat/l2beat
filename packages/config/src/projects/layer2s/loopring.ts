@@ -409,7 +409,7 @@ export const loopring: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'BlockVerifier',
+              name: 'Main circuit',
               proofSystem: 'Groth16',
               mainArithmetization: 'R1CS+QAP',
               mainPCS: 'N/A',

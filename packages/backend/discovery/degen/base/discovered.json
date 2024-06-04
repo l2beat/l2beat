@@ -1,8 +1,8 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 14543033,
-  "configHash": "0x2b73069616d2c2381cd967579b9b10c31f538d4134308084fcc9c3912c51c90a",
+  "blockNumber": 15021326,
+  "configHash": "0x4d7aa9b347660ffbb6c5d35cf522be0d7379e61faffa5df93404d4c097e98239",
   "version": 4,
   "contracts": [
     {
@@ -84,7 +84,7 @@
       "implementations": ["0x5ad3e9141D0EAd2132afFF0CD74487964cE9135A"],
       "sinceTimestamp": 1710087441,
       "values": {
-        "batchCount": 29280,
+        "batchCount": 30158,
         "batchPosters": ["0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
         "dacKeyset": {
@@ -93,14 +93,13 @@
         },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
         "maxTimeVariation": [3456000, 48, 86400000, 3600],
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 118957
+        "totalDelayedMessagesRead": 121759
       },
       "derivedName": "SequencerInbox"
     },
@@ -264,12 +263,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1001,
+        "firstUnresolvedNode": 1166,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 12468814,
-        "latestConfirmed": 1000,
-        "latestNodeCreated": 1036,
+        "latestConfirmed": 1165,
+        "latestNodeCreated": 1222,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -335,12 +334,12 @@
           "0x766DD3A13d17C6D175975C89225bde89F052dBc4"
         ],
         "allowedOutboxList": ["0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"],
-        "delayedMessageCount": 118959,
+        "delayedMessageCount": 121762,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 29280,
-        "sequencerReportedSubMessageCount": 15565263
+        "sequencerMessageCount": 30158,
+        "sequencerReportedSubMessageCount": 19352907
       },
       "derivedName": "ERC20Bridge"
     },

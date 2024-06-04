@@ -9,7 +9,17 @@ import {
 
 import { TokenControl } from '../../../components/chart/TokenControls'
 import { RiskValues } from '../../../utils/risks/types'
+import { PagesData } from '../../Page'
 import { ValueWithDisplayValue } from '../../types'
+
+export interface TvlPagesData
+  extends Pick<
+    PagesData,
+    | 'tvlApiResponse'
+    | 'excludedTokensTvlApiResponse'
+    | 'implementationChange'
+    | 'verificationStatus'
+  > {}
 
 export interface ScalingTvlViewEntry {
   type: 'layer2' | 'layer3'
@@ -28,14 +38,21 @@ export interface ScalingTvlViewEntry {
   hasImplementationChanged?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
-  tvl?: ValueWithDisplayValue
-  cbv?: ValueWithDisplayValue
-  ebv?: ValueWithDisplayValue
-  nmv?: ValueWithDisplayValue
-  tvlChange?: string
-  ebvChange?: string
-  cbvChange?: string
-  nmvChange?: string
-  tokens: TokenControl[]
+  data: DetailedTvlData
   stage: StageConfig
+}
+
+export interface DetailedTvlData {
+  tvl: Omit<TvlDataValue, 'tokens'>
+  cbv: TvlDataValue
+  ebv: TvlDataValue
+  nmv: TvlDataValue
+  excludedAssociatedTokens: Omit<DetailedTvlData, 'excludedAssociatedTokens'>
+  // NOTE: It is never to satisfy the type of the data in ProjectNameCell
+  syncStatus?: never
+}
+
+interface TvlDataValue extends ValueWithDisplayValue {
+  change: string
+  tokens: TokenControl[]
 }

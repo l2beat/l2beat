@@ -59,7 +59,7 @@ export const worldcoin: ZkCatalogProject = {
         verified: 'no',
         subVerifiers: [
           {
-            name: 'RegisterVerifierSize100',
+            name: 'RegisterCircuitSize100',
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS+QAP',
             trustedSetup: 'PPOT 23 + circuit specific',
@@ -77,7 +77,7 @@ export const worldcoin: ZkCatalogProject = {
         verified: 'no',
         subVerifiers: [
           {
-            name: 'RegisterVerifierSize600',
+            name: 'RegisterCircuitSize600',
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS+QAP',
             trustedSetup: 'PPOT 26 + circuit specific',
@@ -95,7 +95,7 @@ export const worldcoin: ZkCatalogProject = {
         verified: 'no',
         subVerifiers: [
           {
-            name: 'RegisterVerifierSize1200',
+            name: 'RegisterCircuitSize1200',
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS+QAP',
             trustedSetup: 'PPOT 27 + circuit specific',
@@ -113,7 +113,7 @@ export const worldcoin: ZkCatalogProject = {
         verified: 'no',
         subVerifiers: [
           {
-            name: 'DeleteVerifierSize10',
+            name: 'DeleteCircuitSize10',
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS+QAP',
             trustedSetup: 'PPOT 19 + circuit specific',
@@ -131,7 +131,7 @@ export const worldcoin: ZkCatalogProject = {
         verified: 'no',
         subVerifiers: [
           {
-            name: 'DeleteVerifierSize100',
+            name: 'DeleteCircuitSize100',
             proofSystem: 'Groth16',
             mainArithmetization: 'R1CS+QAP',
             trustedSetup: 'PPOT 22 + circuit specific',

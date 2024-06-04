@@ -6,11 +6,9 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import {
-  BlockTimestampIndexer,
-  BlockTimestampProvider,
-} from './BlockTimestampIndexer'
+import { BlockTimestampIndexer } from './BlockTimestampIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
   beforeEach(() => {
@@ -26,7 +24,7 @@ describe(BlockTimestampIndexer.name, () => {
         getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampService = mockObject<BlockTimestampService>({
         getBlockNumberAtOrBefore: async () => 666,
       })
       const blockTimestampRepository = mockObject<BlockTimestampRepository>({
@@ -37,7 +35,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        blockTimestampProvider,
+        blockTimestampService,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain,
@@ -50,7 +48,7 @@ describe(BlockTimestampIndexer.name, () => {
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(
-        blockTimestampProvider.getBlockNumberAtOrBefore,
+        blockTimestampService.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync)
 
       expect(blockTimestampRepository.add).toHaveBeenOnlyCalledWith({
@@ -73,7 +71,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+        blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
         chain: 'chain',
@@ -98,7 +96,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
-        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+        blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain: 'ethereum',

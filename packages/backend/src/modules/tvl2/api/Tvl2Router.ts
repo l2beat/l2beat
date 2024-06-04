@@ -1,5 +1,10 @@
 import Router from '@koa/router'
-import { EthereumAddress, ProjectId, stringAs } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  stringAs,
+  stringAsBoolean,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
@@ -9,10 +14,31 @@ import { Tvl2Controller } from './Tvl2Controller'
 export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
-  router.get('/api/tvl2', async (ctx) => {
-    const tvl = await controller.getTvl(clock.getLastHour().add(-1, 'hours'))
-    ctx.body = tvl
-  })
+  router.get(
+    '/api/tvl2',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          excludeAssociatedTokens: stringAsBoolean(false),
+        }),
+      }),
+      async (ctx) => {
+        // If this endpoint is too slow and aggregation layer is to be implemented,
+        // remember to add "isAssociated" to createValueId.ts
+        if (ctx.query.excludeAssociatedTokens) {
+          const excluded = await controller.getExcludedTvl(
+            clock.getLastHour().add(-1, 'hours'),
+          )
+          ctx.body = excluded
+        } else {
+          const tvl = await controller.getTvl(
+            clock.getLastHour().add(-1, 'hours'),
+          )
+          ctx.body = tvl
+        }
+      },
+    ),
+  )
 
   router.get(
     '/api/tvl2/aggregate',
@@ -20,6 +46,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
       z.object({
         query: z.object({
           projectSlugs: z.string(),
+          excludeAssociatedTokens: stringAsBoolean(false),
         }),
       }),
       async (ctx) => {
@@ -30,6 +57,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
         const tvl = await controller.getAggregatedTvl(
           clock.getLastHour().add(-1, 'hours'),
           projectSlugs,
+          ctx.query.excludeAssociatedTokens,
         )
         ctx.body = tvl
       },
