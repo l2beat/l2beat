@@ -1,12 +1,16 @@
-Generated with discovered.json: 0xb099389412788550f1adaec6b2a1120698adec68
+Generated with discovered.json: 0x6360d1a69083b2a11c5a8ab662ad7ddef98cb17e
 
-# Diff at Tue, 04 Jun 2024 05:03:25 GMT:
+# Diff at Tue, 04 Jun 2024 09:13:43 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@706706295a49487100a144276621ec14caf86806 block: 19976259
-- current block number: 20016244
+- comparing to: main@35cc9bbe2a9c9163e503882bcb76877c4909bbc9 block: 19976259
+- current block number: 20017490
 
 ## Description
+
+Added the accesscontrol of the AxelarBridgeAdaptor to discovery, but this changes nothing as the Multisig that is in the permissions section has full control. (as before)
+
+Edit: removed the AxelarGasService contract from this discovery since it is shared infrastructure of the Axelar bridge on Ethereum. (unlike the Adaptor)
 
 The AxelarGasService contract is upgraded, adding L2 gas estimator functions.
 
@@ -15,28 +19,30 @@ The AxelarGasService contract is upgraded, adding L2 gas estimator functions.
 The function `updateGasInfo()` is added, allowing a permissioned 'gas price oracle' to update the gas price for destination L2s.
 The new `payGas()` function then allows bridgers to pre-pay the gas for arbitrary contract calls at the destination.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976259 (main branch discovery), not current.
 
 ```diff
-    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+-   Status: DELETED
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712)
     +++ description: None
-      upgradeability.implementation:
--        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
-+        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
-      implementations.0:
--        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
-+        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
-      values.implementation:
--        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
-+        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD2C37fC6fD89563187f3679304975655e448D192"]},"0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD2C37fC6fD89563187f3679304975655e448D192"]},"0x2b5bda39c23731c6890b6a6f985ff1c326c66dc20aa14dc2e50fc5ec656ecc35":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD2C37fC6fD89563187f3679304975655e448D192"]},"0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xD2C37fC6fD89563187f3679304975655e448D192"]}}
     }
 ```
 
-## Source code changes
-
 ```diff
-.../AxelarGasService/AxelarGasService.sol          | 437 ++++++++++++++++++++-
- 1 file changed, 426 insertions(+), 11 deletions(-)
+-   Status: DELETED
+    contract Operators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x6890d0d61e53889a889b7b86778403a6408d5a49
