@@ -27,15 +27,19 @@ const chainWatchdog = discovery.getContractValue<string>(
   'chain_watchdog',
 )
 
+// sequencer
 const proposer = discovery.getContractValue<string>(
   'TaikoL1Contract',
   'proposer',
 )
 
+// sequencer for block 1
 const proposerOne = discovery.getContractValue<string>(
   'TaikoL1Contract',
   'proposer_one',
 )
+
+const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
 const TIER_SGX = discovery.getContractValue<string[]>(
   'TierProvider',
@@ -91,6 +95,10 @@ export const taiko: Layer2 = {
       rollupCodes: 'https://rollup.codes/taiko',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Taiko is an Optimistic rollup that posts transaction data blocks directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalised after the challenge period has elapsed.',
+    },
   },
   config: {
     escrows: [
@@ -113,6 +121,35 @@ export const taiko: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
+    trackedTxs: [{
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: TaikoL1ContractAddress,
+        selector: '0xef16e845',
+        functionSignature:
+            "function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)",
+        sinceTimestampInclusive: new UnixTime(1716620627),
+      },
+    },              
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: TaikoL1ContractAddress,
+        selector: '0x10d008bd',
+        functionSignature:
+          "function proveBlock(uint64 _blockId, bytes _input)",
+        sinceTimestampInclusive: new UnixTime(1716620627),
+      },
+    }
+  ]
   },
   chainConfig: {
     name: 'taiko',
