@@ -96,7 +96,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[],
+    configurations: RemovalConfiguration<null>[],
   ): Promise<void> {
     for (const configuration of configurations) {
       const deletedRecords =

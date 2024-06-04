@@ -32,8 +32,7 @@ describe(ManagedMultiIndexer.name, () => {
         configurations: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        serializeConfiguration: (v: string) => v,
-        deserializeConfiguration: (blob: string) => blob,
+        serializeConfiguration: (v: null) => JSON.stringify(v),
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       }
@@ -48,8 +47,7 @@ describe(ManagedMultiIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
-        serializeConfiguration: (v: string) => v,
-        deserializeConfiguration: (blob: string) => blob,
+        serializeConfiguration: (v: null) => JSON.stringify(v),
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       }
@@ -105,7 +103,6 @@ describe(ManagedMultiIndexer.name, () => {
     expect(result).toEqual(configurations)
     expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
       'indexer',
-      expect.anything(),
     )
   })
 
@@ -285,28 +282,29 @@ describe(ManagedMultiIndexer.name, () => {
   })
 })
 
-class TestIndexer extends ManagedMultiIndexer<string> {
-  constructor(override readonly options: ManagedMultiIndexerOptions<string>) {
+class TestIndexer extends ManagedMultiIndexer<null> {
+  constructor(override readonly options: ManagedMultiIndexerOptions<null>) {
     super(options)
   }
-  multiUpdate = mockFn<MultiIndexer<string>['multiUpdate']>((_, targetHeight) =>
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
     Promise.resolve(targetHeight),
   )
-  removeData =
-    mockFn<MultiIndexer<string>['removeData']>().resolvesTo(undefined)
+  removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 }
 
 async function getSavedConfigurations(indexerService: IndexerService) {
-  return await indexerService.getSavedConfigurations('indexer', (v) => v)
+  return await indexerService.getSavedConfigurations('indexer')
 }
 
 async function initializeMockIndexer(
   indexerService: IndexerService,
-  saved: SavedConfiguration<string>[],
-  configurations: Configuration<string>[],
+  saved: SavedConfiguration<null>[],
+  configurations: Configuration<null>[],
 ) {
   if (saved.length > 0) {
-    await indexerService.upsertConfigurations('indexer', saved, (v) => v)
+    await indexerService.upsertConfigurations('indexer', saved, (v) =>
+      JSON.stringify(v),
+    )
   }
   const indexer = new TestIndexer({
     parents: [],
@@ -314,8 +312,7 @@ async function initializeMockIndexer(
     indexerService,
     configurations,
     logger: Logger.SILENT,
-    serializeConfiguration: (v) => v,
-    deserializeConfiguration: (v) => v,
+    serializeConfiguration: (v) => JSON.stringify(v),
     createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
   })
   return indexer
@@ -325,8 +322,8 @@ function actual(
   id: string,
   minHeight: number,
   maxHeight: number | null,
-): Configuration<string> {
-  return { id: id.repeat(12), properties: '', minHeight, maxHeight }
+): Configuration<null> {
+  return { id: id.repeat(12), properties: null, minHeight, maxHeight }
 }
 
 function saved(
@@ -334,10 +331,10 @@ function saved(
   minHeight: number,
   maxHeight: number | null,
   currentHeight: number | null,
-): SavedConfiguration<string> {
+): SavedConfiguration<null> {
   return {
     id: id.repeat(12),
-    properties: '',
+    properties: null,
     minHeight,
     maxHeight,
     currentHeight,
@@ -349,14 +346,14 @@ function update(
   minHeight: number,
   maxHeight: number | null,
   hasData: boolean,
-): UpdateConfiguration<string> {
-  return { id: id.repeat(12), properties: '', minHeight, maxHeight, hasData }
+): UpdateConfiguration<null> {
+  return { id: id.repeat(12), properties: null, minHeight, maxHeight, hasData }
 }
 
 function removal(
   id: string,
   from: number,
   to: number,
-): RemovalConfiguration<string> {
-  return { id: id.repeat(12), properties: '', from, to }
+): RemovalConfiguration<null> {
+  return { id: id.repeat(12), properties: null, from, to }
 }

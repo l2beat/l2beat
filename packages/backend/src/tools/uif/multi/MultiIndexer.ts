@@ -53,7 +53,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    *
    * @returns The configurations that were saved previously.
    */
-  abstract multiInitialize(): Promise<SavedConfiguration<T>[]>
+  abstract multiInitialize(): Promise<SavedConfiguration<null>[]>
 
   /**
    * Implements the main data fetching process. It is up to the indexer to
@@ -97,7 +97,9 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * This method can only be called during the initialization of the indexer,
    * after `multiInitialize` returns.
    */
-  abstract removeData(configurations: RemovalConfiguration<T>[]): Promise<void>
+  abstract removeData(
+    configurations: RemovalConfiguration<null>[],
+  ): Promise<void>
 
   /**
    * Saves configurations that the indexer should use to sync data. The

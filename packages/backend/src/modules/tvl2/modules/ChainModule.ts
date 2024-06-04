@@ -9,8 +9,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-
-import { z } from 'zod'
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
@@ -168,7 +166,6 @@ function createChainModule(
       BlockTimestampRepository,
     ),
     serializeConfiguration,
-    deserializeConfiguration,
     syncOptimizer,
     createDatabaseMiddleware: async () =>
       new KnexMiddleware(peripherals.getRepository(AmountRepository)),
@@ -279,10 +276,4 @@ function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
     symbol: value.symbol,
     isAssociated: value.isAssociated,
   }
-}
-
-function deserializeConfiguration(
-  value: string,
-): EscrowEntry | TotalSupplyEntry {
-  return z.union([EscrowEntry, TotalSupplyEntry]).parse(JSON.parse(value))
 }

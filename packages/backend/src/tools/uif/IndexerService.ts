@@ -63,10 +63,9 @@ export class IndexerService {
     )
   }
 
-  async getSavedConfigurations<T>(
+  async getSavedConfigurations(
     indexerId: string,
-    decode: (blob: string) => T,
-  ): Promise<SavedConfiguration<T>[]> {
+  ): Promise<SavedConfiguration<null>[]> {
     const configurations: (SavedConfiguration<string> & {
       indexerId?: string
     })[] =
@@ -81,7 +80,7 @@ export class IndexerService {
 
     return configurations.map((config) => ({
       ...config,
-      properties: decode(config.properties),
+      properties: null,
     }))
   }
 

@@ -165,10 +165,7 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    const result = await indexerService.getSavedConfigurations(
-      'indexer',
-      (blob: string) => JSON.parse(blob),
-    )
+    const result = await indexerService.getSavedConfigurations('indexer')
 
     expect(result).toEqualUnsorted([
       {
@@ -176,14 +173,14 @@ describe(IndexerService.name, () => {
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
-        properties: { a: 1 },
+        properties: null,
       },
       {
         id: 'b',
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
-        properties: { b: 1 },
+        properties: null,
       },
     ])
   })

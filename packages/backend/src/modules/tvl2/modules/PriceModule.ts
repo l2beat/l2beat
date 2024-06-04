@@ -56,7 +56,6 @@ export function createPriceModule(
         priceService,
         priceRepository: peripherals.getRepository(PriceRepository),
         serializeConfiguration,
-        deserializeConfiguration,
         syncOptimizer,
         createDatabaseMiddleware: async () =>
           new KnexMiddleware(peripherals.getRepository(PriceRepository)),
@@ -113,8 +112,4 @@ function getBaseEntry(value: CoingeckoPriceConfigEntry) {
       ? { untilTimestamp: value.untilTimestamp?.toNumber() }
       : {}),
   }
-}
-
-function deserializeConfiguration(value: string): CoingeckoPriceConfigEntry {
-  return CoingeckoPriceConfigEntry.parse(JSON.parse(value))
 }

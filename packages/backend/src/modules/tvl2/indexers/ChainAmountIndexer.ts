@@ -114,7 +114,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<ChainAmountConfig>[],
+    configurations: RemovalConfiguration<null>[],
   ): Promise<void> {
     for (const configuration of configurations) {
       const deletedRecords =

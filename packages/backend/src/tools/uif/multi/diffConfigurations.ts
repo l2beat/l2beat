@@ -6,9 +6,9 @@ import {
 
 export function diffConfigurations<T>(
   actual: Configuration<T>[],
-  saved: SavedConfiguration<T>[],
+  saved: SavedConfiguration<null>[],
 ): {
-  toRemove: RemovalConfiguration<T>[]
+  toRemove: RemovalConfiguration<null>[]
   toSave: SavedConfiguration<T>[]
   safeHeight: number
 } {
@@ -17,14 +17,14 @@ export function diffConfigurations<T>(
   const actualMap = new Map(actual.map((c) => [c.id, c]))
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
-  const toRemove: RemovalConfiguration<T>[] = []
+  const toRemove: RemovalConfiguration<null>[] = []
   for (const c of saved) {
     if (actualMap.has(c.id) || c.currentHeight === null) {
       continue
     }
     toRemove.push({
       id: c.id,
-      properties: c.properties,
+      properties: null,
       from: c.minHeight,
       to: c.currentHeight,
     })
