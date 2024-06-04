@@ -28,7 +28,6 @@ export const termstructure: Layer2 = underReviewL2({
         'https://youtube.com/@termstructurelabs',
       ],
     },
-    activityDataSource: 'Explorer API',
   },
   escrows: [
     discovery.getEscrowDetails({
