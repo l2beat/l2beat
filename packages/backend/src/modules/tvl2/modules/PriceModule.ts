@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -86,15 +86,32 @@ export function createPriceModule(
 }
 
 function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
-  return JSON.stringify({
+  const obj = {
+    ...getBaseEntry(value),
+    type: value.type,
+    coingeckoId: value.coingeckoId.toString(),
+  }
+
+  assert(
+    Object.keys(obj).length === Object.keys(value).length,
+    `Programmer error: update serialization of price entry: ${JSON.stringify(
+      obj,
+    )}`,
+  )
+
+  return JSON.stringify(obj)
+}
+
+function getBaseEntry(value: CoingeckoPriceConfigEntry) {
+  return {
+    assetId: value.assetId.toString(),
     address: value.address.toString(),
     chain: value.chain,
     sinceTimestamp: value.sinceTimestamp.toNumber(),
-    ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
-    type: value.type,
-    coingeckoId: value.coingeckoId.toString(),
-    assetId: value.assetId.toString(),
-  })
+    ...(Object.keys(value).includes('untilTimestamp')
+      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      : {}),
+  }
 }
 
 function deserializeConfiguration(value: string): CoingeckoPriceConfigEntry {
