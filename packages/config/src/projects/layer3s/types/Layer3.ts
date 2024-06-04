@@ -1,6 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import {
+  ChainConfig,
   DataAvailabilityWithSentiment,
   KnowledgeNugget,
   Layer3Provider,
@@ -32,6 +33,8 @@ export interface Layer3 {
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */
   config: Layer3Config
+  /** Technical chain configuration */
+  chainConfig?: ChainConfig
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
@@ -48,6 +51,8 @@ export interface Layer3 {
   contracts: ScalingProjectContracts
   /** List of permissioned addresses */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
+  /** List of permissioned addresses on the chain itself */
+  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */

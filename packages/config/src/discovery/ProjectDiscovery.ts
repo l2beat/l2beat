@@ -18,6 +18,7 @@ import {
 import { utils } from 'ethers'
 import { isArray, isString } from 'lodash'
 
+import { join } from 'path'
 import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -61,7 +62,7 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader('../backend/'),
+    configReader = new ConfigReader(join(process.cwd(), '../backend')),
   ) {
     const config = configReader.readConfig(projectName, chain)
     this.discoveries = [

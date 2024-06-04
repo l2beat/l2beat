@@ -1,19 +1,22 @@
 import { Config } from '../../../../build/config'
-import { PagesData, Wrapped } from '../../../Page'
+import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
+import { TvlPagesData } from '../types'
 import { ScalingTvlPageProps } from '../view/ScalingTvlPage'
 import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
   config: Config,
-  pagesData: PagesData,
+  pagesData: TvlPagesData,
 ): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
       tvlView: getScalingTvlView(
-        [...config.layer2s, ...config.layer3s],
-        pagesData.tvlApiResponse,
-        pagesData.implementationChange,
+        [
+          ...config.layer2s,
+          ...(config.features.layer3sTvl ? config.layer3s : []),
+        ],
+        pagesData,
       ),
     },
     wrapper: {

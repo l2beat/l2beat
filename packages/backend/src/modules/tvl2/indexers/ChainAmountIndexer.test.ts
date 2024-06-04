@@ -1,8 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
   RemovalConfiguration,
   UpdateConfiguration,
@@ -54,9 +56,11 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -65,7 +69,12 @@ describe(ChainAmountIndexer.name, () => {
         update('c', 100, null, true), // configuration with data should not be fetched
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
+      )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -75,9 +84,10 @@ describe(ChainAmountIndexer.name, () => {
         toUpdate.slice(0, 2),
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
-        amount('a', 200, 123),
-      ])
+      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
+        [amount('a', 200, 123)],
+        undefined,
+      )
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
@@ -95,9 +105,11 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -105,7 +117,12 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
+      )
 
       expect(safeHeight).toEqual(to)
     })
@@ -128,14 +145,21 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [update('a', 100, null, false)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
+      )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
       expect(safeHeight).toEqual(to)
@@ -154,9 +178,11 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toUpdate = [
@@ -164,7 +190,12 @@ describe(ChainAmountIndexer.name, () => {
         update('b', 100, null, true),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        toUpdate,
+        mockDbMiddleware,
+      )
 
       expect(safeHeight).toEqual(to)
     })
@@ -185,9 +216,11 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
+        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
+        createDatabaseMiddleware: async () =>
+          mockObject<DatabaseMiddleware>({}),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

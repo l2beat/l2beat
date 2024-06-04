@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xf4333c87d49f3dd17aadb8228ce984c5c5117ffd
+
+# Diff at Thu, 30 May 2024 08:40:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8465affce30f3ceba1fcd6e8fe7a47fd51c7c62f block: 213233578
+- current block number: 216538110
+
+## Description
+
+The Admin EOA is removed, Caldera MS is the only upgrade executor.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+    }
+```
+
+Generated with discovered.json: 0xf6c4a97980541fc70a3ad7b3ee2b52fa9338e04f
+
+# Diff at Mon, 20 May 2024 15:20:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@97bea89f161f8e4e9ebb3b4ef7fb3fcb3f90924f block: 211899420
+- current block number: 213233578
+
+## Description
+
+Discovery of Molten L3 by Caldera showed that `0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF` is likely a Caldera Multisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 211899420 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutorMemberGnosisSafeL2 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      name:
+-        "UpgradeExecutorMemberGnosisSafeL2"
++        "Caldera Multisig"
+    }
+```
+
 Generated with discovered.json: 0x7245a07dfe953ecc4b697834241e5f6b302ccc1e
 
 # Diff at Thu, 25 Apr 2024 21:21:55 GMT:

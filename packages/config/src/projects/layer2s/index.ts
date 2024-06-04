@@ -26,6 +26,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -43,6 +44,7 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { lens } from './lens'
 import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -54,9 +56,9 @@ import { metal } from './metal'
 import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
-import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
+import { myshell } from './myshell'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -80,12 +82,14 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swell } from './swell'
+import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -95,6 +99,7 @@ import { Layer2 } from './types'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
+import { xpla } from './xpla'
 import { zentachain } from './zentachain'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
@@ -138,6 +143,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  form,
   frame,
   fraxtal,
   fuel,
@@ -154,6 +160,7 @@ export const layer2s: Layer2[] = [
   kroma,
   layer2finance,
   layer2financezk,
+  lens,
   lightlink,
   linea,
   lisk,
@@ -165,9 +172,9 @@ export const layer2s: Layer2[] = [
   metis,
   mint,
   mode,
-  molten,
   morph,
   myria,
+  myshell,
   nil,
   nova,
   oev,
@@ -191,20 +198,23 @@ export const layer2s: Layer2[] = [
   rise,
   rss3,
   scroll,
+  sophon,
   sorare,
   specular,
   starknet,
   stealthchain,
   superseed,
   swell,
+  sxt,
   taiko,
   tanx,
   ten,
   termstructure,
   tradable,
   world,
-  xlayer,
   xchain,
+  xlayer,
+  xpla,
   zentachain,
   zircuit,
   zkcandy,

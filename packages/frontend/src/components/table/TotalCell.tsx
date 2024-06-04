@@ -3,66 +3,93 @@ import React from 'react'
 import {
   ScalingL2SummaryViewEntry,
   ScalingL3SummaryViewEntry,
+  TvlData,
 } from '../../pages/scaling/summary/types'
-import { Callout } from '../Callout'
+import { ExcludeAssociatedTokensWrapper } from '../ExcludeAssociatedTokensWrapper'
+import { WarningBar } from '../WarningBar'
 import { Badge } from '../badge/Badge'
+import { TokenBreakdown } from '../breakdown/TokenBreakdown'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
 
 export interface TotalCellProps {
   project: ScalingL2SummaryViewEntry | ScalingL3SummaryViewEntry
+  className?: string
 }
 
-export function TotalCell({ project }: TotalCellProps) {
-  const content = project.tvl ? (
-    <>
-      <NumberCell
-        className="font-bold"
-        tooltip={project.tvlWarnings ? undefined : project.tvlTooltip}
-      >
-        {project.tvl?.displayValue}
-      </NumberCell>
-      <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
-        {project.sevenDayChange}
-      </NumberCell>
-    </>
-  ) : (
-    <Badge type="gray" className="mx-auto translate-x-[11.5px]">
-      Coming soon
-    </Badge>
-  )
-
-  if (project.tvlWarnings?.length && project.tvl) {
-    const anyBadWarnings = project.tvlWarnings.some(
-      (w) => w?.sentiment === 'bad',
-    )
-    return (
-      <Tooltip>
-        <TooltipTrigger className="relative flex items-center gap-1">
-          {content}
-          <RoundedWarningIcon
-            className="absolute -right-4 size-4"
-            sentiment={anyBadWarnings ? 'bad' : 'warning'}
+export function TotalCell({ project, className }: TotalCellProps) {
+  return (
+    <div className={className}>
+      <ExcludeAssociatedTokensWrapper>
+        <ExcludeAssociatedTokensWrapper.Included>
+          <Content data={project.data} tvlTooltip={project.tvlTooltip} />
+        </ExcludeAssociatedTokensWrapper.Included>
+        <ExcludeAssociatedTokensWrapper.Excluded>
+          <Content
+            data={project?.data?.excludedTokens}
+            tvlTooltip={project.tvlTooltip}
           />
-        </TooltipTrigger>
-        <TooltipContent>
-          {project.tvlWarnings.map((warning, i) => (
-            <Callout
-              key={`tvl-warning-${i}`}
-              icon={
-                <RoundedWarningIcon
-                  className="size-5"
-                  sentiment={warning.sentiment}
-                />
-              }
-              body={warning.content}
-            />
-          ))}
-        </TooltipContent>
-      </Tooltip>
+        </ExcludeAssociatedTokensWrapper.Excluded>
+      </ExcludeAssociatedTokensWrapper>
+    </div>
+  )
+}
+
+function Content({
+  data,
+  tvlTooltip,
+}: { data: Omit<TvlData, 'excludedTokens'> | undefined; tvlTooltip?: string }) {
+  if (!data) {
+    return (
+      <Badge type="gray" className="mx-auto translate-x-[11.5px]">
+        Coming soon
+      </Badge>
     )
   }
 
-  return content
+  const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <div className="flex flex-col items-end">
+          <div className="flex items-center gap-1">
+            {data.tvlWarnings.length ? (
+              <RoundedWarningIcon
+                className="size-4"
+                sentiment={anyBadWarnings ? 'bad' : 'warning'}
+              />
+            ) : null}
+            <NumberCell
+              className="font-bold"
+              tooltip={data.tvlWarnings ? undefined : tvlTooltip}
+            >
+              {data.tvl.displayValue}
+            </NumberCell>
+            <NumberCell signed className="ml-1 !text-base font-medium">
+              {data.sevenDayChange}
+            </NumberCell>
+          </div>
+          <TokenBreakdown
+            {...data.tvlBreakdown}
+            className="h-[3px] w-[180px]"
+          />
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="space-y-2">
+          {data.tvlBreakdown.label}
+          {data.tvlWarnings.map((warning, i) => (
+            <WarningBar
+              key={`tvl-warning-${i}`}
+              icon={RoundedWarningIcon}
+              text={warning.content}
+              color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+            />
+          ))}
+        </div>
+      </TooltipContent>
+    </Tooltip>
+  )
 }

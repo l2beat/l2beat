@@ -73,7 +73,7 @@ describe(BlockscoutV2Client.name, () => {
 
       expect(httpClient.fetch).toHaveBeenCalledWith(
         'https://example.com/api/mod/id/act?foo=bar&baz=123',
-        { timeout: 20000 },
+        { timeout: 10000 },
       )
     })
 

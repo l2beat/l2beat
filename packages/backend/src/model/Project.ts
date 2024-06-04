@@ -40,6 +40,7 @@ export interface Project {
   trackedTxsConfig?: TrackedTxsConfig
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
+  associatedTokens?: string[]
 }
 
 export interface ProjectEscrow {
@@ -67,6 +68,7 @@ export function layer2ToProject(layer2: Layer2): Project {
               (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
+      includeInTotal: escrow.includeInTotal,
     })),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
@@ -78,6 +80,7 @@ export function layer2ToProject(layer2: Layer2): Project {
       layer2.config.finality !== 'coming soon'
         ? layer2.config.finality
         : undefined,
+    associatedTokens: layer2.config.associatedTokens,
   }
 }
 
@@ -95,7 +98,9 @@ export function bridgeToProject(bridge: Bridge): Project {
               (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
+      includeInTotal: escrow.includeInTotal,
     })),
+    associatedTokens: bridge.config.associatedTokens,
   }
 }
 
@@ -154,8 +159,10 @@ export function layer3ToProject(layer3: Layer3): Project {
             ? tokensOnChain
             : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
         chain,
+        includeInTotal: escrow.includeInTotal,
       }
     }),
+    associatedTokens: layer3.config.associatedTokens,
   }
 }
 

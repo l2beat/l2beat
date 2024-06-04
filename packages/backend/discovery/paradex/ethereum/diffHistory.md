@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x5a6132e3124a2957003710d5846ed1fbd31e9c1c
+
+# Diff at Wed, 29 May 2024 07:11:17 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca8b8ea4d1ba80d5f20f68bede9336b90b01434 block: 19532051
+- current block number: 19973942
+
+## Description
+
+The USDC Bridge (only bridge in use by Paradex) implementation is upgraded to the one used on starknet currently (code-identical). The ProxyGovernor (allowed to upgrade the implementation) stays the same, and new accessControl roles are not set.
+
+See also the notes `# Diff at Tue, 13 Feb 2024 12:27:47 GMT` in `discovery/starknet/ethereum/diffHistory.md`.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"
++        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      implementations.0:
+-        "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"
++        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x0000000000000000000000000000000000000020"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x0000000000000000000000000000000000000020"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
+      values.identify:
+-        "StarkWare_StarknetERC20Bridge_2022_1"
++        "StarkWare_StarknetERC20Bridge_2.0_4"
+      values.implementation:
+-        "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"
++        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.isActive:
+-        true
+      values.maxDeposit:
+-        500000000000
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    }
+```
+
+## Source code changes
+
+```diff
+.../USDC Bridge/StarknetERC20Bridge.sol            | 2230 +++++++++++++++-----
+ 1 file changed, 1682 insertions(+), 548 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532051 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
 Generated with discovered.json: 0xe86c2f3be0c8108f553b2bbbda07919a1d6fe7f0
 
 # Diff at Thu, 28 Mar 2024 10:35:47 GMT:

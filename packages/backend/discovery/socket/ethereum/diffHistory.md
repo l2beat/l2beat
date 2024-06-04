@@ -1,3 +1,105 @@
+Generated with discovered.json: 0xb73f0ccce9db7a2bbe57ebc5e399a2dcd7210bb0
+
+# Diff at Fri, 24 May 2024 07:28:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@5cd348fa5e8522ccb7c426ede1cad1f03ab682ab block: 19926155
+- current block number: 19938250
+
+## Description
+
+New socket script: only vaults with non-zero TVL are added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19926155 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
+```diff
+    contract rswETH Vault Lyra (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      values.hook__:
+-        "0xAf65752C4643E25C02F693f9D4FE19cF23a095E3"
+      values.token:
+-        "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract USDT Vault Lyra (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WETH Vault Reya (0x64dF894688c5052BeAdC35371cF69151Ebc5D658)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DAI Vault 2 Kinto (0x6ed6E6B7c34Adf01B73732f0c06e3bbd9d4EaE58)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
+    contract weETH Vault Lyra (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      values.hook__:
+-        "0x204cDCFE0D03c75a41A0079f187a7870265Bc949"
+      values.token:
+-        "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract eETH Vault Kinto (0xc7a542f73049C11f9719Be6Ff701fCA882D60020)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract wUSDM Vault Kinto (0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDe Vault Kinto (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e)
+    +++ description: None
+```
+
+```diff
+    contract USDC Vault Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      values.hook__:
+-        "0x4fB274909ffeEf635270915a729dC40500c7260B"
+      values.token:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Hook (0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8c5e260ec6c1e9a5056ac259a728800724d90395
 
 # Diff at Wed, 22 May 2024 14:56:49 GMT:

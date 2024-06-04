@@ -71,6 +71,8 @@ export const tanx: Layer2 = {
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',
+        'https://youtube.com/channel/UCUG2L75yvKJBK9QFUaXTdyA',
+        'https://linkedin.com/company/tanx-fi',
       ],
     },
     activityDataSource: 'Closed API',

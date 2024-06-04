@@ -23,6 +23,7 @@ describeDatabase(IndexerStateRepository.name, (database) => {
         indexerId: 'indexer1',
         safeHeight: 12345,
         minTimestamp: UnixTime.now(),
+        configHash: '0x123456',
       }
       await repository.addOrUpdate(newRecord)
       const indexerState = await repository.findIndexerState('indexer1')
@@ -39,6 +40,7 @@ describeDatabase(IndexerStateRepository.name, (database) => {
         indexerId: 'indexer1',
         safeHeight: 1,
         minTimestamp: UnixTime.now(),
+        configHash: '0x123456',
       }
 
       await repository.addOrUpdate(newRecord)
@@ -51,12 +53,26 @@ describeDatabase(IndexerStateRepository.name, (database) => {
       const record = {
         indexerId: 'indexer1',
         safeHeight: 1,
+        configHash: '0x123456',
       }
       await repository.addOrUpdate(record)
 
       const result = await repository.getAll()
 
       expect(result).toEqual([{ ...record, minTimestamp: undefined }])
+    })
+
+    it('configHash is undefined', async () => {
+      const record = {
+        indexerId: 'indexer1',
+        safeHeight: 1,
+        minTimestamp: UnixTime.ZERO,
+      }
+      await repository.addOrUpdate(record)
+
+      const result = await repository.getAll()
+
+      expect(result).toEqual([{ ...record, configHash: undefined }])
     })
   })
 
@@ -68,6 +84,7 @@ describeDatabase(IndexerStateRepository.name, (database) => {
         indexerId: 'indexer1',
         safeHeight: BEFORE,
         minTimestamp: UnixTime.now(),
+        configHash: '0x123456',
       }
       await repository.addOrUpdate(record)
 
@@ -85,6 +102,7 @@ describeDatabase(IndexerStateRepository.name, (database) => {
         indexerId: 'indexer1',
         safeHeight: BEFORE,
         minTimestamp: UnixTime.now(),
+        configHash: '0x123456',
       }
       await repository.addOrUpdate(record)
 

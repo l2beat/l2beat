@@ -99,6 +99,8 @@ export const blast: Layer2 = opStackL2({
         batchSize: 150,
         sinceBlock: 88189,
         version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
       },
     ],
   },
@@ -168,6 +170,7 @@ export const blast: Layer2 = opStackL2({
     }),
   ],
   isNodeAvailable: true,
+  usesBlobs: true,
   nodeSourceLink: 'https://github.com/blast-io/blast',
   stateDerivation: {
     nodeSoftware:

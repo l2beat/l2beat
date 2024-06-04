@@ -1,8 +1,10 @@
 import React from 'react'
-
 import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
 import { BridgesSummaryViewEntry } from '../../../pages/bridges/summary/types'
+import { WarningBar } from '../../WarningBar'
 import { TokenBreakdown } from '../../breakdown/TokenBreakdown'
+import { RoundedWarningIcon } from '../../icons'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { TypeCell } from '../TypeCell'
@@ -78,7 +80,33 @@ export function getActiveBridgesSummaryColumnsConfig() {
       tooltip:
         'Composition of the total value locked broken down by token type.',
       getValue: (entry) =>
-        entry.tvlBreakdown && <TokenBreakdown {...entry.tvlBreakdown} />,
+        entry.tvlBreakdown && (
+          <Tooltip>
+            <TooltipTrigger className="flex items-center gap-1">
+              <TokenBreakdown {...entry.tvlBreakdown} className="opacity-80" />
+              {entry.tvlBreakdown.warning && (
+                <RoundedWarningIcon
+                  sentiment={entry.tvlBreakdown.warningSeverity}
+                />
+              )}
+            </TooltipTrigger>
+            <TooltipContent>
+              {entry.tvlBreakdown.label}
+              {entry.tvlBreakdown.warning && (
+                <WarningBar
+                  className="mt-2"
+                  text={entry.tvlBreakdown.warning}
+                  icon={RoundedWarningIcon}
+                  color={
+                    entry.tvlBreakdown.warningSeverity === 'warning'
+                      ? 'yellow'
+                      : 'red'
+                  }
+                />
+              )}
+            </TooltipContent>
+          </Tooltip>
+        ),
     },
     {
       name: 'Mkt share',

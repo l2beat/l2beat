@@ -1,15 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import {
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
@@ -59,9 +55,11 @@ export function createPriceModule(
         })),
         priceService,
         priceRepository: peripherals.getRepository(PriceRepository),
-        encode,
-        decode,
+        serializeConfiguration,
+        deserializeConfiguration,
         syncOptimizer,
+        createDatabaseMiddleware: async () =>
+          new KnexMiddleware(peripherals.getRepository(PriceRepository)),
       }),
   )
 
@@ -87,7 +85,7 @@ export function createPriceModule(
   }
 }
 
-function encode(value: CoingeckoPriceConfigEntry): string {
+function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
   return JSON.stringify({
     address: value.address.toString(),
     chain: value.chain,
@@ -95,28 +93,10 @@ function encode(value: CoingeckoPriceConfigEntry): string {
     ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
     type: value.type,
     coingeckoId: value.coingeckoId.toString(),
+    assetId: value.assetId.toString(),
   })
 }
 
-// TODO: validate the config with zod
-function decode(value: string): CoingeckoPriceConfigEntry {
-  const obj = JSON.parse(value) as {
-    address: string
-    chain: string
-    sinceTimestamp: number
-    untilTimestamp?: number
-    type: string
-    coingeckoId: string
-  }
-
-  return {
-    address: obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
-    chain: obj.chain,
-    sinceTimestamp: new UnixTime(obj.sinceTimestamp),
-    ...({
-      untilTimestamp: obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
-    } ?? {}),
-    type: obj.type,
-    coingeckoId: CoingeckoId(obj.coingeckoId),
-  } as CoingeckoPriceConfigEntry
+function deserializeConfiguration(value: string): CoingeckoPriceConfigEntry {
+  return CoingeckoPriceConfigEntry.parse(JSON.parse(value))
 }

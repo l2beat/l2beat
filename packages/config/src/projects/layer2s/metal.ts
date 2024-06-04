@@ -12,6 +12,7 @@ const superchainUpgradeability = {
 
 export const metal: Layer2 = opStackL2({
   discovery,
+  associatedTokens: ['MTL'],
   display: {
     name: 'Metal',
     slug: 'metal',

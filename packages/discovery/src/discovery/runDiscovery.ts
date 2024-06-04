@@ -109,7 +109,6 @@ export async function dryRunDiscovery(
   const diff = diffDiscovery(
     discoveredYesterday.contracts,
     discovered.contracts,
-    projectConfig,
   )
 
   if (diff.length > 0) {

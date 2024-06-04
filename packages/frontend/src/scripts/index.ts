@@ -5,6 +5,7 @@ import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOn
 import { configureCopyButtons } from './configureCopyButtons'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
+import { configureExcludeAssociatedTokensCheckbox } from './configureExcludeAssociatedTokensCheckbox'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureGlossarySideNav } from './configureGlossarySideNav'
@@ -58,3 +59,4 @@ configureScrollToTopButton()
 configureGlossarySideNav()
 configureCopyButtons()
 configureNavWrapper()
+configureExcludeAssociatedTokensCheckbox()
