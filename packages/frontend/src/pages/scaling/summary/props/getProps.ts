@@ -1,30 +1,22 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
-import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
-import { PagesData, Wrapped } from '../../../Page'
+import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
+import { SummaryPagesData } from '../types'
 import { SummaryPageProps } from '../view/ScalingSummaryPage'
 import { getScalingSummaryView } from './getScalingSummaryView'
 
 export function getProps(
   config: Config,
-  pagesData: PagesData,
+  pagesData: SummaryPagesData,
 ): Wrapped<SummaryPageProps> {
-  const { tvlApiResponse, verificationStatus, implementationChange } = pagesData
-
-  const charts = tvlApiResponse.layers2s
-  const { tvl } = getTvlWithChange(charts)
-
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
       tvlView: getScalingSummaryView(
         [...config.layer2s, ...config.layer3s],
-        tvlApiResponse,
-        tvl,
-        verificationStatus,
-        implementationChange,
+        pagesData,
         config.features,
       ),
       footer: getFooterProps(config),

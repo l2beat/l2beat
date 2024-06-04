@@ -37,7 +37,6 @@ const meta = {
             'The ARB token associated with Arbitrum One accounts for 25.00% of the Value Locked!',
           warningSeverity: 'warning',
         },
-        oneDayChange: '-2.44%',
         sevenDayChange: '-7.73%',
         bridgesMarketShare: '102.12%',
         combinedMarketShare: {
@@ -73,7 +72,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.41%',
         sevenDayChange: '-3.88%',
         bridgesMarketShare: '38.86%',
         combinedMarketShare: {
@@ -113,7 +111,6 @@ const meta = {
             'The Metis token associated with Metis Andromeda accounts for 53.97% of the Value Locked!',
           warningSeverity: 'warning',
         },
-        oneDayChange: '-3.15%',
         sevenDayChange: '-10.62%',
         bridgesMarketShare: '1.95%',
         combinedMarketShare: {
@@ -151,7 +148,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-6.08%',
         sevenDayChange: '-16.94%',
         bridgesMarketShare: '1.30%',
         combinedMarketShare: {
@@ -187,7 +183,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.56%',
         sevenDayChange: '-5.59%',
         bridgesMarketShare: '1.05%',
         combinedMarketShare: {
@@ -223,7 +218,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.46%',
         sevenDayChange: '-2.60%',
         bridgesMarketShare: '1.03%',
         combinedMarketShare: {
@@ -258,7 +252,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-0.31%',
         sevenDayChange: '+14.64%',
         bridgesMarketShare: '0.84%',
         combinedMarketShare: {
@@ -296,7 +289,6 @@ const meta = {
             'The ZKS token associated with ZKSpace accounts for 20.68% of the Value Locked!',
           warningSeverity: 'warning',
         },
-        oneDayChange: '-3.81%',
         sevenDayChange: '-7.23%',
         bridgesMarketShare: '0.83%',
         combinedMarketShare: {
@@ -333,7 +325,6 @@ const meta = {
             'The GNO token associated with Omnibridge accounts for 98.81% of the Value Locked!',
           warningSeverity: 'bad',
         },
-        oneDayChange: '-4.68%',
         sevenDayChange: '-4.20%',
         bridgesMarketShare: '0.76%',
         combinedMarketShare: {
@@ -368,7 +359,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-0.02%',
         sevenDayChange: '+2.07%',
         bridgesMarketShare: '0.59%',
         combinedMarketShare: {
@@ -403,7 +393,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.59%',
         sevenDayChange: '-4.98%',
         bridgesMarketShare: '0.35%',
         combinedMarketShare: {
@@ -442,7 +431,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-3.28%',
         sevenDayChange: '-6.69%',
         bridgesMarketShare: '0.04%',
         combinedMarketShare: {
@@ -479,7 +467,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-0.63%',
         sevenDayChange: '-2.40%',
         bridgesMarketShare: '0.01%',
         combinedMarketShare: {
@@ -515,7 +502,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.49%',
         sevenDayChange: '-6.61%',
         bridgesMarketShare: '0.01%',
         combinedMarketShare: {
@@ -554,7 +540,6 @@ const meta = {
             'The ZKS token associated with ZKSwap 2.0 accounts for 44.65% of the Value Locked!',
           warningSeverity: 'warning',
         },
-        oneDayChange: '-2.67%',
         sevenDayChange: '-4.12%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -592,7 +577,6 @@ const meta = {
             'The L2 token associated with Gluon accounts for 50.28% of the Value Locked!',
           warningSeverity: 'warning',
         },
-        oneDayChange: '+27.17%',
         sevenDayChange: '-32.13%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -629,7 +613,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-3.48%',
         sevenDayChange: '-7.42%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -665,7 +648,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-0.03%',
         sevenDayChange: '-0.01%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -701,7 +683,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-0.90%',
         sevenDayChange: '-1.80%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -738,7 +719,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-1.46%',
         sevenDayChange: '-2.76%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {
@@ -776,7 +756,6 @@ const meta = {
           warning: undefined,
           warningSeverity: 'warning',
         },
-        oneDayChange: '-3.81%',
         sevenDayChange: '-6.96%',
         bridgesMarketShare: '0.00%',
         combinedMarketShare: {

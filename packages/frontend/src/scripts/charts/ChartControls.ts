@@ -1,6 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import isEmpty from 'lodash/isEmpty'
 
+import { assert } from '@l2beat/shared-pure'
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { getCurrentTheme } from '../configureThemeToggle'
@@ -83,6 +84,7 @@ export class ChartControls {
     this.configureEthereumTxsToggle(query, settings)
     this.configureTokenSelect(query, unitControls)
     this.configureCanonicalToggle(query)
+    this.configureExcludeAssociatedTokensToggle()
     this.configureProjectFilters()
     this.configureRefetchButton(query)
   }
@@ -230,6 +232,26 @@ export class ChartControls {
     })
   }
 
+  private configureExcludeAssociatedTokensToggle() {
+    const { $ } = makeQuery()
+    const excludeAssociatedTokensCheckbox = $.maybe<HTMLInputElement>(
+      '[data-role="chart-exclude-associated-tokens"]',
+    )
+
+    excludeAssociatedTokensCheckbox?.addEventListener('change', () => {
+      const excludeAssociatedTokens = !!excludeAssociatedTokensCheckbox.checked
+      assert(
+        this.chartType?.type === 'scaling-detailed-tvl' ||
+          this.chartType?.type === 'scaling-tvl',
+        'Invalid chart type',
+      )
+      this.updateChartType({
+        ...this.chartType,
+        excludeAssociatedTokens,
+      })
+    })
+  }
+
   private configureProjectFilters() {
     const { $ } = makeQuery(document.body)
     const projectFilters = $.maybe('#project-filters')
@@ -247,7 +269,7 @@ export class ChartControls {
         this.chartDataController.showEmptyChart()
         return
       }
-      this.chartDataController.setChartType({
+      this.updateChartType({
         ...this.chartType,
         filteredSlugs,
       })

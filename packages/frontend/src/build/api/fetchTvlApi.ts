@@ -12,19 +12,32 @@ import {
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
 
+interface Options { tvl2: boolean, excludeAssociatedTokens?: boolean }
+
 export async function fetchTvlApi(
   backend: Config['backend'],
   http: JsonHttpClient,
-  { tvl2 }: { tvl2: boolean }
+  opts: Options
 ): Promise<TvlApiResponse> {
   if (backend.mock) {
     return getMockTvlApiResponse()
   }
 
-  const url = tvl2 ? `${backend.apiUrl}/api/tvl2` : `${backend.apiUrl}/api/tvl`
+  const url = getUrl(backend, opts)
   const json = await http.fetchJson(url)
   return TvlApiResponse.parse(json)
 }
+
+function getUrl(backend: Config['backend'],opts: Options) {
+  const url = new URL(`${backend.apiUrl}/api/${opts.tvl2 ? 'tvl2' : 'tvl'}`)
+  if(opts.excludeAssociatedTokens){
+    url.searchParams.set("excludeAssociatedTokens", 'true')
+  }
+
+  return url.toString()
+
+}
+
 
 function getMockTvlApiResponse(): TvlApiResponse {
   const result: TvlApiResponse = {

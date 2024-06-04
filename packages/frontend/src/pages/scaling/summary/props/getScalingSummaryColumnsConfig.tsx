@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { compact } from 'lodash'
+import { ExcludeAssociatedTokensWrapper } from '../../../../components/ExcludeAssociatedTokensWrapper'
 import { StageCell } from '../../../../components/stages/StageCell'
 import { NumberCell } from '../../../../components/table/NumberCell'
 import { RosetteCell } from '../../../../components/table/RosetteCell'
@@ -69,7 +70,11 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.tvl.value,
+          'excluded-associated-tokens': project.data?.excludedTokens?.tvl.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
         defaultState: 'desc',
       },
@@ -80,16 +85,35 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       minimalWidth: true,
       headClassName: '!pr-4',
-      getValue: (project) =>
-        project.tvlBreakdown ? (
-          <NumberCell className="pr-4">
-            {project.marketShare?.displayValue}
-          </NumberCell>
-        ) : (
-          <span className="pr-4">—</span>
-        ),
+      getValue: (project) => (
+        <ExcludeAssociatedTokensWrapper>
+          <ExcludeAssociatedTokensWrapper.Included>
+            {project.data?.marketShare ? (
+              <NumberCell className="pr-4">
+                {project.data.marketShare.displayValue}
+              </NumberCell>
+            ) : (
+              <span className="pr-4">—</span>
+            )}
+          </ExcludeAssociatedTokensWrapper.Included>
+          <ExcludeAssociatedTokensWrapper.Excluded>
+            {project.data?.excludedTokens?.marketShare ? (
+              <NumberCell className="pr-4">
+                {project.data.excludedTokens.marketShare.displayValue}
+              </NumberCell>
+            ) : (
+              <span className="pr-4">—</span>
+            )}
+          </ExcludeAssociatedTokensWrapper.Excluded>
+        </ExcludeAssociatedTokensWrapper>
+      ),
       sorting: {
-        getOrderValue: (project) => project.marketShare?.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.marketShare.value,
+          'excluded-associated-tokens':
+            project.data?.excludedTokens?.marketShare.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
       },
     },
@@ -160,14 +184,14 @@ export function getArchivedScalingSummaryColumnsConfig() {
       getValue: (project) => (
         <>
           <NumberCell className="font-bold">
-            {project.tvl?.displayValue}
+            {project.data?.tvl.displayValue}
           </NumberCell>
           {!project.isArchived ? (
             <NumberCell
               signed
               className="ml-1 w-[72px] !text-base font-medium "
             >
-              {project.sevenDayChange}
+              {project.data?.sevenDayChange}
             </NumberCell>
           ) : (
             <span className="w-[72px]" />
@@ -175,7 +199,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
         </>
       ),
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => project.data?.tvl.value,
         rule: 'numeric',
         defaultState: 'desc',
       },
@@ -187,7 +211,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
 
 export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
   const columns: ColumnConfig<ScalingL3SummaryViewEntry>[] = compact([
-    ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    ...getProjectWithIndexColumns(),
     {
       name: 'Type',
       tooltip: <TypeColumnTooltip />,
@@ -224,7 +248,11 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
       headClassName: '!pr-4',
       getValue: (project) => <TotalCell project={project} className="pr-4" />,
       sorting: {
-        getOrderValue: (project) => project.tvl?.value,
+        getOrderValue: (project) => ({
+          'included-associated-tokens': project.data?.tvl.value,
+          'excluded-associated-tokens': project.data?.excludedTokens?.tvl.value,
+        }),
+        defaultOrderKey: 'included-associated-tokens',
         rule: 'numeric',
         defaultState: 'desc',
       },

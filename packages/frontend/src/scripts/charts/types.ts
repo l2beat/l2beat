@@ -225,10 +225,12 @@ export const ChartType = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('scaling-tvl'),
     filteredSlugs: z.array(z.string()).optional(),
+    excludeAssociatedTokens: z.boolean().optional(),
   }),
   z.object({
     type: z.literal('scaling-detailed-tvl'),
     filteredSlugs: z.array(z.string()).optional(),
+    excludeAssociatedTokens: z.boolean().optional(),
   }),
   z.object({
     type: z.literal('scaling-activity'),
