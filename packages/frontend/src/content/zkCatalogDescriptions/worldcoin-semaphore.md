@@ -41,7 +41,3 @@ Now it's time to compare the onchain verification keys to the generated ones. Do
 `cast etherscan-source 0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF --etherscan-api-key "${ETHERSCAN_API_KEY}" --chain optimism > SemaphoreVerifier.sol`
 
 The `_getVerificationKey` function shows how the verification keys are fetched. In particular, the `alpha1`, `beta2` and `gamma2` values are hardcoded in the function (because size-independent) while the `delta2` and `IC` values are fetched from the `VK_POINTS` array depending on the size.
-
-## Semaphore Merkle Tree Batcher (SMTB)
-
-The official verification guide can be found [here](https://github.com/worldcoin/smtb-ceremony/blob/main/contribution_verification/VERIFICATION.md).
