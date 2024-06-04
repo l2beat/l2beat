@@ -251,6 +251,7 @@ function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
 
 function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
   return {
+    ...value,
     chain: value.chain,
     project: value.project.toString(),
     source: value.source,

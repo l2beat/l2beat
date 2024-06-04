@@ -96,6 +96,7 @@ function serializeConfiguration(value: CoingeckoPriceConfigEntry): string {
 
 function getBaseEntry(value: CoingeckoPriceConfigEntry) {
   return {
+    ...value,
     assetId: value.assetId.toString(),
     address: value.address.toString(),
     chain: value.chain,
