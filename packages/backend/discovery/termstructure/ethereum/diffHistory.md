@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xd68f6178c49611897b5e886dfd31fc748f5e39cc
+
+# Diff at Tue, 04 Jun 2024 15:23:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ff4734badb34915faebacc7140d595936b262e64 block: 20018580
+- current block number: 20019330
+
+## Description
+
+Config changes to the discovery, no relevant onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20018580 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.getAaveV3Pool:
++        "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+      values.getPoseidonUnit2:
++        "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7385a1d70af503a9ff4d64a713c79e405f0c3b3a
 
 # Diff at Tue, 04 Jun 2024 12:52:59 GMT:

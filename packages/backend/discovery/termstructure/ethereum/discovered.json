@@ -1,13 +1,20 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20018580,
-  "configHash": "0xe2868b83854000aa581ce1f5a0948183821d0aa35ea11b108b6f2d4b7cd22fd2",
+  "blockNumber": 20019330,
+  "configHash": "0x0abc07c2a3779ca4b18c3453b50574892390d318d2859f27993356e87052d1c4",
   "version": 4,
   "contracts": [
     {
       "name": "ZkTrueUp",
       "address": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
+      "ignoreInWatchMode": [
+        "getAccountNum",
+        "getBlockNum",
+        "getBorrowFeeRate",
+        "getFundWeight",
+        "getL1RequestNum"
+      ],
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
@@ -238,6 +245,7 @@
             ]
           ]
         ],
+        "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "getAccountNum": 14,
         "getBlockNum": [21, 21, 21],
         "getBorrowFeeRate": 10000000,
@@ -248,6 +256,7 @@
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
         "getL1RequestNum": [55, 55, 55],
+        "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
         "getTokenNum": 65,
         "getTreasuryAddr": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
@@ -314,6 +323,15 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "",
+      "address": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1716263735
     },
     {
       "name": "EvacuationFacet",
@@ -406,20 +424,6 @@
         "getThreshold": 1,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1513077455,
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2927420300521899209115927"
       }
     }
   ],
@@ -746,23 +750,6 @@
       "function flashLoan(address receiver, address[] assets, uint256[] amounts, bytes data)",
       "function getFlashLoanPremium() view returns (uint16)",
       "function setFlashLoanPremium(uint16 flashLoanPremium)"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
