@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/react-vite'
+import path from 'path'
 import { mergeConfig } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import turbosnap from 'vite-plugin-turbosnap'
 
 const config: StorybookConfig = {
@@ -21,6 +21,17 @@ const config: StorybookConfig = {
   staticDirs: ['../src/static', './static'],
   viteFinal(config, { configType }) {
     return mergeConfig(config, {
+      resolve: {
+        // Remove this once we are good to go with Context
+        ...config.resolve,
+        alias: {
+          ...config.resolve?.alias,
+          '../content/getCollection': path.resolve(
+            __dirname,
+            '../src/content/getCollection.mock.ts',
+          ),
+        },
+      },
       optimizeDeps: {
         exclude: ['@l2beat/discovery'],
         include: ['@l2beat/config', '@l2beat/shared-pure'],
@@ -36,11 +47,6 @@ const config: StorybookConfig = {
           ? [
               turbosnap({
                 rootDir: process.cwd(),
-              }),
-              nodePolyfills({
-                overrides: {
-                  fs: 'memfs',
-                },
               }),
             ]
           : [],
