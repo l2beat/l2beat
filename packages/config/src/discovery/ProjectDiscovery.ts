@@ -45,6 +45,7 @@ import {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
+import { join } from 'path'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -61,7 +62,7 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader('../backend/'),
+    configReader = new ConfigReader(join(process.cwd(), 'packages/backend')),
   ) {
     const config = configReader.readConfig(projectName, chain)
     this.discoveries = [
