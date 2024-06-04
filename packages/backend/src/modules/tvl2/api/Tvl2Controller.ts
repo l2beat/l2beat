@@ -67,7 +67,7 @@ type ApiProject = {
   >
 }
 
-interface ExcludedToken {
+interface AssociatedToken {
   address: EthereumAddress | 'native'
   chain: string
   type: 'canonical' | 'external' | 'native'
@@ -75,6 +75,7 @@ interface ExcludedToken {
   project: ProjectId
   projectType: 'layers2s' | 'bridges'
 }
+
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
@@ -83,7 +84,7 @@ export class Tvl2Controller {
   >
   private readonly priceConfigs: PriceConfigIdMap
   private readonly projects: ApiProject[]
-  private readonly excludedTokens: ExcludedToken[]
+  private readonly associatedTokens: AssociatedToken[]
   private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
@@ -134,7 +135,7 @@ export class Tvl2Controller {
       return { id, minTimestamp, type, slug, sources }
     })
 
-    this.excludedTokens = projects.flatMap(({ projectId: id, type }) => {
+    this.associatedTokens = projects.flatMap(({ projectId: id, type }) => {
       if (config.projectsExcludedFromApi.includes(id.toString())) {
         return []
       }
@@ -669,7 +670,7 @@ export class Tvl2Controller {
     })
 
     const excluded = await Promise.all(
-      this.excludedTokens
+      this.associatedTokens
         .filter((e) => projectIds.includes(e.project))
         .map(async (x) => ({
           ...x,
@@ -909,7 +910,7 @@ export class Tvl2Controller {
     const tvl = await this.getTvl(lastHour)
 
     const excluded = await Promise.all(
-      this.excludedTokens.map(async (x) => ({
+      this.associatedTokens.map(async (x) => ({
         ...x,
         data: await this.getTokenChart(x, x.project, lastHour),
       })),
