@@ -8,7 +8,7 @@ export const form: Layer2 = upcomingL2({
     slug: 'form',
     description:
       'Form is an Optimistic Rollup utilizing the OP Stack. The Form L2 is focused on bringing mass adoption and interoperability to the SocialFi category.',
-    purposes: ['Universal', 'SocialFi'],
+    purposes: ['Universal', 'Social'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
