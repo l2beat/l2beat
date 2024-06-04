@@ -93,10 +93,7 @@ function getAmountsConfig(
       const project = projects.find((x) => x.projectId === projectId)
       assert(project, 'Project not found')
 
-      const associatedToken = (project.associatedTokens ?? []).find(
-        (t) => t === token.symbol,
-      )
-      const isAssociated = !!associatedToken
+      const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
       switch (token.formula) {
         case 'totalSupply':
@@ -139,10 +136,7 @@ function getAmountsConfig(
   for (const project of projects) {
     for (const escrow of project.escrows) {
       for (const token of escrow.tokens) {
-        const associatedToken = (project.associatedTokens ?? []).find(
-          (t) => t === token.symbol,
-        )
-        const isAssociated = !!associatedToken
+        const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
         entries.push({
           type: 'escrow',
