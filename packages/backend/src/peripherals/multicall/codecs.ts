@@ -34,9 +34,12 @@ const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
 ])
 
-function encodeGetEthBalance(address: EthereumAddress): MulticallRequest {
+function encodeGetEthBalance(
+  multicall: EthereumAddress,
+  address: EthereumAddress,
+): MulticallRequest {
   return {
-    address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+    address: multicall,
     data: Bytes.fromHex(
       multicallInterface.encodeFunctionData('getEthBalance', [
         address.toString(),

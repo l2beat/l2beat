@@ -36,7 +36,10 @@ export interface ERC20MulticallCodec {
 
 export interface NativeAssetMulticallCodec {
   balance: {
-    encode: (address: EthereumAddress) => MulticallRequest
+    encode: (
+      multicall: EthereumAddress,
+      address: EthereumAddress,
+    ) => MulticallRequest
     decode: (response: Bytes) => bigint
   }
 }
