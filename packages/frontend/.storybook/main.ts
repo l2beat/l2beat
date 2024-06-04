@@ -20,6 +20,12 @@ const config: StorybookConfig = {
   staticDirs: ['../src/static', './static'],
   viteFinal(config, { configType }) {
     return mergeConfig(config, {
+      // Remove once we migrate to react context for glossary
+      resolve: {
+        alias: {
+          fs: 'memfs',
+        },
+      },
       optimizeDeps: {
         exclude: ['@l2beat/discovery'],
         include: ['@l2beat/config', '@l2beat/shared-pure'],

@@ -70,6 +70,7 @@
     "del": "^6.1.1",
     "gulp": "^4.0.2",
     "http-proxy-middleware": "^2.0.6",
+    "memfs": "^4.9.2",
     "mockdate": "^3.0.5",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
