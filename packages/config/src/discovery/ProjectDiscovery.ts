@@ -18,6 +18,7 @@ import {
 import { utils } from 'ethers'
 import { isArray, isString } from 'lodash'
 
+import { join } from 'path'
 import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -45,7 +46,6 @@ import {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
-import { join } from 'path'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
