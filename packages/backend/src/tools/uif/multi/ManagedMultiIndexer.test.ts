@@ -350,10 +350,6 @@ function update(
   return { id: id.repeat(12), properties: null, minHeight, maxHeight, hasData }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<null> {
-  return { id: id.repeat(12), properties: null, from, to }
+function removal(id: string, from: number, to: number): RemovalConfiguration {
+  return { id: id.repeat(12), from, to }
 }

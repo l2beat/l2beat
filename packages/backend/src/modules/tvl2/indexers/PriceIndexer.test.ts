@@ -168,9 +168,9 @@ describe(PriceIndexer.name, () => {
           mockObject<DatabaseMiddleware>({}),
       })
 
-      const configurations: RemovalConfiguration<null>[] = [
-        removal<null>('a', 100, 200),
-        removal<null>('b', 200, 300),
+      const configurations: RemovalConfiguration[] = [
+        removal('a', 100, 200),
+        removal('b', 200, 300),
       ]
 
       await indexer.removeData(configurations)

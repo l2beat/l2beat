@@ -246,14 +246,9 @@ function amount(
   }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<null> {
+function removal(id: string, from: number, to: number): RemovalConfiguration {
   return {
     id,
-    properties: null,
     from,
     to,
   }

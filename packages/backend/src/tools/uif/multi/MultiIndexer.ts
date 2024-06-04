@@ -97,9 +97,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * This method can only be called during the initialization of the indexer,
    * after `multiInitialize` returns.
    */
-  abstract removeData(
-    configurations: RemovalConfiguration<null>[],
-  ): Promise<void>
+  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   /**
    * Saves configurations that the indexer should use to sync data. The
