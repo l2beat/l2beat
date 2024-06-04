@@ -65,7 +65,7 @@ export function ContractEntry({
   verificationStatus,
   manuallyVerifiedContracts,
   className,
-  sourceBadge,
+  sourceBadge: sourceLayer,
 }: ContractEntryProps) {
   const verificationStatusForChain =
     verificationStatus.contracts[contract.chain] ?? {}
@@ -127,7 +127,7 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
-            {sourceBadge && <Badge type="blue">L2</Badge>}
+            {sourceLayer && <Badge type="blue" rounded="full" className='leading-none'>{sourceLayer}</Badge>}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}

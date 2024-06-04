@@ -11,6 +11,8 @@ type Story = StoryObj<typeof ContractsSection>
 const props: ContractsSectionProps = {
   id: 'contracts',
   title: 'Smart Contracts',
+  chainName: 'Ethereum',
+  nativeChainName: 'Arbitrum One',
   sectionOrder: 1,
   contracts: [
     {
@@ -71,6 +73,7 @@ const props: ContractsSectionProps = {
       links: [],
     },
   ],
+  nativeContracts: [],
   escrows: [
     {
       name: 'L1Escrow',
