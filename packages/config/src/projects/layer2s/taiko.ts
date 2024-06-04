@@ -97,7 +97,7 @@ export const taiko: Layer2 = {
     activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation:
-        'Taiko is an Optimistic rollup that posts transaction data blocks directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalised after the challenge period has elapsed.',
+        'Taiko is an Optimistic rollup that posts transaction data blocks directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalized after the challenge period has elapsed.',
     },
   },
   config: {
