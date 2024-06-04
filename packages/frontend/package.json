@@ -54,6 +54,7 @@
     "react-dom": "^18.1.0",
     "tailwind-merge": "^2.2.1",
     "tinify": "^1.7.1",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
