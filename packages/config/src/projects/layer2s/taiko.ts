@@ -252,8 +252,7 @@ export const taiko: Layer2 = {
           'Contract allowing for granular control of which TierProvider to apply to a specific block. Currently, the TierProvider is hardcoded as an address for all blocks. Can be changed through L1RollupAddressManager.',
       }),
       discovery.getContractDetails('TierProvider', {
-        description:
-          'Contract managing the multi-tier proof system.',
+        description: 'Contract managing the multi-tier proof system.',
       }),
       discovery.getContractDetails('SgxVerifier', {
         description: 'Verifier contract for SGX proven blocks.',
