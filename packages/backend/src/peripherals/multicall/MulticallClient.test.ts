@@ -1,6 +1,8 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Logger } from '@l2beat/backend-tools'
+import { ethers } from 'ethers'
 import { RpcClient } from '../rpcclient/RpcClient'
 import { BlockTag } from '../rpcclient/types'
 import { MulticallClient } from './MulticallClient'
@@ -10,8 +12,39 @@ import {
   encodeMulticallV1,
   encodeMulticallV2,
   multicallInterface,
+  toMulticallConfigEntry,
 } from './MulticallConfig'
+import { nativeAssetCodec } from './codecs'
 import { MulticallConfigEntry } from './types'
+
+describe('test', () => {
+  it.only('test', async () => {
+    const provider = new ethers.providers.JsonRpcProvider(
+      'https://arb-mainnet.g.alchemy.com/v2/gFYyGuUYUq-5ZtVgLpWWzrEG_caFVj3f',
+    )
+
+    const multicallConfig = toMulticallConfigEntry({
+      address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+      batchSize: 150,
+      sinceBlock: 7654707,
+      version: '3',
+      // TODO: fix this
+      isNativeBalanceSupported: true,
+    })
+
+    const logger = new Logger({ logLevel: 'DEBUG' })
+    const rpcClient = new RpcClient(provider, logger)
+    const multicallClient = new MulticallClient(rpcClient, [multicallConfig])
+
+    const encode = nativeAssetCodec.balance.encode(
+      EthereumAddress('0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6'),
+    )
+    console.log(encode)
+
+    const res = await multicallClient.multicall([encode], 218325382)
+    console.log(res)
+  })
+})
 
 describe(MulticallClient.name, () => {
   const ADDRESS_A = EthereumAddress('0x' + 'a'.repeat(40))
