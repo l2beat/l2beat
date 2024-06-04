@@ -25,6 +25,7 @@ export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
+  // TODO: inject nativeAssetCodec
   logger: Logger
 }
 
@@ -125,6 +126,7 @@ export class AmountService {
         return erc20Codec.totalSupply.encode(properties.address)
       case 'escrow':
         if (properties.address === 'native') {
+          // choose codec based on block number
           return nativeAssetCodec.balance.encode(properties.escrowAddress)
         }
         return erc20Codec.balance.encode(
