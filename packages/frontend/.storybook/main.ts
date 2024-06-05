@@ -26,6 +26,7 @@ const config: StorybookConfig = {
         ...config.resolve,
         alias: {
           ...config.resolve?.alias,
+          async_hooks: '.storybook/polyfills/async_hooks.js',
           '../content/getCollection': path.resolve(
             __dirname,
             '../src/content/getCollection.mock.ts',
@@ -41,11 +42,6 @@ const config: StorybookConfig = {
       },
       build: {
         target: 'es2020',
-      },
-      resolve: {
-        alias: {
-          async_hooks: '.storybook/polyfills/async_hooks.js',
-        },
       },
       plugins:
         configType === 'PRODUCTION'
