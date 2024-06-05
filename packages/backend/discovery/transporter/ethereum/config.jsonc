@@ -6,6 +6,7 @@
   "maxDepth": 8,
   "initialAddresses": [
     "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
+    "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
     "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
   "names": {
@@ -59,64 +60,14 @@
     "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "Router2"
   },
   "overrides": {
-    "OffRamp1": { "extends": "transporter/OffRamp" },
-    "OffRamp2": { "extends": "transporter/OffRamp" },
-    "OffRamp3": { "extends": "transporter/OffRamp" },
-    "OffRamp4": { "extends": "transporter/OffRamp" },
-    "OffRamp5": { "extends": "transporter/OffRamp" },
-    "OffRamp6": { "extends": "transporter/OffRamp" },
-    "OffRamp7": { "extends": "transporter/OffRamp" },
-    "OffRamp8": { "extends": "transporter/OffRamp" },
-    "OffRamp9": { "extends": "transporter/OffRamp" },
-    "OffRamp10": { "extends": "transporter/OffRamp" },
-    "OffRamp11": { "extends": "transporter/OffRamp" },
-    "OffRamp12": { "extends": "transporter/OffRamp" },
-    "OffRamp13": { "extends": "transporter/OffRamp" },
-    "OffRamp14": { "extends": "transporter/OffRamp" },
-    "OnRamp1": { "extends": "transporter/OnRamp" },
-    "OnRamp2": { "extends": "transporter/OnRamp" },
-    "OnRamp3": { "extends": "transporter/OnRamp" },
-    "OnRamp4": { "extends": "transporter/OnRamp" },
-    "OnRamp5": { "extends": "transporter/OnRamp" },
-    "OnRamp6": { "extends": "transporter/OnRamp" },
-    "OnRamp7": { "extends": "transporter/OnRamp" },
-    "OnRamp8": { "extends": "transporter/OnRamp" },
-    "OnRamp9": { "extends": "transporter/OnRampV2" },
-    "OnRamp10": { "extends": "transporter/OnRampV2" },
-    "OnRamp11": { "extends": "transporter/OnRampV2" },
-    "OnRamp12": { "extends": "transporter/OnRampV2" },
-    "OnRamp13": { "extends": "transporter/OnRampV2" },
-    "OnRamp14": { "extends": "transporter/OnRampV2" },
     "ARM": {
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
     },
     "Router": {
-      "fields": {
-        "onRamps": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "OnRampSet",
-            "returnParams": ["destChainSelector", "onRamp"],
-            "groupBy": "destChainSelector",
-            "onlyValue": true
-          }
-        }
-      },
-      "ignoreRelatives": ["getWrappedNative"]
+      "extends": "transporter/Router"
     },
     "Router2": {
-      "fields": {
-        "onRamps": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "OnRampSet",
-            "returnParams": ["destChainSelector", "onRamp"],
-            "groupBy": "destChainSelector",
-            "onlyValue": true
-          }
-        }
-      },
-      "ignoreRelatives": ["getWrappedNative"]
+      "extends": "transporter/RouterV2"
     },
     "EtherSenderReceiver": {
       "ignoreMethods": ["i_weth"]
