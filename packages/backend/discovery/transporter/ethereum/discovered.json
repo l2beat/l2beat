@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 19875350,
-  "configHash": "0x419ae28c6fa7743700c9f67faed9089208ec69d02f91891623e45c808c27ba63",
+  "configHash": "0xc9c677c7c2bbcf887dc0812f0d1992f6e7670544ff72113645f374af7ac86d63",
   "version": 4,
   "contracts": [
     {
@@ -1244,7 +1244,6 @@
       "sinceTimestamp": 1712581007,
       "values": {
         "getRouter": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-        "i_weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "typeAndVersion": "EtherSenderReceiver 1.5.0"
       },
       "derivedName": "EtherSenderReceiver"
@@ -2257,20 +2256,6 @@
         "typeAndVersion": "EVM2EVMOffRamp 1.0.0"
       },
       "derivedName": "EVM2EVMOffRamp"
-    },
-    {
-      "name": "WETH9",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1513077455,
-      "values": {
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "3055178273430641283933741"
-      }
     },
     {
       "name": "GnosisSafe",
@@ -7209,23 +7194,6 @@
       "function transferOwnership(address to)",
       "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32)",
       "function typeAndVersion() view returns (string)"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xc07556a0Bd177F8de4D077f449C2653A072F3798": [
       "constructor(address _singleton)"

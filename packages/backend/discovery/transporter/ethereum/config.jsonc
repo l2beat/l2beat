@@ -115,7 +115,11 @@
             "onlyValue": true
           }
         }
-      }
+      },
+      "ignoreRelatives": ["getWrappedNative"]
+    },
+    "EtherSenderReceiver": {
+      "ignoreMethods": ["i_weth"]
     }
   }
 }

@@ -20,7 +20,7 @@
         "type": "call",
         "args": [],
         "method": "getStaticConfig",
-        "pickFields": ["linkToken"],
+        "pickFields": ["linkToken"]
       }
     },
     "staticConfigAddresses": {
@@ -28,7 +28,7 @@
         "type": "call",
         "args": [],
         "method": "getStaticConfig",
-        "pickFields": ["prevOnRamp", "armProxy"],
+        "pickFields": ["prevOnRamp", "armProxy"]
       }
     },
     "staticConfigChains": {
@@ -36,7 +36,7 @@
         "type": "call",
         "args": [],
         "method": "getStaticConfig",
-        "pickFields": ["chainSelector", "destChainSelector"],
+        "pickFields": ["chainSelector", "destChainSelector"]
       }
     },
     "tokenAddresses": {

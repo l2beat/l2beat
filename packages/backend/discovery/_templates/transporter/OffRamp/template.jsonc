@@ -8,15 +8,15 @@
   ],
   "fields": {
     "commitStore": {
-        "target": {
-          "template": "transporter/CommitStore"
-        },
+      "target": {
+        "template": "transporter/CommitStore"
+      },
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
         "args": [],
-        "pickFields": ["commitStore"],
+        "pickFields": ["commitStore"]
       }
-    },
+    }
   }
 }
