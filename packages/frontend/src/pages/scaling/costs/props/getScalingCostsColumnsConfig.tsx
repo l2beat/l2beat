@@ -30,6 +30,7 @@ export function getScalingCostsColumnsConfig() {
           tooltip:
             'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
           align: 'center',
+          className: '!px-2',
           sorting: getSorting('total'),
         },
       ],

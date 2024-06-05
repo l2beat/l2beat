@@ -26,7 +26,7 @@ export function getProjectWithIndexColumns(opts?: {
       name: '#',
       align: 'center',
       minimalWidth: true,
-      headClassName: 'pl-2 md:pl-4',
+      headClassName: 'pl-2 md:pl-0 2xl:pl-4',
       className: cn(
         'sticky -left-4 z-10 bg-white dark:bg-neutral-900 md:static md:!bg-transparent md:dark:!bg-transparent',
         stickyColumnBackgroundClasses,
@@ -65,7 +65,7 @@ export function getProjectWithIndexColumns(opts?: {
     },
     {
       name: 'Name',
-      headClassName: 'pl-3',
+      headClassName: 'pl-2 2xl:pl-3',
       getValue: (project) => (
         <ProjectNameCell project={project} showIsL3={opts?.showIsL3} />
       ),
