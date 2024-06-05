@@ -111,5 +111,6 @@ const generateFakeAnalysis = (
     sourceBundles: [],
     matchingTemplates: {},
     extendedTemplate,
+    relatives: {},
   }
 }

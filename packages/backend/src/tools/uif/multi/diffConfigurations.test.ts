@@ -217,10 +217,6 @@ function saved(
   return { id, properties: null, minHeight, maxHeight, currentHeight }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<null> {
-  return { id, properties: null, from, to }
+function removal(id: string, from: number, to: number): RemovalConfiguration {
+  return { id, from, to }
 }

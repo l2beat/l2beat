@@ -9,8 +9,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-
-import { z } from 'zod'
 import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
@@ -168,7 +166,6 @@ function createChainModule(
       BlockTimestampRepository,
     ),
     serializeConfiguration,
-    deserializeConfiguration,
     syncOptimizer,
     createDatabaseMiddleware: async () =>
       new KnexMiddleware(peripherals.getRepository(AmountRepository)),
@@ -228,35 +225,43 @@ function createChainModule(
 }
 
 function serializeConfiguration(value: EscrowEntry | TotalSupplyEntry): string {
-  switch (value.type) {
-    case 'escrow':
-      return JSON.stringify({
-        ...value,
-        address: value.address.toString(),
-        escrowAddress: value.escrowAddress.toString(),
-        chain: value.chain,
-        project: value.project.toString(),
-        source: value.source,
-        sinceTimestamp: value.sinceTimestamp.toNumber(),
-        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
-        includeInTotal: value.includeInTotal,
-      })
-    case 'totalSupply':
-      return JSON.stringify({
-        ...value,
-        address: value.address.toString(),
-        chain: value.chain,
-        project: value.project.toString(),
-        source: value.source,
-        sinceTimestamp: value.sinceTimestamp.toNumber(),
-        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
-        includeInTotal: value.includeInTotal,
-      })
+  if (value.type === 'escrow') {
+    const obj = {
+      ...getBaseEntry(value),
+      address: value.address.toString(),
+      escrowAddress: value.escrowAddress.toString(),
+      type: value.type,
+    }
+
+    return JSON.stringify(obj)
   }
+
+  if (value.type === 'totalSupply') {
+    const obj = {
+      ...getBaseEntry(value),
+      address: value.address.toString(),
+      type: value.type,
+    }
+
+    return JSON.stringify(obj)
+  }
+
+  throw new Error('Unknown type')
 }
 
-function deserializeConfiguration(
-  value: string,
-): EscrowEntry | TotalSupplyEntry {
-  return z.union([EscrowEntry, TotalSupplyEntry]).parse(JSON.parse(value))
+function getBaseEntry(value: EscrowEntry | TotalSupplyEntry) {
+  return {
+    ...value,
+    chain: value.chain,
+    project: value.project.toString(),
+    source: value.source,
+    sinceTimestamp: value.sinceTimestamp.toNumber(),
+    ...(Object.keys(value).includes('untilTimestamp')
+      ? { untilTimestamp: value.untilTimestamp?.toNumber() }
+      : {}),
+    includeInTotal: value.includeInTotal,
+    decimals: value.decimals,
+    symbol: value.symbol,
+    isAssociated: value.isAssociated,
+  }
 }

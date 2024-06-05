@@ -271,7 +271,7 @@ export class UpdateMonitor {
     chain: string,
   ) {
     if (diff.length > 0) {
-      const dependents = await findDependents(
+      const dependents = findDependents(
         projectConfig.name,
         chain,
         this.configReader,

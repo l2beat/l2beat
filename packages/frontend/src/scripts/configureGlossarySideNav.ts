@@ -37,7 +37,6 @@ export function configureGlossarySideNav() {
 
   if (selectedNavItem) {
     highlightItem(selectedNavItem)
-    scrollToItem(selectedNavItem)
   }
 
   window.addEventListener('scroll', () => {

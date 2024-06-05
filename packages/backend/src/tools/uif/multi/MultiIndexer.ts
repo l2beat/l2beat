@@ -51,9 +51,12 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * previously with `setStoredConfigurations`. It shouldn't call
    * `setStoredConfigurations` itself.
    *
-   * @returns The configurations that were saved previously.
+   * @returns The configurations that were saved previously. Properties are omitted
+   * because they are not needed for the initialization.
    */
-  abstract multiInitialize(): Promise<SavedConfiguration<T>[]>
+  abstract multiInitialize(): Promise<
+    Omit<SavedConfiguration<T>, 'properties'>[]
+  >
 
   /**
    * Implements the main data fetching process. It is up to the indexer to
@@ -97,7 +100,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * This method can only be called during the initialization of the indexer,
    * after `multiInitialize` returns.
    */
-  abstract removeData(configurations: RemovalConfiguration<T>[]): Promise<void>
+  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   /**
    * Saves configurations that the indexer should use to sync data. The

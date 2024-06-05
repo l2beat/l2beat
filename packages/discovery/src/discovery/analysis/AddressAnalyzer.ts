@@ -38,6 +38,7 @@ export interface AnalyzedContract {
   matchingTemplates: Record<string, number>
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
+  relatives: AddressesWithTemplates
 }
 
 export interface ExtendedTemplate {
@@ -68,14 +69,11 @@ export class AddressAnalyzer {
     blockNumber: number,
     logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
-  ): Promise<{
-    analysis: Analysis
-    relatives: AddressesWithTemplates
-  }> {
+  ): Promise<Analysis> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: {} }
+      return { type: 'EOA', address }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)
@@ -131,24 +129,22 @@ export class AddressAnalyzer {
     )
 
     return {
-      analysis: {
-        type: 'Contract',
-        name: overrides?.name ?? sources.name,
-        derivedName: overrides?.name !== undefined ? sources.name : undefined,
-        isVerified: sources.isVerified,
-        address,
-        deploymentTimestamp: deployment?.timestamp,
-        deploymentBlockNumber: deployment?.blockNumber,
-        upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
-        implementations: proxy?.implementations ?? [],
-        values: values ?? {},
-        errors: { ...templateErrors, ...(errors ?? {}) },
-        abis: sources.abis,
-        sourceBundles: sources.sources,
-        matchingTemplates,
-        extendedTemplate,
-        ignoreInWatchMode: overrides?.ignoreInWatchMode,
-      },
+      type: 'Contract',
+      name: overrides?.name ?? sources.name,
+      derivedName: overrides?.name !== undefined ? sources.name : undefined,
+      isVerified: sources.isVerified,
+      address,
+      deploymentTimestamp: deployment?.timestamp,
+      deploymentBlockNumber: deployment?.blockNumber,
+      upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+      implementations: proxy?.implementations ?? [],
+      values: values ?? {},
+      errors: { ...templateErrors, ...(errors ?? {}) },
+      abis: sources.abis,
+      sourceBundles: sources.sources,
+      matchingTemplates,
+      extendedTemplate,
+      ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives: getRelativesWithSuggestedTemplates(
         results,
         overrides?.ignoreRelatives,

@@ -52,11 +52,10 @@ export function update<T>(
   }
 }
 
-export function removal<T>(
+export function removal(
   id: string,
   from: number,
   to: number,
-  properties?: Partial<T>,
-): RemovalConfiguration<T> {
-  return { id, properties: mockObject<T>({ ...properties }), from, to }
+): RemovalConfiguration {
+  return { id, from, to }
 }

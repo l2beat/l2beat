@@ -17,7 +17,6 @@ export interface BridgesSummaryViewEntry {
   showProjectUnderReview?: boolean
   tvl?: ValueWithDisplayValue
   tvlBreakdown?: TokenBreakdownProps
-  oneDayChange?: string
   sevenDayChange?: string
   bridgesMarketShare?: string
   combinedMarketShare?: ValueWithDisplayValue

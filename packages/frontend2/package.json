@@ -13,6 +13,7 @@
     "format:fix": "biome check --apply ."
   },
   "dependencies": {
+    "@l2beat/backend": "*",
     "@l2beat/config": "*",
     "@l2beat/shared-pure": "*",
     "@t3-oss/env-nextjs": "^0.10.1",

@@ -5,6 +5,7 @@ import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
+import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
@@ -221,8 +222,8 @@ export default async function Page({ params: { address } }: Props) {
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
-    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto py-10">
-      <div className="flex flex-col gap-6">
+    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto pt-10">
+      <div className="flex flex-col gap-6 mb-10">
         <DetailsHeader
           // TODO: Replace with real data when we have it
           dolarValue={0}
@@ -232,6 +233,7 @@ export default async function Page({ params: { address } }: Props) {
         <TokensTable tokens={tokensToDisplay} />
         <Disclaimer />
       </div>
+      <Footer />
     </main>
   )
 }

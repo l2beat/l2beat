@@ -1,3 +1,139 @@
+Generated with discovered.json: 0xc7cd32149b27868b3a50016ee3970759f8e9aa0d
+
+# Diff at Tue, 04 Jun 2024 09:25:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@8229f24e26195fa97d8d36bab0dd2d52dec7efa6 block: 20009991
+- current block number: 20017546
+
+## Description
+
+Two contracts implementation changed, TaikoL1.sol, and Bridge.sol.
+- TaikoL1.sol: introduced B_TIER_ROUTER = bytes32("tier_router") to replace B_TIER_PROVIDER
+- Bridge.sol: Added a max proof size for a message to be processable by a relayer, an insufficent gas check, and added the B_TIER_ROUTER variable support.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      upgradeability.implementation:
+-        "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"
++        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      implementations.0:
+-        "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"
++        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      values.impl:
+-        "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"
++        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      values.tier_router:
+-        "0x0000000000000000000000000000000000000000"
++        "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F"
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.nonce:
+-        24
++        26
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
++        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
+      implementations.0:
+-        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
++        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
+      values.impl:
+-        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
++        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
+      values.RELAYER_MAX_PROOF_BYTES:
++        200000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TierRouter (0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../TaikoBridge/Bridge.sol                         | 131 +++++++++++++--------
+ .../TaikoL1Contract/TaikoL1.sol                    |  68 ++++++-----
+ .../taiko/ethereum/.flat/TierRouter.sol            |  15 +++
+ 3 files changed, 133 insertions(+), 81 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20009991 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.tier_provider:
+-        "0x4cffe56C947E26D07C14020499776DB3e9AE3a23"
+      values.tier_router:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x46b03e9120fb191d6dc7e9e29ada0f5de7841449
+
+# Diff at Mon, 03 Jun 2024 08:06:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@3f44aa4fafff6ecd52bf4dcc77df7a9b1884b765 block: 19985265
+- current block number: 20009991
+
+## Description
+
+Change in bridge implementation processMessage function: message Status and B_OUT_OF_ETH_QUOTA revert logic.
+
+## Watched changes
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.nonce:
+-        23
++        24
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+      implementations.0:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+      values.impl:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../TaikoBridge/Bridge.sol                         | 79 ++++++++++------------
+ 1 file changed, 37 insertions(+), 42 deletions(-)
+```
+
 Generated with discovered.json: 0x1de79ace616f10bb275665d3e223e2f7b9555b6c
 
 # Diff at Thu, 30 May 2024 21:14:50 GMT:

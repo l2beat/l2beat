@@ -57,7 +57,6 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -106,7 +105,6 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -146,7 +144,6 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -179,7 +176,6 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -217,7 +213,6 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        deserializeConfiguration: () => mockObject<ChainAmountConfig>({}),
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -251,14 +246,9 @@ function amount(
   }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<ChainAmountConfig> {
+function removal(id: string, from: number, to: number): RemovalConfiguration {
   return {
     id,
-    properties: mockObject<ChainAmountConfig>({}),
     from,
     to,
   }
