@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import {
   DATA_ON_CHAIN,
   FRONTRUNNING_RISK,
@@ -11,7 +12,6 @@ import {
   addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
-import { utils } from 'ethers'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
