@@ -31,7 +31,7 @@ export const transporter: Bridge = {
       value: 'Third Party',
       description:
         'Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.\
-        These validators are tasked with montioring anomalous behavior and can halt the network if necessary.',
+        These validators are tasked with monitoring anomalous behavior and can halt the network if necessary.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
