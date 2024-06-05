@@ -3,13 +3,13 @@ import React, { ReactNode } from 'react'
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
-import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { InfoIcon } from '../../../../components/icons'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
