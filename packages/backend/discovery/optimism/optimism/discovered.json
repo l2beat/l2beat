@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 120986374,
-  "configHash": "0x585623f610a8bc340a742efeb8d1890445b581bd388367c8bc72d2bf222114ee",
+  "blockNumber": 120992980,
+  "configHash": "0x1eba54817a5bcea527ac524fdd9619fe865165eff00267fd5c931c384a1d620f",
   "version": 4,
   "contracts": [
     {
@@ -85,7 +85,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637410",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637413",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -118,7 +118,7 @@
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 8401294045,
+        "l1BaseFee": 19078113740,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -156,7 +156,7 @@
         "l1FeeWallet": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "3442673877429005409293",
+        "totalProcessed": "3495563082937265797169",
         "version": "1.1.0"
       }
     },
@@ -226,24 +226,24 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 8401294045,
+        "basefee": 19078113740,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x1eb298a6a893905e11b6e1e31b56c825c2e28739ce68eafd0c811f79ad5de309",
+        "hash": "0x0fd68f5164409551b9cc4fe388453d344b0b0284fc954e82e4ce34c1d2166823",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20024043,
-        "sequenceNumber": 0,
-        "timestamp": 1717571387,
+        "number": 20025136,
+        "sequenceNumber": 10,
+        "timestamp": 1717584587,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
     },
     {
-      "name": "L1TL1MessagePasser",
+      "name": "L2ToL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -304,7 +304,7 @@
       "values": {
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "1224906714536859797583",
+        "totalProcessed": "1928902844154653024561",
         "version": "1.1.0"
       }
     },
@@ -321,7 +321,7 @@
       "values": {
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "10689311445014001173604",
+        "totalProcessed": "11679962820116169091101",
         "version": "1.1.0"
       }
     },
@@ -359,7 +359,7 @@
       }
     },
     {
-      "name": "GovernanceToken",
+      "name": "OPToken",
       "address": "0x4200000000000000000000000000000000000042",
       "upgradeability": {
         "type": "immutable"
@@ -376,7 +376,7 @@
       "derivedName": "GovernanceToken"
     },
     {
-      "name": "L2ERC721Bridge",
+      "name": "OldQuixoticNFTBridge",
       "address": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
       "upgradeability": {
         "type": "immutable"
@@ -386,7 +386,8 @@
         "messenger": "0x4200000000000000000000000000000000000007",
         "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L2ERC721Bridge"
     },
     {
       "name": "MintManager",
@@ -405,7 +406,7 @@
       }
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "L2ProxyAdminOwner",
       "address": "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe",
       "upgradeability": {
         "type": "gnosis safe",

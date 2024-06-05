@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x53b2b9dcdd3b214d5dd6757756122b1a59889bc4
+Generated with discovered.json: 0xa1d57f190fbdfb73f7171e0322ccf7bddd4a21c9
 
-# Diff at Wed, 05 Jun 2024 07:12:37 GMT:
+# Diff at Wed, 05 Jun 2024 10:52:26 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 120986374
+- current block number: 120992980
 
 ## Description
 
@@ -79,7 +79,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract L1TL1MessagePasser (0x4200000000000000000000000000000000000016)
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016)
     +++ description: None
 ```
 
@@ -91,7 +91,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x4200000000000000000000000000000000000018)
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018)
     +++ description: None
 ```
 
@@ -121,13 +121,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GovernanceToken (0x4200000000000000000000000000000000000042)
+    contract OPToken (0x4200000000000000000000000000000000000042)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract L2ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D)
+    contract OldQuixoticNFTBridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D)
     +++ description: None
 ```
 
@@ -139,6 +139,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdminOwner (0x7871d1187A97cbbE40710aC119AA3d412944e4Fe)
+    contract L2ProxyAdminOwner (0x7871d1187A97cbbE40710aC119AA3d412944e4Fe)
     +++ description: None
 ```
