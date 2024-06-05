@@ -19,6 +19,7 @@ describe(processAnalysis.name, () => {
     abis: {},
     sourceBundles: [],
     matchingTemplates: {},
+    relatives: {},
   }
 
   const ADDRESS_A = EthereumAddress(

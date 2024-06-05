@@ -86,6 +86,10 @@ function Content({
               icon={RoundedWarningIcon}
               text={warning.content}
               color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+              // Cell itself is a href.
+              // Markdown might contain links - nesting them in a tooltip
+              // breaks semantics apart causing significant layout shifts.
+              ignoreMarkdown
             />
           ))}
         </div>
