@@ -1,5 +1,5 @@
-import { LoggerOptions } from '@l2beat/backend-tools'
-import { DiscoveryChainConfig } from '@l2beat/discovery'
+import { LoggerOptions } from "@l2beat/backend-tools";
+import { DiscoveryChainConfig } from "@l2beat/discovery";
 import {
   AmountConfigEntry,
   ChainId,
@@ -7,186 +7,177 @@ import {
   ProjectId,
   Token,
   UnixTime,
-} from '@l2beat/shared-pure'
-import { Knex } from 'knex'
+} from "@l2beat/shared-pure";
+import { Knex } from "knex";
 
-import { Project } from '../model/Project'
-import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
-import { MulticallConfigEntry } from '../peripherals/multicall/types'
-import { ChainConverter } from '../tools/ChainConverter'
-import { ResolvedFeatureFlag } from './FeatureFlags'
-import { FinalityProjectConfig } from './features/finality'
+import { Project } from "../model/Project";
+import { ActivityTransactionConfig } from "../modules/activity/ActivityTransactionConfig";
+import { MulticallConfigEntry } from "../peripherals/multicall/types";
+import { ChainConverter } from "../tools/ChainConverter";
+import { ResolvedFeatureFlag } from "./FeatureFlags";
+import { FinalityProjectConfig } from "./features/finality";
 
 export interface Config {
-  readonly name: string
-  readonly isReadonly: boolean
-  readonly projects: Project[]
-  readonly tokens: Token[]
-  readonly logger: LoggerConfig
-  readonly logThrottler: LogThrottlerConfig | false
-  readonly clock: ClockConfig
-  readonly metricsAuth: MetricsAuthConfig | false
-  readonly database: DatabaseConfig
-  readonly api: ApiConfig
-  readonly health: HealthConfig
-  readonly tvl: TvlConfig
-  readonly tvl2: Tvl2Config | false
-  readonly trackedTxsConfig: TrackedTxsConfig | false
-  readonly finality: FinalityConfig | false
-  readonly activity: ActivityConfig | false
-  readonly updateMonitor: UpdateMonitorConfig | false
-  readonly implementationChangeReporterEnabled: boolean
-  readonly lzOAppsEnabled: boolean
-  readonly statusEnabled: boolean
-  readonly chains: { name: string; chainId: ChainId }[]
-  readonly flags: ResolvedFeatureFlag[]
-  readonly tvlCleanerEnabled: boolean
-  readonly verifiers: boolean
+  readonly name: string;
+  readonly isReadonly: boolean;
+  readonly projects: Project[];
+  readonly tokens: Token[];
+  readonly logger: LoggerConfig;
+  readonly logThrottler: LogThrottlerConfig | false;
+  readonly clock: ClockConfig;
+  readonly metricsAuth: MetricsAuthConfig | false;
+  readonly database: DatabaseConfig;
+  readonly api: ApiConfig;
+  readonly health: HealthConfig;
+  readonly tvl2: Tvl2Config | false;
+  readonly trackedTxsConfig: TrackedTxsConfig | false;
+  readonly finality: FinalityConfig | false;
+  readonly activity: ActivityConfig | false;
+  readonly updateMonitor: UpdateMonitorConfig | false;
+  readonly implementationChangeReporterEnabled: boolean;
+  readonly lzOAppsEnabled: boolean;
+  readonly statusEnabled: boolean;
+  readonly chains: { name: string; chainId: ChainId }[];
+  readonly flags: ResolvedFeatureFlag[];
+  readonly tvlCleanerEnabled: boolean;
+  readonly verifiers: boolean;
 }
 
-export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
-  Partial<LoggerOptions>
+export type LoggerConfig = Pick<LoggerOptions, "logLevel"> &
+  Partial<LoggerOptions>;
 
 export interface LogThrottlerConfig {
-  readonly callsUntilThrottle: number
-  readonly clearIntervalMs: number
-  readonly throttleTimeMs: number
+  readonly callsUntilThrottle: number;
+  readonly clearIntervalMs: number;
+  readonly throttleTimeMs: number;
 }
 
 export interface ApiConfig {
-  readonly port: number
+  readonly port: number;
   readonly cache: {
-    readonly tvl: boolean
-    readonly liveness: boolean
-    readonly verifiers: boolean
-  }
+    readonly tvl: boolean;
+    readonly liveness: boolean;
+    readonly verifiers: boolean;
+  };
 }
 
 export interface DatabaseConfig {
-  readonly connection: Knex.Config['connection']
-  readonly freshStart: boolean
-  readonly enableQueryLogging: boolean
-  readonly requiredMajorVersion?: number
+  readonly connection: Knex.Config["connection"];
+  readonly freshStart: boolean;
+  readonly enableQueryLogging: boolean;
+  readonly requiredMajorVersion?: number;
   readonly connectionPoolSize: {
-    min: number
-    max: number
-  }
-  readonly isReadonly: boolean
+    min: number;
+    max: number;
+  };
+  readonly isReadonly: boolean;
 }
 
 export interface ClockConfig {
-  readonly minBlockTimestamp: UnixTime
-  readonly safeTimeOffsetSeconds: number
-}
-
-export interface TvlConfig {
-  readonly enabled: boolean
-  readonly errorOnUnsyncedTvl: boolean
-  readonly coingeckoApiKey: string | undefined
-  readonly ethereum: ChainTvlConfig
-  readonly modules: ChainTvlConfig[]
+  readonly minBlockTimestamp: UnixTime;
+  readonly safeTimeOffsetSeconds: number;
 }
 
 export interface Tvl2Config {
-  readonly prices: PriceConfigEntry[]
-  readonly amounts: AmountConfigEntry[]
-  readonly chains: ChainTvlConfig[]
-  readonly projects: Project[]
-  readonly coingeckoApiKey: string | undefined
-  readonly chainConverter: ChainConverter
+  readonly prices: PriceConfigEntry[];
+  readonly amounts: AmountConfigEntry[];
+  readonly chains: ChainTvlConfig[];
+  readonly projects: Project[];
+  readonly coingeckoApiKey: string | undefined;
+  readonly chainConverter: ChainConverter;
   // used by value indexer
-  readonly maxTimestampsToAggregateAtOnce: number
-  readonly projectsExcludedFromApi: string[]
+  readonly maxTimestampsToAggregateAtOnce: number;
+  readonly projectsExcludedFromApi: string[];
 }
 
 export interface TrackedTxsConfig {
   readonly bigQuery: {
-    readonly clientEmail: string
-    readonly privateKey: string
-    readonly projectId: string
-  }
-  readonly minTimestamp: UnixTime
+    readonly clientEmail: string;
+    readonly privateKey: string;
+    readonly projectId: string;
+  };
+  readonly minTimestamp: UnixTime;
   readonly uses: {
-    readonly liveness: boolean
+    readonly liveness: boolean;
     readonly l2costs:
       | {
-          readonly aggregatorEnabled: boolean
-          readonly coingeckoApiKey: string
+          readonly aggregatorEnabled: boolean;
+          readonly coingeckoApiKey: string;
         }
-      | false
-  }
+      | false;
+  };
 }
 
 export interface FinalityConfig {
-  readonly ethereumProviderUrl: string
-  readonly ethereumProviderCallsPerMinute: number
-  readonly beaconApiUrl: string
-  readonly beaconApiCPM: number
-  readonly beaconApiTimeout: number
-  readonly configurations: FinalityProjectConfig[]
+  readonly ethereumProviderUrl: string;
+  readonly ethereumProviderCallsPerMinute: number;
+  readonly beaconApiUrl: string;
+  readonly beaconApiCPM: number;
+  readonly beaconApiTimeout: number;
+  readonly configurations: FinalityProjectConfig[];
 }
 
 export interface BlockscoutChainConfig {
-  readonly type: 'blockscout'
-  readonly blockscoutApiUrl: string
+  readonly type: "blockscout";
+  readonly blockscoutApiUrl: string;
 }
 
 export interface EtherscanChainConfig {
-  readonly type: 'etherscan'
-  readonly etherscanApiKey: string
-  readonly etherscanApiUrl: string
+  readonly type: "etherscan";
+  readonly etherscanApiKey: string;
+  readonly etherscanApiUrl: string;
 }
 
 export interface ChainTvlConfig {
-  readonly chain: string
+  readonly chain: string;
   readonly config?: {
-    readonly projectId: ProjectId
-    readonly chainId: ChainId
-    readonly providerUrl: string
-    readonly providerCallsPerMinute: number
-    readonly minBlockTimestamp: UnixTime
+    readonly projectId: ProjectId;
+    readonly chainId: ChainId;
+    readonly providerUrl: string;
+    readonly providerCallsPerMinute: number;
+    readonly minBlockTimestamp: UnixTime;
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
-      | BlockscoutChainConfig
-    readonly multicallConfig: MulticallConfigEntry[]
-  }
+      | BlockscoutChainConfig;
+    readonly multicallConfig: MulticallConfigEntry[];
+  };
 }
 
 export interface HealthConfig {
-  readonly releasedAt?: string
-  readonly startedAt: string
-  readonly commitSha: string
+  readonly releasedAt?: string;
+  readonly startedAt: string;
+  readonly commitSha: string;
 }
 export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexCallsPerMinute: number
-  readonly projectsExcludedFromAPI: string[]
-  readonly allowedProjectIds?: string[]
-  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
+  readonly starkexApiKey: string;
+  readonly starkexCallsPerMinute: number;
+  readonly projectsExcludedFromAPI: string[];
+  readonly allowedProjectIds?: string[];
+  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[];
 }
 
 export interface MetricsAuthConfig {
-  readonly user: string
-  readonly pass: string
+  readonly user: string;
+  readonly pass: string;
 }
 
 export interface UpdateMonitorConfig {
-  readonly runOnStart?: boolean
-  readonly chains: UpdateMonitorChainConfig[]
-  readonly discord: DiscordConfig | false
+  readonly runOnStart?: boolean;
+  readonly chains: UpdateMonitorChainConfig[];
+  readonly discord: DiscordConfig | false;
 }
 
 export interface DiscordConfig {
-  readonly token: string
-  readonly publicChannelId?: string
-  readonly internalChannelId: string
-  readonly callsPerMinute: number
+  readonly token: string;
+  readonly publicChannelId?: string;
+  readonly internalChannelId: string;
+  readonly callsPerMinute: number;
 }
 
 export interface DiscoveryCacheChainConfig {
-  reorgSafeDepth?: number
-  enableCache?: boolean
+  reorgSafeDepth?: number;
+  enableCache?: boolean;
 }
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
-  DiscoveryCacheChainConfig
+  DiscoveryCacheChainConfig;

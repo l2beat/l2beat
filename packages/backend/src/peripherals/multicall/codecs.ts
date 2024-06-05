@@ -1,20 +1,23 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { Bytes, EthereumAddress } from "@l2beat/shared-pure";
+import { BigNumber, utils } from "ethers";
 
-import { ETHEREUM_BALANCE_ENCODING } from '../../modules/tvl/balances/BalanceProvider'
 import {
   ERC20MulticallCodec,
   MulticallRequest,
   NativeAssetMulticallCodec,
-} from './types'
+} from "./types";
+import {
+  ETHEREUM_MULTICALL_V1_ADDRESS,
+  ETHEREUM_MULTICALL_V1_BLOCK,
+} from "./MulticallConfig";
 
 export const nativeAssetCodec: NativeAssetMulticallCodec = {
-  sinceBlock: ETHEREUM_BALANCE_ENCODING.sinceBlock,
+  sinceBlock: ETHEREUM_MULTICALL_V1_BLOCK,
   balance: {
     encode: encodeGetEthBalance,
     decode: decodeGetEthBalance,
   },
-}
+};
 
 export const erc20Codec: ERC20MulticallCodec = {
   balance: {
@@ -25,72 +28,72 @@ export const erc20Codec: ERC20MulticallCodec = {
     encode: encodeErc20TotalSupplyQuery,
     decode: decodeErc20TotalSupplyQuery,
   },
-}
+};
 
 const erc20Interface = new utils.Interface([
-  'function balanceOf(address account) view returns (uint256)',
-  'function totalSupply() view returns (uint256)',
-])
+  "function balanceOf(address account) view returns (uint256)",
+  "function totalSupply() view returns (uint256)",
+]);
 
 const multicallInterface = new utils.Interface([
-  'function getEthBalance(address account) view returns (uint256)',
-])
+  "function getEthBalance(address account) view returns (uint256)",
+]);
 
 function encodeGetEthBalance(address: EthereumAddress): MulticallRequest {
   return {
-    address: ETHEREUM_BALANCE_ENCODING.address,
+    address: ETHEREUM_MULTICALL_V1_ADDRESS,
     data: Bytes.fromHex(
-      multicallInterface.encodeFunctionData('getEthBalance', [
+      multicallInterface.encodeFunctionData("getEthBalance", [
         address.toString(),
-      ]),
+      ])
     ),
-  }
+  };
 }
 
 function decodeGetEthBalance(response: Bytes) {
   return (
     multicallInterface.decodeFunctionResult(
-      'getEthBalance',
-      response.toString(),
+      "getEthBalance",
+      response.toString()
     )[0] as BigNumber
-  ).toBigInt()
+  ).toBigInt();
 }
 
 function encodeErc20BalanceQuery(
   holder: EthereumAddress,
-  tokenAddress: EthereumAddress,
+  tokenAddress: EthereumAddress
 ): MulticallRequest {
   return {
     address: tokenAddress,
     data: Bytes.fromHex(
-      erc20Interface.encodeFunctionData('balanceOf', [holder.toString()]),
+      erc20Interface.encodeFunctionData("balanceOf", [holder.toString()])
     ),
-  }
+  };
 }
 
 function decodeErc20BalanceQuery(response: Bytes): bigint {
   const [value] = erc20Interface.decodeFunctionResult(
-    'balanceOf',
-    response.toString(),
-  )
+    "balanceOf",
+    response.toString()
+  );
 
-  return (value as BigNumber).toBigInt()
+  return (value as BigNumber).toBigInt();
 }
 
 export function encodeErc20TotalSupplyQuery(
-  tokenAddress: EthereumAddress,
+  tokenAddress: EthereumAddress
 ): MulticallRequest {
   return {
     address: tokenAddress,
-    data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
-  }
+    data: Bytes.fromHex(erc20Interface.encodeFunctionData("totalSupply", [])),
+  };
 }
 
 export function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
   const [value] = erc20Interface.decodeFunctionResult(
-    'totalSupply',
-    response.toString(),
-  )
+    "totalSupply",
+    response.toString()
+  );
 
-  return (value as BigNumber).toBigInt()
+  return (value as BigNumber).toBigInt();
 }
