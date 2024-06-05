@@ -11,61 +11,82 @@ export const real: Layer2 = orbitStackL2({
   display: {
     name: 'Re.al',
     slug: 'real',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Reya is an Arbitrum Orbit stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
-    purposes: ['DeFi', 'AMM', 'Exchange'],
+    purposes: ['RWA', 'Universal'],
     links: {
-      websites: ['https://reya.network/'],
-      apps: [
-        'https://reya.network/lge',
-        'https://bridge.gelato.network/bridge/reya-network',
-      ],
-      documentation: ['https://docs.reya.network/'],
-      explorers: ['https://explorer.reya.network/'],
-      repositories: ['https://github.com/Reya-Labs'],
+      websites: ['https://re.al'],
+      apps: ['https://re.al/bridge', 'https://re.al/app/bridge'],
+      documentation: ['https://docs.re.al/'],
+      explorers: ['https://explorer.re.al'],
+      repositories: ['https://github.com/re-al-Foundation'],
       socialMedia: [
-        'https://twitter.com/Reya_xyz',
-        'https://discord.gg/reyaxyz',
-        'https://medium.com/reya-labs',
+        'https://x.com/real_rwa',
+        'https://discord.gg/cKCCCFXvWj',
+        'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
-    name: 'reya',
-    chainId: 1729,
-    explorerUrl: 'https://explorer.reya.network',
+    name: 'real',
+    chainId: 111188,
+    explorerUrl: 'https://explorer.re.al',
     explorerApi: {
-      url: 'https://explorer.reya.network/api',
+      url: 'https://explorer.re.al/api',
       type: 'blockscout',
     },
-    multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 695,
+        version: '3',
+      },
+    ],
+    minTimestampForTvl: new UnixTime(1710580715),
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: '',
+  rpcUrl: 'https://real.drpc.org',
+  // nativeToken: 'reETH', // not on coingecko yet
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),
+      tokens: '*',
+      description:
+        "Default Gateway for non-native tokens. On depositing, a generic 'wrapped' version of the escrowed token is minted on the L2.",
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x679D4C1cC6855C57726BEA1784F578315d6431f6'),
+      tokens: ['stETH'],
+      description:
+        'This contract escrows the stETH that was deposited to mint reETH.',
+    }),
+  ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'GelatoMultisig',
       'Multisig that can execute upgrades via the UpgradeExecutor.',
     ),
+    {
+      name: 'RealVault Owner EOA',
+      accounts: [discovery.getPermissionedAccount('RealVault', 'owner')],
+      description:
+        'Can migrate the vault to a new contract, withdraw all ETH in the AssetVault and mint unlimited reETH, potentially stealing all user funds.',
+    },
   ],
   milestones: [
     {
-      name: 'Reya DEX launch',
-      link: 'https://x.com/reya_xyz/status/1793296498727485712',
-      date: '2024-05-21T00:00:00Z',
+      name: 'Re.al Mainnet Launch',
+      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/FL4Ewx3CKsFEfMFsU7DZ-cIdhZc05aChfASQ1t-SQ-A',
+      date: '2024-05-15T00:00:00Z',
       description:
-        'Reya DEX launches with Perpetual trading available for ETH and BTC.',
-    },
-    {
-      name: 'Reya LGE',
-      link: 'https://medium.com/reya-labs/reya-network-the-first-trading-optimised-l2-liquidity-generation-event-launch-f3cd958302ec',
-      date: '2024-04-22T00:00:00Z',
-      description:
-        'Reya launches with a Liquidity Generation Event (LGE) where users can provide USDC to the network.',
+        'Re.al launches its mainnet with some initial dapps deployed.',
     },
   ],
 })

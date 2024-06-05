@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x03818c7a5f80be91f8c83e0a98700f7de4e02978
+Generated with discovered.json: 0xd8292d70fd71441d43b5cde9d3e77785b0a78059
 
-# Diff at Wed, 05 Jun 2024 08:40:14 GMT:
+# Diff at Wed, 05 Jun 2024 12:27:34 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 20024491
+- current block number: 20025625
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Orbit stack L2 by Gelato RaaS with AnyTrust 1/1 DAC. The custom native token is backed by  LSTs and the according Vaults are EOA-governed. (strategyManager unverified)
 
 ## Initial discovery
 
@@ -49,6 +49,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract L1OrbitGatewayRouter (0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ERC20RollupEventInbox (0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C)
     +++ description: None
 ```
@@ -61,13 +67,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8)
+    contract StrategyManager (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract Minter (0x655756824385F8903AC8cFDa17B656cc26f7C7da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x679D4C1cC6855C57726BEA1784F578315d6431f6)
     +++ description: None
 ```
 
@@ -152,5 +164,11 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitERC20Gateway (0xfC89B875970122E24C6C5ADd4Dea139443943ea7)
     +++ description: None
 ```

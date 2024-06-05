@@ -4,7 +4,9 @@
   "name": "real",
   "initialAddresses": [
     "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8",
-    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03"
+    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
+    "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+    "0x679D4C1cC6855C57726BEA1784F578315d6431f6"
   ],
   "names": {
     "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": "Bridger",
@@ -16,11 +18,16 @@
     "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0": "SequencerInbox",
     "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a": "UpgradeExecutor",
     "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "GelatoMultisig",
-    "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault"
+    "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault",
+    "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8": "StrategyManager"
   },
   "overrides": {
-    "RealVault":{
-        "ignoreMethods": ["previewDeposit", "roundPricePerShare", "settlementTime"]
+    "RealVault": {
+      "ignoreMethods": [
+        "previewDeposit",
+        "roundPricePerShare",
+        "settlementTime"
+      ]
     },
     "Bridger": {
       "ignoreMethods": ["proxiableUUID"]
@@ -53,9 +60,6 @@
           }
         }
       }
-    },
-    "HychainMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }
