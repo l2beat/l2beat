@@ -18,9 +18,12 @@ export const avalanche: Bridge = {
       apps: ['https://bridge.avax.network/'],
       repositories: ['https://github.com/ava-labs'],
       socialMedia: [
-        'https://twitter.com/avalancheavax',
+        'https://twitter.com/avax',
         'https://t.me/avalancheavax',
         'https://discord.gg/RwXY7P6',
+        'https://www.linkedin.com/company/avalancheavax',
+        'https://www.youtube.com/Avalancheavax',
+        'https://www.facebook.com/avalancheavax',
       ],
     },
   },
