@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "real",
+  "initialAddresses": [
+    "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8",
+    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
+    "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+    "0x679D4C1cC6855C57726BEA1784F578315d6431f6"
+  ],
+  "names": {
+    "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": "Bridger",
+    "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03": "Bridge",
+    "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11": "Inbox",
+    "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a": "RollupProxy",
+    "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d": "ChallengeManager",
+    "0x8592Ca44dE1D354A20F75160F5602E5933D33761": "Outbox",
+    "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0": "SequencerInbox",
+    "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a": "UpgradeExecutor",
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "GelatoMultisig",
+    "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault",
+    "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8": "StrategyManager"
+  },
+  "overrides": {
+    "RealVault": {
+      "ignoreMethods": [
+        "previewDeposit",
+        "roundPricePerShare",
+        "settlementTime"
+      ]
+    },
+    "Bridger": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "extends": "orbitstack/RollupProxy"
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "SequencerInbox": {
+      "extends": "orbitstack/SequencerInbox"
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    }
+  }
+}

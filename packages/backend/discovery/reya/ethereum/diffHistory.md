@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x4026926605a67c1f059c7818b6bcd0715352432d
+
+# Diff at Wed, 05 Jun 2024 08:43:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3a08c61f892fdbd930567c41f50f427b83391859 block: 19973435
+- current block number: 20024504
+
+## Description
+
+Same Multisig as in new re.al L2, deployed by gelato deployer.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19973435 (main branch discovery), not current.
+
+```diff
+    contract ReyaMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      name:
+-        "ReyaMultisig"
++        "GelatoMultisig"
+    }
+```
+
 Generated with discovered.json: 0x365b8f59f73971268b17211f32b838a2f592af96
 
 # Diff at Wed, 29 May 2024 05:29:13 GMT:
