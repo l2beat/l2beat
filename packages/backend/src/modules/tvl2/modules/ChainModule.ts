@@ -127,9 +127,6 @@ function createChainModule(
     syncOptimizer,
   })
 
-  // TODO transform this to nativeCodec[]
-  chainConfig.config.multicallConfig
-
   const amountService = new AmountService({
     rpcClient: rpcClient,
     multicallClient: new MulticallClient(

@@ -49,7 +49,7 @@ describe(AmountService.name, () => {
     expect(mockMulticall.multicall).not.toHaveBeenCalled()
   })
 
-  it.only('calls multicall if supports native balance', async () => {
+  it('calls multicall if supports native balance', async () => {
     const mockMulticall = mockObject<MulticallClient>({
       multicall: () => Promise.resolve([]),
       isNativeBalanceSupported: () => true,
