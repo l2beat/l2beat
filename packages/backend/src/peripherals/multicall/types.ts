@@ -6,7 +6,6 @@ export interface MulticallConfigEntry {
   address: EthereumAddress
   encodeBatch: (requests: MulticallRequest[]) => Bytes
   decodeBatch: (result: Bytes) => MulticallResponse[]
-  // TODO: get rid of this
   isNativeBalanceSupported: boolean
 }
 
