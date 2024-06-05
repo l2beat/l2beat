@@ -43,7 +43,7 @@ export function makeConfig(
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
-    isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
+    isLocal && !env.string('LOCAL_DB_URL').includes('local'),
   )
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -94,7 +94,7 @@ export function makeConfig(
     },
     database: isLocal
       ? {
-          connection: env.string('LOCAL_DB_URL').includes('localhost')
+          connection: env.string('LOCAL_DB_URL').includes('local')
             ? env.string('LOCAL_DB_URL')
             : {
                 connectionString: env.string('LOCAL_DB_URL'),
