@@ -20,7 +20,6 @@ describe(getSourceOutputPath.name, () => {
     implementations: [],
     abis: {},
     sourceBundles: [],
-    matchingTemplates: {},
     relatives: {},
   })
 
