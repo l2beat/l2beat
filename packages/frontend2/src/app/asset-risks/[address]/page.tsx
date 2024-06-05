@@ -1,6 +1,6 @@
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import { redirect } from 'next/navigation'
-import type { SetRequired } from 'type-fest'
+import type { SetOptional, SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
@@ -14,6 +14,8 @@ import { getChain, getChainStage } from './_utils/chains'
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
 }
+
+export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
 interface Props {
   params: { address: string }
@@ -154,6 +156,7 @@ export default async function Page({ params: { address } }: Props) {
                 symbol: token.symbol,
                 iconUrl: token.iconUrl,
                 bridge: token.bridgedUsing?.slug,
+                address: token.address,
               },
               chain: {
                 id: chainId,
@@ -185,7 +188,7 @@ export default async function Page({ params: { address } }: Props) {
         },
       }
 
-    let risks: ScalingProjectRisk[] = []
+    let risks: SetOptional<ScalingProjectRisk, 'category'>[] = []
     risks = chain.technology
       ? [
           chain.technology.stateCorrectness,
@@ -198,6 +201,11 @@ export default async function Page({ params: { address } }: Props) {
           ...(chain.technology.otherConsiderations ?? []),
         ].flatMap((choice) => choice?.risks ?? [])
       : []
+
+    risks = risks.map((r) => ({
+      text: `${r.category} ${r.text}`,
+      isCritical: r.isCritical,
+    }))
 
     const stage = getChainStage(token.chain.id)
 
