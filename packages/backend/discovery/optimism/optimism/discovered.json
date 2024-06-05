@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 120986374,
-  "configHash": "0x36617917839926d357c9ac849587a887d7f366a6c7c4b309231dccdad5c5ef32",
+  "configHash": "0x585623f610a8bc340a742efeb8d1890445b581bd388367c8bc72d2bf222114ee",
   "version": 4,
   "contracts": [
     {
@@ -275,7 +275,7 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "L2ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -288,7 +288,8 @@
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
         "owner": "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "BaseFeeVault",
