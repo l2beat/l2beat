@@ -568,7 +568,7 @@ export function NavWrapper({
       {!!legacyNav && <LegacyNavBar links={groups} />}
       <MobileNavBar links={groups} />
       <Sidenav links={groups} legacyNav={!!legacyNav} />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 overflow-hidden">{children}</div>
     </div>
   )
 }
