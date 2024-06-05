@@ -235,8 +235,6 @@ export const linea: Layer2 = {
         batchSize: 150,
         sinceBlock: 42,
         version: '3',
-        // TODO: fix this
-        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'linea',
