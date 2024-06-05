@@ -153,7 +153,7 @@ export const apex: Layer2 = {
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['DAC'],
-    bridge: { type: 'DAC Members', ...dacConfig },
+    bridge: { type: 'DACMembers', ...dacConfig },
     mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({

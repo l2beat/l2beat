@@ -30,7 +30,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   daProvider: {
     name: 'DAC',
     bridge: {
-      type: 'DAC Members',
+      type: 'DACMembers',
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     },

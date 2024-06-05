@@ -26,7 +26,7 @@ export const mantle: Layer2 = opStackL2({
   daProvider: {
     name: 'MantleDA',
     bridge: {
-      type: 'Staked Operators',
+      type: 'StakedOperators',
       requiredSignatures: threshold,
       membersCount: committeeMembers,
     },

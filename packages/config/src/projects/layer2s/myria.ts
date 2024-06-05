@@ -101,7 +101,7 @@ export const myria: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['DAC'],
     bridge: {
-      type: 'DAC Members',
+      type: 'DACMembers',
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
     },

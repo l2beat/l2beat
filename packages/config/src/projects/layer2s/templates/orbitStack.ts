@@ -318,7 +318,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
           return addSentimentToDataAvailability({
             layers: ['DAC'],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
+            bridge: { type: 'DACMembers', membersCount, requiredSignatures },
             mode: 'CompressedTransactionsData',
           })
         })()
@@ -506,7 +506,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
           return addSentimentToDataAvailability({
             layers: ['DAC'],
-            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
+            bridge: { type: 'DACMembers', membersCount, requiredSignatures },
             mode: 'CompressedTransactionsData',
           })
         })()

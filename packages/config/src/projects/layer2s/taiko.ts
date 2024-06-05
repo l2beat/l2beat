@@ -70,9 +70,9 @@ const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in min
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs)'],
+    layers: ['EthereumBlobs'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'TransactionsData',
   }),
   display: {
     name: 'Taiko',
