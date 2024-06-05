@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 119700093,
-  "configHash": "0xe094ba026e591c8cdcefa1b4f637209c5a9e3168bb3005f19986bd174fadf242",
+  "blockNumber": 120986374,
+  "configHash": "0x36617917839926d357c9ac849587a887d7f366a6c7c4b309231dccdad5c5ef32",
   "version": 4,
   "contracts": [
     {
@@ -24,7 +24,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 190,
+        "nonce": 195,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -74,6 +74,7 @@
     {
       "name": "L2CrossDomainMessenger",
       "address": "0x4200000000000000000000000000000000000007",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
@@ -84,7 +85,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636289",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637410",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -100,6 +101,7 @@
     {
       "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
+      "ignoreInWatchMode": ["l1BaseFee"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xb528D11cC114E026F138fE568744c6D45ce6Da7A",
@@ -116,7 +118,7 @@
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 8272482002,
+        "l1BaseFee": 8401294045,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -154,7 +156,7 @@
         "l1FeeWallet": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "3295835456307289236126",
+        "totalProcessed": "3442673877429005409293",
         "version": "1.1.0"
       }
     },
@@ -184,9 +186,9 @@
       "implementations": ["0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "getL1BlockNumber": 19811074,
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L1BlockNumber"
     },
     {
       "name": "L2ERC721Bridge",
@@ -209,6 +211,13 @@
     {
       "name": "L1Block",
       "address": "0x4200000000000000000000000000000000000015",
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
@@ -217,23 +226,24 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 8272482002,
+        "basefee": 8401294045,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x68489937ef8fd075a65b6aeb3e4cb9ad5bf031dc6746f20920d8f6ccf27ea0a4",
+        "hash": "0x1eb298a6a893905e11b6e1e31b56c825c2e28739ce68eafd0c811f79ad5de309",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 19811074,
-        "sequenceNumber": 1,
-        "timestamp": 1714998887,
+        "number": 20024043,
+        "sequenceNumber": 0,
+        "timestamp": 1717571387,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "L1Block"
     },
     {
-      "name": "L2ToL1MessagePasser",
+      "name": "L1TL1MessagePasser",
       "address": "0x4200000000000000000000000000000000000016",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -244,9 +254,9 @@
       "sinceTimestamp": 1636665399,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292636299",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L2ToL1MessagePasser"
     },
     {
       "name": "OptimismMintableERC721Factory",
@@ -424,6 +434,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
     "0x3041BA32f451F5850c147805F5521AC206421623",
     "0x4665374939642965EfD8357D4568D2A77f677429",

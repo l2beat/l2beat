@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x08b3dc3fec948d7ece718f1244e0aa6a9034bc46
+Generated with discovered.json: 0x53b2b9dcdd3b214d5dd6757756122b1a59889bc4
 
-# Diff at Mon, 06 May 2024 12:36:13 GMT:
+# Diff at Wed, 05 Jun 2024 07:12:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 119700093
+- current block number: 120986374
 
 ## Description
 
@@ -13,19 +13,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x28B1eE885034ccD2d5Fa228a9A3157390D27177C)
+    contract InternalProxyAdminOwnerMultisig1 (0x28B1eE885034ccD2d5Fa228a9A3157390D27177C)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Proxy (0x4200000000000000000000000000000000000001)
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26)
     +++ description: None
 ```
 
@@ -85,7 +79,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016)
+    contract L1TL1MessagePasser (0x4200000000000000000000000000000000000016)
     +++ description: None
 ```
 
@@ -145,6 +139,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x7871d1187A97cbbE40710aC119AA3d412944e4Fe)
+    contract ProxyAdminOwner (0x7871d1187A97cbbE40710aC119AA3d412944e4Fe)
     +++ description: None
 ```
