@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x2e96b99a18a238b80113eef0b15038b22f19a9eb
+
+# Diff at Wed, 05 Jun 2024 10:52:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@2d4052223220f6bca7a10a92f78dc445f890f114 block: 19875796
+- current block number: 20025146
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19875796 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f397bd826fe7f9bf02d8d05820501cea74e396d
 
 # Diff at Wed, 15 May 2024 13:52:02 GMT:
