@@ -14,7 +14,7 @@ export const real: Layer2 = orbitStackL2({
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
-      'Reya is an Arbitrum Orbit stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
+      'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     purposes: ['RWA', 'Universal'],
     links: {
       websites: ['https://re.al'],
