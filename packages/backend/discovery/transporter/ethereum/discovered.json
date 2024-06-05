@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20025240,
+  "blockNumber": 20026089,
   "configHash": "0x3ba157497c0bc83b9e2bf6c62a23a61a37d8f2a14b01bf30c1b5802c624c7025",
   "version": 4,
   "contracts": [
@@ -115,7 +115,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 67263,
+        "nextAvailableNonce": 67298,
         "owner": "0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -136,7 +136,7 @@
         "commitStore": ["0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76"],
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -231,7 +231,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -299,7 +299,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 6,
-        "getLatestPriceEpochAndRound": 367361,
+        "getLatestPriceEpochAndRound": 374273,
         "getStaticConfig": [
           "5009297550715157269",
           "465200170687744372",
@@ -385,7 +385,7 @@
         "commitStore": ["0x40c558575093eC1099CC21B020d9b8D13c74417F"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -530,8 +530,8 @@
       "sinceTimestamp": 1701286199,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1654,
-        "getLatestPriceEpochAndRound": 369410,
+        "getExpectedNextSequenceNumber": 1655,
+        "getLatestPriceEpochAndRound": 376322,
         "getStaticConfig": [
           "5009297550715157269",
           "6433500567565415381",
@@ -677,7 +677,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 730,
-        "getLatestPriceEpochAndRound": 368642,
+        "getLatestPriceEpochAndRound": 375299,
         "getStaticConfig": [
           "5009297550715157269",
           "5142893604156789321",
@@ -713,7 +713,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -778,7 +778,7 @@
       "values": {
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -795,10 +795,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1663,
-        "getNopFeesJuels": "1013351581596261002",
+        "getExpectedNextSequenceNumber": 1664,
+        "getNopFeesJuels": "1041974829029984275",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7755387324761516006",
+        "linkAvailableForPayment": "7726764077327792733",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -841,7 +841,7 @@
         "commitStore": ["0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -924,7 +924,7 @@
       "values": {
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -941,10 +941,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1307,
-        "getNopFeesJuels": "2165303536507873973",
+        "getExpectedNextSequenceNumber": 1308,
+        "getNopFeesJuels": "2215126805413807531",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7330553933601448995",
+        "linkAvailableForPayment": "7280730664695515437",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1030,7 +1030,7 @@
         "commitStore": ["0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -1112,8 +1112,8 @@
       "sinceTimestamp": 1701285563,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1179,
-        "getLatestPriceEpochAndRound": 369153,
+        "getExpectedNextSequenceNumber": 1180,
+        "getLatestPriceEpochAndRound": 377857,
         "getStaticConfig": [
           "5009297550715157269",
           "3734403246176062136",
@@ -1220,7 +1220,7 @@
         "commitStore": ["0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE"],
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -1295,7 +1295,7 @@
         "commitStore": ["0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -1578,7 +1578,7 @@
         "commitStore": ["0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -1736,7 +1736,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 6,
-        "getLatestPriceEpochAndRound": 369665,
+        "getLatestPriceEpochAndRound": 375809,
         "getStaticConfig": [
           "5009297550715157269",
           "1346049177634351622",
@@ -1771,7 +1771,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -1830,8 +1830,8 @@
       "sinceTimestamp": 1701457415,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1451,
-        "getLatestPriceEpochAndRound": 370178,
+        "getExpectedNextSequenceNumber": 1452,
+        "getLatestPriceEpochAndRound": 378881,
         "getStaticConfig": [
           "5009297550715157269",
           "11344663589394136015",
@@ -1970,8 +1970,8 @@
       "sinceTimestamp": 1701287747,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 2265,
-        "getLatestPriceEpochAndRound": 369666,
+        "getExpectedNextSequenceNumber": 2266,
+        "getLatestPriceEpochAndRound": 377858,
         "getStaticConfig": [
           "5009297550715157269",
           "15971525489660198786",
@@ -2007,7 +2007,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2024,8 +2024,8 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1558,
-        "getNopFeesJuels": "1785910107234168729",
+        "getExpectedNextSequenceNumber": 1559,
+        "getNopFeesJuels": "1843107376764494843",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9288050172940952666",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
@@ -2073,7 +2073,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2090,10 +2090,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 2366,
-        "getNopFeesJuels": "2331934606229215941",
+        "getExpectedNextSequenceNumber": 2370,
+        "getNopFeesJuels": "2466765175847322885",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3444715092116813839",
+        "linkAvailableForPayment": "3372235031343134119",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2233,8 +2233,8 @@
       "sinceTimestamp": 1701287831,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1661,
-        "getLatestPriceEpochAndRound": 369410,
+        "getExpectedNextSequenceNumber": 1663,
+        "getLatestPriceEpochAndRound": 376066,
         "getStaticConfig": [
           "5009297550715157269",
           "4949039107694359620",
@@ -2388,7 +2388,7 @@
         "commitStore": ["0x4af4B497c998007eF83ad130318eB2b925a79dc8"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2474,7 +2474,7 @@
         "commitStore": ["0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2660,7 +2660,7 @@
         "commitStore": ["0x7986C9892389854cAAbAC785ff18123B0070a5Fd"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -2706,7 +2706,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2723,10 +2723,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1189,
-        "getNopFeesJuels": "469798865335944495",
+        "getExpectedNextSequenceNumber": 1190,
+        "getNopFeesJuels": "500808696856894324",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4933563445075025815",
+        "linkAvailableForPayment": "4902553613554075986",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2758,7 +2758,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2826,7 +2826,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -2889,7 +2889,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 628,
-        "getLatestPriceEpochAndRound": 369667,
+        "getLatestPriceEpochAndRound": 374017,
         "getStaticConfig": [
           "5009297550715157269",
           "4051577828743386545",
@@ -2926,7 +2926,7 @@
         "commitStore": ["0x831097033C88c82a7F1897b168Aa88cC44540C8f"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -2998,7 +2998,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3040,7 +3040,7 @@
         "commitStore": ["0x8DC27D621c41a32140e22E2a4dAf1259639BAe04"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3087,7 +3087,7 @@
       "values": {
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3104,10 +3104,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 3649,
-        "getNopFeesJuels": "3409912262770521639",
+        "getExpectedNextSequenceNumber": 3652,
+        "getNopFeesJuels": "3494018689037061214",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8284074688653310266",
+        "linkAvailableForPayment": "8226132760935440922",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3167,7 +3167,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -3274,7 +3274,7 @@
         "commitStore": ["0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3321,7 +3321,7 @@
         "commitStore": ["0x118a9389960F86390A4F14ce4C95D6ff076C6bFC"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3386,7 +3386,7 @@
       "values": {
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3430,7 +3430,7 @@
         "commitStore": ["0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -3512,7 +3512,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3569,7 +3569,7 @@
         "commitStore": ["0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717585835,
+          1717596059,
           true,
           "600000000000000000000000",
           "167000000000000000000"
