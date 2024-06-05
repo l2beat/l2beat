@@ -234,10 +234,10 @@ describe(ManagedMultiIndexer.name, () => {
       const configurations = await getSavedConfigurations(indexerService)
 
       expect(configurations).toEqualUnsorted([
-        saved('a', 100, 300, 300),
-        saved('b', 200, 500, 500),
-        saved('c', 400, null, 600),
-        saved('d', 100, null, 600),
+        savedWithoutProperties('a', 100, 300, 300),
+        savedWithoutProperties('b', 200, 500, 500),
+        savedWithoutProperties('c', 400, null, 600),
+        savedWithoutProperties('d', 100, null, 600),
       ])
     })
 
@@ -335,6 +335,20 @@ function saved(
   return {
     id: id.repeat(12),
     properties: null,
+    minHeight,
+    maxHeight,
+    currentHeight,
+  }
+}
+
+function savedWithoutProperties(
+  id: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight: number | null,
+): Omit<SavedConfiguration<null>, 'properties'> {
+  return {
+    id: id.repeat(12),
     minHeight,
     maxHeight,
     currentHeight,
