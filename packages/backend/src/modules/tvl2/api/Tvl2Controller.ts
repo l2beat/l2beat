@@ -16,76 +16,76 @@ import {
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
-} from "@l2beat/shared-pure";
-import { groupBy } from "lodash";
+} from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
-import { Tvl2Config } from "../../../config/Config";
-import { Project } from "../../../model/Project";
-import { ChainConverter } from "../../../tools/ChainConverter";
-import { asNumber } from "./asNumber";
-import { AmountRepository } from "../repositories/AmountRepository";
-import { PriceRepository } from "../repositories/PriceRepository";
-import { ValueRecord, ValueRepository } from "../repositories/ValueRepository";
-import { calculateValue } from "../utils/calculateValue";
-import { createAmountId } from "../utils/createAmountId";
-import { createPriceId } from "../utils/createPriceId";
+import { Tvl2Config } from '../../../config/Config'
+import { Project } from '../../../model/Project'
+import { ChainConverter } from '../../../tools/ChainConverter'
+import { AmountRepository } from '../repositories/AmountRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
+import { calculateValue } from '../utils/calculateValue'
+import { createAmountId } from '../utils/createAmountId'
+import { createPriceId } from '../utils/createPriceId'
+import { asNumber } from './asNumber'
 
 interface CanonicalAssetBreakdown {
-  assetId: AssetId;
-  chainId: ChainId;
-  amount: number;
-  usdValue: number;
-  usdPrice: string;
-  escrows: CanonicalAssetBreakdownData["escrows"];
+  assetId: AssetId
+  chainId: ChainId
+  amount: number
+  usdValue: number
+  usdPrice: string
+  escrows: CanonicalAssetBreakdownData['escrows']
 }
 
 type AmountConfigMap = Map<
   ProjectId,
   (AmountConfigEntry & { configId: string })[]
->;
+>
 
-type PriceConfigIdMap = Map<string, { assetId: AssetId; priceId: string }>;
+type PriceConfigIdMap = Map<string, { assetId: AssetId; priceId: string }>
 
 type Values = {
-  external: bigint;
-  canonical: bigint;
-  native: bigint;
-};
-type ValuesMap = Map<number, Values>;
+  external: bigint
+  canonical: bigint
+  native: bigint
+}
+type ValuesMap = Map<number, Values>
 
 type ApiProject = {
-  id: ProjectId;
-  minTimestamp: UnixTime;
-  type: Project["type"];
-  slug: string;
+  id: ProjectId
+  minTimestamp: UnixTime
+  type: Project['type']
+  slug: string
   sources: Map<
     string,
     {
-      name: string;
-      minTimestamp: UnixTime;
+      name: string
+      minTimestamp: UnixTime
     }
-  >;
-};
+  >
+}
 
 interface AssociatedToken {
-  address: EthereumAddress | "native";
-  chain: string;
-  type: "canonical" | "external" | "native";
-  includeInTotal: boolean;
-  project: ProjectId;
-  projectType: "layers2s" | "bridges";
+  address: EthereumAddress | 'native'
+  chain: string
+  type: 'canonical' | 'external' | 'native'
+  includeInTotal: boolean
+  project: ProjectId
+  projectType: 'layers2s' | 'bridges'
 }
 
 export class Tvl2Controller {
-  private readonly amountConfig: AmountConfigMap;
+  private readonly amountConfig: AmountConfigMap
   private readonly currAmountConfigs: Map<
     string,
     AmountConfigEntry & { configId: string }
-  >;
-  private readonly priceConfigs: PriceConfigIdMap;
-  private readonly projects: ApiProject[];
-  private readonly associatedTokens: AssociatedToken[];
-  private minTimestamp: Record<Project["type"], UnixTime>;
+  >
+  private readonly priceConfigs: PriceConfigIdMap
+  private readonly projects: ApiProject[]
+  private readonly associatedTokens: AssociatedToken[]
+  private minTimestamp: Record<Project['type'], UnixTime>
 
   constructor(
     private readonly amountRepository: AmountRepository,
@@ -93,71 +93,71 @@ export class Tvl2Controller {
     private readonly valueRepository: ValueRepository,
     private readonly chainConverter: ChainConverter,
     projects: Project[],
-    config: Tvl2Config
+    config: Tvl2Config,
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
-    this.amountConfig = getAmountConfigMap(config);
+    this.amountConfig = getAmountConfigMap(config)
     this.currAmountConfigs = new Map(
       [...this.amountConfig.values()]
         .flat()
         // TODO: we should check it on runtime as well
         .filter((x) => !x.untilTimestamp)
-        .map((x) => [x.configId, x])
-    );
-    this.priceConfigs = getPriceConfigIds(config);
+        .map((x) => [x.configId, x]),
+    )
+    this.priceConfigs = getPriceConfigIds(config)
     this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
       if (config.projectsExcludedFromApi.includes(id.toString())) {
-        return [];
+        return []
       }
 
-      const amounts = this.amountConfig.get(id);
+      const amounts = this.amountConfig.get(id)
       if (!amounts) {
-        return [];
+        return []
       }
-      assert(amounts, "Config not found: " + id.toString());
+      assert(amounts, 'Config not found: ' + id.toString())
       const minTimestamp = amounts
         .map((x) => x.sinceTimestamp)
-        .reduce((a, b) => UnixTime.min(a, b));
+        .reduce((a, b) => UnixTime.min(a, b))
 
       const sources = new Map<
         string,
         { name: string; minTimestamp: UnixTime }
-      >();
+      >()
       for (const amount of amounts) {
         const name =
-          amount.type === "circulatingSupply" ? "coingecko" : amount.chain;
+          amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
 
-        const source = sources.get(name);
+        const source = sources.get(name)
         if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
-          sources.set(name, { name, minTimestamp: amount.sinceTimestamp });
+          sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
         }
       }
-      return { id, minTimestamp, type, slug, sources };
-    });
+      return { id, minTimestamp, type, slug, sources }
+    })
 
     this.associatedTokens = projects.flatMap(({ projectId: id, type }) => {
       if (config.projectsExcludedFromApi.includes(id.toString())) {
-        return [];
+        return []
       }
 
-      const amounts = this.amountConfig.get(id);
+      const amounts = this.amountConfig.get(id)
       if (!amounts) {
-        return [];
+        return []
       }
 
-      const uniqueTokens = new Map<string, string>();
+      const uniqueTokens = new Map<string, string>()
 
       const associatedAmounts = amounts
         .filter((x) => x.isAssociated === true)
         .filter((amount) => {
-          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`);
+          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
           if (u) {
-            assert(amount.source === u, "Type mismatch");
-            return false;
+            assert(amount.source === u, 'Type mismatch')
+            return false
           }
-          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source);
-          return true;
-        });
+          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
+          return true
+        })
 
       return associatedAmounts.map((amount) => {
         return {
@@ -167,161 +167,161 @@ export class Tvl2Controller {
           includeInTotal: amount.includeInTotal,
           project: id,
           projectType: getType(type),
-        };
-      });
-    });
+        }
+      })
+    })
 
     this.minTimestamp = {
-      layer2: this.getMinTimestamp("layer2"),
-      bridge: this.getMinTimestamp("bridge"),
-      layer3: this.getMinTimestamp("layer3"),
-    };
+      layer2: this.getMinTimestamp('layer2'),
+      bridge: this.getMinTimestamp('bridge'),
+      layer3: this.getMinTimestamp('layer3'),
+    }
   }
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPrices = await this.getEthPrices();
+    const ethPrices = await this.getEthPrices()
 
-    const projectIds = this.projects.map((x) => x.id);
-    const values = await this.valueRepository.getForProjects(projectIds);
+    const projectIds = this.projects.map((x) => x.id)
+    const values = await this.valueRepository.getForProjects(projectIds)
 
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour);
-    const hourlyCutOff = getHourlyCutoff(lastHour);
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const hourlyCutOff = getHourlyCutoff(lastHour)
 
-    const valuesByProject = groupBy(values, "projectId");
+    const valuesByProject = groupBy(values, 'projectId')
 
     const aggregates = {
       layer3: new Map<number, Values>(),
       layer2: new Map<number, Values>(),
       bridge: new Map<number, Values>(),
-    };
+    }
 
-    const chartsMap = new Map<string, TvlApiCharts>();
+    const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of this.projects) {
-      const values = valuesByProject[project.id.toString()];
+      const values = valuesByProject[project.id.toString()]
       if (!values) {
-        continue;
+        continue
       }
 
-      const valuesByTimestamp = groupBy(values, "timestamp");
+      const valuesByTimestamp = groupBy(values, 'timestamp')
 
-      const valueSums = new Map<number, Values>();
+      const valueSums = new Map<number, Values>()
       for (const [timestamp, value] of Object.entries(valuesByTimestamp)) {
         const sum = value.reduce(
           (acc, curr) => {
-            acc.canonical += curr.canonical;
-            acc.external += curr.external;
-            acc.native += curr.native;
-            return acc;
+            acc.canonical += curr.canonical
+            acc.external += curr.external
+            acc.native += curr.native
+            return acc
           },
-          { canonical: 0n, external: 0n, native: 0n }
-        );
-        valueSums.set(Number(timestamp), sum);
+          { canonical: 0n, external: 0n, native: 0n },
+        )
+        valueSums.set(Number(timestamp), sum)
 
         const resultForTotal = value.reduce(
           (acc, curr) => {
-            acc.canonical += curr.canonicalForTotal;
-            acc.external += curr.externalForTotal;
-            acc.native += curr.nativeForTotal;
-            return acc;
+            acc.canonical += curr.canonicalForTotal
+            acc.external += curr.externalForTotal
+            acc.native += curr.nativeForTotal
+            return acc
           },
-          { canonical: 0n, external: 0n, native: 0n }
-        );
+          { canonical: 0n, external: 0n, native: 0n },
+        )
 
-        const aggregateSums = aggregates[project.type];
-        const aggregateSum = aggregateSums.get(Number(timestamp));
+        const aggregateSums = aggregates[project.type]
+        const aggregateSum = aggregateSums.get(Number(timestamp))
         if (!aggregateSum) {
-          aggregateSums.set(Number(timestamp), resultForTotal);
+          aggregateSums.set(Number(timestamp), resultForTotal)
         } else {
-          aggregateSum.canonical += resultForTotal.canonical;
-          aggregateSum.external += resultForTotal.external;
-          aggregateSum.native += resultForTotal.native;
+          aggregateSum.canonical += resultForTotal.canonical
+          aggregateSum.external += resultForTotal.external
+          aggregateSum.native += resultForTotal.native
         }
       }
 
-      const minValueTimestamp = new UnixTime(Math.min(...valueSums.keys()));
-      const maxValueTimestamp = new UnixTime(Math.max(...valueSums.keys()));
+      const minValueTimestamp = new UnixTime(Math.min(...valueSums.keys()))
+      const maxValueTimestamp = new UnixTime(Math.max(...valueSums.keys()))
 
       const minTimestamp = UnixTime.max(
         minValueTimestamp,
-        project.minTimestamp
-      ).toEndOf("day");
-      const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour);
+        project.minTimestamp,
+      ).toEndOf('day')
+      const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
 
       const dailyData = getChartData({
         start: minTimestamp,
         end: maxTimestamp,
-        step: [1, "days"],
+        step: [1, 'days'],
         aggregatedValues: valueSums,
         ethPrices,
         chartId: project.id,
-      });
+      })
 
       const sixHourlyData = getChartData({
-        start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf("day"),
+        start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
         end: maxTimestamp,
-        step: [6, "hours"],
+        step: [6, 'hours'],
         aggregatedValues: valueSums,
         ethPrices,
         chartId: project.id,
-      });
+      })
 
       const hourlyData = getChartData({
         start: UnixTime.max(hourlyCutOff, minTimestamp),
         end: maxTimestamp,
-        step: [1, "hours"],
+        step: [1, 'hours'],
         aggregatedValues: valueSums,
         ethPrices,
         chartId: project.id,
-      });
+      })
 
       chartsMap.set(project.id.toString(), {
         daily: getChart(dailyData),
         sixHourly: getChart(sixHourlyData),
         hourly: getChart(hourlyData),
-      });
+      })
     }
 
-    for (const type of ["layer2", "layer3", "bridge"] as const) {
-      const value = aggregates[type];
-      const minTimestamp = this.minTimestamp[type];
+    for (const type of ['layer2', 'layer3', 'bridge'] as const) {
+      const value = aggregates[type]
+      const minTimestamp = this.minTimestamp[type]
       const dailyData = getChartData({
         start: minTimestamp,
         end: lastHour,
-        step: [1, "days"],
+        step: [1, 'days'],
         aggregatedValues: value,
         ethPrices,
         chartId: type,
-      });
+      })
       const sixHourlyData = getChartData({
         start: sixHourlyCutOff,
         end: lastHour,
-        step: [6, "hours"],
+        step: [6, 'hours'],
         aggregatedValues: value,
         ethPrices,
         chartId: type,
-      });
+      })
       const hourlyData = getChartData({
         start: hourlyCutOff,
         end: lastHour,
-        step: [1, "hours"],
+        step: [1, 'hours'],
         aggregatedValues: value,
         ethPrices,
         chartId: type,
-      });
+      })
 
       chartsMap.set(type, {
         daily: getChart(dailyData),
         sixHourly: getChart(sixHourlyData),
         hourly: getChart(hourlyData),
-      });
+      })
     }
 
-    const breakdownMap = await this.getBreakdownMap(lastHour);
+    const breakdownMap = await this.getBreakdownMap(lastHour)
 
-    const projectData: Record<string, TvlApiProject> = {};
+    const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
     for (const [projectId, charts] of chartsMap.entries()) {
-      const breakdown = breakdownMap.get(projectId);
+      const breakdown = breakdownMap.get(projectId)
       if (!breakdown) {
         projectData[projectId] = {
           tokens: {
@@ -330,8 +330,8 @@ export class Tvl2Controller {
             NMV: [],
           },
           charts,
-        };
-        continue;
+        }
+        continue
       }
 
       // The following is backward-compatibility layer
@@ -339,61 +339,61 @@ export class Tvl2Controller {
       // check for repetitions in breakdown
       // and sum their values
       for (const value of Object.values(breakdown)) {
-        const assetMap = new Map();
+        const assetMap = new Map()
         for (const token of value) {
-          const assetId = token.assetId.toString();
-          const chainId = token.chainId.toString();
-          const id = `${assetId}-${chainId}`;
-          const existing = assetMap.get(id);
+          const assetId = token.assetId.toString()
+          const chainId = token.chainId.toString()
+          const id = `${assetId}-${chainId}`
+          const existing = assetMap.get(id)
           if (existing) {
-            existing.usdValue += token.usdValue;
+            existing.usdValue += token.usdValue
           } else {
-            assetMap.set(id, token);
+            assetMap.set(id, token)
           }
         }
-        value.splice(0, value.length, ...assetMap.values());
+        value.splice(0, value.length, ...assetMap.values())
       }
 
       projectData[projectId] = {
         tokens: breakdown,
         charts,
-      };
+      }
     }
 
-    const bridges = chartsMap.get("bridge");
-    assert(bridges, "Bridges not found");
-    const layers2s = chartsMap.get("layer2");
-    assert(layers2s, "Layer2s not found");
-    const layer3s = chartsMap.get("layer3");
-    assert(layer3s, "Layer3s not found");
+    const bridges = chartsMap.get('bridge')
+    assert(bridges, 'Bridges not found')
+    const layers2s = chartsMap.get('layer2')
+    assert(layers2s, 'Layer2s not found')
+    const layer3s = chartsMap.get('layer3')
+    assert(layer3s, 'Layer3s not found')
 
     const layer2sTotal = {
       hourly: sumCharts(layers2s.hourly, layer3s.hourly),
       sixHourly: sumCharts(layers2s.sixHourly, layer3s.sixHourly),
       daily: sumCharts(layers2s.daily, layer3s.daily),
-    };
+    }
 
     const combined = {
       hourly: sumCharts(bridges.hourly, layer2sTotal.hourly),
       sixHourly: sumCharts(bridges.sixHourly, layer2sTotal.sixHourly),
       daily: sumCharts(bridges.daily, layer2sTotal.daily),
-    };
+    }
 
     const result: TvlApiResponse = {
       bridges,
       layers2s: layer2sTotal,
       combined,
       projects: projectData,
-    };
+    }
 
-    return result;
+    return result
   }
 
   async getTvlBreakdown(
-    timestamp: UnixTime
+    timestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const breakdowns = await this.getNewBreakdown(timestamp);
-    return { dataTimestamp: timestamp, breakdowns };
+    const breakdowns = await this.getNewBreakdown(timestamp)
+    return { dataTimestamp: timestamp, breakdowns }
   }
 
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
@@ -401,40 +401,40 @@ export class Tvl2Controller {
   private async getBreakdownMap(timestamp: UnixTime) {
     const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
       [...this.currAmountConfigs.keys()],
-      timestamp
-    );
+      timestamp,
+    )
     const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
       [...this.priceConfigs.values()].map((x) => x.priceId),
-      timestamp
-    );
+      timestamp,
+    )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]));
-    const breakdownMap = new Map<string, TvlApiProject["tokens"]>();
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
     for (const amount of tokenAmounts) {
-      const config = this.currAmountConfigs.get(amount.configId);
-      assert(config, "Config not found for id " + amount.configId);
-      let breakdown = breakdownMap.get(config.project);
+      const config = this.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdownMap.get(config.project)
       if (!breakdown) {
         breakdown = {
           CBV: [],
           EBV: [],
           NMV: [],
-        };
-        breakdownMap.set(config.project, breakdown);
+        }
+        breakdownMap.set(config.project, breakdown)
       }
 
-      const priceConfig = this.priceConfigs.get(createAssetId(config));
-      assert(priceConfig, "PriceId not found for id " + amount.configId);
-      const price = pricesMap.get(priceConfig.priceId);
-      assert(price, "Price not found for id " + amount.configId);
+      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
 
       const value = calculateValue({
         amount: amount.amount,
         priceUsd: price,
         decimals: config.decimals,
-      });
+      })
 
-      const source = convertSourceName(config.source);
+      const source = convertSourceName(config.source)
       breakdown[source].push({
         assetId: priceConfig.assetId,
         address: config.address.toString(),
@@ -442,64 +442,64 @@ export class Tvl2Controller {
         chainId: this.chainConverter.toChainId(config.chain),
         assetType: convertSourceName(config.source),
         usdValue: asNumber(value, 2),
-      });
+      })
     }
-    return breakdownMap;
+    return breakdownMap
   }
 
   private async getNewBreakdown(timestamp: UnixTime) {
     const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
       [...this.currAmountConfigs.keys()],
-      timestamp
-    );
+      timestamp,
+    )
     const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
       [...this.priceConfigs.values()].map((x) => x.priceId),
-      timestamp
-    );
+      timestamp,
+    )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]));
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdowns: Record<
       string,
       {
-        canonical: Map<AssetId, CanonicalAssetBreakdown>;
-        external: ExternalAssetBreakdownData[];
-        native: NativeAssetBreakdownData[];
+        canonical: Map<AssetId, CanonicalAssetBreakdown>
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
       }
-    > = {};
+    > = {}
     for (const amount of tokenAmounts) {
-      const config = this.currAmountConfigs.get(amount.configId);
-      assert(config, "Config not found for id " + amount.configId);
-      let breakdown = breakdowns[config.project];
+      const config = this.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdowns[config.project]
       if (!breakdown) {
         breakdown = {
           canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
           external: [],
           native: [],
-        };
-        breakdowns[config.project] = breakdown;
+        }
+        breakdowns[config.project] = breakdown
       }
 
-      const priceConfig = this.priceConfigs.get(createAssetId(config));
-      assert(priceConfig, "PriceId not found for id " + amount.configId);
-      const price = pricesMap.get(priceConfig.priceId);
-      assert(price, "Price not found for id " + amount.configId);
+      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
 
-      const amountAsNumber = asNumber(amount.amount, config.decimals);
-      const valueAsNumber = amountAsNumber * price;
+      const amountAsNumber = asNumber(amount.amount, config.decimals)
+      const valueAsNumber = amountAsNumber * price
 
       switch (config.source) {
-        case "canonical": {
+        case 'canonical': {
           // The canonical logic is the most complex one
-          assert(config.type === "escrow", "Only escrow can be canonical");
-          const asset = breakdown.canonical.get(priceConfig.assetId);
+          assert(config.type === 'escrow', 'Only escrow can be canonical')
+          const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
-            asset.usdValue += valueAsNumber;
-            asset.amount += amountAsNumber;
+            asset.usdValue += valueAsNumber
+            asset.amount += amountAsNumber
             asset.escrows.push({
               amount: amountAsNumber.toString(),
               usdValue: valueAsNumber.toString(),
               escrowAddress: config.escrowAddress,
-            });
+            })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
@@ -514,11 +514,11 @@ export class Tvl2Controller {
                   escrowAddress: config.escrowAddress,
                 },
               ],
-            });
+            })
           }
-          break;
+          break
         }
-        case "external":
+        case 'external':
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: this.chainConverter.toChainId(config.chain),
@@ -526,10 +526,10 @@ export class Tvl2Controller {
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
             tokenAddress:
-              config.address === "native" ? undefined : config.address,
-          });
-          break;
-        case "native":
+              config.address === 'native' ? undefined : config.address,
+          })
+          break
+        case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,
             chainId: this.chainConverter.toChainId(config.chain),
@@ -538,22 +538,22 @@ export class Tvl2Controller {
             usdPrice: price.toString(),
             // TODO: force fe to accept "native"
             tokenAddress:
-              config.address === "native" ? undefined : config.address,
-          });
+              config.address === 'native' ? undefined : config.address,
+          })
       }
     }
     const result: Record<
       string,
       {
-        canonical: CanonicalAssetBreakdownData[];
-        external: ExternalAssetBreakdownData[];
-        native: NativeAssetBreakdownData[];
+        canonical: CanonicalAssetBreakdownData[]
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
       }
-    > = {};
+    > = {}
     for (const [project, breakdown] of Object.entries(breakdowns)) {
       const canonical = [...breakdown.canonical.values()].sort(
-        (a, b) => +b.usdValue - +a.usdValue
-      );
+        (a, b) => +b.usdValue - +a.usdValue,
+      )
 
       result[project] = {
         canonical: canonical.map((x) => ({
@@ -564,116 +564,116 @@ export class Tvl2Controller {
         })),
         external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
         native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
-      };
+      }
     }
 
-    return result;
+    return result
   }
 
   async getAggregatedTvl(
     lastHour: UnixTime,
     projectSlugs: string[],
-    excludeAssociated: boolean
+    excludeAssociated: boolean,
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.getEthPrices();
+    const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug));
-    const projectIds = projects.map((x) => x.id);
+    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
+    const projectIds = projects.map((x) => x.id)
 
-    const values = await this.valueRepository.getForProjects(projectIds);
+    const values = await this.valueRepository.getForProjects(projectIds)
 
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour);
-    const hourlyCutOff = getHourlyCutoff(lastHour);
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
+    const hourlyCutOff = getHourlyCutoff(lastHour)
 
-    const valuesByProject = groupBy(values, "projectId");
+    const valuesByProject = groupBy(values, 'projectId')
 
-    const aggregate = new Map<number, Values>();
+    const aggregate = new Map<number, Values>()
     for (const project of projects) {
-      const projectValues = valuesByProject[project.id.toString()];
-      const valuesByTimestamp = groupBy(projectValues, "timestamp");
+      const projectValues = valuesByProject[project.id.toString()]
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
       const timestamps = this.getTimestampsForProject(
         project,
         sixHourlyCutOff,
         hourlyCutOff,
-        lastHour
-      );
+        lastHour,
+      )
 
       for (const timestamp of timestamps) {
-        const values = valuesByTimestamp[timestamp.toString()] ?? [];
+        const values = valuesByTimestamp[timestamp.toString()] ?? []
         const configuredSources = this.getConfiguredSources(
           values,
           project,
-          timestamp
-        );
+          timestamp,
+        )
 
         const sum = values
           .filter((x) => configuredSources.includes(x.dataSource))
           .reduce(
             (acc, curr) => {
-              acc.canonical += curr.canonical;
-              acc.external += curr.external;
-              acc.native += curr.native;
-              return acc;
+              acc.canonical += curr.canonical
+              acc.external += curr.external
+              acc.native += curr.native
+              return acc
             },
-            { canonical: 0n, external: 0n, native: 0n }
-          );
+            { canonical: 0n, external: 0n, native: 0n },
+          )
 
-        const aggregateSum = aggregate.get(Number(timestamp));
+        const aggregateSum = aggregate.get(Number(timestamp))
         if (!aggregateSum) {
-          aggregate.set(Number(timestamp), sum);
+          aggregate.set(Number(timestamp), sum)
         } else {
-          aggregateSum.canonical += sum.canonical;
-          aggregateSum.external += sum.external;
-          aggregateSum.native += sum.native;
+          aggregateSum.canonical += sum.canonical
+          aggregateSum.external += sum.external
+          aggregateSum.native += sum.native
         }
       }
     }
 
-    const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()));
-    const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()));
+    const minValueTimestamp = new UnixTime(Math.min(...aggregate.keys()))
+    const maxValueTimestamp = new UnixTime(Math.max(...aggregate.keys()))
     const projectsMinTimestamp = this.projects
       .map((x) => x.minTimestamp)
-      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now());
+      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
 
     const minTimestamp = UnixTime.max(
       minValueTimestamp,
-      projectsMinTimestamp
-    ).toEndOf("day");
-    const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour);
+      projectsMinTimestamp,
+    ).toEndOf('day')
+    const maxTimestamp = UnixTime.min(maxValueTimestamp, lastHour)
 
     const dailyData = getChartData({
       start: minTimestamp,
       end: maxTimestamp,
-      step: [1, "days"],
+      step: [1, 'days'],
       aggregatedValues: aggregate,
       ethPrices,
-      chartId: "/tvl/aggregate",
-    });
+      chartId: '/tvl/aggregate',
+    })
 
     const sixHourlyData = getChartData({
-      start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf("day"),
+      start: UnixTime.max(sixHourlyCutOff, minTimestamp).toEndOf('day'),
       end: maxTimestamp,
-      step: [6, "hours"],
+      step: [6, 'hours'],
       aggregatedValues: aggregate,
       ethPrices,
-      chartId: "/tvl/aggregate",
-    });
+      chartId: '/tvl/aggregate',
+    })
 
     const hourlyData = getChartData({
       start: UnixTime.max(hourlyCutOff, minTimestamp),
       end: maxTimestamp,
-      step: [1, "hours"],
+      step: [1, 'hours'],
       aggregatedValues: aggregate,
       ethPrices,
-      chartId: "/tvl/aggregate",
-    });
+      chartId: '/tvl/aggregate',
+    })
 
     const result: TvlApiCharts = {
       hourly: getChart(hourlyData),
       sixHourly: getChart(sixHourlyData),
       daily: getChart(dailyData),
-    };
+    }
 
     if (excludeAssociated) {
       const excluded = await Promise.all(
@@ -682,241 +682,241 @@ export class Tvl2Controller {
           .map(async (x) => ({
             ...x,
             data: await this.getTokenChart(x, x.project, lastHour),
-          }))
-      );
+          })),
+      )
 
       for (const e of excluded) {
         result.hourly = subtractTokenChart(
           result.hourly,
           e.data.hourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         result.sixHourly = subtractTokenChart(
           result.sixHourly,
           e.data.sixHourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         result.daily = subtractTokenChart(
           result.daily,
           e.data.daily,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
       }
     }
 
-    return result;
+    return result
   }
 
   // TODO: instead of assert we should interpolate values so the page builds even with unsynced sources
   private getConfiguredSources(
     values: ValueRecord[],
     project: ApiProject,
-    timestamp: UnixTime
+    timestamp: UnixTime,
   ) {
-    const valuesSources = values.map((x) => x.dataSource);
+    const valuesSources = values.map((x) => x.dataSource)
     const configuredSources = Array.from(project.sources.values())
       .filter((s) => s.minTimestamp.lte(timestamp))
-      .map((s) => s.name);
+      .map((s) => s.name)
 
     const missingSources = configuredSources.filter(
-      (s) => !valuesSources.includes(s)
-    );
+      (s) => !valuesSources.includes(s),
+    )
 
     assert(
       missingSources.length === 0,
       `Missing data sources [${missingSources.join(
-        ", "
-      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`
-    );
-    return configuredSources;
+        ', ',
+      )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
+    )
+    return configuredSources
   }
 
   private getTimestampsForProject(
     project: ApiProject,
     sixHourlyCutOff: UnixTime,
     hourlyCutOff: UnixTime,
-    lastHour: UnixTime
+    lastHour: UnixTime,
   ): UnixTime[] {
-    const timestamps: UnixTime[] = [];
+    const timestamps: UnixTime[] = []
 
-    let t = project.minTimestamp.toEndOf("day");
-    timestamps.push(t);
+    let t = project.minTimestamp.toEndOf('day')
+    timestamps.push(t)
 
-    while (t.add(1, "days").lte(sixHourlyCutOff)) {
-      t = t.add(1, "days");
-      timestamps.push(t);
+    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
+      t = t.add(1, 'days')
+      timestamps.push(t)
     }
 
-    while (t.add(6, "hours").lte(hourlyCutOff)) {
-      t = t.add(6, "hours");
-      timestamps.push(t);
+    while (t.add(6, 'hours').lte(hourlyCutOff)) {
+      t = t.add(6, 'hours')
+      timestamps.push(t)
     }
 
-    while (t.add(1, "hours").lte(lastHour)) {
-      t = t.add(1, "hours");
-      timestamps.push(t);
+    while (t.add(1, 'hours').lte(lastHour)) {
+      t = t.add(1, 'hours')
+      timestamps.push(t)
     }
-    return timestamps;
+    return timestamps
   }
 
   async getTokenChart(
-    token: { address: EthereumAddress | "native"; chain: string },
+    token: { address: EthereumAddress | 'native'; chain: string },
     project: ProjectId,
-    lastHour: UnixTime
+    lastHour: UnixTime,
   ): Promise<TokenTvlApiCharts> {
-    const projectAmounts = this.amountConfig.get(project);
-    assert(projectAmounts);
+    const projectAmounts = this.amountConfig.get(project)
+    assert(projectAmounts)
 
-    const assetId = createAssetId(token);
+    const assetId = createAssetId(token)
     const amountConfigs = projectAmounts.filter(
-      (x) => createAssetId(x) === assetId
-    );
+      (x) => createAssetId(x) === assetId,
+    )
     assert(
       amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
-      "Decimals mismatch!"
-    );
-    const decimals = amountConfigs[0].decimals;
+      'Decimals mismatch!',
+    )
+    const decimals = amountConfigs[0].decimals
 
-    const projectConfig = this.projects.find((x) => x.id === project);
-    assert(projectConfig, "Project not found!");
+    const projectConfig = this.projects.find((x) => x.id === project)
+    assert(projectConfig, 'Project not found!')
 
     const amounts = await this.amountRepository.getByConfigIdsInRange(
       amountConfigs.map((x) => x.configId),
       projectConfig.minTimestamp,
-      lastHour
-    );
-    const priceConfig = this.priceConfigs.get(assetId);
-    assert(priceConfig, "PriceId not found!");
+      lastHour,
+    )
+    const priceConfig = this.priceConfigs.get(assetId)
+    assert(priceConfig, 'PriceId not found!')
     const prices = await this.priceRepository.getByConfigIdsInRange(
       [priceConfig.priceId],
       projectConfig.minTimestamp,
-      lastHour
-    );
+      lastHour,
+    )
     const pricesMap = new Map(
-      prices.map((x) => [x.timestamp.toNumber(), x.priceUsd])
-    );
-    const amountsByTimestamp = groupBy(amounts, "timestamp");
+      prices.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+    const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const hourlyCutOff = getHourlyCutoff(lastHour);
-    const sixHourlyCutOff = getSixHourlyCutoff(lastHour);
+    const hourlyCutOff = getHourlyCutoff(lastHour)
+    const sixHourlyCutOff = getSixHourlyCutoff(lastHour)
     const timestamps = this.getTimestampsForProject(
       projectConfig,
       sixHourlyCutOff,
       hourlyCutOff,
-      lastHour
-    );
+      lastHour,
+    )
 
-    const values = new Map<number, { amount: number; value: number }>();
+    const values = new Map<number, { amount: number; value: number }>()
     for (const timestamp of timestamps) {
-      const priceUsd = pricesMap.get(Number(timestamp));
-      const amounts = amountsByTimestamp[timestamp.toNumber()];
+      const priceUsd = pricesMap.get(Number(timestamp))
+      const amounts = amountsByTimestamp[timestamp.toNumber()]
       if (!priceUsd || !amounts) {
-        values.set(Number(timestamp), { amount: 0, value: 0 });
-        continue;
+        values.set(Number(timestamp), { amount: 0, value: 0 })
+        continue
       }
-      const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n);
-      const usdValue = calculateValue({ amount, priceUsd, decimals });
+      const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
+      const usdValue = calculateValue({ amount, priceUsd, decimals })
       values.set(Number(timestamp), {
         amount: asNumber(amount, decimals),
         value: asNumber(usdValue, 2),
-      });
+      })
     }
 
-    const start = new UnixTime(Math.min(...values.keys()));
-    const end = new UnixTime(Math.max(...values.keys()));
+    const start = new UnixTime(Math.min(...values.keys()))
+    const end = new UnixTime(Math.max(...values.keys()))
 
-    const dailyData: [UnixTime, number, number][] = [];
-    for (let curr = start; curr <= end; curr = curr.add(1, "days")) {
-      const value = values.get(curr.toNumber());
+    const dailyData: [UnixTime, number, number][] = []
+    for (let curr = start; curr <= end; curr = curr.add(1, 'days')) {
+      const value = values.get(curr.toNumber())
       assert(
         value !== undefined,
-        "Value not found for timestamp " + curr.toString()
-      );
-      dailyData.push([curr, value.amount, value.value]);
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      dailyData.push([curr, value.amount, value.value])
     }
 
-    const sixHourlyData: [UnixTime, number, number][] = [];
+    const sixHourlyData: [UnixTime, number, number][] = []
     for (
       let curr = UnixTime.max(sixHourlyCutOff, start);
       curr <= end;
-      curr = curr.add(6, "hours")
+      curr = curr.add(6, 'hours')
     ) {
-      const value = values.get(curr.toNumber());
+      const value = values.get(curr.toNumber())
       assert(
         value !== undefined,
-        "Value not found for timestamp " + curr.toString()
-      );
-      sixHourlyData.push([curr, value.amount, value.value]);
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      sixHourlyData.push([curr, value.amount, value.value])
     }
 
-    const hourlyData: [UnixTime, number, number][] = [];
+    const hourlyData: [UnixTime, number, number][] = []
     for (
       let curr = UnixTime.max(hourlyCutOff, start);
       curr <= end;
-      curr = curr.add(1, "hours")
+      curr = curr.add(1, 'hours')
     ) {
-      const value = values.get(curr.toNumber());
+      const value = values.get(curr.toNumber())
       assert(
         value !== undefined,
-        "Value not found for timestamp " + curr.toString()
-      );
-      hourlyData.push([curr, value.amount, value.value]);
+        'Value not found for timestamp ' + curr.toString(),
+      )
+      hourlyData.push([curr, value.amount, value.value])
     }
 
     return {
       daily: {
-        types: ["timestamp", "amount", "valueUsd"],
+        types: ['timestamp', 'amount', 'valueUsd'],
         data: dailyData,
       },
       sixHourly: {
-        types: ["timestamp", "amount", "valueUsd"],
+        types: ['timestamp', 'amount', 'valueUsd'],
         data: sixHourlyData,
       },
       hourly: {
-        types: ["timestamp", "amount", "valueUsd"],
+        types: ['timestamp', 'amount', 'valueUsd'],
         data: hourlyData,
       },
-    };
+    }
   }
 
-  private getMinTimestamp(type: Project["type"]) {
+  private getMinTimestamp(type: Project['type']) {
     return this.projects
       .filter((x) => x.type === type)
       .map((x) => x.minTimestamp)
       .reduce((acc, curr) => {
-        return UnixTime.min(acc, curr);
+        return UnixTime.min(acc, curr)
       })
-      .toEndOf("day");
+      .toEndOf('day')
   }
 
   private async getEthPrices() {
-    const ethAssetId = createAssetId({ address: "native", chain: "ethereum" });
-    const ethPriceId = this.priceConfigs.get(ethAssetId)?.priceId;
-    assert(ethPriceId, "Eth priceId not found");
-    const records = await this.priceRepository.getDailyByConfigId(ethPriceId);
+    const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
+    const ethPriceId = this.priceConfigs.get(ethAssetId)?.priceId
+    assert(ethPriceId, 'Eth priceId not found')
+    const records = await this.priceRepository.getDailyByConfigId(ethPriceId)
     const ethPrices = new Map(
-      records.map((x) => [x.timestamp.toNumber(), x.priceUsd])
-    );
-    return ethPrices;
+      records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+    return ethPrices
   }
 
   // TODO: it is slow an can be optimized via querying for all tokens in a batch
   async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const tvl = await this.getTvl(lastHour);
+    const tvl = await this.getTvl(lastHour)
 
     const excluded = await Promise.all(
       this.associatedTokens.map(async (x) => ({
         ...x,
         data: await this.getTokenChart(x, x.project, lastHour),
-      }))
-    );
+      })),
+    )
 
-    const ethPrices = await this.getEthPrices();
+    const ethPrices = await this.getEthPrices()
 
     for (const e of excluded) {
       if (e.includeInTotal) {
@@ -924,102 +924,102 @@ export class Tvl2Controller {
           tvl.combined.hourly,
           e.data.hourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         tvl.combined.sixHourly = subtractTokenChart(
           tvl.combined.sixHourly,
           e.data.sixHourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         tvl.combined.daily = subtractTokenChart(
           tvl.combined.daily,
           e.data.daily,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
       }
       if (e.includeInTotal) {
         tvl[e.projectType].hourly = subtractTokenChart(
           tvl[e.projectType].hourly,
           e.data.hourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         tvl[e.projectType].sixHourly = subtractTokenChart(
           tvl[e.projectType].sixHourly,
           e.data.sixHourly,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
 
         tvl[e.projectType].daily = subtractTokenChart(
           tvl[e.projectType].daily,
           e.data.daily,
           e.type,
-          ethPrices
-        );
+          ethPrices,
+        )
       }
 
-      const project = tvl.projects[e.project.toString()];
-      assert(project, "Project not found");
+      const project = tvl.projects[e.project.toString()]
+      assert(project, 'Project not found')
 
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
         project.charts.hourly,
         e.data.hourly,
         e.type,
-        ethPrices
-      );
+        ethPrices,
+      )
 
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
         project.charts.sixHourly,
         e.data.sixHourly,
         e.type,
-        ethPrices
-      );
+        ethPrices,
+      )
 
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
         project.charts.daily,
         e.data.daily,
         e.type,
-        ethPrices
-      );
+        ethPrices,
+      )
 
       // Remove token from breakdown
       switch (e.type) {
-        case "canonical":
+        case 'canonical':
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
           tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
             e.project.toString()
           ]!.tokens.CBV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain)
-          );
-          break;
-        case "external":
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
+        case 'external':
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
           tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
             e.project.toString()
           ]!.tokens.EBV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain)
-          );
-          break;
-        case "native":
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
+        case 'native':
           // biome-ignore lint/style/noNonNullAssertion: <explanation>
           tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
             e.project.toString()
           ]!.tokens.NMV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain)
-          );
-          break;
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
       }
     }
-    return tvl;
+    return tvl
   }
 }
 
@@ -1031,124 +1031,124 @@ function getChartData({
   chartId,
   ethPrices,
 }: {
-  start: UnixTime;
-  end: UnixTime;
-  step: [number, "hours" | "days"];
-  aggregatedValues: ValuesMap;
-  ethPrices: Map<number, number>;
-  chartId: string | ProjectId;
+  start: UnixTime
+  end: UnixTime
+  step: [number, 'hours' | 'days']
+  aggregatedValues: ValuesMap
+  ethPrices: Map<number, number>
+  chartId: string | ProjectId
 }) {
-  const values = [];
+  const values = []
   for (let curr = start; curr.lte(end); curr = curr.add(...step)) {
-    const value = aggregatedValues.get(curr.toNumber());
+    const value = aggregatedValues.get(curr.toNumber())
     assert(
       value,
-      "Value not found for chart " +
+      'Value not found for chart ' +
         chartId.toString() +
-        " at timestamp " +
-        curr.toString()
-    );
-    const ethPrice = ethPrices.get(curr.toNumber());
-    assert(ethPrice, "Eth price not found for timestamp " + curr.toString());
+        ' at timestamp ' +
+        curr.toString(),
+    )
+    const ethPrice = ethPrices.get(curr.toNumber())
+    assert(ethPrice, 'Eth price not found for timestamp ' + curr.toString())
 
-    values.push(getChartPoint(curr, ethPrice, value));
+    values.push(getChartPoint(curr, ethPrice, value))
   }
-  return values;
+  return values
 }
 
 function getAmountConfigMap(config: Tvl2Config) {
-  const groupedEntries = Object.entries(groupBy(config.amounts, "project"));
+  const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
   const amountConfigEntries = groupedEntries.map(([k, v]) => {
-    const projectId = ProjectId(k);
-    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }));
+    const projectId = ProjectId(k)
+    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
 
-    return [projectId, amountWithIds] as const;
-  });
+    return [projectId, amountWithIds] as const
+  })
 
-  return new Map(amountConfigEntries);
+  return new Map(amountConfigEntries)
 }
 
 function createAssetId(price: {
-  address: EthereumAddress | "native";
-  chain: string;
+  address: EthereumAddress | 'native'
+  chain: string
 }): string {
-  return `${price.chain}-${price.address.toString()}`;
+  return `${price.chain}-${price.address.toString()}`
 }
 
 function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
-  const result = new Map<string, { assetId: AssetId; priceId: string }>();
+  const result = new Map<string, { assetId: AssetId; priceId: string }>()
   for (const p of config.prices) {
     result.set(createAssetId(p), {
       priceId: createPriceId(p),
       assetId: p.assetId,
-    });
+    })
   }
 
-  return result;
+  return result
 }
 
-function convertSourceName(source: "canonical" | "external" | "native") {
+function convertSourceName(source: 'canonical' | 'external' | 'native') {
   switch (source) {
-    case "canonical":
-      return "CBV" as const;
-    case "external":
-      return "EBV" as const;
-    case "native":
-      return "NMV" as const;
+    case 'canonical':
+      return 'CBV' as const
+    case 'external':
+      return 'EBV' as const
+    case 'native':
+      return 'NMV' as const
   }
 }
 
 function getSixHourlyCutoff(lastHour?: UnixTime) {
-  return (lastHour ?? UnixTime.now()).toNext("day").add(-90, "days");
+  return (lastHour ?? UnixTime.now()).toNext('day').add(-90, 'days')
 }
 
 function getHourlyCutoff(lastHour?: UnixTime) {
-  return (lastHour ?? UnixTime.now()).add(-7, "days");
+  return (lastHour ?? UnixTime.now()).add(-7, 'days')
 }
 
-function getChart(data: TvlApiChart["data"]): TvlApiChart {
+function getChart(data: TvlApiChart['data']): TvlApiChart {
   return {
     types: [
-      "timestamp",
-      "valueUsd",
-      "cbvUsd",
-      "ebvUsd",
-      "nmvUsd",
-      "valueEth",
-      "cbvEth",
-      "ebvEth",
-      "nmvEth",
+      'timestamp',
+      'valueUsd',
+      'cbvUsd',
+      'ebvUsd',
+      'nmvUsd',
+      'valueEth',
+      'cbvEth',
+      'ebvEth',
+      'nmvEth',
     ] as [
-      "timestamp",
-      "valueUsd",
-      "cbvUsd",
-      "ebvUsd",
-      "nmvUsd",
-      "valueEth",
-      "cbvEth",
-      "ebvEth",
-      "nmvEth",
+      'timestamp',
+      'valueUsd',
+      'cbvUsd',
+      'ebvUsd',
+      'nmvUsd',
+      'valueEth',
+      'cbvEth',
+      'ebvEth',
+      'nmvEth',
     ],
     data,
-  };
+  }
 }
 
 function getChartPoint(
   timestamp: UnixTime,
   ethPrice: number,
-  values: { canonical: bigint; external: bigint; native: bigint }
+  values: { canonical: bigint; external: bigint; native: bigint },
 ) {
   const valueUsd = asNumber(
     values.canonical + values.external + values.native,
-    2
-  );
-  const cbvUsd = asNumber(values.canonical, 2);
-  const ebvUsd = asNumber(values.external, 2);
-  const nmvUsd = asNumber(values.native, 2);
-  const valueEth = valueUsd / ethPrice;
-  const cbvEth = cbvUsd / ethPrice;
-  const ebvEth = ebvUsd / ethPrice;
-  const nmvEth = nmvUsd / ethPrice;
+    2,
+  )
+  const cbvUsd = asNumber(values.canonical, 2)
+  const ebvUsd = asNumber(values.external, 2)
+  const nmvUsd = asNumber(values.native, 2)
+  const valueEth = valueUsd / ethPrice
+  const cbvEth = cbvUsd / ethPrice
+  const ebvEth = ebvUsd / ethPrice
+  const nmvEth = nmvUsd / ethPrice
 
   return [
     timestamp,
@@ -1160,27 +1160,26 @@ function getChartPoint(
     cbvEth,
     ebvEth,
     nmvEth,
-  ] as TvlApiChart["data"][0];
+  ] as TvlApiChart['data'][0]
 }
 
 function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
   // adjust chart length to the longer chart
-  const lastTimestamp1 = chart1.data.at(-1)?.[0];
-  const lastTimestamp2 = chart2.data.at(-1)?.[0];
+  const lastTimestamp1 = chart1.data.at(-1)?.[0]
+  const lastTimestamp2 = chart2.data.at(-1)?.[0]
 
   assert(
     lastTimestamp1 && lastTimestamp2 && lastTimestamp1.equals(lastTimestamp2),
-    "Last timestamp mismatch"
-  );
-
-  const longerChart = chart1.data.length > chart2.data.length ? chart1 : chart2;
-  const shorterChart =
-    chart1.data.length > chart2.data.length ? chart2 : chart1;
-  const shorterPadded = Array(
-    longerChart.data.length - shorterChart.data.length
+    'Last timestamp mismatch',
   )
-    .fill([new UnixTime(0), 0, 0, 0, 0, 0, 0, 0, 0] as TvlApiChart["data"][0])
-    .concat(shorterChart.data);
+
+  const longerChart = chart1.data.length > chart2.data.length ? chart1 : chart2
+  const shorterChart = chart1.data.length > chart2.data.length ? chart2 : chart1
+  const shorterPadded = Array(
+    longerChart.data.length - shorterChart.data.length,
+  )
+    .fill([new UnixTime(0), 0, 0, 0, 0, 0, 0, 0, 0] as TvlApiChart['data'][0])
+    .concat(shorterChart.data)
 
   return {
     types: longerChart.types,
@@ -1196,54 +1195,54 @@ function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
           x[6] + shorterPadded[i][6],
           x[7] + shorterPadded[i][7],
           x[8] + shorterPadded[i][8],
-        ] as TvlApiChart["data"][0]
+        ] as TvlApiChart['data'][0],
     ),
-  };
+  }
 }
 
 function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,
-  tokenType: "canonical" | "external" | "native",
-  ethPrices: Map<number, number>
+  tokenType: 'canonical' | 'external' | 'native',
+  ethPrices: Map<number, number>,
 ): TvlApiChart {
   const data = main.data.map((x) => {
-    const tokenAt = token.data.find((d) => d[0].equals(x[0]));
+    const tokenAt = token.data.find((d) => d[0].equals(x[0]))
 
     if (!tokenAt) {
-      return x;
+      return x
     }
-    const tokenUsdValue = tokenAt[2];
+    const tokenUsdValue = tokenAt[2]
     // TODO
-    const ethPriceAt = ethPrices.get(x[0].toNumber());
-    assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`);
-    const tokenEthValue = tokenUsdValue / ethPriceAt;
+    const ethPriceAt = ethPrices.get(x[0].toNumber())
+    assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
+    const tokenEthValue = tokenUsdValue / ethPriceAt
 
     return [
       x[0],
       x[1] - tokenUsdValue,
-      tokenType === "canonical" ? x[2] - tokenUsdValue : x[2],
-      tokenType === "external" ? x[3] - tokenUsdValue : x[3],
-      tokenType === "native" ? x[4] - tokenUsdValue : x[4],
+      tokenType === 'canonical' ? x[2] - tokenUsdValue : x[2],
+      tokenType === 'external' ? x[3] - tokenUsdValue : x[3],
+      tokenType === 'native' ? x[4] - tokenUsdValue : x[4],
       +(x[5] - tokenEthValue).toFixed(2),
-      tokenType === "canonical" ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
-      tokenType === "external" ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
-      tokenType === "native" ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
-    ] as TvlApiChart["data"][0];
-  });
+      tokenType === 'canonical' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
+      tokenType === 'external' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
+      tokenType === 'native' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
+    ] as TvlApiChart['data'][0]
+  })
 
   return {
     types: main.types,
     data,
-  };
+  }
 }
-function getType(type: "layer2" | "bridge" | "layer3"): "layers2s" | "bridges" {
+function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
   switch (type) {
-    case "layer2":
-      return "layers2s";
-    case "bridge":
-      return "bridges";
-    case "layer3":
-      return "layers2s";
+    case 'layer2':
+      return 'layers2s'
+    case 'bridge':
+      return 'bridges'
+    case 'layer3':
+      return 'layers2s'
   }
 }
