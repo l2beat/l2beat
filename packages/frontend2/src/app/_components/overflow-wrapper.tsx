@@ -10,6 +10,7 @@ interface OverflowWrapperProps {
   children: React.ReactNode
   childrenClassName?: string
   className?: string
+  innerRef?: React.Ref<HTMLDivElement>
 }
 
 const ARROWS_THRESHOLD = 4
@@ -19,7 +20,7 @@ export function OverflowWrapper({
   childrenClassName,
   className,
   ...rest
-}: OverflowWrapperProps) {
+}: React.ComponentPropsWithRef<'div'> & OverflowWrapperProps) {
   const leftArrowRef = useRef<HTMLDivElement>(null)
   const rightArrowRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)

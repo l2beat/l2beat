@@ -3,9 +3,9 @@ import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
 import { getCollection } from '~/content/getCollection'
-import { AlphabetSelector } from './_components/alphabet-selector'
+import { AlphabetSelector } from './_components/alphabet-selector/alphabet-selector'
 import { GlossaryItem } from './_components/glossary-item'
-import { GlossarySideNavigation } from './_components/glossary-side-navigation'
+import { GlossarySideNav } from './_components/side-nav/glossary-side-nav'
 
 export const metadata: Metadata = {
   title: 'Glossary - L2BEAT',
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   const glossaryEntries = getCollection('glossary')
-
   return (
     <>
       <FullPageHeader className="pb-0">
@@ -47,13 +46,14 @@ export default function Page() {
         <AlphabetSelector entries={glossaryEntries} />
       </FullPageHeader>
       <ContentWrapper className="mt-12 flex">
-        <GlossarySideNavigation entries={glossaryEntries} />
+        <GlossarySideNav entries={glossaryEntries} />
         <main className="lg:ml-16">
           {glossaryEntries.map((entry) => (
             <GlossaryItem key={entry.id} entry={entry} />
           ))}
         </main>
       </ContentWrapper>
+
       <ScrollToTopButton />
     </>
   )

@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://l2beat.com'),
   openGraph: {
     type: 'website',
+    siteName: 'L2BEAT',
   },
   twitter: {
     card: 'summary_large_image',
