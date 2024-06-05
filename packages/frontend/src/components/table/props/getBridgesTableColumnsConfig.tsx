@@ -97,6 +97,7 @@ export function getActiveBridgesSummaryColumnsConfig() {
                   className="mt-2"
                   text={entry.tvlBreakdown.warning}
                   icon={RoundedWarningIcon}
+                  ignoreMarkdown
                   color={
                     entry.tvlBreakdown.warningSeverity === 'warning'
                       ? 'yellow'
