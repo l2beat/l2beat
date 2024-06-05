@@ -25,7 +25,6 @@ export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
-  // TODO: inject nativeAssetCodec
   logger: Logger
 }
 
