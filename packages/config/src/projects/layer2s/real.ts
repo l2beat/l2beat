@@ -68,6 +68,21 @@ export const real: Layer2 = orbitStackL2({
         'This contract escrows the stETH that was deposited to mint reETH.',
     }),
   ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('StrategyManager'),
+    discovery.getContractDetails(
+      'RealVault',
+      'This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.',
+    ),
+    discovery.getContractDetails(
+      'AssetsVault',
+      'This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.',
+    ),
+    discovery.getContractDetails(
+      'Bridger',
+      'A Routing contract to the standard orbit stack bridge of the L2.',
+    ),
+  ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'GelatoMultisig',
