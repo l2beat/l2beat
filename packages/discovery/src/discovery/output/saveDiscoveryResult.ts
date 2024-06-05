@@ -25,7 +25,6 @@ export interface SaveDiscoveryResultOptions {
   flatSourcesFolder?: string
   discoveryFilename?: string
   metaFilename?: string
-  skipHints?: boolean
 }
 
 export async function saveDiscoveryResult(

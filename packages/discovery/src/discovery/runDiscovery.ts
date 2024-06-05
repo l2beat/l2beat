@@ -58,7 +58,6 @@ export async function runDiscovery(
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
-    skipHints: config.skipHints,
   })
 
   const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
