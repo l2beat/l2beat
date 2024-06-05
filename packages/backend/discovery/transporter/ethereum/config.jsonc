@@ -101,7 +101,8 @@
             "onlyValue": true
           }
         }
-      }
+      },
+      "ignoreRelatives": ["getWrappedNative"]
     },
     "Router2": {
       "fields": {
