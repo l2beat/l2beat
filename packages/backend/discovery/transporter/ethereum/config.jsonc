@@ -5,7 +5,7 @@
   "maxAddresses": 450,
   "maxDepth": 8,
   "initialAddresses": [
-    "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
+    "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
     "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
     "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
@@ -62,48 +62,19 @@
     "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
   },
   "overrides": {
-    "OnRamp1":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp2":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp3":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp4":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp5":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp6":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp7":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp8":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp9":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp10":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp11":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp12":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp13":{
-      "extends": "transporter/OnRamp"
-    },
-    "OnRamp14":{
-      "extends": "transporter/OnRamp"
-    },
+    "OnRamp9": { "extends": "transporter/OnRampV2" },
+    "OnRamp10": { "extends": "transporter/OnRampV2" },
+    "OnRamp11": { "extends": "transporter/OnRampV2" },
+    "OnRamp12": { "extends": "transporter/OnRampV2" },
+    "OnRamp13": { "extends": "transporter/OnRampV2" },
+    "OnRamp14": { "extends": "transporter/OnRampV2" },
+    "OffRamp9": { "extends": "transporter/OffRamp" },
+    "OffRamp10": { "extends": "transporter/OffRamp" },
+    "OffRamp11": { "extends": "transporter/OffRamp" },
+    "OffRamp12": { "extends": "transporter/OffRamp" },
+    "OffRamp13": { "extends": "transporter/OffRamp" },
+    "OffRamp14": { "extends": "transporter/OffRamp" },
+
     "ARM": {
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
     },

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8c2b948e8e454267182e1a14619e3090141698ec
+Generated with discovered.json: 0x4f96600412e64568be6d8761bc79c8985c9fc3ab
 
-# Diff at Wed, 05 Jun 2024 10:13:47 GMT:
+# Diff at Wed, 05 Jun 2024 11:10:56 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 20024950
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- current block number: 20025240
 
 ## Description
 
@@ -13,43 +13,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract PriceRegistry (0x020082A7a9c2510e1921116001152DEE4da81985)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract PEAS (0x02f92800F57BCD74066F5709F1Daa1A4302Df875)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RewardsLocker (0x02FFdaCeb369b54255b6f20d640C5829F029061F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x046EeE2cc3188071C02BfC1745A6b17c656e3f3d)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0x047204D42d93a6471F7c9Ec94292B4B00E8e0786)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828)
     +++ description: None
 ```
 
@@ -62,12 +32,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract BurnMintTokenPool (0x06f9817a91595E1B595F789Fb91529e8651da9B8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x0935e6fFd0A43ACAf463d18e22F3d974309Db7F7)
     +++ description: None
 ```
 
@@ -86,12 +50,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LockReleaseTokenPool (0x0C291Ae31730901515e5C46406A6ba2d88c1f4aA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UniswapV3Pool (0x0c30062368eEfB96bF3AdE1218E685306b8E89Fa)
     +++ description: None
 ```
 
@@ -121,12 +79,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract UniswapV3Pool (0x11950d141EcB863F01007AdD7D1A342041227b58)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (0x123ed44f3B863a684437Ebf18F8a744c250Ee5cA)
     +++ description: None
 ```
@@ -139,37 +91,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract BRC20 (0x15e6E0D4ebeAC120F9a97e71FaA6a0235b85ED12)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Timelock (0x1a9C8182C09F50C8318d769245beA52c32BE35BC)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OffRamp10 (0x1C207dabc46902dF9028b27D6d301c3849b2D12c)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0x1e28DD4b559a7fF546b1e84691129508b2C9C3D3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UniswapV3Factory (0x1F98431c8aD98523631AE4a59f267346ea31F984)
     +++ description: None
 ```
 
@@ -187,25 +115,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract WBTC (0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (0x2764910B500689BbC9DB16c7AD61c6DD32FDE73B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x27E843260c71443b4CC8cB6bF226C3f77b9695AF)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x290A6a7460B308ee3F19023D2D00dE604bcf5B42)
     +++ description: None
 ```
 
@@ -230,18 +140,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ManyChainMultiSig (0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x2F62f2B4c5fcd7570a709DeC05D68EA19c82A9ec)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract LendingRewards (0x300648a601c584E6379fa0D6a31CbBFCcA6177e4)
     +++ description: None
 ```
 
@@ -283,25 +181,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Members (0x3e8640574aa764763291eD733672D3A105107ac5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GovernorBravoDelegator (0x408ED6354d4973f66138C91495F2f2FCbd8724C3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract CommitStore10 (0x40c558575093eC1099CC21B020d9b8D13c74417F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
     +++ description: None
 ```
 
@@ -331,12 +211,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract UniswapV3Pool (0x44C95bf226A6A1385beacED2bb3328D6aFb044a3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8)
     +++ description: None
 ```
@@ -349,37 +223,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0x50f6631B377be52E132DF35a2F05eA54fda882ac)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UniswapV3Pool (0x510100D5143e011Db24E2aa38abE85d73D5B2177)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract LinkToken (0x514910771AF9Ca656af840dff83E8264EcF986CA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x532C1f04E76C2AA6e146dfFa59a0cb0f68DAF21D)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GovernorBravoDelegate (0x53a328F4086d7C0F1Fa19e594c9b842125263026)
     +++ description: None
 ```
 
@@ -403,19 +247,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract UniswapV2Factory (0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OffRamp12 (0x61135E701a2214C170c5F596D0067798FEfbaaE4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x61772739d588c2e047013a329aa208848550ee5e)
     +++ description: None
 ```
 
@@ -428,12 +260,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract EtherSenderReceiver (0x66598216D8E4d9AFE0F06d525B335b762229842f)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract PepeToken (0x6982508145454Ce325dDbE47a25d4ec3d2311933)
     +++ description: None
 ```
 
@@ -457,19 +283,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract LendingPool (0x6F2064837D82358AFF96E2dFe6AA8953123A0249)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0x6Ff6BF3BF8af2e419DDC7BF038aFa5EB92b6cD7e)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Bitcoin (0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9)
     +++ description: None
 ```
 
@@ -505,12 +319,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D)
     +++ description: None
 ```
@@ -541,43 +349,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract HyperbolicProtocol (0x85225Ed797fd4128Ac45A992C46eA4681a7A15dA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BRC20Factory (0x861E3c82Bc2753ea64aE5f962d993DF6853a6700)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract UniswapV3Pool (0x874f903003dec4639e22cbeBff6e8295c80842a7)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract CommitStore3 (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract DFXToken (0x888888435FDe8e7d4c54cAb67f206e4199454c60)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Voting (0x8B1631ab830d11531aE83725fDa4D86012eCCd77)
     +++ description: None
 ```
 
@@ -601,12 +379,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad)
     +++ description: None
 ```
@@ -625,12 +397,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OnRamp3 (0x925228D7B82d883Dde340A55Fe8e6dA56244A22C)
     +++ description: None
 ```
@@ -643,19 +409,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OptimisticGovernor (0x96E367914f7C1eca47C3511A409F6b1063B884CE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (0x9797E886EDe987AEf6A62885dFD6CcA885D828E6)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract FixedSlashSlashingLibrary (0x9a406ba5a99983250Fd663947b3c968D387ce5cd)
     +++ description: None
 ```
 
@@ -673,12 +427,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract FiatTokenV2_2 (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (0xa17698199466E71bAFC31F226db341B7840701E7)
     +++ description: None
 ```
@@ -686,18 +434,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LockReleaseTokenPool (0xa370CEcd451ecf15c2A01ec47762E967dF7574DA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UniswapV2Pair (0xA43fe16908251ee70EF74718545e4FE6C5cCEc9f)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xa6Cc3C2531FdaA6Ae1A3CA84c2855806728693e8)
     +++ description: None
 ```
 
@@ -715,37 +451,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract UniswapV3Pool (0xAD9eF19e289dcbC9AB27b83D2dF53CDEFF60f02D)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OffRamp4 (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0xb2F30A7C980f052f02563fb518dcc39e6bf38175)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract MultiSigWalletWithDailyLimit (0xB33f8879d4608711cEBb623F293F8Da13B8A37c5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0xb854536206EB6C1013b1642b576196E5EF19D7BA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract LoanToken (0xB9ef94C9541fBB6bDe4a1a3d79C44909e268E23e)
     +++ description: None
 ```
 
@@ -763,19 +475,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract TwapUtils (0xBf1858b24243Ecbcf7d940f458e36CB7401c2366)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BurnMintTokenPool (0xBF7cb652A2d5ed3BFc3832Ef8Af33Ffb0cDc0982)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
     +++ description: None
 ```
 
@@ -787,19 +487,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract LendingPoolTokenCustodian (0xC1dE6455D1Ce538aeF2a7e6Ea7304e4128813d74)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract NonfungiblePositionManager (0xC36442b4a4522E871399CD717aBDD847Ab11FE88)
     +++ description: None
 ```
 
@@ -824,24 +512,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OffRamp13 (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Controller (0xCA06411bd7a7296d7dbdd0050DFc846E95fEBEB7)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BridgedNuon (0xCA160D11087E03fd398d40f561cd4768825f4958)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UniswapV3Pool (0xCBCdF9626bC03E24f779434178A73a0B4bad62eD)
     +++ description: None
 ```
 
@@ -907,12 +577,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xe04Cd8884098Ac5f8237642B8e999269468092aA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract OnRamp6 (0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7)
     +++ description: None
 ```
@@ -937,24 +601,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SwapRouter (0xE592427A0AEce92De3Edee1F18E0157C05861564)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Factory (0xe5A5F138005E19A3E6D0FE68b039397EeEf2322b)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ERC20MintablePauseableUpgradeable (0xe85411C030fB32A9D8b14Bbbc6CB19417391F711)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract EVM2EVMOffRamp (0xE8af3b68eDfFf65Ce48648009982380701f09B92)
     +++ description: None
 ```
@@ -962,12 +608,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OffRamp2 (0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract MasterMinter (0xE982615d461DD5cD06575BbeA87624fda4e3de17)
     +++ description: None
 ```
 
@@ -1003,19 +643,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0xf70B2473e7808eDAeA4A5Cea95996A9B1843D96C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract CCIPTokenProxy (0xF9F5bcd3a50653387ee0b9d60C1905854093e8Fb)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
     +++ description: None
 ```
 
