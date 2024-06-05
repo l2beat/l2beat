@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply scroll-pt-16 scroll-smooth md:scroll-pt-8 data-[page="/glossary"]:scroll-pt-28 md:data-[page="/glossary"]:scroll-pt-36;
+}
+
 body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
 }

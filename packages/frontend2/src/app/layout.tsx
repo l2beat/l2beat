@@ -7,6 +7,7 @@ import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
 import '../styles/globals.css'
+import { HtmlPathnameSetter } from './_components/html-pathname-setter'
 import { roboto } from './fonts'
 
 export const metadata: Metadata = {
@@ -42,11 +43,7 @@ export default async function RootLayout({
     // - our restoreCollapsibleNavStateScript
     // which cause a mismatch between the server and client render.
     // This is completely fine and applies to the `html` tag only.
-    <html
-      lang="en-us"
-      className="scroll-pt-16 scroll-smooth md:scroll-pt-8"
-      suppressHydrationWarning
-    >
+    <html lang="en-us" suppressHydrationWarning>
       <body className={roboto.variable}>
         <script {...restoreCollapsibleNavStateScript} />
         <PlausibleProvider
@@ -63,6 +60,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
+        <HtmlPathnameSetter />
         {shouldInjectToolbar && <VercelToolbar />}
       </body>
     </html>
