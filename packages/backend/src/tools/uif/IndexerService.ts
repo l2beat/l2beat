@@ -66,8 +66,9 @@ export class IndexerService {
   async getSavedConfigurations<T>(
     indexerId: string,
   ): Promise<Omit<SavedConfiguration<T>, 'properties'>[]> {
-    const configurations: (SavedConfiguration<string> & {
+    const configurations: (Omit<SavedConfiguration<T>, 'properties'> & {
       indexerId?: string
+      properties?: string
     })[] =
       await this.indexerConfigurationRepository.getSavedConfigurations(
         indexerId,
@@ -76,11 +77,11 @@ export class IndexerService {
     for (const config of configurations) {
       // biome-ignore lint/performance/noDelete: not a performance problem
       delete config.indexerId
+      // biome-ignore lint/performance/noDelete: not a performance problem
+      delete config.properties
     }
 
-    return configurations.map((config) => ({
-      ...config,
-    }))
+    return configurations
   }
 
   async updateSavedConfigurations(
