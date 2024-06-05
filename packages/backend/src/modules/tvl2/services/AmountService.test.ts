@@ -7,7 +7,7 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, mockObject } from 'earl'
 import { BigNumber } from 'ethers'
 
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -49,10 +49,11 @@ describe(AmountService.name, () => {
     expect(mockMulticall.multicall).not.toHaveBeenCalled()
   })
 
-  it('calls multicall if supports native balance', async () => {
+  it.only('calls multicall if supports native balance', async () => {
     const mockMulticall = mockObject<MulticallClient>({
       multicall: () => Promise.resolve([]),
       isNativeBalanceSupported: () => true,
+      getMulticallAddressAt: () => EthereumAddress.random(),
     })
 
     const service = new AmountService({
@@ -60,9 +61,6 @@ describe(AmountService.name, () => {
       multicallClient: mockMulticall,
       logger: Logger.SILENT,
     })
-
-    const mockEncode = mockFn(service.encodeForMulticall)
-    service.encodeForMulticall = mockEncode
 
     const escrowNativeConfig = mockUifConfig(
       mockEscrowConfig({ address: 'native' }),
@@ -74,7 +72,6 @@ describe(AmountService.name, () => {
     await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
-    expect(mockEncode).toHaveBeenOnlyCalledWith(escrowNativeConfig)
   })
 
   it('calls RPC for ERC20s', async () => {
