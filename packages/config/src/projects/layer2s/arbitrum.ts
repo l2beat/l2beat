@@ -310,9 +310,9 @@ export const arbitrum: Layer2 = {
     coingeckoPlatform: 'arbitrum-one',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: ['EthereumBlobsOrCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'CompressedTransactionsData',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

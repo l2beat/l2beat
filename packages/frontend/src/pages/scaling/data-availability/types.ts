@@ -1,4 +1,6 @@
 import {
+  DataAvailabilityBridgeType,
+  DataAvailabilityLayer,
   Layer2Provider,
   Layer3Provider,
   ScalingProjectCategory,
@@ -33,7 +35,7 @@ export interface ScalingDataAvailabilityViewEntry {
 }
 
 type DataAvailability = {
-  layer: ValueWithSentiment<string>
-  bridge: ValueWithSentiment<string>
+  layer: ValueWithSentiment<DataAvailabilityLayer>
+  bridge: ValueWithSentiment<DataAvailabilityBridgeType>
   mode: string
 }

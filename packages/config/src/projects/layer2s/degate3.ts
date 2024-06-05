@@ -149,9 +149,9 @@ export const degate3: Layer2 = {
     },
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

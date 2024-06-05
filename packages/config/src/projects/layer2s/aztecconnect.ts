@@ -70,9 +70,9 @@ export const aztecconnect: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: {
     stateValidation: {

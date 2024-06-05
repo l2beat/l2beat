@@ -103,7 +103,7 @@ export const tanx: Layer2 = {
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
     },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

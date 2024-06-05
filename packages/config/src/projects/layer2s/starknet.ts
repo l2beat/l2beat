@@ -600,9 +600,9 @@ export const starknet: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: ['EthereumBlobsOrCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

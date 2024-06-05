@@ -55,9 +55,9 @@ export const fuelv1: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'TransactionsData',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,

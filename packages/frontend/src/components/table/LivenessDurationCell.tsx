@@ -37,7 +37,7 @@ export function LivenessDurationCell(props: {
     const tooltipText =
       props.dataType === 'batchSubmissions' &&
       (props.project?.dataAvailabilityMode === 'State diffs' ||
-        props.project?.dataAvailabilityMode === 'State diffs (compressed)')
+        props.project?.dataAvailabilityMode === 'CompressedStateDiffs')
         ? 'State diff rollups do not post batches of transactions to the L1.'
         : props.dataType === 'proofSubmissions' &&
             props.project?.category === 'Optimistic Rollup'

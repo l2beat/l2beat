@@ -242,9 +242,9 @@ export const linea: Layer2 = {
     coingeckoPlatform: 'linea',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: ['EthereumBlobsOrCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'CompressedTransactionsData',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

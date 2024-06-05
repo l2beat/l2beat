@@ -64,9 +64,9 @@ export const layer2aWithDups: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'TransactionsData',
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,

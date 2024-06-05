@@ -105,9 +105,9 @@ export const zkspace: Layer2 = {
     finality: 'coming soon',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

@@ -482,16 +482,16 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? 'EthereumBlobsOrCalldata'
+                : 'EthereumCalldata',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           }),
     riskView: makeBridgeCompatible({
       stateValidation: {
@@ -694,16 +694,16 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           })
         : addSentimentToDataAvailability({
             layers: [
               templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
+                ? 'EthereumBlobsOrCalldata'
+                : 'EthereumCalldata',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           }),
     config: {
       associatedTokens: templateVars.associatedTokens,

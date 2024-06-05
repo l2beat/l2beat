@@ -291,9 +291,9 @@ export const zksyncera: Layer2 = {
     coingeckoPlatform: 'zksync',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs or calldata)'],
+    layers: ['EthereumBlobsOrCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'State diffs (compressed)',
+    mode: 'CompressedStateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

@@ -147,7 +147,7 @@ export const zkfair: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['DAC'],
     bridge: { type: 'DAC Members', requiredSignatures, membersCount },
-    mode: 'State diffs',
+    mode: 'StateDiffs',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

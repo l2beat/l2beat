@@ -102,9 +102,9 @@ export const honeypot: Layer2 = {
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['EthereumCalldata'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'TransactionsData',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

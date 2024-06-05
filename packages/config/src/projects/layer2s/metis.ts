@@ -82,7 +82,7 @@ export const metis: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['MEMO'],
     bridge: { type: 'None' },
-    mode: 'Transactions data',
+    mode: 'TransactionsData',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

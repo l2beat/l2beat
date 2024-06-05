@@ -74,7 +74,7 @@ export const cyber: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: { type: 'None + DA challenges' },
+    bridge: { type: 'NoneAndDAChallenges' },
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

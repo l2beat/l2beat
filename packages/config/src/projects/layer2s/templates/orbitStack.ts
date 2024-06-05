@@ -319,17 +319,17 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           })
         })()
       : addSentimentToDataAvailability({
           layers: [
             templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+              ? 'EthereumBlobsOrCalldata'
+              : 'EthereumCalldata',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transactions data (compressed)',
+          mode: 'CompressedTransactionsData',
         }),
     stackedRiskView: templateVars.stackedRiskView,
     riskView: makeBridgeCompatible({
@@ -507,17 +507,17 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transactions data (compressed)',
+            mode: 'CompressedTransactionsData',
           })
         })()
       : addSentimentToDataAvailability({
           layers: [
             templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+              ? 'EthereumBlobsOrCalldata'
+              : 'EthereumCalldata',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transactions data (compressed)',
+          mode: 'CompressedTransactionsData',
         }),
     riskView: makeBridgeCompatible({
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
