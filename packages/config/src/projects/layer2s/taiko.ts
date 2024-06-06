@@ -199,7 +199,7 @@ export const taiko: Layer2 = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. In the event of a sequencer failure, users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay.',
+        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay.',
       sentiment: 'good',
       value: 'Self sequence', // based rollup sequencing
     },
@@ -272,9 +272,9 @@ export const taiko: Layer2 = {
       risks: [],
     },
     operator: {
-      name: 'The system uses based sequencing mechanism',
+      name: 'The system uses a based sequencing mechanism',
       description:
-        'The system used a based (or L1-sequenced) sequencing mechanism. Anyone can sequence L2 blocks by proposing them directly on the L1. Proposing a block requires designating a prover, who is required to deposit a liveness bond as a commitment to proving the block.',
+        'The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. Proposing a block requires designating a prover, which will be the only entity allowed to provide a proof for the block during the initial proving window. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.',
       references: [
         {
           text: 'TaikoL1 - proposeBlock',
