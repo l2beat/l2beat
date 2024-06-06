@@ -1,4 +1,5 @@
 import React from 'react'
+import { CopyButton } from '~/app/_components/copy-button'
 
 import { type CollectionEntry } from '~/content/getCollection'
 import ChiliIcon from '~/icons/chili.svg'
@@ -20,11 +21,10 @@ export function GlossaryItem(props: Props) {
             <ChiliIcon className="size-6 shrink-0" />
           )}
         </a>
-        {/* NOTE: Let's disable this until we will port the rest of the site to Next.js - implementing this would require tooltips and I don't want to make them different */}
-        {/* <CopyButton
+        <CopyButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
           className="md:hidden md:animate-quick-fade-in md:group-hover:block"
-        /> */}
+        />
       </div>
 
       <p className="text-lg text-gray-850 dark:text-white">
