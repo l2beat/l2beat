@@ -286,7 +286,7 @@ export const taiko: Layer2 = {
     forceTransactions: {
       name: `Users can force any transaction`,
       description:
-        'The system is designed to allow users to propose L2 blocks directly on L1.',
+        'The system is designed to allow users to propose L2 blocks directly on L1. However, the TaikoAdmin multisig can pause block proposals without delay.',
       references: [],
       risks: [],
     },
