@@ -75,6 +75,7 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
@@ -195,6 +196,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   redstone,
+  real,
   reya,
   rhinofi,
   rise,

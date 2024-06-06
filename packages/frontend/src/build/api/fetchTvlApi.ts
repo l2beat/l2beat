@@ -1,4 +1,4 @@
-import { bridges, layer2s as allLayer2s } from '@l2beat/config'
+import { layer2s as allLayer2s, bridges } from '@l2beat/config'
 import {
   AssetId,
   AssetType,
@@ -12,12 +12,15 @@ import {
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
 
-interface Options { tvl2: boolean, excludeAssociatedTokens?: boolean }
+interface Options {
+  tvl2: boolean
+  excludeAssociatedTokens?: boolean
+}
 
 export async function fetchTvlApi(
   backend: Config['backend'],
   http: JsonHttpClient,
-  opts: Options
+  opts: Options,
 ): Promise<TvlApiResponse> {
   if (backend.mock) {
     return getMockTvlApiResponse()
@@ -36,7 +39,6 @@ function getUrl(backend: Config['backend'],opts: Options) {
 
   return url.toString()
 }
-
 
 function getMockTvlApiResponse(): TvlApiResponse {
   const result: TvlApiResponse = {

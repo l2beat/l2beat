@@ -1,10 +1,11 @@
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
 import { redirect } from 'next/navigation'
-import type { SetRequired } from 'type-fest'
+import type { SetOptional, SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
 import { type ScalingProjectRisk } from '@l2beat/config'
 import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
+import { Footer } from '../_components/footer'
 import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
@@ -13,6 +14,8 @@ import { getChain, getChainStage } from './_utils/chains'
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
 }
+
+export type Risk = SetOptional<ScalingProjectRisk, 'category'>
 
 interface Props {
   params: { address: string }
@@ -153,6 +156,7 @@ export default async function Page({ params: { address } }: Props) {
                 symbol: token.symbol,
                 iconUrl: token.iconUrl,
                 bridge: token.bridgedUsing?.slug,
+                address: token.address,
               },
               chain: {
                 id: chainId,
@@ -184,7 +188,7 @@ export default async function Page({ params: { address } }: Props) {
         },
       }
 
-    let risks: ScalingProjectRisk[] = []
+    let risks: SetOptional<ScalingProjectRisk, 'category'>[] = []
     risks = chain.technology
       ? [
           chain.technology.stateCorrectness,
@@ -197,6 +201,11 @@ export default async function Page({ params: { address } }: Props) {
           ...(chain.technology.otherConsiderations ?? []),
         ].flatMap((choice) => choice?.risks ?? [])
       : []
+
+    risks = risks.map((r) => ({
+      text: `${r.category} ${r.text}`,
+      isCritical: r.isCritical,
+    }))
 
     const stage = getChainStage(token.chain.id)
 
@@ -213,8 +222,8 @@ export default async function Page({ params: { address } }: Props) {
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
-    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto py-10">
-      <div className="flex flex-col gap-6">
+    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto pt-10">
+      <div className="flex flex-col gap-6 mb-10">
         <DetailsHeader
           // TODO: Replace with real data when we have it
           dolarValue={0}
@@ -224,6 +233,7 @@ export default async function Page({ params: { address } }: Props) {
         <TokensTable tokens={tokensToDisplay} />
         <Disclaimer />
       </div>
+      <Footer />
     </main>
   )
 }

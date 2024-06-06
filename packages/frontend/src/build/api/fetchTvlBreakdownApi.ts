@@ -12,9 +12,9 @@ import { Config } from '../config'
 
 export async function fetchTvlBreakdownApi(
   backend: Config['backend'],
-  apiUrl: string,
+  _apiUrl: string,
   http: JsonHttpClient,
-  {tvl2}: {tvl2: boolean}
+  { tvl2 }: { tvl2: boolean },
 ): Promise<ProjectAssetsBreakdownApiResponse> {
   if (backend.mock) {
     return getMockTvlBreakdownApiResponse()

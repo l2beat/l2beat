@@ -135,7 +135,6 @@ describe(AddressAnalyzer.name, () => {
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        matchingTemplates: {},
         extendedTemplate: undefined,
         ignoreInWatchMode: undefined,
         relatives: {
@@ -236,7 +235,6 @@ describe(AddressAnalyzer.name, () => {
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        matchingTemplates: {},
         extendedTemplate: undefined,
         ignoreInWatchMode: undefined,
         relatives: {
@@ -335,7 +333,6 @@ describe(AddressAnalyzer.name, () => {
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        matchingTemplates: {},
         extendedTemplate: undefined,
         ignoreInWatchMode: undefined,
         relatives: {

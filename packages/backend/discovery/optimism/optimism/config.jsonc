@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "optimism",
+  "name": "optimism",
+  "initialAddresses": [
+    "0x4200000000000000000000000000000000000010",
+    "0x4200000000000000000000000000000000000016",
+    "0x4200000000000000000000000000000000000014",
+    "0x4200000000000000000000000000000000000011",
+    "0x4200000000000000000000000000000000000012",
+    "0x4200000000000000000000000000000000000017",
+    "0x4200000000000000000000000000000000000015",
+    "0x420000000000000000000000000000000000000F",
+    "0x4200000000000000000000000000000000000002",
+    "0x4200000000000000000000000000000000000013",
+    "0x4200000000000000000000000000000000000019",
+    "0x420000000000000000000000000000000000001A",
+    "0x4200000000000000000000000000000000000042",
+    "0x4200000000000000000000000000000000000020",
+    "0x4200000000000000000000000000000000000021"
+  ],
+  "names": {
+    "0x4200000000000000000000000000000000000010": "L2StandardBridge",
+    "0x420000000000000000000000000000000000000F": "GasPriceOracle",
+    "0x4200000000000000000000000000000000000042": "OPToken",
+    "0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
+    "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe": "L2ProxyAdminOwner",
+    "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
+    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
+    "0x4200000000000000000000000000000000000013": "L1BlockNumber",
+    "0x4200000000000000000000000000000000000015": "L1Block",
+    "0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
+    "0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge"
+  },
+  "overrides": {
+    "GasPriceOracle": {
+      "ignoreMethods": ["overhead", "scalar"],
+      "ignoreInWatchMode": ["l1BaseFee"]
+    },
+    "OPToken": {
+      "ignoreMethods": ["getPastTotalSupply"]
+    },
+    "L2CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "L1BlockNumber": {
+      "ignoreMethods": ["getL1BlockNumber"]
+    },
+    "L1Block": {
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber"
+      ]
+    },
+    "L2ToL1MessagePasser": {
+      "ignoreMethods": ["messageNonce"]
+    }
+  }
+}

@@ -19,7 +19,6 @@ export interface DiscoveryModuleConfig {
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
-  readonly skipHints?: boolean
 }
 
 export interface SingleDiscoveryModuleConfig {

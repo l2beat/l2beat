@@ -5,7 +5,7 @@ import { type ClassNameValue } from 'tailwind-merge'
 import { formatUnits } from 'viem'
 import ArrowIcon from '~/icons/arrow.svg'
 import { cn } from '~/utils/cn'
-import { groupRisks } from '../../_utils/group-risks'
+import { RiskDetails } from './risk-details'
 import { StageBadge } from './stage-badge'
 import { type Token } from './tokens-table'
 import { CriticalWarning, Warning } from './warning'
@@ -17,24 +17,8 @@ export function TableRow({
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const groupedRisks = groupRisks(token.chain.risks ?? [])
-
-  const criticalWarnings = groupedRisks.flatMap((r) => ({
-    name: r.name,
-    items: r.items.filter((i) => i.isCritical),
-  }))
-
-  const warnings = groupedRisks.flatMap((r) => ({
-    name: r.name,
-    items: r.items.filter((i) => !i.isCritical),
-  }))
-
-  const criticalWarningsCount = criticalWarnings.reduce(
-    (acc, r) => acc + r.items.length,
-    0,
-  )
-
-  const warningsCount = warnings.reduce((acc, r) => acc + r.items.length, 0)
+  const criticalWarnings = token.chain.risks.filter((r) => r.isCritical)
+  const warnings = token.chain.risks.filter((r) => !r.isCritical)
 
   return (
     <>
@@ -83,10 +67,10 @@ export function TableRow({
         <Cell>
           <div className={cn('flex items-center justify-between gap-3')}>
             <div className="flex items-center gap-3">
-              {!!criticalWarningsCount && (
-                <CriticalWarning count={criticalWarningsCount} />
+              {!!criticalWarnings.length && (
+                <CriticalWarning count={criticalWarnings.length} />
               )}
-              {!!warningsCount && <Warning count={warningsCount} />}
+              {!!warnings.length && <Warning count={warnings.length} />}
             </div>
             <div className={cn(!isOpen && 'rotate-180')}>
               <ArrowIcon className="dark:fill-gray-50" />
@@ -97,13 +81,13 @@ export function TableRow({
       {isOpen && (
         <tr
           className={cn(
-            'cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
+            'cursor-default border-b border-b-gray-200 dark:border-b-zinc-700',
             'hover:bg-black/[0.05] dark:hover:bg-white/[0.1]',
             'group-hover/body:bg-black/[0.05]',
           )}
         >
-          <Cell className="col-span-5" colSpan={5}>
-            Risks
+          <Cell className="pt-0" colSpan={5}>
+            <RiskDetails token={token} />
           </Cell>
         </tr>
       )}
