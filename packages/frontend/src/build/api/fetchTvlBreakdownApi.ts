@@ -19,7 +19,7 @@ export async function fetchTvlBreakdownApi(
   if (backend.mock) {
     return getMockTvlBreakdownApiResponse()
   }
-  const url = tvl2 ? `${backend.apiUrl}/api/tvl2/breakdown` : `${backend.apiUrl}/api/project-assets-breakdown`
+  const url = `${backend.apiUrl}/api/tvl2/breakdown`
   const json = await http.fetchJson(url)
   return ProjectAssetsBreakdownApiResponse.parse(json)
 }
