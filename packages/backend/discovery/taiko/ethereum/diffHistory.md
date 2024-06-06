@@ -1,3 +1,173 @@
+Generated with discovered.json: 0xc8183ab4ebdd418eb6d37e78217c69d073a4ba07
+
+# Diff at Thu, 06 Jun 2024 10:12:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@68b8e831d7a9790dc56ed4caf0e841fbec8adb53 block: 20018468
+- current block number: 20032110
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      upgradeability.implementation:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
+      implementations.0:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
+      values.assignment_hook:
+-        "0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6"
++        "0x0000000000000000000000000000000000000000"
+      values.getConfig.7:
++        true
+      values.impl:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
+      values.prover_set:
+-        "0x500735343372Dd6c9B84dBc7a75babf4479742B9"
++        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0x500735343372Dd6c9B84dBc7a75babf4479742B9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AssignmentHook (0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6)
+    +++ description: None
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      upgradeability.implementation:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+      implementations.0:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+      values.impl:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"
++        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
+      implementations.0:
+-        "0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"
++        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
+      values.impl:
+-        "0x8Af4669E3068Bae96b92cD73603f5D86beD07a9a"
++        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      upgradeability.implementation:
+-        "0x500735343372Dd6c9B84dBc7a75babf4479742B9"
++        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
+      implementations.0:
+-        "0x500735343372Dd6c9B84dBc7a75babf4479742B9"
++        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
+      values.impl:
+-        "0x500735343372Dd6c9B84dBc7a75babf4479742B9"
++        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
+    }
+```
+
+```diff
+    contract TaikoAdmin (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.nonce:
+-        26
++        28
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
+      implementations.0:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
+      values.impl:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      upgradeability.implementation:
+-        "0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
++        "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"
+      implementations.0:
+-        "0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
++        "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"
+      values.impl:
+-        "0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
++        "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      upgradeability.implementation:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+      implementations.0:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+      values.impl:
+-        "0x468F6A9C0ad2e9C8370687D2844A9e70fE942d5c"
++        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AssignmentHook/AssignmentHook.sol => /dev/null | 2714 --------------------
+ .../AssignmentHook/ERC1967Proxy.p.sol => /dev/null |  593 -----
+ .../GuardianMinorityProver/GuardianProver.sol      |  136 +-
+ .../GuardianProver.sol                             |  136 +-
+ .../L1RollupAddressManager.sol                     |    8 +-
+ ...0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F.sol} |   85 +-
+ .../ProverSetProxy/ProverSet.sol                   |   85 +-
+ .../SgxVerifier/SgxVerifier.sol                    |   40 +-
+ .../SignalService/SignalService.sol                |   70 +-
+ .../TaikoL1Contract/TaikoL1.sol                    |  333 +--
+ 10 files changed, 263 insertions(+), 3937 deletions(-)
+```
+
 Generated with discovered.json: 0xc7cd32149b27868b3a50016ee3970759f8e9aa0d
 
 # Diff at Tue, 04 Jun 2024 09:25:32 GMT:
