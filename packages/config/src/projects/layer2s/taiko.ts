@@ -77,10 +77,10 @@ const TaikoChainConfig = discovery.getContractValue<string>(
 
 const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
-const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TKO
-const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TKO
-const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TKO
-const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TKO
+const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TAIKO
+const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
+const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
+const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
 
 const LivenessBond = utils.formatEther(TaikoChainConfig[5])
 
@@ -242,10 +242,10 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TKO) as a commitment to proving the block. If the assigned prover does not prove the block, he forfeits his liveness bond, which then serves as a reward to the actual prover. 
+        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to proving the block. If the assigned prover does not prove the block, he forfeits his liveness bond, which then serves as a reward to the actual prover. 
         The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TKO, while ${SGXcontestBond} TKO is required to contest the proof. 
-        For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TKO and ${MinorityContestBond} TKO, respectively. It is not required to provide a proof for the block to submit a contestation.
+        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TAIKO, while ${SGXcontestBond} TAIKO is required to contest the proof. 
+        For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [],
@@ -326,7 +326,7 @@ export const taiko: Layer2 = {
       }),
       discovery.getContractDetails('ProverSetProxy', {
         description:
-          "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
+          "A contract that holds TAIKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO.",
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {
