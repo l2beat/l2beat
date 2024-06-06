@@ -1,8 +1,7 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
-import { Chart, FooterProps, NavbarProps } from '../../../../components'
-import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
+import { Chart } from '../../../../components'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import {
   ScalingSummaryView,
@@ -11,23 +10,13 @@ import {
 
 export interface SummaryPageProps {
   tvlView: ScalingSummaryViewProps
-  navbar: NavbarProps
-  footer: FooterProps
+
   milestones: Milestone[] | undefined
 }
 
 export function ScalingSummaryPage(props: SummaryPageProps) {
   return (
-    <DashboardLayout
-      navbar={props.navbar}
-      footer={props.footer}
-      tabs={
-        <ScalingNavigationTabs
-          features={props.navbar.features}
-          selected="summary"
-        />
-      }
-    >
+    <DashboardLayout>
       <Chart
         settingsId="scaling-summary"
         initialType={{ type: 'scaling-tvl' }}

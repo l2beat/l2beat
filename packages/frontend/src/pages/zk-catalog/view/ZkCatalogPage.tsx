@@ -1,19 +1,16 @@
 import React from 'react'
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 import { ZkCatalogView, ZkCatalogViewProps } from './ZkCatalogView'
 
 export interface ZkCatalogPageProps {
-  navbar: NavbarProps
   view: ZkCatalogViewProps
-  footer: FooterProps
 }
 
 export function ZkCatalogPage(props: ZkCatalogPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent className="w-full">
+    <DashboardLayout>
+      <PageContent>
         <header className="text-left md:text-center mt-[72px]">
           <h1 className="text-6xl font-extrabold">ZK Catalog</h1>
           <p className="mx-auto text-base font-medium mt-6 max-w-[994px]">
@@ -27,7 +24,6 @@ export function ZkCatalogPage(props: ZkCatalogPageProps) {
           <ZkCatalogView {...props.view} />
         </main>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

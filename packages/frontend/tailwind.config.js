@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   future: {
@@ -175,6 +177,8 @@ module.exports = {
       sm: '550px',
       md: '750px',
       lg: '1120px',
+      xl: '1280px',
+      '2xl': '1920px',
     },
     zIndex: {
       1: '1',
@@ -207,4 +211,15 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    plugin(function ({ addVariant, e }) {
+      addVariant('sidenav-collapsed', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.sidenav-collapsed .${e(
+            `sidenav-collapsed${separator}${className}`,
+          )}`
+        })
+      })
+    }),
+  ],
 }

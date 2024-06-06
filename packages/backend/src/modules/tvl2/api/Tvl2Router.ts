@@ -71,15 +71,11 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
         query: z.object({
           project: stringAs(ProjectId),
           chain: z.string(),
-          address: z.string(),
+          address: z.union([stringAs(EthereumAddress), z.literal('native')]),
         }),
       }),
       async (ctx) => {
-        const { chain, project } = ctx.query
-        const address =
-          ctx.query.address === 'native'
-            ? 'native'
-            : EthereumAddress(ctx.query.address)
+        const { chain, project, address } = ctx.query
 
         ctx.body = await controller.getTokenChart(
           { chain, address },

@@ -1,28 +1,20 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { LinkWithThumbnail } from '../../../../components/LinkWithThumbnail'
 import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationsPageProps {
   publications: GovernancePublicationEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GovernancePublicationsPage(
   props: GovernancePublicationsPageProps,
 ) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <Header />
       <PageContent>
         <h1 className="mt-20 text-3xl font-bold">
@@ -34,8 +26,7 @@ export function GovernancePublicationsPage(
           ))}
         </div>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }
 

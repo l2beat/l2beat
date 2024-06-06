@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { getDiagramImageOrThrow } from '../../../project/common/getDiagramImage'
@@ -13,10 +12,8 @@ export function getProps(
 ): Wrapped<ScalingFinalityPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
       finalityView: getScalingFinalityView(config.layer2s, pagesData),
       diagrams,
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

@@ -1,28 +1,20 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Logo,
-  Navbar,
-  NavbarProps,
-} from '../../../components'
+import { Logo } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { PolygonLogo } from '../../../components/report/PolygonLogo'
 import { ReportBanner } from '../../../components/report/ReportBanner'
 import { ReportDownloadButton } from '../../../components/report/ReportDownloadButton'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 
 export interface MultisigReportPageProps {
-  navbar: NavbarProps
-  footer: FooterProps
   showActivity: boolean
   multisigReportUrl: string
 }
 
 export function MultisigReportPage(props: MultisigReportPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <PageContent>
         <main className="flex flex-col md:items-center">
           <ReportBanner />
@@ -70,7 +62,6 @@ export function MultisigReportPage(props: MultisigReportPageProps) {
           />
         </main>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

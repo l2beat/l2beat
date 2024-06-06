@@ -1,12 +1,5 @@
 import chunk from 'lodash/chunk'
 import React from 'react'
-
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { Link } from '../../../../components/Link'
 import { PageContent } from '../../../../components/PageContent'
@@ -17,6 +10,7 @@ import { OurApproachSection } from '../../../../components/governance/sections/O
 import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
 import { RecentPublicationsSection } from '../../../../components/governance/sections/RecentPublicationsSection'
 import { OutLinkIcon } from '../../../../components/icons'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { GovernanceDelegatedProjectEntry } from '../props/getGovernanceDelegatedProjectEntry'
 import { GovernanceEventEntry } from '../props/getGovernanceEventEntries'
 import { GovernancePublicationEntry } from '../props/getGovernancePublicationEntry'
@@ -25,14 +19,11 @@ export interface GovernancePageProps {
   publications: GovernancePublicationEntry[]
   events: GovernanceEventEntry[]
   delegatedProjects: GovernanceDelegatedProjectEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GovernancePage(props: GovernancePageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <Header
         delegatedProjects={props.delegatedProjects}
         pageContentClassName="md:px-6 lg:px-12 justify-start"
@@ -52,8 +43,7 @@ export function GovernancePage(props: GovernancePageProps) {
           <OurMissionSection className="lg:col-span-4" />
         </main>
       </PageContent>
-      <Footer {...props.footer} className="mt-0 md:mt-20" />
-    </>
+    </DashboardLayout>
   )
 }
 
