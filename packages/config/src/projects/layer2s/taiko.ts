@@ -7,7 +7,6 @@ import {
 import { utils } from 'ethers'
 import {
   DATA_ON_CHAIN,
-  FRONTRUNNING_RISK,
   RISK_VIEW,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
@@ -200,9 +199,9 @@ export const taiko: Layer2 = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Anyone can propose L2 blocks directly on the Taiko L1 contract. Hovewer, the TaikoAdmin multisig can pause block proposals.',
+        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. In the event of a sequencer failure, users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay.',
       sentiment: 'good',
-      value: 'L1-sequenced', // based rollup sequencing
+      value: 'Self sequence', // based rollup sequencing
     },
     proposerFailure: {
       description:
