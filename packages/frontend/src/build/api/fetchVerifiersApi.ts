@@ -1,3 +1,4 @@
+import { layer2s, zkCatalogProjects } from '@l2beat/config'
 import {
   EthereumAddress,
   UnixTime,
@@ -5,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
-import { layer2s, zkCatalogProjects } from '@l2beat/config'
 
 export async function fetchVerifiersApi(
   backend: Config['backend'],

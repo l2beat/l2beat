@@ -1,9 +1,9 @@
+import fs from 'fs'
 import { parseManuallyVerifiedContracts } from '@l2beat/config'
 import {
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
-import fs from 'fs'
 
 export function getVerificationStatus(
   supportedChains: string[],

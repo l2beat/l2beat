@@ -192,11 +192,12 @@ export function checkIfDelayedActivity(
   response: ActivityApiChartsWithEstimation,
   now: UnixTime,
 ) {
+  // biome-ignore lint/style/noNonNullAssertion: even if it's not there we want to fail
   const lastValue = response.daily.data.at(-1)!
   const lastTimestamp = lastValue[0]
   const delay = now.toNumber() - lastTimestamp.toNumber()
 
-  if(delay > ACTIVITY_ACCEPTABLE_DELAY){
+  if (delay > ACTIVITY_ACCEPTABLE_DELAY) {
     throw new Error(
       `Combined activity data is delayed! ${delay} seconds. Acceptable delay is ${ACTIVITY_ACCEPTABLE_DELAY} seconds.`,
     )
