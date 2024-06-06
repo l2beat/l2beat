@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x412c3152a7e9266e259ca114662031a4d33f2e21
+
+# Diff at Thu, 06 Jun 2024 05:15:31 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@508157754f563221cb69d9a7257ec7bb4f731937 block: 20025625
+- current block number: 20030638
+
+## Description
+
+Reconfigured discovery to ignore token related values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20025625 (main branch discovery), not current.
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: None
+      values.getVaultAvailableAmount:
+-        [0,"310422643444773035033"]
+      values.latestRoundID:
+-        17
+      values.withdrawAmountDust:
+-        0
+    }
+```
+
 Generated with discovered.json: 0xd8292d70fd71441d43b5cde9d3e77785b0a78059
 
 # Diff at Wed, 05 Jun 2024 12:27:34 GMT:

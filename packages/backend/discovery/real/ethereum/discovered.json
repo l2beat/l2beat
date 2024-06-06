@@ -1,8 +1,8 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20025625,
-  "configHash": "0x773368117716997fb0773214cd505e96477a0b84f80860d70aa139d41a44e939",
+  "blockNumber": 20030638,
+  "configHash": "0xe37a031b6fd526dc34762efc2c4f1b19829cd2113a763d6e4f7604773f77e9bf",
   "version": 4,
   "contracts": [
     {
@@ -77,12 +77,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 2076,
+        "delayedMessageCount": 2096,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 1619,
-        "sequencerReportedSubMessageCount": 84743
+        "sequencerMessageCount": 1635,
+        "sequencerReportedSubMessageCount": 86312
       },
       "derivedName": "ERC20Bridge"
     },
@@ -140,7 +140,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1710580715,
       "values": {
-        "batchCount": 1619,
+        "batchCount": 1635,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
@@ -155,7 +155,7 @@
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2075
+        "totalDelayedMessagesRead": 2095
       },
       "derivedName": "SequencerInbox"
     },
@@ -306,6 +306,7 @@
     {
       "name": "Real",
       "address": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
+      "ignoreInWatchMode": ["tokenPrice", "totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -316,8 +317,9 @@
         "name": "Real Ether",
         "symbol": "reETH",
         "tokenPrice": "1001888553793467708",
-        "totalSupply": "330446067364894910496"
-      }
+        "totalSupply": "332458891750497035123"
+      },
+      "derivedName": "Real"
     },
     {
       "name": "RollupProxy",
@@ -347,12 +349,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1137,
+        "firstUnresolvedNode": 1153,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 1136,
-        "latestNodeCreated": 1286,
+        "latestConfirmed": 1152,
+        "latestNodeCreated": 1303,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -439,19 +441,28 @@
     {
       "name": "AssetsVault",
       "address": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
+      "ignoreInWatchMode": ["getBalance"],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1715706239,
       "values": {
-        "getBalance": "13893016059661700664",
+        "getBalance": "22022348292174786716",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
-      }
+      },
+      "derivedName": "AssetsVault"
     },
     {
       "name": "RealVault",
       "address": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
+      "ignoreInWatchMode": [
+        "currentSharePrice",
+        "withdrawingSharesInPast",
+        "withdrawableAmountInPast",
+        "withdrawingSharesInRound",
+        "rebaseTime"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -460,21 +471,18 @@
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
         "currentSharePrice": "1001888553793467708",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
-        "getVaultAvailableAmount": [0, "310422643444773035033"],
-        "latestRoundID": 17,
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
         "owner": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proposal": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1717560011,
+        "rebaseTime": 1717647023,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "20597275549947104917",
-        "withdrawAmountDust": 0,
+        "withdrawableAmountInPast": "22022348292174786716",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "20572895374150169450",
+        "withdrawingSharesInPast": "21995281862978597109",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
