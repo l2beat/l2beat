@@ -41,7 +41,7 @@ export class PriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getDailyByConfigId(configId: string) {
+  async getByConfigId(configId: string) {
     const knex = await this.knex()
     const rows = await knex('prices')
       .where({ configuration_id: configId })

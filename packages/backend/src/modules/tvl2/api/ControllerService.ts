@@ -152,6 +152,24 @@ export class ControllerService {
     }
     return timestamps
   }
+
+  async getPrices(priceId: string) {
+    const records = await this.$.priceRepository.getByConfigId(priceId)
+    const ethPrices = new Map(
+      records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
+    )
+    return ethPrices
+  }
+
+  async getByConfigIdsAndTimestamp(
+    priceConfigIds: string[],
+    timestamp: UnixTime,
+  ) {
+    return await this.$.priceRepository.getByConfigIdsAndTimestamp(
+      priceConfigIds,
+      timestamp,
+    )
+  }
 }
 
 export function filterSources(

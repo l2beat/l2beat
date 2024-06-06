@@ -19,7 +19,6 @@ import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './ControllerService'
@@ -49,7 +48,6 @@ export interface Tvl2ControllerDependencies {
   associatedTokens: AssociatedToken[]
   minTimestamp: Record<Project['type'], UnixTime>
   amountRepository: AmountRepository
-  priceRepository: PriceRepository
   chainConverter: ChainConverter
   controllerService: ControllerService
 }
@@ -266,7 +264,7 @@ export class Tvl2Controller {
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
+    const prices = await this.$.controllerService.getByConfigIdsAndTimestamp(
       [...this.$.priceConfigs.values()].map((x) => x.priceId),
       timestamp,
     )
@@ -316,7 +314,7 @@ export class Tvl2Controller {
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
+    const prices = await this.$.controllerService.getByConfigIdsAndTimestamp(
       [...this.$.priceConfigs.values()].map((x) => x.priceId),
       timestamp,
     )
@@ -617,11 +615,7 @@ export class Tvl2Controller {
     const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
     const ethPriceId = this.$.priceConfigs.get(ethAssetId)?.priceId
     assert(ethPriceId, 'Eth priceId not found')
-    const records = await this.$.priceRepository.getDailyByConfigId(ethPriceId)
-    const ethPrices = new Map(
-      records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
-    )
-    return ethPrices
+    return await this.$.controllerService.getPrices(ethPriceId)
   }
 
   // TODO: it is slow an can be optimized via querying for all tokens in a batch
