@@ -4,7 +4,7 @@ import { Footer } from '../components'
 import { About } from '../components/About'
 import { PageContent } from '../components/PageContent'
 import { NavWrapper } from '../components/navbar/NavWrapper'
-import { usePageBuildContext } from '../components/navbar/navigationContext'
+import { usePageBuildContext } from '../build/pageBuildContext'
 import { OtherSites } from '../components/other-sites/OtherSites'
 import { cn } from '../utils/cn'
 
@@ -18,7 +18,7 @@ export function DashboardLayout(props: DashboardLayoutProps) {
   // Enable new layout for /scaling and /bridges pages, but not for detailed project pages
   const scalingOrBridges =
     ['/scaling', '/bridges'].some((p) => path.startsWith(p)) &&
-    ['/scaling/projects', '/bridges/projects'].every((p) => !path.startsWith(p))
+    !path.includes('/projects')
 
   return (
     <NavWrapper legacyNav={!scalingOrBridges}>

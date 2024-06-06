@@ -9,7 +9,7 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from '../icons'
-import { usePageBuildContext } from './navigationContext'
+import { usePageBuildContext } from '../../build/pageBuildContext'
 
 export function SocialLinks() {
   const { config } = usePageBuildContext()

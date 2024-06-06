@@ -3,7 +3,7 @@ import fsx from 'fs-extra'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import { Config } from '../build/config'
-import { withPageBuildContext } from '../components/navbar/navigationContext'
+import { withPageBuildContext } from '../build/pageBuildContext'
 import { Page } from './Page'
 
 export function outputPages(config: Config, pages: Page[]) {

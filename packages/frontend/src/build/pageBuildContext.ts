@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from 'async_hooks'
-import { Config } from '../../build/config'
+import { Config } from './config'
 
 export interface PageBuildContext {
   config: Config
