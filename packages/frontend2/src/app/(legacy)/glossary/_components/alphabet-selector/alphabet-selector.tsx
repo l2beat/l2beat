@@ -1,10 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 
+import debounce from 'lodash/debounce'
 import { useCurrentSection } from '~/hooks/use-current-section'
-import { startsWithNumber } from '~/utils/startsWithLetterOrNumber'
+import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
+import { startsWithNumber } from '~/utils/starts-with-letter-or-number'
 import { AlphabetSelectorChar } from './alphabet-selector-char'
 
 const OPTIONS = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
@@ -14,26 +16,48 @@ interface Props<T> {
 }
 
 export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
+  const selectedItem = useRef<HTMLLIElement>(null)
+  const overflowContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection({
     desktop: '164px',
     mobile: '132px',
   })
+
+  const scrollToItem = useMemo(
+    () =>
+      debounce(
+        (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
+          scrollHorizontallyToItem({ item, overflowingContainer }),
+        200,
+      ),
+    [],
+  )
+
+  useEffect(() => {
+    if (!selectedItem.current || !overflowContainer.current) return
+    scrollToItem(selectedItem.current, overflowContainer.current)
+  }, [currentSection, scrollToItem])
+
   const optionsWithEntry = getOptionsWithEntry(props.entries)
 
   return (
     <div data-role="alphabet-selector">
-      <OverflowWrapper>
+      <OverflowWrapper ref={overflowContainer}>
         <ul className="flex gap-2">
-          {optionsWithEntry.map(({ char, entry }) => (
-            <AlphabetSelectorChar
-              key={`alphabet-selector-${char}`}
-              char={char}
-              href={entry ? `#${entry.id}` : undefined}
-              selected={
-                currentSection ? isSelected(currentSection?.id, char) : false
-              }
-            />
-          ))}
+          {optionsWithEntry.map(({ char, entry }) => {
+            const selected = currentSection
+              ? isSelected(currentSection?.id, char)
+              : false
+            return (
+              <AlphabetSelectorChar
+                key={`alphabet-selector-${char}`}
+                char={char}
+                href={entry ? `#${entry.id}` : undefined}
+                selected={selected}
+                ref={selected ? selectedItem : null}
+              />
+            )
+          })}
         </ul>
       </OverflowWrapper>
     </div>

@@ -1,10 +1,11 @@
 'use client'
 
 import clamp from 'lodash/clamp'
-import React, { useEffect, useRef } from 'react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
 
 import ChevronIcon from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
+import mergeRefs from '../utils/merge-refs'
 
 interface OverflowWrapperProps {
   children: React.ReactNode
@@ -13,109 +14,104 @@ interface OverflowWrapperProps {
   innerRef?: React.Ref<HTMLDivElement>
 }
 
+type VisibleArrows = 'left' | 'right' | 'both'
 const ARROWS_THRESHOLD = 4
 
-export function OverflowWrapper({
-  children,
-  childrenClassName,
-  className,
-  ...rest
-}: React.ComponentPropsWithRef<'div'> & OverflowWrapperProps) {
-  const leftArrowRef = useRef<HTMLDivElement>(null)
-  const rightArrowRef = useRef<HTMLDivElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
+export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
+  ({ children, childrenClassName, className, ...rest }, ref) => {
+    const [visibleArrows, setVisibleArrows] = useState<VisibleArrows>()
 
-  function onArrowClick(dir: 'left' | 'right') {
-    if (!contentRef.current) return
-    const content = contentRef.current
+    const contentRef = useRef<HTMLDivElement>(null)
 
-    const contentWidth = content.getBoundingClientRect().width
-    let scrollBy
-    if (dir === 'left') {
-      scrollBy = -clamp(contentWidth, 0, content.scrollLeft)
-    } else {
-      scrollBy = clamp(
-        contentWidth,
-        0,
-        content.scrollWidth - contentWidth - content.scrollLeft,
-      )
+    function onArrowClick(dir: 'left' | 'right') {
+      if (!contentRef.current) return
+      const content = contentRef.current
+
+      const contentWidth = content.getBoundingClientRect().width
+      let scrollBy
+      if (dir === 'left') {
+        scrollBy = -clamp(contentWidth, 0, content.scrollLeft)
+      } else {
+        scrollBy = clamp(
+          contentWidth,
+          0,
+          content.scrollWidth - contentWidth - content.scrollLeft,
+        )
+      }
+
+      content.scrollBy({
+        left: scrollBy,
+        behavior: 'smooth',
+      })
     }
 
-    content.scrollBy({
-      left: scrollBy,
-      behavior: 'smooth',
-    })
-  }
+    useEffect(() => {
+      function onScroll() {
+        if (!contentRef.current) return
+        const content = contentRef.current
 
-  const onScroll = () => {
-    if (!contentRef.current) return
-    const content = contentRef.current
+        const isScrolledToStart = content.scrollLeft < ARROWS_THRESHOLD
+        const isScrolledToEnd =
+          content.scrollLeft >
+          content.scrollWidth - content.clientWidth - ARROWS_THRESHOLD
 
-    const isScrolledToStart = content.scrollLeft < ARROWS_THRESHOLD
-    const isScrolledToEnd =
-      content.scrollLeft >
-      content.scrollWidth - content.clientWidth - ARROWS_THRESHOLD
+        const visibleArrows =
+          isScrolledToStart && isScrolledToEnd
+            ? undefined
+            : isScrolledToStart
+              ? 'right'
+              : isScrolledToEnd
+                ? 'left'
+                : 'both'
+        setVisibleArrows(visibleArrows)
+      }
 
-    leftArrowRef.current?.setAttribute(
-      'data-visible',
-      isScrolledToStart ? 'false' : 'true',
-    )
-    rightArrowRef.current?.setAttribute(
-      'data-visible',
-      isScrolledToEnd ? 'false' : 'true',
-    )
-    content.setAttribute(
-      'data-scrolled-to-start',
-      isScrolledToStart ? 'true' : 'false',
-    )
-    content.setAttribute(
-      'data-scrolled-to-end',
-      isScrolledToEnd ? 'true' : 'false',
-    )
-  }
+      onScroll()
+      contentRef.current?.addEventListener('scroll', onScroll)
+      window.addEventListener('resize', onScroll)
+    }, [])
 
-  useEffect(() => {
-    onScroll()
-    contentRef.current?.addEventListener('scroll', onScroll)
-    window.addEventListener('resize', onScroll)
-  }, [])
-
-  return (
-    <div className={cn('relative', className)} {...rest}>
-      <div
-        ref={leftArrowRef}
-        onClick={() => onArrowClick('left')}
-        className={cn(
-          'pointer-events-none duration-300 absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity fade-out-mask',
-          'data-[visible=true]/overflow-wrapper:pointer-events-auto data-[visible=true]/overflow-wrapper:opacity-100',
-        )}
-      >
-        <div className="flex h-full items-center justify-center">
-          <ChevronIcon className="scale-75 rotate-90 dark:fill-white" />
+    return (
+      <div className={cn('relative', className)} {...rest}>
+        <div
+          onClick={() => onArrowClick('left')}
+          className={cn(
+            'pointer-events-none duration-300 absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity fade-out-mask',
+            (visibleArrows === 'left' || visibleArrows === 'both') &&
+              'pointer-events-auto opacity-100',
+          )}
+        >
+          <div className="flex h-full items-center justify-center">
+            <ChevronIcon className="scale-75 rotate-90 dark:fill-white" />
+          </div>
+        </div>
+        <div
+          ref={mergeRefs(contentRef, ref)}
+          className={cn(
+            'scrollbar-hide overflow-x-auto',
+            visibleArrows === 'left' && 'fade-out-to-left',
+            visibleArrows === 'right' && 'fade-out-to-right',
+            visibleArrows === 'both' && 'fade-out-horizontal',
+            childrenClassName,
+          )}
+        >
+          {children}
+        </div>
+        <div
+          onClick={() => onArrowClick('right')}
+          className={cn(
+            'pointer-events-none duration-200 absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity',
+            (visibleArrows === 'right' || visibleArrows === 'both') &&
+              'pointer-events-auto opacity-100',
+          )}
+        >
+          <div className="flex h-full items-center justify-center">
+            <ChevronIcon className="scale-75 -rotate-90 dark:fill-white" />
+          </div>
         </div>
       </div>
-      <div
-        ref={contentRef}
-        className={cn(
-          'scrollbar-hide overflow-x-auto data-[scrolled-to-start="false"]:fade-out-to-left data-[scrolled-to-end="false"]:fade-out-to-right',
-          'data-[scrolled-to-start="false"]:data-[scrolled-to-end="false"]:fade-out-horizontal',
-          childrenClassName,
-        )}
-      >
-        {children}
-      </div>
-      <div
-        ref={rightArrowRef}
-        onClick={() => onArrowClick('right')}
-        className={cn(
-          'pointer-events-none duration-200 absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity',
-          'data-[visible=true]/overflow-wrapper:pointer-events-auto data-[visible=true]/overflow-wrapper:opacity-100',
-        )}
-      >
-        <div className="flex h-full items-center justify-center">
-          <ChevronIcon className="scale-75 -rotate-90 dark:fill-white" />
-        </div>
-      </div>
-    </div>
-  )
-}
+    )
+  },
+)
+
+OverflowWrapper.displayName = 'OverflowWrapper'
