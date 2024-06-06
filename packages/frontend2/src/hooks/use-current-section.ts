@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useHtmlQuery } from './use-html-query'
 import { useIsMobile } from './use-is-mobile'
 
 const DEFAULT_THRESHOLD = `15%`
@@ -12,12 +11,13 @@ interface Threshold {
 }
 
 export function useCurrentSection(threshold?: Threshold) {
-  const { $$ } = useHtmlQuery()
   const isMobile = useIsMobile()
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
 
   useEffect(() => {
-    const sections = $$('section')
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('section'),
+    )
     const firstSection = sections.at(0)
     const lastSection = sections.at(-1)
 
@@ -48,7 +48,7 @@ export function useCurrentSection(threshold?: Threshold) {
     }
     findCurrentSection()
     document.addEventListener('scroll', findCurrentSection)
-  }, [$$, isMobile, threshold])
+  }, [isMobile, threshold])
 
   return currentSection
 }
