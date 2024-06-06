@@ -72,8 +72,7 @@ describe(AmountService.name, () => {
     await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
-    expect(mockMulticall.getMulticallAddressAt).toHaveBeenNthCalledWith(
-      1,
+    expect(mockMulticall.getMulticallAddressAt).toHaveBeenOnlyCalledWith(
       blockNumber,
     )
   })

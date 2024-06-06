@@ -224,4 +224,32 @@ describe(MulticallClient.name, () => {
     )
     expect(address).toEqual(ADDRESS_V2)
   })
+
+  it('configs are correctly sorted in getMulticallAddressAt & isNativeBalanceSupported', () => {
+    const entries = [
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 3,
+        address: EthereumAddress('0x' + '3'.toString().repeat(40)),
+      }),
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 1,
+        address: EthereumAddress('0x' + '1'.toString().repeat(40)),
+      }),
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 2,
+        address: EthereumAddress('0x' + '2'.toString().repeat(40)),
+        isNativeBalanceSupported: false,
+      }),
+    ]
+    const ethereumClient = mockObject<RpcClient>()
+    const multicallClient = new MulticallClient(ethereumClient, [...entries])
+
+    const address = multicallClient.getMulticallAddressAt(3)
+    const isNativeBalanceSupported = multicallClient.isNativeBalanceSupported(3)
+
+    expect(address).toEqual(entries[2].address)
+    expect(isNativeBalanceSupported).toEqual(
+      entries[2].isNativeBalanceSupported,
+    )
+  })
 })
