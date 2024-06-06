@@ -120,7 +120,7 @@ export const mxc: Layer3 = {
       value: '',
     },
   },
-  technology: { },
+  technology: {},
   permissions: [
     {
       name: 'MXC deployer EOA',

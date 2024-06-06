@@ -124,20 +124,20 @@ export function getProjectDetails(
       },
     })
 
-        /* We want state derivation to be after technology section
+    /* We want state derivation to be after technology section
         so we split the technology sections into two arrays
         and add state derivation in between */
-        const technologySection = technologySections[0]
-    if(technologySection) {
-        items.push({
-            type: 'TechnologySection',
-            props: {
-                items: technologySection.items,
-                id: technologySection.id,
-                title: technologySection.title,
-                isUnderReview: technologySection.isUnderReview,
-            },
-        })
+    const technologySection = technologySections[0]
+    if (technologySection) {
+      items.push({
+        type: 'TechnologySection',
+        props: {
+          items: technologySection.items,
+          id: technologySection.id,
+          title: technologySection.title,
+          isUnderReview: technologySection.isUnderReview,
+        },
+      })
     }
 
     if (project.stateDerivation) {

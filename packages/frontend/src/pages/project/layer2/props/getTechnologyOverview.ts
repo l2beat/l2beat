@@ -22,10 +22,11 @@ export function getTechnologyOverview(
           'new-cryptography',
           project.technology.newCryptography,
         ),
-      project.technology.dataAvailability && makeTechnologyChoice(
-        'data-availability',
-        project.technology.dataAvailability,
-      ),
+      project.technology.dataAvailability &&
+        makeTechnologyChoice(
+          'data-availability',
+          project.technology.dataAvailability,
+        ),
     ].filter(notUndefined),
   }
 
@@ -34,11 +35,13 @@ export function getTechnologyOverview(
     title: 'Operator',
     isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
     items: [
-      project.technology.operator && makeTechnologyChoice('operator', project.technology.operator),
-      project.technology.forceTransactions && makeTechnologyChoice(
-        'force-transactions',
-        project.technology.forceTransactions,
-      ),
+      project.technology.operator &&
+        makeTechnologyChoice('operator', project.technology.operator),
+      project.technology.forceTransactions &&
+        makeTechnologyChoice(
+          'force-transactions',
+          project.technology.forceTransactions,
+        ),
     ].filter(notUndefined),
   }
 
