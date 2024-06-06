@@ -126,7 +126,7 @@ export class AmountService {
         return erc20Codec.totalSupply.encode(properties.address)
       case 'escrow':
         if (properties.address === 'native') {
-          // choose codec based on block number
+          // choose multicall address based on block number
           const multicallAddress =
             this.$.multicallClient.getMulticallAddressAt(blockNumber)
 

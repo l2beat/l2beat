@@ -72,6 +72,10 @@ describe(AmountService.name, () => {
     await service.fetchAmounts(timestamp, blockNumber, configurations)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
+    expect(mockMulticall.getMulticallAddressAt).toHaveBeenNthCalledWith(
+      1,
+      blockNumber,
+    )
   })
 
   it('calls RPC for ERC20s', async () => {
