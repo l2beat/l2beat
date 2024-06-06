@@ -384,7 +384,10 @@ export function Sidenav({
             className="select-none cursor-pointer"
             data-role="sidenav-collapse-toggle"
           >
-            <NavCollapseIcon className="sidenav-collapsed:rotate-180" />
+            <NavCollapseIcon
+              className="sidenav-collapsed:rotate-180"
+              fill="none"
+            />
           </button>
         </div>
       </div>
