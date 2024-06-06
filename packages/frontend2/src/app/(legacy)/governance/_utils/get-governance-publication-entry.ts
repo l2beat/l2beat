@@ -1,8 +1,8 @@
-import { formatPublicationDate } from '~/app/utils/dates'
 import {
   type CollectionEntry,
   getCollectionEntry,
 } from '~/content/getCollection'
+import { formatPublicationDate } from '~/utils/dates'
 import {
   type GovernanceAuthorEntry,
   getGovernanceAuthorEntry,

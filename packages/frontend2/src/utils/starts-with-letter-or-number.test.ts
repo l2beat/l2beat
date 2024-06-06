@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import {
   startsWithLetterOrNumber,
   startsWithNumber,
-} from './startsWithLetterOrNumber'
+} from './starts-with-letter-or-number'
 
 describe(startsWithLetterOrNumber.name, () => {
   it('should return true for a string that starts with a letter', () => {

@@ -7,11 +7,14 @@ interface Props {
   children: React.ReactNode
   className?: string
   contentWrapperClassName?: string
+  as?: 'header' | 'div'
 }
 
 export function FullPageHeader(props: Props) {
+  const Comp = props.as ?? 'header'
+
   return (
-    <header
+    <Comp
       className={cn('bg-pure-white py-24 dark:bg-zinc-900', props.className)}
     >
       <ContentWrapper
@@ -22,6 +25,6 @@ export function FullPageHeader(props: Props) {
       >
         {props.children}
       </ContentWrapper>
-    </header>
+    </Comp>
   )
 }

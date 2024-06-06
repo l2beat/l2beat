@@ -1,5 +1,5 @@
 import { formatTimestamp } from '../dates'
-import type { OneTimeEvent } from './getOneTimeEvents'
+import type { OneTimeEvent } from './get-one-time-events'
 
 export function getNiceEventDate(event: OneTimeEvent) {
   const startDay = event.data.startDate.getDate()
