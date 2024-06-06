@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { TvlPagesData } from '../types'
@@ -12,8 +11,6 @@ export function getProps(
 ): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
-      footer: getFooterProps(config),
       tvlView: getScalingTvlView(
         [
           ...config.layer2s,

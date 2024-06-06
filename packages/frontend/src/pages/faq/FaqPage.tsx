@@ -1,21 +1,18 @@
 import React from 'react'
 
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
 import { HorizontalSeparator } from '../../components/HorizontalSeparator'
 import { PageContent } from '../../components/PageContent'
+import { DashboardLayout } from '../../layouts/DashboardLayout'
 import { FaqItem } from './getFaqItems'
 
 export interface FaqPageProps {
   title: string
   items: FaqItem[]
-  footer: FooterProps
-  navbar: NavbarProps
 }
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <PageContent>
         <div className="mt-16">
           <div className="mb-4 text-4xl font-extrabold">
@@ -60,8 +57,7 @@ export function FaqPage(props: FaqPageProps) {
           </article>
         </div>
       </PageContent>
-      <Footer narrow {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }
 

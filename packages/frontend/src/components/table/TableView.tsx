@@ -155,7 +155,7 @@ function ColumnHeader<T>(props: {
     <>
       <th
         className={cn(
-          'whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
+          'whitespace-pre py-2 align-bottom text-xs leading-5 font-medium uppercase text-gray-500 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
             !props.groupOptions?.isLast &&

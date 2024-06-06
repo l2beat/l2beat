@@ -26,6 +26,7 @@ const LocalStorageKeySchemas = {
   'rollups-only-checked': strictBoolean,
   'top-bar-variant-data': stringAsObjectOrUndefined(TopBarVariantData),
   'chart-settings': stringAsObjectOrUndefined(SavedChartState),
+  'sidenav-collapsed': strictBoolean,
 } as const
 
 type LocalStorageKeys = keyof typeof LocalStorageKeySchemas

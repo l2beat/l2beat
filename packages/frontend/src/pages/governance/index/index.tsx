@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { getProps } from './props/getProps'
 import { GovernancePage } from './view/GovernancePage'
 
-export function getGovernancePage(config: Config) {
-  const { wrapper, props } = getProps(config)
+export function getGovernancePage() {
+  const { wrapper, props } = getProps()
   return {
     slug: '/governance',
     page: (
