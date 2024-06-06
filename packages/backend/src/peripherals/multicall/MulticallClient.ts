@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { RpcClient } from '../rpcclient/RpcClient'
 import { parseEthersError } from './parseEthersError'
 import {
@@ -11,26 +11,27 @@ export class MulticallClient {
   constructor(
     private readonly rcpClient: RpcClient,
     private readonly config: MulticallConfigEntry[],
-  ) {
-    const isSorted = config.every(
-      (c, i) => i === 0 || c.sinceBlock < config[i - 1].sinceBlock,
-    )
-    assert(isSorted, 'Multicall config must be sorted descending by sinceBlock')
-  }
+  ) {}
 
   isNativeBalanceSupported(blockNumber: number): boolean {
-    const config = this.config.find((x) => blockNumber > x.sinceBlock)
+    const config = this.config
+      .sort((a, b) => b.sinceBlock - a.sinceBlock)
+      .find((x) => blockNumber > x.sinceBlock)
     return config?.isNativeBalanceSupported ?? false
   }
 
   getMulticallAddressAt(blockNumber: number): EthereumAddress | undefined {
-    const config = this.config.find((x) => blockNumber > x.sinceBlock)
+    const config = this.config
+      .sort((a, b) => b.sinceBlock - a.sinceBlock)
+      .find((x) => blockNumber > x.sinceBlock)
     return config?.address
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
     // We use strictly greater than because contracts are deployed during the block
-    const config = this.config.find((x) => blockNumber > x.sinceBlock)
+    const config = this.config
+      .sort((a, b) => b.sinceBlock - a.sinceBlock)
+      .find((x) => blockNumber > x.sinceBlock)
     try {
       if (!config || requests.length === 1) {
         return this.executeIndividual(requests, blockNumber)
