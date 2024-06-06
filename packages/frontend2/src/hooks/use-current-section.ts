@@ -48,6 +48,8 @@ export function useCurrentSection(threshold?: Threshold) {
     }
     findCurrentSection()
     document.addEventListener('scroll', findCurrentSection)
+
+    return () => document.removeEventListener('scroll', findCurrentSection)
   }, [isMobile, threshold])
 
   return currentSection

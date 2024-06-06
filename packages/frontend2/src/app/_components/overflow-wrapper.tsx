@@ -46,6 +46,9 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
     }
 
     useEffect(() => {
+      const content = contentRef.current
+      if (!content) return
+
       function onScroll() {
         if (!contentRef.current) return
         const content = contentRef.current
@@ -67,8 +70,13 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
       }
 
       onScroll()
-      contentRef.current?.addEventListener('scroll', onScroll)
+      content?.addEventListener('scroll', onScroll)
       window.addEventListener('resize', onScroll)
+
+      return () => {
+        content?.removeEventListener('scroll', onScroll)
+        window.removeEventListener('resize', onScroll)
+      }
     }, [])
 
     return (
