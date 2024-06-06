@@ -1,9 +1,12 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { DABridge } from './DABridge'
+import { DaBridge, DacBridge } from './DABridge'
 
-export type DALayerType = 'Public blockchain' | 'DAC'
+export type DaLayerType = 'Public blockchain' | 'DaC'
 
-export type DALayer = {
+export type DaLayer = BlockchainDaLayer | DacDaLayer
+
+export type BlockchainDaLayer = CommonDaLayer & {
+  type: 'Public blockchain'
   display: {
     /**
      * The name of the data availability layer.
@@ -28,18 +31,7 @@ export type DALayer = {
     logo?: string
   }
 
-  bridges: DABridge[]
-
-  /**
-   * List of projects given da layer is being used in
-   */
-  usedIn: ProjectId[]
-
-  /**
-   * The type of the data availability layer.
-   * @see DALayerType
-   */
-  type: DALayerType
+  bridges: DaBridge[]
 
   /**
    * The duration of the data storage.
@@ -49,12 +41,25 @@ export type DALayer = {
 
   /**
    * Risks associated with the data availability layer.
-   * @see DALayerRisks
+   * @see DaLayerRisks
    */
-  risks: DALayerRisks
+  risks: DaLayerRisks
 }
 
-export type DALayerRisks = {
+export type DacDaLayer = CommonDaLayer & {
+  type: 'DAC'
+
+  dacs: DacBridge[]
+}
+
+export type CommonDaLayer = {
+  /**
+   * List of projects given da layer is being used in
+   */
+  usedIn: ProjectId[]
+}
+
+export type DaLayerRisks = {
   economicSecurity: EconomicSecurityRisk
   fraudDetection: FraudDetectionRisk
 }

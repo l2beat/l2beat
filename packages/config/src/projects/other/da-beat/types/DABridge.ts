@@ -1,13 +1,13 @@
 import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ScalingProjectContractSingleAddress } from '../../../../common'
 
-export type DABridge = NoDABridge | OnChainDABridge
+export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
 
-export type NoDABridge = CommonDABridge & {
+export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
 }
 
-export type OnChainDABridge = CommonDABridge & {
+export type OnChainDaBridge = CommonDaBridge & {
   type: 'OnChain'
   /**
    * The chain ID of the data availability bridge
@@ -27,10 +27,28 @@ export type OnChainDABridge = CommonDABridge & {
   /**
    * Risks related to given data availability bridge
    */
-  risks: DABridgeRisks
+  risks: DaBridgeRisks
 }
 
-type CommonDABridge = {
+export type DacBridge = CommonDaBridge & {
+  type: 'DAC'
+  /**
+   * The chain the DAC attests data on.
+   */
+  chain: ChainId
+
+  /**
+   * Total number of members in the DAC.
+   */
+  totalMembers: number
+
+  /**
+   * Minimum number of members required to sign and attest the data.
+   */
+  requiredMembers: number
+}
+
+type CommonDaBridge = {
   display: {
     /**
      * The name of the data availability bridge
@@ -61,22 +79,22 @@ type CommonDABridge = {
   usedIn: ProjectId[]
 }
 
-type DABridgeRisks = {
+type DaBridgeRisks = {
   /**
    * Attestation - TBD
    */
-  attestations: AttestationSecurity & { description: string }
+  attestations: AttestationSecurity & { description?: string }
 
   /**
    * Exit window - TBD
    * @unit seconds
    */
-  exitWindow: ExitWindow & { description: string }
+  exitWindow: ExitWindow & { description?: string }
 
   /**
    * Accessability - TBD
    */
-  accessability: Accessability & { description: string }
+  accessability: Accessability & { description?: string }
 }
 
 type AttestationSecurity =
@@ -91,9 +109,6 @@ type AttestationSecurity =
     }
   | {
       type: 'NotSatisfied'
-    }
-  | {
-      type: 'NoBridge'
     }
   | {
       type: 'CommitmentFrequencySatisfied'
@@ -111,9 +126,6 @@ type ExitWindow =
     }
   | {
       type: 'NoDelay'
-    }
-  | {
-      type: 'NoBridge'
     }
 
 type Accessability =

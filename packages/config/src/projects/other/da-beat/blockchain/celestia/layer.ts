@@ -7,19 +7,21 @@ import { mantapacific } from '../../../../layer2s/mantapacific'
 import { orderly } from '../../../../layer2s/orderly'
 import { publicgoodsnetwork } from '../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../layer3s/stack'
-import { DALayer } from '../../types/DALayer'
+import { DaLayer } from '../../types/DALayer'
+import { blobStream } from './bridges/blob-stream'
 import { noBridge } from './bridges/no-bridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const celestia: DALayer = {
+export const celestia = {
+  type: 'Public blockchain',
   display: {
     name: 'Celestia',
     slug: 'celestia',
     description: 'Celestia lorem ipsum',
   },
-  bridges: [noBridge],
+  bridges: [noBridge, blobStream],
   usedIn: [
     mantapacific.id,
     karak.id,
@@ -31,7 +33,6 @@ export const celestia: DALayer = {
     hypr.id,
     stack.id,
   ],
-  type: 'Public blockchain',
   storageDuration: 1000,
   risks: {
     economicSecurity: {
@@ -41,4 +42,4 @@ export const celestia: DALayer = {
       type: 'DAS with block reconstruction',
     },
   },
-}
+} satisfies DaLayer

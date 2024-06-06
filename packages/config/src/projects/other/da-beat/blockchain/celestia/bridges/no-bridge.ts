@@ -7,12 +7,12 @@ import { mantapacific } from '../../../../../layer2s/mantapacific'
 import { orderly } from '../../../../../layer2s/orderly'
 import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../../layer3s/stack'
-import { DABridge } from '../../../types/DABridge'
+import { DaBridge } from '../../../types/DABridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const noBridge: DABridge = {
+export const noBridge = {
   type: 'NoBridge',
   display: {
     name: 'No Bridge',
@@ -30,4 +30,4 @@ export const noBridge: DABridge = {
     hypr.id,
     stack.id,
   ],
-}
+} satisfies DaBridge
