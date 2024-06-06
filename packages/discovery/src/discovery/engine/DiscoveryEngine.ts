@@ -16,7 +16,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 4
+export const DISCOVERY_LOGIC_VERSION = 5
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -27,9 +27,8 @@ export class DiscoveryEngine {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<Analysis[]> {
-    let resolved: Analysis[] = []
+    const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
-    const addressRelatives: Record<string, EthereumAddress[]> = {}
     let depth = 0
     let count = 0
 
@@ -38,7 +37,7 @@ export class DiscoveryEngine {
     })
 
     while (Object.keys(toAnalyze).length > 0) {
-      removeAlreadyAnalyzed(toAnalyze, resolved)
+      removeAlreadyAnalyzed(toAnalyze, Object.values(resolved))
 
       for (const address of Object.keys(toAnalyze)) {
         const skipReason = shouldSkip(
@@ -56,20 +55,32 @@ export class DiscoveryEngine {
       }
 
       // remove resolved addresses that need to be analyzed again
-      resolved = resolved.filter((x) => !(x.address.toString() in toAnalyze))
-      for (const address of Object.keys(addressRelatives)) {
-        const inResolved =
-          resolved.find((x) => x.address.toString() === address) !== undefined
-        if (!inResolved) {
-          delete addressRelatives[address]
+      for (const address of Object.keys(resolved)) {
+        if (address in toAnalyze) {
+          delete resolved[address]
         }
       }
 
-      // remove addresses to analyze that are no longer reachable from initial
+      const relativesGraph = Object.fromEntries(
+        Object.entries(resolved).map(([address, analysis]) =>
+          analysis.type === 'Contract'
+            ? [address, Object.keys(analysis.relatives).map(EthereumAddress)]
+            : [address, undefined],
+        ),
+      )
+
+      // find addresses that are still reachable from initial adresses
       const reachableAddresses = gatherReachableAddresses(
         config.initialAddresses,
-        addressRelatives,
+        relativesGraph,
       )
+      // remove addresses from `resolved` that are no longer reachable from initial
+      for (const address of Object.keys(resolved)) {
+        if (!reachableAddresses.has(EthereumAddress(address))) {
+          delete resolved[address]
+        }
+      }
+      // filter out addresses from `toAnalyze` that are no longer reachable from initial
       const leftToAnalyze = Object.entries(toAnalyze).filter(([address]) =>
         reachableAddresses.has(EthereumAddress(address)),
       )
@@ -84,25 +95,29 @@ export class DiscoveryEngine {
           })
 
           bufferedLogger.log(`Analyzing ${address.toString()}`)
-          const { analysis, relatives } = await this.addressAnalyzer.analyze(
+          const analysis = await this.addressAnalyzer.analyze(
             address,
             config.overrides.get(address),
             blockNumber,
             bufferedLogger,
             templates,
           )
-          resolved.push(analysis)
-          addressRelatives[address.toString()] = Object.keys(relatives).map(
-            (v) => EthereumAddress(v),
-          )
+          resolved[address.toString()] = analysis
+          if (analysis.type === 'Contract') {
+            bufferedLogger.log(
+              `Relatives: [${Object.keys(analysis.relatives)}]`,
+            )
+          }
 
-          for (const [address, suggestedTemplates] of Object.entries(
-            relatives,
-          )) {
-            toAnalyze[address] = new Set([
-              ...(toAnalyze[address] ?? []),
-              ...suggestedTemplates,
-            ])
+          if (analysis.type === 'Contract') {
+            for (const [address, suggestedTemplates] of Object.entries(
+              analysis.relatives,
+            )) {
+              toAnalyze[address] = new Set([
+                ...(toAnalyze[address] ?? []),
+                ...suggestedTemplates,
+              ])
+            }
           }
 
           bufferedLogger.flushToLogger(this.logger)
@@ -113,8 +128,8 @@ export class DiscoveryEngine {
     }
 
     this.logger.flushServer(config.name)
-    this.checkErrors(resolved)
-    return resolved
+    this.checkErrors(Object.values(resolved))
+    return Object.values(resolved)
   }
 
   async hasOutputChanged(

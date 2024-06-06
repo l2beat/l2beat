@@ -1,5 +1,4 @@
 import { Config } from '../../build/config'
-import { getFooterProps, getNavbarProps } from '../../components'
 import { Wrapped } from '../Page'
 import { FaqPageProps } from './FaqPage'
 import { getFaqItems } from './getFaqItems'
@@ -7,10 +6,8 @@ import { getFaqItems } from './getFaqItems'
 export function getProps(config: Config): Wrapped<FaqPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
       items: getFaqItems(),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

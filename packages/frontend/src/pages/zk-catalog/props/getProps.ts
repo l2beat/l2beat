@@ -1,6 +1,5 @@
 import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { Wrapped } from '../../Page'
 import { ZkCatalogPageProps } from '../view/ZkCatalogPage'
 import { getZkCatalogView } from './getZkCatalogView'
@@ -17,9 +16,7 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config, 'zk-catalog'),
       view: getZkCatalogView(projects, verifiersApiResponse),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

@@ -6,9 +6,9 @@ import {
 
 export function diffConfigurations<T>(
   actual: Configuration<T>[],
-  saved: SavedConfiguration<T>[],
+  saved: Omit<SavedConfiguration<T>, 'properties'>[],
 ): {
-  toRemove: RemovalConfiguration<T>[]
+  toRemove: RemovalConfiguration[]
   toSave: SavedConfiguration<T>[]
   safeHeight: number
 } {
@@ -17,14 +17,13 @@ export function diffConfigurations<T>(
   const actualMap = new Map(actual.map((c) => [c.id, c]))
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
-  const toRemove: RemovalConfiguration<T>[] = []
+  const toRemove: RemovalConfiguration[] = []
   for (const c of saved) {
     if (actualMap.has(c.id) || c.currentHeight === null) {
       continue
     }
     toRemove.push({
       id: c.id,
-      properties: c.properties,
       from: c.minHeight,
       to: c.currentHeight,
     })
@@ -58,7 +57,6 @@ export function diffConfigurations<T>(
       // We will re-download everything from the beginning
       toRemove.push({
         id: stored.id,
-        properties: stored.properties,
         from: stored.minHeight,
         to: stored.currentHeight,
       })
@@ -69,7 +67,6 @@ export function diffConfigurations<T>(
     if (stored.minHeight < c.minHeight) {
       toRemove.push({
         id: stored.id,
-        properties: stored.properties,
         from: stored.minHeight,
         to: c.minHeight - 1,
       })
@@ -78,7 +75,6 @@ export function diffConfigurations<T>(
     if (c.maxHeight !== null && stored.currentHeight > c.maxHeight) {
       toRemove.push({
         id: stored.id,
-        properties: stored.properties,
         from: c.maxHeight + 1,
         to: stored.currentHeight,
       })

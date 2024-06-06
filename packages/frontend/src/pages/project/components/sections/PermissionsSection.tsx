@@ -12,9 +12,11 @@ import { ProjectSectionId } from './common/sectionId'
 export interface PermissionsSectionProps {
   id: ProjectSectionId
   title: string
+  projectType: 'L2' | 'L3'
   sectionOrder: number
   isUnderReview: boolean | undefined
   permissions: TechnologyContract[]
+  nativePermissions: TechnologyContract[]
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   references?: ScalingProjectReference[]
@@ -23,8 +25,10 @@ export interface PermissionsSectionProps {
 export function PermissionsSection({
   id,
   title,
+  projectType,
   sectionOrder,
   permissions,
+  nativePermissions,
   verificationStatus,
   manuallyVerifiedContracts,
   isUnderReview,
@@ -48,6 +52,16 @@ export function PermissionsSection({
             verificationStatus={verificationStatus}
             manuallyVerifiedContracts={manuallyVerifiedContracts}
             className="my-4"
+          />
+        ))}
+        {nativePermissions.map((permission, i) => (
+          <ContractEntry
+            key={i}
+            contract={permission}
+            verificationStatus={verificationStatus}
+            manuallyVerifiedContracts={manuallyVerifiedContracts}
+            className="my-4"
+            sourceBadge={projectType}
           />
         ))}
       </div>

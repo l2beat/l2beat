@@ -11,7 +11,11 @@ const SORTING_ARROW_NAMES = [
 
 export function configureExcludeAssociatedTokensCheckbox() {
   const { $, $$ } = makeQuery()
-  const checkbox = $<HTMLInputElement>('#exclude-associated-tokens-checkbox')
+  const checkbox = $.maybe<HTMLInputElement>(
+    '#exclude-associated-tokens-checkbox',
+  )
+  if (!checkbox) return
+
   const elements = $$('[data-role="exclude-associated-tokens-wrapper"]')
 
   checkbox.addEventListener('change', () => {

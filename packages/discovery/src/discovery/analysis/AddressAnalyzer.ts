@@ -35,9 +35,9 @@ export interface AnalyzedContract {
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
-  matchingTemplates: Record<string, number>
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
+  relatives: AddressesWithTemplates
 }
 
 export interface ExtendedTemplate {
@@ -68,14 +68,11 @@ export class AddressAnalyzer {
     blockNumber: number,
     logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
-  ): Promise<{
-    analysis: Analysis
-    relatives: AddressesWithTemplates
-  }> {
+  ): Promise<Analysis> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: {} }
+      return { type: 'EOA', address }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)
@@ -88,6 +85,7 @@ export class AddressAnalyzer {
     } else if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
+        // extend template even on error to make sure pruning works
         overrides = this.templateService.applyTemplateOnContractOverrides(
           overrides ?? { address },
           template,
@@ -115,12 +113,35 @@ export class AddressAnalyzer {
     )
     logger.logName(sources.name)
 
-    // Match templates only if there are no explicitly set
-    const matchingTemplates =
+    // Match templates by shape only if there are no explicitly set
+    if (
       overrides?.extends === undefined &&
       (suggestedTemplates === undefined || suggestedTemplates.size === 0)
-        ? this.templateService.findMatchingTemplates(sources)
-        : {}
+    ) {
+      const matchingTemplatesByShape =
+        this.templateService.findMatchingTemplates(sources)
+      const matchingTemplates = Object.keys(matchingTemplatesByShape)
+      const template = matchingTemplates[0]
+      if (template !== undefined) {
+        // extend template even on error to make sure pruning works
+        overrides = this.templateService.applyTemplateOnContractOverrides(
+          overrides ?? { address },
+          template,
+        )
+        extendedTemplate = { template, reason: 'byShapeMatch' }
+      }
+      if (matchingTemplates.length > 1) {
+        templateErrors['@template'] =
+          `Multiple shapes matched (${matchingTemplates.join(', ')})`
+      }
+    }
+
+    const templateLog =
+      extendedTemplate !== undefined
+        ? `"${extendedTemplate?.template}" (${extendedTemplate?.reason})`
+        : 'none'
+
+    logger.log(`  Template: ${templateLog}`)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
@@ -131,24 +152,21 @@ export class AddressAnalyzer {
     )
 
     return {
-      analysis: {
-        type: 'Contract',
-        name: overrides?.name ?? sources.name,
-        derivedName: overrides?.name !== undefined ? sources.name : undefined,
-        isVerified: sources.isVerified,
-        address,
-        deploymentTimestamp: deployment?.timestamp,
-        deploymentBlockNumber: deployment?.blockNumber,
-        upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
-        implementations: proxy?.implementations ?? [],
-        values: values ?? {},
-        errors: { ...templateErrors, ...(errors ?? {}) },
-        abis: sources.abis,
-        sourceBundles: sources.sources,
-        matchingTemplates,
-        extendedTemplate,
-        ignoreInWatchMode: overrides?.ignoreInWatchMode,
-      },
+      type: 'Contract',
+      name: overrides?.name ?? sources.name,
+      derivedName: overrides?.name !== undefined ? sources.name : undefined,
+      isVerified: sources.isVerified,
+      address,
+      deploymentTimestamp: deployment?.timestamp,
+      deploymentBlockNumber: deployment?.blockNumber,
+      upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+      implementations: proxy?.implementations ?? [],
+      values: values ?? {},
+      errors: { ...templateErrors, ...(errors ?? {}) },
+      abis: sources.abis,
+      sourceBundles: sources.sources,
+      extendedTemplate,
+      ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives: getRelativesWithSuggestedTemplates(
         results,
         overrides?.ignoreRelatives,

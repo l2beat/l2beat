@@ -1,9 +1,8 @@
 import React from 'react'
-
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
 import { PageContent } from '../../../components/PageContent'
 import { ScrollToTopButton } from '../../../components/ScrollToTopButton'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 import { GlossaryEntry } from '../props/getGlossaryEntry'
 import { AlphabetSelector } from './AlphabetSelector'
 import { GlossaryItem } from './GlossaryItem'
@@ -11,14 +10,11 @@ import { GlossarySideNavigation } from './GlossarySideNavigation'
 
 export interface GlossaryPageProps {
   entries: GlossaryEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GlossaryPage(props: GlossaryPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <FullPageHeader className="pb-0">
         <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
@@ -54,7 +50,6 @@ export function GlossaryPage(props: GlossaryPageProps) {
         </main>
       </PageContent>
       <ScrollToTopButton />
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

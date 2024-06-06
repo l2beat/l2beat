@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 
-describe.only(gatherReachableAddresses.name, () => {
+describe(gatherReachableAddresses.name, () => {
   it('returns reachable addresses', () => {
     // scenario:
     // from = 1 & 3 & 10

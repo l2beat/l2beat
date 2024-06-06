@@ -1,5 +1,4 @@
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { Wrapped } from '../../Page'
 import { getDefaultPageMetadata } from '../../metadata'
 import { MultisigReportPageProps } from '../view/MultisigReportPage'
@@ -7,8 +6,6 @@ import { MultisigReportPageProps } from '../view/MultisigReportPage'
 export function getProps(config: Config): Wrapped<MultisigReportPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'multisig-report'),
-      footer: getFooterProps(config),
       showActivity: config.features.activity,
       multisigReportUrl: config.links.multisigReport,
     },

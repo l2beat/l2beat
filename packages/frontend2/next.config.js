@@ -1,6 +1,6 @@
 import createVercelToolbarPlugin from '@vercel/toolbar/plugins/next'
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
-import { env } from './src/env.js'
+import './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,7 +15,9 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: `${env.FALLBACK_REWRITE_DESTINATION}/:path*`,
+          // NOTE(piotradamczyk): Unfortunately using an env variable here
+          // doesn't work for some reason, so we have to hardcode the URL.
+          destination: `https://l2beat-production.vercel.app/:path*`,
         },
       ],
     }
@@ -71,6 +73,16 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i
 
     return config
+  },
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
 }
 

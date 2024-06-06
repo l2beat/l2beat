@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import {
   DATA_ON_CHAIN,
   FRONTRUNNING_RISK,
@@ -27,19 +28,28 @@ const chainWatchdog = discovery.getContractValue<string>(
   'chain_watchdog',
 )
 
+// sequencer
 const proposer = discovery.getContractValue<string>(
   'TaikoL1Contract',
   'proposer',
 )
 
+// sequencer for block 1
 const proposerOne = discovery.getContractValue<string>(
   'TaikoL1Contract',
   'proposer_one',
 )
 
+const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
+
 const TIER_SGX = discovery.getContractValue<string[]>(
   'TierProvider',
   'TIER_SGX',
+)
+
+const TIER_MINORITY_GUARDIAN = discovery.getContractValue<string[]>(
+  'TierProvider',
+  'TIER_GUARDIAN_MINORITY',
 )
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
@@ -60,8 +70,19 @@ const NumGuardiansProver = discovery.getContractValue<string[]>(
   'numGuardians',
 )
 
+const TaikoChainConfig = discovery.getContractValue<string>(
+  'TaikoL1Contract',
+  'getConfig',
+)
+
 const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
+const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TAIKO
+const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
+const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
+const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
+
+const LivenessBond = utils.formatEther(TaikoChainConfig[5])
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -91,6 +112,10 @@ export const taiko: Layer2 = {
       rollupCodes: 'https://rollup.codes/taiko',
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      explanation:
+        'Taiko is an Optimistic rollup that posts blocks of L2 transaction data directly to the L1. For a transaction to be considered final, both a block and its parent block have to be proven on the L1. State updates are a three step process: first blocks are proposed to L1, then they are proved, and lastly finalized after the challenge period has elapsed.',
+    },
   },
   config: {
     escrows: [
@@ -113,6 +138,36 @@ export const taiko: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0xef16e845',
+          functionSignature:
+            'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
+          sinceTimestampInclusive: new UnixTime(1716620627),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: TaikoL1ContractAddress,
+          selector: '0x10d008bd',
+          functionSignature:
+            'function proveBlock(uint64 _blockId, bytes _input)',
+          sinceTimestampInclusive: new UnixTime(1716620627),
+        },
+      },
+    ],
   },
   chainConfig: {
     name: 'taiko',
@@ -187,11 +242,22 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the sequencer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. It is not required to provide a proof for the block to submit a contestation.
+        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to proving the block, which will be returned once the block is proven.
+        The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TAIKO, while ${SGXcontestBond} TAIKO is required to contest the proof. 
+        For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-      references: [],
+      references: [
+        {
+          text: 'Tier Provider - Tiers',
+          href: 'https://etherscan.io/address/0x4cffe56C947E26D07C14020499776DB3e9AE3a23#code#F1#L11',
+        },
+        {
+          text: 'Block Proving - Liveness bond',
+          href: 'https://etherscan.io/address/0xe84dc8e2a21e59426542ab040d77f81d6db881ee#code#F5#L416',
+        },
+      ],
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -269,7 +335,7 @@ export const taiko: Layer2 = {
       }),
       discovery.getContractDetails('ProverSetProxy', {
         description:
-          "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
+          "A contract that holds TAIKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO.",
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {

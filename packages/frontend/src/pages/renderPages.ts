@@ -95,9 +95,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   if (config.features.governancePage) {
-    pages.push(getGovernancePage(config))
+    pages.push(getGovernancePage())
     pages.push(getGovernancePublicationsPage(config))
-    pages.push(...getGovernancePublicationPages(config))
+    pages.push(...getGovernancePublicationPages())
   }
 
   if (config.features.glossary) {
@@ -127,5 +127,5 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getZkCatalogProjectPages(config, verifiersApiResponse))
   }
 
-  outputPages(pages)
+  outputPages(config, pages)
 }

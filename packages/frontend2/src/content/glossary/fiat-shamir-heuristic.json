@@ -1,0 +1,5 @@
+{
+  "term": "Fiat-Shamir heuristic",
+  "definition": "A method of converting interactive proofs into non-interactive proofs, commonly used in zero-knowledge protocols.",
+  "isSpicy": false
+}

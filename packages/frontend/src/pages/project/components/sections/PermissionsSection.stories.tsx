@@ -63,6 +63,7 @@ const permissions: TechnologyContract[] = [
 export const PermissionsSection: Story = {
   args: {
     permissions,
+    nativePermissions: [],
     verificationStatus: {
       projects: {},
       contracts: {
