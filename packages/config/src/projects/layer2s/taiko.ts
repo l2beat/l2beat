@@ -415,5 +415,11 @@ export const taiko: Layer2 = {
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',
     },
+    {
+      name: 'Taiko Based Sequencing Upgrade',
+      link: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
+      date: '2024-06-6T00:00:00.00Z',
+      description: 'Proposing blocks on Taiko is now permissionless.',
+    },
   ],
 }
