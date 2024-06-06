@@ -10,6 +10,10 @@
     "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
   "names": {
+    /* 
+      For a mapping of onramp addresses to dest/source chains, see:
+      https://docs.chain.link/ccip/supported-networks/v1_2_0/mainnet
+    */
     "0x66598216D8E4d9AFE0F06d525B335b762229842f": "EtherSenderReceiver",
     "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5": "OffRamp1",
     "0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4": "OffRamp2",
