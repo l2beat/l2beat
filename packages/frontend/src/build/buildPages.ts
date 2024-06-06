@@ -70,11 +70,7 @@ async function main() {
         ? fetchActivityApi(config.backend, http)
         : undefined,
       config.features.tvlBreakdown
-        ? fetchTvlBreakdownApi(
-            config.backend,
-            config.backend.apiUrl,
-            http,
-          )
+        ? fetchTvlBreakdownApi(config.backend, config.backend.apiUrl, http)
         : undefined,
       config.features.liveness
         ? fetchLivenessApi(config.backend, http)

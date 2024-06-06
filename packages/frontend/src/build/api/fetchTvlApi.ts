@@ -31,10 +31,10 @@ export async function fetchTvlApi(
   return TvlApiResponse.parse(json)
 }
 
-function getUrl(backend: Config['backend'],opts: Options) {
+function getUrl(backend: Config['backend'], opts: Options) {
   const url = new URL(`${backend.apiUrl}/api/tvl2`)
-  if(opts.excludeAssociatedTokens){
-    url.searchParams.set("excludeAssociatedTokens", 'true')
+  if (opts.excludeAssociatedTokens) {
+    url.searchParams.set('excludeAssociatedTokens', 'true')
   }
 
   return url.toString()
