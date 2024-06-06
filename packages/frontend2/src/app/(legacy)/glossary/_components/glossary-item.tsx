@@ -23,7 +23,7 @@ export function GlossaryItem(props: Props) {
         </a>
         <CopyButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
-          className="md:hidden md:animate-quick-fade-in md:group-hover:block"
+          className="md:hidden md:group-hover:animate-in md:group-hover:fade-in-0 md:group-hover:block"
         />
       </div>
 

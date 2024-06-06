@@ -57,7 +57,7 @@ export default async function RootLayout({
               storageKey="l2beat-theme"
               disableTransitionOnChange
             >
-              <TooltipProvider>{children}</TooltipProvider>
+              <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
