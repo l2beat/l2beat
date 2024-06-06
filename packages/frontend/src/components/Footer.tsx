@@ -1,6 +1,4 @@
 import React from 'react'
-
-import { cn } from '../utils/cn'
 import { Link } from './Link'
 import { SocialLinks } from './navbar/SocialLinks'
 export function Footer() {

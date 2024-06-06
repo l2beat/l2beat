@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react'
 
+import { usePageBuildContext } from '../build/pageBuildContext'
 import { Footer } from '../components'
 import { About } from '../components/About'
 import { PageContent } from '../components/PageContent'
 import { NavWrapper } from '../components/navbar/NavWrapper'
-import { usePageBuildContext } from '../build/pageBuildContext'
 import { OtherSites } from '../components/other-sites/OtherSites'
 import { cn } from '../utils/cn'
 

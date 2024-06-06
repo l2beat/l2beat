@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { usePageBuildContext } from '../../build/pageBuildContext'
 import { PlainLink } from '../PlainLink'
 import {
   DiscordIcon,
@@ -9,7 +10,6 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from '../icons'
-import { usePageBuildContext } from '../../build/pageBuildContext'
 
 export function SocialLinks() {
   const { config } = usePageBuildContext()

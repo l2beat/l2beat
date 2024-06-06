@@ -2,9 +2,9 @@ import { withThemeByDataAttribute } from '@storybook/addon-styling'
 import React from 'react'
 import { withPageBuildContext } from '../src/build/pageBuildContext'
 import '../src/styles/style.css'
+import { storybookBuildContext } from './buildContext'
 import { allModes } from './modes'
 import { viewports } from './viewports'
-import { storybookBuildContext } from './buildContext'
 
 export const decorators = [
   withThemeByDataAttribute({

@@ -1,4 +1,5 @@
 import React, { ReactNode, SVGAttributes } from 'react'
+import { usePageBuildContext } from '../../build/pageBuildContext'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
 import { LogoSmall } from '../LogoSmall'
@@ -18,7 +19,6 @@ import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { SocialLinks } from './SocialLinks'
-import { usePageBuildContext } from '../../build/pageBuildContext'
 
 function NavLinkGroup({
   title,
