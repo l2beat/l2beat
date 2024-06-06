@@ -3,7 +3,6 @@ import {
   AmountConfigEntry,
   AssetId,
   CanonicalAssetBreakdownData,
-  ChainId,
   EthereumAddress,
   ExternalAssetBreakdownData,
   NativeAssetBreakdownData,
@@ -30,52 +29,15 @@ import { ControllerService } from '../services/ControllerService'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-
-interface CanonicalAssetBreakdown {
-  assetId: AssetId
-  chainId: ChainId
-  amount: number
-  usdValue: number
-  usdPrice: string
-  escrows: CanonicalAssetBreakdownData['escrows']
-}
-
-type AmountConfigMap = Map<
-  ProjectId,
-  (AmountConfigEntry & { configId: string })[]
->
-
-type PriceConfigIdMap = Map<string, { assetId: AssetId; priceId: string }>
-
-type Values = {
-  external: bigint
-  canonical: bigint
-  native: bigint
-}
-type ValuesMap = Map<number, Values>
-
-export interface ApiProject {
-  id: ProjectId
-  minTimestamp: UnixTime
-  type: Project['type']
-  slug: string
-  sources: Map<
-    string,
-    {
-      name: string
-      minTimestamp: UnixTime
-    }
-  >
-}
-
-interface AssociatedToken {
-  address: EthereumAddress | 'native'
-  chain: string
-  type: 'canonical' | 'external' | 'native'
-  includeInTotal: boolean
-  project: ProjectId
-  projectType: 'layers2s' | 'bridges'
-}
+import {
+  AmountConfigMap,
+  ApiProject,
+  AssociatedToken,
+  CanonicalAssetBreakdown,
+  PriceConfigIdMap,
+  Values,
+  ValuesMap,
+} from './types'
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap

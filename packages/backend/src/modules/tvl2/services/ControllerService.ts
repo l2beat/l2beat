@@ -2,7 +2,7 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Dictionary, groupBy } from 'lodash'
-import { ApiProject } from '../api/Tvl2Controller'
+import { ApiProject } from '../api/types'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
