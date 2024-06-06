@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x13e06bce43c5192ff855fed34be3ca4b165dc2d3
+Generated with discovered.json: 0x3a4dd94fb8e0bcc87ffc7593dfc1c7aff5188b10
 
-# Diff at Thu, 06 Jun 2024 16:45:41 GMT:
+# Diff at Thu, 06 Jun 2024 16:52:10 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ede45d4470f4a86adbf9140e79f58d3d03af8b66 block: 19624206
-- current block number: 20034063
+- current block number: 20034095
 
 ## Description
 
@@ -348,7 +348,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    contract ValidatorTimelock_NEW (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
     +++ description: None
 ```
 

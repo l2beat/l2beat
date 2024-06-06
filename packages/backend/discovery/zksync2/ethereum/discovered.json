@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20034063,
-  "configHash": "0x925f38d3736d37162ed7e37d5721f5f21bf97ef6c502f9bac9518b022209a8e5",
+  "blockNumber": 20034095,
+  "configHash": "0xbcfcbe88d122afcabcdd2a5dc487cdad79f057c7693e2f46baad941ae69193ed",
   "version": 5,
   "contracts": [
     {
@@ -176,24 +176,24 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3249480,
+        "getFirstUnprocessedPriorityTx": 3249497,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 484290,
         "getL2SystemContractsUpgradeBlockNumber": 484290,
         "getL2SystemContractsUpgradeTxHash": "0xb88380066d84222045097f0fad44e876c361dc27f5367d46decb294ba1a7d29c",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 187,
+        "getPriorityQueueSize": 170,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 484357,
-        "getTotalBatchesExecuted": 484196,
+        "getTotalBatchesCommitted": 484358,
+        "getTotalBatchesExecuted": 484211,
         "getTotalBatchesVerified": 484289,
-        "getTotalBlocksCommitted": 484357,
-        "getTotalBlocksExecuted": 484196,
+        "getTotalBlocksCommitted": 484358,
+        "getTotalBlocksExecuted": 484211,
         "getTotalBlocksVerified": 484289,
         "getTotalPriorityTxs": 3249667,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
@@ -204,8 +204,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x5660cc55b2e067b8a6482a942a11509e9d91992eb2607623fcb613a1db99c9d3",
-          1717606391,
+          "0xe581e6bfb8b1548ea7fbc902dab9d41a754a1918247b9b130386d1c2a3e9ce66",
+          1717615883,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
@@ -276,7 +276,7 @@
           "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
         "getThreshold": 4,
-        "nonce": 116,
+        "nonce": 118,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -300,7 +300,7 @@
       "derivedName": "L1ERC20Bridge"
     },
     {
-      "name": "ValidatorTimelock",
+      "name": "ValidatorTimelock_NEW",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
       "upgradeability": {
         "type": "immutable"
@@ -312,7 +312,8 @@
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-      }
+      },
+      "derivedName": "ValidatorTimelock"
     },
     {
       "name": "Verifier",
@@ -364,7 +365,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2888040784311831388179223"
+        "totalSupply": "2888276758785753624137791"
       }
     },
     {
