@@ -1,5 +1,5 @@
-import { common } from './common'
 import { Config } from './Config'
+import { common } from './common'
 
 export function getLocalConfig(): Config {
   const useMock = process.env.MOCK === 'true'

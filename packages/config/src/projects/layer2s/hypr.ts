@@ -43,6 +43,6 @@ export const hypr: Layer2 = opStackL2({
       description: 'Hypr launches on mainnet.',
     },
   ],
-  rpcUrl: 'https://rpc.hypr.network',
+  // rpcUrl: 'https://rpc.hypr.network',
   associatedTokens: ['HYPR'],
 })

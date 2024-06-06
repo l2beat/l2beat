@@ -15,9 +15,8 @@ export interface SavedConfiguration<T> extends Configuration<T> {
   currentHeight: number | null
 }
 
-export interface RemovalConfiguration<T> {
+export interface RemovalConfiguration {
   id: string
-  properties: T
   /** Inclusive */
   from: number
   /** Inclusive */

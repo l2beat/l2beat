@@ -1,5 +1,5 @@
-import { common } from './common'
 import { Config } from './Config'
+import { common } from './common'
 
 export function getProductionConfig(): Config {
   return {

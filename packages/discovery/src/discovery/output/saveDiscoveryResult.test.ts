@@ -20,7 +20,7 @@ describe(getSourceOutputPath.name, () => {
     implementations: [],
     abis: {},
     sourceBundles: [],
-    matchingTemplates: {},
+    relatives: {},
   })
 
   const contractA = genAnalyzedContract('A')

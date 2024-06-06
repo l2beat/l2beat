@@ -1,3 +1,4 @@
+import path from 'path'
 import {
   ActivityApiCharts,
   ActivityApiResponse,
@@ -8,7 +9,6 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 import fsx from 'fs-extra'
-import path from 'path'
 
 import { Config } from '../config'
 
@@ -39,7 +39,10 @@ export function createApi(
     }
   }
 
-  urlCharts.set('tvl/scaling-excluded-associated-tokens', excludedTokensTvlApiResponse.layers2s)
+  urlCharts.set(
+    'tvl/scaling-excluded-associated-tokens',
+    excludedTokensTvlApiResponse.layers2s,
+  )
 
   if (activityApiResponse) {
     urlCharts.set('activity/combined', activityApiResponse.combined)

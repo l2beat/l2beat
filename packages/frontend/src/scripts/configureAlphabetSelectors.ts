@@ -45,7 +45,6 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
 
   if (selectedAlphabetSelectorItem) {
     highlightItem(selectedAlphabetSelectorItem)
-    scrollToItem(selectedAlphabetSelectorItem)
   }
 
   window.addEventListener('scroll', () => {

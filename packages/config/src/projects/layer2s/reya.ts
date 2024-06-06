@@ -87,7 +87,7 @@ export const reya: Layer2 = orbitStackL2({
   //   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'ReyaMultisig',
+      'GelatoMultisig',
       'Multisig that can execute upgrades via the UpgradeExecutor.',
     ),
   ],
