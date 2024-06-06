@@ -79,22 +79,30 @@ export function renderDetailedTvlHover(
     renderDateRow(data.date),
     renderDetailedRow({
       title: 'Total TVL',
-      value: formatCurrency(total, currency),
+      value: formatCurrency(total, currency, {
+        showLessThanMinimum: false,
+      }),
     }),
     renderHorizontalSeparator(),
     renderDetailedRow({
       title: 'Canonical',
-      value: formatCurrency(selectedCbv, currency),
+      value: formatCurrency(selectedCbv, currency, {
+        showLessThanMinimum: false,
+      }),
       icon: 'roundedPurpleSquare',
     }),
     renderDetailedRow({
       title: 'External',
-      value: formatCurrency(selectedEbv, currency),
+      value: formatCurrency(selectedEbv, currency, {
+        showLessThanMinimum: false,
+      }),
       icon: 'roundedYellowSquare',
     }),
     renderDetailedRow({
       title: 'Native',
-      value: formatCurrency(selectedNmv, currency),
+      value: formatCurrency(selectedNmv, currency, {
+        showLessThanMinimum: false,
+      }),
       icon: 'roundedPinkSquare',
     }),
   ])

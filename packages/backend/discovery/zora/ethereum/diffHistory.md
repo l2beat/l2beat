@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x061b8314d180cd714b79c9ff7496ce6106de7109
+
+# Diff at Thu, 06 Jun 2024 12:23:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5302ef2899ddfb7175df497ceaa47fba4e383655 block: 19982489
+- current block number: 20032759
+
+## Description
+
+Discovery output now includes names of templates used for contract analysis.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19982489 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
+    +++ description: None
+      template:
++        "opstack/OptimismPortal"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3e2Ea9B92B7E48A52296fD261dc26fd995284631) {
+    +++ description: None
+      template:
++        "opstack/L1StandardBridge"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3) {
+    +++ description: None
+      template:
++        "opstack/L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      template:
++        "opstack/SuperchainConfig"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x9E6204F750cD866b299594e2aC9eA824E2e5f95c) {
+    +++ description: None
+      template:
++        "opstack/L2OutputOracle"
+    }
+```
+
+```diff
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
+    +++ description: None
+      template:
++        "opstack/SystemConfig"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf) {
+    +++ description: None
+      template:
++        "opstack/OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xdC40a14d9abd6F410226f1E6de71aE03441ca506) {
+    +++ description: None
+      template:
++        "opstack/L1CrossDomainMessenger"
+    }
+```
+
 Generated with discovered.json: 0x971b070707f5c7c01728fdc8f02fb4e6903fec67
 
 # Diff at Wed, 22 May 2024 20:13:47 GMT:
