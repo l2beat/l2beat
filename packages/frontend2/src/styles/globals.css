@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 html {
-  @apply scroll-pt-16 scroll-smooth md:scroll-pt-8 data-[page="/glossary"]:scroll-pt-28 md:data-[page="/glossary"]:scroll-pt-36;
+  @apply scroll-pt-16 md:scroll-pt-8 data-[page="/glossary"]:scroll-pt-28 md:data-[page="/glossary"]:scroll-pt-36;
 }
 
 body {
