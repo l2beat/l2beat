@@ -28,17 +28,6 @@ export type OnChainDABridge = CommonDABridge & {
    * Risks related to given data availability bridge
    */
   risks: DABridgeRisks;
-
-  /**
-   * Exit window - TBD
-   * @unit seconds
-   */
-  exitWindow: ExitWindow;
-
-  /**
-   * Accessability - TBD
-   */
-  accessability: Accessability;
 };
 
 type CommonDABridge = {
@@ -73,7 +62,21 @@ type CommonDABridge = {
 };
 
 type DABridgeRisks = {
+  /**
+   * Attestation - TBD
+   */
   attestations: AttestationSecurity & { description: string };
+
+  /**
+   * Exit window - TBD
+   * @unit seconds
+   */
+  exitWindow: ExitWindow & { description: string };
+
+  /**
+   * Accessability - TBD
+   */
+  accessability: Accessability & { description: string };
 };
 
 type AttestationSecurity =

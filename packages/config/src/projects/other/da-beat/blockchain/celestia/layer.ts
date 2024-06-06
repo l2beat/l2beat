@@ -7,18 +7,19 @@ import { mantapacific } from '../../../../layer2s/mantapacific';
 import { orderly } from '../../../../layer2s/orderly';
 import { publicgoodsnetwork } from '../../../../layer2s/publicgoodsnetwork';
 import { stack } from '../../../../layer3s/stack';
-import { DABridge } from '../../types/DABridge';
+import { DALayer } from '../../types/DALayer';
+import { noBridge } from './bridges/no-bridge';
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const noBridge: DABridge = {
-  type: 'NoBridge',
+export const celestia: DALayer = {
   display: {
-    name: 'No Bridge',
-    slug: 'no-bridge',
-    description: 'Celestia with no DA bridge',
+    name: 'Celestia',
+    slug: 'celestia',
+    description: 'Celestia lorem ipsum',
   },
+  bridges: [noBridge],
   usedIn: [
     mantapacific.id,
     karak.id,
@@ -30,4 +31,14 @@ export const noBridge: DABridge = {
     hypr.id,
     stack.id,
   ],
+  type: 'Public blockchain',
+  storageDuration: 1000,
+  risks: {
+    economicSecurity: {
+      type: 'OnchainQuantifiable',
+    },
+    fraudDetection: {
+      type: 'DAS with block reconstruction',
+    },
+  },
 };
