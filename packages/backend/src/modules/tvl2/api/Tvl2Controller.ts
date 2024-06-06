@@ -18,7 +18,6 @@ import {
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../../tvl/api/asNumber'
-import { AmountRepository } from '../repositories/AmountRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './ControllerService'
@@ -47,7 +46,6 @@ export interface Tvl2ControllerDependencies {
   projects: ApiProject[]
   associatedTokens: AssociatedToken[]
   minTimestamp: Record<Project['type'], UnixTime>
-  amountRepository: AmountRepository
   chainConverter: ChainConverter
   controllerService: ControllerService
 }
@@ -260,14 +258,15 @@ export class Tvl2Controller {
   // and keep only the current values in the database.
   private async getBreakdownMap(timestamp: UnixTime) {
     const tokenAmounts =
-      await this.$.amountRepository.getByConfigIdsAndTimestamp(
+      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices = await this.$.controllerService.getByConfigIdsAndTimestamp(
-      [...this.$.priceConfigs.values()].map((x) => x.priceId),
-      timestamp,
-    )
+    const prices =
+      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
+        [...this.$.priceConfigs.values()].map((x) => x.priceId),
+        timestamp,
+      )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
@@ -310,14 +309,15 @@ export class Tvl2Controller {
 
   private async getNewBreakdown(timestamp: UnixTime) {
     const tokenAmounts =
-      await this.$.amountRepository.getByConfigIdsAndTimestamp(
+      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices = await this.$.controllerService.getByConfigIdsAndTimestamp(
-      [...this.$.priceConfigs.values()].map((x) => x.priceId),
-      timestamp,
-    )
+    const prices =
+      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
+        [...this.$.priceConfigs.values()].map((x) => x.priceId),
+        timestamp,
+      )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdowns: Record<

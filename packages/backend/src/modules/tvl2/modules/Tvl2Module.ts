@@ -101,7 +101,6 @@ export function createTvl2Module(
 
   const controllerDependencies = getControllerDependencies(
     config.tvl2,
-    peripherals.getRepository(AmountRepository),
     controllerService,
     new ChainConverter(
       chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
@@ -132,7 +131,6 @@ export function createTvl2Module(
 
 function getControllerDependencies(
   config: Tvl2Config,
-  amountRepository: AmountRepository,
   controllerService: ControllerService,
   chainConverter: ChainConverter,
 ): Tvl2ControllerDependencies {
@@ -223,7 +221,6 @@ function getControllerDependencies(
     projects,
     associatedTokens,
     minTimestamp,
-    amountRepository,
     controllerService,
     chainConverter,
   }

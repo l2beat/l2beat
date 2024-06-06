@@ -161,12 +161,22 @@ export class ControllerService {
     return ethPrices
   }
 
-  async getByConfigIdsAndTimestamp(
+  async getPricesByConfigIdsAndTimestamp(
     priceConfigIds: string[],
     timestamp: UnixTime,
   ) {
     return await this.$.priceRepository.getByConfigIdsAndTimestamp(
       priceConfigIds,
+      timestamp,
+    )
+  }
+
+  async getAmountsByConfigIdsAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ) {
+    return await this.$.amountRepository.getByConfigIdsAndTimestamp(
+      configIds,
       timestamp,
     )
   }
