@@ -9,13 +9,13 @@ import { expect } from 'earl'
 
 import {
   ActivityProjectData,
+  TvlProjectData,
   activitySanityCheck,
   checkIfDelayedActivity,
   checkIfDelayedTvl,
   checkIfEmptyActivityCharts,
   checkIfEmptyTvlCharts,
   checkIfZeroTpsProjects,
-  TvlProjectData,
   tvlSanityCheck,
 } from './sanityCheck'
 
@@ -314,7 +314,7 @@ describe(activitySanityCheck.name, () => {
         estimatedSince: now,
       }
       expect(() => checkIfDelayedActivity(allProjects, now)).toThrow(
-        'Combined activity data is delayed! 183600 seconds. Acceptable delay is 180000 seconds.'
+        'Combined activity data is delayed! 183600 seconds. Acceptable delay is 180000 seconds.',
       )
     })
   })
