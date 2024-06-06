@@ -136,6 +136,13 @@ export class AddressAnalyzer {
       }
     }
 
+    const templateLog =
+      extendedTemplate !== undefined
+        ? `"${extendedTemplate?.template}" (${extendedTemplate?.reason})`
+        : 'none'
+
+    logger.log(`  Template: ${templateLog}`)
+
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
       sources.abi,

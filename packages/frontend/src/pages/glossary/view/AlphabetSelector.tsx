@@ -4,7 +4,7 @@ import { OverflowWrapper } from '../../../components/OverflowWrapper'
 import { cn } from '../../../utils/cn'
 import { startsWithNumber } from '../../../utils/startsWithLetterOrNumber'
 
-const options = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+const OPTIONS = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 interface Props<T> {
   entries: T[]
@@ -60,7 +60,7 @@ interface OptionWithEntry<T> {
 function getOptionsWithEntry<T extends { id: string }>(
   entries: T[],
 ): OptionWithEntry<T>[] {
-  return options.map((char) => {
+  return OPTIONS.map((char) => {
     if (char === '#') {
       return {
         char,
