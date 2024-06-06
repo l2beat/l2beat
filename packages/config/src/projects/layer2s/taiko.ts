@@ -248,7 +248,16 @@ export const taiko: Layer2 = {
         For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-      references: [],
+      references: [
+        {
+          text: 'Tier Provider - Tiers',
+          href: 'https://etherscan.io/address/0x4cffe56C947E26D07C14020499776DB3e9AE3a23#code#F1#L11',
+        },
+        {
+          text: 'Block Proving - Liveness bond',
+          href: 'https://etherscan.io/address/0xe84dc8e2a21e59426542ab040d77f81d6db881ee#code#F5#L416',
+        },
+      ],
       risks: [
         {
           category: 'Funds can be stolen if',
