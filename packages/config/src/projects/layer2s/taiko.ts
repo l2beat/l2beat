@@ -87,7 +87,7 @@ const LivenessBond = utils.formatEther(TaikoChainConfig[5])
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
@@ -200,9 +200,9 @@ export const taiko: Layer2 = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned sequencer who can propose blocks. This is a single point of failure and can lead to the system being halted if the sequencer fails to propose blocks on L1.',
-      sentiment: 'bad',
-      value: 'No mechanism', // based rollup sequencing
+        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Anyone can propose L2 blocks directly on the Taiko L1 contract. Hovewer, the TaikoAdmin multisig can pause block proposals.',
+      sentiment: 'good',
+      value: 'L1-sequenced', // based rollup sequencing
     },
     proposerFailure: {
       description:
@@ -273,23 +273,23 @@ export const taiko: Layer2 = {
       risks: [],
     },
     operator: {
-      name: 'The system has a centralized sequencer',
+      name: 'The system uses based sequencing mechanism',
       description:
-        'Although designed for permissionless block proposals, the system currently has a single sequencer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
-      references: [],
-      risks: [FRONTRUNNING_RISK],
-    },
-    forceTransactions: {
-      name: `Users can't force any transaction`,
-      description:
-        'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
-      references: [],
-      risks: [
+        'The system used a based (or L1-sequenced) sequencing mechanism. Anyone can sequence L2 blocks by proposing them directly on the L1. Proposing a block requires designating a prover, who is required to deposit a liveness bond as a commitment to proving the block.',
+      references: [
         {
-          category: 'Users can be censored if',
-          text: 'the sequencer refuses to include their transactions.',
+          text: 'TaikoL1 - proposeBlock',
+          href: 'https://etherscan.io/address/0x4b2743b869b85d5f7d8020566f92664995e4f3c5#code#F1#L84',
         },
       ],
+      risks: [],
+    },
+    forceTransactions: {
+      name: `Users can force any transaction`,
+      description:
+        'The system is designed to allow users to propose L2 blocks directly on L1.',
+      references: [],
+      risks: [],
     },
     exitMechanisms: [
       // to do: double check exit mechanism
@@ -392,7 +392,7 @@ export const taiko: Layer2 = {
       description: 'The chain watchdog role can pause proving of blocks.',
     },
     {
-      name: 'Sequencer',
+      name: 'Permissioned Sequencer (old)',
       accounts: [
         {
           address: EthereumAddress(proposer),
@@ -400,7 +400,7 @@ export const taiko: Layer2 = {
         },
       ],
       description:
-        'The authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract.',
+        'The previous authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract. Removed at block 20031708.',
     },
     {
       name: 'SequencerBlockOne',
