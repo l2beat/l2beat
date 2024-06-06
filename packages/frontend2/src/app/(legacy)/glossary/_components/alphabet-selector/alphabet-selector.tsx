@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 
 import debounce from 'lodash/debounce'
+import { glossarySectionTreshold } from '~/app/_components/nav/consts'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
 import { startsWithNumber } from '~/utils/starts-with-letter-or-number'
@@ -18,10 +19,7 @@ interface Props<T> {
 export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const selectedItem = useRef<HTMLLIElement>(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
-  const currentSection = useCurrentSection({
-    desktop: '164px',
-    mobile: '132px',
-  })
+  const currentSection = useCurrentSection(glossarySectionTreshold)
 
   const scrollToItem = useMemo(
     () =>
