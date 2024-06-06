@@ -140,16 +140,25 @@ export class ControllerService {
     priceConfigIds: string[],
     timestamp: UnixTime,
   ) {
-    return await this.$.priceRepository.getByConfigIdsAndTimestamp(
+    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
       priceConfigIds,
       timestamp,
     )
+
+    // TODO: interpolate here
+    assert(
+      prices.length === priceConfigIds.length,
+      `Missing prices for ${timestamp.toNumber()}`,
+    )
+
+    return prices
   }
 
   async getAmountsByConfigIdsAndTimestamp(
     configIds: string[],
     timestamp: UnixTime,
   ) {
+    // TODO: what to do when there are missing values?
     return await this.$.amountRepository.getByConfigIdsAndTimestamp(
       configIds,
       timestamp,
