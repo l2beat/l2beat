@@ -34,7 +34,9 @@ function getUrl(backend: Config['backend'],opts: Options) {
     url.searchParams.set("excludeAssociatedTokens", 'true')
   }
 
-  return url.toString()
+  return url.toString();
+
+  
 
 }
 
