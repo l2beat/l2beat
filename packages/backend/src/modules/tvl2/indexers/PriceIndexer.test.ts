@@ -62,8 +62,7 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
@@ -125,8 +124,7 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
@@ -165,17 +163,15 @@ describe(PriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         configurations: [],
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<CoingeckoPriceConfigEntry>(),
+        serializeConfiguration: () => '',
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
       })
 
-      const configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[] =
-        [
-          removal<CoingeckoPriceConfigEntry>('a', 100, 200),
-          removal<CoingeckoPriceConfigEntry>('b', 200, 300),
-        ]
+      const configurations: RemovalConfiguration[] = [
+        removal('a', 100, 200),
+        removal('b', 200, 300),
+      ]
 
       await indexer.removeData(configurations)
 

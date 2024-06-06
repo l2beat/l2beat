@@ -5,6 +5,7 @@ export interface GlossaryEntry {
   term: string
   definition: string
   isSpicy: boolean
+  match?: string[]
 }
 
 export function getGlossaryEntry(
@@ -15,5 +16,6 @@ export function getGlossaryEntry(
     term: entry.data.term,
     definition: entry.data.definition,
     isSpicy: entry.data.isSpicy,
+    match: entry.data.match,
   }
 }

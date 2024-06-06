@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19882098,
+  "blockNumber": 19976289,
   "configHash": "0x9f5c5f686ed4bfe982a25f00bc50d2b5a0513d1ce029759e7ae55b43c207b658",
   "version": 4,
   "contracts": [
@@ -17,10 +17,11 @@
     {
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+      "ignoreInWatchMode": ["totalBridgedDAI"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
       },
       "implementations": ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"],
       "sinceTimestamp": 1695199499,
@@ -50,6 +51,7 @@
     {
       "name": "PolygonZkEVMEtrog",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+      "ignoreInWatchMode": ["lastAccInputHash"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
@@ -75,7 +77,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0x5446fbee745cbe2acd03a67b77899a34124657a4b34f03db69dc5d93c83ba4af",
+        "lastAccInputHash": "0xadc2b474c1301bee6c8c89fbe30a3c6e7365cc594a229d2bdf6331d9db5cbb28",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -117,7 +119,7 @@
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
       },
       "implementations": ["0x18FED1E19dC564DC917D203be9d40790472D22e9"],
       "sinceTimestamp": 1703945135,
@@ -185,6 +187,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x099198353446A9E3a20672eDC1Bd461E978842c3",
     "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
     "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",

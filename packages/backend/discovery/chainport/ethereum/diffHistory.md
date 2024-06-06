@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x395832b1ed12a664e1117b2f9f8c99dcd4b1e7df
+
+# Diff at Tue, 04 Jun 2024 04:37:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@706706295a49487100a144276621ec14caf86806 block: 19531518
+- current block number: 20016116
+
+## Description
+
+A new proposal is made in the goveernance contract which has the description 'Unfreeze bridges' and targets a Chainport Vault (`0x763a0ca93af05ade98a52dc1e5b936b89bf8b89a`) of which the source code is unverified.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        52
++        53
+    }
+```
+
 Generated with discovered.json: 0x4e1a299c85d757fb2b972b98daae67841056a93f
 
 # Diff at Thu, 28 Mar 2024 08:48:24 GMT:

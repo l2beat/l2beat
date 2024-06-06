@@ -30,6 +30,9 @@ export function SubVerifiersTable({ verifier, className }: Props) {
               Name
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
+              Proof system
+            </th>
+            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
               <div className="flex items-center gap-1.5">
                 <span>Arithmetization</span>
                 <Tooltip>
@@ -54,9 +57,6 @@ export function SubVerifiersTable({ verifier, className }: Props) {
                   </TooltipContent>
                 </Tooltip>
               </div>
-            </th>
-            <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
-              Proof system
             </th>
             <th className="py-1.5 pr-3 uppercase text-2xs font-semibold text-gray-500 dark:text-gray-50">
               <div className="flex items-center gap-1.5">

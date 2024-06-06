@@ -72,6 +72,7 @@ export function RiskCell({ item }: Props) {
             text={item.warning.value}
             icon={RoundedWarningIcon}
             color={item.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            ignoreMarkdown
           />
         )}
         {item.description !== '' ? item.description : null}

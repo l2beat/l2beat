@@ -81,7 +81,9 @@ export interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateNativePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateNativeContracts?: ScalingProjectContract[]
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -289,12 +291,14 @@ export function opStackCommon(
       }),
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
+    nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses: [
         ...templateVars.discovery.getOpStackContractDetails(upgradeability),
         ...(templateVars.nonTemplateContracts ?? []),
       ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+      nativeAddresses: templateVars.nonTemplateNativeContracts,
     },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [

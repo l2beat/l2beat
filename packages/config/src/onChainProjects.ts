@@ -8,5 +8,4 @@ export const onChainProjects: string[] = [
   'shared-eigenlayer',
   'swell',
   'worldcoin',
-  'molten', // waiting for a more serious launch where they are sure what stack to use
 ]

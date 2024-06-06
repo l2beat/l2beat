@@ -88,7 +88,8 @@ async function main() {
         const bridgedUsing = token.bridgedUsing ?? existingToken.bridgedUsing
         if (
           existingToken.bridgedUsing?.bridge !== bridgedUsing?.bridge ||
-          existingToken.bridgedUsing?.slug !== bridgedUsing?.slug
+          existingToken.bridgedUsing?.slug !== bridgedUsing?.slug ||
+          existingToken.bridgedUsing?.warning !== bridgedUsing?.warning
         ) {
           tokenLogger.overriding(
             'bridgedUsing',

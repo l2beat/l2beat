@@ -5,27 +5,43 @@ import { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
+  const LAST_HOUR = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+  const HOURLY_CUTOFF_WITH_GRACE_PERIOD = 10
+  const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
+  const CLOCK = mockObject<Clock>({
+    getLastHour: () => LAST_HOUR,
+  })
+
+  describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
+    const syncOptimizer = new SyncOptimizer(CLOCK)
+    it('return true if timestamp should be synced', () => {
+      const result = syncOptimizer.shouldTimestampBeSynced(
+        LAST_HOUR.add(-1, 'hours'),
+      )
+      expect(result).toEqual(true)
+    })
+
+    it('return false if timestamp should not be synced', () => {
+      const result = syncOptimizer.shouldTimestampBeSynced(
+        LAST_HOUR.add(365, 'days').add(-1, 'hours'),
+      )
+      expect(result).toEqual(true)
+    })
+  })
+
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
-    const SIX_HOURLY_CUTOFF = 10
-    const DAILY_CUTOFF = 93
-    const OPTIONS = {
-      removeHourlyAfterDays: SIX_HOURLY_CUTOFF,
-      removeSixHourlyAfterDays: DAILY_CUTOFF,
-    }
-    const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
     const CLOCK = mockObject<Clock>({
-      getLastHour: () => LAST_HOUR,
+      getLastHour: () => LAST_HOUR.add(1, 'minutes'),
     })
 
     it('returns daily timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
       // hourly timestamp older than daily cutoff
-      const hourlyTimestamp = LAST_HOUR.add(-(DAILY_CUTOFF + 1), 'days').add(
-        1,
-        'hours',
-      )
+      const hourlyTimestamp = LAST_HOUR.add(
+        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1),
+        'days',
+      ).add(1, 'hours')
       const timestampToSync = syncOptimizer.getTimestampToSync(
         hourlyTimestamp.toNumber(),
       )
@@ -36,11 +52,11 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('returns six hourly timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(
-        -(SIX_HOURLY_CUTOFF + 1),
+        -(HOURLY_CUTOFF_WITH_GRACE_PERIOD + 1),
         'days',
       ).add(1, 'hours')
 
@@ -54,7 +70,7 @@ describe(SyncOptimizer.name, () => {
     })
 
     it('returns hourly timestamp', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
@@ -68,27 +84,71 @@ describe(SyncOptimizer.name, () => {
     })
   })
 
-  describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
-    const now = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+  describe(SyncOptimizer.prototype.getTimestampsToSync.name, () => {
+    it('respects maxTimestamps', () => {
+      const syncOptimizer = new SyncOptimizer(CLOCK)
 
-    const clock = mockObject<Clock>({
-      getLastHour: () => now,
-    })
-
-    const syncOptimizer = new SyncOptimizer(clock, {
-      removeHourlyAfterDays: 10,
-      removeSixHourlyAfterDays: 93,
-    })
-    it('return true if timestamp should be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(now.add(-1, 'hours'))
-      expect(result).toEqual(true)
-    })
-
-    it('return false if timestamp should not be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(
-        now.add(365, 'days').add(-1, 'hours'),
+      const start = LAST_HOUR.add(-7, 'hours')
+      const timestampToSync = syncOptimizer.getTimestampsToSync(
+        start.toNumber(),
+        start.add(100_000, 'days').toNumber(),
+        7,
       )
-      expect(result).toEqual(true)
+
+      expect(timestampToSync).toEqual([
+        start,
+        start.add(1, 'hours'),
+        start.add(2, 'hours'),
+        start.add(3, 'hours'),
+        start.add(4, 'hours'),
+        start.add(5, 'hours'),
+        start.add(6, 'hours'),
+      ])
+    })
+
+    it('respects to', () => {
+      const syncOptimizer = new SyncOptimizer(CLOCK)
+
+      const start = LAST_HOUR.add(-7, 'hours')
+      const timestampToSync = syncOptimizer.getTimestampsToSync(
+        start.toNumber(),
+        start.add(6, 'hours').toNumber(),
+        100_000,
+      )
+
+      expect(timestampToSync).toEqual([
+        start,
+        start.add(1, 'hours'),
+        start.add(2, 'hours'),
+        start.add(3, 'hours'),
+        start.add(4, 'hours'),
+        start.add(5, 'hours'),
+        start.add(6, 'hours'),
+      ])
+    })
+
+    it('complex case', () => {
+      const syncOptimizer = new SyncOptimizer(CLOCK)
+
+      const start = LAST_HOUR.add(
+        -(SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD + 2),
+        'days',
+      )
+      const timestampToSync = syncOptimizer.getTimestampsToSync(
+        start.toNumber(),
+        start.add(100_000, 'days').toNumber(),
+        7,
+      )
+
+      expect(timestampToSync).toEqual([
+        start,
+        start.add(1, 'days'),
+        start.add(2, 'days'),
+        start.add(2, 'days').add(6, 'hours'),
+        start.add(2, 'days').add(12, 'hours'),
+        start.add(2, 'days').add(18, 'hours'),
+        start.add(2, 'days').add(24, 'hours'),
+      ])
     })
   })
 })

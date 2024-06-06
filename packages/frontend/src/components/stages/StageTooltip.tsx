@@ -47,6 +47,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
                   : UnderReviewIcon
               }
               text={stageConfig.message.text}
+              ignoreMarkdown
             />
           )}
           {stageConfig.missing && (

@@ -23,6 +23,7 @@ export interface Bridge {
   technology: BridgeTechnology
   contracts?: ScalingProjectContracts
   permissions?: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }

@@ -31,13 +31,18 @@ function getMockActivityApiResponse(): ActivityApiResponse {
     ...allLayer2s.filter((l2) => !l2.isArchived && !l2.isUpcoming),
     ...allLayer3s.filter((l3) => !l3.isUpcoming),
   ]) {
-    const syncedTo =( project.display.slug === 'orb3' || project.display.slug === 'arbitrum' )? now.add(-Math.floor(Math.random() * 100), 'days') : now
+    const syncedTo =
+      project.display.slug === 'orb3' || project.display.slug === 'arbitrum'
+        ? now.add(-Math.floor(Math.random() * 100), 'days')
+        : now
     result.projects[project.id.toString()] = getMockActivityApiChart(syncedTo)
   }
   return result
 }
 
-function getMockActivityApiChart(syncedTo: UnixTime): ActivityApiChartsWithEstimation {
+function getMockActivityApiChart(
+  syncedTo: UnixTime,
+): ActivityApiChartsWithEstimation {
   const now = syncedTo.toStartOf('day')
   const chart: ActivityApiChart = {
     types: ['timestamp', 'transactions', 'ethereumTransactions'],

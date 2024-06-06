@@ -109,7 +109,7 @@ const generateFakeAnalysis = (
     errors: errors ?? {},
     abis: {},
     sourceBundles: [],
-    matchingTemplates: {},
     extendedTemplate,
+    relatives: {},
   }
 }

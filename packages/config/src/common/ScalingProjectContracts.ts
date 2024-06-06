@@ -5,10 +5,12 @@ import { ScalingProjectReference } from './ScalingProjectReference'
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 
 export interface ScalingProjectContracts {
-  /** List of the contracts */
+  /** List of the contracts on hosted chain */
   addresses: ScalingProjectContract[]
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
+  /** List of the contracts on the chain itself */
+  nativeAddresses?: ScalingProjectContract[]
   /** List of references backing up the claim */
   references?: ScalingProjectReference[]
   /** The description and research is incomplete */

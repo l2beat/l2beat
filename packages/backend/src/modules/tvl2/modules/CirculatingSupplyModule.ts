@@ -1,10 +1,6 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
-import {
-  CirculatingSupplyEntry,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
@@ -90,6 +86,13 @@ export function createCirculatingSupplyModule(
       priceRepository: peripherals.getRepository(PriceRepository),
     })
 
+    const minHeight = Math.min(
+      ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+    )
+    const maxHeight = Math.max(
+      ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+    )
+
     const indexer = new ValueIndexer({
       valueService,
       valueRepository: peripherals.getRepository(ValueRepository),
@@ -102,12 +105,8 @@ export function createCirculatingSupplyModule(
       tag: `${project}_coingecko`,
       indexerService,
       logger,
-      minHeight: amountConfigs
-        .reduce(
-          (prev, curr) => UnixTime.min(prev, curr.sinceTimestamp),
-          amountConfigs[0].sinceTimestamp,
-        )
-        .toNumber(),
+      minHeight,
+      maxHeight,
       maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 

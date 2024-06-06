@@ -71,9 +71,13 @@ export async function NavSidebar({
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           {zkCatalog && <NavSmallLink title="ZK Catalog" href="/zk-catalog" />}
-          <NavSmallLink title="Donate" href={'/donate'} />
+          <NavSmallLink title="Donate" href="/donate" />
           {governance ? (
-            <NavSmallLink title="Governance" href={'/governance'} />
+            <NavSmallLink
+              title="Governance"
+              href="/governance"
+              activeBehavior={{ type: 'prefix', prefix: '/governance' }}
+            />
           ) : (
             <NavSmallLink
               title="Governance"

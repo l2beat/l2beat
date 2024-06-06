@@ -39,4 +39,5 @@ export interface AmountConfigBase {
   includeInTotal: boolean
   decimals: number
   symbol: string
+  isAssociated: boolean
 }

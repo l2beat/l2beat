@@ -37,14 +37,11 @@ export function getRelativesWithSuggestedTemplates(
   return result
 }
 
-function getAddresses(
-  value: ContractValue | undefined,
-  template?: string,
-): EthereumAddress[] {
+function getAddresses(value: ContractValue | undefined): EthereumAddress[] {
   if (Array.isArray(value)) {
-    return value.flatMap((v) => getAddresses(v, template))
+    return value.flatMap((v) => getAddresses(v))
   } else if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => getAddresses(v, template))
+    return Object.values(value).flatMap((v) => getAddresses(v))
   } else if (typeof value === 'string') {
     try {
       return [EthereumAddress(value)]

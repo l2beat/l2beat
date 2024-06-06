@@ -104,6 +104,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
               )[props.warning.sentiment]
             }
             text={props.warning.value}
+            ignoreMarkdown
           />
         )}
       </TooltipContent>

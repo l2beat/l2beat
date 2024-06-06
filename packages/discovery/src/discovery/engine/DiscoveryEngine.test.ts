@@ -1,11 +1,27 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 import { DiscoveryEngine } from './DiscoveryEngine'
+
+const base = {
+  derivedName: undefined,
+  errors: {},
+  values: {},
+  isVerified: true,
+  deploymentTimestamp: new UnixTime(1234),
+  deploymentBlockNumber: 9876,
+  upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
+  implementations: [],
+  abis: {},
+  sourceBundles: [],
+  matchingTemplates: {},
+  relatives: {},
+}
 
 describe(DiscoveryEngine.name, () => {
   const BLOCK_NUMBER = 1234
@@ -35,15 +51,24 @@ describe(DiscoveryEngine.name, () => {
     })
     addressAnalyzer.analyze
       .resolvesToOnce({
-        analysis: { type: 'EOA', address: A },
+        ...base,
+        address: A,
+        type: 'Contract',
+        name: 'A',
         relatives: { [strB]: new Set(), [strC]: new Set() },
       })
       .resolvesToOnce({
-        analysis: { type: 'EOA', address: C },
+        ...base,
+        address: C,
+        type: 'Contract',
+        name: 'C',
         relatives: { [strB]: new Set(), [strD]: new Set() },
       })
       .resolvesToOnce({
-        analysis: { type: 'EOA', address: D },
+        ...base,
+        address: D,
+        type: 'Contract',
+        name: 'D',
         relatives: {},
       })
 
@@ -51,9 +76,21 @@ describe(DiscoveryEngine.name, () => {
     const result = await engine.discover(config, BLOCK_NUMBER)
 
     expect(result).toEqual([
-      { type: 'EOA', address: A },
-      { type: 'EOA', address: C },
-      { type: 'EOA', address: D },
+      {
+        ...base,
+        type: 'Contract',
+        name: 'A',
+        address: A,
+        relatives: { [strB]: new Set(), [strC]: new Set() },
+      },
+      {
+        ...base,
+        type: 'Contract',
+        name: 'C',
+        address: C,
+        relatives: { [strB]: new Set(), [strD]: new Set() },
+      },
+      { ...base, type: 'Contract', name: 'D', address: D },
     ])
 
     expect(discoveryLogger.log).toHaveBeenCalledTimes(5)
