@@ -8,8 +8,8 @@ import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
 import '../styles/globals.css'
 import { HtmlPathnameSetter } from './_components/html-pathname-setter'
-import { roboto } from './fonts'
 import { TooltipProvider } from './_components/tooltip'
+import { roboto } from './fonts'
 
 export const metadata: Metadata = {
   title: 'L2BEAT - The state of the layer two ecosystem',
