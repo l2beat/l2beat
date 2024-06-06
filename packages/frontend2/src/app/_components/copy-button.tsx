@@ -34,14 +34,13 @@ export function CopyButton(props: Props) {
     <Tooltip>
       <TooltipTrigger asChild onClick={(event) => event.preventDefault()}>
         <button
-          className="group flex items-center justify-center"
-          data-to-copy={props.toCopy}
+          className="flex items-center justify-center"
           onClick={() => copyToClipboard()}
         >
           {copied ? (
-            <SatisfiedIcon className="size-6 animate-in fill-green-700 dark:fill-green-450" />
+            <SatisfiedIcon className="size-6 fill-green-700 dark:fill-green-450" />
           ) : (
-            <CopyIcon className="size-6 animate-in fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550" />
+            <CopyIcon className="size-6 fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550" />
           )}
         </button>
       </TooltipTrigger>
