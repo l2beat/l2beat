@@ -3,7 +3,6 @@ import { toDataURL } from 'qrcode'
 import React from 'react'
 
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { Link } from '../../../components/Link'
 import { Wrapped } from '../../Page'
 import { DonateFundingSourcesProps } from '../view/DonateFundingSources'
@@ -15,7 +14,6 @@ export async function getProps(
   const address = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
   return {
     props: {
-      navbar: getNavbarProps(config, 'donate'),
       header: {
         ethereumAddress: address,
         qrCodeUrl: await toDataURL(address, {
@@ -50,7 +48,6 @@ export async function getProps(
         ]),
       },
       fundingSources: getFundingSources(),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: {

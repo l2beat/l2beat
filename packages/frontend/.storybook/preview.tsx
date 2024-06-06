@@ -1,6 +1,8 @@
 import { withThemeByDataAttribute } from '@storybook/addon-styling'
 import React from 'react'
+import { withPageBuildContext } from '../src/build/pageBuildContext'
 import '../src/styles/style.css'
+import { storybookBuildContext } from './buildContext'
 import { allModes } from './modes'
 import { viewports } from './viewports'
 
@@ -13,11 +15,12 @@ export const decorators = [
     defaultTheme: 'light',
     attributeName: 'class',
   }),
-  (Story) => (
-    <div className="m-4">
-      <Story />
-    </div>
-  ),
+  (Story) =>
+    withPageBuildContext(storybookBuildContext, () => (
+      <div className="m-4">
+        <Story />
+      </div>
+    )),
 ]
 
 export const parameters = {

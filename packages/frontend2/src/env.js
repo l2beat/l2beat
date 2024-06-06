@@ -15,18 +15,6 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
-    FALLBACK_REWRITE_DESTINATION: z
-      .enum(['local', 'vercel-mock', 'vercel-staging', 'vercel-production'])
-      .transform(
-        (val) =>
-          ({
-            local: 'http://127.0.0.1:8080',
-            'vercel-mock': 'https://l2beat-mock.vercel.app',
-            'vercel-staging': 'https://l2beat-staging.vercel.app',
-            'vercel-production': 'https://l2beat-production.vercel.app',
-          })[val],
-      )
-      .default('local'),
     FEATURE_FLAG_ACTIVITY: featureFlag.default('true'),
     FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
     FEATURE_FLAG_COSTS: featureFlag.default('true'),
@@ -55,7 +43,6 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    FALLBACK_REWRITE_DESTINATION: process.env.FALLBACK_REWRITE_DESTINATION,
     FEATURE_FLAG_ACTIVITY: process.env.FEATURE_FLAG_ACTIVITY,
     FEATURE_FLAG_ASSET_RISKS: process.env.FEATURE_FLAG_ASSET_RISKS,
     FEATURE_FLAG_COSTS: process.env.FEATURE_FLAG_COSTS,

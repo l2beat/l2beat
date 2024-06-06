@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { BridgesPagesData } from '../../types'
@@ -12,12 +11,10 @@ export function getProps(
 ): Wrapped<BridgesRiskPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'bridges'),
       riskView: getBridgesRiskView(
         [...config.bridges, ...config.layer2s],
         pagesData,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
