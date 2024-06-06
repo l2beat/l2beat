@@ -8,7 +8,18 @@ Generated with discovered.json: 0xc8183ab4ebdd418eb6d37e78217c69d073a4ba07
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+TaikoL1Contract implementation update:
+assignment_hook?
+getConfig[7]?
+
+prover_set update:
+GuardianMinorityProver update:
+GuardianProver update:
+SGXVerifier update:
+L1RollupAddressManager update:
+SignalService update:
+
+
 
 ## Watched changes
 
