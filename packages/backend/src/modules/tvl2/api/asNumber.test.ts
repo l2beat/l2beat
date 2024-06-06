@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { asNumber } from './asNumber'
+import { asNumber } from '../utils/asNumber'
 
 describe(asNumber.name, () => {
   it('1234567 || 6 precision digits', () => {

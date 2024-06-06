@@ -28,7 +28,7 @@ import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-import { asNumber } from './asNumber'
+import { asNumber } from '../utils/asNumber'
 
 interface CanonicalAssetBreakdown {
   assetId: AssetId
