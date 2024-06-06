@@ -7,7 +7,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../model/Project'
+import { Project } from '../../../../model/Project'
 
 export interface CanonicalAssetBreakdown {
   assetId: AssetId

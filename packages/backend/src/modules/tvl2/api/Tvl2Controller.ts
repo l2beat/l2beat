@@ -8,27 +8,30 @@ import {
   NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
-  TokenTvlApiChart,
   TokenTvlApiCharts,
-  TvlApiChart,
   TvlApiCharts,
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Dictionary, groupBy } from 'lodash'
 
-import { Tvl2Config } from '../../../config/Config'
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
-import { createAmountId } from '../utils/createAmountId'
-import { createPriceId } from '../utils/createPriceId'
+import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './ControllerService'
+import {
+  convertSourceName,
+  getChart,
+  getChartData,
+  getTokenChartData,
+  subtractTokenChart,
+  sumCharts,
+  sumValuesPerSource,
+} from './utils/chartsUtils'
 import {
   AmountConfigMap,
   ApiProject,
@@ -36,111 +39,23 @@ import {
   CanonicalAssetBreakdown,
   PriceConfigIdMap,
   Values,
-  ValuesMap,
-} from './types'
+} from './utils/types'
+
+export interface Tvl2ControllerDependencies {
+  amountConfig: AmountConfigMap
+  currAmountConfigs: Map<string, AmountConfigEntry & { configId: string }>
+  priceConfigs: PriceConfigIdMap
+  projects: ApiProject[]
+  associatedTokens: AssociatedToken[]
+  minTimestamp: Record<Project['type'], UnixTime>
+  amountRepository: AmountRepository
+  priceRepository: PriceRepository
+  chainConverter: ChainConverter
+  controllerService: ControllerService
+}
 
 export class Tvl2Controller {
-  private readonly amountConfig: AmountConfigMap
-  private readonly currAmountConfigs: Map<
-    string,
-    AmountConfigEntry & { configId: string }
-  >
-  private readonly priceConfigs: PriceConfigIdMap
-  private readonly projects: ApiProject[]
-  private readonly associatedTokens: AssociatedToken[]
-  private minTimestamp: Record<Project['type'], UnixTime>
-
-  constructor(
-    private readonly amountRepository: AmountRepository,
-    private readonly priceRepository: PriceRepository,
-    private readonly valueRepository: ValueRepository,
-    private readonly chainConverter: ChainConverter,
-    private readonly controllerService: ControllerService,
-    projects: Project[],
-    config: Tvl2Config,
-  ) {
-    // We're calculating the configIds on startup to avoid doing it on every request.
-    this.amountConfig = getAmountConfigMap(config)
-    this.currAmountConfigs = new Map(
-      [...this.amountConfig.values()]
-        .flat()
-        // TODO: we should check it on runtime as well
-        .filter((x) => !x.untilTimestamp)
-        .map((x) => [x.configId, x]),
-    )
-    this.priceConfigs = getPriceConfigIds(config)
-    this.projects = projects.flatMap(({ projectId: id, type, slug }) => {
-      if (config.projectsExcludedFromApi.includes(id.toString())) {
-        return []
-      }
-
-      const amounts = this.amountConfig.get(id)
-      if (!amounts) {
-        return []
-      }
-      assert(amounts, 'Config not found: ' + id.toString())
-      const minTimestamp = amounts
-        .map((x) => x.sinceTimestamp)
-        .reduce((a, b) => UnixTime.min(a, b))
-
-      const sources = new Map<
-        string,
-        { name: string; minTimestamp: UnixTime }
-      >()
-      for (const amount of amounts) {
-        const name =
-          amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
-
-        const source = sources.get(name)
-        if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
-          sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
-        }
-      }
-      return { id, minTimestamp, type, slug, sources }
-    })
-
-    this.associatedTokens = projects.flatMap(({ projectId: id, type }) => {
-      if (config.projectsExcludedFromApi.includes(id.toString())) {
-        return []
-      }
-
-      const amounts = this.amountConfig.get(id)
-      if (!amounts) {
-        return []
-      }
-
-      const uniqueTokens = new Map<string, string>()
-
-      const associatedAmounts = amounts
-        .filter((x) => x.isAssociated === true)
-        .filter((amount) => {
-          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
-          if (u) {
-            assert(amount.source === u, 'Type mismatch')
-            return false
-          }
-          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
-          return true
-        })
-
-      return associatedAmounts.map((amount) => {
-        return {
-          address: amount.address,
-          chain: amount.chain,
-          type: amount.source,
-          includeInTotal: amount.includeInTotal,
-          project: id,
-          projectType: getType(type),
-        }
-      })
-    })
-
-    this.minTimestamp = {
-      layer2: this.getMinTimestamp('layer2'),
-      bridge: this.getMinTimestamp('bridge'),
-      layer3: this.getMinTimestamp('layer3'),
-    }
-  }
+  constructor(private readonly $: Tvl2ControllerDependencies) {}
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPrices = await this.getEthPrices()
@@ -150,8 +65,8 @@ export class Tvl2Controller {
       hourlyStart,
       sixHourlyStart,
       dailyStart,
-    } = await this.controllerService.getValuesForProjects(
-      this.projects,
+    } = await this.$.controllerService.getValuesForProjects(
+      this.$.projects,
       lastHour,
     )
 
@@ -162,7 +77,7 @@ export class Tvl2Controller {
     }
 
     const chartsMap = new Map<string, TvlApiCharts>()
-    for (const project of this.projects) {
+    for (const project of this.$.projects) {
       const valuesByTimestamp =
         valuesByProjectByTimestamp[project.id.toString()]
 
@@ -229,7 +144,7 @@ export class Tvl2Controller {
 
     for (const type of ['layer2', 'layer3', 'bridge'] as const) {
       const value = aggregates[type]
-      const minTimestamp = this.minTimestamp[type]
+      const minTimestamp = this.$.minTimestamp[type]
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, minTimestamp).toEndOf('day'),
         end: lastHour,
@@ -346,19 +261,20 @@ export class Tvl2Controller {
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
   // and keep only the current values in the database.
   private async getBreakdownMap(timestamp: UnixTime) {
-    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
-      [...this.currAmountConfigs.keys()],
-      timestamp,
-    )
-    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
-      [...this.priceConfigs.values()].map((x) => x.priceId),
+    const tokenAmounts =
+      await this.$.amountRepository.getByConfigIdsAndTimestamp(
+        [...this.$.currAmountConfigs.keys()],
+        timestamp,
+      )
+    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
+      [...this.$.priceConfigs.values()].map((x) => x.priceId),
       timestamp,
     )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
     for (const amount of tokenAmounts) {
-      const config = this.currAmountConfigs.get(amount.configId)
+      const config = this.$.currAmountConfigs.get(amount.configId)
       assert(config, 'Config not found for id ' + amount.configId)
       let breakdown = breakdownMap.get(config.project)
       if (!breakdown) {
@@ -370,7 +286,7 @@ export class Tvl2Controller {
         breakdownMap.set(config.project, breakdown)
       }
 
-      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
       assert(priceConfig, 'PriceId not found for id ' + amount.configId)
       const price = pricesMap.get(priceConfig.priceId)
       assert(price, 'Price not found for id ' + amount.configId)
@@ -386,7 +302,7 @@ export class Tvl2Controller {
         assetId: priceConfig.assetId,
         address: config.address.toString(),
         chain: config.chain,
-        chainId: this.chainConverter.toChainId(config.chain),
+        chainId: this.$.chainConverter.toChainId(config.chain),
         assetType: convertSourceName(config.source),
         usdValue: asNumber(value, 2),
       })
@@ -395,12 +311,13 @@ export class Tvl2Controller {
   }
 
   private async getNewBreakdown(timestamp: UnixTime) {
-    const tokenAmounts = await this.amountRepository.getByConfigIdsAndTimestamp(
-      [...this.currAmountConfigs.keys()],
-      timestamp,
-    )
-    const prices = await this.priceRepository.getByConfigIdsAndTimestamp(
-      [...this.priceConfigs.values()].map((x) => x.priceId),
+    const tokenAmounts =
+      await this.$.amountRepository.getByConfigIdsAndTimestamp(
+        [...this.$.currAmountConfigs.keys()],
+        timestamp,
+      )
+    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
+      [...this.$.priceConfigs.values()].map((x) => x.priceId),
       timestamp,
     )
 
@@ -414,7 +331,7 @@ export class Tvl2Controller {
       }
     > = {}
     for (const amount of tokenAmounts) {
-      const config = this.currAmountConfigs.get(amount.configId)
+      const config = this.$.currAmountConfigs.get(amount.configId)
       assert(config, 'Config not found for id ' + amount.configId)
       let breakdown = breakdowns[config.project]
       if (!breakdown) {
@@ -426,7 +343,7 @@ export class Tvl2Controller {
         breakdowns[config.project] = breakdown
       }
 
-      const priceConfig = this.priceConfigs.get(createAssetId(config))
+      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
       assert(priceConfig, 'PriceId not found for id ' + amount.configId)
       const price = pricesMap.get(priceConfig.priceId)
       assert(price, 'Price not found for id ' + amount.configId)
@@ -450,7 +367,7 @@ export class Tvl2Controller {
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
               assetId: priceConfig.assetId,
-              chainId: this.chainConverter.toChainId(config.chain),
+              chainId: this.$.chainConverter.toChainId(config.chain),
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
@@ -468,7 +385,7 @@ export class Tvl2Controller {
         case 'external':
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: this.chainConverter.toChainId(config.chain),
+            chainId: this.$.chainConverter.toChainId(config.chain),
             amount: amountAsNumber.toString(),
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
@@ -479,7 +396,7 @@ export class Tvl2Controller {
         case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: this.chainConverter.toChainId(config.chain),
+            chainId: this.$.chainConverter.toChainId(config.chain),
             amount: amountAsNumber.toString(),
             usdValue: valueAsNumber.toString(),
             usdPrice: price.toString(),
@@ -524,13 +441,15 @@ export class Tvl2Controller {
   ): Promise<TvlApiCharts> {
     const ethPrices = await this.getEthPrices()
 
-    const projects = this.projects.filter((p) => projectSlugs.includes(p.slug))
+    const projects = this.$.projects.filter((p) =>
+      projectSlugs.includes(p.slug),
+    )
     const {
       valuesByProjectByTimestamp,
       sixHourlyStart,
       hourlyStart,
       dailyStart,
-    } = await this.controllerService.getValuesForProjects(projects, lastHour)
+    } = await this.$.controllerService.getValuesForProjects(projects, lastHour)
 
     const aggregate = new Map<number, Values>()
     for (const project of projects) {
@@ -585,8 +504,10 @@ export class Tvl2Controller {
     }
 
     if (excludeAssociated) {
+      const projectIds = projects.map((p) => p.id.toString())
+
       const excluded = await Promise.all(
-        this.associatedTokens
+        this.$.associatedTokens
           .filter((e) => projectIds.includes(e.project))
           .map(async (x) => ({
             ...x,
@@ -626,7 +547,7 @@ export class Tvl2Controller {
     project: ProjectId,
     lastHour: UnixTime,
   ): Promise<TokenTvlApiCharts> {
-    const projectAmounts = this.amountConfig.get(project)
+    const projectAmounts = this.$.amountConfig.get(project)
     assert(projectAmounts)
 
     const assetId = createAssetId(token)
@@ -639,13 +560,13 @@ export class Tvl2Controller {
     )
     const decimals = amountConfigs[0].decimals
 
-    const projectConfig = this.projects.find((x) => x.id === project)
+    const projectConfig = this.$.projects.find((x) => x.id === project)
     assert(projectConfig, 'Project not found!')
-    const priceConfig = this.priceConfigs.get(assetId)
+    const priceConfig = this.$.priceConfigs.get(assetId)
     assert(priceConfig, 'PriceId not found!')
 
     const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
-      await this.controllerService.getPricesAndAmountsForToken(
+      await this.$.controllerService.getPricesAndAmountsForToken(
         amountConfigs.map((x) => x.configId),
         priceConfig.priceId,
         projectConfig.minTimestamp,
@@ -692,21 +613,11 @@ export class Tvl2Controller {
     }
   }
 
-  private getMinTimestamp(type: Project['type']) {
-    return this.projects
-      .filter((x) => x.type === type)
-      .map((x) => x.minTimestamp)
-      .reduce((acc, curr) => {
-        return UnixTime.min(acc, curr)
-      })
-      .toEndOf('day')
-  }
-
   private async getEthPrices() {
     const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
-    const ethPriceId = this.priceConfigs.get(ethAssetId)?.priceId
+    const ethPriceId = this.$.priceConfigs.get(ethAssetId)?.priceId
     assert(ethPriceId, 'Eth priceId not found')
-    const records = await this.priceRepository.getDailyByConfigId(ethPriceId)
+    const records = await this.$.priceRepository.getDailyByConfigId(ethPriceId)
     const ethPrices = new Map(
       records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
@@ -718,7 +629,7 @@ export class Tvl2Controller {
     const tvl = await this.getTvl(lastHour)
 
     const excluded = await Promise.all(
-      this.associatedTokens.map(async (x) => ({
+      this.$.associatedTokens.map(async (x) => ({
         ...x,
         data: await this.getTokenChart(x, x.project, lastHour),
       })),
@@ -828,267 +739,5 @@ export class Tvl2Controller {
       }
     }
     return tvl
-  }
-}
-
-function sumValuesPerSource(values: ValueRecord[]) {
-  return values.reduce(
-    (acc, curr) => {
-      acc.canonical += curr.canonical
-      acc.external += curr.external
-      acc.native += curr.native
-      return acc
-    },
-    { canonical: 0n, external: 0n, native: 0n },
-  )
-}
-
-function getChartData({
-  start,
-  end,
-  step,
-  aggregatedValues,
-  chartId,
-  ethPrices,
-}: {
-  start: UnixTime
-  end: UnixTime
-  step: [number, 'hours' | 'days']
-  aggregatedValues: ValuesMap
-  ethPrices: Map<number, number>
-  chartId: string | ProjectId
-}) {
-  const values = []
-  for (let curr = start; curr.lte(end); curr = curr.add(...step)) {
-    const value = aggregatedValues.get(curr.toNumber())
-    assert(
-      value,
-      'Value not found for chart ' +
-        chartId.toString() +
-        ' at timestamp ' +
-        curr.toString(),
-    )
-    const ethPrice = ethPrices.get(curr.toNumber())
-    assert(ethPrice, 'Eth price not found for timestamp ' + curr.toString())
-
-    values.push(getChartPoint(curr, ethPrice, value))
-  }
-  return values
-}
-
-function getTokenChartData({
-  start,
-  end,
-  step,
-  amountsAndPrices,
-  decimals,
-}: {
-  start: UnixTime
-  end: UnixTime
-  step: [number, 'days' | 'hours']
-  amountsAndPrices: Dictionary<{ amount: bigint; price: number }>
-  decimals: number
-}) {
-  const data: [UnixTime, number, number][] = []
-  for (let curr = start; curr <= end; curr = curr.add(...step)) {
-    const amountAndPrice = amountsAndPrices[curr.toString()]
-    assert(
-      amountAndPrice !== undefined,
-      'Value not found for timestamp ' + curr.toString(),
-    )
-    const valueUsd = calculateValue({
-      amount: amountAndPrice.amount,
-      priceUsd: amountAndPrice.price,
-      decimals,
-    })
-    data.push([
-      curr,
-      asNumber(amountAndPrice.amount, decimals),
-      asNumber(valueUsd, 2),
-    ] as const)
-  }
-  return data
-}
-
-function getAmountConfigMap(config: Tvl2Config) {
-  const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
-  const amountConfigEntries = groupedEntries.map(([k, v]) => {
-    const projectId = ProjectId(k)
-    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
-
-    return [projectId, amountWithIds] as const
-  })
-
-  return new Map(amountConfigEntries)
-}
-
-function createAssetId(price: {
-  address: EthereumAddress | 'native'
-  chain: string
-}): string {
-  return `${price.chain}-${price.address.toString()}`
-}
-
-function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
-  const result = new Map<string, { assetId: AssetId; priceId: string }>()
-  for (const p of config.prices) {
-    result.set(createAssetId(p), {
-      priceId: createPriceId(p),
-      assetId: p.assetId,
-    })
-  }
-
-  return result
-}
-
-function convertSourceName(source: 'canonical' | 'external' | 'native') {
-  switch (source) {
-    case 'canonical':
-      return 'CBV' as const
-    case 'external':
-      return 'EBV' as const
-    case 'native':
-      return 'NMV' as const
-  }
-}
-
-function getChart(data: TvlApiChart['data']): TvlApiChart {
-  return {
-    types: [
-      'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ] as [
-      'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ],
-    data,
-  }
-}
-
-function getChartPoint(
-  timestamp: UnixTime,
-  ethPrice: number,
-  values: { canonical: bigint; external: bigint; native: bigint },
-) {
-  const valueUsd = asNumber(
-    values.canonical + values.external + values.native,
-    2,
-  )
-  const cbvUsd = asNumber(values.canonical, 2)
-  const ebvUsd = asNumber(values.external, 2)
-  const nmvUsd = asNumber(values.native, 2)
-  const valueEth = valueUsd / ethPrice
-  const cbvEth = cbvUsd / ethPrice
-  const ebvEth = ebvUsd / ethPrice
-  const nmvEth = nmvUsd / ethPrice
-
-  return [
-    timestamp,
-    valueUsd,
-    cbvUsd,
-    ebvUsd,
-    nmvUsd,
-    valueEth,
-    cbvEth,
-    ebvEth,
-    nmvEth,
-  ] as TvlApiChart['data'][0]
-}
-
-function sumCharts(chart1: TvlApiChart, chart2: TvlApiChart): TvlApiChart {
-  // adjust chart length to the longer chart
-  const lastTimestamp1 = chart1.data.at(-1)?.[0]
-  const lastTimestamp2 = chart2.data.at(-1)?.[0]
-
-  assert(
-    lastTimestamp1 && lastTimestamp2 && lastTimestamp1.equals(lastTimestamp2),
-    'Last timestamp mismatch',
-  )
-
-  const longerChart = chart1.data.length > chart2.data.length ? chart1 : chart2
-  const shorterChart = chart1.data.length > chart2.data.length ? chart2 : chart1
-  const shorterPadded = Array(
-    longerChart.data.length - shorterChart.data.length,
-  )
-    .fill([new UnixTime(0), 0, 0, 0, 0, 0, 0, 0, 0] as TvlApiChart['data'][0])
-    .concat(shorterChart.data)
-
-  return {
-    types: longerChart.types,
-    data: longerChart.data.map(
-      (x, i) =>
-        [
-          x[0],
-          x[1] + shorterPadded[i][1],
-          x[2] + shorterPadded[i][2],
-          x[3] + shorterPadded[i][3],
-          x[4] + shorterPadded[i][4],
-          x[5] + shorterPadded[i][5],
-          x[6] + shorterPadded[i][6],
-          x[7] + shorterPadded[i][7],
-          x[8] + shorterPadded[i][8],
-        ] as TvlApiChart['data'][0],
-    ),
-  }
-}
-
-function subtractTokenChart(
-  main: TvlApiChart,
-  token: TokenTvlApiChart,
-  tokenType: 'canonical' | 'external' | 'native',
-  ethPrices: Map<number, number>,
-): TvlApiChart {
-  const data = main.data.map((x) => {
-    const tokenAt = token.data.find((d) => d[0].equals(x[0]))
-
-    if (!tokenAt) {
-      return x
-    }
-    const tokenUsdValue = tokenAt[2]
-    // TODO
-    const ethPriceAt = ethPrices.get(x[0].toNumber())
-    assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
-    const tokenEthValue = tokenUsdValue / ethPriceAt
-
-    return [
-      x[0],
-      x[1] - tokenUsdValue,
-      tokenType === 'canonical' ? x[2] - tokenUsdValue : x[2],
-      tokenType === 'external' ? x[3] - tokenUsdValue : x[3],
-      tokenType === 'native' ? x[4] - tokenUsdValue : x[4],
-      +(x[5] - tokenEthValue).toFixed(2),
-      tokenType === 'canonical' ? +(x[6] - tokenEthValue).toFixed(2) : x[6],
-      tokenType === 'external' ? +(x[7] - tokenEthValue).toFixed(2) : x[7],
-      tokenType === 'native' ? +(x[8] - tokenEthValue).toFixed(2) : x[8],
-    ] as TvlApiChart['data'][0]
-  })
-
-  return {
-    types: main.types,
-    data,
-  }
-}
-function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
-  switch (type) {
-    case 'layer2':
-      return 'layers2s'
-    case 'bridge':
-      return 'bridges'
-    case 'layer3':
-      return 'layers2s'
   }
 }

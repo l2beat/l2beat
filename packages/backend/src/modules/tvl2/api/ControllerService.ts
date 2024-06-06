@@ -6,7 +6,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { ApiProject } from './types'
+import { ApiProject } from './utils/types'
 
 export interface ControllerServiceDependencies {
   readonly valueRepository: ValueRepository
