@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Central actor allowed to post new L2 state roots to L1.",
+  "displayName": "L2OutputOracle",
+  "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
   "ignoreMethods": [
     "getL2OutputAfter",
     "getL2OutputIndexAfter",
@@ -14,6 +15,16 @@
     "latestOutputIndex"
   ],
   "fields": {
+    "proposer": {
+      "target": {
+        "role": "Proposer"
+      }
+    },
+    "challenger": {
+      "target": {
+        "role": "Challenger"
+      }
+    },
     "deletedOutputs": {
       "handler": {
         "type": "stateFromEvent",
