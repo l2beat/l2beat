@@ -16,6 +16,7 @@ export interface DiscoveryOutput {
 export interface ContractParameters {
   name: string
   derivedName?: string
+  template?: string
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress
