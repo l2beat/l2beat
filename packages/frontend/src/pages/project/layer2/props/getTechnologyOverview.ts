@@ -22,7 +22,7 @@ export function getTechnologyOverview(
           'new-cryptography',
           project.technology.newCryptography,
         ),
-      makeTechnologyChoice(
+      project.technology.dataAvailability && makeTechnologyChoice(
         'data-availability',
         project.technology.dataAvailability,
       ),
@@ -34,12 +34,12 @@ export function getTechnologyOverview(
     title: 'Operator',
     isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
     items: [
-      makeTechnologyChoice('operator', project.technology.operator),
-      makeTechnologyChoice(
+      project.technology.operator && makeTechnologyChoice('operator', project.technology.operator),
+      project.technology.forceTransactions && makeTechnologyChoice(
         'force-transactions',
         project.technology.forceTransactions,
       ),
-    ],
+    ].filter(notUndefined),
   }
 
   const withdrawals: ProjectDetailsTechnologySection['props'] = {
@@ -47,7 +47,7 @@ export function getTechnologyOverview(
     title: 'Withdrawals',
     isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
     items: [
-      ...project.technology.exitMechanisms.map((x, i) =>
+      ...(project.technology.exitMechanisms ?? []).map((x, i) =>
         makeTechnologyChoice(`exit-mechanisms-${i + 1}`, x),
       ),
       project.technology.massExit &&
