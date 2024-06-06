@@ -60,6 +60,8 @@ export const mxc: Layer3 = {
             '0xC31a6C0C1087BBB6E6660F27014aD1321591c641',
           ),
           tokens: '*',
+          description:
+            'Tokens that are bridged from Arbitrum to MXC Moonchain are escrowed here.',
         }),
       },
       {
