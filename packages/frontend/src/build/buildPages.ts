@@ -74,7 +74,6 @@ async function main() {
             config.backend,
             config.backend.apiUrl,
             http,
-            config.features,
           )
         : undefined,
       config.features.liveness
