@@ -1,0 +1,5 @@
+{
+  "term": "Random oracle",
+  "definition": "A theoretical cryptographic primitive that is used to model the behavior of hash functions in security proofs.",
+  "isSpicy": false
+}

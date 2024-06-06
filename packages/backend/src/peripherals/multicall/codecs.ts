@@ -2,17 +2,12 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import {
-  ETHEREUM_MULTICALL_V1_ADDRESS,
-  ETHEREUM_MULTICALL_V1_BLOCK,
-} from './MulticallConfig'
-import {
   ERC20MulticallCodec,
   MulticallRequest,
   NativeAssetMulticallCodec,
 } from './types'
 
 export const nativeAssetCodec: NativeAssetMulticallCodec = {
-  sinceBlock: ETHEREUM_MULTICALL_V1_BLOCK,
   balance: {
     encode: encodeGetEthBalance,
     decode: decodeGetEthBalance,
@@ -39,9 +34,12 @@ const multicallInterface = new utils.Interface([
   'function getEthBalance(address account) view returns (uint256)',
 ])
 
-function encodeGetEthBalance(address: EthereumAddress): MulticallRequest {
+function encodeGetEthBalance(
+  multicall: EthereumAddress,
+  address: EthereumAddress,
+): MulticallRequest {
   return {
-    address: ETHEREUM_MULTICALL_V1_ADDRESS,
+    address: multicall,
     data: Bytes.fromHex(
       multicallInterface.encodeFunctionData('getEthBalance', [
         address.toString(),

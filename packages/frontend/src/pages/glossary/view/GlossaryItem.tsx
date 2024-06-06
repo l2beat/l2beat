@@ -13,7 +13,7 @@ export function GlossaryItem(props: { entry: GlossaryEntry }) {
           className="peer flex items-center gap-2 text-2xl font-bold text-gray-850 no-underline dark:text-white"
         >
           {props.entry.term}
-          {props.entry.isSpicy && <ChiliIcon className="size-6 shrink-0" />}
+          {props.entry.isSpicy && <ChiliIcon className="shrink-0" />}
         </a>
         <CopyButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}

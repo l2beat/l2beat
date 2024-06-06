@@ -9,10 +9,6 @@ const config: Config = {
   },
   theme: {
     keyframes: {
-      'fade-in': {
-        '0%': { opacity: '0' },
-        '100%': { opacity: '1' },
-      },
       pulse: {
         '0%': {
           transform: 'scale(1,1)',
@@ -35,7 +31,6 @@ const config: Config = {
       },
     },
     animation: {
-      'quick-fade-in': 'fade-in 0.1s ease-out',
       pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
@@ -194,6 +189,9 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      transitionDuration: {
+        '250': '250ms',
+      },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
         'roboto-serif': [
@@ -220,6 +218,7 @@ const config: Config = {
     plugin(function ({ addVariant }) {
       addVariant('sidenav-collapsed', '.sidenav-collapsed &')
     }),
+    require('tailwindcss-animate'),
   ],
 }
 

@@ -1,0 +1,5 @@
+{
+  "term": "Execution environment",
+  "definition": "Refers to both the environment where transactions are processed, constituted by the execution clients, as well as the virtual machine model which the clients run.",
+  "isSpicy": false
+}
