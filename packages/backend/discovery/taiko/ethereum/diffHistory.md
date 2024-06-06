@@ -9,16 +9,20 @@ Generated with discovered.json: 0xc8183ab4ebdd418eb6d37e78217c69d073a4ba07
 ## Description
 
 TaikoL1Contract implementation update:
-assignment_hook?
-getConfig[7]?
+- Retrieve the tier configurations based on router rather than tier_provider
+- Removed L1_UNAUTHORIZED error and _isProposerPermitted function, making block proposing permissionless.
+- checkEOAForCalldataDA is not in getConfig(), used when blob usages is not detected, it will check the calldata for tx data.
+- LibStrings changes: removed assignment_hook, proposer and proposer_one. Proposer and proposer_one still resolve but unused since _isProposerPermitted is removed. 
 
-prover_set update:
-GuardianMinorityProver update:
-GuardianProver update:
-SGXVerifier update:
-L1RollupAddressManager update:
-SignalService update:
+SignalService update: getSyncedChainData to getSyncedChainHeight, some error changes.
 
+Prover_set update: reflect changes to LibStrings, made natively aware of taiko token.
+
+SGXVerifier update: reflect changes to LibStrings, some error changes. _replaceInstance only if new instance != old instance.
+
+GuardianProver(s) update: safeApprove and safeTransfer function to approve and transfer. Reflect changes to LibStrings.
+
+L1RollupAddressManager update: removed B_ASSIGNMENT_HOOK, B_PROPOSER, B_PROPOSER_ONE, B_TIER_PROVIDER. Added B_TIER_ROUTER.
 
 
 ## Watched changes
