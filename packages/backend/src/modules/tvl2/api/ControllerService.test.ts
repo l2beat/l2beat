@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Dictionary } from 'lodash'
-import { filterSources, filterTimestamps } from '../api/ControllerService'
-import { ApiProject } from '../api/Tvl2Controller'
+import { ApiProject } from './Tvl2Controller'
 import { ValueRecord } from '../repositories/ValueRepository'
+import { filterSources, filterTimestamps } from './ControllerService'
 
 describe(filterSources.name, () => {
   it('filters out additional values', () => {

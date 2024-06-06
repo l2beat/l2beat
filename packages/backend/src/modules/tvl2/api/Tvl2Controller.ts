@@ -25,10 +25,10 @@ import { asNumber } from '../../tvl/api/asNumber'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
-import { ControllerService } from '../services/ControllerService'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
+import { ControllerService } from './ControllerService'
 import {
   AmountConfigMap,
   ApiProject,
