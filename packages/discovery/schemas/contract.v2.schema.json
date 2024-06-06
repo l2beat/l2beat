@@ -45,6 +45,7 @@
                 }
               ]
             },
+            "target": { "$ref": "#/$defs/targetConfig" },
             "handler": {
               "^.+$": {
                 "type": "object",
@@ -59,7 +60,11 @@
       }
     },
     "description": {
-      "description": "Description for the contract ",
+      "description": "Description for the contract",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Name that will be displayed instead of the derived smart contract name",
       "type": "string"
     },
     "methods": {
@@ -84,6 +89,53 @@
         "PERMISSION",
         null
       ]
+    },
+    "stackRole": {
+      "type": ["string", "null"],
+      "enum": ["Sequencer", "Proposer", "Challenger", "Guardian", "Validator"]
+    },
+    "permission": {
+      "type": ["string", "null"],
+      "enum": ["admin", "owner"]
+    },
+    "stackCategory": {
+      "type": ["string", "null"],
+      "enum": ["Core", "Gateways&Escrows", "Upgrades&Governance"]
+    },
+    "targetConfig": {
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": {
+        "description": { "type": ["string", "null"] },
+        "template": { "type": ["string", "null"] },
+        "role": {
+          "anyOf": [
+            { "$ref": "#/$defs/stackRole" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/stackRole" }
+            }
+          ]
+        },
+        "category": {
+          "anyOf": [
+            { "$ref": "#/$defs/stackCategory" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/stackCategory" }
+            }
+          ]
+        },
+        "permission": {
+          "anyOf": [
+            { "$ref": "#/$defs/permission" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/permission" }
+            }
+          ]
+        }
+      }
     }
   }
 }
