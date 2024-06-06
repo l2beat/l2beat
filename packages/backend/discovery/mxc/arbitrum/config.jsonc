@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "mxc",
+  "initialAddresses": [
+    "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74", // addressmanager
+    "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6", // bridge
+    "0xB612eb073ebc8638b8E445D7F15f02400e1d99d8", // signalservice
+    "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a", // MXCL1Contract
+    "0xC31a6C0C1087BBB6E6660F27014aD1321591c641" // TokenVault
+  ],
+  "names": {
+    "0xC31a6C0C1087BBB6E6660F27014aD1321591c641": "TokenVault?",
+    "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6": "Bridge?",
+    "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "SharedERC20Vault",
+    "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a": "MxcL1Contract?",
+    "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ProverSetProxy",
+    "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F": "TierRouter",
+    "0x4cffe56C947E26D07C14020499776DB3e9AE3a23": "TierProvider",
+    "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74": "AddressManager?",
+    "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
+    "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager",
+    "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81": "SgxVerifier",
+    "0x579A8d63a2Db646284CBFE31FE5082c9989E985c": "GuardianMinorityProver",
+    "0xE3D777143Ea25A6E031d1e921F396750885f43aC": "GuardianProver",
+    "0xB612eb073ebc8638b8E445D7F15f02400e1d99d8": "SignalService",
+    "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TaikoToken",
+    "0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6": "AssignmentHook",
+    "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
+  },
+  "overrides": {}
+}
