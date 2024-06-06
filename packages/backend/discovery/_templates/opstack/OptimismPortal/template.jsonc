@@ -1,5 +1,24 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal",
+  "description": "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
   "ignoreMethods": ["isOutputFinalized"],
-  "ignoreInWatchMode": ["params"]
+  "ignoreInWatchMode": ["params"],
+  "fields": {
+    "guardian": {
+      "target": {
+        "role": "Guardian"
+      }
+    },
+    "l2Oracle": {
+      "target": {
+        "template": "opstack/L2OutputOracle"
+      }
+    },
+    "systemConfig": {
+      "target": {
+        "template": "opstack/SystemConfig"
+      }
+    }
+  }
 }
