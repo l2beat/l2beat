@@ -328,13 +328,8 @@ export class ProjectDiscovery {
           },
         ],
         chain: this.chain,
-      },
-      {
-        name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
-        chain: this.chain,
+        participants: this.getPermissionedAccounts(identifier, 'getOwners'),
       },
     ]
   }

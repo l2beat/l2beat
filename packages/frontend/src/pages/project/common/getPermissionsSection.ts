@@ -46,28 +46,12 @@ export function getPermissionsSection(
   return (
     (project.permissions || project.nativePermissions) && {
       ...section,
-      permissions: (project.permissions ?? []).map((p) => {
-        const entry = toTechnologyContract(project, p)
-        return {
-          ...entry,
-          // Plus one because the first address is set to `address` and is not present in the array
-          name:
-            entry.links.length > 0
-              ? `${entry.name} (${entry.links.length + 1})`
-              : entry.name,
-        }
-      }),
-      nativePermissions: (project.nativePermissions ?? []).map((p) => {
-        const entry = toTechnologyContract(project, p)
-        return {
-          ...entry,
-          // Plus one because the first address is set to `address` and is not present in the array
-          name:
-            entry.links.length > 0
-              ? `${entry.name} (${entry.links.length + 1})`
-              : entry.name,
-        }
-      }),
+      permissions: (project.permissions ?? []).flatMap((p) =>
+        toTechnologyContract(project, p),
+      ),
+      nativePermissions: (project.nativePermissions ?? []).flatMap((p) =>
+        toTechnologyContract(project, p),
+      ),
     }
   )
 }
@@ -75,7 +59,7 @@ export function getPermissionsSection(
 function toTechnologyContract(
   project: Layer2 | Layer3 | Bridge,
   permission: ScalingProjectPermission,
-): TechnologyContract {
+): TechnologyContract[] {
   const chain = permission.chain ?? 'ethereum'
   const etherscanUrl = getExplorerUrl(chain)
   const links = permission.accounts.slice(1).map((account) => {
@@ -104,14 +88,72 @@ function toTechnologyContract(
     }
   }
 
-  return {
-    name: permission.name,
-    addresses,
-    etherscanUrl,
-    usedInProjects,
-    chain,
-    description: permission.description,
-    links,
-    references: permission.references,
+  const name =
+    permission.accounts.length > 1
+      ? `${permission.name} (${permission.accounts.length})`
+      : permission.name
+
+  const result = [
+    {
+      name,
+      addresses,
+      etherscanUrl,
+      usedInProjects,
+      chain,
+      description: permission.description,
+      links,
+      references:
+        permission.participants === undefined
+          ? permission.references
+          : undefined,
+    },
+  ]
+
+  if (permission.participants) {
+    result.push({
+      name: `${permission.name} participants (${permission.participants.length})`,
+      addresses: [],
+      chain,
+      etherscanUrl,
+      links: permission.participants.map((account) => {
+        let name = `${account.address.slice(0, 6)}…${account.address.slice(
+          38,
+          42,
+        )}`
+
+        if (
+          project.permissions !== undefined &&
+          project.permissions !== 'UnderReview'
+        ) {
+          const matchingPermissions = project.permissions.filter((p) =>
+            p.accounts
+              .map((a) => a.address.toString())
+              .includes(account.address.toString()),
+          )
+          if (matchingPermissions.length === 1) {
+            name = matchingPermissions[0].name
+          }
+
+          const multisigs = matchingPermissions.filter(
+            (p) => p.participants !== undefined,
+          )
+          if (multisigs.length === 1) {
+            name = multisigs[0].name
+          }
+        }
+
+        return {
+          name,
+          address: account.address.toString(),
+          href: `${etherscanUrl}/address/${account.address.toString()}#code`,
+          isAdmin: false,
+        }
+      }),
+      description: `Those are the participants of the ${permission.name}.`,
+      references: permission.references,
+      usedInProjects: undefined,
+    })
   }
+
+  return result
 }
