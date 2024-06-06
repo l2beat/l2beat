@@ -1,4 +1,4 @@
-export default function mergeRefs<T>(
+export function mergeRefs<T>(
   ...inputRefs: (React.Ref<T> | undefined)[]
 ): React.Ref<T> | React.RefCallback<T> {
   const filteredInputRefs = inputRefs.filter(Boolean)
