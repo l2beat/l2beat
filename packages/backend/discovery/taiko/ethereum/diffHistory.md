@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc8183ab4ebdd418eb6d37e78217c69d073a4ba07
+Generated with discovered.json: 0x5d7159ace678f291bde2f744c708641bebd2b669
 
-# Diff at Thu, 06 Jun 2024 10:12:39 GMT:
+# Diff at Thu, 06 Jun 2024 12:40:03 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@68b8e831d7a9790dc56ed4caf0e841fbec8adb53 block: 20018468
-- current block number: 20032110
+- current block number: 20032840
 
 ## Description
 
@@ -181,6 +181,32 @@ L1RollupAddressManager update: removed B_ASSIGNMENT_HOOK, B_PROPOSER, B_PROPOSER
  .../SignalService/SignalService.sol                |   70 +-
  .../TaikoL1Contract/TaikoL1.sol                    |  333 +--
  10 files changed, 263 insertions(+), 3937 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20018468 (main branch discovery), not current.
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.tier_sgx_zkvm:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_SGX_ZKVM:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract AssignmentHook (0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6) {
+    +++ description: None
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      errors:
++        {"proxiableUUID":"Multicall failed"}
+    }
 ```
 
 Generated with discovered.json: 0xc7cd32149b27868b3a50016ee3970759f8e9aa0d

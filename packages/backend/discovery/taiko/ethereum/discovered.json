@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20032110,
-  "configHash": "0xb7adbc662ce5f2d96e4efac7d943600ff3e0aedb09fae0194f27666b57dd7a13",
+  "blockNumber": 20032840,
+  "configHash": "0xfde16061e231837023ba65c649297894601c3e998cbda4c10b57712e4ced59f8",
   "version": 4,
   "contracts": [
     {
@@ -48,8 +48,8 @@
           true
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 34326, 1717668539],
-          [38150, 34335, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 34673, 1717676975],
+          [38600, 34688, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0x4b2743B869b85d5F7D8020566f92664995E4f3c5",
         "inNonReentrant": false,
@@ -67,21 +67,21 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 34326, 1717668539],
-        "slotB": [38150, 34335, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 34673, 1717676975],
+        "slotB": [38600, 34688, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 34326, 1717668539],
-          [38150, 34335, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 34673, 1717676975],
+          [38600, 34688, false, 0, 0, 0, 1716571955]
         ],
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "taiko_token": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
         "tier_router": "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F",
-        "tier_sgx_zkvm": "0x0000000000000000000000000000000000000000",
         "verifier_TIER_GUARDIAN": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
         "verifier_TIER_GUARDIAN_MINORITY": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
         "verifier_TIER_SGX": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+        "verifier_TIER_SGX_ZKVM": "0x0000000000000000000000000000000000000000",
         "withdrawer": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "TaikoL1"
@@ -99,7 +99,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1717668731,
+        "clock": 1717677539,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -462,7 +462,7 @@
         "impl": "0x3c326483EBFabCf3252205f26dF632FE83d11108",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 9615,
+        "nextMessageId": 9625,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",

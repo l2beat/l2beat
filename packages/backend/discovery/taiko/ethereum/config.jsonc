@@ -5,7 +5,7 @@
   "initialAddresses": [
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC", // shared
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab", // shared
-    "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a", 
+    "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
     "0x4cffe56C947E26D07C14020499776DB3e9AE3a23"
   ],
@@ -24,7 +24,6 @@
     "0xE3D777143Ea25A6E031d1e921F396750885f43aC": "GuardianProver",
     "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "SignalService",
     "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TaikoToken",
-    "0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6": "AssignmentHook",
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
   "overrides": {
@@ -341,7 +340,7 @@
             ] // bytes32("STATE_ROOT");
           }
         },
-        // recently removed 
+        // recently removed
         "assignment_hook": {
           "handler": {
             "type": "call",
@@ -553,18 +552,6 @@
         }
       },
       "ignoreInWatchMode": ["clock"]
-    },
-    "AssignmentHook": {
-      "fields": {
-        "proxiableUUID": {
-          "handler": {
-            "type": "call",
-            "method": "function proxiableUUID() view returns (bytes32)",
-            "args": [],
-            "expectRevert": true
-          }
-        }
-      }
     },
     "AutomataDcapV3Attestation": {
       "fields": {
