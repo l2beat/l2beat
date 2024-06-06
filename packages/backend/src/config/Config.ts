@@ -5,7 +5,6 @@ import {
   ChainId,
   PriceConfigEntry,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
@@ -21,7 +20,6 @@ export interface Config {
   readonly name: string
   readonly isReadonly: boolean
   readonly projects: Project[]
-  readonly tokens: Token[]
   readonly logger: LoggerConfig
   readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
@@ -39,7 +37,6 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
-  readonly tvlCleanerEnabled: boolean
   readonly verifiers: boolean
 }
 

@@ -8,7 +8,7 @@ import {
   LoggerOptions,
   LoggerTransportOptions,
 } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
@@ -74,7 +74,6 @@ export function makeConfig(
     name,
     isReadonly,
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
       utc: isLocal ? false : true,
@@ -233,7 +232,6 @@ export function makeConfig(
       'implementationChangeReporter',
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
 
     // Must be last
     flags: flags.getResolved(),

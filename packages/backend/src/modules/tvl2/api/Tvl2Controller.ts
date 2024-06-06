@@ -25,10 +25,10 @@ import { ChainConverter } from '../../../tools/ChainConverter'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
+import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAmountId } from '../utils/createAmountId'
 import { createPriceId } from '../utils/createPriceId'
-import { asNumber } from '../utils/asNumber'
 
 interface CanonicalAssetBreakdown {
   assetId: AssetId
