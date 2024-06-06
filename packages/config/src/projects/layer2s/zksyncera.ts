@@ -136,6 +136,12 @@ export const zksyncera: Layer2 = {
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
+        tokens: '*',
+        description: 'Shared bridge for depositing tokens to zkSync Era.', // TODO: review with upgrade
+        ...upgrades, // TODO: also review this one, just added this to say the worst (and most likely) case but i didn't check
+      }),
     ],
     transactionApi: {
       type: 'rpc',
