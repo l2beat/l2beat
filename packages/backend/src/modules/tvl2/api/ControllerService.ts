@@ -96,12 +96,8 @@ export class ControllerService {
 
     const hourlyCutOff = this.$.syncOptimizer.hourlyCutOff
     const sixHourlyCutOff = this.$.syncOptimizer.sixHourlyCutOff
-    const timestamps = this.getTimestamps(
-      minTimestamp,
-      sixHourlyCutOff,
-      hourlyCutOff,
-      lastHour,
-    )
+    // TODO: move to sync optimizer
+    const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
 
     const amountsAndPrices: Dictionary<{ amount: bigint; price: number }> = {}
     for (const timestamp of timestamps) {
@@ -125,43 +121,17 @@ export class ControllerService {
     }
   }
 
-  private getTimestamps(
-    minTimestamp: UnixTime,
-    sixHourlyCutOff: UnixTime,
-    hourlyCutOff: UnixTime,
-    lastHour: UnixTime,
-  ): UnixTime[] {
-    const timestamps: UnixTime[] = []
-
-    let t = minTimestamp.toEndOf('day')
-    timestamps.push(t)
-
-    while (t.add(1, 'days').lte(sixHourlyCutOff)) {
-      t = t.add(1, 'days')
-      timestamps.push(t)
-    }
-
-    while (t.add(6, 'hours').lte(hourlyCutOff)) {
-      t = t.add(6, 'hours')
-      timestamps.push(t)
-    }
-
-    while (t.add(1, 'hours').lte(lastHour)) {
-      t = t.add(1, 'hours')
-      timestamps.push(t)
-    }
-    return timestamps
-  }
-
   async getPrices(priceId: string, _lastHour: UnixTime) {
     const records = await this.$.priceRepository.getByConfigId(priceId)
     const prices = new Map(
       records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
     //TODO: interpolate here
+    const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
+
     assert(
-      prices.get(_lastHour.toNumber()),
-      `Missing price for last hour | id: ${priceId} | timestamp: ${_lastHour.toString()}`,
+      timestamps.every((x) => prices.has(x.toNumber())),
+      `Missing price for id: ${priceId}`,
     )
     return prices
   }

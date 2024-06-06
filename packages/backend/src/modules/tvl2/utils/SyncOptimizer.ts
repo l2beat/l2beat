@@ -52,4 +52,12 @@ export class SyncOptimizer {
 
     return timestamps
   }
+
+  getAllTimestampsToSync() {
+    return this.getTimestampsToSync(
+      this.clock.getFirstDay().toNumber(),
+      this.clock.getLastHour().toNumber(),
+      Infinity,
+    )
+  }
 }
