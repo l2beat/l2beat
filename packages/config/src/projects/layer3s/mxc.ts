@@ -1,8 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('mxc', 'arbitrum')
+const discovery_ethereum = new ProjectDiscovery('mxc', 'ethereum')
 
 // Rollup contracts on Arbitrum are not verified
 // RollupAddressManager: https://arbiscan.io/address/0x931a8ffccda64dc441bcca81bd65dc0c3d42af74
@@ -48,9 +49,14 @@ export const mxc: Layer3 = {
     escrows: [
       {
         chain: 'ethereum',
-        address: EthereumAddress('0x7C954170305b11572522313b6AD514070ce0339c'),
-        sinceTimestamp: new UnixTime(1689164375),
-        tokens: ['MXC'],
+        ...discovery_ethereum.getEscrowDetails({
+          address: EthereumAddress(
+            '0x7C954170305b11572522313b6AD514070ce0339c',
+          ),
+          tokens: ['MXC'],
+          description:
+            'MXC tokens that are bridged from Ethereum to MXC Moonchain are escrowed here.',
+        }),
       },
       {
         includeInTotal: false,
@@ -63,13 +69,6 @@ export const mxc: Layer3 = {
           description:
             'Tokens that are bridged from Arbitrum to MXC Moonchain are escrowed here.',
         }),
-      },
-      {
-        includeInTotal: false,
-        chain: 'arbitrum',
-        address: EthereumAddress('0xC31a6C0C1087BBB6E6660F27014aD1321591c641'),
-        sinceTimestamp: new UnixTime(1689143164),
-        tokens: '*',
       },
     ],
     transactionApi: {
@@ -147,7 +146,7 @@ export const mxc: Layer3 = {
       name: 'MXC deployer EOA',
       accounts: [discovery.getPermissionedAccount('SignalService', 'owner')],
       description:
-        'Deployer of the MXC contracts. Owner of SignalService and potentially others.',
+        'Deployer of the MXC contracts. Upgrade admin of the MXC Moonchain escrow on Ethereum. (Can potentially steal all funds) Owner of SignalService and potentially others.',
     },
     {
       name: 'Vault Admin EOA',
@@ -161,7 +160,7 @@ export const mxc: Layer3 = {
         },
       ],
       description:
-        'Upgrade admin of the MXC escrows on Ethereum and Arbitrum. Can potentially steal all funds.',
+        'Upgrade admin of the MXC Moonchain escrow on Arbitrum. Can potentially steal all funds.',
     },
   ],
   contracts: {
