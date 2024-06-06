@@ -55,7 +55,7 @@ export function getTvl2Config(
       chainConverter,
       chainToProject,
     ),
-    prices: getPricesConfig(tokenList),
+    prices: getPricesConfig(tokenList, minTimestampOverride),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString([
       'COINGECKO_API_KEY_FOR_TVL2',
@@ -186,7 +186,10 @@ function getUntilTimestamp(
   return UnixTime.max(tokenUntil, escrowUntil)
 }
 
-function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
+function getPricesConfig(
+  tokenList: Token[],
+  minTimestampOverride?: UnixTime,
+): PriceConfigEntry[] {
   const prices = new Map<string, PriceConfigEntry>()
 
   for (const token of tokenList) {
@@ -198,10 +201,11 @@ function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
     assert(prices.get(key) === undefined, 'Every price should be unique')
 
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-    const sinceTimestamp = UnixTime.max(
+    const chainMinTimestamp = UnixTime.max(
       chain.minTimestampForTvl,
-      token.sinceTimestamp,
+      minTimestampOverride ?? new UnixTime(0),
     )
+    const sinceTimestamp = UnixTime.max(chainMinTimestamp, token.sinceTimestamp)
 
     prices.set(key, {
       type: 'coingecko',
