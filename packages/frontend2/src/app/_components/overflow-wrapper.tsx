@@ -5,7 +5,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 
 import ChevronIcon from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
-import { mergeRefs } from '../utils/merge-refs'
+import { mergeRefs } from '~/utils/merge-refs'
 
 interface OverflowWrapperProps {
   children: React.ReactNode
