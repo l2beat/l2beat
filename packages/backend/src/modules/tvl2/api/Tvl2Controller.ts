@@ -247,189 +247,121 @@ export class Tvl2Controller {
     return result
   }
 
-  async getTvlBreakdown(
-    timestamp: UnixTime,
-  ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const breakdowns = await this.getNewBreakdown(timestamp)
-    return { dataTimestamp: timestamp, breakdowns }
-  }
+  // TODO: it is slow an can be optimized via querying for all tokens in a batch
+  async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+    const tvl = await this.getTvl(lastHour)
 
-  // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
-  // and keep only the current values in the database.
-  private async getBreakdownMap(timestamp: UnixTime) {
-    const tokenAmounts =
-      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
-        [...this.$.currAmountConfigs.keys()],
-        timestamp,
-      )
-    const prices =
-      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
-        [...this.$.priceConfigs.values()].map((x) => x.priceId),
-        timestamp,
-      )
+    const excluded = await Promise.all(
+      this.$.associatedTokens.map(async (x) => ({
+        ...x,
+        data: await this.getTokenChart(x, x.project, lastHour),
+      })),
+    )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
-    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
-    for (const amount of tokenAmounts) {
-      const config = this.$.currAmountConfigs.get(amount.configId)
-      assert(config, 'Config not found for id ' + amount.configId)
-      let breakdown = breakdownMap.get(config.project)
-      if (!breakdown) {
-        breakdown = {
-          CBV: [],
-          EBV: [],
-          NMV: [],
-        }
-        breakdownMap.set(config.project, breakdown)
+    const ethPrices = await this.getEthPrices(lastHour)
+
+    for (const e of excluded) {
+      if (e.includeInTotal) {
+        tvl.combined.hourly = subtractTokenChart(
+          tvl.combined.hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl.combined.sixHourly = subtractTokenChart(
+          tvl.combined.sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl.combined.daily = subtractTokenChart(
+          tvl.combined.daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
+      }
+      if (e.includeInTotal) {
+        tvl[e.projectType].hourly = subtractTokenChart(
+          tvl[e.projectType].hourly,
+          e.data.hourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl[e.projectType].sixHourly = subtractTokenChart(
+          tvl[e.projectType].sixHourly,
+          e.data.sixHourly,
+          e.type,
+          ethPrices,
+        )
+
+        tvl[e.projectType].daily = subtractTokenChart(
+          tvl[e.projectType].daily,
+          e.data.daily,
+          e.type,
+          ethPrices,
+        )
       }
 
-      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
-      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceConfig.priceId)
-      assert(price, 'Price not found for id ' + amount.configId)
+      const project = tvl.projects[e.project.toString()]
+      assert(project, 'Project not found')
 
-      const value = calculateValue({
-        amount: amount.amount,
-        priceUsd: price,
-        decimals: config.decimals,
-      })
-
-      const source = convertSourceName(config.source)
-      breakdown[source].push({
-        assetId: priceConfig.assetId,
-        address: config.address.toString(),
-        chain: config.chain,
-        chainId: this.$.chainConverter.toChainId(config.chain),
-        assetType: convertSourceName(config.source),
-        usdValue: asNumber(value, 2),
-      })
-    }
-    return breakdownMap
-  }
-
-  private async getNewBreakdown(timestamp: UnixTime) {
-    const tokenAmounts =
-      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
-        [...this.$.currAmountConfigs.keys()],
-        timestamp,
-      )
-    const prices =
-      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
-        [...this.$.priceConfigs.values()].map((x) => x.priceId),
-        timestamp,
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
+        project.charts.hourly,
+        e.data.hourly,
+        e.type,
+        ethPrices,
       )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
-    const breakdowns: Record<
-      string,
-      {
-        canonical: Map<AssetId, CanonicalAssetBreakdown>
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
-    for (const amount of tokenAmounts) {
-      const config = this.$.currAmountConfigs.get(amount.configId)
-      assert(config, 'Config not found for id ' + amount.configId)
-      let breakdown = breakdowns[config.project]
-      if (!breakdown) {
-        breakdown = {
-          canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
-          external: [],
-          native: [],
-        }
-        breakdowns[config.project] = breakdown
-      }
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
+        project.charts.sixHourly,
+        e.data.sixHourly,
+        e.type,
+        ethPrices,
+      )
 
-      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
-      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceConfig.priceId)
-      assert(price, 'Price not found for id ' + amount.configId)
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
+        project.charts.daily,
+        e.data.daily,
+        e.type,
+        ethPrices,
+      )
 
-      const amountAsNumber = asNumber(amount.amount, config.decimals)
-      const valueAsNumber = amountAsNumber * price
-
-      switch (config.source) {
-        case 'canonical': {
-          // The canonical logic is the most complex one
-          assert(config.type === 'escrow', 'Only escrow can be canonical')
-          const asset = breakdown.canonical.get(priceConfig.assetId)
-          if (asset) {
-            asset.usdValue += valueAsNumber
-            asset.amount += amountAsNumber
-            asset.escrows.push({
-              amount: amountAsNumber.toString(),
-              usdValue: valueAsNumber.toString(),
-              escrowAddress: config.escrowAddress,
-            })
-          } else {
-            breakdown.canonical.set(priceConfig.assetId, {
-              assetId: priceConfig.assetId,
-              chainId: this.$.chainConverter.toChainId(config.chain),
-              amount: amountAsNumber,
-              usdValue: valueAsNumber,
-              usdPrice: price.toString(),
-              escrows: [
-                {
-                  amount: amountAsNumber.toString(),
-                  usdValue: valueAsNumber.toString(),
-                  escrowAddress: config.escrowAddress,
-                },
-              ],
-            })
-          }
+      // Remove token from breakdown
+      switch (e.type) {
+        case 'canonical':
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.CBV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
           break
-        }
         case 'external':
-          breakdown.external.push({
-            assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
-            usdPrice: price.toString(),
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
-          })
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.EBV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
           break
         case 'native':
-          breakdown.native.push({
-            assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
-            usdPrice: price.toString(),
-            // TODO: force fe to accept "native"
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
-          })
+          // biome-ignore lint/style/noNonNullAssertion: <explanation>
+          tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
+            e.project.toString()
+          ]!.tokens.NMV.filter(
+            (c) => !(c.address === e.address && c.chain === e.chain),
+          )
+          break
       }
     }
-    const result: Record<
-      string,
-      {
-        canonical: CanonicalAssetBreakdownData[]
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
-    for (const [project, breakdown] of Object.entries(breakdowns)) {
-      const canonical = [...breakdown.canonical.values()].sort(
-        (a, b) => +b.usdValue - +a.usdValue,
-      )
-
-      result[project] = {
-        canonical: canonical.map((x) => ({
-          ...x,
-          escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
-          amount: x.amount.toString(),
-          usdValue: x.usdValue.toString(),
-        })),
-        external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
-        native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
-      }
-    }
-
-    return result
+    return tvl
   }
 
   async getAggregatedTvl(
@@ -611,127 +543,195 @@ export class Tvl2Controller {
     }
   }
 
+  async getTvlBreakdown(
+    timestamp: UnixTime,
+  ): Promise<ProjectAssetsBreakdownApiResponse> {
+    const breakdowns = await this.getNewBreakdown(timestamp)
+    return { dataTimestamp: timestamp, breakdowns }
+  }
+
+  private async getNewBreakdown(timestamp: UnixTime) {
+    const tokenAmounts =
+      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
+        [...this.$.currAmountConfigs.keys()],
+        timestamp,
+      )
+    const prices =
+      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
+        [...this.$.priceConfigs.values()].map((x) => x.priceId),
+        timestamp,
+      )
+
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdowns: Record<
+      string,
+      {
+        canonical: Map<AssetId, CanonicalAssetBreakdown>
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
+      }
+    > = {}
+    for (const amount of tokenAmounts) {
+      const config = this.$.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdowns[config.project]
+      if (!breakdown) {
+        breakdown = {
+          canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
+          external: [],
+          native: [],
+        }
+        breakdowns[config.project] = breakdown
+      }
+
+      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
+
+      const amountAsNumber = asNumber(amount.amount, config.decimals)
+      const valueAsNumber = amountAsNumber * price
+
+      switch (config.source) {
+        case 'canonical': {
+          // The canonical logic is the most complex one
+          assert(config.type === 'escrow', 'Only escrow can be canonical')
+          const asset = breakdown.canonical.get(priceConfig.assetId)
+          if (asset) {
+            asset.usdValue += valueAsNumber
+            asset.amount += amountAsNumber
+            asset.escrows.push({
+              amount: amountAsNumber.toString(),
+              usdValue: valueAsNumber.toString(),
+              escrowAddress: config.escrowAddress,
+            })
+          } else {
+            breakdown.canonical.set(priceConfig.assetId, {
+              assetId: priceConfig.assetId,
+              chainId: this.$.chainConverter.toChainId(config.chain),
+              amount: amountAsNumber,
+              usdValue: valueAsNumber,
+              usdPrice: price.toString(),
+              escrows: [
+                {
+                  amount: amountAsNumber.toString(),
+                  usdValue: valueAsNumber.toString(),
+                  escrowAddress: config.escrowAddress,
+                },
+              ],
+            })
+          }
+          break
+        }
+        case 'external':
+          breakdown.external.push({
+            assetId: priceConfig.assetId,
+            chainId: this.$.chainConverter.toChainId(config.chain),
+            amount: amountAsNumber.toString(),
+            usdValue: valueAsNumber.toString(),
+            usdPrice: price.toString(),
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
+          })
+          break
+        case 'native':
+          breakdown.native.push({
+            assetId: priceConfig.assetId,
+            chainId: this.$.chainConverter.toChainId(config.chain),
+            amount: amountAsNumber.toString(),
+            usdValue: valueAsNumber.toString(),
+            usdPrice: price.toString(),
+            // TODO: force fe to accept "native"
+            tokenAddress:
+              config.address === 'native' ? undefined : config.address,
+          })
+      }
+    }
+    const result: Record<
+      string,
+      {
+        canonical: CanonicalAssetBreakdownData[]
+        external: ExternalAssetBreakdownData[]
+        native: NativeAssetBreakdownData[]
+      }
+    > = {}
+    for (const [project, breakdown] of Object.entries(breakdowns)) {
+      const canonical = [...breakdown.canonical.values()].sort(
+        (a, b) => +b.usdValue - +a.usdValue,
+      )
+
+      result[project] = {
+        canonical: canonical.map((x) => ({
+          ...x,
+          escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
+          amount: x.amount.toString(),
+          usdValue: x.usdValue.toString(),
+        })),
+        external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
+        native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
+      }
+    }
+
+    return result
+  }
+
+  // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
+  // and keep only the current values in the database.
+  private async getBreakdownMap(timestamp: UnixTime) {
+    const tokenAmounts =
+      await this.$.controllerService.getAmountsByConfigIdsAndTimestamp(
+        [...this.$.currAmountConfigs.keys()],
+        timestamp,
+      )
+    const prices =
+      await this.$.controllerService.getPricesByConfigIdsAndTimestamp(
+        [...this.$.priceConfigs.values()].map((x) => x.priceId),
+        timestamp,
+      )
+
+    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const breakdownMap = new Map<string, TvlApiProject['tokens']>()
+    for (const amount of tokenAmounts) {
+      const config = this.$.currAmountConfigs.get(amount.configId)
+      assert(config, 'Config not found for id ' + amount.configId)
+      let breakdown = breakdownMap.get(config.project)
+      if (!breakdown) {
+        breakdown = {
+          CBV: [],
+          EBV: [],
+          NMV: [],
+        }
+        breakdownMap.set(config.project, breakdown)
+      }
+
+      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
+      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
+      const price = pricesMap.get(priceConfig.priceId)
+      assert(price, 'Price not found for id ' + amount.configId)
+
+      const value = calculateValue({
+        amount: amount.amount,
+        priceUsd: price,
+        decimals: config.decimals,
+      })
+
+      const source = convertSourceName(config.source)
+      breakdown[source].push({
+        assetId: priceConfig.assetId,
+        address: config.address.toString(),
+        chain: config.chain,
+        chainId: this.$.chainConverter.toChainId(config.chain),
+        assetType: convertSourceName(config.source),
+        usdValue: asNumber(value, 2),
+      })
+    }
+    return breakdownMap
+  }
+
   private async getEthPrices(lastHour: UnixTime) {
     const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
     const ethPriceId = this.$.priceConfigs.get(ethAssetId)?.priceId
     assert(ethPriceId, 'Eth priceId not found')
     return await this.$.controllerService.getPrices(ethPriceId, lastHour)
-  }
-
-  // TODO: it is slow an can be optimized via querying for all tokens in a batch
-  async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const tvl = await this.getTvl(lastHour)
-
-    const excluded = await Promise.all(
-      this.$.associatedTokens.map(async (x) => ({
-        ...x,
-        data: await this.getTokenChart(x, x.project, lastHour),
-      })),
-    )
-
-    const ethPrices = await this.getEthPrices(lastHour)
-
-    for (const e of excluded) {
-      if (e.includeInTotal) {
-        tvl.combined.hourly = subtractTokenChart(
-          tvl.combined.hourly,
-          e.data.hourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl.combined.sixHourly = subtractTokenChart(
-          tvl.combined.sixHourly,
-          e.data.sixHourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl.combined.daily = subtractTokenChart(
-          tvl.combined.daily,
-          e.data.daily,
-          e.type,
-          ethPrices,
-        )
-      }
-      if (e.includeInTotal) {
-        tvl[e.projectType].hourly = subtractTokenChart(
-          tvl[e.projectType].hourly,
-          e.data.hourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl[e.projectType].sixHourly = subtractTokenChart(
-          tvl[e.projectType].sixHourly,
-          e.data.sixHourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl[e.projectType].daily = subtractTokenChart(
-          tvl[e.projectType].daily,
-          e.data.daily,
-          e.type,
-          ethPrices,
-        )
-      }
-
-      const project = tvl.projects[e.project.toString()]
-      assert(project, 'Project not found')
-
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
-        project.charts.hourly,
-        e.data.hourly,
-        e.type,
-        ethPrices,
-      )
-
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
-        project.charts.sixHourly,
-        e.data.sixHourly,
-        e.type,
-        ethPrices,
-      )
-
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
-        project.charts.daily,
-        e.data.daily,
-        e.type,
-        ethPrices,
-      )
-
-      // Remove token from breakdown
-      switch (e.type) {
-        case 'canonical':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.CBV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
-          )
-          break
-        case 'external':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.EBV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
-          )
-          break
-        case 'native':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.NMV.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
-          )
-          break
-      }
-    }
-    return tvl
   }
 }
