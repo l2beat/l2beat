@@ -1,14 +1,45 @@
-Generated with discovered.json: 0x3a4dd94fb8e0bcc87ffc7593dfc1c7aff5188b10
+Generated with discovered.json: 0x8ba560f18095598e3af5acc0003988554feb5cb1
 
-# Diff at Thu, 06 Jun 2024 16:52:10 GMT:
+# Diff at Fri, 07 Jun 2024 13:08:03 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@ede45d4470f4a86adbf9140e79f58d3d03af8b66 block: 19624206
-- current block number: 20034095
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d174b7f47849f16a466cad24e0b634b27491988e block: 19624206
+- current block number: 20040151
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Upgrade v24 - VM version 1.5.0. (was initially scheduled for May 13)
+
+[CHANGELOG](https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519)
+
+Main points:
+- New shared L1 escrow and Bridgehub for zkSync Era and all future ZK stack chains 
+- New StateTransitionManager (shared proof verification for ZK stack chains with the same EVM implementation, currently only one)
+
+### New architecture summary
+
+Each ZK stack chain including zkSync Era has its own diamond contract similar to the old model, with all chain-specific logic inside. ZK stack chains with the same EVM logic can share a State Transition Manager (STM), which is responsible for proof verification for each connected chain. The multiple future STMs in turn are connected through the single Bridgehub, which allows L1 to L2 and L2 to L2 message passing. Below it is the shared bridge for all registered ZK stack chains.
+
+### Changes to the zkSync Era diamond
+#### AdminFacet.sol
+
+- L1--> L2 Transaction filtering (can set tx filtering contract)
+- Governor role removed (onlyGovernor functions are now mostly onlySTM)
+- VerifierParams moved to STM
+- Support for custom native token ('basetoken')
+- Function `upgradeChainFromVersion()` added: Allows to upgrade the diamond with preformed calldata (can be used for synchronous upgrading of multiple chains in the future)
+
+#### ExecutorFacet.sol
+
+- Support for more Blobs in one transaction (6, up from 2)
+- ChainID can be added to committing, proving, executing, reverting of batches
+- `PubdataPricingMode.Validium` implemented (was not usable before)
+- New upgrade logic in `commitBatches()`: L2 upgrade will be logged on L1
+
+### MailBoxFacet.sol
+
+- New function `transferEthToSharedBridge()` can be used to move all ETH to a shared bridge by the `BaseTokenBridge` address
+- `requestL2Transaction()` is still available, but can also be accessed via Bridgehub
 
 ## Watched changes
 
@@ -259,15 +290,6 @@ Provide description of changes. This section will be preserved.
       values.getL2DefaultAccountBytecodeHash:
 -        "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066"
 +        "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32"
-      values.getL2SystemContractsUpgradeBatchNumber:
--        0
-+        484290
-      values.getL2SystemContractsUpgradeBlockNumber:
--        0
-+        484290
-      values.getL2SystemContractsUpgradeTxHash:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0xb88380066d84222045097f0fad44e876c361dc27f5367d46decb294ba1a7d29c"
       values.getPendingGovernor:
 -        "0x0000000000000000000000000000000000000000"
 +++ description: Protocol version, increments with each protocol change
@@ -312,23 +334,6 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
-    +++ description: None
-      upgradeability.implementation:
--        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
-+        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
-      upgradeability.admin:
--        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
-+        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      implementations.0:
--        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
-+        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
-      values.SHARED_BRIDGE:
-+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-    }
-```
-
-```diff
 -   Status: DELETED
     contract Verifier (0xdd9C826196cf3510B040A8784D85aE36674c7Ed2)
     +++ description: None
@@ -348,7 +353,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ValidatorTimelock_NEW (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
     +++ description: None
 ```
 
@@ -388,7 +399,8 @@ Provide description of changes. This section will be preserved.
 .../zksync2/ethereum/.flat/BridgeHub/Bridgehub.sol | 1200 +++++++
  .../BridgeHub/TransparentUpgradeableProxy.p.sol    |  728 ++++
  .../zksync2/ethereum/.flat/GenesisUpgrade.sol      | 2657 +++++++++++++++
- .../L1ERC20Bridge.sol                              |  438 +--
+ .../L1ERC20Bridge.sol                              |  785 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  652 ++++
  .../.flat/L1SharedBridge/L1SharedBridge.sol        | 2072 ++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  728 ++++
  .../zksync2/ethereum/.flat/ProxyAdmin.sol          |  150 +
@@ -402,7 +414,7 @@ Provide description of changes. This section will be preserved.
  .../zkSync/ExecutorFacet.4.sol                     |  380 ++-
  .../zkSync/GettersFacet.2.sol                      | 1542 +++++----
  .../zkSync/MailboxFacet.3.sol                      |  563 ++--
- 17 files changed, 14047 insertions(+), 1483 deletions(-)
+ 18 files changed, 15363 insertions(+), 1166 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -412,10 +424,17 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19624206 (main branch discovery), not current.
 
 ```diff
-    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
-    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
-      template:
-+        "GnosisSafe"
+-   Status: DELETED
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: None
+```
+
+```diff
+    contract ValidatorTimelock (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock_deprecated"
     }
 ```
 
