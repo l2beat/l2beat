@@ -61,6 +61,7 @@ const validators = constructorArgs._validators
   .filter((v) => !validatorsRemoved.includes(v))
 
 export const zksyncera: Layer2 = {
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
@@ -135,6 +136,12 @@ export const zksyncera: Layer2 = {
           'Bridge for depositing wrapped stETH (Lido) to zkSync Era.',
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
+        tokens: '*',
+        description: 'Shared bridge for depositing tokens to zkSync Era.', // TODO: review with upgrade
+        ...upgrades, // TODO: also review this one, just added this to say the worst (and most likely) case but i didn't check
       }),
     ],
     transactionApi: {
@@ -305,20 +312,20 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
+            // 'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L377',
-            'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L33',
+            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L377',
+            // 'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L33',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code#F2#L345',
+            // 'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code#F2#L345',
           ],
         },
       ],
@@ -333,16 +340,16 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
-            'https://etherscan.io/tx/0x90f6a9c90842d7db4eb8a64731d2ae9224b2a754077b30200e67689b517f18e5', // example tx (see calldata)
+            // 'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
+            // 'https://etherscan.io/tx/0x90f6a9c90842d7db4eb8a64731d2ae9224b2a754077b30200e67689b517f18e5', // example tx (see calldata)
             // todo: add blob example
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L54',
-            'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L57',
+            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L54',
+            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L57',
           ],
         },
       ],
@@ -356,9 +363,9 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x230214F0224C7E0485f348a79512ad00514DB1F7#code#F5#L106',
-            'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
-            'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
+            // 'https://etherscan.io/address/0x230214F0224C7E0485f348a79512ad00514DB1F7#code#F5#L106',
+            // 'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
+            // 'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
           ],
         },
       ],
@@ -369,13 +376,13 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L63',
-            'https://etherscan.io/address/0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7#code#F10#L194',
+            // 'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L63',
+            // 'https://etherscan.io/address/0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7#code#F10#L194',
           ],
         },
       ],
       otherReferences: [
-        'https://docs.zksync.io/build/developer-reference/l1-l2-interop.html#priority-queue',
+        // 'https://docs.zksync.io/build/developer-reference/l1-l2-interop.html#priority-queue',
       ],
     },
     proposerFailure: {
@@ -384,7 +391,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L198',
+            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L198',
           ],
         },
       ],
