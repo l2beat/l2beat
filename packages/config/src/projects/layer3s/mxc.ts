@@ -15,7 +15,7 @@ export const mxc: Layer3 = {
   display: {
     name: 'MXC Moonchain zkEVM',
     redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds. The system contracts are unverified.',
     shortName: 'MXC',
     slug: 'mxc',
     provider: 'Taiko',
