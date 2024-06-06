@@ -15,7 +15,7 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          // NOTE(piotradamczyk): Unfortunately using an .env variable here
+          // NOTE(piotradamczyk): Unfortunately using an env variable here
           // doesn't work for some reason, so we have to hardcode the URL.
           destination: `https://l2beat-production.vercel.app/:path*`,
         },
