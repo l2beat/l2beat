@@ -27,12 +27,6 @@ const chainWatchdog = discovery.getContractValue<string>(
   'chain_watchdog',
 )
 
-// sequencer
-const proposer = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'proposer',
-)
-
 // sequencer for block 1
 const proposerOne = discovery.getContractValue<string>(
   'TaikoL1Contract',
@@ -389,17 +383,6 @@ export const taiko: Layer2 = {
       name: 'ChainWatchdog',
       accounts: [{ address: EthereumAddress(chainWatchdog), type: 'MultiSig' }],
       description: 'The chain watchdog role can pause proving of blocks.',
-    },
-    {
-      name: 'Permissioned Sequencer (old)',
-      accounts: [
-        {
-          address: EthereumAddress(proposer),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'The previous authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract. Removed at block 20031708.',
     },
     {
       name: 'SequencerBlockOne',
