@@ -153,12 +153,17 @@ export class ControllerService {
     return timestamps
   }
 
-  async getPrices(priceId: string) {
+  async getPrices(priceId: string, _lastHour: UnixTime) {
     const records = await this.$.priceRepository.getByConfigId(priceId)
-    const ethPrices = new Map(
+    const prices = new Map(
       records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
-    return ethPrices
+    //TODO: interpolate here
+    assert(
+      prices.get(_lastHour.toNumber()),
+      `Missing price for last hour | id: ${priceId} | timestamp: ${_lastHour.toString()}`,
+    )
+    return prices
   }
 
   async getPricesByConfigIdsAndTimestamp(

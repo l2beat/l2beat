@@ -54,7 +54,7 @@ export class Tvl2Controller {
   constructor(private readonly $: Tvl2ControllerDependencies) {}
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPrices = await this.getEthPrices()
+    const ethPrices = await this.getEthPrices(lastHour)
 
     const {
       valuesByProjectByTimestamp,
@@ -437,7 +437,7 @@ export class Tvl2Controller {
     projectSlugs: string[],
     excludeAssociated: boolean,
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.getEthPrices()
+    const ethPrices = await this.getEthPrices(lastHour)
 
     const projects = this.$.projects.filter((p) =>
       projectSlugs.includes(p.slug),
@@ -611,11 +611,11 @@ export class Tvl2Controller {
     }
   }
 
-  private async getEthPrices() {
+  private async getEthPrices(lastHour: UnixTime) {
     const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
     const ethPriceId = this.$.priceConfigs.get(ethAssetId)?.priceId
     assert(ethPriceId, 'Eth priceId not found')
-    return await this.$.controllerService.getPrices(ethPriceId)
+    return await this.$.controllerService.getPrices(ethPriceId, lastHour)
   }
 
   // TODO: it is slow an can be optimized via querying for all tokens in a batch
@@ -629,7 +629,7 @@ export class Tvl2Controller {
       })),
     )
 
-    const ethPrices = await this.getEthPrices()
+    const ethPrices = await this.getEthPrices(lastHour)
 
     for (const e of excluded) {
       if (e.includeInTotal) {
