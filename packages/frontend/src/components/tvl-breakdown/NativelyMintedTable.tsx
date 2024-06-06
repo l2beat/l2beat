@@ -22,8 +22,6 @@ export function NativelyMintedTable(props: NativelyMintedTableProps) {
       <TVLBreakdownTableView
         columns={getNativelyMintedColumns()}
         items={props.tokens}
-        type="NMV"
-        empty={props.tokens.length === 0}
       />
       <TableSum amount={sum} />
     </div>

@@ -22,8 +22,6 @@ export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
       <TVLBreakdownTableView
         columns={getExternallyBridgedColumns()}
         items={props.tokens}
-        type="EBV"
-        empty={props.tokens.length === 0}
       />
       <TableSum amount={sum} />
     </div>
