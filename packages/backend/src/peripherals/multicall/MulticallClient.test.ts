@@ -213,6 +213,15 @@ describe(MulticallClient.name, () => {
     expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
   })
 
+  it('throws error when config configs are not sorted descending by since', () => {
+    const ethereumClient = mockObject<RpcClient>()
+
+    expect(
+      () =>
+        new MulticallClient(ethereumClient, TEST_MULTICALL_CONFIG.reverse()),
+    ).toThrow()
+  })
+
   it('returns multicall address based on block number', () => {
     const ethereumClient = mockObject<RpcClient>()
     const multicallClient = new MulticallClient(

@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { RpcClient } from '../rpcclient/RpcClient'
 import { parseEthersError } from './parseEthersError'
 import {
@@ -11,7 +11,12 @@ export class MulticallClient {
   constructor(
     private readonly rcpClient: RpcClient,
     private readonly config: MulticallConfigEntry[],
-  ) {}
+  ) {
+    const isSorted = config.every(
+      (c, i) => i === 0 || c.sinceBlock < config[i - 1].sinceBlock,
+    )
+    assert(isSorted, 'Multicall config must be sorted descending by sinceBlock')
+  }
 
   isNativeBalanceSupported(blockNumber: number): boolean {
     const config = this.config.find((x) => blockNumber > x.sinceBlock)
