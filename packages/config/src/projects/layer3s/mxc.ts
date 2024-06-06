@@ -80,44 +80,52 @@ export const mxc: Layer3 = {
   },
   riskView: {
     validatedBy: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     sourceUpgradeability: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     destinationToken: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     stateValidation: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     dataAvailability: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     exitWindow: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     sequencerFailure: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
     proposerFailure: {
-      description: '',
+      description:
+        'Risk cannot be evaluated since smart contract source is unavailable.',
       sentiment: 'bad',
-      value: '',
+      value: 'Unverified',
     },
   },
   technology: {},
