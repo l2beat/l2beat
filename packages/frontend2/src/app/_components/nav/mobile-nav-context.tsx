@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const MobileNavContext = createContext<{
   open: boolean
@@ -8,7 +9,12 @@ const MobileNavContext = createContext<{
 } | null>(null)
 
 export function MobileNavProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
 
   return (
     <MobileNavContext.Provider value={{ open, setOpen }}>
