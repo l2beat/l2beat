@@ -29,7 +29,7 @@ export function getScalingFinalityColumnsConfig() {
       name: 'DA MODE',
       getValue: (project) =>
         project.dataAvailabilityMode ?? <span>&mdash;</span>,
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       tooltip:
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
       sorting: {
