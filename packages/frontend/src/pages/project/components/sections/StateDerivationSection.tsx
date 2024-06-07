@@ -36,10 +36,10 @@ export function StateDerivationSection(props: StateDerivationSectionProps) {
 function Item(props: { title: string; children: string }) {
   return (
     <div>
-      <span className="text-lg font-bold uppercase md:text-xl">
+      <span className="font-bold text-lg uppercase md:text-xl">
         {props.title}
       </span>
-      <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+      <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400 md:text-lg">
         {props.children}
       </Markdown>
     </div>

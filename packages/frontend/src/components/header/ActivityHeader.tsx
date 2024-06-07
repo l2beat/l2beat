@@ -9,8 +9,8 @@ export function ActivityHeader() {
   return (
     <header className="mb-4" data-role="chart-header">
       <div className="flex items-baseline justify-between">
-        <h1 className="mb-1 text-3xl font-bold">Activity</h1>
-        <p className="text-right text-3xl font-bold group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
+        <h1 className="mb-1 font-bold text-3xl">Activity</h1>
+        <p className="text-right font-bold text-3xl group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0">
           <span className="hidden text-sm md:inline md:text-2xl">
             Scaling factor:{' '}
           </span>
@@ -18,12 +18,12 @@ export function ActivityHeader() {
         </p>
       </div>
       <div className="flex items-baseline justify-between text-xs md:text-base">
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
+        <p className="hidden text-gray-500 md:block dark:text-gray-600">
           Transactions per second
         </p>
         <div
           className={cn(
-            'w-full text-right text-gray-500 dark:text-gray-600 md:w-auto',
+            'w-full text-right text-gray-500 md:w-auto dark:text-gray-600',
             'flex items-center gap-1.5',
             'group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:opacity-0',
           )}

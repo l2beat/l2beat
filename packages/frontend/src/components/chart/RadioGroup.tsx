@@ -23,7 +23,7 @@ export function RadioGroup(props: RadioGroupProps) {
     <div
       data-role={props.role}
       className={cn(
-        'bg-gray-200 text-base font-medium dark:bg-zinc-700',
+        'bg-gray-200 font-medium text-base dark:bg-zinc-700',
         'inline-flex items-center gap-1 rounded-lg p-1',
         props.className,
       )}
@@ -38,7 +38,7 @@ export function RadioGroup(props: RadioGroupProps) {
           )}
         >
           <input
-            className="peer absolute left-0 top-0 block size-full cursor-pointer opacity-0"
+            className="peer absolute top-0 left-0 block size-full cursor-pointer opacity-0"
             defaultChecked={option.checked}
             autoComplete="off"
             type="radio"
@@ -48,12 +48,12 @@ export function RadioGroup(props: RadioGroupProps) {
           <span
             className={cn(
               'relative block px-2',
-              'cursor-pointer rounded-md peer-checked:bg-white peer-disabled:cursor-not-allowed peer-disabled:!bg-transparent peer-disabled:opacity-60 dark:peer-checked:bg-black',
+              'peer-disabled:!bg-transparent cursor-pointer rounded-md peer-disabled:cursor-not-allowed dark:peer-checked:bg-black peer-checked:bg-white peer-disabled:opacity-60',
               'outline-current peer-focus-visible:outline peer-focus-visible:outline-2',
               props.highlighted &&
                 'from-purple-100 to-pink-100 peer-checked:bg-gradient-to-r peer-checked:text-white',
               !props.highlighted &&
-                'peer-checked:bg-white dark:peer-checked:bg-black',
+                'dark:peer-checked:bg-black peer-checked:bg-white',
             )}
           >
             {option.label ?? option.value}

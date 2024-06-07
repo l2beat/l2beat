@@ -55,8 +55,8 @@ export function DetailsHeader(props: HeaderProps) {
   const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
-      <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
-        <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
+      <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 md:gap-0 dark:bg-zinc-900 md:bg-transparent md:dark:bg-transparent">
+        <div className="flex w-full flex-wrap divide-y divide-gray-200 md:gap-4 md:divide-y-0 dark:divide-gray-850">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
             <ProjectHeader title={props.title} icon={props.icon} />
             {props.description && (
@@ -92,7 +92,7 @@ export function DetailsHeader(props: HeaderProps) {
           </div>
           <div
             className={cn(
-              'grid w-full divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0 ',
+              'grid w-full divide-y divide-gray-200 md:gap-4 md:divide-y-0 dark:divide-gray-850',
               isL2orL3 && 'md:grid-cols-3',
             )}
           >
@@ -117,7 +117,7 @@ export function DetailsHeader(props: HeaderProps) {
           </div>
         </div>
         {props.risks && (
-          <div className="ml-8 mt-auto hidden lg:block">
+          <div className="mt-auto ml-8 hidden lg:block">
             <BigRosette
               risks={props.risks}
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}

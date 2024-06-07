@@ -29,10 +29,10 @@ function NavLinkGroup({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="ml-1 text-slate-600 dark:text-zinc-500 text-[0.8125rem] leading-[0.8125rem] uppercase font-medium xl:sidenav-collapsed:hidden">
+      <div className="ml-1 font-medium text-[0.8125rem] text-slate-600 uppercase leading-[0.8125rem] xl:sidenav-collapsed:hidden dark:text-zinc-500">
         {title}
       </div>
-      <div className="h-px w-8 bg-slate-600 dark:bg-zinc-500 hidden xl:sidenav-collapsed:block mt-[12px]" />
+      <div className="mt-[12px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-zinc-500" />
       <ul className="flex flex-col gap-0.5">{children}</ul>
     </div>
   )
@@ -64,7 +64,7 @@ function NavLink({
     <a href={href}>
       <li
         className={cn(
-          'flex items-center gap-[0.625rem] p-1.5 rounded-[0.25rem] hover:bg-[#F1D6FF] dark:hover:bg-[#272A2F] transition-colors xl:sidenav-collapsed:w-8 xl:sidenav-collapsed:h-8 xl:sidenav-collapsed:p-0 xl:sidenav-collapsed:justify-center ease-out duration-300',
+          'flex items-center gap-[0.625rem] rounded-[0.25rem] p-1.5 transition-colors duration-300 ease-out xl:sidenav-collapsed:h-8 xl:sidenav-collapsed:w-8 xl:sidenav-collapsed:justify-center dark:hover:bg-[#272A2F] hover:bg-[#F1D6FF] xl:sidenav-collapsed:p-0',
           active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
         )}
       >
@@ -110,9 +110,9 @@ function NavSmallLink({
     <a href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
         className={cn(
-          'font-medium text-xs leading-none text-zinc-800 dark:text-white hover:text-zinc-500 dark:hover:text-gray-400 transition-colors ease-out duration-300',
+          'font-medium text-xs text-zinc-800 leading-none transition-colors duration-300 ease-out dark:hover:text-gray-400 dark:text-white hover:text-zinc-500',
           active &&
-            'hover:text-pink-900 text-pink-900 dark:text-pink-200 dark:hover:text-pink-200',
+            'text-pink-900 dark:hover:text-pink-200 dark:text-pink-200 hover:text-pink-900',
         )}
       >
         {children ?? title}
@@ -172,13 +172,13 @@ function MobileNavBarLink({
     <a href={href}>
       <li
         className={cn(
-          'flex flex-col justify-center h-full relative px-2 font-medium text-base md:px-4 md:text-lg',
+          'relative flex h-full flex-col justify-center px-2 font-medium text-base md:px-4 md:text-lg',
           active && 'text-pink-900 dark:text-pink-200',
         )}
       >
         {title}
         {active && (
-          <div className="absolute bottom-0 w-full h-[3px] left-0 bg-pink-900" />
+          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-pink-900" />
         )}
       </li>
     </a>
@@ -212,7 +212,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
   )
   return (
     <div className="xl:hidden">
-      <div className="h-16 px-3.5 relative flex justify-between flex-row gap-8 border-b border-gray-200 dark:border-gray-850 items-stretch">
+      <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-gray-200 border-b px-3.5 dark:border-gray-850">
         {/* Left side */}
         <div className="flex flex-row gap-4">
           <div className="py-4">
@@ -242,19 +242,19 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
       </div>
       {currentGroup && (
         <div
-          className="overflow-x-scroll w-full border-b border-gray-200 dark:border-gray-850 text-center scrollbar-hide"
+          className="scrollbar-hide w-full overflow-x-scroll border-gray-200 border-b text-center dark:border-gray-850"
           data-role="sidenav-mobile-tabs"
         >
-          <div className="inline-flex flex-row gap-2 px-4 py-2 m-auto">
+          <div className="m-auto inline-flex flex-row gap-2 px-4 py-2">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
                 <a href={link.href} key={link.href}>
                   <div
                     className={cn(
-                      'rounded-[4px] border border-[#AB3BD2] text-xs font-semibold px-4 py-[0.53125rem] whitespace-nowrap m-auto leading-none',
+                      'm-auto whitespace-nowrap rounded-[4px] border border-[#AB3BD2] px-4 py-[0.53125rem] font-semibold text-xs leading-none',
                       link.href === path &&
-                        'bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] text-white border-0 px-[calc(1rem_+_1px)] py-[calc(0.53125rem_+_1px)]',
+                        'border-0 bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] px-[calc(1rem_+_1px)] py-[calc(0.53125rem_+_1px)] text-white',
                     )}
                     data-sidenav-mobile-tabs-active={
                       link.href === path ? 'true' : 'false'
@@ -275,7 +275,7 @@ function Divider({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'h-px w-full bg-gray-300 dark:bg-gray-850 xl:sidenav-collapsed:hidden',
+        'h-px w-full bg-gray-300 xl:sidenav-collapsed:hidden dark:bg-gray-850',
         className,
       )}
     />
@@ -298,38 +298,38 @@ export function Sidenav({
   return (
     <div
       className={cn(
-        'flex-shrink-0 xl:static absolute flex flex-col items-stretch group translate-x-full data-[open=true]:translate-x-0 duration-300 xl:transform-none xl:sidenav-collapsed:w-20 z-999 transition-all',
+        'group absolute z-999 flex flex-shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 xl:static xl:sidenav-collapsed:w-20 data-[open=true]:translate-x-0 xl:transform-none',
         sharedSizeClasses,
       )}
       data-role="sidenav"
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-clip transition-all',
+          'flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all xl:fixed xl:sidenav-collapsed:w-20 dark:border-gray-850 xl:dark:border-r dark:border-r-0 dark:bg-[#1E1C21]',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
       >
         <div
           className={cn(
-            'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-clip flex-1 flex flex-col gap-8',
+            'flex flex-1 flex-col gap-8 overflow-y-auto overflow-x-clip px-3.5 py-4 xl:px-6 xl:py-[1.125rem]',
             sharedSizeClasses,
           )}
           data-role="sidenav-collapse-content"
         >
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row items-center justify-between">
             <a href={getMainLink(path, links)}>
-              <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
-              <LogoSmall className="h-8 w-auto hidden xl:sidenav-collapsed:block" />
+              <Logo className="block h-8 w-auto xl:sidenav-collapsed:hidden" />
+              <LogoSmall className="hidden h-8 w-auto xl:sidenav-collapsed:block" />
             </a>
-            <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4 items-center">
+            <div className="flex flex-row items-center gap-4 xl:sidenav-collapsed:hidden">
               <DarkThemeToggle />
               <button className="xl:hidden" data-role="sidenav-mobile-toggle">
                 <MenuCloseIcon className="h-6 w-6" />
               </button>
             </div>
           </div>
-          <nav className="flex flex-col gap-6 flex-1">
+          <nav className="flex flex-1 flex-col gap-6">
             {links.map((group) => (
               <NavLinkGroup key={group.title} title={group.title}>
                 {group.links.map(
@@ -371,17 +371,17 @@ export function Sidenav({
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
             <Divider className="xl:hidden" />
-            <ul className="xl:hidden flex flex-row gap-4 pb-12">
+            <ul className="flex flex-row gap-4 pb-12 xl:hidden">
               <SocialLinks />
             </ul>
           </nav>
         </div>
         <div
-          className="p-6 border-t border-gray-300 dark:border-gray-850 hidden xl:block xl:sidenav-collapsed:ml-1"
+          className="hidden border-gray-300 border-t p-6 xl:sidenav-collapsed:ml-1 xl:block dark:border-gray-850"
           data-role="sidenav-collapse-toggle-container"
         >
           <button
-            className="select-none cursor-pointer"
+            className="cursor-pointer select-none"
             data-role="sidenav-collapse-toggle"
           >
             <NavCollapseIcon
@@ -412,7 +412,7 @@ function LegacyNavBarLink({
           'flex h-full items-center font-medium',
           large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
           path === href &&
-            'border-b-2 border-current pt-0.5 text-pink-900 dark:text-pink-200',
+            'border-current border-b-2 pt-0.5 text-pink-900 dark:text-pink-200',
         )}
         href={href}
         target={href.startsWith('http') ? '_blank' : undefined}
@@ -426,9 +426,9 @@ function LegacyNavBarLink({
 function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
   const { path, config } = usePageBuildContext()
   return (
-    <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
+    <div className="hidden h-[4.25rem] border-gray-200 border-b text-base xl:block dark:border-gray-850">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
-        <ul className="flex py-4 items-center">
+        <ul className="flex items-center py-4">
           <li className="mr-8">
             <a href={path.startsWith('/bridges') ? '/bridges/summary' : '/'}>
               <Logo className="h-8 w-auto" />
@@ -444,10 +444,10 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
           ))}
         </ul>
         <div className="flex h-full items-center gap-5">
-          <ul className="items-center gap-4 hidden 2xl:flex">
+          <ul className="hidden items-center gap-4 2xl:flex">
             <SocialLinks />
           </ul>
-          <div className="h-8 w-px bg-gray-300 dark:bg-gray-700 hidden 2xl:block" />
+          <div className="hidden h-8 w-px bg-gray-300 2xl:block dark:bg-gray-700" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavBarLink title="Forum" href={config.links.forum} />
             {config.features.zkCatalog && (
@@ -564,7 +564,7 @@ export function NavWrapper({
   return (
     <div
       className={cn(
-        'flex flex-col xl:flex-row relative overflow-x-clip',
+        'relative flex flex-col overflow-x-clip xl:flex-row',
         legacyNav && 'xl:flex-col',
       )}
     >

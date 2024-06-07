@@ -42,7 +42,7 @@ export function TechnologySection({
     >
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
-          <h3 id={item.id} className="text-lg font-bold md:text-xl">
+          <h3 id={item.id} className="font-bold text-lg md:text-xl">
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
           {item.isIncomplete && <TechnologyIncompleteShort />}
@@ -50,7 +50,7 @@ export function TechnologySection({
             <UnderReviewCallout />
           ) : (
             <>
-              <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
                 {item.description}
               </Markdown>
               <RiskList risks={item.risks} />

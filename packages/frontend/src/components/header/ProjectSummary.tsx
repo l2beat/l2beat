@@ -34,7 +34,7 @@ export function ProjectSummary(props: Props) {
   return (
     <div
       className={cn(
-        'grid h-fit grow gap-3 bg-gray-100 p-4 dark:bg-zinc-900 md:gap-x-3 md:rounded-lg md:px-6 md:py-5',
+        'grid h-fit grow gap-3 bg-gray-100 p-4 md:gap-x-3 md:rounded-lg dark:bg-zinc-900 md:px-6 md:py-5',
         cols === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3',
         props.className,
       )}
@@ -74,20 +74,20 @@ function DetailsHeaderStat(props: ProjectSummaryStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs text-gray-500 dark:text-gray-600">
+        <span className="text-gray-500 text-xs dark:text-gray-600">
           {props.title}
         </span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-[2px] fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="mt-[2px] fill-gray-500 md:size-3.5 dark:fill-gray-600" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>
         )}
       </div>
 
-      <span className="text-lg font-semibold !leading-none md:text-xl md:font-bold">
+      <span className="!leading-none font-semibold text-lg md:font-bold md:text-xl">
         {props.value}
       </span>
     </li>

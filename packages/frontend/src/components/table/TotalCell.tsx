@@ -67,7 +67,7 @@ function Content({
             >
               {data.tvl.displayValue}
             </NumberCell>
-            <NumberCell signed className="ml-1 !text-base font-medium">
+            <NumberCell signed className="!text-base ml-1 font-medium">
               {data.sevenDayChange}
             </NumberCell>
           </div>

@@ -82,7 +82,8 @@
               "console": "Do not use console"
             }
           }
-        }
+        },
+        "useSortedClasses": "error"
       },
       "suspicious": {
         "noAssignInExpressions": "off",
