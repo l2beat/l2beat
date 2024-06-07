@@ -19,7 +19,7 @@ export const telos: Layer2 = upcomingL2({
       socialMedia: [
         'https://x.com/HelloTelos',
         'https://discord.com/invite/telos',
-        'https://www.youtube.com/@TheTelosNetwork',
+        'https://youtube.com/@TheTelosNetwork',
       ],
     },
   },
