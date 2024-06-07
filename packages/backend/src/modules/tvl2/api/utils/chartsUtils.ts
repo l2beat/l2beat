@@ -6,8 +6,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
-import { asNumber } from '../../../tvl/api/asNumber'
 import { ValueRecord } from '../../repositories/ValueRepository'
+import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 import { ValuesMap } from './types'
 
