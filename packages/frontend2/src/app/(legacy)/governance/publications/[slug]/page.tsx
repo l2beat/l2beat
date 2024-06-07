@@ -6,6 +6,7 @@ import { Article } from '~/app/_components/markdown/article'
 import { roboto_serif } from '~/app/fonts'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
 import { cn } from '~/utils/cn'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
@@ -29,7 +30,7 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata | null> {
   const publication = getCollectionEntry('publications', params.slug)
-  return {
+  return getDefaultMetadata({
     title: `${publication.data.shortTitle ?? publication.data.title} - L2BEAT`,
     description: publication.data.description ?? publication.excerpt,
     openGraph: {
@@ -39,7 +40,7 @@ export async function generateMetadata({
         `https://l2beat.com/meta-images/governance/publications/${publication.id}.png`,
       ],
     },
-  }
+  })
 }
 
 export default function Page({ params }: Props) {

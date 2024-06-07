@@ -6,14 +6,15 @@ import { getCollection } from '~/content/getCollection'
 import { AlphabetSelector } from './_components/alphabet-selector/alphabet-selector'
 import { GlossaryItem } from './_components/glossary-item'
 import { GlossarySideNav } from './_components/side-nav/glossary-side-nav'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'Glossary - L2BEAT',
   description: "A glossary of terms for Ethereum's Layer 2 ecosystem",
   openGraph: {
     url: '/glossary',
   },
-}
+})
 
 export default function Page() {
   const glossaryEntries = getCollection('glossary')
