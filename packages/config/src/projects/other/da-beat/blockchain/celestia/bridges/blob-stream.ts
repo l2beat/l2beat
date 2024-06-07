@@ -26,8 +26,8 @@ export const blobStream = {
     },
     exitWindow: {
       party: 'EOA',
-      delay: 'NoDelay',
-      description: 'There is no delay.',
+      delay: 1000,
+      description: 'There is little to no delay.',
     },
     accessability: {
       type: 'NotEnshrined',

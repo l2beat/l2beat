@@ -115,7 +115,7 @@ type AttestationSecurity =
 
 type ExitWindow = {
   party: 'EOA' | 'SecurityCouncil' | 'Immutable'
-  delay: number | 'NoDelay'
+  delay: number
 }
 
 type Accessability =
