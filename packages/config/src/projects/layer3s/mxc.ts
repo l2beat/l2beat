@@ -134,7 +134,7 @@ export const mxc: Layer3 = {
       name: 'MXC deployer EOA',
       accounts: [discovery.getPermissionedAccount('SignalService', 'owner')],
       description:
-        'Deployer of the MXC contracts. Upgrade admin of the MXC Moonchain escrow on Ethereum. (Can potentially steal all funds) Owner of SignalService and potentially others.',
+        'Deployer of the MXC contracts. Upgrade admin of the MXC Moonchain escrow on Ethereum. Can potentially steal all funds. Owner of SignalService and potentially others.',
     },
     {
       name: 'Vault Admin EOA',
