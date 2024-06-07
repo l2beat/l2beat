@@ -61,7 +61,6 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
     {
@@ -240,7 +239,6 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
 

@@ -145,7 +145,6 @@ export function getBridgesRiskColumnsConfig() {
     {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
-      className: 'whitespace-normal',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
       sorting: {
         getOrderValue: (project) =>
@@ -178,7 +177,6 @@ export function getBridgesRiskColumnsConfig() {
     },
     {
       name: 'Destination\nToken',
-      className: 'whitespace-normal',
       tooltip: 'What is the token that you receive from this bridge?',
       getValue: (entry) => <RiskCell item={entry.destinationToken} />,
       sorting: {
