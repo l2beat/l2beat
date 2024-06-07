@@ -50,6 +50,7 @@ import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
+import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
@@ -170,6 +171,7 @@ export const layer2s: Layer2[] = [
   linea,
   lisk,
   loopring,
+  lumia,
   lyra,
   mantapacific,
   mantle,
