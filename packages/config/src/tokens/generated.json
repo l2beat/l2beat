@@ -6313,6 +6313,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "arbitrum:mxc-mxc-token",
+      "name": "MXC Token",
+      "coingeckoId": "mxc",
+      "address": "0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
+      "symbol": "MXC",
+      "decimals": 18,
+      "deploymentTimestamp": 1687777847,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4604/large/M_1-modified.png?1712206949",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:rdnt-radiant",
       "name": "Radiant",
       "coingeckoId": "radiant-capital",

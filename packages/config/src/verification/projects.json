@@ -86,7 +86,7 @@
   "molten": true,
   "morph": true,
   "multichain": true,
-  "mxc": true,
+  "mxc": false,
   "myria": true,
   "myshell": true,
   "near": true,

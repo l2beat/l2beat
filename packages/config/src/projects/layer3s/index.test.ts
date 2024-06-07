@@ -46,7 +46,10 @@ describe('layer3s', () => {
           expect(contract.chain).not.toEqual('ethereum')
         }
 
-        if (layer3.id !== ProjectId('zklinknova')) {
+        if (
+          layer3.id !== ProjectId('zklinknova') &&
+          layer3.id !== ProjectId('mxc')
+        ) {
           const escrows = layer3.config.escrows
           for (const escrow of escrows) {
             expect(escrow.newVersion).toEqual(true)

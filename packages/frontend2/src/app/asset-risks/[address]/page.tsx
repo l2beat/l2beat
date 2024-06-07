@@ -196,7 +196,7 @@ export default async function Page({ params: { address } }: Props) {
           chain.technology.dataAvailability,
           chain.technology.operator,
           chain.technology.forceTransactions,
-          ...chain.technology.exitMechanisms,
+          ...(chain.technology.exitMechanisms ?? []),
           chain.technology.massExit,
           ...(chain.technology.otherConsiderations ?? []),
         ].flatMap((choice) => choice?.risks ?? [])
