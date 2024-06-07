@@ -516,21 +516,36 @@ export const zksyncera: Layer2 = {
           It uses separate Verifier to validate ZK proofs.',
         ...upgrades,
       }),
+      discovery.getContractDetails('Governance', {
+        description: `Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade. While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than ${discovery.getContractValue<number>(
+          'Governance',
+          'minDelay',
+        )} seconds. Canceling the upgrade can be done only by the owner. The owner or the security council can perform the upgrade if the chosen delay is up. Only the security council can force the upgrade to execute even if the delay is not up.`,
+        ...upgrades,
+      }),
+      discovery.getContractDetails(
+        'ValidatorTimelock',
+        'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
+      ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
         ...upgrades,
         upgradeConsiderations:
           'Multisig can change the verifier with no delay.',
       }),
-      discovery.getContractDetails(
-        'ValidatorTimelock',
-        'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
-      ),
-      discovery.getContractDetails('Governance', {
-        description: `Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade. While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than ${discovery.getContractValue<number>(
-          'Governance',
-          'minDelay',
-        )} seconds. Canceling the upgrade can be done only by the owner. The owner or the security council can perform the upgrade if the chosen delay is up. Only the security council can force the upgrade to execute even if the delay is not up.`,
+      discovery.getContractDetails('L1SharedBridge', {
+        description:
+          'This bridge contract escrows all ERC-20s and ETH that are deposited to zkSync Era, and in the future, other registered ZK stack chains.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('BridgeHub', {
+        description:
+          'Sits between the single shared bridge and the StateTransitionManager(s) and forwards L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('StateTransitionManager', {
+        description:
+          'Defines rollup creation, upgrade and proof verification for the zkSync diamond contract connected to it (and potential other rollup contracts that want to share this logic).',
         ...upgrades,
       }),
     ],
