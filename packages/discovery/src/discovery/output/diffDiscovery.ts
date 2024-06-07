@@ -41,7 +41,11 @@ export function diffDiscovery(
       currentContract.ignoreInWatchMode ?? []
     ).map((i) => `values.${i}`)
 
-    const ignored = ['ignoreInWatchMode', ...ignoreValuesInWatchMode]
+    const ignored = [
+      'ignoreInWatchMode',
+      'template',
+      ...ignoreValuesInWatchMode,
+    ]
     const diff = diffContracts(previousContract, currentContract, ignored)
 
     if (diff.length > 0) {
