@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { ScalingRiskPagesData } from '../types'
@@ -12,9 +11,7 @@ export function getProps(
 ): Wrapped<ScalingRiskPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
       riskView: getScalingRiskView(config.layer2s, pagesData),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

@@ -1,10 +1,18 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1ERC721Bridge",
   "description": "Used to bridge ERC-721 tokens from L1 to L2",
   "fields": {
+    "superchainConfig": {
+      "target": {
+        "template": "opstack/SuperchainConfig",
+        "category": "Upgrades&Governance"
+      }
+    },
     "messenger": {
       "target": {
-        "template": "opstack/L1CrossDomainMessenger"
+        "template": "opstack/L1CrossDomainMessenger",
+        "category": "Core"
       }
     }
   }

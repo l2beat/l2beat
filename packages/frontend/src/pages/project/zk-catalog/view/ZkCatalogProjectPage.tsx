@@ -1,21 +1,15 @@
 import React, { ReactNode } from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
-import { PageContent } from '../../../../components/PageContent'
 import { InfoIcon } from '../../../../components/icons'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../../../components/tooltip/Tooltip'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ZkCatalogProofVerification } from '../../../../utils/zk-catalog/types'
 import { ProjectHeader } from '../../components/header/ProjectHeader'
 import { RequiredTools } from './RequiredTools'
@@ -23,10 +17,8 @@ import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
 import { Verifiers } from './Verifiers'
 
 export interface ZkCatalogProjectPageProps {
-  navbar: NavbarProps
   details: ZkCatalogProjectDetails
   askForVerificationLink: string
-  footer: FooterProps
 }
 
 export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
@@ -39,30 +31,26 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent mobileFull>
-        <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
-          <Breadcrumbs icon={props.details.icon} title={props.details.title} />
-          <Header {...props} />
-        </div>
-        <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
-          <Section title="List of verifiers">
-            <Verifiers
-              items={props.details.verifiers}
-              askForVerificationLink={props.askForVerificationLink}
-            />
-          </Section>
-          <Section title="Description">
-            <Markdown>{props.details.description}</Markdown>
-          </Section>
-          <Section title="List of required tools">
-            <RequiredTools items={props.details.requiredTools} />
-          </Section>
-        </div>
-      </PageContent>
-      <Footer narrow {...props.footer} />
-    </>
+    <DashboardLayout>
+      <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
+        <Breadcrumbs icon={props.details.icon} title={props.details.title} />
+        <Header {...props} />
+      </div>
+      <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
+        <Section title="List of verifiers">
+          <Verifiers
+            items={props.details.verifiers}
+            askForVerificationLink={props.askForVerificationLink}
+          />
+        </Section>
+        <Section title="Description">
+          <Markdown>{props.details.description}</Markdown>
+        </Section>
+        <Section title="List of required tools">
+          <RequiredTools items={props.details.requiredTools} />
+        </Section>
+      </div>
+    </DashboardLayout>
   )
 }
 

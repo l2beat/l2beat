@@ -5,7 +5,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { ScalingLivenessPageProps } from '../view/ScalingLivenessPage'
@@ -24,8 +23,6 @@ export function getProps(
   return {
     props: {
       livenessView: getScalingLivenessView(config.layer2s, pagesData),
-      navbar: getNavbarProps(config, 'scaling'),
-      footer: getFooterProps(config),
     },
     wrapper: {
       banner: config.features.banner,

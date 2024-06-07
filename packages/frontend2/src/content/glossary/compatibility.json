@@ -1,0 +1,5 @@
+{
+  "term": "Compatibility",
+  "definition": "The degree to which a rollup can make use of existing patterns, code, and tooling from another blockchain or development environment. Today, this typically refers to how well rollups and developers thereon can make use of the Ethereum Virtual Machine, existing smart contracts, and other Ethereum infrastructure.",
+  "isSpicy": false
+}

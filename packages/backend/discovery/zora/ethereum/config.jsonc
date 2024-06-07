@@ -23,23 +23,11 @@
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig" // Conduit Multisig
   },
   "overrides": {
+    "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf": {
+      "extends": "opstack/OptimismMintableERC20Factory"
+    },
     "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3": {
       "extends": "opstack/L1ERC721Bridge"
-    },
-    "ConduitMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "OptimismPortal": {
-      "extends": "opstack/OptimismPortal"
-    },
-    "L2OutputOracle": {
-      "extends": "opstack/L2OutputOracle"
-    },
-    "ZoraMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "SystemConfig": {
-      "extends": "opstack/SystemConfig"
     }
   }
 }

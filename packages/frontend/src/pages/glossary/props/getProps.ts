@@ -1,5 +1,4 @@
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { getCollection } from '../../../content/getCollection'
 import { Wrapped } from '../../Page'
 import { GlossaryPageProps } from '../view/GlossaryPage'
@@ -12,8 +11,6 @@ export function getProps(config: Config): Wrapped<GlossaryPageProps> {
   return {
     props: {
       entries: glossaryEntries.map(getGlossaryEntry),
-      navbar: getNavbarProps(config, 'glossary'),
-      footer: getFooterProps(config),
     },
     wrapper: {
       banner: config.features.banner,

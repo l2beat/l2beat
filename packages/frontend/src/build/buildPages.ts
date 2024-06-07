@@ -12,6 +12,7 @@ import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
+import { fetchVerifiersApi } from './api/fetchVerifiersApi'
 import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
@@ -20,7 +21,6 @@ import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { getCommonFeatures } from './config/getCommonFeatures'
-import { fetchVerifiersApi } from './api/fetchVerifiersApi'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -61,8 +61,11 @@ async function main() {
       l2CostsApiResponse,
       verifiersApiResponse,
     ] = await Promise.all([
-      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2}),
-      fetchTvlApi(config.backend, http, {tvl2: config.features.tvl2, excludeAssociatedTokens: true}),
+      fetchTvlApi(config.backend, http, { tvl2: config.features.tvl2 }),
+      fetchTvlApi(config.backend, http, {
+        tvl2: config.features.tvl2,
+        excludeAssociatedTokens: true,
+      }),
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,
@@ -102,7 +105,13 @@ async function main() {
     console.timeEnd('[SANITY CHECKS]')
 
     console.time('[BUILDING PAGES]')
-    createApi(config, tvlApiResponse,excludedTokensTvlApiResponse,activityApiResponse, l2CostsApiResponse)
+    createApi(
+      config,
+      tvlApiResponse,
+      excludedTokensTvlApiResponse,
+      activityApiResponse,
+      l2CostsApiResponse,
+    )
     const pagesData = {
       tvlApiResponse,
       excludedTokensTvlApiResponse,

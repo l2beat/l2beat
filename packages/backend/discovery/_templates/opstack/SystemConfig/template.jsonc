@@ -1,8 +1,13 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SystemConfig",
+  "description": "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.",
   "fields": {
     // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
     "batcherHash": {
+      "target": {
+        "role": "Sequencer"
+      },
       "handler": {
         "type": "call",
         "method": "function batcherHash() view returns (address)",
@@ -20,6 +25,10 @@
         "type": "opStackSequencerInbox",
         "sequencerAddress": "{{ batcherHash }}"
       }
+    },
+    "gasLimit": {
+      "description": "Gas limit for blocks on L2.",
+      "severity": "LOW"
     }
   },
   "ignoreInWatchMode": ["scalar", "overhead"]

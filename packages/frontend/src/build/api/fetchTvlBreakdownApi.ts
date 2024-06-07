@@ -12,14 +12,16 @@ import { Config } from '../config'
 
 export async function fetchTvlBreakdownApi(
   backend: Config['backend'],
-  apiUrl: string,
+  _apiUrl: string,
   http: JsonHttpClient,
-  {tvl2}: {tvl2: boolean}
+  { tvl2 }: { tvl2: boolean },
 ): Promise<ProjectAssetsBreakdownApiResponse> {
   if (backend.mock) {
     return getMockTvlBreakdownApiResponse()
   }
-  const url = tvl2 ? `${backend.apiUrl}/api/tvl2/breakdown` : `${backend.apiUrl}/api/project-assets-breakdown`
+  const url = tvl2
+    ? `${backend.apiUrl}/api/tvl2/breakdown`
+    : `${backend.apiUrl}/api/project-assets-breakdown`
   const json = await http.fetchJson(url)
   return ProjectAssetsBreakdownApiResponse.parse(json)
 }

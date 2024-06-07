@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import {
   EscrowEntry,
   TotalSupplyEntry,
@@ -85,7 +85,7 @@ export class AmountService {
       return []
     }
     const encoded = configurations.map((configuration) => ({
-      ...this.encodeForMulticall(configuration),
+      ...this.encodeForMulticall(configuration, blockNumber),
     }))
 
     const responses = await this.$.multicallClient.multicall(
@@ -117,15 +117,25 @@ export class AmountService {
     })
   }
 
-  encodeForMulticall({
-    properties,
-  }: Configuration<ChainAmountConfig>): MulticallRequest {
+  encodeForMulticall(
+    { properties }: Configuration<ChainAmountConfig>,
+    blockNumber: number,
+  ): MulticallRequest {
     switch (properties.type) {
       case 'totalSupply':
         return erc20Codec.totalSupply.encode(properties.address)
       case 'escrow':
         if (properties.address === 'native') {
-          return nativeAssetCodec.balance.encode(properties.escrowAddress)
+          // choose multicall address based on block number
+          const multicallAddress =
+            this.$.multicallClient.getMulticallAddressAt(blockNumber)
+
+          assert(multicallAddress, 'Multicall address not found')
+
+          return nativeAssetCodec.balance.encode(
+            multicallAddress,
+            properties.escrowAddress,
+          )
         }
         return erc20Codec.balance.encode(
           properties.escrowAddress,
