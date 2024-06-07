@@ -58,7 +58,6 @@ const validatorsRemoved = discovery.getContractValue<string[]>(
 const validators = validatorsAdded.filter((v) => !validatorsRemoved.includes(v))
 
 export const zksyncera: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
