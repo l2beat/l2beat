@@ -101,8 +101,6 @@ export const mantle: Layer2 = opStackL2({
         batchSize: 150,
         sinceBlock: 304717,
         version: '3',
-        // TODO: fix this
-        isNativeBalanceSupported: false,
       },
     ],
     coingeckoPlatform: 'mantle',

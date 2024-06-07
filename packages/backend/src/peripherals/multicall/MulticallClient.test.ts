@@ -1,6 +1,5 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-
 import { RpcClient } from '../rpcclient/RpcClient'
 import { BlockTag } from '../rpcclient/types'
 import { MulticallClient } from './MulticallClient'
@@ -212,5 +211,45 @@ describe(MulticallClient.name, () => {
     )
     expect(result.length).toEqual(BATCH_SIZE * 2 + 1)
     expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
+  })
+
+  it('returns multicall address based on block number', () => {
+    const ethereumClient = mockObject<RpcClient>()
+    const multicallClient = new MulticallClient(
+      ethereumClient,
+      TEST_MULTICALL_CONFIG,
+    )
+    const address = multicallClient.getMulticallAddressAt(
+      MULTICALL_V2_BLOCK + 1,
+    )
+    expect(address).toEqual(ADDRESS_V2)
+  })
+
+  it('configs are correctly sorted in getMulticallAddressAt & isNativeBalanceSupported', () => {
+    const entries = [
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 3,
+        address: EthereumAddress('0x' + '3'.toString().repeat(40)),
+      }),
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 1,
+        address: EthereumAddress('0x' + '1'.toString().repeat(40)),
+      }),
+      mockObject<MulticallConfigEntry>({
+        sinceBlock: 2,
+        address: EthereumAddress('0x' + '2'.toString().repeat(40)),
+        isNativeBalanceSupported: false,
+      }),
+    ]
+    const ethereumClient = mockObject<RpcClient>()
+    const multicallClient = new MulticallClient(ethereumClient, [...entries])
+
+    const address = multicallClient.getMulticallAddressAt(3)
+    const isNativeBalanceSupported = multicallClient.isNativeBalanceSupported(3)
+
+    expect(address).toEqual(entries[2].address)
+    expect(isNativeBalanceSupported).toEqual(
+      entries[2].isNativeBalanceSupported,
+    )
   })
 })

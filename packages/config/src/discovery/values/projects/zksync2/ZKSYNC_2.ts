@@ -3,9 +3,7 @@ import { RISK_VIEW } from '../../../../common/riskView'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('zksync2')
-const governor = discovery
-  .getAddressFromValue('zkSync', 'getGovernor')
-  .toString()
+const governor = discovery.getAddressFromValue('zkSync', 'getAdmin').toString() // TODO: check if correct
 const upgradeMinDelay = discovery.getContractValue<number>(governor, 'minDelay')
 const stats = discovery.getMultisigStats(
   discovery.getContractValue(governor, 'owner'),
