@@ -145,7 +145,7 @@ export function getBridgesRiskColumnsConfig() {
     {
       name: 'Validated by',
       tooltip: 'How are the messages sent via this bridge checked?',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (entry) => <RiskCell item={entry.validatedBy} />,
       sorting: {
         getOrderValue: (project) =>
@@ -158,7 +158,7 @@ export function getBridgesRiskColumnsConfig() {
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => (
-        <span className="sm:text-xs md:text-base">{entry.category}</span>
+        <span className="md:text-base sm:text-xs">{entry.category}</span>
       ),
       sorting: {
         getOrderValue: (project) => project.category,
@@ -178,7 +178,7 @@ export function getBridgesRiskColumnsConfig() {
     },
     {
       name: 'Destination\nToken',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       tooltip: 'What is the token that you receive from this bridge?',
       getValue: (entry) => <RiskCell item={entry.destinationToken} />,
       sorting: {

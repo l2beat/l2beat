@@ -17,7 +17,7 @@ export function GovernanceEventsSection({ events, className }: Props) {
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Governance events</GovernanceCardHeader>
       </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-4 lg:grid-cols-4 md:grid-cols-2">
         {events.map((event, i) => (
           <Event event={event} key={i} />
         ))}
@@ -39,14 +39,14 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.subtitle && (
           <p
             className={cn(
-              'text-xs font-semibold uppercase text-purple-100 dark:text-pink-200',
+              'font-semibold text-purple-100 text-xs uppercase dark:text-pink-200',
               event.highlighted && 'text-pink-200',
             )}
           >
             {event.subtitle}
           </p>
         )}
-        <p className="text-lg font-semibold leading-tight">{event.title}</p>
+        <p className="font-semibold text-lg leading-tight">{event.title}</p>
         <Link
           href={event.link}
           className="mt-2"

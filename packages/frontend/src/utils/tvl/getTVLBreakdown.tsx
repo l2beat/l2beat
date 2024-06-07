@@ -96,7 +96,7 @@ function Row({ children, value }: { children: ReactNode; value: number }) {
   }
 
   return (
-    <div className="flex justify-between items-center gap-x-6">
+    <div className="flex items-center justify-between gap-x-6">
       <span className="flex items-center gap-1">{children}</span>
       <span className="font-semibold">{(value * 100).toFixed(2)}%</span>
     </div>

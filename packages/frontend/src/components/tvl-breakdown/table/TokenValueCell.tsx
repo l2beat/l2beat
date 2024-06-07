@@ -25,13 +25,13 @@ export function TokenValueCell(props: TokenValueCellProps) {
 
   return props.forCanonical && props.escrows ? (
     <Tooltip>
-      <TooltipTrigger className="flex flex-col items-end gap-2 text-xs font-bold">
+      <TooltipTrigger className="flex flex-col items-end gap-2 font-bold text-xs">
         ${formatNumberWithCommas(Number(props.usdValue))}
         {props.escrows.length > 1 &&
           props.escrows.map((escrow) => (
             <div
               key={escrow.escrowAddress.toString()}
-              className=" hidden font-normal text-black/80 dark:text-white/80"
+              className="hidden font-normal text-black/80 dark:text-white/80"
               data-role="multiple-escrows-hidden"
               data-token={props.assetId}
             >
@@ -47,7 +47,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
     </Tooltip>
   ) : (
     <Tooltip>
-      <TooltipTrigger className="text-xs font-bold">
+      <TooltipTrigger className="font-bold text-xs">
         ${formatNumberWithCommas(Number(props.usdValue))}
       </TooltipTrigger>
       <TooltipContent>

@@ -45,7 +45,7 @@ export function DesktopProjectNavigation({
               alt={`${project.title} logo`}
             />
           )}
-          <span className="text-xl font-bold lg:text-2xl">{project.title}</span>
+          <span className="font-bold text-xl lg:text-2xl">{project.title}</span>
         </div>
         {project.showProjectUnderReview && (
           <UnderReviewCallout small className="mt-2" />
@@ -100,7 +100,7 @@ function ProjectNavigationList({
 function NavigationListIndex(props: { index: number }) {
   return (
     <div
-      className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-center text-xs font-bold dark:bg-neutral-700"
+      className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-center font-bold text-xs dark:bg-neutral-700"
       id={DESKTOP_PROJECT_NAVIGATION_IDS.index}
     >
       <span>{props.index}</span>

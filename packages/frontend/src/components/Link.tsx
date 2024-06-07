@@ -37,10 +37,10 @@ export function Link<T extends React.ElementType = 'a'>({
     <Comp
       className={cn(
         'group w-max cursor-pointer data-[state=highlighted]:relative data-[state=highlighted]:z-10',
-        'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
+        'data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5 data-[state=highlighted]:before:absolute',
         'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',
-        'data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:bg-yellow-250/50 data-[state=highlighted]:before:content-[""]',
+        'data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:bg-yellow-250/50 data-[state=highlighted]:before:content-[""]',
         'data-[state=highlighted]:before:dark:border-yellow-250 data-[state=highlighted]:before:dark:bg-yellow-250/10',
         className,
       )}
@@ -63,13 +63,13 @@ export function Link<T extends React.ElementType = 'a'>({
           className={cn(
             'flex items-center gap-1',
             underline && 'underline',
-            showArrow && 'transition-transform group-hover:-translate-x-px',
+            showArrow && 'group-hover:-translate-x-px transition-transform',
           )}
         >
           {children}
         </span>
         {showArrow && (
-          <ArrowRightIcon className="ml-1 inline-block fill-current transition-transform group-hover:translate-x-px group-hover:fill-blue-550 dark:fill-blue-500" />
+          <ArrowRightIcon className="ml-1 inline-block fill-current transition-transform group-hover:translate-x-px dark:fill-blue-500 group-hover:fill-blue-550" />
         )}
       </span>
     </Comp>
