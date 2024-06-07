@@ -7,6 +7,11 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import {
+  CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from './deleteArchivedRecords'
 
 export interface PriceRow {
   configuration_id: string
@@ -86,6 +91,20 @@ export class PriceRepository extends BaseRepository {
       .where('timestamp', '<=', toInclusive.toDate())
       .delete()
   }
+
+  // #region methods used only in TvlCleaner
+
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'prices', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'prices', dateRange)
+  }
+
+  // #endregion
 
   // #region methods used only in tests
 

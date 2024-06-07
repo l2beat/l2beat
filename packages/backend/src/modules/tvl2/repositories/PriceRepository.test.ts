@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
+import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
@@ -125,6 +126,11 @@ describeDatabase(PriceRepository.name, (database) => {
 
     expect(results).toEqual([])
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) =>
+    saved('a', timestamp, 1),
+  )
 })
 
 function saved(id: string, timestamp: UnixTime, priceUsd: number): PriceRecord {

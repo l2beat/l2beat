@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -19,6 +20,7 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
+import { TvlCleaner } from './TvlCleaner'
 
 export function createTvl2Module(
   config: Config,
@@ -90,10 +92,25 @@ export function createTvl2Module(
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const tvlRouter = createTvl2Router(tvlController, clock)
 
+  const tvlCleaner = new TvlCleaner(
+    clock,
+    logger,
+    peripherals.getRepository(TvlCleanerRepository),
+    [
+      peripherals.getRepository(AmountRepository),
+      peripherals.getRepository(PriceRepository),
+      peripherals.getRepository(ValueRepository),
+    ],
+  )
+
   const start = async () => {
     await hourlyIndexer.start()
 
     await priceModule.start()
+
+    if (config.tvlCleanerEnabled) {
+      tvlCleaner.start()
+    }
 
     for (const module of chainModules) {
       await module.start()

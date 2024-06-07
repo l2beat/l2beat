@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
 import { ValueRecord, ValueRepository } from './ValueRepository'
+import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 describeDatabase(ValueRepository.name, (database) => {
   const repository = new ValueRepository(database, Logger.SILENT)
@@ -68,6 +69,11 @@ describeDatabase(ValueRepository.name, (database) => {
 
     expect(results).toEqual([])
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) =>
+    saved('a', timestamp, 'data_src', 1, 2, 3),
+  )
 })
 
 function saved(

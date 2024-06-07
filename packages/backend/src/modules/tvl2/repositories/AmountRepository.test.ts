@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
 import { AmountRepository } from './AmountRepository'
+import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 describeDatabase(AmountRepository.name, (database) => {
   const amountRepository = new AmountRepository(database, Logger.SILENT)
@@ -130,6 +131,11 @@ describeDatabase(AmountRepository.name, (database) => {
       expect(results).toEqualUnsorted([amount('b', new UnixTime(2), 0n)])
     })
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(amountRepository, (timestamp) =>
+    amount('a', timestamp, 0n),
+  )
 
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {
