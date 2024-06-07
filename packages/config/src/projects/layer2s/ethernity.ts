@@ -14,7 +14,9 @@ export const ethernity: Layer2 = upcomingL2({
     links: {
       websites: ['https://www.ethernity.io/'],
       apps: ['https://app.ethernity.io/'],
-      documentation: ['https://drive.google.com/file/d/1o74ZBmYMIUa8QUwvLOK7KhoXP9-LCsPf/view'],
+      documentation: [
+        'https://drive.google.com/file/d/1o74ZBmYMIUa8QUwvLOK7KhoXP9-LCsPf/view',
+      ],
       explorers: ['https://ethplorer.io/'],
       repositories: [],
       socialMedia: [
