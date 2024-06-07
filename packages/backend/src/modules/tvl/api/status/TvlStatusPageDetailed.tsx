@@ -32,7 +32,7 @@ export function TvlStatusPageDetailed({
   return (
     <Page title="Detailed updater status">
       <div
-        className={`card${syncStatus === 'not synced' ? 'warn' : 'hint'}`}
+        className={`card ${syncStatus === 'not synced' ? 'warn' : 'hint'}`}
         style={{ margin: '8px', width: '358px' }}
       >
         <p>Overview</p>

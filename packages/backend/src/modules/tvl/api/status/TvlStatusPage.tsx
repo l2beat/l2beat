@@ -31,7 +31,9 @@ export function TvlStatusPage({
   return (
     <Page title="TVL module status (24h)">
       <div
-        className={`card${aggregatedStatus === 'not synced' ? 'warn' : 'hint'}`}
+        className={`card ${
+          aggregatedStatus === 'not synced' ? 'warn' : 'hint'
+        }`}
         style={{ margin: '8px', width: '358px' }}
       >
         <p>Overview</p>
