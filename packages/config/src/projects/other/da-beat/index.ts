@@ -2,6 +2,7 @@ import { celestia } from './blockchain/celestia/layer'
 import { dac } from './dac/layer'
 import { DaLayer } from './types/DALayer'
 
-export const daLayers: DaLayer[] = [dac, celestia]
+export * from './types/DABridge'
+export * from './types/DALayer'
 
-console.dir({ daLayers }, { depth: null })
+export const daLayers: DaLayer[] = [dac, celestia]

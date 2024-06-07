@@ -23,7 +23,8 @@ export const blobStream = {
       type: 'CommitmentFrequencySatisfied',
     },
     exitWindow: {
-      type: 'ImmutableOrSCWithDelay',
+      party: 'EOA',
+      delay: 'NoDelay',
     },
     accessability: {
       type: 'NotEnshrined',

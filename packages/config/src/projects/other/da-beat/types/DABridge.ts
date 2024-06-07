@@ -114,19 +114,10 @@ type AttestationSecurity =
       type: 'CommitmentFrequencySatisfied'
     }
 
-type ExitWindow =
-  | {
-      type: 'ImmutableOrSCWithDelay'
-    }
-  | {
-      type: 'EOAWithDelay'
-    }
-  | {
-      type: 'SCInsufficientDelay'
-    }
-  | {
-      type: 'NoDelay'
-    }
+type ExitWindow = {
+  party: 'EOA' | 'SecurityCouncil' | 'Immutable'
+  delay: number | 'NoDelay'
+}
 
 type Accessability =
   | {

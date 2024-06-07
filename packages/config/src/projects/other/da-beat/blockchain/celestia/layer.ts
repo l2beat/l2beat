@@ -40,6 +40,7 @@ export const celestia = {
     },
     fraudDetection: {
       type: 'DAS with block reconstruction',
+      erasureCoding: false,
     },
   },
 } satisfies DaLayer
