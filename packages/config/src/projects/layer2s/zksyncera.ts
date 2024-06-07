@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -38,10 +37,10 @@ const upgrades = {
 
 const upgradeDelay = 0
 
-const constructorArgs = discovery.getContractValue<{ _validators: string[] }>(
-  'ValidatorTimelock',
-  'constructorArgs',
-)
+// const constructorArgs = discovery.getContractValue<{ _validators: string[] }>(
+//   'ValidatorTimelock',
+//   'constructorArgs',
+// )
 const validatorsAdded = discovery.getContractValue<string[]>(
   'ValidatorTimelock',
   'validatorsAdded',
@@ -56,12 +55,9 @@ const validatorsRemoved = discovery.getContractValue<string[]>(
  * It can happen that if a validator is added and then removed and then added again,
  * it will not appear on the list.
  */
-const validators = constructorArgs._validators
-  .concat(validatorsAdded)
-  .filter((v) => !validatorsRemoved.includes(v))
+const validators = validatorsAdded.filter((v) => !validatorsRemoved.includes(v))
 
 export const zksyncera: Layer2 = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
@@ -117,7 +113,7 @@ export const zksyncera: Layer2 = {
         address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
         sinceTimestamp: new UnixTime(1676268575),
         tokens: ['ETH'],
-        description: 'Main rollup contract, additionally serving as an escrow.',
+        description: 'Main rollup contract of zkSync Era.',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
@@ -125,7 +121,7 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676367083),
         tokens: '*',
         description:
-          'Standard bridge for depositing ERC20 tokens to zkSync Era.',
+          'Standard legacy bridge for depositing ERC20 tokens to zkSync Era.',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
@@ -140,8 +136,9 @@ export const zksyncera: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
         tokens: '*',
-        description: 'Shared bridge for depositing tokens to zkSync Era.', // TODO: review with upgrade
-        ...upgrades, // TODO: also review this one, just added this to say the worst (and most likely) case but i didn't check
+        description:
+          'Shared bridge for depositing tokens to zkSync Era and other ZK stack chains.',
+        ...upgrades,
       }),
     ],
     transactionApi: {
@@ -176,6 +173,20 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
           sinceTimestampInclusive: new UnixTime(1710169104),
+          untilTimestampExclusive: new UnixTime(1717681823),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
+          ),
+          selector: '0x6edd4f12',
+          functionSignature:
+            'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+          sinceTimestampInclusive: new UnixTime(1717681823),
         },
       },
       {
@@ -226,6 +237,23 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
           sinceTimestampInclusive: new UnixTime(1710165419),
+          untilTimestampExclusive: new UnixTime(1717694375),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
+          ),
+          selector: '0xc37533bb',
+          functionSignature:
+            'function proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))',
+          sinceTimestampInclusive: new UnixTime(1717694375),
         },
       },
       {
@@ -276,6 +304,23 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
           sinceTimestampInclusive: new UnixTime(1710167255),
+          untilTimestampExclusive: new UnixTime(1717683407),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
+          ),
+          selector: '0x6f497ac6',
+          functionSignature:
+            'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
+          sinceTimestampInclusive: new UnixTime(1717683407),
         },
       },
     ],
@@ -312,7 +357,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            // 'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
+            // 'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L102',
           ],
         },
         {
@@ -325,7 +370,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'Verifier',
           references: [
-            // 'https://etherscan.io/address/0xdd9C826196cf3510B040A8784D85aE36674c7Ed2#code#F2#L345',
+            // 'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F2#L345',
           ],
         },
       ],
@@ -340,7 +385,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            // 'https://etherscan.io/address/0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD#code#F1#L102',
+            // 'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L102',
             // 'https://etherscan.io/tx/0x90f6a9c90842d7db4eb8a64731d2ae9224b2a754077b30200e67689b517f18e5', // example tx (see calldata)
             // todo: add blob example
           ],
@@ -445,7 +490,7 @@ export const zksyncera: Layer2 = {
       references: [
         {
           text: "L1 - L2 interoperability - Developer's documentation",
-          href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/l1-l2-interop.html#priority-queue',
+          href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
         },
       ],
     },
@@ -455,7 +500,7 @@ export const zksyncera: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://era.zksync.io/docs/dev/developer-guides/bridging/bridging-asset.html',
+            href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
           },
         ],
       },
@@ -468,8 +513,7 @@ export const zksyncera: Layer2 = {
         description:
           'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract \
           and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate ZK proofs. Governance manages list of Validators and can set basic rollup parameters.\
-          It is also serves the purpose of ETH bridge.',
+          It uses separate Verifier to validate ZK proofs.',
         ...upgrades,
       }),
       discovery.getContractDetails('Verifier', {
@@ -501,39 +545,6 @@ export const zksyncera: Layer2 = {
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
-  upgradesAndGovernance: (() => {
-    const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
-      'Governance',
-      'securityCouncil',
-    )
-    assert(
-      discoveredSecurityCouncilAddress ===
-        '0x0000000000000000000000000000000000000000',
-      'There is a security council set up for zkSync Era. Change the governance description to reflect that.',
-    )
-    const description = `
-Currently, the Matter Labs multisig (${discovery.getMultisigStats(
-      'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts (including the diamond and its facets) and roles (including the *Governor* role). The *Governor* role that resolves to the multisig is the highest permissioned role defined in the system.
-
-*Governor:* Can access all \`AdminFacet\` functions and thus upgrade the diamond and the related smart contract system. Additionally inherits access to functions for the *Admin* role. Can freeze all freezable Facets (currently \`ExecutorFacet\`, \`MailboxFacet\`) and upgrade the bridges.
-
-*Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
-      discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    )}). This allows for freezing the L2 chain within the delay if any suspicious activity was detected. Can be set by the *Admin* or *Governor*.
-
-*Verifier:* Verifies the zk proofs that were provided by the Validator. Can be changed by calling \`ExecuteUpgrade()\` on the \`AdminFacet\` from the *Governor* role.
-
-*Admin:* Currently **not set**. Will be able to make non-critical changes like setting the *Validator*. Will be the role of the multisig when higher permissions are restricted to the *Security Council*.
-
-*Security Council:* Currently **not set**. Will share the *Governor* role of the main diamond with the Matter Labs multisig through the Governance smart contract (see below).
-
-A \`Governance\` smart contract is set up as the *Governor* role of the diamond. It includes logic for planning upgrades with parameters like transparency and/or a delay. Currently the delay is optional (minimum delay = ${formatSeconds(
-      discovery.getContractValue('Governance', 'minDelay'),
-    )}) and not used by the multisig. The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* role and a *securityCouncil* role.
-`
-    return description
-  })(),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -576,7 +587,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
             'zkSync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
           verified: 'no',
           contractAddress: EthereumAddress(
-            '0xdd9C826196cf3510B040A8784D85aE36674c7Ed2',
+            '0x70F3FBf8a427155185Ec90BED8a3434203de9604',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
@@ -609,7 +620,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
   permissions: [
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
-      'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
+      'This MultiSig is the current Admin of zkSync Era main contract and owner of the all bridges and shared contracts. It can upgrade zkSync Era, upgrade bridge, shared contracts and change rollup parameters with no delay.',
     ),
     {
       name: 'Validators',
@@ -619,6 +630,13 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
     },
   ],
   milestones: [
+    {
+      name: 'zkSync Protocol Upgrade v24',
+      link: 'https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519',
+      date: '2024-06-06T00:00:00Z',
+      description:
+        'A protocol upgrade that introduces a shared bridge and the basis for new ZK stack chains.',
+    },
     {
       name: 'zkSync Era starts using blobs',
       link: 'https://twitter.com/zksync/status/1767983026443579448',
