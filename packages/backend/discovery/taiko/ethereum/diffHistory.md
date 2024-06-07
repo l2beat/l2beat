@@ -1,14 +1,19 @@
-Generated with discovered.json: 0x85c0e1cc64947661a7f897ef98eebd24edabd758
+Generated with discovered.json: 0x7a7ee6d7150da7b32b975066196c21a41b2d3ebc
 
-# Diff at Fri, 07 Jun 2024 09:08:58 GMT:
+# Diff at Fri, 07 Jun 2024 09:10:41 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@41d748a25dcae1e5bca51dff605a48b4ddac2c56 block: 20032840
-- current block number: 20038958
+- current block number: 20038966
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+- ProverSet.sol: can now propose blocks by calling proposeBlock from proverSet contract, which will in turn call TaikoL1 proposeBlock().
+- ERC20Vault.sol - LibStrings update, typo fixes and gas optimisations.
+- SignalService.sol - Reverted to old implementation of SignalService (0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d). It is now back to old LibStrings, expecting an update soon.
+- Bridge.sol - LibStrings update, added a max size for a calldata message to be processable by a relayer during proof verification.
+- TaikoL1.sol - Added L1_NO_HOOKS error but not used. Fixed a bug where if they passed no hooks in the input params the livenessBond wouldn't be transferred.
+- TaikoToken.sol - Added delegates function, not allowed to delegate to TaikoL1 or ERC20Vault.
 
 ## Watched changes
 
