@@ -24,7 +24,6 @@
     "0xE3D777143Ea25A6E031d1e921F396750885f43aC": "GuardianProver",
     "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "SignalService",
     "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TaikoToken",
-    "0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6": "AssignmentHook",
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
   "overrides": {
@@ -81,46 +80,6 @@
           }
         },
         // Harcoded values for names, is there a better way?
-        "verifier_TIER_SGX": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x746965725f736778000000000000000000000000000000000000000000000000",
-              "false"
-            ] // bytes32("tier_sgx")
-          }
-        },
-        "verifier_TIER_GUARDIAN_MINORITY": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
-              "false"
-            ] // bytes32("tier_guardian_minority")
-          }
-        },
-        "verifier_TIER_GUARDIAN": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x746965725f677561726469616e00000000000000000000000000000000000000",
-              "false"
-            ] // bytes32("tier_guardian")
-          }
-        },
-        "assignment_hook": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x61737369676e6d656e745f686f6f6b0000000000000000000000000000000000",
-              "false"
-            ] // bytes32("assignment_hook");
-          }
-        },
         "automata_dcap_attestation": {
           "handler": {
             "type": "call",
@@ -221,26 +180,6 @@
             ] // bytes32("erc721_vault");
           }
         },
-        "proposer": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x70726f706f736572000000000000000000000000000000000000000000000000",
-              "false"
-            ] // bytes32("proposer");
-          }
-        },
-        "proposer_one": {
-          "handler": {
-            "type": "call",
-            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-            "args": [
-              "0x70726f706f7365725f6f6e650000000000000000000000000000000000000000",
-              "false"
-            ] // bytes32("proposer_one");
-          }
-        },
         "prover_assignment": {
           "handler": {
             "type": "call",
@@ -321,7 +260,37 @@
             ] // bytes32("tier_router");
           }
         },
-        "tier_sgx_zkvm": {
+        "verifier_TIER_GUARDIAN": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x746965725f677561726469616e00000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("tier_guardian")
+          }
+        },
+        "verifier_TIER_GUARDIAN_MINORITY": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+              "false"
+            ] // bytes32("tier_guardian_minority")
+          }
+        },
+        "verifier_TIER_SGX": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x746965725f736778000000000000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("tier_sgx")
+          }
+        },
+        "verifier_TIER_SGX_ZKVM": {
           "handler": {
             "type": "call",
             "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
@@ -369,6 +338,38 @@
               "0x53544154455f524f4f5400000000000000000000000000000000000000000000",
               "false"
             ] // bytes32("STATE_ROOT");
+          }
+        },
+        // recently removed
+        "assignment_hook": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x61737369676e6d656e745f686f6f6b0000000000000000000000000000000000",
+              "false"
+            ] // bytes32("assignment_hook");
+          }
+        },
+        // still resolving but unused
+        "proposer": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x70726f706f736572000000000000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("proposer");
+          }
+        },
+        "proposer_one": {
+          "handler": {
+            "type": "call",
+            "method": "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+            "args": [
+              "0x70726f706f7365725f6f6e650000000000000000000000000000000000000000",
+              "false"
+            ] // bytes32("proposer_one");
           }
         }
       },
@@ -551,18 +552,6 @@
         }
       },
       "ignoreInWatchMode": ["clock"]
-    },
-    "AssignmentHook": {
-      "fields": {
-        "proxiableUUID": {
-          "handler": {
-            "type": "call",
-            "method": "function proxiableUUID() view returns (bytes32)",
-            "args": [],
-            "expectRevert": true
-          }
-        }
-      }
     },
     "AutomataDcapV3Attestation": {
       "fields": {
