@@ -17,7 +17,6 @@ import {
 
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
-import { asNumber } from '../../tvl/api/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './ControllerService'
@@ -38,6 +37,7 @@ import {
   PriceConfigIdMap,
   Values,
 } from './utils/types'
+import { asNumber } from '../utils/asNumber'
 
 export interface Tvl2ControllerDependencies {
   amountConfig: AmountConfigMap
