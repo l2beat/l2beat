@@ -3,7 +3,7 @@
 import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
 import { DrawerTrigger } from '~/app/_components/drawer'
-import { formatAddress } from '~/app/utils/format-address'
+import { formatAddress } from '~/utils/format-address'
 import { ChangeButton } from '../change-button'
 
 export function NavbarDrawerTrigger() {
