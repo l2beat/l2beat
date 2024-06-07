@@ -100,12 +100,11 @@ type DaBridgeRisks = {
 type AttestationSecurity =
   | {
       type: 'SigVerified'
+      areSignersTracked: boolean
     }
   | {
       type: 'SigVerifiedZK'
-    }
-  | {
-      type: 'SigVerifiedSignersNotTracked'
+      areSignersTracked: boolean
     }
   | {
       type: 'NotSatisfied'

@@ -20,14 +20,18 @@ export const blobStream = {
   permissions: [],
   risks: {
     attestations: {
-      type: 'CommitmentFrequencySatisfied',
+      type: 'SigVerified',
+      areSignersTracked: true,
+      description: 'Attestations are signed by known signers.',
     },
     exitWindow: {
       party: 'EOA',
       delay: 'NoDelay',
+      description: 'There is no delay.',
     },
     accessability: {
       type: 'NotEnshrined',
+      description: 'Data is not enshrined.',
     },
   },
 } satisfies DaBridge
