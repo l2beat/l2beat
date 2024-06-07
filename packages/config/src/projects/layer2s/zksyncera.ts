@@ -248,7 +248,7 @@ export const zksyncera: Layer2 = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+            '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
           ),
           selector: '0xc37533bb',
           functionSignature:
