@@ -19,7 +19,7 @@ export function ProjectSection(props: Props) {
     <section
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
+        'mt-10 md:rounded-lg md:bg-gray-100 md:dark:bg-zinc-900 md:p-8',
         props.className,
       )}
     >
@@ -64,11 +64,11 @@ export function ProjectDetailsSectionHeader(
       )}
     >
       {props.sectionOrder && (
-        <div className="hidden size-10 items-center justify-center rounded bg-gray-200 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex">
+        <div className="hidden size-10 items-center justify-center rounded bg-gray-200 font-bold text-[26px] text-gray-700 tabular-nums md:flex dark:bg-zinc-700 dark:text-zinc-500">
           {props.sectionOrder}
         </div>
       )}
-      <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
+      <span className="font-bold text-2xl md:text-4xl">{props.title}</span>
     </a>
   )
 }

@@ -12,19 +12,19 @@ export function RequiredTools(props: Props) {
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-gray-200 dark:border-zinc-700 align-bottom text-xs font-semibold uppercase text-gray-500 dark:text-gray-50">
+        <tr className="border-gray-200 border-b align-bottom font-semibold text-gray-500 text-xs uppercase dark:border-zinc-700 dark:text-gray-50">
           <th className="px-4 py-2 text-start">Tool name</th>
-          <th className="pr-4 py-2 text-start">Version</th>
-          <th className="pr-4 py-2 text-start">Tool docs</th>
+          <th className="py-2 pr-4 text-start">Version</th>
+          <th className="py-2 pr-4 text-start">Tool docs</th>
         </tr>
       </thead>
       <tbody>
         {props.items.map((item) => (
           <tr
-            className="h-14 border-b border-gray-200 dark:border-zinc-700"
+            className="h-14 border-gray-200 border-b dark:border-zinc-700"
             key={item.name}
           >
-            <td className="px-4 text-base md:text-lg font-medium text-balance">
+            <td className="text-balance px-4 font-medium text-base md:text-lg">
               {item.name}
             </td>
             <td className="pr-4 text-sm md:text-base">{item.version}</td>

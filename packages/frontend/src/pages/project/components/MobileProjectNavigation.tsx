@@ -19,7 +19,7 @@ export function MobileProjectNavigation({ sections }: Props) {
         <a
           href="#"
           data-role="mobile-project-navigation-summary-item"
-          className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-b-2 data-[selected=true]:border-current data-[selected=true]:text-pink-900 data-[selected=true]:dark:text-pink-200"
+          className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-current data-[selected=true]:border-b-2 data-[selected=true]:dark:text-pink-200 data-[selected=true]:text-pink-900"
         >
           Summary
         </a>
@@ -40,7 +40,7 @@ function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
           <a
             key={section.props.id}
             href={`#${section.props.id}`}
-            className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-b-2 data-[selected=true]:border-current data-[selected=true]:text-pink-900 data-[selected=true]:dark:text-pink-200"
+            className="whitespace-nowrap p-4 text-xs transition-colors data-[selected=true]:border-current data-[selected=true]:border-b-2 data-[selected=true]:dark:text-pink-200 data-[selected=true]:text-pink-900"
           >
             {section.props.title}
           </a>

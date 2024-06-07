@@ -9,7 +9,7 @@ export function ImplementationUnderReviewBar() {
         <span className="flex items-center">
           <UnderReviewIcon />
         </span>
-        <span className="ml-2 text-pretty text-base font-medium">
+        <span className="ml-2 text-pretty font-medium text-base">
           There are implementation changes and part of the information might be
           outdated.
         </span>

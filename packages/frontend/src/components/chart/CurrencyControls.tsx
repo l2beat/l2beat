@@ -13,7 +13,7 @@ export function UnitControls(props: Props) {
     <RadioGroup
       role="chart-unit-controls"
       name={`${props.chartType.type}-unit`}
-      className="transition-colors duration-200 group-data-[interactivity-disabled]/chart:bg-gray-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700"
+      className="transition-colors duration-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700 group-data-[interactivity-disabled]/chart:bg-gray-200"
       optionsClassname="group-data-[interactivity-disabled]/chart:opacity-0 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none"
       options={getOptions(props.chartType)}
     />

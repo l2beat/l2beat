@@ -32,11 +32,11 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <DashboardLayout>
-      <div className="bg-gray-100 dark:bg-zinc-900 md:!bg-transparent pt-8 px-4 pb-6 md:px-0 md:pb-0 md:pt-[72px]">
+      <div className="md:!bg-transparent bg-gray-100 px-4 pt-8 pb-6 dark:bg-zinc-900 md:px-0 md:pt-[72px] md:pb-0">
         <Breadcrumbs icon={props.details.icon} title={props.details.title} />
         <Header {...props} />
       </div>
-      <div className="space-y-10 mt-8 md:mt-16 px-4 md:px-0">
+      <div className="mt-8 space-y-10 px-4 md:mt-16 md:px-0">
         <Section title="List of verifiers">
           <Verifiers
             items={props.details.verifiers}
@@ -56,11 +56,11 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
 
 function Breadcrumbs(props: { icon: string; title: string }) {
   return (
-    <nav className="space-x-1 select-none dark:text-gray-50 flex gap-1 font-medium">
+    <nav className="flex select-none gap-1 space-x-1 font-medium dark:text-gray-50">
       <a href="/zk-catalog">ZK Catalog</a>
       <span>/</span>
       <span>
-        <img src={props.icon} className="size-4 mr-1.5 inline" />
+        <img src={props.icon} className="mr-1.5 inline size-4" />
         <span>{props.title}</span>
       </span>
     </nav>
@@ -82,8 +82,8 @@ function Header(props: ZkCatalogProjectPageProps) {
           </Link>
         ) : undefined}
       </div>
-      <HorizontalSeparator className="md:hidden mt-6 mb-5" />
-      <div className="flex flex-col md:grid gap-1 md:mt-8 grid-cols-3 md:rounded-xl bg-gray-100 dark:bg-zinc-900 md:p-6">
+      <HorizontalSeparator className="mt-6 mb-5 md:hidden" />
+      <div className="flex grid-cols-3 flex-col gap-1 bg-gray-100 md:mt-8 md:grid md:rounded-xl dark:bg-zinc-900 md:p-6">
         <HeaderItem title="Number of verifiers">
           <VerifiedCountWithDetails verifiers={props.details.verifiers} />
         </HeaderItem>
@@ -114,8 +114,8 @@ function HeaderItem({
   children: ReactNode
 }) {
   return (
-    <div className="flex justify-between md:block items-baseline">
-      <h3 className="flex items-center gap-1.5 md:mb-2 text-xs text-gray-600 dark:text-gray-50">
+    <div className="flex items-baseline justify-between md:block">
+      <h3 className="flex items-center gap-1.5 text-gray-600 text-xs md:mb-2 dark:text-gray-50">
         {title}
         {tooltip ? (
           <Tooltip>
@@ -126,7 +126,7 @@ function HeaderItem({
           </Tooltip>
         ) : null}
       </h3>
-      <span className="text-lg font-bold">{children}</span>
+      <span className="font-bold text-lg">{children}</span>
     </div>
   )
 }
@@ -134,7 +134,7 @@ function HeaderItem({
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section>
-      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
+      <h2 className="mb-4 font-bold text-2xl">{title}</h2>
       {children}
     </section>
   )

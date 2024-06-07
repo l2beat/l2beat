@@ -50,7 +50,7 @@ export function ScalingSummaryView({
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <div className="flex flex-col-reverse lg:flex-row gap-x-4 gap-y-2">
+      <div className="flex flex-col-reverse gap-x-4 gap-y-2 lg:flex-row">
         <ScalingFilters items={[...layer2s, ...layer3s]} />
         <ExcludeAssociatedTokensCheckbox className="lg:ml-auto" />
       </div>
