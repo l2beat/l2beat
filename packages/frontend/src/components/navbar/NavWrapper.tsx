@@ -291,7 +291,7 @@ export function Sidenav({
 }) {
   const { config, path } = usePageBuildContext()
   const sharedSizeClasses = cn(
-    'w-full xl:w-[240px] 2xl:w-[280px] h-screen h-[100dvh]',
+    'h-[100dvh] h-screen w-full 2xl:w-[280px] xl:w-[240px]',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 

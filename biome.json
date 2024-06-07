@@ -83,7 +83,13 @@
             }
           }
         },
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "level": "error",
+          "options": {
+            "attributes": ["className", "classname"],
+            "functions": ["cn", "cva"]
+          }
+        }
       },
       "suspicious": {
         "noAssignInExpressions": "off",

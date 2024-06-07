@@ -5,7 +5,7 @@ import { cn } from '../utils/cn'
 import { PlainLink } from './PlainLink'
 
 const buttonVariants = cva(
-  'cursor-pointer flex justify-center w-max items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
+  'flex w-max cursor-pointer items-center justify-center px-6 py-2 text-center font-bold transition-colors duration-100',
   {
     variants: {
       variant: {
@@ -13,8 +13,8 @@ const buttonVariants = cva(
         purple: 'border border-pink-900 hover:bg-pink-900/25',
       },
       size: {
-        default: 'text-base rounded-lg',
-        sm: 'text-xs rounded-md',
+        default: 'rounded-lg text-base',
+        sm: 'rounded-md text-xs',
       },
     },
     defaultVariants: {
