@@ -25,7 +25,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
 
   return props.forCanonical && props.escrows ? (
     <Tooltip>
-      <TooltipTrigger className="flex flex-col items-end gap-2 text-xs font-medium">
+      <TooltipTrigger className="flex flex-col items-end gap-2 font-medium text-xs">
         {formatNumberWithCommas(Number(props.amount))}
         {props.escrows.length > 1 &&
           props.escrows.map((escrow) => (
@@ -43,7 +43,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
     </Tooltip>
   ) : (
     <Tooltip>
-      <TooltipTrigger className="text-xs font-medium">
+      <TooltipTrigger className="font-medium text-xs">
         {formatNumberWithCommas(Number(props.amount))}
       </TooltipTrigger>
       <TooltipContent>

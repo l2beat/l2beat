@@ -16,8 +16,8 @@ export function TokenTypeCell(props: TokenTypeCellProps) {
         : ''
 
   return (
-    <div className="flex items-center justify-start gap-2 ">
-      <span className="text-xs font-medium">{tokenType}</span>
+    <div className="flex items-center justify-start gap-2">
+      <span className="font-medium text-xs">{tokenType}</span>
     </div>
   )
 }

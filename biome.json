@@ -82,6 +82,13 @@
               "console": "Do not use console"
             }
           }
+        },
+        "useSortedClasses": {
+          "level": "error",
+          "options": {
+            "attributes": ["className", "classname"],
+            "functions": ["cn", "cva"]
+          }
         }
       },
       "suspicious": {

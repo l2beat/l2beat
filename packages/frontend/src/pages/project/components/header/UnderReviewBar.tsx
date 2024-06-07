@@ -9,7 +9,7 @@ export function UnderReviewBar() {
         <span className="flex items-center">
           <UnderReviewIcon />
         </span>
-        <span className="ml-2 text-base font-medium">
+        <span className="ml-2 font-medium text-base">
           This project is under review.
         </span>
       </span>

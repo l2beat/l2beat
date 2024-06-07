@@ -48,7 +48,7 @@ function EscrowLink(props: EscrowLinkProps) {
   if (!props.explorer) {
     return (
       <span
-        className={cn('text-xs font-medium', props.hidden && 'hidden')}
+        className={cn('font-medium text-xs', props.hidden && 'hidden')}
         data-role={props.hidden ? 'multiple-escrows-hidden' : undefined}
       >
         {formatAddress(props.escrowAddress)}
@@ -60,7 +60,7 @@ function EscrowLink(props: EscrowLinkProps) {
       href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
       target="_blank"
       className={cn(
-        'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
+        'flex gap-1 font-medium text-blue-700 text-xs underline dark:text-blue-500',
         props.hidden && 'hidden',
       )}
       data-role={props.hidden ? 'multiple-escrows-hidden' : undefined}
@@ -95,7 +95,7 @@ function MultipleEscrows(props: MultipleEscrowsProps) {
           fill="#FFC107"
         />
       </svg>
-      <span className="text-xs font-medium">Multiple escrows</span>
+      <span className="font-medium text-xs">Multiple escrows</span>
       <ChevronDownIcon
         className="w-[10px] transition-transform duration-300"
         data-role="multiple-escrows-arrow"

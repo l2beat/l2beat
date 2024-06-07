@@ -62,7 +62,7 @@ export function Chart(props: ChartProps) {
         className={cn(
           'group/chart',
           props.mobileFull
-            ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
+            ? 'px-4 py-6 dark:bg-gray-950 md:dark:bg-transparent md:p-0'
             : 'mt-4',
           props.metaChart && 'mt-0',
           props.sectionClassName,
@@ -93,7 +93,7 @@ export function Chart(props: ChartProps) {
           <div
             data-role="chart-view"
             className={cn(
-              'relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]',
+              'relative col-span-4 h-[160px] sm:h-[260px] xs:h-[200px]',
               props.metaChart && 'relative h-[262px]',
             )}
             role="img"
@@ -103,12 +103,12 @@ export function Chart(props: ChartProps) {
             <ChartHover />
             <Logo
               className={cn(
-                'absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20',
+                'absolute right-2 bottom-2 z-30 h-[25px] w-[60px] opacity-20',
                 props.metaChart && 'hidden',
               )}
             />
             <div
-              className="absolute -inset-x-4 -bottom-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
+              className="-inset-x-4 -bottom-4 absolute top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />
@@ -119,7 +119,7 @@ export function Chart(props: ChartProps) {
               data-is-meta={props.metaChart}
               className={cn(
                 'absolute bottom-0 left-0 z-20 block size-full',
-                props.metaChart && 'bottom-[unset] top-0 h-[242px]',
+                props.metaChart && 'top-0 bottom-[unset] h-[242px]',
               )}
             />
             <ChartLabels

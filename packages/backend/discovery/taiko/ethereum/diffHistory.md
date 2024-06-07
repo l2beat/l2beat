@@ -1,3 +1,164 @@
+Generated with discovered.json: 0x038e91afa3edebd8b8da34afbe138b21b7d82f25
+
+# Diff at Fri, 07 Jun 2024 10:40:21 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@41d748a25dcae1e5bca51dff605a48b4ddac2c56 block: 20032840
+- current block number: 20039414
+
+## Description
+
+- ProverSet.sol: can now propose blocks by calling proposeBlock from proverSet contract, which will in turn call TaikoL1 proposeBlock().
+- ERC20Vault.sol - LibStrings update, typo fixes and gas optimisations.
+- SignalService.sol - Reverted to old implementation of SignalService (0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d). It is now back to old LibStrings, expecting an update soon.
+- Bridge.sol - LibStrings update, added a max size for a calldata message to be processable by a relayer during proof verification.
+- TaikoL1.sol - Added L1_NO_HOOKS error but not used. Fixed a bug where if they passed no hooks in the input params the livenessBond wouldn't be transferred.
+- TaikoToken.sol - Added delegates function, not allowed to delegate to TaikoL1 or ERC20Vault.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      upgradeability.implementation:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      implementations.0:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      values.getConfig.6:
+-        16
++        32
+      values.getConfig.2:
+-        432512
++        324512
+      values.getConfig.1:
+-        432000
++        324000
+      values.impl:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      values.prover_set:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
+      implementations.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
+      values.impl:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      upgradeability.implementation:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
+      implementations.0:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
+      values.impl:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x4F750D13005444407D44dAA30922128db0374ca1"
++        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
+      implementations.0:
+-        "0x4F750D13005444407D44dAA30922128db0374ca1"
++        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
+      values.impl:
+-        "0x4F750D13005444407D44dAA30922128db0374ca1"
++        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
+      implementations.0:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
+      values.impl:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.instances.7:
++        ["0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"]
+      values.instances.6:
++        ["0x4A9d339c94D1D3b685e3923907A98c73b8168AFF"]
+      values.nextInstanceId:
+-        6
++        8
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F)
+    +++ description: None
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
++        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
+      implementations.0:
+-        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
++        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
+      values.impl:
+-        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
++        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
+      values.CALLDATA_MESSAGE_SIZE_BYTES:
++        352
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd.sol} | 14 ++++-
+ .../ProverSetProxy/ProverSet.sol                   | 14 ++++-
+ .../SharedERC20Vault/ERC20Vault.sol                | 45 +++++++-------
+ .../SignalService/SignalService.sol                | 70 ++++++++--------------
+ .../TaikoBridge/Bridge.sol                         | 31 +++++++---
+ .../TaikoL1Contract/TaikoL1.sol                    | 66 +++++++++-----------
+ .../TaikoToken/TaikoToken.sol                      | 10 ++++
+ 7 files changed, 134 insertions(+), 116 deletions(-)
+```
+
 Generated with discovered.json: 0x5d7159ace678f291bde2f744c708641bebd2b669
 
 # Diff at Thu, 06 Jun 2024 12:40:03 GMT:

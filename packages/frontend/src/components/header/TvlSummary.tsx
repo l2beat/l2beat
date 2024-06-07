@@ -82,12 +82,12 @@ export function TvlSummary(props: TvlSummaryProps) {
     : []
 
   return (
-    <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
+    <div className="bg-gray-100 p-4 md:flex md:flex-col md:gap-3 md:rounded-lg dark:bg-zinc-900 md:px-6 md:py-4">
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
-        <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
+        <span className="font-medium text-lg md:hidden md:font-normal md:dark:text-gray-600 md:text-gray-500 md:text-xs">
           Value Locked
         </span>
-        <span className="hidden text-lg font-bold text-gray-500 dark:text-gray-600 md:block md:text-xs md:font-normal">
+        <span className="hidden font-bold text-gray-500 text-lg md:block md:font-normal dark:text-gray-600 md:text-xs">
           TVL
         </span>
 
@@ -95,11 +95,11 @@ export function TvlSummary(props: TvlSummaryProps) {
           props.tvlWarning ? (
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
-                <p className="text-lg font-bold md:text-2xl md:leading-none">
+                <p className="font-bold text-lg md:text-2xl md:leading-none">
                   {formatUSD(props.stats.tvl)}
                 </p>
                 {props.stats.tvl > 0 && (
-                  <p className="text-xs font-bold md:text-base">
+                  <p className="font-bold text-xs md:text-base">
                     <PercentChange value={props.stats.tvlChange} />
                   </p>
                 )}
@@ -114,11 +114,11 @@ export function TvlSummary(props: TvlSummaryProps) {
             </Tooltip>
           ) : (
             <div className="flex items-center gap-1">
-              <p className="text-lg font-bold md:text-2xl md:leading-none">
+              <p className="font-bold text-lg md:text-2xl md:leading-none">
                 {formatUSD(props.stats.tvl)}
               </p>
               {props.stats.tvl > 0 && (
-                <p className="text-xs font-bold md:text-base">
+                <p className="font-bold text-xs md:text-base">
                   <PercentChange value={props.stats.tvlChange} />
                 </p>
               )}
@@ -148,12 +148,12 @@ export function TvlSummary(props: TvlSummaryProps) {
               >
                 <div className="flex items-center gap-1">
                   {s.icon}
-                  <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
+                  <span className="text-gray-500 text-xs leading-none dark:text-gray-600">
                     <span className="inline md:hidden">{s.label}</span>
                     <span className="hidden md:inline">{s.shortLabel}</span>
                   </span>
                 </div>
-                <span className="text-base font-semibold leading-none">
+                <span className="font-semibold text-base leading-none">
                   {s.value}
                   {props.stats && props.stats.tvl > 0 && (
                     <span className="hidden font-normal text-gray-500 lg:inline">

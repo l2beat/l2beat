@@ -14,15 +14,15 @@ export function UnderReviewCallout({
     <div
       className={cn(
         'flex flex-col rounded-lg bg-yellow-700/20',
-        small ? 'gap-2 p-4' : 'items-center gap-4 p-8 ',
+        small ? 'gap-2 p-4' : 'items-center gap-4 p-8',
         className,
       )}
     >
       <div>
         <UnderReviewIcon
           className={cn(
-            'relative -top-0.5 inline-block',
-            small ? 'size-4' : ' size-6',
+            '-top-0.5 relative inline-block',
+            small ? 'size-4' : 'size-6',
           )}
         />
         <span
