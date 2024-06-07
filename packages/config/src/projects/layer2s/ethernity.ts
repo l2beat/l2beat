@@ -12,7 +12,7 @@ export const ethernity: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      websites: ['https://www.ethernity.io/'],
+      websites: ['https://ethernity.io/'],
       apps: ['https://app.ethernity.io/'],
       documentation: [
         'https://drive.google.com/file/d/1o74ZBmYMIUa8QUwvLOK7KhoXP9-LCsPf/view',
