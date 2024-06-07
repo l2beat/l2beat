@@ -7,10 +7,10 @@ import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { HtmlPathnameSetter } from './_components/html-pathname-setter'
 import { TooltipProvider } from './_components/tooltip'
-import { roboto } from './fonts'
 
 export const metadata: Metadata = getDefaultMetadata()
 

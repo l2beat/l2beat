@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { Article } from '~/app/_components/markdown/article'
-import { roboto_serif } from '~/app/fonts'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
+import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import {
@@ -36,9 +36,6 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       url: `/governance/publications/${publication.id}`,
-      images: [
-        `https://l2beat.com/meta-images/governance/publications/${publication.id}.png`,
-      ],
     },
   })
 }
