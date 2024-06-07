@@ -3,7 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["DEPLOYMENT_ENV", "NODE_ENV"],
+      "env": ["DEPLOYMENT_ENV", "NODE_ENV", "MOCK"],
       "cache": false
     }
   }
