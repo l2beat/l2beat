@@ -1385,6 +1385,13 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "MXC",
+      "address": "0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "mxc"
+    },
+    {
       "symbol": "RDNT",
       "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
       "type": "NMV",

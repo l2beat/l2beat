@@ -6,13 +6,13 @@ export interface ScalingProjectTechnology {
   /** What is the new cryptography used in the project */
   newCryptography?: ScalingProjectTechnologyChoice
   /** What is the data availability choice for the project */
-  dataAvailability: ScalingProjectTechnologyChoice
+  dataAvailability?: ScalingProjectTechnologyChoice
   /** What are the details about project operator(s) */
-  operator: ScalingProjectTechnologyChoice
+  operator?: ScalingProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
-  forceTransactions: ScalingProjectTechnologyChoice
+  forceTransactions?: ScalingProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms: ScalingProjectTechnologyChoice[]
+  exitMechanisms?: ScalingProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
   massExit?: ScalingProjectTechnologyChoice
   /** Other considerations */
