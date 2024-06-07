@@ -9,7 +9,7 @@ export const move: Layer2 = upcomingL2({
     description:
       'M2 is the first MoveVM L2 leveraging Celestia for Data Availability.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://movementlabs.xyz'],
       apps: [],
