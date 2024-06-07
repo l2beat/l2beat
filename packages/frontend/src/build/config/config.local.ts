@@ -3,7 +3,7 @@ import { common } from './common'
 
 export function getLocalConfig(): Config {
   const useMock = process.env.MOCK === 'true'
-  if(useMock) {
+  if (useMock) {
     console.log('Using mock data for build')
   }
 
