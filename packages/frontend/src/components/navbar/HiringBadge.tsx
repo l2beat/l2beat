@@ -7,7 +7,7 @@ export function HiringBadge({ className }: { className?: string }) {
   return (
     <Badge
       type="purple"
-      className={cn('ml-1 py-0.5 rounded-sm md:text-2xs', className)}
+      className={cn('ml-1 rounded-sm py-0.5 md:text-2xs', className)}
     >
       We're hiring
     </Badge>

@@ -190,10 +190,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
             {project.data?.tvl.displayValue}
           </NumberCell>
           {!project.isArchived ? (
-            <NumberCell
-              signed
-              className="ml-1 w-[72px] !text-base font-medium "
-            >
+            <NumberCell signed className="!text-base ml-1 w-[72px] font-medium">
               {project.data?.sevenDayChange}
             </NumberCell>
           ) : (

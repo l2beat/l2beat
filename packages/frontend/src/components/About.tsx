@@ -7,7 +7,7 @@ export function About() {
     <section className="mt-8 text-base">
       <h2
         id="about"
-        className="text-2xl font-bold md:text-3xl md:leading-normal"
+        className="font-bold text-2xl md:text-3xl md:leading-normal"
       >
         <a href="#about">About L2BEAT</a>
       </h2>

@@ -46,7 +46,7 @@ export function StageSection(props: StageSectionProps) {
           <img
             src={props.icon}
             alt={props.name}
-            className="relative -top-0.5 mr-2 inline-block size-6"
+            className="-top-0.5 relative mr-2 inline-block size-6"
           />
           {props.name} is currently
           <StageBadge
@@ -75,7 +75,7 @@ export function StageSection(props: StageSectionProps) {
         <img
           src={props.icon}
           alt={props.name}
-          className="relative -top-0.5 mr-2 inline-block size-6"
+          className="-top-0.5 relative mr-2 inline-block size-6"
         />
         {props.name} is a{' '}
         <StageBadge
@@ -152,7 +152,7 @@ export function StageSection(props: StageSectionProps) {
                   ))}
                   {underReview.map((req, i) => (
                     <li key={i} className="flex">
-                      <UnderReviewIcon className="relative top-0.5 shrink-0 " />
+                      <UnderReviewIcon className="relative top-0.5 shrink-0" />
                       <Markdown className="ml-2" inline>
                         {req.description}
                       </Markdown>

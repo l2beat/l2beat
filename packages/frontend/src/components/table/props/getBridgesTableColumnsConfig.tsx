@@ -158,7 +158,7 @@ export function getBridgesRiskColumnsConfig() {
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
       getValue: (entry) => (
-        <span className="sm:text-xs md:text-base">{entry.category}</span>
+        <span className="md:text-base sm:text-xs">{entry.category}</span>
       ),
       sorting: {
         getOrderValue: (project) => project.category,

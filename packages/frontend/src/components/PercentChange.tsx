@@ -27,9 +27,9 @@ export function PercentChange({ value, className, role }: Props) {
       )}
       data-role={role}
     >
-      {isMore && <ArrowUpIcon className="absolute top-1/2 -translate-y-1/2" />}
+      {isMore && <ArrowUpIcon className="-translate-y-1/2 absolute top-1/2" />}
       {isLess && (
-        <ArrowDownIcon className="absolute top-1/2 -translate-y-1/2" />
+        <ArrowDownIcon className="-translate-y-1/2 absolute top-1/2" />
       )}
       <span className="relative pl-3.5">{value.substring(1)}</span>
     </span>

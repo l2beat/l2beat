@@ -15,7 +15,7 @@
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
     "format": "biome format .",
-    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint:fix": "biome check --formatter-enabled=false --apply-unsafe .",
     "lint": "biome check --formatter-enabled=false .",
     "start": "yarn start:staging",
     "start:local": "DEPLOYMENT_ENV=local gulp watch",

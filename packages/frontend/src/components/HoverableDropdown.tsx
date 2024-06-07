@@ -36,10 +36,10 @@ function HoverableDropdownToggle(props: HoverableDropdownToggleProps) {
     <div
       ref={props.toggleRef}
       data-role="hoverable-dropdown-toggle"
-      className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors group-hover:bg-gray-200 dark:bg-zinc-900 dark:group-hover:bg-zinc-700"
+      className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 font-medium text-xs transition-colors dark:bg-zinc-900 dark:group-hover:bg-zinc-700 group-hover:bg-gray-200"
     >
       {props.children}
-      <ChevronDownIcon className="m-auto scale-75 transition-transform duration-300 group-hover:-rotate-180" />
+      <ChevronDownIcon className="group-hover:-rotate-180 m-auto scale-75 transition-transform duration-300" />
     </div>
   )
 }

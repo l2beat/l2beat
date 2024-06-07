@@ -19,13 +19,13 @@ export function BridgedUsingCell(props: BridgedUsingCellProps) {
           className="flex items-center justify-start gap-1"
           href={`/bridges/projects/${token.bridgedUsing.slug}`}
         >
-          <span className="text-xs font-medium text-blue-700 underline dark:text-blue-500">
+          <span className="font-medium text-blue-700 text-xs underline dark:text-blue-500">
             {token.bridgedUsing.bridge}
           </span>
           <ArrowRightIcon className="inline-block fill-blue-700 transition-transform dark:fill-blue-500" />
         </a>
       ) : token?.bridgedUsing ? (
-        <span className="text-xs font-medium">{token.bridgedUsing.bridge}</span>
+        <span className="font-medium text-xs">{token.bridgedUsing.bridge}</span>
       ) : null}
       {token?.bridgedUsing?.warning && (
         <Tooltip>
