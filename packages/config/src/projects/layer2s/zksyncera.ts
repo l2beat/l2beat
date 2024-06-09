@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -36,7 +37,18 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
-const upgradeDelay = 0
+const upgradeDelay = discovery.getContractValue<number>(
+  'Governance',
+  'minDelay',
+)
+
+const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
+  'Governance',
+  'securityCouncil',
+)
+const isSCset =
+  discoveredSecurityCouncilAddress !==
+  '0x0000000000000000000000000000000000000000'
 
 /**
  * Fetches Validators from ValidatorTimelock events:
@@ -529,6 +541,39 @@ export const zksyncera: Layer2 = {
       EXITS.FORCED('forced-withdrawals'),
     ],
   },
+  upgradesAndGovernance: (() => {
+    assert(
+      !isSCset,
+      'There is a Security Council set up for zkSync Era. Change the governance description to reflect that.',
+    )
+    const description = `
+    The Matter Labs multisig (${discovery.getMultisigStats(
+      'Matter Labs Multisig',
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`zkSync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by being the *Owner* of the \`StateTransitionManager\` (*STM*). A security council is currently not used.
+    
+    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role. 
+    This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. 
+    
+    Other roles include:
+    
+    *Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
+      discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
+    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected. The \`ValidatorTimelock\` holds the single *Validator* role in the zkSync Era diamond and can be set by the *Matter Labs Multisig* through the *STM*. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
+    
+    *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the *STM*.
+    
+    A \`Governance\` smart contract is used as the intermediary for most of the critical permissions of the *Matter Labs Multisig*. It includes logic for planning upgrades with parameters like transparency and/or a delay. 
+    ${
+      discovery.getContractValue<number>('Governance', 'minDelay') === 0
+        ? 'Currently the delay is optional and not used by the multisig.'
+        : `Currently the minimum delay is ${formatSeconds(
+            discovery.getContractValue('Governance', 'minDelay'),
+          )}.`
+    }
+    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* (*Matter Labs Multisig*) role and a *securityCouncil* role.
+`
+    return description
+  })(),
   contracts: {
     addresses: [
       discovery.getContractDetails('zkSync', {
@@ -544,14 +589,7 @@ export const zksyncera: Layer2 = {
         Currently the delay is set to ${formatSeconds(
           discovery.getContractValue<number>('Governance', 'minDelay'),
         )}
-        ${
-          discovery.getContractValue<string>(
-            'Governance',
-            'securityCouncil',
-          ) === '0x0000000000000000000000000000000000000000'
-            ? ' and the Security Council role is not used.'
-            : '.'
-        }`,
+        ${isSCset ? '.' : ' and the Security Council role is not used.'}`,
         ...upgrades,
       }),
       discovery.getContractDetails(
