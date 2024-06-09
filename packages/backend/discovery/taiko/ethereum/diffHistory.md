@@ -9,8 +9,9 @@ Generated with discovered.json: 0x701a08a07c9b66dae3e3043102e7419add2d2918
 ## Description
 
 Added "payable" to proposeBlock function in ProverSet. Calling proposeBlocks from ProverSet allows the ProverSetProxy to be the proposer of the block. On proveBlock(), also called from ProverSetProxy, there will be no validityBond posted as net transfers will be zero, since the TaikoL1 needs to return the livenessBond (250 TAIKO) to ProverSetProxy, and the validityBond (250 TAIKO) is of the same amount.
-
 There are no special privileges for ProverSetProxy or its set provers in TaikoL1 contract.
+
+Also new SGX instances registered.
 
 ## Watched changes
 
