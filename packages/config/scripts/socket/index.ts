@@ -49,6 +49,7 @@ const chainSlugToName: Record<string, string> = {
   34443: 'Mode',
   42161: 'Arbitrum',
   80001: 'Polygon Mumbai testnet',
+  81457: 'Blast',
   421613: 'Arbitrum Goerli',
   421614: 'Arbitrum Sepolia',
   11155111: 'Sepolia',
