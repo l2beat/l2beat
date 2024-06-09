@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20053837,
-  "configHash": "0xfde16061e231837023ba65c649297894601c3e998cbda4c10b57712e4ced59f8",
+  "blockNumber": 20054153,
+  "configHash": "0xa84e78187a82cd64cb1eed2be4f1ea39926ae20c90426528f8d6e8ac34ca360c",
   "version": 5,
   "contracts": [
     {
@@ -48,8 +48,8 @@
           true
         ],
         "getStateVariables": [
-          [19923613, 1716358991, 44790, 1717930463],
-          [47091, 44811, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 44823, 1717931327],
+          [47211, 44852, false, 0, 0, 0, 1716571955]
         ],
         "impl": "0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
         "inNonReentrant": false,
@@ -67,12 +67,12 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 44790, 1717930463],
-        "slotB": [47091, 44811, false, 0, 0, 0, 1716571955],
+        "slotA": [19923613, 1716358991, 44823, 1717931327],
+        "slotB": [47211, 44852, false, 0, 0, 0, 1716571955],
         "state": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 44790, 1717930463],
-          [47091, 44811, false, 0, 0, 0, 1716571955]
+          [19923613, 1716358991, 44823, 1717931327],
+          [47211, 44852, false, 0, 0, 0, 1716571955]
         ],
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -99,7 +99,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1717930907,
+        "clock": 1717934735,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -397,6 +397,7 @@
     {
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F",
@@ -420,10 +421,11 @@
           ["0x4A9d339c94D1D3b685e3923907A98c73b8168AFF"],
           ["0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"],
           ["0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"],
-          ["0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"]
+          ["0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"],
+          ["0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34"]
         ],
         "lastUnpausedAt": 0,
-        "nextInstanceId": 10,
+        "nextInstanceId": 11,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -469,7 +471,7 @@
         "impl": "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 11384,
+        "nextMessageId": 11403,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -545,6 +547,7 @@
     "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
     "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
     "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6",
+    "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34",
     "0x3777c454aF69C87df961E92dA99fCF96EdB30683",
     "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
     "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3",

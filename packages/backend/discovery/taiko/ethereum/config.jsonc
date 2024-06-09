@@ -468,6 +468,7 @@
       }
     },
     "SgxVerifier": {
+      "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "description": "Verifier contract for SGX proven blocks.",
       "fields": {
         "proxiableUUID": {

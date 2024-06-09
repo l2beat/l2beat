@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf13fd671ad691bc323058f580940f2055cb87b97
+Generated with discovered.json: 0x11db6f6b7eec90e64b2483ebac75da462cc2cc5a
 
-# Diff at Sun, 09 Jun 2024 11:02:18 GMT:
+# Diff at Sun, 09 Jun 2024 12:06:08 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 20039414
-- current block number: 20053837
+- current block number: 20054153
 
 ## Description
 
@@ -42,19 +42,6 @@ Also new SGX instances registered.
       values.impl:
 -        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
 +        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
-    }
-```
-
-```diff
-    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
-    +++ description: Verifier contract for SGX proven blocks.
-      values.instances.9:
-+        ["0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"]
-      values.instances.8:
-+        ["0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"]
-      values.nextInstanceId:
--        8
-+        10
     }
 ```
 
