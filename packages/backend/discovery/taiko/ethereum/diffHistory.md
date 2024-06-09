@@ -1,14 +1,16 @@
-Generated with discovered.json: 0x2f1db193ae2b5a2a580fcce70e1227b17cc5fff3
+Generated with discovered.json: 0x701a08a07c9b66dae3e3043102e7419add2d2918
 
-# Diff at Sun, 09 Jun 2024 09:29:32 GMT:
+# Diff at Sun, 09 Jun 2024 10:56:32 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 20039414
-- current block number: 20053376
+- current block number: 20053809
 
 ## Description
 
-Added "payable" to proposeBlock function in ProverSet relayer.
+Added "payable" to proposeBlock function in ProverSet. Calling proposeBlocks from ProverSet allows the ProverSetProxy to be the proposer of the block. On proveBlock(), also called from ProverSetProxy, there will be no validityBond posted as net transfers will be zero, since the TaikoL1 needs to return the livenessBond (250 TAIKO) to ProverSetProxy, and the validityBond (250 TAIKO) is of the same amount.
+
+There are no special privileges for ProverSetProxy or its set provers in TaikoL1 contract.
 
 ## Watched changes
 
