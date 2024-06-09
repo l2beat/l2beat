@@ -548,18 +548,18 @@ export const zksyncera: Layer2 = {
     const description = `
     The Matter Labs multisig (${discovery.getMultisigStats(
       'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`zkSync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by being the *Owner* of the \`StateTransitionManager\` (*STM*). A security council is currently not used.
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`zkSync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
     
     The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role. 
     This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. 
     
     Other roles include:
     
-    *Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
+    *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
       discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected. The \`ValidatorTimelock\` holds the single *Validator* role in the zkSync Era diamond and can be set by the *Matter Labs Multisig* through the *STM*. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
+    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the zkSync Era diamond and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
     
-    *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the *STM*.
+    *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the \`STM\`.
     
     A \`Governance\` smart contract is used as the intermediary for most of the critical permissions of the *Matter Labs Multisig*. It includes logic for planning upgrades with parameters like transparency and/or a delay. 
     ${
@@ -569,7 +569,7 @@ export const zksyncera: Layer2 = {
             discovery.getContractValue('Governance', 'minDelay'),
           )}.`
     }
-    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* (*Matter Labs Multisig*) role and a *securityCouncil* role.
+    The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *Owner* (*Matter Labs Multisig*) role and a *SecurityCouncil* role.
 `
     return description
   })(),
@@ -577,23 +577,23 @@ export const zksyncera: Layer2 = {
     addresses: [
       discovery.getContractDetails('zkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions (executes batches). During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
+          'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
+          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
         ...upgrades,
       }),
       discovery.getContractDetails('Governance', {
         description: `Intermediary governance contract with two roles and a customizable delay. 
-        This delay is only mandatory for transactions scheduled by the Owner role and can be set by the Security Council role. 
-        The Security Council role can execute arbitrary transactions immediately. 
+        This delay is only mandatory for transactions scheduled by the *Owner* role and can be set by the *SecurityCouncil* role. 
+        The *SecurityCouncil* role can execute arbitrary upgrade transactions immediately. 
         Currently the delay is set to ${formatSeconds(
           discovery.getContractValue<number>('Governance', 'minDelay'),
         )}
-        ${isSCset ? '.' : ' and the Security Council role is not used.'}`,
+        ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
         ...upgrades,
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
-        'Intermediary contract between the validators and the zkSync Era diamond proxy that delays block execution (ie withdrawals and other L2 --> L1 messages).',
+        'Intermediary contract between the *Validators* and the `zkSync Era diamond` that delays block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
@@ -613,7 +613,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('StateTransitionManager', {
         description:
-          'Defines rollup creation, upgrade and proof verification for the zkSync diamond contract connected to it (and potential other rollup contracts that opt in to share this logic).',
+          'Defines L2 diamond contract creation and upgrade, proof verification for the `zkSync diamond` contract connected to it (and potential other L2 diamond contracts that opt in to share this logic).',
         ...upgrades,
       }),
     ],
