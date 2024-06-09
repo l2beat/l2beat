@@ -87,7 +87,6 @@ const validators = () => {
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
-  isUnderReview: true,
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
