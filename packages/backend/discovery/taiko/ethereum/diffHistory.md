@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x2f1db193ae2b5a2a580fcce70e1227b17cc5fff3
+
+# Diff at Sun, 09 Jun 2024 09:29:32 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 20039414
+- current block number: 20053376
+
+## Description
+
+Added "payable" to proposeBlock function in ProverSet relayer.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.prover_set:
+-        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
++        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd)
+    +++ description: None
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      upgradeability.implementation:
+-        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
++        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
+      implementations.0:
+-        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
++        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
+      values.impl:
+-        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
++        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.instances.9:
++        ["0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"]
+      values.instances.8:
++        ["0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"]
+      values.nextInstanceId:
+-        8
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ProverSet-0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1.sol}            | 1 +
+ .../ethereum/{.flat@20039414 => .flat}/ProverSetProxy/ProverSet.sol      | 1 +
+ 2 files changed, 2 insertions(+)
+```
+
 Generated with discovered.json: 0x038e91afa3edebd8b8da34afbe138b21b7d82f25
 
 # Diff at Fri, 07 Jun 2024 10:40:21 GMT:
