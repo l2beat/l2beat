@@ -106,15 +106,6 @@
             ]
           }
         },
-        // the 3 following allow us to get an array of validators without creating a new handler
-        // construnctorArgs._validators u validatorsAdded n validatorsRemoved
-        // where u is the union of the 2 sets and n is intersection
-        "constructorArgs": {
-          "handler": {
-            "type": "constructorArgs",
-            "nameArgs": true
-          }
-        },
         "validatorsAdded": {
           "handler": {
             "type": "arrayFromOneEvent",

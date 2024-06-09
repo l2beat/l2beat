@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x13d6850b6bd59151a9b1b92caeec3729cae620f9
+
+# Diff at Sun, 09 Jun 2024 10:14:49 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@9a3f8bf37251d3ca29218e661b10e1e417102bfa block: 20040416
+- current block number: 20053603
+
+## Description
+
+Remove the deprecated constructorArgs from the config.
+
+For v24 upgrade below, there is now also an [informative diff audit by OpenZeppelin](https://blog.openzeppelin.com/zksync-state-transition-diff-audit).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20040416 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.constructorArgs:
+-        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+    }
+```
+
 Generated with discovered.json: 0x93ee29c36171713f01b80b6748356bdbc622eb7a
 
 # Diff at Fri, 07 Jun 2024 14:02:15 GMT:

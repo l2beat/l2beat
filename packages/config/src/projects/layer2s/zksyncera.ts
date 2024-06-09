@@ -24,11 +24,12 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 
-const executionDelay = discovery.getContractValue<number>(
+const executionDelaySeconds = discovery.getContractValue<number>(
   'ValidatorTimelock',
   'executionDelay',
 )
-const delay = executionDelay > 0 && formatSeconds(executionDelay)
+const executionDelay =
+  executionDelaySeconds > 0 && formatSeconds(executionDelaySeconds)
 
 const upgrades = {
   upgradableBy: ['Matter Labs Multisig'],
@@ -37,25 +38,39 @@ const upgrades = {
 
 const upgradeDelay = 0
 
-// const constructorArgs = discovery.getContractValue<{ _validators: string[] }>(
-//   'ValidatorTimelock',
-//   'constructorArgs',
-// )
-const validatorsAdded = discovery.getContractValue<string[]>(
-  'ValidatorTimelock',
-  'validatorsAdded',
-)
-const validatorsRemoved = discovery.getContractValue<string[]>(
-  'ValidatorTimelock',
-  'validatorsRemoved',
-)
-
-/** todo(miszke)
- * This could be a separate handler.
- * It can happen that if a validator is added and then removed and then added again,
- * it will not appear on the list.
+/**
+ * Fetches Validators from ValidatorTimelock events:
+ * It is more complicated to accomodate the case in which
+ * a validator is added and removed more than once.
  */
-const validators = validatorsAdded.filter((v) => !validatorsRemoved.includes(v))
+const validators = () => {
+  const validatorsAdded = discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsAdded',
+  )
+  const validatorsRemoved = discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsRemoved',
+  )
+
+  // Create a map to track the net state of each validator (added or removed)
+  const validatorStates = new Map<string, number>()
+
+  // Increment for added validators
+  validatorsAdded.forEach((validator) => {
+    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
+  })
+
+  // Decrement for removed validators
+  validatorsRemoved.forEach((validator) => {
+    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
+  })
+
+  // Filter validators that have a net positive state (added more times than removed)
+  return Array.from(validatorStates.entries())
+    .filter(([_, state]) => state > 0)
+    .map(([validator, _]) => validator)
+}
 
 export const zksyncera: Layer2 = {
   type: 'layer2',
@@ -64,8 +79,8 @@ export const zksyncera: Layer2 = {
   display: {
     name: 'zkSync Era',
     slug: 'zksync-era',
-    warning: delay
-      ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
+    warning: executionDelay
+      ? `Withdrawals are delayed by ${executionDelay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
       'zkSync Era is a general-purpose ZK Rollup with full EVM compatibility.',
@@ -73,13 +88,15 @@ export const zksyncera: Layer2 = {
     provider: 'ZK Stack',
     category: 'ZK Rollup',
     links: {
-      websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
-      apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
-      documentation: ['https://era.zksync.io/docs/'],
+      websites: ['https://zksync.io/', 'https://zksync.dappradar.com/'],
+      apps: ['https://portal.zksync.io/bridge/'],
+      documentation: ['https://docs.zksync.io/'],
       explorers: [
         'https://explorer.zksync.io/',
         'https://era.zksync.network/',
         'https://zksync-era.l2scan.co/',
+        'https://zksync.blockscout.com/',
+        'https://hyperscan.xyz/',
       ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
       socialMedia: [
@@ -93,17 +110,17 @@ export const zksyncera: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
     liveness: {
-      explanation: delay
-        ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${delay} delay between state diffs verification and the execution of the corresponding state actions.`
+      explanation: executionDelay
+        ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
         : undefined,
     },
     finality: {
-      finalizationPeriod: executionDelay,
+      finalizationPeriod: executionDelaySeconds,
       warnings: {
         timeToInclusion: {
           sentiment: 'warning',
           value:
-            'Proven but not executed batches can be reverted by the validator.',
+            'Proven but not executed batches can be reverted by the validator(s) or the StateTransitionManager.',
         },
       },
     },
@@ -111,18 +128,10 @@ export const zksyncera: Layer2 = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
-        sinceTimestamp: new UnixTime(1676268575),
-        tokens: ['ETH'],
-        description: 'Main rollup contract of zkSync Era.',
-        ...upgrades,
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
-        sinceTimestamp: new UnixTime(1676367083),
+        address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
         tokens: '*',
         description:
-          'Standard legacy bridge for depositing ERC20 tokens to zkSync Era.',
+          'Shared bridge for depositing tokens to zkSync Era and, in the future, other ZK stack chains.',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
@@ -130,15 +139,29 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1698058151),
         tokens: ['wstETH'],
         description:
-          'Bridge for depositing wrapped stETH (Lido) to zkSync Era.',
+          'Bridge for depositing wrapped stETH (Lido) to zkSync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
       }),
+      {
+        ...discovery.getEscrowDetails({
+          address: EthereumAddress(
+            '0x32400084C286CF3E17e7B677ea9583e60a000324',
+          ),
+          sinceTimestamp: new UnixTime(1676268575),
+          tokens: ['ETH'],
+          description: 'Main rollup contract of zkSync Era.',
+          ...upgrades,
+        }),
+        isHistorical: true,
+        untilTimestamp: new UnixTime(1717922458),
+      },
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
+        address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
+        sinceTimestamp: new UnixTime(1676367083),
         tokens: '*',
         description:
-          'Shared bridge for depositing tokens to zkSync Era and other ZK stack chains.',
+          'Legacy bridge for depositing ERC20 tokens to zkSync Era. Forwards deposits and withdrawals to the BridgeHub.',
         ...upgrades,
       }),
     ],
@@ -358,26 +381,26 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            // 'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L102',
+            'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169',
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L377',
-            // 'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L33',
+            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
+            'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            // 'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F2#L345',
+            'https://etherscan.io/address/0x70F3FBf8a427155185Ec90BED8a3434203de9604#code#F1#L343',
           ],
         },
       ],
       otherReferences: [
-        'https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle.html#transaction-types',
-        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
+        'https://docs.zksync.io/zk-stack/concepts/transaction-lifecycle#transaction-types',
+        'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
       ],
     },
     dataAvailability: {
@@ -386,32 +409,30 @@ export const zksyncera: Layer2 = {
         {
           contract: 'ValidatorTimelock',
           references: [
-            // 'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L102',
-            // 'https://etherscan.io/tx/0x90f6a9c90842d7db4eb8a64731d2ae9224b2a754077b30200e67689b517f18e5', // example tx (see calldata)
-            // todo: add blob example
+            'https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120',
+            'https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63', // example tx (see calldata, blob)
           ],
         },
         {
           contract: 'zkSync',
           references: [
-            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L54',
-            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L57',
+            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
+            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
           ],
         },
       ],
       otherReferences: [
-        'https://era.zksync.io/docs/dev/developer-guides/system-contracts.html#executorfacet',
+        'https://docs.zksync.io/build/developer-reference/era-contracts/l1-contracts#executorfacet',
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelay),
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelaySeconds),
       sources: [
         {
           contract: 'zkSync',
           references: [
-            // 'https://etherscan.io/address/0x230214F0224C7E0485f348a79512ad00514DB1F7#code#F5#L106',
-            // 'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
-            // 'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
+            'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
+            'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
           ],
         },
       ],
@@ -422,13 +443,13 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            // 'https://etherscan.io/address/0x10113bB3a8e64f8eD67003126adC8CE74C34610c#code#F5#L63',
-            // 'https://etherscan.io/address/0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7#code#F10#L194',
+            'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
+            'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
           ],
         },
       ],
       otherReferences: [
-        // 'https://docs.zksync.io/build/developer-reference/l1-l2-interop.html#priority-queue',
+        'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
       ],
     },
     proposerFailure: {
@@ -437,7 +458,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            // 'https://etherscan.io/address/0xfd3779e6214eBBd40f5F5890351298e123A46BA6#code#F7#L198',
+            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
           ],
         },
       ],
@@ -462,7 +483,7 @@ export const zksyncera: Layer2 = {
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
+        fraudProofSystemIsPermissionless: null, // why not false?
         delayWith30DExitWindow: false,
       },
     },
@@ -512,21 +533,30 @@ export const zksyncera: Layer2 = {
     addresses: [
       discovery.getContractDetails('zkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract \
-          and process transactions (executes blocks). During block execution it processes L1 --> L2 and L2 --> L1 transactions.\
-          It uses separate Verifier to validate ZK proofs.',
+          'The main Rollup contract. Operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
+          then processes transactions (executes batches). During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
         ...upgrades,
       }),
       discovery.getContractDetails('Governance', {
-        description: `Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade. While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than ${discovery.getContractValue<number>(
-          'Governance',
-          'minDelay',
-        )} seconds. Canceling the upgrade can be done only by the owner. The owner or the security council can perform the upgrade if the chosen delay is up. Only the security council can force the upgrade to execute even if the delay is not up.`,
+        description: `Intermediary governance contract with two roles and a customizable delay. 
+        This delay is only mandatory for transactions scheduled by the Owner role and can be set by the Security Council role. 
+        The Security Council role can execute arbitrary transactions immediately. 
+        Currently the delay is set to ${formatSeconds(
+          discovery.getContractValue<number>('Governance', 'minDelay'),
+        )}
+        ${
+          discovery.getContractValue<string>(
+            'Governance',
+            'securityCouncil',
+          ) === '0x0000000000000000000000000000000000000000'
+            ? ' and the Security Council role is not used.'
+            : '.'
+        }`,
         ...upgrades,
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
-        'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
+        'Intermediary contract between the validators and the zkSync Era diamond proxy that delays block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
@@ -536,17 +566,17 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('L1SharedBridge', {
         description:
-          'This bridge contract escrows all ERC-20s and ETH that are deposited to zkSync Era, and in the future, other registered ZK stack chains.',
+          'This bridge contract escrows all ERC-20s and ETH that are deposited to zkSync Era - and in the future - other registered ZK stack chains.',
         ...upgrades,
       }),
       discovery.getContractDetails('BridgeHub', {
         description:
-          'Sits between the single shared bridge and the StateTransitionManager(s) and forwards L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.',
+          'Sits between the single shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.',
         ...upgrades,
       }),
       discovery.getContractDetails('StateTransitionManager', {
         description:
-          'Defines rollup creation, upgrade and proof verification for the zkSync diamond contract connected to it (and potential other rollup contracts that want to share this logic).',
+          'Defines rollup creation, upgrade and proof verification for the zkSync diamond contract connected to it (and potential other rollup contracts that opt in to share this logic).',
         ...upgrades,
       }),
     ],
@@ -636,13 +666,13 @@ export const zksyncera: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'Matter Labs Multisig',
-      'This MultiSig is the current Admin of zkSync Era main contract and owner of the all bridges and shared contracts. It can upgrade zkSync Era, upgrade bridge, shared contracts and change rollup parameters with no delay.',
+      'This MultiSig is the current central Admin for upgradeability and configuration of the rollup system and can potentially steal all funds.',
     ),
     {
       name: 'Validators',
-      accounts: validators.map((v) => discovery.formatPermissionedAccount(v)),
+      accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),
       description:
-        'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
+        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
     },
   ],
   milestones: [
@@ -651,7 +681,7 @@ export const zksyncera: Layer2 = {
       link: 'https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519',
       date: '2024-06-06T00:00:00Z',
       description:
-        'A protocol upgrade that introduces a shared bridge and the basis for new ZK stack chains.',
+        'A protocol upgrade that introduces a shared bridge and the foundation for other ZK stack chains.',
     },
     {
       name: 'zkSync Era starts using blobs',
