@@ -23,9 +23,13 @@
     "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
     "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
     "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool",
-    "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723": "StakingProxyAdmin"
+    "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723": "StakingProxyAdmin",
+    "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878": "FundsReiceiverMultisig"
   },
   "overrides": {
+    "FundsReiceiverMultisig": {
+      "description": "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."
+    },
     "PoolFactory": {
       "ignoreMethods": ["getPoolAddress", "stakingPools"],
       "ignoreRelatives": ["esXaiAddress"],

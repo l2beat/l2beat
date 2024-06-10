@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x3cd42a08892b92a1bd91bcd208a84877f296fec4
+
+# Diff at Mon, 10 Jun 2024 06:37:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 215638135
+- current block number: 220299069
+
+## Description
+
+The fundsreceiver multisig that currently holds USD 3M in ETH from Sentry Node License mints, has a new signer.
+The SentryReferee contract is upgraded to identical code with new initial parameters for staking and esXai emissions.
+
+## Watched changes
+
+```diff
+    contract FundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      upgradeability.threshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+      values.getOwners.4:
+-        "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
++        "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c"
+      values.getOwners.3:
+-        "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c"
++        "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.getOwners.2:
+-        "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
++        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.getOwners.1:
+-        "0xbBE90F6748C82623F130A4486722a436c5a72440"
++        "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
+      values.getOwners.0:
+-        "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
++        "0xd427165292B2E39cdac102eD963B14fFBACc964a"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
++        "0x609152cb742916E0F7FBC4391Be750C458b049fe"
+      implementations.0:
+-        "0xFf38Aa9D553bE47eee329F968ADF0C74A01D021c"
++        "0x609152cb742916E0F7FBC4391Be750C458b049fe"
+      values.maxKeysPerPool:
+-        750
++        1000
+      values.maxStakeAmountPerLicense:
+-        "10000000000000000000000"
++        "20000000000000000000000"
+      values.stakeAmountBoostFactors.3:
+-        600
++        700
+      values.stakeAmountTierThresholds.3:
+-        "5500000000000000000000000"
++        "8000000000000000000000000"
+      values.stakeAmountTierThresholds.2:
+-        "500000000000000000000000"
++        "4000000000000000000000000"
+      values.stakeAmountTierThresholds.1:
+-        "100000000000000000000000"
++        "2000000000000000000000000"
+      values.stakeAmountTierThresholds.0:
+-        "10000000000000000000000"
++        "30000000000000000000000"
+      derivedName:
+-        "Referee7"
++        "Referee8"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Referee7.sol => .flat/SentryReferee/Referee8.sol}   | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 215638135 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "FundsReiceiverMultisig"
+    }
+```
+
 Generated with discovered.json: 0x264bd861a65349ee79e7d213b146fb2d90f6005d
 
 # Diff at Mon, 27 May 2024 17:44:30 GMT:
