@@ -32,7 +32,7 @@ export const fraxferry: Bridge = {
     },
     description:
       'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains.',
-    category: 'Token Bridge',
+    category: 'Liquidity Network',
   },
   config: {
     associatedTokens: [
