@@ -57,7 +57,7 @@ export class ValueRepository extends BaseRepository {
   async addMany(records: ValueRecord[], trx?: Knex.Transaction) {
     const rows: ValueRow[] = records.map(toRow)
     const knex = await this.knex(trx)
-    await knex.batchInsert('values', rows, 10_000)
+    await knex.batchInsert('values', rows, BATCH_SIZE)
     return rows.length
   }
 
