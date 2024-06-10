@@ -8,7 +8,6 @@ export class HourlyIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly module?: string,
   ) {
     super(logger)
   }
