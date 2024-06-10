@@ -3,8 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { PriceRecord, PriceRepository } from './PriceRepository'
-import { testDeletingArchivedRecords } from './deleteArchivedRecords.test'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)

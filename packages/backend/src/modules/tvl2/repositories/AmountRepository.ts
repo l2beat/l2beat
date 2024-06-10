@@ -11,7 +11,7 @@ import {
   CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
-} from './deleteArchivedRecords'
+} from '../utils/deleteArchivedRecords'
 export interface AmountRow {
   configuration_id: string
   timestamp: Date

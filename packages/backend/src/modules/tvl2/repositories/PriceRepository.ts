@@ -11,7 +11,7 @@ import {
   CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
-} from './deleteArchivedRecords'
+} from '../utils/deleteArchivedRecords'
 
 export interface PriceRow {
   configuration_id: string
