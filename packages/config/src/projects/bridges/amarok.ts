@@ -31,10 +31,7 @@ export const amarok: Bridge = {
       websites: ['https://blog.connext.network/'],
       documentation: ['https://docs.connext.network/'],
       repositories: ['https://github.com/connext/monorepo'],
-      socialMedia: [
-        'https://x.com/EverclearOrg',
-        'https://discord.gg/connext',
-      ],
+      socialMedia: ['https://x.com/EverclearOrg', 'https://discord.gg/connext'],
     },
   },
   milestones: [
