@@ -42,6 +42,7 @@
     "0x4146DF64D83acB0DcB0c1a4884a16f090165e122": "FaultDisputeGame",
     "0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34": "PreimageOracle",
     "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0": "PermissionedDisputeGame",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
   },
   "overrides": {
     "AddressManager": {

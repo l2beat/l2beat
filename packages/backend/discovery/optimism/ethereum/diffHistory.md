@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8154ddf7c6f50e960c49006bbab587ccf747173b
+Generated with discovered.json: 0xb342fc020b85b6a8ca8bb20b18f094cac5e0350a
 
-# Diff at Mon, 10 Jun 2024 17:43:22 GMT:
+# Diff at Mon, 10 Jun 2024 19:54:09 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@d3c8c03ba1310e94fe51ccffffb90b46e5ec9ea9 block: 20025146
-- current block number: 20062993
+- current block number: 20063644
 
 ## Description
 
@@ -38,6 +38,15 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
     contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
     +++ description: None
       upgradeability.implementation:
@@ -46,6 +55,9 @@ Provide description of changes. This section will be preserved.
       implementations.0:
 -        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
 +        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
       values.GUARDIAN:
 -        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
       values.L2_ORACLE:
@@ -74,6 +86,20 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      upgradeability.modules.0:
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      upgradeability.threshold:
+-        "4 of 13 (31%)"
++        "10 of 13 (77%)"
+      values.getThreshold:
+-        4
++        10
+    }
+```
+
+```diff
 -   Status: DELETED
     contract L2OutputOracle (0xdfe97868233d1aa22e815a266982f2cf17685a27)
     +++ description: None
@@ -81,31 +107,55 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x5638A9fb7914189a829E3cB6B5C07f6D32F2851A)
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0x6D9Dd462b55d43D76754135BB370A068D3819544)
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0x80749BfD4065e1bf12C001C19AF65Af76B62F332)
+    contract MIPS (0x0f8EdFbDdD3c0256A80AD8C0F2560B1807873C9c)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0xA019Ec50dFd0cA20f92912342891138B07A24633)
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0xc3bd67F0caa0B7E25ce9932C5194C19AD61A0602)
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14)
     +++ description: None
 ```
 
@@ -115,16 +165,35 @@ Provide description of changes. This section will be preserved.
     +++ description: None
 ```
 
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-.../DisputeGameFactory/DisputeGameFactory.sol      | 1549 ++++++++++++++++++++
- .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  199 +++
- .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  678 ---------
- .../L2OutputOracle/Proxy.p.sol => /dev/null        |  210 ---
- .../OptimismPortal/OptimismPortal2.sol}            |  512 ++++---
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  414 +++
+ .../ethereum/.flat/AnchorStateRegistry/Proxy.p.sol |  199 +
+ .../ethereum/.flat/DelayedWETH/DelayedWETH.sol     |  649 ++++
+ .../ethereum/.flat/DelayedWETH/Proxy.p.sol         |  199 +
+ .../ethereum/.flat/DeputyGuardianModule.sol        |  139 +
+ .../DisputeGameFactory/DisputeGameFactory.sol      | 1549 ++++++++
+ .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  199 +
+ .../optimism/ethereum/.flat/FaultDisputeGame.sol   | 3700 +++++++++++++++++++
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol |  952 +++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |   34 +
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  678 ----
+ .../L2OutputOracle/Proxy.p.sol => /dev/null        |  210 --
+ .../optimism/ethereum/.flat/LivenessGuard.sol      |  581 +++
+ .../optimism/ethereum/.flat/LivenessModule.sol     |  257 ++
+ .../optimism/ethereum/.flat/MIPS.sol               | 1103 ++++++
+ .../OptimismPortal/OptimismPortal2.sol}            |  512 ++-
+ .../ethereum/.flat/PermissionedDisputeGame.sol     | 3815 ++++++++++++++++++++
+ .../optimism/ethereum/.flat/PreimageOracle.sol     | 1309 +++++++
  .../SystemConfig/SystemConfig.sol                  |   48 +-
- 6 files changed, 2100 insertions(+), 1096 deletions(-)
+ 19 files changed, 15451 insertions(+), 1096 deletions(-)
 ```
 
 Generated with discovered.json: 0x2e96b99a18a238b80113eef0b15038b22f19a9eb

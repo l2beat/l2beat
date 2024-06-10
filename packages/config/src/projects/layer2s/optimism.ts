@@ -397,7 +397,48 @@ export const optimism: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
-  permissions: [], // TODO: add permissions
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'ProxyAdminOwner',
+      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the ProxyAdminOwner.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      'Member of the ProxyAdminOwner.',
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'This address is the owner of the following contracts: SystemConfig.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('FeesCollector'),
+      'Address collecting sequencer, base and L1 fees from L2.',
+    ),
+  ],
+  nativePermissions: [
+    l2Discovery.contractAsPermissioned(
+      l2Discovery.getContract('L2ProxyAdmin'),
+      'Admin of L2CrossDomainMessenger, GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L1BlockNumber, L2ERC721Bridge, L1Block, L1ToL2MessagePasser, OptimismMintableERC721Factory, BaseFeeVault, L1FeeVault, SchemaRegistry and EAS contracts.',
+    ),
+    ...l2Discovery.getMultisigPermission(
+      'L2ProxyAdminOwner',
+      'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned to the aliased address of the L1 ProxyAdminOwner.',
+    ),
+    ...l2Discovery.getMultisigPermission(
+      'MintManagerOwner',
+      'Owner of the MintManager. It can change the OP token owner to a different MintManager and therefore change the inflation policy.',
+    ),
+  ],
   contracts: {
     addresses: [
       l2Discovery.getContractDetails(
@@ -462,7 +503,6 @@ export const optimism: Layer2 = {
           'Contract collecting L1 fees, which are withdrawable to the FeesCollector on L1.',
         ...l2Upgradability,
       }),
-
       l2Discovery.getContractDetails('SequencerFeeVault', {
         description:
           'Contract collecting sequencer fees, which are withdrawable to the FeesCollector on L1.',
@@ -480,9 +520,9 @@ export const optimism: Layer2 = {
       }),
     ], // TODO: add contracts
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC('0d')],
-    nativeAddresses: [],
   },
-  upgradesAndGovernance: '', // TODO: add upgrades and governance
+  upgradesAndGovernance:
+    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. `FoundationMultisig_2` controls the `SuperchainConfig` Superchain-wide pause mechanism that can pause `L1CrossDomainMessenger` messages relay, as well as ERC-20 and ERC-721 withdrawals. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     // {
     //   name: 'Optimism Protocol Upgrade #6: Multi-Chain Prep (MCP) L1',
@@ -563,54 +603,12 @@ export const optimism: Layer2 = {
     },
   ],
   /*
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
-      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SecurityCouncilMultisig',
-      'Member of the ProxyAdminOwner.',
-      [
-        {
-          text: 'Security Council members - Optimism Collective forum',
-          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
-        },
-      ],
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
-      'This address is the owner of the following contracts: SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('FeesCollector'),
-      'Address collecting sequencer, base and L1 fees from L2.',
-    ),
-  ],
   nonTemplateContracts: [
     discovery.getContractDetails('SuperchainConfig', {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
       ...l1Upgradeability,
     }),
-  ],
-  nonTemplateNativePermissions: [
-    l2Discovery.contractAsPermissioned(
-      l2Discovery.getContract('L2ProxyAdmin'),
-      'Admin of L2CrossDomainMessenger, GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L1BlockNumber, L2ERC721Bridge, L1Block, L1ToL2MessagePasser, OptimismMintableERC721Factory, BaseFeeVault, L1FeeVault, SchemaRegistry and EAS contracts.',
-    ),
-    ...l2Discovery.getMultisigPermission(
-      'L2ProxyAdminOwner',
-      'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component.',
-    ),
-    ...l2Discovery.getMultisigPermission(
-      'MintManagerOwner',
-      'Owner of the MintManager. It can change the OP token owner to a different MintManager and therefore change the inflation policy.',
-    ),
   ],
   */
 }
