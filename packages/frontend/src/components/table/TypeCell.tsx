@@ -1,7 +1,7 @@
-import { Layer2Provider, Layer3Provider } from "@l2beat/config";
-import React from "react";
+import { Layer2Provider, Layer3Provider } from '@l2beat/config'
+import React from 'react'
 
-import { cn } from "../../utils/cn";
+import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
   LoopringIcon,
@@ -12,86 +12,86 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
-} from "../icons";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip/Tooltip";
+} from '../icons'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface TypeCellProps {
-  children: string;
-  disableColors?: boolean;
-  provider?: Layer2Provider | Layer3Provider;
+  children: string
+  disableColors?: boolean
+  provider?: Layer2Provider | Layer3Provider
 }
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
-  const isRollup = children.includes("Rollup");
+  const isRollup = children.includes('Rollup')
 
   return (
     <span
       className={cn(
-        isRollup && !disableColors && "text-green-300 dark:text-green-450"
+        isRollup && !disableColors && 'text-green-300 dark:text-green-450',
       )}
     >
       {children}
-      {provider === "StarkEx" && (
+      {provider === 'StarkEx' && (
         <TypeTooltip
           text="This project is built using StarkEx."
           Icon={StarkWareIcon}
         />
       )}
-      {provider === "OP Stack" && (
+      {provider === 'OP Stack' && (
         <TypeTooltip
           text="This project is based on OP Stack's code base."
           Icon={OptimismIcon}
         />
       )}
-      {provider === "OVM" && (
+      {provider === 'OVM' && (
         <TypeTooltip
           text="This project is based on old OVM's code base."
           Icon={OVMIcon}
         />
       )}
-      {provider === "ZKsync Lite" && (
+      {provider === 'ZKsync Lite' && (
         <TypeTooltip
           text="This project is based on ZKsync Lite's code base."
           Icon={ZkSyncLiteIcon}
         />
       )}
-      {provider === "ZK Stack" && (
+      {provider === 'ZK Stack' && (
         <TypeTooltip
           text="This project is based on ZK Stack's code base."
           Icon={ZKStackIcon}
         />
       )}
-      {provider === "Loopring" && (
+      {provider === 'Loopring' && (
         <TypeTooltip
           text="This project is based on Loopring's code base."
           Icon={LoopringIcon}
         />
       )}
-      {provider === "Arbitrum" && (
+      {provider === 'Arbitrum' && (
         <TypeTooltip
           text="This project is based on Arbitrum's code base."
           Icon={ArbitrumIcon}
         />
       )}
-      {provider === "Polygon" && (
+      {provider === 'Polygon' && (
         <TypeTooltip
           text="This project is based on Polygon's code base."
           Icon={PolygonIcon}
         />
       )}
-      {provider === "Starknet" && (
+      {provider === 'Starknet' && (
         <TypeTooltip
           text="This project is based on Starknet's code base."
           Icon={StarknetIcon}
         />
       )}
     </span>
-  );
+  )
 }
 
 interface TypeTooltipProps {
-  Icon: (props: { className: string }) => JSX.Element;
-  text: string;
+  Icon: (props: { className: string }) => JSX.Element
+  text: string
 }
 
 function TypeTooltip({ Icon, text }: TypeTooltipProps) {
@@ -102,13 +102,13 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>
     </Tooltip>
-  );
+  )
 }
 
 export function TypeColumnTooltip({
   showOnlyRollupsDefinitions,
 }: {
-  showOnlyRollupsDefinitions?: boolean;
+  showOnlyRollupsDefinitions?: boolean
 }) {
   return (
     <div>
@@ -128,5 +128,5 @@ export function TypeColumnTooltip({
         </>
       )}
     </div>
-  );
+  )
 }

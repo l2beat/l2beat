@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 import {
   ArbitrumIcon,
@@ -10,7 +10,7 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
-} from "./icons";
+} from './icons'
 
 export function ScalingLegend() {
   return (
@@ -61,5 +61,5 @@ export function ScalingLegend() {
         <span>This project is based on Starknet&apos;s code base.</span>
       </p>
     </div>
-  );
+  )
 }

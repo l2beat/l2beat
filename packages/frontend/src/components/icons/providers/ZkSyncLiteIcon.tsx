@@ -1,6 +1,6 @@
-import React, { SVGAttributes } from "react";
+import React, { SVGAttributes } from 'react'
 
-import { Icon } from "../Icon";
+import { Icon } from '../Icon'
 
 export function ZkSyncLiteIcon(props: SVGAttributes<SVGElement>) {
   return (
@@ -14,5 +14,5 @@ export function ZkSyncLiteIcon(props: SVGAttributes<SVGElement>) {
         className="fill-none stroke-[#4E5299] dark:stroke-current"
       />
     </Icon>
-  );
+  )
 }
