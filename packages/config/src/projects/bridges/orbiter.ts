@@ -54,7 +54,7 @@ export const orbiter: Bridge = {
   },
   technology: {
     destination: [
-      'zkSync',
+      'ZKsync',
       'Polygon',
       'Arbitrum',
       'Arbitrum Nova',

@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20059772,
-  "configHash": "0xda1ce29e3aea99444aec821b633ec73a5964dbda96d3f7223075bcbcdf9782a0",
+  "blockNumber": 20061096,
+  "configHash": "0x12b0456ba7d83ebc9b51d8314dec5340fae8de0ab2eca56ebe387e83249995b7",
   "version": 5,
   "contracts": [
     {
@@ -50,7 +50,7 @@
       "derivedName": "Bridgehub"
     },
     {
-      "name": "zkSync",
+      "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -185,26 +185,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3250639,
+        "getFirstUnprocessedPriorityTx": 3250723,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 535,
+        "getPriorityQueueSize": 605,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 484895,
-        "getTotalBatchesExecuted": 484768,
-        "getTotalBatchesVerified": 484884,
-        "getTotalBlocksCommitted": 484895,
-        "getTotalBlocksExecuted": 484768,
-        "getTotalBlocksVerified": 484884,
-        "getTotalPriorityTxs": 3251174,
+        "getTotalBatchesCommitted": 484940,
+        "getTotalBatchesExecuted": 484785,
+        "getTotalBatchesVerified": 484907,
+        "getTotalBlocksCommitted": 484940,
+        "getTotalBlocksExecuted": 484785,
+        "getTotalBlocksVerified": 484907,
+        "getTotalPriorityTxs": 3251328,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": [
           "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -213,8 +213,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x0456e24b18b5fdb0e01f210120fb77cd85fd48ba345666c55d2ab121940d7dea",
-          1717922207,
+          "0x614257ad43142df2989b15bbaf3ed56cfa516f9500a2ebb6cfb86c1c788d4a47",
+          1717931411,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]

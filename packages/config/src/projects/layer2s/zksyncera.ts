@@ -1,10 +1,10 @@
 import {
   assert,
-  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
+  ChainId,
 } from '@l2beat/shared-pure'
 
 import {
@@ -88,13 +88,13 @@ export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
   display: {
-    name: 'zkSync Era',
+    name: 'ZKsync Era',
     slug: 'zksync-era',
     warning: executionDelay
       ? `Withdrawals are delayed by ${executionDelay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
-      'zkSync Era is a general-purpose ZK Rollup with full EVM compatibility.',
+      'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
     purposes: ['Universal'],
     provider: 'ZK Stack',
     category: 'ZK Rollup',
@@ -122,7 +122,7 @@ export const zksyncera: Layer2 = {
     activityDataSource: 'Blockchain RPC',
     liveness: {
       explanation: executionDelay
-        ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
+        ? `ZKsync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
         : undefined,
     },
     finality: {
@@ -142,7 +142,7 @@ export const zksyncera: Layer2 = {
         address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
         tokens: '*',
         description:
-          'Shared bridge for depositing tokens to zkSync Era and, in the future, other ZK stack chains.',
+          'Shared bridge for depositing tokens to ZKsync Era and, in the future, other ZK stack chains.',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
@@ -150,7 +150,7 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1698058151),
         tokens: ['wstETH'],
         description:
-          'Bridge for depositing wrapped stETH (Lido) to zkSync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
+          'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
       }),
@@ -161,7 +161,7 @@ export const zksyncera: Layer2 = {
           ),
           sinceTimestamp: new UnixTime(1676268575),
           tokens: ['ETH'],
-          description: 'Main rollup contract of zkSync Era.',
+          description: 'Main rollup contract of ZKsync Era.',
           ...upgrades,
         }),
         isHistorical: true,
@@ -172,7 +172,7 @@ export const zksyncera: Layer2 = {
         sinceTimestamp: new UnixTime(1676367083),
         tokens: '*',
         description:
-          'Legacy bridge for depositing ERC20 tokens to zkSync Era. Forwards deposits and withdrawals to the BridgeHub.',
+          'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
         ...upgrades,
       }),
     ],
@@ -396,7 +396,7 @@ export const zksyncera: Layer2 = {
           ],
         },
         {
-          contract: 'zkSync',
+          contract: 'ZKsync',
           references: [
             'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L448',
             'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F6#L23',
@@ -425,7 +425,7 @@ export const zksyncera: Layer2 = {
           ],
         },
         {
-          contract: 'zkSync',
+          contract: 'ZKsync',
           references: [
             'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L216',
             'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F11#L120',
@@ -440,7 +440,7 @@ export const zksyncera: Layer2 = {
       ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, executionDelaySeconds),
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZKsync',
           references: [
             'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L114', // upgradeChainFromVersion() onlyAdminOrStateTransitionManager
             'https://etherscan.io/address/0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a#code#F1#L128', // executeUpgrade() onlyStateTransitionManager
@@ -452,7 +452,7 @@ export const zksyncera: Layer2 = {
       ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZKsync',
           references: [
             'https://etherscan.io/address/0xCDB6228b616EEf8Df47D69A372C4f725C43e718C#code#F1#L53',
             'https://etherscan.io/address/0xE60E94fCCb18a81D501a38959E532C0A85A1be89#code#F1#L95',
@@ -467,7 +467,7 @@ export const zksyncera: Layer2 = {
       ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
       sources: [
         {
-          contract: 'zkSync',
+          contract: 'ZKsync',
           references: [
             'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L219',
           ],
@@ -532,7 +532,7 @@ export const zksyncera: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'Withdrawing funds - zkSync documentation',
+            text: 'Withdrawing funds - ZKsync documentation',
             href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
           },
         ],
@@ -543,12 +543,12 @@ export const zksyncera: Layer2 = {
   upgradesAndGovernance: (() => {
     assert(
       !isSCset,
-      'There is a Security Council set up for zkSync Era. Change the governance description to reflect that.',
+      'There is a Security Council set up for ZKsync Era. Change the governance description to reflect that.',
     )
     const description = `
     The Matter Labs multisig (${discovery.getMultisigStats(
       'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`zkSync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`ZKsync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
     
     The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role. 
     This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. 
@@ -557,7 +557,7 @@ export const zksyncera: Layer2 = {
     
     *Validator:* Proposes batches from L2 through the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(
       discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the zkSync Era diamond and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
+    )}). This allows for freezing the L2 chain and reverting batches within the delay if any suspicious activity was detected, but also delays finality. The \`ValidatorTimelock\` has the single *Validator* role in the ZKsync Era diamond and can be set by the *Matter Labs Multisig* through the \`STM\`. The actual *Validator* actors can be added and removed by the *Admin* in the \`ValidatorTimelock\` contract.
     
     *Verifier:* Verifies the zk proofs that were provided by a *Validator*. Can be changed by calling \`executeUpgrade()\` on the \`AdminFacet\` from the \`STM\`.
     
@@ -575,7 +575,7 @@ export const zksyncera: Layer2 = {
   })(),
   contracts: {
     addresses: [
-      discovery.getContractDetails('zkSync', {
+      discovery.getContractDetails('ZKsync', {
         description:
           'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
           then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
@@ -593,7 +593,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
-        'Intermediary contract between the *Validators* and the `zkSync Era diamond` that delays block execution (ie withdrawals and other L2 --> L1 messages).',
+        'Intermediary contract between the *Validators* and the `ZKsync Era diamond` that delays block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
       discovery.getContractDetails('Verifier', {
         description: 'Implements ZK proof verification logic.',
@@ -603,7 +603,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('L1SharedBridge', {
         description:
-          'This bridge contract escrows all ERC-20s and ETH that are deposited to zkSync Era - and in the future - other registered ZK stack chains.',
+          'This bridge contract escrows all ERC-20s and ETH that are deposited to ZKsync Era - and in the future - other registered ZK stack chains.',
         ...upgrades,
       }),
       discovery.getContractDetails('BridgeHub', {
@@ -613,7 +613,7 @@ export const zksyncera: Layer2 = {
       }),
       discovery.getContractDetails('StateTransitionManager', {
         description:
-          'Defines L2 diamond contract creation and upgrade, proof verification for the `zkSync diamond` contract connected to it (and potential other L2 diamond contracts that opt in to share this logic).',
+          'Defines L2 diamond contract creation and upgrade, proof verification for the `ZKsync diamond` contract connected to it (and potential other L2 diamond contracts that opt in to share this logic).',
         ...upgrades,
       }),
     ],
@@ -621,7 +621,7 @@ export const zksyncera: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
-    The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but zkSync is actively working on a solution for this.`,
+    The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but ZKsync is actively working on a solution for this.`,
     compressionScheme:
       'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/compression.md).',
     genesisState: 'There have been neither genesis states nor regenesis.',
@@ -635,12 +635,12 @@ export const zksyncera: Layer2 = {
       {
         title: 'Prover Architecture',
         description:
-          'zkSync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
+          'ZKsync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
       },
       {
         title: 'ZK Circuits',
         description:
-          'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
+          'ZKsync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
         risks: [
           {
             category: 'Funds can be lost if',
@@ -667,7 +667,7 @@ export const zksyncera: Layer2 = {
         {
           name: 'zkSyncEraVerifier',
           description:
-            'zkSync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
+            'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
           verified: 'no',
           contractAddress: EthereumAddress(
             '0x70F3FBf8a427155185Ec90BED8a3434203de9604',
@@ -714,17 +714,17 @@ export const zksyncera: Layer2 = {
   ],
   milestones: [
     {
-      name: 'zkSync Protocol Upgrade v24',
-      link: 'https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519',
+      name: 'ZKsync Protocol Upgrade v24',
+      link: 'https://github.com/ZKsync-Community-Hub/zksync-developers/discussions/519',
       date: '2024-06-06T00:00:00Z',
       description:
         'A protocol upgrade that introduces a shared bridge and the foundation for other ZK stack chains.',
     },
     {
-      name: 'zkSync Era starts using blobs',
+      name: 'ZKsync Era starts using blobs',
       link: 'https://twitter.com/zksync/status/1767983026443579448',
       date: '2024-03-13T00:00:00Z',
-      description: 'zkSync Era starts publishing data to blobs.',
+      description: 'ZKsync Era starts publishing data to blobs.',
     },
     {
       name: 'Introduction of Boojum prover',
@@ -733,23 +733,23 @@ export const zksyncera: Layer2 = {
       description: 'Deployment of Boojum - new high-performance proof system.',
     },
     {
-      name: 'zkSync 2.0 baby alpha launch',
+      name: 'ZKsync 2.0 baby alpha launch',
       link: 'https://blog.matter-labs.io/baby-alpha-has-arrived-5b10798bc623',
       date: '2022-10-28T00:00:00Z',
-      description: 'zkSync 2.0 baby alpha is launched on mainnet.',
+      description: 'ZKsync 2.0 baby alpha is launched on mainnet.',
     },
     {
       name: 'Fair Onboarding Alpha and Rebranding',
       link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59',
       date: '2023-02-16T00:00:00Z',
       description:
-        'zkSync 2.0 rebrands to zkSync Era and lets registered projects and developers deploy on mainnet.',
+        'ZKsync 2.0 rebrands to ZKsync Era and lets registered projects and developers deploy on mainnet.',
     },
     {
       name: 'Full Launch Alpha',
       link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
       date: '2023-03-24T00:00:00Z',
-      description: 'zkSync Era is now permissionless and open for everyone.',
+      description: 'ZKsync Era is now permissionless and open for everyone.',
     },
   ],
   knowledgeNuggets: [

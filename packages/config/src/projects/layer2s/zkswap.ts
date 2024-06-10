@@ -27,9 +27,9 @@ export const zkswap: Layer2 = {
     warning:
       'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
     description:
-      'ZKSwap is a fork of zkSync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
+      'ZKSwap is a fork of ZKsync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
     purposes: ['Payments', 'AMM'],
-    provider: 'zkSync Lite',
+    provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {

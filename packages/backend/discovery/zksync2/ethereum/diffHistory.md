@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x750bf144c27f53350e1c17e23f321626f55f7e46
+Generated with discovered.json: 0x9d13e77ec72fc4421198bbb5fca0598df52f3e69
 
-# Diff at Mon, 10 Jun 2024 06:54:51 GMT:
+# Diff at Mon, 10 Jun 2024 11:20:35 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 20040416
-- current block number: 20059772
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e461ce92143e7c3cc87a0a365cc0690be1d348d7 block: 20040416
+- current block number: 20061096
 
 ## Description
 
@@ -25,6 +25,15 @@ discovery. Values are for block 20040416 (main branch discovery), not current.
 +++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
       values.chainsCreated:
 +        [{"chainId":324,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x71d84c3404a6ae258E6471d4934B96a2033F9438"}]
+    }
+```
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      name:
+-        "zkSync"
++        "ZKsync"
     }
 ```
 

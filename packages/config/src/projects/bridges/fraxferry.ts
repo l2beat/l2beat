@@ -387,7 +387,7 @@ export const fraxferry: Bridge = {
       'Fraxtal',
       'Boba',
       'Polygon zkEVM',
-      'zkSync',
+      'ZKsync',
     ],
     principleOfOperation: {
       name: 'Principle of operation',
@@ -763,32 +763,32 @@ export const fraxferry: Bridge = {
       // ZKSYNC
       {
         address: EthereumAddress('0x32dDf80508cfD8feD8ABe375582FC7cfD20372C4'),
-        name: 'FRAX Ferry Bridge (zkSync)',
+        name: 'FRAX Ferry Bridge (ZKsync)',
         description: 'FRAX Bridge Contract (Escrow).',
       },
       {
         address: EthereumAddress('0x27E97F35D80514D5DD1Caa730e22a292E912a214'),
-        name: 'FXS Ferry Bridge (zkSync)',
+        name: 'FXS Ferry Bridge (ZKsync)',
         description: 'FXS Bridge Contract (Escrow).',
       },
       {
         address: EthereumAddress('0x0F6136F9aBB7A0c21FbE076771625b39C544BDf5'),
-        name: 'FPI Ferry Bridge (zkSync)',
+        name: 'FPI Ferry Bridge (ZKsync)',
         description: 'FPI Bridge Contract (Escrow).',
       },
       {
         address: EthereumAddress('0xFBC512849D4dcEeeFAa1bfce08B3dC9daD755482'),
-        name: 'FPIS Ferry Bridge (zkSync)',
+        name: 'FPIS Ferry Bridge (ZKsync)',
         description: 'FPIS Bridge Contract (Escrow).',
       },
       {
         address: EthereumAddress('0x9f76b097Cd95627bFbD8052A583127FF6e7b3Fa9'),
-        name: 'frxETH Ferry Bridge (zkSync)',
+        name: 'frxETH Ferry Bridge (ZKsync)',
         description: 'frxETH Bridge Contract (Escrow).',
       },
       {
         address: EthereumAddress('0x29396AaE6198130A15F6Ff982C44BC4a7353Ef37'),
-        name: 'sfrxETH Ferry Bridge (zkSync)',
+        name: 'sfrxETH Ferry Bridge (ZKsync)',
         description: 'sfrxETH Bridge Contract (Escrow).',
       },
     ],
