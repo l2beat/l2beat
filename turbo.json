@@ -7,7 +7,7 @@
     "build": {
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "db:generate"
       ],
       "outputs": [
         "build/**",
@@ -24,7 +24,7 @@
     "typecheck": {
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "db:generate"
       ],
       "inputs": [
         "**/*.ts",
@@ -34,7 +34,7 @@
     "test": {
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "db:generate"
       ],
       "inputs": [
         "**/*.ts",
@@ -46,7 +46,7 @@
     "lint": {
       "dependsOn": [
         "^build",
-        "^db:generate"
+        "db:generate"
       ]
     },
     "format": {},
