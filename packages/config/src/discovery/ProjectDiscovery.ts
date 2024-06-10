@@ -150,7 +150,8 @@ export class ProjectDiscovery {
       contract,
       isUpcoming,
       chain,
-      includeInTotal,
+      includeInTotal:
+        includeInTotal ?? chain === 'ethereum' ? true : includeInTotal,
     }
   }
 
