@@ -6,13 +6,14 @@
   "tasks": {
     "build": {
       "dependsOn": [
-        "^build"
+        "^db:generate"
       ],
       "outputs": [
         "build/**",
         ".next/**",
         "!.next/cache/**",
-        "dist/**"
+        "dist/**",
+        "src/kysely/generated/**"
       ]
     },
     "typecheck": {
