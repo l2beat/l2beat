@@ -32,7 +32,7 @@ export const amarok: Bridge = {
       documentation: ['https://docs.connext.network/'],
       repositories: ['https://github.com/connext/monorepo'],
       socialMedia: [
-        'https://twitter.com/ConnextNetwork',
+        'https://x.com/EverclearOrg',
         'https://discord.gg/connext',
       ],
     },
