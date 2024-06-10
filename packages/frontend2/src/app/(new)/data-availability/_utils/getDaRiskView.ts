@@ -1,11 +1,11 @@
 import {
   DaAccessabilityRisk,
   DaAttestationSecurityRisk,
+  type DaBridge,
+  type DaBridgeRisks,
   DaEconomicSecurityRisk,
   DaExitWindowRisk,
   DaFraudDetectionRisk,
-  type DaBridge,
-  type DaBridgeRisks,
   type DaLayer,
   type DaLayerRisks,
   type DacBridge,
