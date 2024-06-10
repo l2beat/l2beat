@@ -15,7 +15,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   const router = new Router()
 
   router.get(
-    '/api/tvl2',
+    ['/api/tvl', '/api/tvl2'],
     withTypedContext(
       z.object({
         query: z.object({
@@ -41,7 +41,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   )
 
   router.get(
-    '/api/tvl2/aggregate',
+    ['/api/tvl/aggregate', '/api/tvl2/aggregate'],
     withTypedContext(
       z.object({
         query: z.object({
@@ -71,15 +71,11 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
         query: z.object({
           project: stringAs(ProjectId),
           chain: z.string(),
-          address: z.string(),
+          address: z.union([stringAs(EthereumAddress), z.literal('native')]),
         }),
       }),
       async (ctx) => {
-        const { chain, project } = ctx.query
-        const address =
-          ctx.query.address === 'native'
-            ? 'native'
-            : EthereumAddress(ctx.query.address)
+        const { chain, project, address } = ctx.query
 
         ctx.body = await controller.getTokenChart(
           { chain, address },
@@ -90,18 +86,21 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
     ),
   )
 
-  router.get('/api/tvl2/breakdown', async (ctx) => {
-    const breakdown = await controller.getTvlBreakdown(
-      // TODO: This is a temporary solution. We should use the last hour
-      // instead of the hour before the last hour.
-      // This should be fixed by interpolating the data for the last hour when not every project has data for it.
-      clock
-        .getLastHour()
-        .add(-1, 'hours'),
-    )
+  router.get(
+    ['/api/project-assets-breakdown', '/api/tvl2/breakdown'],
+    async (ctx) => {
+      const breakdown = await controller.getTvlBreakdown(
+        // TODO: This is a temporary solution. We should use the last hour
+        // instead of the hour before the last hour.
+        // This should be fixed by interpolating the data for the last hour when not every project has data for it.
+        clock
+          .getLastHour()
+          .add(-1, 'hours'),
+      )
 
-    ctx.body = breakdown
-  })
+      ctx.body = breakdown
+    },
+  )
 
   return router
 }

@@ -16,7 +16,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 4
+export const DISCOVERY_LOGIC_VERSION = 5
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -103,6 +103,11 @@ export class DiscoveryEngine {
             templates,
           )
           resolved[address.toString()] = analysis
+          if (analysis.type === 'Contract') {
+            bufferedLogger.log(
+              `Relatives: [${Object.keys(analysis.relatives)}]`,
+            )
+          }
 
           if (analysis.type === 'Contract') {
             for (const [address, suggestedTemplates] of Object.entries(

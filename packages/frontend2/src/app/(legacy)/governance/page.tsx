@@ -7,6 +7,7 @@ import { CustomLink } from '~/app/_components/custom-link'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { getCollection } from '~/content/getCollection'
 import OutLinkIcon from '~/icons/outlink.svg'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { GovernanceHeaderIllustration } from './_assets/governance-header'
 import { GovernanceEventsSection } from './_components/sections/governance-events-section'
 import { OfficeHoursSection } from './_components/sections/office-hours-section'
@@ -16,14 +17,14 @@ import { RecentPublicationsSection } from './_components/sections/recent-publica
 import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from './_utils/get-governance-publication-entry'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance - L2BEAT',
   description:
     'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
   openGraph: {
     url: '/governance',
   },
-}
+})
 
 export default function Page() {
   const publications = getCollection('publications')
@@ -85,7 +86,7 @@ function Header() {
                   {projects.map((delegatedProject) => (
                     <CustomLink
                       key={delegatedProject.id}
-                      className="flex items-center text-sm font-medium justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
+                      className="flex items-center text-sm font-medium justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
                       href={delegatedProject.data.delegateTokensUrl}
                       underline={false}
                     >

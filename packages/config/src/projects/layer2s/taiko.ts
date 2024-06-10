@@ -4,9 +4,9 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import {
   DATA_ON_CHAIN,
-  FRONTRUNNING_RISK,
   RISK_VIEW,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
@@ -27,12 +27,6 @@ const chainWatchdog = discovery.getContractValue<string>(
   'chain_watchdog',
 )
 
-// sequencer
-const proposer = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'proposer',
-)
-
 // sequencer for block 1
 const proposerOne = discovery.getContractValue<string>(
   'TaikoL1Contract',
@@ -44,6 +38,11 @@ const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 const TIER_SGX = discovery.getContractValue<string[]>(
   'TierProvider',
   'TIER_SGX',
+)
+
+const TIER_MINORITY_GUARDIAN = discovery.getContractValue<string[]>(
+  'TierProvider',
+  'TIER_GUARDIAN_MINORITY',
 )
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
@@ -64,13 +63,24 @@ const NumGuardiansProver = discovery.getContractValue<string[]>(
   'numGuardians',
 )
 
+const TaikoChainConfig = discovery.getContractValue<string>(
+  'TaikoL1Contract',
+  'getConfig',
+)
+
 const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
+const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TAIKO
+const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
+const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
+const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
+
+const LivenessBond = utils.formatEther(TaikoChainConfig[5])
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (blobs)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
@@ -183,14 +193,14 @@ export const taiko: Layer2 = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based rollup sequencing mechanism. However, currently there is only one permissioned sequencer who can propose blocks. This is a single point of failure and can lead to the system being halted if the sequencer fails to propose blocks on L1.',
-      sentiment: 'bad',
-      value: 'No mechanism', // based rollup sequencing
+        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay.',
+      sentiment: 'good',
+      value: 'Self sequence', // based rollup sequencing
     },
     proposerFailure: {
       description:
-        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks. However, the TaikoAdmin multisig can delete SGX instances and revoke certificates without delay, which would prevent valid SGX proofs from being accepted.',
-      sentiment: 'warning',
+        'Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks.',
+      sentiment: 'good',
       value: 'Self propose',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -206,14 +216,14 @@ export const taiko: Layer2 = {
       },
       stage1: {
         stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: false,
+        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
+        fraudProofSystemIsPermissionless: null,
         delayWith30DExitWindow: false,
       },
     },
@@ -225,11 +235,22 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the sequencer specifies a designated prover for that block. The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
-        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. It is not required to provide a proof for the block to submit a contestation.
+        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the block, which will be returned once the block is proven.
+        The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TAIKO, while ${SGXcontestBond} TAIKO is required to contest the proof. 
+        For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
         If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
-      references: [],
+      references: [
+        {
+          text: 'TierProviderV2.sol - Etherscan source code, tier ids',
+          href: 'https://etherscan.io/address/0x4cffe56C947E26D07C14020499776DB3e9AE3a23#code',
+        },
+        {
+          text: 'TaikoL1.sol - Etherscan source code, liveness bond',
+          href: 'https://etherscan.io/address/0xe84dc8e2a21e59426542ab040d77f81d6db881ee#code',
+        },
+      ],
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -245,23 +266,23 @@ export const taiko: Layer2 = {
       risks: [],
     },
     operator: {
-      name: 'The system has a centralized sequencer',
+      name: 'The system uses a based sequencing mechanism',
       description:
-        'Although designed for permissionless block proposals, the system currently has a single sequencer who is responsible for proposing blocks. This is a single point of failure and can lead to the system being halted if the proposer fails to propose blocks on L1.',
-      references: [],
-      risks: [FRONTRUNNING_RISK],
-    },
-    forceTransactions: {
-      name: `Users can't force any transaction`,
-      description:
-        'The system is designed to allow users to propose L2 blocks directly on L1. However, currently only the permissioned proposer is allowed to propose blocks.',
-      references: [],
-      risks: [
+        'The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. Proposing a block requires designating a prover, which will be the only entity allowed to provide a proof for the block during the initial proving window. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.',
+      references: [
         {
-          category: 'Users can be censored if',
-          text: 'the sequencer refuses to include their transactions.',
+          text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
+          href: 'https://etherscan.io/address/0x4b2743b869b85d5f7d8020566f92664995e4f3c5#code',
         },
       ],
+      risks: [],
+    },
+    forceTransactions: {
+      name: `Users can force any transaction`,
+      description:
+        'The system is designed to allow users to propose L2 blocks directly on L1. However, the TaikoAdmin multisig can pause block proposals without delay.',
+      references: [],
+      risks: [],
     },
     exitMechanisms: [
       // to do: double check exit mechanism
@@ -307,7 +328,7 @@ export const taiko: Layer2 = {
       }),
       discovery.getContractDetails('ProverSetProxy', {
         description:
-          "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.",
+          "A contract that holds TAIKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TAIKO.",
         ...upgradesTaikoMultisig,
       }),
       discovery.getContractDetails('SignalService', {
@@ -364,17 +385,6 @@ export const taiko: Layer2 = {
       description: 'The chain watchdog role can pause proving of blocks.',
     },
     {
-      name: 'Sequencer',
-      accounts: [
-        {
-          address: EthereumAddress(proposer),
-          type: 'EOA',
-        },
-      ],
-      description:
-        'The authorized sequencer (in Taiko called “proposer”) of blocks on the TaikoL1 contract.',
-    },
-    {
       name: 'SequencerBlockOne',
       accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
       description:
@@ -383,10 +393,22 @@ export const taiko: Layer2 = {
   ],
   milestones: [
     {
+      name: 'TKO Token Airdrop',
+      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      date: '2024-06-05T00:00:00.00Z',
+      description: 'TKO token launches.',
+    },
+    {
       name: 'Taiko Mainnet Launch',
       link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',
+    },
+    {
+      name: 'Taiko Based Sequencing Upgrade',
+      link: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
+      date: '2024-06-06T00:00:00.00Z',
+      description: 'Proposing blocks on Taiko is now permissionless.',
     },
   ],
 }

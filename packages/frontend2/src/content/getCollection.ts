@@ -5,7 +5,7 @@ import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 import { type z } from 'zod'
 
-import { startsWithLetterOrNumber } from '~/utils/startsWithLetterOrNumber'
+import { startsWithLetterOrNumber } from '~/utils/starts-with-letter-or-number'
 import { collections } from './collections'
 
 type Collection = typeof collections

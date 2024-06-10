@@ -1,22 +1,19 @@
 import React from 'react'
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
+import { DashboardLayout } from '../../../layouts/DashboardLayout'
 import { ZkCatalogView, ZkCatalogViewProps } from './ZkCatalogView'
 
 export interface ZkCatalogPageProps {
-  navbar: NavbarProps
   view: ZkCatalogViewProps
-  footer: FooterProps
 }
 
 export function ZkCatalogPage(props: ZkCatalogPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent className="w-full">
-        <header className="text-left md:text-center mt-[72px]">
-          <h1 className="text-6xl font-extrabold">ZK Catalog</h1>
-          <p className="mx-auto text-base font-medium mt-6 max-w-[994px]">
+    <DashboardLayout>
+      <PageContent>
+        <header className="mt-[72px] text-left md:text-center">
+          <h1 className="font-extrabold text-6xl">ZK Catalog</h1>
+          <p className="mx-auto mt-6 max-w-[994px] font-medium text-base">
             ZK Catalog by L2BEAT is a community-driven resource offering
             detailed insights into the ZK technology utilized by various
             blockchain projects. It aims to enhance transparency and
@@ -27,7 +24,6 @@ export function ZkCatalogPage(props: ZkCatalogPageProps) {
           <ZkCatalogView {...props.view} />
         </main>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }

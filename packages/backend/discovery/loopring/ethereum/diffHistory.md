@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x05f7ecde6b4a9a589584862a36c9bfbf48372d23
+
+# Diff at Mon, 10 Jun 2024 06:22:03 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 19960423
+- current block number: 20059608
+
+## Description
+
+A new agent is registered: A LoopringAmmPool contract for Taiko-USDC.
+
+## Watched changes
+
+```diff
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14) {
+    +++ description: None
+      values.agents.137:
++        "0xB42bBCd12c14F4b2efc1C84bb971F62A943db7d5"
+    }
+```
+
 Generated with discovered.json: 0x0b8b96cd701f713f7fbfe5c110e91309ee7036ae
 
 # Diff at Mon, 27 May 2024 09:50:43 GMT:

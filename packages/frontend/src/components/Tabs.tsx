@@ -42,7 +42,7 @@ export function Tabs({ items }: TabsProps) {
             {tab.itemsCount && (
               <span
                 data-role="tabs-item-count-badge"
-                className="flex items-center justify-center rounded-full bg-purple-100 px-1.5 py-0.5 text-2xs tabular-nums leading-none text-white md:text-xs"
+                className="flex items-center justify-center rounded-full bg-purple-100 px-1.5 py-0.5 text-2xs text-white tabular-nums leading-none md:text-xs"
               >
                 {tab.itemsCount}
               </span>

@@ -18,7 +18,7 @@ import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
-const TEMPLATE_SIMILARITY_THRESHOLD = 0.55
+const TEMPLATE_SIMILARITY_THRESHOLD = 0.9
 
 export class TemplateService {
   private readonly loadedTemplates: Record<string, DiscoveryContract> = {}

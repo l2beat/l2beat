@@ -58,6 +58,7 @@ import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
+import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
 import { nil } from './nil'
@@ -75,6 +76,7 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
@@ -93,6 +95,7 @@ import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
@@ -175,6 +178,7 @@ export const layer2s: Layer2[] = [
   mint,
   mode,
   morph,
+  move,
   myria,
   myshell,
   nil,
@@ -195,6 +199,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   redstone,
+  real,
   reya,
   rhinofi,
   rise,
@@ -210,6 +215,7 @@ export const layer2s: Layer2[] = [
   sxt,
   taiko,
   tanx,
+  telos,
   ten,
   termstructure,
   tradable,

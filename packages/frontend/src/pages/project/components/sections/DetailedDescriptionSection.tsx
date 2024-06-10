@@ -21,7 +21,7 @@ export function DetailedDescriptionSection(
       id={props.id}
       sectionOrder={props.sectionOrder}
     >
-      <div className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
+      <div className="mt-4 text-gray-850 leading-snug dark:text-gray-400">
         <Markdown>{props.description}</Markdown>
         {props.detailedDescription && (
           <Markdown className="mt-2">{props.detailedDescription}</Markdown>

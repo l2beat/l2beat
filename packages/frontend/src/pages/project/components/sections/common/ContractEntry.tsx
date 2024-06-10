@@ -160,7 +160,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+            <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}
@@ -209,7 +209,7 @@ export function ContractEntry({
                 Show upgrade details
               </button>
               {/* TODO: remove leading once line heights are fixed for all text on the page */}
-              <Markdown className="mt-2 hidden text-sm leading-snug text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 hidden text-gray-850 text-sm leading-snug dark:text-gray-400">
                 {contract.upgradeConsiderations}
               </Markdown>
             </>
@@ -244,7 +244,7 @@ function UsedInProjectEntry({
                   key={i}
                   src={project.iconPath}
                   alt="Project icon"
-                  className="h-5 w-5 mx-1 inline"
+                  className="mx-1 inline h-5 w-5"
                 />
               </a>
             </TooltipTrigger>

@@ -13,8 +13,14 @@ export function DarkThemeToggle({ withText }: DarkThemeToggleProps) {
       className="flex gap-4 font-medium"
       title="Change color scheme"
     >
-      <SunIcon className="hidden dark:block" aria-label="Toggle light mode" />
-      <MoonIcon className="block dark:hidden" aria-label="Toggle dark mode" />
+      <SunIcon
+        className="hidden h-5 w-5 dark:block"
+        aria-label="Toggle light mode"
+      />
+      <MoonIcon
+        className="block h-5 w-5 dark:hidden"
+        aria-label="Toggle dark mode"
+      />
       {withText && (
         <>
           <span className="inline dark:hidden">Switch to dark theme</span>

@@ -545,12 +545,8 @@ function update(
   return { id, properties: null, minHeight, maxHeight, hasData }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<null> {
-  return { id, properties: null, from, to }
+function removal(id: string, from: number, to: number): RemovalConfiguration {
+  return { id, from, to }
 }
 
 export const mockDbMiddleware = {

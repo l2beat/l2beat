@@ -15,7 +15,7 @@ export function ReportDownloadButton({
   return (
     <a
       className={cn(
-        'flex items-center justify-center rounded-md bg-pink-900 py-4 font-medium text-white transition-colors hover:bg-pink-800 md:w-1/3 md:py-5',
+        'flex items-center justify-center rounded-md bg-pink-900 py-4 font-medium text-white transition-colors md:w-1/3 hover:bg-pink-800 md:py-5',
         className,
       )}
       href={fileUrl}

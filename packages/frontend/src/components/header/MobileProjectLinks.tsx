@@ -29,7 +29,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
             <tbody>
               {props.projectLinks.map(({ name, links }, i) => (
                 <tr
-                  className="border-t border-gray-300 first:border-none dark:border-gray-850"
+                  className="border-gray-300 border-t dark:border-gray-850 first:border-none"
                   key={i}
                 >
                   <th

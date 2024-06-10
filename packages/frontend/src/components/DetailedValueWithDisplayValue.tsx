@@ -19,7 +19,7 @@ export function DetailedValueWithDisplayValue({ children }: Props) {
     <Tooltip>
       <TooltipTrigger>{children.displayValue}</TooltipTrigger>
       <TooltipContent>
-        <span className="text-xs font-medium">
+        <span className="font-medium text-xs">
           {children.value.toFixed(precision)}
         </span>
       </TooltipContent>

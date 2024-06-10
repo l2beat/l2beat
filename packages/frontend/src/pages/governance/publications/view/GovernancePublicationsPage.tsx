@@ -1,41 +1,32 @@
 import React from 'react'
 
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { LinkWithThumbnail } from '../../../../components/LinkWithThumbnail'
 import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationsPageProps {
   publications: GovernancePublicationEntry[]
-  navbar: NavbarProps
-  footer: FooterProps
 }
 
 export function GovernancePublicationsPage(
   props: GovernancePublicationsPageProps,
 ) {
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       <Header />
       <PageContent>
-        <h1 className="mt-20 text-3xl font-bold">
+        <h1 className="mt-20 font-bold text-3xl">
           All governance publications
         </h1>
-        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-8 lg:grid-cols-3 md:grid-cols-2">
           {props.publications.map((publication) => (
             <PublicationCard publication={publication} key={publication.id} />
           ))}
         </div>
       </PageContent>
-      <Footer {...props.footer} />
-    </>
+    </DashboardLayout>
   )
 }
 
@@ -50,7 +41,7 @@ function PublicationCard({
       src={`/meta-images/governance/publications/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
-        <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+        <p className="font-semibold text-2xs text-purple-100 uppercase dark:text-pink-200">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
         </p>
@@ -65,7 +56,7 @@ function PublicationCard({
 function Header() {
   return (
     <FullPageHeader pageContentClassName="flex-col md:text-center md:items-center items-start">
-      <h1 className="mb-6 text-5xl font-bold">Governance publications</h1>
+      <h1 className="mb-6 font-bold text-5xl">Governance publications</h1>
       <p className="text-xl">
         Explore the L2BEAT Governance publications, and discover the latest
         insights, analyses, and updates on Layer 2 project governance, curated

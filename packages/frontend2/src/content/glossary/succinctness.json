@@ -1,0 +1,5 @@
+{
+  "term": "Succinctness",
+  "definition": "A property of ZKP that stands for the following terms: (i) the proof of statement is shorter than the statement itself, (ii) the time to verify the proof is faster than just to evaluate the function from scratch.",
+  "isSpicy": false
+}

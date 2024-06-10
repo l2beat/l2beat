@@ -61,6 +61,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
     {
@@ -68,6 +69,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
       align: 'right',
+      headClassName: '-translate-x-[72px]',
       getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => ({
@@ -84,6 +86,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Share of the sum of total value locked of all projects.',
       align: 'right',
       minimalWidth: true,
+      className: 'hidden 2xl:table-cell',
       headClassName: '!pr-4',
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
@@ -187,10 +190,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
             {project.data?.tvl.displayValue}
           </NumberCell>
           {!project.isArchived ? (
-            <NumberCell
-              signed
-              className="ml-1 w-[72px] !text-base font-medium "
-            >
+            <NumberCell signed className="!text-base ml-1 w-[72px] font-medium">
               {project.data?.sevenDayChange}
             </NumberCell>
           ) : (
@@ -237,6 +237,7 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
 

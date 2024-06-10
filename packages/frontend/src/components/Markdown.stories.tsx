@@ -144,5 +144,6 @@ type Story = StoryObj<typeof MarkdownComponent>
 export const Markdown: Story = {
   args: {
     children: CONTENT,
+    ignoreGlossary: true,
   },
 }
