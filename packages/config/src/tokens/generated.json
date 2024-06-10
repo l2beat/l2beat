@@ -2086,6 +2086,21 @@
       "formula": "locked"
     },
     {
+      "id": "ll-lightlink",
+      "name": "LightLink",
+      "coingeckoId": "lightlink",
+      "address": "0x0921799CB1d702148131024d18fCdE022129Dc73",
+      "symbol": "LL",
+      "decimals": 18,
+      "deploymentTimestamp": 1708060619,
+      "coingeckoListingTimestamp": 1713916800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35357/large/lightlink-ticker-200.png?1708362303",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "steth-liquid-staked-ether-2.0",
       "name": "Liquid staked Ether 2.0",
       "coingeckoId": "staked-ether",
