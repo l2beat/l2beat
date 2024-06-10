@@ -1,9 +1,9 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 19982126,
+  "blockNumber": 20060546,
   "configHash": "0x9baeef1cf2bda73a3a0da300b75b231b8c7646ca0679cd65d7f065340075d6eb",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -37,6 +37,7 @@
     {
       "name": "GuardianMultisig",
       "address": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -61,7 +62,7 @@
           "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
         ],
         "getThreshold": 3,
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -100,7 +101,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19982121],
+        "params": [1000000000, 491310, 20060545],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -137,10 +138,10 @@
         ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 15136200,
-        "latestOutputIndex": 8408,
-        "nextBlockNumber": 15138000,
-        "nextOutputIndex": 8409,
+        "latestBlockNumber": 15609600,
+        "latestOutputIndex": 8671,
+        "nextBlockNumber": 15611400,
+        "nextOutputIndex": 8672,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -194,7 +195,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
-        "gasLimit": 75000000,
+        "gasLimit": 90000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
@@ -222,6 +223,7 @@
     {
       "name": "AdminMultisig",
       "address": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -258,7 +260,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292805782",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292820268",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -286,6 +288,7 @@
     {
       "name": "BaseMultisig",
       "address": "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -301,13 +304,13 @@
         "getOwners": [
           "0x6CD3850756b7894774Ab715D136F9dD02837De50",
           "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
-          "0x1d0D1f61137E457d4CF13146bBFA9F07B33f8Ec5",
+          "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
           "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
           "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
           "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -403,7 +406,6 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
-    "0x1d0D1f61137E457d4CF13146bBFA9F07B33f8Ec5",
     "0x3041BA32f451F5850c147805F5521AC206421623",
     "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
     "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
@@ -413,6 +415,7 @@
     "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839",
     "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
     "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
+    "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
     "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
     "0x6CD3850756b7894774Ab715D136F9dD02837De50",
     "0x73565876170a336Fa02fDe34EeD03E3121f70bA6",

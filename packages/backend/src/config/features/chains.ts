@@ -48,16 +48,22 @@ export function getChainTvlConfig(
     return { chain }
   }
 
+  const project =
+    layer2s.find((layer2) => layer2.id === projectId) ??
+    layer3s.find((layer3) => layer3.id === projectId)
+
   const ENV_NAME = chain.toUpperCase()
   return {
     chain,
     config: {
       projectId,
       chainId: ChainId(chainConfig.chainId),
-      providerUrl: env.string([
-        `${ENV_NAME}_RPC_URL_FOR_TVL`,
-        `${ENV_NAME}_RPC_URL`,
-      ]),
+      providerUrl: env.string(
+        [`${ENV_NAME}_RPC_URL_FOR_TVL`, `${ENV_NAME}_RPC_URL`],
+        project?.config.transactionApi?.type === 'rpc'
+          ? project.config.transactionApi.defaultUrl
+          : undefined,
+      ),
       providerCallsPerMinute: env.integer(
         [
           `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_TVL`,

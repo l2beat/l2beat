@@ -85,6 +85,7 @@
   "mode": true,
   "molten": true,
   "morph": true,
+  "move": true,
   "multichain": true,
   "mxc": false,
   "myria": true,

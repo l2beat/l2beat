@@ -1,9 +1,9 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 20025964,
-  "configHash": "0x96e23df3cf87adb218b1909582a1c981beec00661aff249d33859afb5f926bbc",
-  "version": 4,
+  "blockNumber": 20059600,
+  "configHash": "0x914e7bb1f1ef535a617569b498719e4412dee0e0bbee7d24f7b7f76066dae93b",
+  "version": 5,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -77,7 +77,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 36682422175082,
+        "balance": 34358781371190,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -89,6 +89,7 @@
     {
       "name": "AdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -153,7 +154,8 @@
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
         "currentL2StoredL1RollingHash",
-        "currentFinalizedShnarf"
+        "currentFinalizedShnarf",
+        "currentFinalizedState"
       ],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -188,11 +190,11 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0x3938b6a00bcd05d14fd9a7fb5b18ba697d4269e8f1939cf20e074bfd574d944f",
-        "currentFinalizedState": "0xdefa81791e0d707e911c19ca6336da4b78f81cf3e085e591c31b94155ede2b08",
+        "currentFinalizedShnarf": "0xdecd5bbfe1ad27cee6a833de214574fed9c2a93f0a10580b66c18eb7d855c822",
+        "currentFinalizedState": "0x6fe36a585ff3224e865ba0c92bfc544cd1218718c20249a303e5eb2283e651ad",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "18117606000000000000",
+        "currentPeriodAmountInWei": "15664856200000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,

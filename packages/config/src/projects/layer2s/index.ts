@@ -58,6 +58,7 @@ import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
+import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
 import { nil } from './nil'
@@ -94,6 +95,7 @@ import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
@@ -176,6 +178,7 @@ export const layer2s: Layer2[] = [
   mint,
   mode,
   morph,
+  move,
   myria,
   myshell,
   nil,
@@ -212,6 +215,7 @@ export const layer2s: Layer2[] = [
   sxt,
   taiko,
   tanx,
+  telos,
   ten,
   termstructure,
   tradable,
