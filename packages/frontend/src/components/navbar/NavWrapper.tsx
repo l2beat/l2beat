@@ -243,7 +243,7 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
       </div>
       {currentGroup && (
         <OverflowWrapper>
-          <div className="flex flex-row gap-2 px-4 py-2">
+          <div className="mx-auto flex w-fit flex-row gap-2 px-4 py-2">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
