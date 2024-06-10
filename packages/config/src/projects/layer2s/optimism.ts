@@ -19,6 +19,10 @@ const l2Upgradability = {
 }
 
 export const optimism: Layer2 = opStackL2({
+  isUnderReview: true,
+  stage: {
+    stage: 'UnderReview',
+  },
   discovery,
   display: {
     name: 'OP Mainnet',
