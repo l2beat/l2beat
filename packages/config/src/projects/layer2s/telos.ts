@@ -4,10 +4,10 @@ import { Layer2 } from './types'
 export const telos: Layer2 = upcomingL2({
   id: 'telos',
   display: {
-    name: 'Telos',
+    name: 'Telos zkEVM',
     slug: 'telos',
     description:
-      'Telos L2 will leverage the SNARKtor decentralized protocol for scalable SNARKs verification unlocking massively scalable users data protecting applications, regulator compliance and trustless interoperability.',
+      'Telos zkEVM is an upcoming ZK-based scaling solution on Ethereum, powered by SNARKtor decentralized proof aggregation and developed by Telos.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
