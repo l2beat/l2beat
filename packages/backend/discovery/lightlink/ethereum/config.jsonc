@@ -15,7 +15,6 @@
     "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": "CanonicalStateChain",
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": "Challenge",
     "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": "ChainOracle"
-
   },
   "overrides": {
     "LightLinkBridge": {
@@ -74,9 +73,9 @@
             "expectRevert": true
           }
         }
-      },
+      }
     },
-    "ChainOracle":{
+    "ChainOracle": {
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -88,7 +87,7 @@
         }
       }
     },
-    "Challenge":{
+    "Challenge": {
       "fields": {
         "proxiableUUID": {
           "handler": {
