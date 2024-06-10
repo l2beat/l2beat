@@ -86,7 +86,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Share of the sum of total value locked of all projects.',
       align: 'right',
       minimalWidth: true,
-      className: 'hidden 2xl:table-cell',
+      className: 'hidden min-[1440px]:table-cell',
       headClassName: '!pr-4',
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
