@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x9f5c5f686ed4bfe982a25f00bc50d2b5a0513d1ce029759e7ae55b43c207b658",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",
@@ -36,11 +36,14 @@
         "destId": 1,
         "MAKER_ROLE": "0x70d8f6b4dfca278d41482e0778a0bf123d87b86b23b71cc0ef42c2f082e8053a",
         "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-        "pendingDefaultAdmin": [
-          "0x0000000000000000000000000000000000000000",
-          0
-        ],
-        "pendingDefaultAdminDelay": [0, 0],
+        "pendingDefaultAdmin": {
+          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": {
+          "newDelay": 0,
+          "schedule": 0
+        },
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
         "totalBridgedDAI": "254032905626934742210448",
         "totalProtocolDAI": "1000000000000000000",
@@ -135,11 +138,14 @@
         "originTokenNetwork": 0,
         "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "paused": false,
-        "pendingDefaultAdmin": [
-          "0x0000000000000000000000000000000000000000",
-          0
-        ],
-        "pendingDefaultAdminDelay": [0, 0],
+        "pendingDefaultAdmin": {
+          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": {
+          "newDelay": 0,
+          "schedule": 0
+        },
         "polygonZkEVMBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "wrappedTokenAddress": "0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f"
       },
@@ -157,6 +163,8 @@
     {
       "name": "EscrowsAdmin",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

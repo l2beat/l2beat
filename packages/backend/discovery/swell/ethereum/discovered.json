@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 20016207,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "SwellMultisig",
       "address": "0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

@@ -27,25 +27,31 @@
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
         "getBlockHeight": 52471,
-        "getConstants": [
-          "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-          4096,
-          1296000,
-          604800,
-          4294967296,
-          65536,
-          604800,
-          2592000,
-          68,
-          1296000
-        ],
+        "getConstants": {
+          "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+          "MAX_OPEN_FORCED_REQUESTS": 4096,
+          "MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE": 1296000,
+          "TIMESTAMP_HALF_WINDOW_SIZE_IN_SECONDS": 604800,
+          "MAX_NUM_ACCOUNTS": 4294967296,
+          "MAX_NUM_TOKENS": 65536,
+          "MIN_AGE_PROTOCOL_FEES_UNTIL_UPDATED": 604800,
+          "MIN_TIME_IN_SHUTDOWN": 2592000,
+          "TX_DATA_AVAILABILITY_SIZE": 68,
+          "MAX_AGE_DEPOSIT_UNTIL_WITHDRAWABLE_UPPERBOUND": 1296000
+        },
         "getDepositContract": "0x674bdf20A0F284D710BC40872100128e2d66Bd3f",
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
         "getMerkleRoot": "0x01026c7498971c88d89445d6b3d33206db64f35bd1ba53bed115f99007eeebbf",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1717949735, 0, 0, 0, 0],
+        "getProtocolFeeValues": {
+          "syncedAt": 1717949735,
+          "takerFeeBips": 0,
+          "makerFeeBips": 0,
+          "previousTakerFeeBips": 0,
+          "previousMakerFeeBips": 0
+        },
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -251,16 +257,16 @@
       "values": {
         "DAO_PERDENTAGE": 20,
         "daoAddress": "0xe6FcAA61d9354dBb2320d9DcAFA9C1486Cf93907",
-        "getProtocolFeeStats": [
-          "4355094991122463357585188",
-          "435509499112246335758520",
-          "871018998224492671517037",
-          "3048566493785724350309631",
-          0,
-          0,
-          0,
-          0
-        ],
+        "getProtocolFeeStats": {
+          "accumulatedFees": "4355094991122463357585188",
+          "accumulatedBurn": "435509499112246335758520",
+          "accumulatedDAOFund": "871018998224492671517037",
+          "accumulatedReward": "3048566493785724350309631",
+          "remainingFees": 0,
+          "remainingBurn": 0,
+          "remainingDAOFund": 0,
+          "remainingReward": 0
+        },
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -371,7 +377,10 @@
       "values": {
         "blockVerifierAddress": "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef",
         "forcedWithdrawalFee": "20000000000000000",
-        "getProtocolFeeValues": [0, 0],
+        "getProtocolFeeValues": {
+          "takerFeeBips": 0,
+          "makerFeeBips": 0
+        },
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -409,7 +418,11 @@
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
-        "total": ["484686791990849091170868", 0, 1615983279]
+        "total": {
+          "balance": "484686791990849091170868",
+          "depositedAt": 0,
+          "claimedAt": 1615983279
+        }
       },
       "derivedName": "UserStakingPool"
     }

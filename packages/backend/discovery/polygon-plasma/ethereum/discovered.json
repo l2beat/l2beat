@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532081,
   "configHash": "0x3cec333902cf22e442ca0b353080c466156a67bdb3d8be0ad3c6596730aeb799",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -30,6 +30,7 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+      "ignoreInWatchMode": ["counter"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -137,6 +138,19 @@
     {
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+      "ignoreInWatchMode": [
+        "currentEpoch",
+        "currentValidatorSetTotalStake",
+        "epoch",
+        "validatorState",
+        "totalRewardsLiquidated",
+        "totalStaked",
+        "checkPointBlockInterval",
+        "checkpointRewardDelta",
+        "NFTCounter",
+        "signerUpdateLimit",
+        "totalHeimdallFee"
+      ],
       "upgradeability": {
         "type": "Polygon Extension proxy",
         "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
@@ -191,7 +205,10 @@
         "totalStaked": "11303851544084717680341729",
         "validatorReward": [],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-        "validatorState": ["3585680535632990569599321803", 105],
+        "validatorState": {
+          "amount": "3585680535632990569599321803",
+          "stakerCount": 105
+        },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
@@ -250,6 +267,11 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "currentHeaderBlock",
+        "getLastChildBlock"
+      ],
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -275,6 +297,7 @@
     {
       "name": "MaticWETH",
       "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -434,6 +457,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
     "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",

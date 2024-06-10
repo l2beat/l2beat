@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19974091,
   "configHash": "0x39a8e1b7d25617654f4f9ceeadfe54d59bef30b45f6450451937cef8847432e7",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "L1MessageQueue",
@@ -142,6 +142,7 @@
     {
       "name": "ExecutorMultisig",
       "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -360,15 +361,15 @@
       "sinceTimestamp": 1696782323,
       "values": {
         "DOMAIN_SEPARATOR": "0x4ba6355a403460269233dc486e88f1f91f64c2c97dc065c7ee1782de423fd902",
-        "eip712Domain": [
-          "0x0f",
-          "EnforcedTxGateway",
-          "1",
-          1,
-          "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EnforcedTxGateway",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "feeVault": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
@@ -573,6 +574,7 @@
     {
       "name": "FeeVaultMultisig",
       "address": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -609,7 +611,12 @@
       "implementations": ["0xfDF1eE0098168eaa61BF87Db68C39c85151a4E9E"],
       "sinceTimestamp": 1696782311,
       "values": {
-        "intrinsicParams": [21000, 53000, 4, 16],
+        "intrinsicParams": {
+          "txGas": 21000,
+          "txGasContractCreation": 53000,
+          "zeroGas": 4,
+          "nonZeroGas": 16
+        },
         "l2BaseFee": 460000000,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "whitelist": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
@@ -686,6 +693,7 @@
     {
       "name": "EmergencyMultisig",
       "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -822,6 +830,7 @@
     {
       "name": "ScrollMultisig",
       "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

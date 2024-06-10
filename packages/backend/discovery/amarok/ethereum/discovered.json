@@ -275,7 +275,10 @@
         "optimisticMode": true,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
-        "pendingInboundRoots": [170, 169],
+        "pendingInboundRoots": {
+          "first": 170,
+          "last": 169
+        },
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedAggregateRootHash": "0x181dafb614d5dd37a4b3cb7dfe04f968ba71c531cf9089ce640514ea7d3df44d",
         "proposedTimestamp": 0,
@@ -584,9 +587,9 @@
           "0x3Bcf4185443A339517aD4e580067f178d1B68E1D"
         ],
         "facets": [
-          [
-            "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81",
-            [
+          {
+            "facetAddress": "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81",
+            "functionSelectors": [
               "0x1506e463",
               "0x60062091",
               "0x80dc2248",
@@ -608,10 +611,10 @@
               "0xc4058429",
               "0xe9d7bcec"
             ]
-          ],
-          [
-            "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
-            [
+          },
+          {
+            "facetAddress": "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2",
+            "functionSelectors": [
               "0x8a336231",
               "0x159e041f",
               "0x2424401f",
@@ -633,11 +636,14 @@
               "0x93f18ac5",
               "0x674dc933"
             ]
-          ],
-          ["0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295", ["0xab2dc3f5"]],
-          [
-            "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
-            [
+          },
+          {
+            "facetAddress": "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295",
+            "functionSelectors": ["0xab2dc3f5"]
+          },
+          {
+            "facetAddress": "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d",
+            "functionSelectors": [
               "0xc5b350df",
               "0xbb271a27",
               "0x2ec0c002",
@@ -657,10 +663,10 @@
               "0x12232937",
               "0x3f4ba83a"
             ]
-          ],
-          [
-            "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352",
-            [
+          },
+          {
+            "facetAddress": "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352",
+            "functionSelectors": [
               "0xa03e4bc3",
               "0xef1eb0c1",
               "0x09d7ba54",
@@ -670,20 +676,20 @@
               "0x349f937c",
               "0x3bd30d34"
             ]
-          ],
-          [
-            "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769",
-            [
+          },
+          {
+            "facetAddress": "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769",
+            "functionSelectors": [
               "0xdd39f00d",
               "0x8cba8b6a",
               "0x65bc8582",
               "0x60f0a5ac",
               "0xf01b3e01"
             ]
-          ],
-          [
-            "0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D",
-            [
+          },
+          {
+            "facetAddress": "0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D",
+            "functionSelectors": [
               "0x4b72c5da",
               "0x0951d6d8",
               "0x09935b8f",
@@ -709,10 +715,10 @@
               "0x911b8ee2",
               "0x04376ff4"
             ]
-          ],
-          [
-            "0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686",
-            [
+          },
+          {
+            "facetAddress": "0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686",
+            "functionSelectors": [
               "0x8d365457",
               "0xa02288f4",
               "0x29d99b10",
@@ -734,10 +740,10 @@
               "0x80b297e8",
               "0x74c6b89b"
             ]
-          ],
-          [
-            "0x6369F971fd1f1f230B8584151Ed7747FF710Cc68",
-            [
+          },
+          {
+            "facetAddress": "0x6369F971fd1f1f230B8584151Ed7747FF710Cc68",
+            "functionSelectors": [
               "0xea027c2f",
               "0xe5f6220f",
               "0x4b141bb4",
@@ -750,22 +756,30 @@
               "0x8dc51484",
               "0xa1a23c29"
             ]
-          ],
-          [
-            "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b",
-            ["0x1f931c1c", "0x56a8ea48", "0xbbf2358e", "0x2c67849c"]
-          ],
-          ["0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4", ["0x9a7e155e"]],
-          [
-            "0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
-            [
+          },
+          {
+            "facetAddress": "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b",
+            "functionSelectors": [
+              "0x1f931c1c",
+              "0x56a8ea48",
+              "0xbbf2358e",
+              "0x2c67849c"
+            ]
+          },
+          {
+            "facetAddress": "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4",
+            "functionSelectors": ["0x9a7e155e"]
+          },
+          {
+            "facetAddress": "0x3Bcf4185443A339517aD4e580067f178d1B68E1D",
+            "functionSelectors": [
               "0xcdffacc6",
               "0x52ef6b2c",
               "0xadfca15e",
               "0x7a0ed627",
               "0x01ffc9a7"
             ]
-          ]
+          }
         ],
         "LIQUIDITY_FEE_DENOMINATOR": 10000,
         "LIQUIDITY_FEE_NUMERATOR": 9995,

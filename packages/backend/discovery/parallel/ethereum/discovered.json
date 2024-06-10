@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927721,
   "configHash": "0x17208eec8fac7f7a71ca41192fe0227e61aee8976f11df132e523bfab7f5eabc",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "Inbox",
@@ -104,6 +104,8 @@
     {
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -146,6 +148,11 @@
     {
       "name": "Bridge",
       "address": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
@@ -190,6 +197,12 @@
     {
       "name": "RollupProxy",
       "address": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
+      "template": "orbitstack/RollupProxy",
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
@@ -339,6 +352,7 @@
     {
       "name": "SequencerInbox",
       "address": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
@@ -430,6 +444,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x2bc118eC75c4154DC164Ee663E09F5F83232b1DC",
     "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2",

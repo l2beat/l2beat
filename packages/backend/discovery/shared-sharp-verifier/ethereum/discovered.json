@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531641,
   "configHash": "0x446f481375f24a1ebdb62c00d34185db930f81f5886f322ea3526361b22ab3b1",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "CpuConstraintPoly",
@@ -51,6 +51,8 @@
     {
       "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -99,7 +101,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [20, 151],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 20,
+          "selectedBuiltins": 151
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -230,7 +235,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [18, 15],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 18,
+          "selectedBuiltins": 15
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -262,7 +270,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [18, 15],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 18,
+          "selectedBuiltins": 15
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -314,7 +325,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [22, 63],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 22,
+          "selectedBuiltins": 63
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -401,7 +415,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [18, 23],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 18,
+          "selectedBuiltins": 23
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -455,7 +472,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [24, 191],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 24,
+          "selectedBuiltins": 191
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -1253,7 +1273,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [18, 15],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 18,
+          "selectedBuiltins": 15
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -1319,7 +1342,10 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": [20, 31],
+        "getLayoutInfo": {
+          "publicMemoryOffset": 20,
+          "selectedBuiltins": 31
+        },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
