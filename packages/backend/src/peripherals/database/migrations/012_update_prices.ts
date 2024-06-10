@@ -27,7 +27,6 @@ export async function up(knex: Knex) {
     }),
   )
 
-  // @ts-expect-error asset_id not nullable in knex types module
   await knex('coingecko_prices').where({ asset_id: null }).delete()
 
   await knex.schema.alterTable('coingecko_prices', (table) => {
@@ -44,12 +43,9 @@ export async function down(knex: Knex) {
   })
   await Promise.all(
     tokenList.map(({ id, coingeckoId }) => {
-      return (
-        knex('coingecko_prices')
-          // @ts-expect-error coingecko_id removed from knex types module
-          .update({ coingecko_id: coingeckoId.toString() })
-          .where({ asset_id: id.toString() })
-      )
+      return knex('coingecko_prices')
+        .update({ coingecko_id: coingeckoId.toString() })
+        .where({ asset_id: id.toString() })
     }),
   )
 

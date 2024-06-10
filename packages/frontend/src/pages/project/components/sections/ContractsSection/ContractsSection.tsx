@@ -68,13 +68,13 @@ export function ContractsSection(props: ContractsSectionProps) {
       {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-gray-500 text-xs dark:text-gray-600">
             A diagram of the smart contract architecture
           </figcaption>
         </figure>
@@ -180,7 +180,7 @@ function ImplementationHasChangedContracts(props: {
   manuallyVerifiedContracts: ManuallyVerifiedContracts
 }) {
   return (
-    <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
+    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
         There are implementation changes and part of the information might be
         outdated.

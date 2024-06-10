@@ -16,9 +16,9 @@ export function GovernancePublicationPage(
   return (
     <DashboardLayout>
       <Header publication={props.publication} />
-      <PageContent type="article" className="mt-12 md:mt-16 lg:mt-20">
+      <PageContent type="article" className="mt-12 lg:mt-20 md:mt-16">
         {props.publication.description && (
-          <p className="mb-12 font-roboto-serif text-xl font-light leading-[1.6] opacity-80 ">
+          <p className="mb-12 font-light font-roboto-serif text-xl leading-[1.6] opacity-80">
             {props.publication.description}
           </p>
         )}
@@ -36,11 +36,11 @@ export function GovernancePublicationPage(
 function Header({ publication }: { publication: GovernancePublicationEntry }) {
   return (
     <FullPageHeader pageContentClassName="flex-col items-start gap-6">
-      <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+      <p className="font-semibold text-2xs text-purple-100 uppercase dark:text-pink-200">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}
       </p>
-      <h1 className="text-2xl font-bold md:text-3xl lg:text-[44px] lg:leading-[1.2]">
+      <h1 className="font-bold text-2xl lg:text-[44px] md:text-3xl lg:leading-[1.2]">
         {publication.title}
       </h1>
       <div>
@@ -50,10 +50,10 @@ function Header({ publication }: { publication: GovernancePublicationEntry }) {
             className="mr-2 size-10 rounded-full"
           />
           <div>
-            <p className="text-lg font-bold leading-none">
+            <p className="font-bold text-lg leading-none">
               {publication.author.firstName} {publication.author.lastName}
             </p>
-            <p className="text-2xs font-medium text-zinc-500 dark:text-gray-50">
+            <p className="font-medium text-2xs text-zinc-500 dark:text-gray-50">
               {publication.author.role}
             </p>
           </div>

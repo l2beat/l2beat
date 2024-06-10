@@ -12,7 +12,7 @@ export function StatWithChange(props: StatWithChangeProps) {
   return (
     <span className="flex items-center gap-2">
       <span className={props.className}>{props.stat}</span>
-      <PercentChange className="text-base font-semibold" value={props.change} />
+      <PercentChange className="font-semibold text-base" value={props.change} />
     </span>
   )
 }

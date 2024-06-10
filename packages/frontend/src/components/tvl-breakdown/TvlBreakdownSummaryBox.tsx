@@ -10,7 +10,7 @@ export function TvlBreakdownSummaryBox(
   props: TvlBreakdownViewProps['tvlBreakdownSummary'],
 ) {
   return (
-    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 dark:bg-purple-700 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:p-6 md:dark:border-pink-900">
+    <div className="flex flex-col justify-between gap-[7px] bg-purple-300 px-4 py-5 md:flex-row md:gap-2 md:rounded-lg md:border md:border-pink-200 md:dark:border-pink-900 dark:bg-purple-700 md:p-6">
       <StatsItem
         title="Total Value Locked"
         tooltip="Total value locked displayed together with a percentage change compared to 7D ago."
@@ -62,27 +62,27 @@ function StatsItem(props: StatsItemProps) {
       )}
     >
       <div className="flex items-center gap-1">
-        <span className="hidden text-xs font-medium text-gray-500 dark:text-gray-600 md:inline">
+        <span className="hidden font-medium text-gray-500 text-xs md:inline dark:text-gray-600">
           {props.title}
         </span>
         <span
           className={cn(
-            'font-medium  md:hidden',
+            'font-medium md:hidden',
             props.big
-              ? 'text-lg text-black dark:text-white'
-              : 'text-xs text-gray-600',
+              ? 'text-black text-lg dark:text-white'
+              : 'text-gray-600 text-xs',
           )}
         >
           {props.mobileTitle}
         </span>
 
         <Tooltip>
-          <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
+          <TooltipTrigger className="-translate-y-px ml-0.5 md:translate-y-0">
             <InfoIcon
               className={cn(
                 'md:size-3.5',
                 props.big
-                  ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
+                  ? 'fill-black dark:fill-white md:dark:fill-gray-600 md:fill-gray-500'
                   : 'fill-gray-500 dark:fill-gray-600',
               )}
             />
@@ -99,7 +99,7 @@ function StatsItem(props: StatsItemProps) {
         >
           {props.value}
         </span>
-        <div className="ml-1 text-xs font-semibold md:text-base">
+        <div className="ml-1 font-semibold text-xs md:text-base">
           <PercentChange value={props.change} />
         </div>
       </div>

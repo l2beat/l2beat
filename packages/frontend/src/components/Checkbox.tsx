@@ -24,8 +24,8 @@ export function Checkbox({
   return (
     <label
       className={cn(
-        'bg-gray-200 text-base font-semibold dark:bg-zinc-700',
-        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pl-2 pr-3',
+        'bg-gray-200 font-semibold text-base dark:bg-zinc-700',
+        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pr-3 pl-2',
         className,
       )}
     >

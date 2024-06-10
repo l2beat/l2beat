@@ -15,7 +15,7 @@ export function OurMissionSection({ className }: Props) {
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
-        <ul className="ml-6 mt-2 list-disc text-base md:text-sm">
+        <ul className="mt-2 ml-6 list-disc text-base md:text-sm">
           <li>
             Permissionless, no one should need a third party's permission to
             join the network,
@@ -48,7 +48,7 @@ export function OurMissionSection({ className }: Props) {
       </p>
       <div className="mt-6 flex gap-3 rounded-lg bg-[#F7DEEB] p-4 dark:bg-[#3A1929]">
         <HeartIcon className="shrink-0" />
-        <span className="text-balance text-base font-medium md:text-sm">
+        <span className="text-balance font-medium text-base md:text-sm">
           We believe that right now the best ecosystem where those values could
           be represented and cherished is Ethereum together with its L2s. While
           we respect and value other blockchains and people building on top of
