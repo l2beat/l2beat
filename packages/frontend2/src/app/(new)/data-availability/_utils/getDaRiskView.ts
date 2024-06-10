@@ -1,43 +1,37 @@
 import {
+  DaAccessabilityRisk,
+  DaAttestationSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaExitWindowRisk,
+  DaFraudDetectionRisk,
   type DaBridge,
+  type DaBridgeRisks,
   type DaLayer,
+  type DaLayerRisks,
   type DacBridge,
   type OnChainDaBridge,
 } from '@l2beat/config'
 
-type Sentiment = 'green' | 'yellow' | 'red'
-
-type WithSentiment = {
-  value: string
-  description?: string
-  sentiment: Sentiment
-}
-
-export type DaRiskView = {
-  economicSecurity: WithSentiment
-  fraudDetection: WithSentiment
-  attestationSecurity: WithSentiment
-  exitWindow: WithSentiment
-  accessability: WithSentiment
-}
-
-export function getDaRiskView(layer: DaLayer, bridge: DaBridge): DaRiskView {
+export function getDaRiskView(
+  layer: DaLayer,
+  bridge: DaBridge,
+): DaBridgeRisks & DaLayerRisks {
   const fraudDetection = getFraudDetection(layer)
 
   if (bridge.type === 'NoBridge') {
     return {
-      economicSecurity: { value: 'No bridge', sentiment: 'red' },
+      economicSecurity: DaEconomicSecurityRisk.UNKNOWN,
       fraudDetection,
-      attestationSecurity: { value: 'Not verified', sentiment: 'red' },
-      exitWindow: { value: 'None', sentiment: 'red' },
-      accessability: { value: 'External', sentiment: 'red' },
+      attestations: DaAttestationSecurityRisk.NOT_VERIFIED,
+      exitWindow: DaExitWindowRisk.LOW_OR_NO_DELAY(),
+      accessability: DaAccessabilityRisk.NOT_ENSHRINED,
     }
   }
 
   return {
     economicSecurity: getEconomicSecurity(layer),
     fraudDetection,
-    attestationSecurity: getAttestationSecurity(bridge),
+    attestations: getAttestationSecurity(bridge),
     exitWindow: getExitWindow(bridge),
     accessability: getAccessibility(bridge),
   }
@@ -45,200 +39,50 @@ export function getDaRiskView(layer: DaLayer, bridge: DaBridge): DaRiskView {
 
 export function getEconomicSecurity(
   layer: DaLayer /*, totalValueSecured: bigint, slashableFunds: bigint */,
-): WithSentiment {
+) {
   if (layer.type === 'DAC') {
-    return {
-      value: 'None',
-      sentiment: 'red',
-    }
+    return DaEconomicSecurityRisk.UNKNOWN
   }
 
-  const { economicSecurity } = layer.risks
-
-  // if totalValueSecured > slashableFunds - yellow sentiment once we have metrics
-  // in place
-  if (
-    economicSecurity.type ===
-    'OnchainQuantifiable' /** && totalValueSecured <= slashableFunds */
-  ) {
-    return {
-      value: 'Staked assets',
-      sentiment: 'green',
-    }
-  }
-
-  if (economicSecurity.type === 'OffchainVerifiable') {
-    return {
-      value: 'Public Committee',
-      sentiment: 'yellow',
-    }
-  }
-
-  // Unknown
-  return {
-    value: 'Unknown',
-    sentiment: 'red',
-  }
+  // Add checks against TVS and SA here later on once we have tha metrics
+  return layer.risks.economicSecurity
 }
 
-export function getFraudDetection(layer: DaLayer): WithSentiment {
+export function getFraudDetection(layer: DaLayer) {
   if (layer.type === 'DAC') {
-    return {
-      value: 'None',
-      sentiment: 'red',
-    }
+    return DaFraudDetectionRisk.NO_FRAUD_DETECTION
   }
 
-  const { fraudDetection } = layer.risks
-
-  if (
-    fraudDetection.type === 'DAS with block reconstruction' ||
-    fraudDetection.type === 'DAS with no block reconstruction'
-  ) {
-    return {
-      value: fraudDetection.type,
-      sentiment: fraudDetection.erasureCoding ? 'green' : 'yellow',
-    }
-  }
-
-  if (fraudDetection.type === 'Erasure coding proof') {
-    return {
-      value: 'Erasure Coding Proof',
-      sentiment: 'red',
-    }
-  }
-
-  // No fraud detection
-  return {
-    value: 'None',
-    sentiment: 'red',
-  }
+  return layer.risks.fraudDetection
 }
 
 // TODO: Include whether commitment frequency has been satisfied
 export function getAttestationSecurity(
   bridge: DacBridge | OnChainDaBridge,
-): WithSentiment {
+): DaBridgeRisks['attestations'] {
   if (bridge.type === 'DAC') {
-    return {
-      value: 'Not verified',
-      sentiment: 'red',
-    }
+    return DaAttestationSecurityRisk.NOT_VERIFIED
   }
 
-  const { attestations, accessability } = bridge.risks
-
-  if (accessability.type === 'Enshrined') {
-    return {
-      value: 'Enshrined',
-      sentiment: 'green',
-    }
+  if (bridge.risks.accessability.type === 'ENSHRIRNED') {
+    return DaAttestationSecurityRisk.ENSHRINED
   }
 
-  if (
-    attestations.type === 'SigVerified' ||
-    attestations.type === 'SigVerifiedZK'
-  ) {
-    const value =
-      attestations.type === 'SigVerified'
-        ? 'Signatures verified'
-        : 'Signatures verified (ZK-Proof)'
-    return {
-      value,
-      sentiment: attestations.areSignersTracked ? 'green' : 'yellow',
-    }
-  }
-
-  // Not satisfied
-  return {
-    value: 'Not verified',
-    sentiment: 'red',
-  }
+  return bridge.risks.attestations
 }
 
-export function getExitWindow(
-  bridge: DacBridge | OnChainDaBridge,
-): WithSentiment {
+export function getExitWindow(bridge: DacBridge | OnChainDaBridge) {
   if (bridge.type === 'DAC') {
-    return {
-      value: 'None',
-      sentiment: 'red',
-    }
+    return DaExitWindowRisk.LOW_OR_NO_DELAY()
   }
 
-  const { exitWindow } = bridge.risks
-  const delayInDays = toDays(exitWindow.delay)
-
-  const ONE_DAY_SECONDS = 24 * 60 * 60
-  const THIRTY_DAYS_SECONDS = 30 * ONE_DAY_SECONDS
-  const SEVEN_DAYS_SECONDS = 7 * ONE_DAY_SECONDS
-
-  if (
-    exitWindow.party === 'Immutable' ||
-    (exitWindow.party === 'SecurityCouncil' &&
-      exitWindow.delay >= THIRTY_DAYS_SECONDS)
-  ) {
-    return {
-      value: `${delayInDays} days`,
-      sentiment: 'green',
-    }
-  }
-
-  if (
-    exitWindow.party === 'SecurityCouncil' &&
-    exitWindow.delay >= SEVEN_DAYS_SECONDS &&
-    exitWindow.delay < THIRTY_DAYS_SECONDS
-  ) {
-    return {
-      value: `SC ${delayInDays} days`,
-      sentiment: 'yellow',
-    }
-  }
-
-  if (
-    exitWindow.party === 'EOA' &&
-    exitWindow.delay >= SEVEN_DAYS_SECONDS &&
-    exitWindow.delay < THIRTY_DAYS_SECONDS
-  ) {
-    return {
-      value: `${delayInDays} days`,
-      sentiment: 'yellow',
-    }
-  }
-
-  // Irrelevant delay or no timelock
-  const value =
-    exitWindow.delay < SEVEN_DAYS_SECONDS ? `${delayInDays} days` : 'No delay'
-
-  return {
-    value,
-    sentiment: 'red',
-  }
+  return bridge.risks.exitWindow
 }
 
-function getAccessibility(bridge: DacBridge | OnChainDaBridge): WithSentiment {
+function getAccessibility(bridge: DacBridge | OnChainDaBridge) {
   if (bridge.type === 'DAC') {
-    return {
-      value: 'External',
-      sentiment: 'red',
-    }
+    return DaAccessabilityRisk.NOT_ENSHRINED
   }
 
-  const { accessability } = bridge.risks
-
-  if (accessability.type === 'Enshrined') {
-    return {
-      value: 'Enshrined',
-      sentiment: 'green',
-    }
-  }
-
-  return {
-    value: 'External',
-    sentiment: 'red',
-  }
-}
-
-function toDays(seconds: number): number {
-  return Math.floor(seconds / (24 * 60 * 60))
+  return bridge.risks.accessability
 }

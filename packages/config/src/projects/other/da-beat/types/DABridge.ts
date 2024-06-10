@@ -1,5 +1,8 @@
 import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ScalingProjectContractSingleAddress } from '../../../../common'
+import { DaAccessabilityRisk } from './DaAccessabilityRisk'
+import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
+import { DaExitWindowRisk } from './DaExitWindowRisk'
 
 export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
 
@@ -79,50 +82,23 @@ type CommonDaBridge = {
   usedIn: ProjectId[]
 }
 
-type DaBridgeRisks = {
+export type DaBridgeRisks = {
   /**
    * Attestation - TBD
    */
-  attestations: AttestationSecurity & { description?: string }
+  attestations: DaAttestationSecurityRisk
 
   /**
    * Exit window - TBD
    * @unit seconds
    */
-  exitWindow: ExitWindow & { description?: string }
+  exitWindow: DaExitWindowRisk
 
   /**
    * Accessability - TBD
    */
-  accessability: Accessability & { description?: string }
+  accessability: DaAccessabilityRisk
 }
-
-type AttestationSecurity =
-  | {
-      type: 'SigVerified'
-      areSignersTracked: boolean
-    }
-  | {
-      type: 'SigVerifiedZK'
-      areSignersTracked: boolean
-    }
-  | {
-      type: 'NotSatisfied'
-    }
-  | {
-      type: 'CommitmentFrequencySatisfied'
-    }
-
-type ExitWindow = {
-  party: 'EOA' | 'SecurityCouncil' | 'Immutable'
-  delay: number
-}
-
-type Accessability =
-  | {
-      type: 'Enshrined'
-    }
-  | { type: 'NotEnshrined' }
 
 type Permissions = {
   /**

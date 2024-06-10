@@ -1,5 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, NoDaBridge, OnChainDaBridge } from './DABridge'
+import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
+import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 
 export type DaLayerType = 'Public blockchain' | 'DaC'
 
@@ -61,33 +63,6 @@ export type CommonDaLayer = {
 }
 
 export type DaLayerRisks = {
-  economicSecurity: EconomicSecurityRisk
-  fraudDetection: FraudDetectionRisk
+  economicSecurity: DaEconomicSecurityRisk
+  fraudDetection: DaFraudDetectionRisk
 }
-
-export type EconomicSecurityRisk =
-  | {
-      type: 'OnchainQuantifiable'
-    }
-  | {
-      type: 'OffchainVerifiable'
-    }
-  | {
-      type: 'Unknown'
-    }
-
-export type FraudDetectionRisk =
-  | {
-      type: 'DAS with block reconstruction'
-      erasureCoding: boolean
-    }
-  | {
-      type: 'DAS with no block reconstruction'
-      erasureCoding: boolean
-    }
-  | {
-      type: 'Erasure coding proof'
-    }
-  | {
-      type: 'No fraud detection'
-    }

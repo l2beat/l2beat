@@ -7,7 +7,7 @@ import { mantapacific } from '../../../../../layer2s/mantapacific'
 import { orderly } from '../../../../../layer2s/orderly'
 import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../../layer3s/stack'
-import { DaBridge } from '../../../types/DABridge'
+import { DaBridge } from '../../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES

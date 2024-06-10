@@ -1,4 +1,4 @@
-import { DaLayer } from '../types/DALayer'
+import { DaLayer } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
 /**

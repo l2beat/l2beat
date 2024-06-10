@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { immutablex } from '../../../../layer2s/immutablex'
-import { DacBridge } from '../../types/DABridge'
+import { DacBridge } from '../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES

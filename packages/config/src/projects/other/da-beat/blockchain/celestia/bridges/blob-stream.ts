@@ -1,5 +1,8 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
-import { DaBridge } from '../../../types/DABridge'
+import { DaAccessabilityRisk } from '../../../types/DaAccessabilityRisk'
+import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import { DaBridge } from '../../../types/DaBridge'
+import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
@@ -19,19 +22,8 @@ export const blobStream = {
   },
   permissions: [],
   risks: {
-    attestations: {
-      type: 'SigVerified',
-      areSignersTracked: true,
-      description: 'Attestations are signed by known signers.',
-    },
-    exitWindow: {
-      party: 'EOA',
-      delay: 1000,
-      description: 'There is little to no delay.',
-    },
-    accessability: {
-      type: 'NotEnshrined',
-      description: 'Data is not enshrined.',
-    },
+    attestations: DaAttestationSecurityRisk.SIG_VERIFIED_ZK(true),
+    exitWindow: DaExitWindowRisk.SECURITY_COUNCIL(30 * 24 * 60 * 60),
+    accessability: DaAccessabilityRisk.NOT_ENSHRINED,
   },
 } satisfies DaBridge
