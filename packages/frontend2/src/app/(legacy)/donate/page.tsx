@@ -41,7 +41,7 @@ export default async function Page() {
       linkURL: `https://optimistic.etherscan.io/address/${donateAddress}`,
     },
     {
-      name: 'zkSync Lite',
+      name: 'ZKsync Lite',
       linkURL: `https://zkscan.io/explorer/accounts/${donateAddress}`,
     },
     gitcoinOption && {

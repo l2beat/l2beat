@@ -7,7 +7,7 @@ export const tradable: Layer2 = upcomingL2({
     name: 'Tradable',
     slug: 'tradable',
     description:
-      "A US-based hyperchain on zkSync helping the world's leading asset managers tokenize assets and discover investment opportunities in DeFi in a secure, compliant way, leveraging zero knowledge proofs.",
+      "A US-based hyperchain on ZKsync helping the world's leading asset managers tokenize assets and discover investment opportunities in DeFi in a secure, compliant way, leveraging zero knowledge proofs.",
     purposes: ['RWA', 'DeFi'],
     category: 'ZK Rollup',
     provider: 'ZK Stack',

@@ -37,7 +37,7 @@ export async function getProps(
             linkURL: `https://optimistic.etherscan.io/address/${address}`,
           },
           {
-            name: 'zkSync Lite',
+            name: 'ZKsync Lite',
             linkURL: `https://zkscan.io/explorer/accounts/${address}`,
           },
           config.features.gitcoinOption && {
