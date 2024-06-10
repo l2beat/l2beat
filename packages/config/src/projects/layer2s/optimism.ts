@@ -441,6 +441,23 @@ export const optimism: Layer2 = {
   ],
   contracts: {
     addresses: [
+      discovery.getContractDetails('OptimismPortal', {}),
+      discovery.getContractDetails('L1CrossDomainMessenger', {}),
+      discovery.getContractDetails('L1StandardBridge', {}),
+      discovery.getContractDetails('L1ERC721Bridge', {}),
+      discovery.getContractDetails('SystemConfig', {}),
+      discovery.getContractDetails('DisputeGameFactory', {}),
+      discovery.getContractDetails('FaultDisputeGame', {}),
+      discovery.getContractDetails('MIPS', {}),
+      discovery.getContractDetails('AnchorStateRegistry', {}),
+      discovery.getContractDetails('PreimageOracle', {}),
+      discovery.getContractDetails('SuperchainConfig', {
+        description:
+          'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+        ...l1Upgradeability,
+      }),
+    ],
+    nativeAddresses: [
       l2Discovery.getContractDetails(
         'OPToken',
         'The OP token contract. It is owned by the MintManager and can inflate the token supply by 2% annually.',
@@ -518,7 +535,7 @@ export const optimism: Layer2 = {
           'Contract containing the main logic for the Ethereum Attestation Service (EAS).',
         ...l2Upgradability,
       }),
-    ], // TODO: add contracts
+    ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC('0d')],
   },
   upgradesAndGovernance:
@@ -602,13 +619,4 @@ export const optimism: Layer2 = {
       thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
     },
   ],
-  /*
-  nonTemplateContracts: [
-    discovery.getContractDetails('SuperchainConfig', {
-      description:
-        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...l1Upgradeability,
-    }),
-  ],
-  */
 }
