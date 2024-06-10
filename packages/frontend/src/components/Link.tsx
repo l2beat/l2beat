@@ -36,7 +36,7 @@ export function Link({
   return (
     <a
       className={cn(
-        'group w-max cursor-pointer font-medium transition-colors',
+        'group cursor-pointer font-medium transition-colors',
         isEtherscanLink && etherscanLinkClassnames,
         underline && 'underline',
         textClassesByType[type],
