@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 20062993,
-  "configHash": "0xf2bf37bc5c1f04b018e32f35cecd55da6aedf30e87b9f1a6dbcdcffbeca0688c",
+  "configHash": "0x482794d5b88d2618a3d81c3803f2ebf229285879e7af68ae572f124f4f373c16",
   "version": 5,
   "contracts": [
     {
@@ -160,7 +160,6 @@
         ],
         "gameType": 0,
         "getChallengerDuration": [],
-        "getNumToResolve": [0, 0, 0, 0, 0],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
@@ -168,15 +167,7 @@
         "l2ChainId": 10,
         "maxClockDuration": 302400,
         "maxGameDepth": 73,
-        "resolutionCheckpoints": [
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"]
-        ],
         "resolvedAt": 0,
-        "resolvedSubgames": [false, false, false, false, false],
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
@@ -190,11 +181,7 @@
         "vm": "0x0f8EdFbDdD3c0256A80AD8C0F2560B1807873C9c",
         "weth": "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"
       },
-      "errors": {
-        "getNumToResolve": "Too many values. Update configuration to explore fully",
-        "resolutionCheckpoints": "Too many values. Update configuration to explore fully",
-        "resolvedSubgames": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "FaultDisputeGame"
     },
     {
       "name": "GnosisSafe",
@@ -675,18 +662,9 @@
         "minProposalSize": 126000,
         "proposalCount": 0,
         "proposals": [],
-        "version": "1.0.0",
-        "zeroHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5",
-          "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
-          "0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85",
-          "0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"
-        ]
+        "version": "1.0.0"
       },
-      "errors": {
-        "zeroHashes": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "PreimageOracle"
     },
     {
       "name": "AddressManager",
@@ -789,7 +767,6 @@
         ],
         "gameType": 1,
         "getChallengerDuration": [],
-        "getNumToResolve": [0, 0, 0, 0, 0],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
@@ -798,15 +775,7 @@
         "maxClockDuration": 302400,
         "maxGameDepth": 73,
         "proposer": "0x473300df21D047806A082244b417f96b32f13A33",
-        "resolutionCheckpoints": [
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"],
-          [false, 0, 0, "0x0000000000000000000000000000000000000000"]
-        ],
         "resolvedAt": 0,
-        "resolvedSubgames": [false, false, false, false, false],
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
@@ -820,11 +789,7 @@
         "vm": "0x0f8EdFbDdD3c0256A80AD8C0F2560B1807873C9c",
         "weth": "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14"
       },
-      "errors": {
-        "getNumToResolve": "Too many values. Update configuration to explore fully",
-        "resolutionCheckpoints": "Too many values. Update configuration to explore fully",
-        "resolvedSubgames": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "PermissionedDisputeGame"
     },
     {
       "name": "SynthetixMultisig",
