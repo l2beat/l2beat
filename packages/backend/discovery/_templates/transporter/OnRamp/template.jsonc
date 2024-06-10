@@ -1,7 +1,12 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["getNops", "getAllowList", "getStaticConfig"],
-  "ignoreRelatives": ["getSupportedTokens", "tokenAddresses", "linkToken","getAllowList" ],
+  "ignoreRelatives": [
+    "getSupportedTokens",
+    "tokenAddresses",
+    "linkToken",
+    "getAllowList"
+  ],
   "fields": {
     "tokenPools": {
       "target": {
