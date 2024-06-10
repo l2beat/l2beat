@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha",
     "clean": "rm -rf dist",
     "build": "tsc",
     "db:generate": "prisma generate",
