@@ -61,7 +61,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
     {
@@ -190,10 +190,7 @@ export function getArchivedScalingSummaryColumnsConfig() {
             {project.data?.tvl.displayValue}
           </NumberCell>
           {!project.isArchived ? (
-            <NumberCell
-              signed
-              className="ml-1 w-[72px] !text-base font-medium "
-            >
+            <NumberCell signed className="!text-base ml-1 w-[72px] font-medium">
               {project.data?.sevenDayChange}
             </NumberCell>
           ) : (
@@ -240,7 +237,7 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
 

@@ -15,7 +15,7 @@ export function ProjectHeader(props: Props) {
           alt={`${props.title} logo`}
         />
       )}
-      <span className="text-3xl font-bold md:text-4xl">{props.title}</span>
+      <span className="font-bold text-3xl md:text-4xl">{props.title}</span>
     </h1>
   )
 }

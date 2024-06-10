@@ -118,19 +118,19 @@ export function MediumRosette({ risks, isUnderReview }: RosetteProps) {
         className="h-[136px] w-[137px]"
         isUnderReview={isUnderReview}
       />
-      <span className="absolute bottom-[18px] left-[22px] w-[10ch] rotate-[36deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute bottom-[18px] left-[22px] w-[10ch] rotate-[36deg] text-center font-medium text-[10px] uppercase leading-tight">
         Sequencer failure
       </span>
-      <span className="absolute -left-2 top-[59px] w-[10ch] rotate-[-68deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="-left-2 absolute top-[59px] w-[10ch] rotate-[-68deg] text-center font-medium text-[10px] uppercase leading-tight">
         State validation
       </span>
-      <span className="absolute left-1/2 top-0.5 w-[10ch] -translate-x-1/2 text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="-translate-x-1/2 absolute top-0.5 left-1/2 w-[10ch] text-center font-medium text-[10px] uppercase leading-tight">
         Data availability
       </span>
-      <span className="absolute left-[160px] top-[58px] rotate-[68deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute top-[58px] left-[160px] rotate-[68deg] text-center font-medium text-[10px] uppercase leading-tight">
         Exit window
       </span>
-      <span className="absolute bottom-[20px] right-[19px] w-[10ch] rotate-[-36deg] text-center text-[10px] font-medium uppercase leading-tight">
+      <span className="absolute right-[19px] bottom-[20px] w-[10ch] rotate-[-36deg] text-center font-medium text-[10px] uppercase leading-tight">
         Proposer failure
       </span>
     </div>
@@ -167,35 +167,35 @@ export function BigRosette({
         isUnderReview={isUnderReview}
       />
       <span
-        className="absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center text-xs font-medium uppercase leading-tight"
+        className="absolute bottom-[30px] left-[31px] w-[10ch] rotate-[36deg] text-center font-medium text-xs uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="sequencer-failure"
       >
         Sequencer failure
       </span>
       <span
-        className="absolute -left-1 top-[77px] w-[10ch] rotate-[-64deg] text-center text-xs font-medium uppercase leading-tight"
+        className="-left-1 absolute top-[77px] w-[10ch] rotate-[-64deg] text-center font-medium text-xs uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="state-validation"
       >
         State validation
       </span>
       <span
-        className="absolute left-1/2 top-[10px] w-[10ch] -translate-x-1/2 text-center text-xs font-medium uppercase leading-tight"
+        className="-translate-x-1/2 absolute top-[10px] left-1/2 w-[10ch] text-center font-medium text-xs uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="data-availability"
       >
         Data availability
       </span>
       <span
-        className="absolute left-[205px] top-[86px] w-[10ch] rotate-[69deg] text-center text-xs font-medium uppercase leading-tight"
+        className="absolute top-[86px] left-[205px] w-[10ch] rotate-[69deg] text-center font-medium text-xs uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="exit-window"
       >
         Exit window
       </span>
       <span
-        className="absolute bottom-[32px] right-[23px] w-[10ch] rotate-[-36deg] text-center text-xs font-medium uppercase leading-tight"
+        className="absolute right-[23px] bottom-[32px] w-[10ch] rotate-[-36deg] text-center font-medium text-xs uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="validator-failure"
       >
@@ -212,17 +212,17 @@ export function BigRosette({
         risk={risks.proposerFailure}
       />
       <OverlayBox
-        className="absolute left-0 top-44"
+        className="absolute top-44 left-0"
         data-rosette="state-validation"
         risk={risks.stateValidation}
       />
       <OverlayBox
-        className="absolute left-0 top-44"
+        className="absolute top-44 left-0"
         data-rosette="exit-window"
         risk={risks.exitWindow}
       />
       <OverlayBox
-        className="absolute left-0 top-44"
+        className="absolute top-44 left-0"
         data-rosette="data-availability"
         risk={risks.dataAvailability}
       />
@@ -379,7 +379,7 @@ function BigRosetteIcon({
         }
       </Icon>
       {isUpcoming && (
-        <UpcomingBadge className="absolute left-[90px] top-[130px]" />
+        <UpcomingBadge className="absolute top-[130px] left-[90px]" />
       )}
     </>
   )
@@ -399,7 +399,7 @@ function OverlayBox({
       {...props}
       data-role="rosette-description"
       className={cn(
-        'z-110 hidden animate-quick-fade-in rounded-md bg-white px-4 py-3 text-left text-sm leading-tight text-gray-700 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
+        'z-110 hidden animate-quick-fade-in rounded-md bg-white px-4 py-3 text-left text-gray-700 text-sm leading-tight shadow-[0px_4px_12px_0px_rgba(0,0,0,0.55)] dark:bg-neutral-700 dark:text-white',
         className,
       )}
     >
