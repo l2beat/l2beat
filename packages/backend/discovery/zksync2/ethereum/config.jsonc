@@ -4,7 +4,7 @@
   "name": "zksync2",
   "initialAddresses": [
     "0x41527B2d03844dB6b0945f25702cB958b6d55989",
-    "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+    "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
   ],
   "names": {
     "0x32400084C286CF3E17e7B677ea9583e60a000324": "ZKsync",
@@ -17,7 +17,7 @@
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
     "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "StateTransitionManager",
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "L1SharedBridge",
-    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock",
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
   },
   "overrides": {
     "BridgeHub": {
@@ -31,43 +31,43 @@
             "returnParams": [
               "chainId",
               "stateTransitionManager",
-              "chainGovernance",
-            ],
-          },
+              "chainGovernance"
+            ]
+          }
         },
         "zksyncEraDiamond": {
           "handler": {
             "type": "call",
             "method": "getHyperchain",
-            "args": [324],
-          },
+            "args": [324]
+          }
         },
         "zksyncEraSTM": {
           "handler": {
             "type": "call",
             "method": "stateTransitionManager",
-            "args": [324],
-          },
-        },
-      },
+            "args": [324]
+          }
+        }
+      }
     },
     "StateTransitionManager": {
       "ignoreMethods": [
         "getHyperchain",
         "protocolVersionDeadline",
         "protocolVersionIsActive",
-        "upgradeCutHash",
-      ],
+        "upgradeCutHash"
+      ]
     },
     "L1SharedBridge": {
-      "ignoreMethods": ["l2BridgeAddress", "L1_WETH_TOKEN"],
+      "ignoreMethods": ["l2BridgeAddress", "L1_WETH_TOKEN"]
     },
     "ZKsync": {
       "ignoreMethods": [
         "l2LogsRootHash",
         "storedBlockHash",
         "storedBatchHash",
-        "getName",
+        "getName"
       ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -79,7 +79,7 @@
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
         "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx",
+        "getFirstUnprocessedPriorityTx"
       ],
       "fields": {
         "validators": {
@@ -88,23 +88,23 @@
             "type": "arrayFromOneEvent",
             "event": "ValidatorStatusUpdate",
             "valueKey": "validatorAddress",
-            "flagKey": "isActive",
-          },
+            "flagKey": "isActive"
+          }
         },
         "getProtocolVersion": {
           "description": "Protocol version, increments with each protocol change",
-          "severity": "MEDIUM",
+          "severity": "MEDIUM"
         },
         "getVerifierParams": {
           "description": "Verifier parameters used for proving batches",
-          "severity": "LOW",
-        },
-      },
+          "severity": "LOW"
+        }
+      }
     },
     "ValidatorTimelock": {
       "ignoreMethods": [
         "committedBlockTimestamp",
-        "getCommittedBatchTimestamp",
+        "getCommittedBatchTimestamp"
       ],
       "fields": {
         "revertedBlocks": {
@@ -114,30 +114,30 @@
             "returnParams": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
-              "totalBlocksExecuted",
-            ],
-          },
+              "totalBlocksExecuted"
+            ]
+          }
         },
         "validatorsAdded": {
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-          },
+            "valueKey": "_addedValidator"
+          }
         },
         "validatorsRemoved": {
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-          },
-        },
-      },
+            "valueKey": "_removedValidator"
+          }
+        }
+      }
     },
     "ValidatorTimelock_deprecated": {
       "ignoreMethods": [
         "committedBlockTimestamp",
-        "getCommittedBatchTimestamp",
+        "getCommittedBatchTimestamp"
       ],
       "fields": {
         "revertedBlocks": {
@@ -147,9 +147,9 @@
             "returnParams": [
               "totalBlocksCommitted",
               "totalBlocksVerified",
-              "totalBlocksExecuted",
-            ],
-          },
+              "totalBlocksExecuted"
+            ]
+          }
         },
         // the 3 following allow us to get an array of validators without creating a new handler
         // construnctorArgs._validators u validatorsAdded n validatorsRemoved
@@ -157,24 +157,24 @@
         "constructorArgs": {
           "handler": {
             "type": "constructorArgs",
-            "nameArgs": true,
-          },
+            "nameArgs": true
+          }
         },
         "validatorsAdded": {
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorAdded",
-            "valueKey": "_addedValidator",
-          },
+            "valueKey": "_addedValidator"
+          }
         },
         "validatorsRemoved": {
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator",
-          },
-        },
-      },
+            "valueKey": "_removedValidator"
+          }
+        }
+      }
     },
     "Matter Labs Multisig": {
       "description": "Can instantly upgrade all contracts and roles in the zksync Era contracts",
@@ -183,17 +183,17 @@
         "getOwners": {
           "description": "Signers of the multisig",
           "severity": "LOW",
-          "type": "PERMISSION",
+          "type": "PERMISSION"
         },
         "getThreshold": {
           "description": "Should be 4/8 per official docs",
           "severity": "HIGH",
-          "type": "PERMISSION",
-        },
-      },
+          "type": "PERMISSION"
+        }
+      }
     },
     "L1ERC20Bridge": {
-      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"],
+      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     },
     "L1ERC20Bridge_wstETH": {
       "ignoreRelatives": [
@@ -201,34 +201,34 @@
         "l2Token",
         "l2Bridge",
         "l2TokenAddress",
-        "proxy__getAdmin",
-      ],
+        "proxy__getAdmin"
+      ]
     },
     "LidoAgent": {
-      "ignoreDiscovery": true,
+      "ignoreDiscovery": true
     },
     "Governance": {
       "fields": {
         "minDelay": {
           "description": "Minimum delay for scheduled upgrades",
-          "severity": "MEDIUM",
+          "severity": "MEDIUM"
         },
         "owner": {
           "description": "This owner role has all permissions in absence of a security council",
           "severity": "HIGH",
-          "type": "PERMISSION",
+          "type": "PERMISSION"
         },
         "pendingOwner": {
           "description": "Pending owner can be set by current owner and accept or renounce ownership",
           "severity": "HIGH",
-          "type": "PERMISSION",
+          "type": "PERMISSION"
         },
         "securityCouncil": {
           "description": "Address of the security council, change Governance section if this differs from the null address",
           "severity": "HIGH",
-          "type": "PERMISSION",
-        },
-      },
-    },
-  },
+          "type": "PERMISSION"
+        }
+      }
+    }
+  }
 }
