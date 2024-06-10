@@ -1,10 +1,29 @@
 {
   "name": "satellite",
   "chain": "ethereum",
-  "blockNumber": 19118480,
-  "configHash": "0x0fdb8a2153e8a3fd7ca82275244ea64056d530d1ce3823a9df9f2112c7565de8",
-  "version": 3,
+  "blockNumber": 20017695,
+  "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
+  "version": 4,
   "contracts": [
+    {
+      "name": "AxelarGasService",
+      "address": "0x2d5d7d31F671F86C782533cc367F14109a082712",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "admin": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      },
+      "implementations": ["0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"],
+      "sinceTimestamp": 1661972207,
+      "values": {
+        "contractId": "0xfaa2f015f2ce5aee225904728de2def86eb8837491efd21f1a04fc20d8e923f6",
+        "gasCollector": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+        "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
+        "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "AxelarGasService"
+    },
     {
       "name": "Gateway",
       "address": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
@@ -24,6 +43,19 @@
         "tokenDeployer": "0xb28478319B64f8D47e19A120209A211D902F8b8f"
       },
       "derivedName": "AxelarGateway"
+    },
+    {
+      "name": "AxelarGasServiceOperators",
+      "address": "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1702533995,
+      "values": {
+        "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "Operators"
     },
     {
       "name": "TokenDeployer",
@@ -57,12 +89,13 @@
     {
       "name": "AxelarAuthWeighted",
       "address": "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0",
+      "ignoreInWatchMode": ["currentEpoch"],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1697785871,
       "values": {
-        "currentEpoch": 99,
+        "currentEpoch": 225,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
@@ -86,14 +119,26 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
     "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b",
     "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
     "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4",
+    "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
     "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC",
     "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f"
   ],
   "abis": {
+    "0x2d5d7d31F671F86C782533cc367F14109a082712": [
+      "error AlreadyInitialized()",
+      "error EtherNotAccepted()",
+      "error InvalidImplementation()",
+      "error NotOwner()",
+      "error SetupFailed()",
+      "function implementation() view returns (address implementation_)",
+      "function init(address implementationAddress, address newOwner, bytes params)",
+      "function setup(bytes data)"
+    ],
     "0x4F4495243837681061C4743b74B3eEdf548D56A5": [
       "constructor(bytes params)",
       "function getAddress(bytes32 key) view returns (address)",
@@ -103,6 +148,31 @@
       "function getString(bytes32 key) view returns (string)",
       "function getUint(bytes32 key) view returns (uint256)",
       "function setup(bytes params)"
+    ],
+    "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": [
+      "constructor(address initialOwner)",
+      "error ExecutionFailed()",
+      "error InvalidOperator()",
+      "error InvalidOwner()",
+      "error InvalidOwnerAddress()",
+      "error NotAnOperator()",
+      "error NotOperator()",
+      "error NotOwner()",
+      "error OperatorAlreadyAdded()",
+      "event OperatorAdded(address indexed operator)",
+      "event OperatorRemoved(address indexed operator)",
+      "event OwnershipTransferStarted(address indexed newOwner)",
+      "event OwnershipTransferred(address indexed newOwner)",
+      "function acceptOwnership()",
+      "function addOperator(address operator)",
+      "function executeContract(address target, bytes callData, uint256 nativeValue) payable returns (bytes)",
+      "function isOperator(address account) view returns (bool)",
+      "function operators(address) view returns (bool)",
+      "function owner() view returns (address owner_)",
+      "function pendingOwner() view returns (address owner_)",
+      "function proposeOwnership(address newOwner)",
+      "function removeOperator(address operator)",
+      "function transferOwnership(address newOwner)"
     ],
     "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098": [
       "constructor(address authModule_, address tokenDeployer_)",
@@ -182,6 +252,71 @@
     ],
     "0xb28478319B64f8D47e19A120209A211D902F8b8f": [
       "function deployToken(string name, string symbol, uint8 decimals, uint256 cap, bytes32 salt) returns (address tokenAddress)"
+    ],
+    "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": [
+      "constructor(address gasCollector_)",
+      "error InsufficientGasPayment(uint256 required, uint256 provided)",
+      "error InvalidAddress()",
+      "error InvalidAmounts()",
+      "error InvalidCodeHash()",
+      "error InvalidGasUpdates()",
+      "error InvalidImplementation()",
+      "error InvalidOwner()",
+      "error InvalidOwnerAddress()",
+      "error InvalidParams()",
+      "error NativeTransferFailed()",
+      "error NotCollector()",
+      "error NotOwner()",
+      "error NotProxy()",
+      "error SetupFailed()",
+      "error TokenTransferFailed()",
+      "error UnsupportedEstimationType(uint8 gasEstimationType)",
+      "event ExpressGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasAdded(bytes32 indexed txHash, uint256 indexed logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasInfoUpdated(string chain, tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee) info)",
+      "event GasPaidForContractCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForContractCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForExpressCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event GasPaidForExpressCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeExpressGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasAdded(bytes32 indexed txHash, uint256 indexed logIndex, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForContractCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForContractCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForExpressCall(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, uint256 gasFeeAmount, address refundAddress)",
+      "event NativeGasPaidForExpressCallWithToken(address indexed sourceAddress, string destinationChain, string destinationAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, uint256 gasFeeAmount, address refundAddress)",
+      "event OwnershipTransferStarted(address indexed newOwner)",
+      "event OwnershipTransferred(address indexed newOwner)",
+      "event Refunded(bytes32 indexed txHash, uint256 indexed logIndex, address receiver, address token, uint256 amount)",
+      "event Upgraded(address indexed newImplementation)",
+      "function acceptOwnership()",
+      "function addExpressGas(bytes32 txHash, uint256 logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function addGas(bytes32 txHash, uint256 logIndex, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function addNativeExpressGas(bytes32 txHash, uint256 logIndex, address refundAddress) payable",
+      "function addNativeGas(bytes32 txHash, uint256 logIndex, address refundAddress) payable",
+      "function collectFees(address receiver, address[] tokens, uint256[] amounts)",
+      "function contractId() pure returns (bytes32)",
+      "function estimateGasFee(string destinationChain, string, bytes payload, uint256 executionGasLimit, bytes) view returns (uint256 gasEstimate)",
+      "function gasCollector() view returns (address)",
+      "function getGasInfo(string chain) view returns (tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee))",
+      "function implementation() view returns (address implementation_)",
+      "function owner() view returns (address owner_)",
+      "function payGas(address sender, string destinationChain, string destinationAddress, bytes payload, uint256 executionGasLimit, bool estimateOnChain, address refundAddress, bytes params) payable",
+      "function payGasForContractCall(address sender, string destinationChain, string destinationAddress, bytes payload, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForContractCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForExpressCall(address sender, string destinationChain, string destinationAddress, bytes payload, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payGasForExpressCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address gasToken, uint256 gasFeeAmount, address refundAddress)",
+      "function payNativeGasForContractCall(address sender, string destinationChain, string destinationAddress, bytes payload, address refundAddress) payable",
+      "function payNativeGasForContractCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address refundAddress) payable",
+      "function payNativeGasForExpressCall(address sender, string destinationChain, string destinationAddress, bytes payload, address refundAddress) payable",
+      "function payNativeGasForExpressCallWithToken(address sender, string destinationChain, string destinationAddress, bytes payload, string symbol, uint256 amount, address refundAddress) payable",
+      "function pendingOwner() view returns (address owner_)",
+      "function proposeOwnership(address newOwner)",
+      "function refund(bytes32 txHash, uint256 logIndex, address receiver, address token, uint256 amount)",
+      "function refund(address receiver, address token, uint256 amount)",
+      "function setup(bytes data)",
+      "function transferOwnership(address newOwner)",
+      "function updateGasInfo(string[] chains, tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee)[] gasUpdates)",
+      "function upgrade(address newImplementation, bytes32 newImplementationCodeHash, bytes params)"
     ],
     "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68": [
       "constructor(address[] accounts, uint256 threshold)",
