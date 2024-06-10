@@ -25,7 +25,8 @@
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
         "currentL2StoredL1RollingHash",
-        "currentFinalizedShnarf"
+        "currentFinalizedShnarf",
+        "currentFinalizedState"
       ],
       "ignoreMethods": [
         "stateRootHashes",
