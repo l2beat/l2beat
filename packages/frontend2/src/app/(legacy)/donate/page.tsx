@@ -1,54 +1,54 @@
-import { compact } from 'lodash'
-import { type Metadata } from 'next'
-import { toDataURL } from 'qrcode'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { OutLink } from '~/app/_components/out-link'
-import { showGitcoinOption } from '~/flags'
-import OutLinkIcon from '~/icons/outlink.svg'
-import { fundingSources } from './funding-sources'
+import { compact } from "lodash";
+import { type Metadata } from "next";
+import { toDataURL } from "qrcode";
+import { ContentWrapper } from "~/app/_components/content-wrapper";
+import { OutLink } from "~/app/_components/out-link";
+import { showGitcoinOption } from "~/flags";
+import OutLinkIcon from "~/icons/outlink.svg";
+import { fundingSources } from "./funding-sources";
 
 export const metadata: Metadata = {
-  title: 'Donate - L2BEAT',
+  title: "Donate - L2BEAT",
   openGraph: {
-    url: '/donate',
+    url: "/donate",
   },
-}
+};
 
 export default async function Page() {
-  const gitcoinOption = await showGitcoinOption()
+  const gitcoinOption = await showGitcoinOption();
 
-  const donateAddress = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
+  const donateAddress = "0x41626BA92c0C2a1aD38fC83920300434082B1870";
   const qrCodeUrl = await toDataURL(donateAddress, {
     color: {
-      light: '#fafafa',
+      light: "#fafafa",
     },
-    errorCorrectionLevel: 'H',
+    errorCorrectionLevel: "H",
     margin: 0,
-  })
+  });
 
   const networks = compact([
     {
-      name: 'Ethereum',
+      name: "Ethereum",
       linkURL: `https://etherscan.io/address/${donateAddress}`,
     },
     {
-      name: 'Arbitrum One',
+      name: "Arbitrum One",
       linkURL: `https://arbiscan.io/address/${donateAddress}`,
     },
     {
-      name: 'OP Mainnet',
+      name: "OP Mainnet",
       linkURL: `https://optimistic.etherscan.io/address/${donateAddress}`,
     },
     {
-      name: 'zkSync Lite',
+      name: "ZKsync Lite",
       linkURL: `https://zkscan.io/explorer/accounts/${donateAddress}`,
     },
     gitcoinOption && {
-      name: 'Gitcoin',
+      name: "Gitcoin",
       linkURL:
-        'https://explorer.gitcoin.co/#/round/424/0x222ea76664ed77d18d4416d2b2e77937b76f0a35/0x222ea76664ed77d18d4416d2b2e77937b76f0a35-27',
+        "https://explorer.gitcoin.co/#/round/424/0x222ea76664ed77d18d4416d2b2e77937b76f0a35/0x222ea76664ed77d18d4416d2b2e77937b76f0a35-27",
     },
-  ])
+  ]);
 
   return (
     <div>
@@ -63,16 +63,16 @@ export default async function Page() {
         </main>
       </ContentWrapper>
     </div>
-  )
+  );
 }
 
 interface HeaderProps {
-  ethereumAddress: string
-  qrCodeUrl: string
+  ethereumAddress: string;
+  qrCodeUrl: string;
   networks: {
-    name: string
-    linkURL: string
-  }[]
+    name: string;
+    linkURL: string;
+  }[];
 }
 
 async function Header(props: HeaderProps) {
@@ -160,7 +160,7 @@ async function Header(props: HeaderProps) {
         </div>
       </ContentWrapper>
     </header>
-  )
+  );
 }
 
 function DonateFundingSources() {
@@ -218,12 +218,12 @@ function DonateFundingSources() {
                     {item.description}
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
       </div>
       <div className="mt-8 font-bold">Last updated: January 2024</div>
     </section>
-  )
+  );
 }
