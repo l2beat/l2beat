@@ -9,6 +9,13 @@ import { isEqual } from 'lodash'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import {
+  ContractFieldSeverity,
+  Permission,
+  StackCategory,
+  StackRole,
+  ValueType,
+} from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -18,8 +25,18 @@ import {
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import { getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
+
+export interface ContractMeta {
+  descriptions?: string[]
+  roles?: Set<StackRole>
+  permissions?: { [address: string]: Set<Permission> }
+  category?: Set<StackCategory>
+  types?: Set<ValueType>
+  severity?: ContractFieldSeverity
+}
 
 export interface AnalyzedContract {
   type: 'Contract'
@@ -38,6 +55,9 @@ export interface AnalyzedContract {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
+  selfMeta?: Omit<ContractMeta, 'descriptions'> & { description: string }
+  targetsMeta?: Record<string, ContractMeta>
+  combinedMeta?: ContractMeta
 }
 
 export interface ExtendedTemplate {
@@ -150,6 +170,17 @@ export class AddressAnalyzer {
       blockNumber,
       logger,
     )
+    const relatives = getRelativesWithSuggestedTemplates(
+      results,
+      overrides?.ignoreRelatives,
+      proxy?.relatives,
+      proxy?.implementations,
+      overrides?.fields,
+    )
+    const targetsMeta =
+      overrides?.fields !== undefined
+        ? getTargetsMeta(address, results, overrides.fields)
+        : undefined
 
     return {
       type: 'Contract',
@@ -167,13 +198,11 @@ export class AddressAnalyzer {
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
-      relatives: getRelativesWithSuggestedTemplates(
-        results,
-        overrides?.ignoreRelatives,
-        proxy?.relatives,
-        proxy?.implementations,
-        overrides?.fields,
-      ),
+      relatives,
+      selfMeta: overrides?.description
+        ? { description: overrides.description }
+        : undefined,
+      targetsMeta,
     }
   }
 
