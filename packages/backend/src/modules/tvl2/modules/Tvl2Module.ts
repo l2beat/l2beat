@@ -13,6 +13,7 @@ import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AmountRepository } from '../repositories/AmountRepository'
+import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { IdConverter } from '../utils/IdConverter'
@@ -98,6 +99,7 @@ export function createTvl2Module(
     peripherals.getRepository(TvlCleanerRepository),
     [
       peripherals.getRepository(AmountRepository),
+      peripherals.getRepository(BlockTimestampRepository),
       peripherals.getRepository(PriceRepository),
       peripherals.getRepository(ValueRepository),
     ],

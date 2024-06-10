@@ -1,11 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import {
+  CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 
 export interface BlockTimestampRecord {
   chain: string
@@ -46,6 +52,13 @@ export class BlockTimestampRepository extends BaseRepository {
     return row ? toRecord(row).blockNumber : undefined
   }
 
+  async addMany(records: BlockTimestampRecord[], trx?: Knex.Transaction) {
+    const rows: BlockTimestampRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
+    await knex.batchInsert('block_timestamps', rows, 2_000)
+    return rows.length
+  }
+
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
     const knex = await this.knex()
 
@@ -54,6 +67,20 @@ export class BlockTimestampRepository extends BaseRepository {
       .where('timestamp', '>', timestamp.toDate())
       .delete()
   }
+
+  // #region methods used only in TvlCleaner
+
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'block_timestamps', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'block_timestamps', dateRange)
+  }
+
+  // #endregion
 
   // #region methods used only in tests
 
