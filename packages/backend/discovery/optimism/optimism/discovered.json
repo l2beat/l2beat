@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 121224426,
-  "configHash": "0x7908ff0a19c63a46a46493cffb5406560aa81493a62b61fc2381319d7326c946",
+  "blockNumber": 121224472,
+  "configHash": "0xbaad1d82a2b8b919da5cd901ace58fea1f0703c97d30191ab524240bf1b276aa",
   "version": 5,
   "contracts": [
     {
@@ -79,7 +79,7 @@
     {
       "name": "GasPriceOracle",
       "address": "0x420000000000000000000000000000000000000F",
-      "ignoreInWatchMode": ["l1BaseFee"],
+      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xb528D11cC114E026F138fE568744c6D45ce6Da7A",
@@ -96,7 +96,7 @@
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 18746384558,
+        "l1BaseFee": 18367210213,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -194,7 +194,8 @@
         "hash",
         "number",
         "timestamp",
-        "sequenceNumber"
+        "sequenceNumber",
+        "blobBaseFee"
       ],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -204,18 +205,18 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 18746384558,
+        "basefee": 18367210213,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
         "blobBaseFee": 3,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x31cf472a5fe0172630c68af245cefc159a995625699e48157a5193ccdd522091",
+        "hash": "0x624d1dc1e575a805e21b2087ea3cb2c9db0f41b471da81a80e16ff97c613e15d",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20063501,
-        "sequenceNumber": 0,
-        "timestamp": 1718047499,
+        "number": 20063507,
+        "sequenceNumber": 10,
+        "timestamp": 1718047571,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"

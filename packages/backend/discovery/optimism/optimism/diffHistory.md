@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xec17f2fff261e3469c3f09d3f20b08213440ff78
+Generated with discovered.json: 0xa8070b605df02d4a8f16536f9083d0eb5b628ca8
 
-# Diff at Mon, 10 Jun 2024 19:27:24 GMT:
+# Diff at Mon, 10 Jun 2024 19:28:51 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@d3c8c03ba1310e94fe51ccffffb90b46e5ec9ea9 block: 121202053
-- current block number: 121224426
+- current block number: 121224472
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The ProxyAdmin owner is now the same as L1 (but aliased).
 
 ## Watched changes
 
@@ -16,24 +16,6 @@ Provide description of changes. This section will be preserved.
 -   Status: DELETED
     contract InternalProxyAdminOwnerMultisig1 (0x28B1eE885034ccD2d5Fa228a9A3157390D27177C)
     +++ description: None
-```
-
-```diff
-    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
-    +++ description: None
-      values.blobBaseFee:
--        1
-+        3
-    }
-```
-
-```diff
-    contract L1Block (0x4200000000000000000000000000000000000015) {
-    +++ description: None
-      values.blobBaseFee:
--        1
-+        3
-    }
 ```
 
 ```diff

@@ -17,7 +17,7 @@
     "0x420000000000000000000000000000000000001A",
     "0x4200000000000000000000000000000000000042",
     "0x4200000000000000000000000000000000000020",
-    "0x4200000000000000000000000000000000000021"
+    "0x4200000000000000000000000000000000000021",
   ],
   "names": {
     "0x4200000000000000000000000000000000000010": "L2StandardBridge",
@@ -32,25 +32,25 @@
     "0x4200000000000000000000000000000000000015": "L1Block",
     "0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
     "0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
-    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge"
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
   },
   "overrides": {
     "SequencerFeeVault": {
-      "ignoreMethods": ["totalProcessed"]
+      "ignoreMethods": ["totalProcessed"],
     },
     "GasPriceOracle": {
       "ignoreMethods": ["overhead", "scalar"],
-      "ignoreInWatchMode": ["l1BaseFee"]
+      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
     },
     "OPToken": {
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply"],
     },
     "L2CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "ignoreInWatchMode": ["messageNonce"],
     },
     "L1BlockNumber": {
-      "ignoreMethods": ["getL1BlockNumber"]
+      "ignoreMethods": ["getL1BlockNumber"],
     },
     "L1Block": {
       "ignoreInWatchMode": [
@@ -58,11 +58,12 @@
         "hash",
         "number",
         "timestamp",
-        "sequenceNumber"
-      ]
+        "sequenceNumber",
+        "blobBaseFee",
+      ],
     },
     "L2ToL1MessagePasser": {
-      "ignoreMethods": ["messageNonce"]
-    }
-  }
+      "ignoreMethods": ["messageNonce"],
+    },
+  },
 }
