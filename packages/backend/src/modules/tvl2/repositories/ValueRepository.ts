@@ -54,13 +54,6 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: ValueRecord[], trx?: Knex.Transaction) {
-    const rows: ValueRow[] = records.map(toRow)
-    const knex = await this.knex(trx)
-    await knex.batchInsert('values', rows, BATCH_SIZE)
-    return rows.length
-  }
-
   async addOrUpdateMany(records: ValueRecord[]) {
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < records.length; i += BATCH_SIZE) {
@@ -104,6 +97,13 @@ export class ValueRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('values')
     return rows.map(toRecord)
+  }
+
+  async addMany(records: ValueRecord[], trx?: Knex.Transaction) {
+    const rows: ValueRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
+    await knex.batchInsert('values', rows, BATCH_SIZE)
+    return rows.length
   }
 
   async deleteAll() {

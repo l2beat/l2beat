@@ -52,13 +52,6 @@ export class BlockTimestampRepository extends BaseRepository {
     return row ? toRecord(row).blockNumber : undefined
   }
 
-  async addMany(records: BlockTimestampRecord[], trx?: Knex.Transaction) {
-    const rows: BlockTimestampRow[] = records.map(toRow)
-    const knex = await this.knex(trx)
-    await knex.batchInsert('block_timestamps', rows, 2_000)
-    return rows.length
-  }
-
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
     const knex = await this.knex()
 
@@ -88,6 +81,13 @@ export class BlockTimestampRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('block_timestamps')
     return rows.map(toRecord)
+  }
+
+  async addMany(records: BlockTimestampRecord[], trx?: Knex.Transaction) {
+    const rows: BlockTimestampRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
+    await knex.batchInsert('block_timestamps', rows, 2_000)
+    return rows.length
   }
 
   async deleteAll() {

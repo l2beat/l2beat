@@ -36,15 +36,12 @@ export class SyncOptimizer {
   getTimestampToSync(_timestamp: number): UnixTime {
     const timestamp = new UnixTime(_timestamp)
 
-    const hourlyCutOff = this.hourlyCutOff.add(-this.gracePeriodDays, 'days')
+    const hourlyCutOff = this.hourlyCutOffWithGracePeriod
     if (timestamp.gte(hourlyCutOff)) {
       return timestamp.toEndOf('hour')
     }
 
-    const sixHourlyCutOff = this.sixHourlyCutOff.add(
-      -this.gracePeriodDays,
-      'days',
-    )
+    const sixHourlyCutOff = this.sixHourlyCutOffWithGracePeriod
     if (timestamp.gte(sixHourlyCutOff)) {
       return timestamp.toEndOf('six hours')
     }
