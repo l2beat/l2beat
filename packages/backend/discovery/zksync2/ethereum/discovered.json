@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20053603,
-  "configHash": "0x1ce1bbd4120f9c093a009ae81e9b837ffa65e887f6d71cc9bf8501135358d6e4",
+  "blockNumber": 20059772,
+  "configHash": "0xda1ce29e3aea99444aec821b633ec73a5964dbda96d3f7223075bcbcdf9782a0",
   "version": 5,
   "contracts": [
     {
@@ -32,6 +32,13 @@
       "sinceTimestamp": 1717520639,
       "values": {
         "admin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+        "chainsCreated": [
+          {
+            "chainId": 324,
+            "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+          }
+        ],
         "getHyperchain": [],
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "paused": false,
@@ -178,26 +185,26 @@
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3250258,
+        "getFirstUnprocessedPriorityTx": 3250639,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 438,
+        "getPriorityQueueSize": 535,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 484777,
-        "getTotalBatchesExecuted": 484651,
-        "getTotalBatchesVerified": 484761,
-        "getTotalBlocksCommitted": 484777,
-        "getTotalBlocksExecuted": 484651,
-        "getTotalBlocksVerified": 484761,
-        "getTotalPriorityTxs": 3250696,
+        "getTotalBatchesCommitted": 484895,
+        "getTotalBatchesExecuted": 484768,
+        "getTotalBatchesVerified": 484884,
+        "getTotalBlocksCommitted": 484895,
+        "getTotalBlocksExecuted": 484768,
+        "getTotalBlocksVerified": 484884,
+        "getTotalPriorityTxs": 3251174,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": [
           "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -206,8 +213,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x6f54b127e9be2dce5b540f7596df5dad9119c31448c37b58a9ba2911a8c3dcbd",
-          1717850255,
+          "0x0456e24b18b5fdb0e01f210120fb77cd85fd48ba345666c55d2ab121940d7dea",
+          1717922207,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
@@ -433,6 +440,7 @@
     "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
     "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df",
     "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
+    "0x71d84c3404a6ae258E6471d4934B96a2033F9438",
     "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
     "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
     "0xe79af29d618141Ffef951B240b250d47030D56d7"

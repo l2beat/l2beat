@@ -1,14 +1,15 @@
-Generated with discovered.json: 0x13d6850b6bd59151a9b1b92caeec3729cae620f9
+Generated with discovered.json: 0x750bf144c27f53350e1c17e23f321626f55f7e46
 
-# Diff at Sun, 09 Jun 2024 10:14:49 GMT:
+# Diff at Mon, 10 Jun 2024 06:54:51 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@9a3f8bf37251d3ca29218e661b10e1e417102bfa block: 20040416
-- current block number: 20053603
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 20040416
+- current block number: 20059772
 
 ## Description
 
 Remove the deprecated constructorArgs from the config.
+Add trigger for all new chains that are created (even with a different STM).
 
 For v24 upgrade below, there is now also an [informative diff audit by OpenZeppelin](https://blog.openzeppelin.com/zksync-state-transition-diff-audit).
 
@@ -17,6 +18,15 @@ For v24 upgrade below, there is now also an [informative diff audit by OpenZeppe
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20040416 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated:
++        [{"chainId":324,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x71d84c3404a6ae258E6471d4934B96a2033F9438"}]
+    }
+```
 
 ```diff
     contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
