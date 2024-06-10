@@ -17,7 +17,7 @@ export function RangeControls({ chartType, isMetaChart }: Props) {
       role="chart-range-controls"
       name={`${chartType.type}-range`}
       className={cn(
-        'transition-colors duration-200 group-data-[interactivity-disabled]/chart:bg-gray-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700',
+        'transition-colors duration-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700 group-data-[interactivity-disabled]/chart:bg-gray-200',
         isMetaChart && 'hidden',
       )}
       optionsClassname="group-data-[interactivity-disabled]/chart:opacity-0 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none"

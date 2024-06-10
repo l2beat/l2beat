@@ -22,7 +22,7 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
+        'group flex gap-6 rounded-md bg-gray-100 transition-all dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-300',
         orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
@@ -34,12 +34,12 @@ export function LinkWithThumbnail({
           orientation === 'vertical' &&
             'rounded-t-md transition-all group-hover:scale-[1.03] group-hover:rounded-md',
           orientation === 'horizontal' &&
-            'max-w-36 rounded-md transition-all group-hover:scale-105 md:max-w-48',
+            'max-w-36 rounded-md transition-all md:max-w-48 group-hover:scale-105',
         )}
       />
       <div
         className={cn(
-          orientation === 'vertical' && 'mb-12 mt-6 px-8',
+          orientation === 'vertical' && 'mt-6 mb-12 px-8',
           orientation === 'horizontal' &&
             'self-center transition-all group-hover:translate-x-0.5',
         )}
@@ -67,7 +67,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="mt-3 flex flex-wrap items-center gap-1 text-sm font-semibold text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500">
+        <p className="mt-3 flex flex-wrap items-center gap-1 font-semibold text-blue-700 text-sm underline transition-colors dark:text-blue-500 group-hover:text-blue-550">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

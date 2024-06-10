@@ -12,5 +12,12 @@
       "discovery/**/.flat",
       "discovery/**/script-ts"
     ]
+  },
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useSortedClasses": "off"
+      }
+    }
   }
 }

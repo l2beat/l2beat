@@ -28,7 +28,7 @@ export function TableView<T>({
     <div
       className={cn(
         'group/tableview mt-3 overflow-x-auto whitespace-pre pb-3 text-base md:mt-6',
-        '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
+        '-mx-4 md:-mx-12 w-[calc(100%_+_32px)] px-4 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
       data-rerender-on-load={rerenderOnLoad}
@@ -79,7 +79,7 @@ export function TableView<T>({
                 {...rest}
                 className={cn(
                   'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
-                  'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
+                  'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm',
                   rowClassName,
                 )}
               >
@@ -119,7 +119,7 @@ export function TableView<T>({
         </tbody>
       </table>
       <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700/15 py-10 group-data-[state=empty]/tableview:flex">
-        <span className="mb-4 text-2xl font-semibold">No results</span>
+        <span className="mb-4 font-semibold text-2xl">No results</span>
         <span className="mb-6">There are no results meeting the criteria</span>
         <Link className="cursor-pointer" data-role="project-filters-reset">
           Reset all filters
@@ -155,7 +155,7 @@ function ColumnHeader<T>(props: {
     <>
       <th
         className={cn(
-          'whitespace-pre py-2 align-bottom text-xs leading-5 font-medium uppercase text-gray-500 dark:text-gray-50',
+          'whitespace-pre py-2 align-bottom font-medium text-gray-500 text-xs uppercase leading-5 dark:text-gray-50',
           props.column.minimalWidth && 'w-0',
           hasPaddingRight &&
             !props.groupOptions?.isLast &&

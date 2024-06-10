@@ -1,11 +1,11 @@
 "initialAddresses": [
 // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
     "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
@@ -18,6 +18,7 @@
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
 // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
 ],
@@ -25,11 +26,11 @@
 "names": {
 // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault Lyra",
-    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
     "0x8180EcCC825b692ef65FF099a0A387743788bf78": "weETH Vault Lyra",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault Lyra",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Lyra",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981": "USDC Vault Hook",
@@ -42,6 +43,7 @@
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault Kinto",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": "ETHFI Vault Kinto",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
 // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya"
 },
@@ -49,11 +51,11 @@
 "ignoreMethods": {
 // Lyra
     "USDC Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
-    "rswETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "weETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
+    "rswETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "wstETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
-    "WETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "SNX Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
+    "WETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "WBTC Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
 // Hook
     "USDC Vault Hook": {"ignoreMethods":["token","token__","hook__"]},
@@ -66,6 +68,7 @@
     "wstETH Vault Kinto": {"ignoreMethods":["token","token__","hook__"]},
     "DAI Vault Kinto": {"ignoreMethods":["token","token__","hook__"]},
     "ETHFI Vault Kinto": {"ignoreMethods":["token","token__","hook__"]},
+    "WETH Vault Kinto": {"ignoreMethods":["token","token__","hook__"]},
 // Reya
     "USDC Vault Reya": {"ignoreMethods":["token","token__","hook__"]}
 },
@@ -79,16 +82,16 @@ discovery.getEscrowDetails({
                 tokens: ['USDC'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
-                name: 'rswETH Vault Lyra',
-                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
-                tokens: ['rswETH'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0x8180EcCC825b692ef65FF099a0A387743788bf78'),
                 name: 'weETH Vault Lyra',
                 description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
                 tokens: ['weETH'],
+              }),
+discovery.getEscrowDetails({
+                address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
+                name: 'rswETH Vault Lyra',
+                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
+                tokens: ['rswETH'],
               }),
 discovery.getEscrowDetails({
                 address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
@@ -97,16 +100,16 @@ discovery.getEscrowDetails({
                 tokens: ['wstETH'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
-                name: 'WETH Vault Lyra',
-                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
-                tokens: ['WETH'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592'),
                 name: 'SNX Vault Lyra',
                 description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
                 tokens: ['SNX'],
+              }),
+discovery.getEscrowDetails({
+                address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
+                name: 'WETH Vault Lyra',
+                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
+                tokens: ['WETH'],
               }),
 discovery.getEscrowDetails({
                 address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
@@ -169,6 +172,12 @@ discovery.getEscrowDetails({
                 name: 'ETHFI Vault Kinto',
                 description: 'Socket Vault associated with Kinto and owned by KintoMultisig.',
                 tokens: ['ETHFI'],
+              }),
+discovery.getEscrowDetails({
+                address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
+                name: 'WETH Vault Kinto',
+                description: 'Socket Vault associated with Kinto and owned by KintoMultisig.',
+                tokens: ['WETH'],
               }),
 // Reya
 discovery.getEscrowDetails({

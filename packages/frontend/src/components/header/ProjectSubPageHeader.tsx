@@ -19,7 +19,7 @@ export function ProjectSubPageHeader(props: ProjectSubPageHeaderProps) {
         src={`/icons/${props.project.slug}.png`}
         alt={`${props.project.name} logo`}
       />
-      <h1 className="text-base font-medium">
+      <h1 className="font-medium text-base">
         <a href={`/scaling/projects/${props.project.slug}`}>
           {props.project.name}
         </a>

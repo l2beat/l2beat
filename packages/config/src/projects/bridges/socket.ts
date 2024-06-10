@@ -208,6 +208,13 @@ export const socket: Bridge = {
           'Socket Vault associated with Kinto and owned by KintoMultisig.',
         tokens: ['ETHFI'],
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
+        name: 'WETH Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoMultisig.',
+        tokens: ['WETH'],
+      }),
       // Reya
       discovery.getEscrowDetails({
         address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
