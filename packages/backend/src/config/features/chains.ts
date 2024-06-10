@@ -44,10 +44,6 @@ export function getChainTvlConfig(
     throw new Error('Missing minTimestampForTvl for chain: ' + chain)
   }
 
-  if (!chainConfig.explorerApi) {
-    throw new Error('Missing explorerApi for chain: ' + chain)
-  }
-
   if (!isEnabled) {
     return { chain }
   }
@@ -75,8 +71,8 @@ export function getChainTvlConfig(
         ],
         DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
-      blockNumberProviderConfig:
-        chainConfig.explorerApi.type === 'etherscan'
+      blockNumberProviderConfig: chainConfig.explorerApi
+        ? chainConfig.explorerApi.type === 'etherscan'
           ? {
               type: chainConfig.explorerApi.type,
               etherscanApiKey: env.string([
@@ -88,7 +84,8 @@ export function getChainTvlConfig(
           : {
               type: chainConfig.explorerApi.type,
               blockscoutApiUrl: chainConfig.explorerApi.url,
-            },
+            }
+        : undefined,
       minBlockTimestamp:
         options?.minTimestamp ?? chainConfig.minTimestampForTvl,
       multicallConfig: (chainConfig.multicallContracts ?? []).map(
