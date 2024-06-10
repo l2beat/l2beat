@@ -399,8 +399,88 @@ export const optimism: Layer2 = {
   }),
   permissions: [], // TODO: add permissions
   contracts: {
-    addresses: [], // TODO: add contracts
+    addresses: [
+      l2Discovery.getContractDetails(
+        'OPToken',
+        'The OP token contract. It is owned by the MintManager and can inflate the token supply by 2% annually.',
+      ),
+      l2Discovery.getContractDetails(
+        'MintManager',
+        'Controls the OP inflation rate, which is currently hardcoded to 2% annually. It is controlled by the MintManagerOwner multisig, which can also change the OP token owner and therefore the inflation rate.',
+      ),
+      l2Discovery.getContractDetails('L2CrossDomainMessenger', {
+        description:
+          'The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('GasPriceOracle', {
+        description:
+          'Contracts that provide L1 and L2 gas price information, which is derived permissionlessly from the L1 chain.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2StandardBridge', {
+        description:
+          'The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('OptimismMintableERC20Factory', {
+        description:
+          'Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('OptimismMintableERC721Factory', {
+        description:
+          'Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L1BlockNumber', {
+        description: 'Simple contract that returns the latest L1 block number.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2ERC721Bridge', {
+        description:
+          'The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L1Block', {
+        description:
+          'Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2ToL1MessagePasser', {
+        description:
+          'Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('BaseFeeVault', {
+        description:
+          'Contract collecting base fees, which are withdrawable to the FeesCollector on L1.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L1FeeVault', {
+        description:
+          'Contract collecting L1 fees, which are withdrawable to the FeesCollector on L1.',
+        ...l2Upgradability,
+      }),
+
+      l2Discovery.getContractDetails('SequencerFeeVault', {
+        description:
+          'Contract collecting sequencer fees, which are withdrawable to the FeesCollector on L1.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('SchemaRegistry', {
+        description:
+          'Contracts to register schemas for the Ethereum Attestation Service (EAS).',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('EAS', {
+        description:
+          'Contract containing the main logic for the Ethereum Attestation Service (EAS).',
+        ...l2Upgradability,
+      }),
+    ], // TODO: add contracts
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC('0d')],
+    nativeAddresses: [],
   },
   upgradesAndGovernance: '', // TODO: add upgrades and governance
   milestones: [
@@ -516,86 +596,6 @@ export const optimism: Layer2 = {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
       ...l1Upgradeability,
-    }),
-  ],
-  nonTemplateNativeContracts: [
-    l2Discovery.getContractDetails(
-      'OPToken',
-      'The OP token contract. It is owned by the MintManager and can inflate the token supply by 2% annually.',
-    ),
-    l2Discovery.getContractDetails(
-      'MintManager',
-      'Controls the OP inflation rate, which is currently hardcoded to 2% annually. It is controlled by the MintManagerOwner multisig, which can also change the OP token owner and therefore the inflation rate.',
-    ),
-    l2Discovery.getContractDetails('L2CrossDomainMessenger', {
-      description:
-        'The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('GasPriceOracle', {
-      description:
-        'Contracts that provide L1 and L2 gas price information, which is derived permissionlessly from the L1 chain.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L2StandardBridge', {
-      description:
-        'The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('OptimismMintableERC20Factory', {
-      description:
-        'Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('OptimismMintableERC721Factory', {
-      description:
-        'Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L1BlockNumber', {
-      description: 'Simple contract that returns the latest L1 block number.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L2ERC721Bridge', {
-      description:
-        'The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L1Block', {
-      description:
-        'Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L2ToL1MessagePasser', {
-      description:
-        'Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('BaseFeeVault', {
-      description:
-        'Contract collecting base fees, which are withdrawable to the FeesCollector on L1.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('L1FeeVault', {
-      description:
-        'Contract collecting L1 fees, which are withdrawable to the FeesCollector on L1.',
-      ...l2Upgradability,
-    }),
-
-    l2Discovery.getContractDetails('SequencerFeeVault', {
-      description:
-        'Contract collecting sequencer fees, which are withdrawable to the FeesCollector on L1.',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('SchemaRegistry', {
-      description:
-        'Contracts to register schemas for the Ethereum Attestation Service (EAS).',
-      ...l2Upgradability,
-    }),
-    l2Discovery.getContractDetails('EAS', {
-      description:
-        'Contract containing the main logic for the Ethereum Attestation Service (EAS).',
-      ...l2Upgradability,
     }),
   ],
   nonTemplateNativePermissions: [
