@@ -39,9 +39,9 @@ export const molten: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
     {
-      chain: 'arbitrum',
-      includeInTotal: false,
       ...discovery.getEscrowDetails({
+        chain: 'arbitrum',
+        includeInTotal: false,
         address: EthereumAddress('0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80'),
         tokens: '*',
         description:
