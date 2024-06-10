@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x8154ddf7c6f50e960c49006bbab587ccf747173b
+
+# Diff at Mon, 10 Jun 2024 17:43:22 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d3c8c03ba1310e94fe51ccffffb90b46e5ec9ea9 block: 20025146
+- current block number: 20062993
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
++        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
+      implementations.0:
+-        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
++        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.version:
+-        "1.12.0"
++        "2.2.0"
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
+      values.maximumGasLimit:
++        200000000
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
++        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      implementations.0:
+-        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
++        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      values.GUARDIAN:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      values.L2_ORACLE:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.l2Oracle:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.SYSTEM_CONFIG:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      values.version:
+-        "2.5.0"
++        "3.10.0"
+      values.disputeGameFactory:
++        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
+      values.disputeGameFinalityDelaySeconds:
++        302400
+      values.proofMaturityDelaySeconds:
++        604800
+      values.respectedGameType:
++        0
+      values.respectedGameTypeUpdatedAt:
++        1718037779
+      derivedName:
+-        "OptimismPortal"
++        "OptimismPortal2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xdfe97868233d1aa22e815a266982f2cf17685a27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x5638A9fb7914189a829E3cB6B5C07f6D32F2851A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6D9Dd462b55d43D76754135BB370A068D3819544)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x80749BfD4065e1bf12C001C19AF65Af76B62F332)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xA019Ec50dFd0cA20f92912342891138B07A24633)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xc3bd67F0caa0B7E25ce9932C5194C19AD61A0602)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      | 1549 ++++++++++++++++++++
+ .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  199 +++
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  678 ---------
+ .../L2OutputOracle/Proxy.p.sol => /dev/null        |  210 ---
+ .../OptimismPortal/OptimismPortal2.sol}            |  512 ++++---
+ .../SystemConfig/SystemConfig.sol                  |   48 +-
+ 6 files changed, 2100 insertions(+), 1096 deletions(-)
+```
+
 Generated with discovered.json: 0x2e96b99a18a238b80113eef0b15038b22f19a9eb
 
 # Diff at Wed, 05 Jun 2024 10:52:13 GMT:
