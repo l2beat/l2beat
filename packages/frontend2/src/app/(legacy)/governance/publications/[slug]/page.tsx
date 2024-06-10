@@ -3,9 +3,10 @@ import Image from 'next/image'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { Article } from '~/app/_components/markdown/article'
-import { roboto_serif } from '~/app/fonts'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
+import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
@@ -29,17 +30,15 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata | null> {
   const publication = getCollectionEntry('publications', params.slug)
-  return {
+  return getDefaultMetadata({
     title: `${publication.data.shortTitle ?? publication.data.title} - L2BEAT`,
     description: publication.data.description ?? publication.excerpt,
     openGraph: {
       type: 'article',
       url: `/governance/publications/${publication.id}`,
-      images: [
-        `https://l2beat.com/meta-images/governance/publications/${publication.id}.png`,
-      ],
+      images: [`/meta-images/governance/publications/${publication.id}.png`],
     },
-  }
+  })
 }
 
 export default function Page({ params }: Props) {
@@ -62,7 +61,7 @@ export default function Page({ params }: Props) {
         )}
         <Image
           alt={`${publicationEntry.title} publication thumbnail`}
-          src={`/meta-images/governance/publications/${publicationEntry.id}.png`}
+          src={`/meta-images/governance/publications/${publication.id}.png`}
           className="mb-12 w-full rounded-lg"
           width={1200}
           height={674}
