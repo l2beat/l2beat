@@ -1,17 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator kysely {
-  provider = "prisma-kysely"
-
-  // Optionally provide a destination directory for the generated file
-  // and a filename of your choice
+  provider     = "prisma-kysely"
   output       = "../src/kysely/generated"
   fileName     = "types.ts"
-  // Optionally generate runtime enums to a separate file
   enumFileName = "enums.ts"
 }
 
