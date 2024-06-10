@@ -5,6 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from './TvlCleaner'
 
 describe(TvlCleaner.name, () => {
@@ -12,13 +13,16 @@ describe(TvlCleaner.name, () => {
     it('schedules on every hour', async () => {
       const clock = mockObject<Clock>({
         onNewHour: () => () => {},
-        _TVL_ONLY_getHourlyDeletionBoundary: () => UnixTime.ZERO,
-        _TVL_ONLY_getSixHourlyDeletionBoundary: () => UnixTime.ZERO,
+      })
+      const mockSyncOptimizer = mockObject<SyncOptimizer>({
+        hourlyCutOffWithGracePeriod: UnixTime.ZERO,
+        sixHourlyCutOffWithGracePeriod: UnixTime.ZERO,
       })
       const mockRepository = mockObject<TvlCleanerRepository>()
       const tvlCleaner = new TvlCleaner(
         clock,
         Logger.SILENT,
+        mockSyncOptimizer,
         mockRepository,
         [],
       )
@@ -41,8 +45,10 @@ describe(TvlCleaner.name, () => {
       )
       const clock = mockObject<Clock>({
         onNewHour: () => () => {},
-        _TVL_ONLY_getHourlyDeletionBoundary: () => hourlyDeletionBoundary,
-        _TVL_ONLY_getSixHourlyDeletionBoundary: () => sixHourlyDeletionBoundary,
+      })
+      const mockSyncOptimizer = mockObject<SyncOptimizer>({
+        hourlyCutOffWithGracePeriod: hourlyDeletionBoundary,
+        sixHourlyCutOffWithGracePeriod: sixHourlyDeletionBoundary,
       })
 
       const firstTable = mockObject({
@@ -83,10 +89,13 @@ describe(TvlCleaner.name, () => {
         addOrUpdate: mockFn().resolvesTo(1),
       })
 
-      const tvlCleaner = new TvlCleaner(clock, Logger.SILENT, repository, [
-        firstTable,
-        secondTable,
-      ])
+      const tvlCleaner = new TvlCleaner(
+        clock,
+        Logger.SILENT,
+        mockSyncOptimizer,
+        repository,
+        [firstTable, secondTable],
+      )
 
       await tvlCleaner.clean()
 
@@ -131,8 +140,10 @@ describe(TvlCleaner.name, () => {
       const sixHourlyDeletionBoundary = new UnixTime(2000)
       const clock = mockObject<Clock>({
         onNewHour: () => () => {},
-        _TVL_ONLY_getHourlyDeletionBoundary: () => hourlyDeletionBoundary,
-        _TVL_ONLY_getSixHourlyDeletionBoundary: () => sixHourlyDeletionBoundary,
+      })
+      const mockSyncOptimizer = mockObject<SyncOptimizer>({
+        hourlyCutOffWithGracePeriod: hourlyDeletionBoundary,
+        sixHourlyCutOffWithGracePeriod: sixHourlyDeletionBoundary,
       })
 
       const firstTable = mockObject({
@@ -150,9 +161,13 @@ describe(TvlCleaner.name, () => {
         addOrUpdate: mockFn().resolvesTo(1),
       })
 
-      const tvlCleaner = new TvlCleaner(clock, Logger.SILENT, repository, [
-        firstTable,
-      ])
+      const tvlCleaner = new TvlCleaner(
+        clock,
+        Logger.SILENT,
+        mockSyncOptimizer,
+        repository,
+        [firstTable],
+      )
 
       await tvlCleaner.clean()
 

@@ -4,6 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 export interface TvlRepositoryToClean {
   deleteHourlyUntil: (dateRange: {
     from: UnixTime | undefined
@@ -25,6 +26,7 @@ export class TvlCleaner {
   constructor(
     private readonly clock: Clock,
     private readonly logger: Logger,
+    private readonly syncOptimizer: SyncOptimizer,
     private readonly tvlCleanerRepository: TvlCleanerRepository,
     private readonly repositoriesToClean: TvlRepositoryToClean[],
   ) {
@@ -48,9 +50,9 @@ export class TvlCleaner {
 
   async clean() {
     const hourlyDeletionBoundary =
-      this.clock._TVL_ONLY_getHourlyDeletionBoundary()
+      this.syncOptimizer.hourlyCutOffWithGracePeriod
     const sixHourlyDeletionBoundary =
-      this.clock._TVL_ONLY_getSixHourlyDeletionBoundary()
+      this.syncOptimizer.sixHourlyCutOffWithGracePeriod
 
     for (const repository of this.repositoriesToClean) {
       const repositoryName = repository.constructor.name

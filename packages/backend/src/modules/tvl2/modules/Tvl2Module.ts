@@ -96,6 +96,7 @@ export function createTvl2Module(
   const tvlCleaner = new TvlCleaner(
     clock,
     logger,
+    syncOptimizer,
     peripherals.getRepository(TvlCleanerRepository),
     [
       peripherals.getRepository(AmountRepository),
