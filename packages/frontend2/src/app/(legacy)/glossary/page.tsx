@@ -3,10 +3,10 @@ import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
 import { getCollection } from '~/content/getCollection'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { AlphabetSelector } from './_components/alphabet-selector/alphabet-selector'
 import { GlossaryItem } from './_components/glossary-item'
 import { GlossarySideNav } from './_components/side-nav/glossary-side-nav'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Glossary - L2BEAT',
