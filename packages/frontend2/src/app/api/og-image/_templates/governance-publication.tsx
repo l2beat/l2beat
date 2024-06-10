@@ -1,20 +1,14 @@
 import { ImageResponse } from 'next/og'
-import { getCollectionEntry } from '~/content/getCollection'
+import React from 'react'
 import { loadFont } from '~/utils/opengraph-image/load-font'
 
-export const runtime = 'nodejs'
+export async function getGovernancePublicationTemplate(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const title = searchParams.get('title')
 
-export const alt = 'Governance publication'
-export const size = {
-  width: 1200,
-  height: 630,
-}
+  if (!title) return new Response('No title provided', { status: 401 })
 
-export const contentType = 'image/png'
-
-export default async function Image({ params }: { params: { slug: string } }) {
   const corsarioVf = await loadFont('corsario-vf')
-  const publication = getCollectionEntry('publications', params.slug)
   return new ImageResponse(
     <div
       style={{
@@ -87,7 +81,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
             letterSpacing: -1.6,
           }}
         >
-          {publication.data.title}
+          {title}
         </div>
       </div>
       <svg
@@ -391,7 +385,6 @@ export default async function Image({ params }: { params: { slug: string } }) {
       </svg>
     </div>,
     {
-      ...size,
       fonts: [
         {
           name: 'Corsario VF',

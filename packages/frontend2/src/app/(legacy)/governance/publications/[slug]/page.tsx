@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { Article } from '~/app/_components/markdown/article'
+import { getOpenGraphImageUrl } from '~/app/api/og-image/_utils/get-open-graph-image-url'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
@@ -60,7 +61,10 @@ export default function Page({ params }: Props) {
         )}
         <Image
           alt={`${publicationEntry.title} publication thumbnail`}
-          src={`/meta-images/governance/publications/${publicationEntry.id}.png`}
+          src={getOpenGraphImageUrl({
+            type: 'governance',
+            title: publicationEntry.title,
+          })}
           className="mb-12 w-full rounded-lg"
           width={1200}
           height={674}

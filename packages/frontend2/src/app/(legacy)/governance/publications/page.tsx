@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
+import { getOpenGraphImageUrl } from '~/app/api/og-image/_utils/get-open-graph-image-url'
 import { getCollection } from '~/content/getCollection'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import {
@@ -62,7 +63,10 @@ function PublicationCard({
   return (
     <LinkWithThumbnail
       href={`/governance/publications/${publication.id}`}
-      src={`/meta-images/governance/publications/${publication.id}.png`}
+      src={getOpenGraphImageUrl({
+        type: 'governance',
+        title: publication.title,
+      })}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
