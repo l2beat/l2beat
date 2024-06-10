@@ -56,8 +56,7 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -105,8 +104,7 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -145,8 +143,7 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -178,8 +175,7 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -216,8 +212,7 @@ describe(ChainAmountIndexer.name, () => {
         parents: [],
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
-        encode: () => '',
-        decode: () => mockObject<ChainAmountConfig>({}),
+        serializeConfiguration: () => '',
         configurations: [],
         createDatabaseMiddleware: async () =>
           mockObject<DatabaseMiddleware>({}),
@@ -251,14 +246,9 @@ function amount(
   }
 }
 
-function removal(
-  id: string,
-  from: number,
-  to: number,
-): RemovalConfiguration<ChainAmountConfig> {
+function removal(id: string, from: number, to: number): RemovalConfiguration {
   return {
     id,
-    properties: mockObject<ChainAmountConfig>({}),
     from,
     to,
   }

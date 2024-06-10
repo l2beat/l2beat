@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismMintableERC20Factory",
+  "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa.",
+  "fields": {
+    "bridge": {
+      "target": {
+        "template": "opstack/L1StandardBridge",
+        "category": "Gateways&Escrows"
+      }
+    }
+  }
+}

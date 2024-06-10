@@ -25,7 +25,7 @@ import {
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
-import { getChainTvlConfig, getChainsWithTokens } from './tvl'
+import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
 export function getTvl2Config(
   flags: FeatureFlags,
@@ -54,8 +54,9 @@ export function getTvl2Config(
       tokenList,
       chainConverter,
       chainToProject,
+      minTimestampOverride,
     ),
-    prices: getPricesConfig(tokenList),
+    prices: getPricesConfig(tokenList, minTimestampOverride),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString([
       'COINGECKO_API_KEY_FOR_TVL2',
@@ -79,6 +80,7 @@ function getAmountsConfig(
   tokenList: Token[],
   chainConverter: ChainConverter,
   chainToProject: Map<string, ProjectId>,
+  minTimestampOverride?: UnixTime,
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
 
@@ -87,8 +89,26 @@ function getAmountsConfig(
       if (token.symbol === 'ETH') {
         continue
       }
-      const project = chainToProject.get(chainConverter.toName(token.chainId))
-      assert(project, 'Project is required for token')
+      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, 'Project is required for token')
+
+      const project = projects.find((x) => x.projectId === projectId)
+      assert(project, 'Project not found')
+
+      const chain = chains.find((x) => x.chainId === +token.chainId)
+      assert(chain, `Chain not found for token ${token.id}`)
+
+      assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+      const chainMinTimestamp = UnixTime.max(
+        chain.minTimestampForTvl,
+        minTimestampOverride ?? new UnixTime(0),
+      )
+      const sinceTimestamp = UnixTime.max(
+        chainMinTimestamp,
+        token.sinceTimestamp,
+      )
+
+      const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
       switch (token.formula) {
         case 'totalSupply':
@@ -98,12 +118,14 @@ function getAmountsConfig(
             type: 'totalSupply',
             address: token.address,
             chain: chainConverter.toName(token.chainId),
-            sinceTimestamp: token.sinceTimestamp,
-            project,
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
+            project: projectId,
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
+            isAssociated,
           })
           break
         case 'circulatingSupply':
@@ -111,13 +133,15 @@ function getAmountsConfig(
             type: 'circulatingSupply',
             address: token.address ?? 'native',
             chain: chainConverter.toName(token.chainId),
-            sinceTimestamp: token.sinceTimestamp,
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
             coingeckoId: token.coingeckoId,
-            project,
+            project: projectId,
             source: toSource(token.type),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
+            isAssociated,
           })
           break
         case 'locked':
@@ -129,12 +153,26 @@ function getAmountsConfig(
   for (const project of projects) {
     for (const escrow of project.escrows) {
       for (const token of escrow.tokens) {
+        const chain = chains.find((x) => x.chainId === +token.chainId)
+        assert(chain, `Chain not found for token ${token.id}`)
+
+        assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+        const chainMinTimestamp = UnixTime.max(
+          chain.minTimestampForTvl,
+          minTimestampOverride ?? new UnixTime(0),
+        )
+        const tokenSinceTimestamp = UnixTime.max(
+          chainMinTimestamp,
+          token.sinceTimestamp,
+        )
+        const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+
         entries.push({
           type: 'escrow',
           address: token.address ?? 'native',
           chain: chainConverter.toName(token.chainId),
           sinceTimestamp: UnixTime.max(
-            token.sinceTimestamp,
+            tokenSinceTimestamp,
             escrow.sinceTimestamp,
           ),
           untilTimestamp: getUntilTimestamp(
@@ -147,6 +185,7 @@ function getAmountsConfig(
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,
           symbol: token.symbol,
+          isAssociated,
         })
       }
     }
@@ -174,7 +213,10 @@ function getUntilTimestamp(
   return UnixTime.max(tokenUntil, escrowUntil)
 }
 
-function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
+function getPricesConfig(
+  tokenList: Token[],
+  minTimestampOverride?: UnixTime,
+): PriceConfigEntry[] {
   const prices = new Map<string, PriceConfigEntry>()
 
   for (const token of tokenList) {
@@ -186,10 +228,11 @@ function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
     assert(prices.get(key) === undefined, 'Every price should be unique')
 
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-    const sinceTimestamp = UnixTime.max(
+    const chainMinTimestamp = UnixTime.max(
       chain.minTimestampForTvl,
-      token.sinceTimestamp,
+      minTimestampOverride ?? new UnixTime(0),
     )
+    const sinceTimestamp = UnixTime.max(chainMinTimestamp, token.sinceTimestamp)
 
     prices.set(key, {
       type: 'coingecko',

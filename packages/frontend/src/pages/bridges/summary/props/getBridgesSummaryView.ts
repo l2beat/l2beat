@@ -82,7 +82,6 @@ export function getBridgesSummaryViewEntry(
         }
       : undefined,
     tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
-    oneDayChange: stats ? stats.oneDayChange : undefined,
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
     bridgesMarketShare: stats
       ? formatPercent(stats.latestTvl / bridgesTvl)

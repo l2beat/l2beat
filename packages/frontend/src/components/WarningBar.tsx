@@ -13,6 +13,7 @@ export interface WarningBarProps {
   icon?: (props: { className?: string }) => JSX.Element
   isCritical?: boolean
   className?: string
+  ignoreMarkdown?: boolean
 }
 
 export function WarningBar({
@@ -22,6 +23,7 @@ export function WarningBar({
   href,
   isCritical,
   className,
+  ignoreMarkdown,
 }: WarningBarProps) {
   const iconFill =
     color === 'red'
@@ -30,7 +32,12 @@ export function WarningBar({
         ? 'fill-yellow-700 dark:fill-yellow-300'
         : 'fill-gray-700 dark:fill-gray-300'
 
-  const textElement = (
+  const textElement = ignoreMarkdown ? (
+    <>
+      {text}
+      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
+    </>
+  ) : (
     <>
       <Markdown className="leading-snug" inline>
         {text}

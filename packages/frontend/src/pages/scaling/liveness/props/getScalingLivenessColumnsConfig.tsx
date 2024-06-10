@@ -108,6 +108,7 @@ export function getScalingLivenessColumnsConfig() {
       name: 'Type',
       tooltip: <TypeColumnTooltip showOnlyRollupsDefinitions />,
       shortName: 'Type',
+      className: 'hidden 2xl:table-cell',
       getValue: (project) => (
         <TypeCell provider={project.provider} disableColors>
           {project.category}
@@ -131,7 +132,8 @@ export function getScalingLivenessColumnsConfig() {
           showComingSoon={
             !project.data?.syncStatus.isSynced ||
             project.slug === 'linea' ||
-            project.slug === 'starknet'
+            project.slug === 'starknet' ||
+            project.slug === 'scroll'
           }
         />
       ),

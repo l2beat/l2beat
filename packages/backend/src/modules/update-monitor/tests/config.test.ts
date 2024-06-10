@@ -70,13 +70,13 @@ describe('discovery config.jsonc', () => {
             continue
           }
 
-          if (override.ignoreInWatchMode === undefined) {
-            continue
-          }
-
           const contract = discovery.contracts.find(
             (c) => c.address === override.address,
           )
+
+          if (contract?.ignoreInWatchMode === undefined) {
+            continue
+          }
 
           const errorPrefix = `${c.name} (chain: ${
             c.chain
@@ -92,7 +92,7 @@ describe('discovery config.jsonc', () => {
             `${errorPrefix} - values does not exist for this contract in discovery.json`,
           )
 
-          const ignore = override.ignoreInWatchMode
+          const ignore = contract.ignoreInWatchMode
           const values = Object.keys(contract.values)
 
           assert(

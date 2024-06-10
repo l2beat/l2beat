@@ -16,6 +16,7 @@ export interface DiscoveryOutput {
 export interface ContractParameters {
   name: string
   derivedName?: string
+  template?: string
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress
@@ -23,6 +24,7 @@ export interface ContractParameters {
   implementations?: EthereumAddress[]
   values?: Record<string, ContractValue>
   errors?: Record<string, string>
+  ignoreInWatchMode?: string[]
 }
 
 export type ContractValue =

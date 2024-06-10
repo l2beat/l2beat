@@ -82,21 +82,21 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     )
 
     dbMiddleware.add(async (trx?: DatabaseTransaction) => {
-      await this.$.priceRepository.addMany(optimizedPrices, trx)
-    })
+      this.logger.info('Saving prices into DB', {
+        from,
+        to: adjustedTo.toNumber(),
+        configurationsToSync: configurationsToSync.length,
+        prices: optimizedPrices.length,
+      })
 
-    this.logger.info('Saving prices into DB', {
-      from,
-      to: adjustedTo.toNumber(),
-      configurationsToSync: configurationsToSync.length,
-      prices: optimizedPrices.length,
+      await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 
     return adjustedTo.toNumber()
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<CoingeckoPriceConfigEntry>[],
+    configurations: RemovalConfiguration[],
   ): Promise<void> {
     for (const configuration of configurations) {
       const deletedRecords =

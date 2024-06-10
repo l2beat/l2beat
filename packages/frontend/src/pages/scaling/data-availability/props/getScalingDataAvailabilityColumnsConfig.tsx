@@ -28,6 +28,7 @@ export function getScalingDataAvailabilityColumnsConfig() {
       name: 'DA Layer',
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is published.',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => (
         <SentimentText
           sentiment={project.dataAvailability.layer.sentiment}
@@ -62,6 +63,7 @@ export function getScalingDataAvailabilityColumnsConfig() {
     },
     {
       name: 'Type of data',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.dataAvailability.mode,
       sorting: {
         getOrderValue: (project) => project.dataAvailability.mode,

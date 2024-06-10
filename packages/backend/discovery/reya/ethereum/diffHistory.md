@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x4026926605a67c1f059c7818b6bcd0715352432d
+
+# Diff at Wed, 05 Jun 2024 08:43:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3a08c61f892fdbd930567c41f50f427b83391859 block: 19973435
+- current block number: 20024504
+
+## Description
+
+Same Multisig as in new re.al L2, deployed by gelato deployer.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19973435 (main branch discovery), not current.
+
+```diff
+    contract ReyaMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      name:
+-        "ReyaMultisig"
++        "GelatoMultisig"
+    }
+```
+
+Generated with discovered.json: 0x365b8f59f73971268b17211f32b838a2f592af96
+
+# Diff at Wed, 29 May 2024 05:29:13 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bca8b8ea4d1ba80d5f20f68bede9336b90b01434 block: 19926951
+- current block number: 19973435
+
+## Description
+
+The EOA is removed from EXECUTOR_ROLE.members. The rollup can now be upgraded by the 6/10 Reya Multisig only.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract ReyaMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      upgradeability.threshold:
+-        "5 of 9 (56%)"
++        "6 of 10 (60%)"
+      values.getOwners.9:
++        "0x547D0F472309e4239b296D01e03bEDc101241a26"
+      values.getOwners.8:
+-        "0xebD4919C075417a86F19713dADe101852867A04F"
++        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.getOwners.7:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.getOwners.6:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
+      values.getOwners.5:
+-        "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
++        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
+      values.getOwners.4:
+-        "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
++        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
+      values.getOwners.3:
+-        "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
++        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.getOwners.2:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.getOwners.1:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.getOwners.0:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.getThreshold:
+-        5
++        6
+      values.nonce:
+-        0
++        4
+    }
+```
+
 Generated with discovered.json: 0x940faef00f64ffdef8e782429009677653fbae56
 
 # Diff at Wed, 22 May 2024 17:36:40 GMT:

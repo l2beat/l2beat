@@ -13,7 +13,7 @@ export function IndexCell({ index, className }: IndexCellProps) {
   return (
     <span
       className={cn(
-        'text-xs font-medium text-gray-50 dark:font-normal dark:text-gray-600',
+        'font-medium text-gray-50 text-xs dark:font-normal dark:text-gray-600',
         className,
       )}
       data-role="index-cell"

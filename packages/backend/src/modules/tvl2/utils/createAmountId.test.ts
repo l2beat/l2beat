@@ -1,4 +1,5 @@
 import {
+  AmountConfigBase,
   CirculatingSupplyEntry,
   CoingeckoId,
   EscrowEntry,
@@ -185,7 +186,7 @@ function mockEscrow(
   }
 }
 
-function mock() {
+function mock(): AmountConfigBase {
   return {
     chain: 'chain',
     project: ProjectId('project'),
@@ -195,5 +196,6 @@ function mock() {
     includeInTotal: true,
     decimals: 18,
     symbol: 'SYMBOL',
+    isAssociated: false,
   }
 }

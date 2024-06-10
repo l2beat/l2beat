@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xca6d8ac5ce0717a621979efbe2d47b5bb7aa1c58
+
+# Diff at Wed, 05 Jun 2024 13:36:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@dba0142405a65703b7e8a12a6df456ca91e8442d block: 19574554
+- current block number: 20025964
+
+## Description
+
+This [upgrade](https://docs.linea.build/developers/linea-version#alpha-v32) is mainly about gas optimizations and does not change functionality. The bridge upgrade is minor, apart from it now being upgradeable by the timelock.
+
+### LineaRollup.sol
+
+- TransientStorageHelpers library added (for tstore'ing values)
+- unsetVerifierAddress() function added to unset the verifier contract for a proof type
+- Computation of finalized state and public input is now done using assembly
+
+## Watched changes
+
+```diff
+    contract ERC20Bridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"
++        "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
+      upgradeability.admin:
+-        "0x5B0bb17755FBa06028530682E2FD5bc373931768"
++        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      implementations.0:
+-        "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"
++        "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20BridgeProxyAdmin (0x5B0bb17755FBa06028530682E2FD5bc373931768)
+    +++ description: None
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x934Dd4C63E285551CEceF8459103554D0096c179"
++        "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"
+      implementations.0:
+-        "0x934Dd4C63E285551CEceF8459103554D0096c179"
++        "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"
+      values.GENESIS_SHNARF:
+-        "0x4f64fe1ce613546d34d666d8258c13c6296820fd13114d784203feb91276e838"
++        "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f"
+      values.sender:
+-        "0x00000000000000000000000000000000075BCd15"
++        "0x0000000000000000000000000000000000000000"
+      values.currentFinalizedState:
++        "0xdefa81791e0d707e911c19ca6336da4b78f81cf3e085e591c31b94155ede2b08"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ERC20Bridge/TokenBridge.sol                    | 111 ++-
+ .../dev/null                                       | 146 ----
+ .../zkEVM/LineaRollup.sol                          | 968 +++++++++++++--------
+ 3 files changed, 668 insertions(+), 557 deletions(-)
+```
+
 Generated with discovered.json: 0xb58a5128a27cb93b34481a9cfc0c0e196eef55fc
 
 # Diff at Wed, 03 Apr 2024 10:10:46 GMT:

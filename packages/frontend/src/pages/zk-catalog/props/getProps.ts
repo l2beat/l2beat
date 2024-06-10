@@ -1,8 +1,6 @@
 import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { Config } from '../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../components'
 import { Wrapped } from '../../Page'
-import { getDefaultPageMetadata } from '../../metadata'
 import { ZkCatalogPageProps } from '../view/ZkCatalogPage'
 import { getZkCatalogView } from './getZkCatalogView'
 
@@ -18,16 +16,15 @@ export function getProps(
 
   return {
     props: {
-      navbar: getNavbarProps(config, 'zk-catalog'),
       view: getZkCatalogView(projects, verifiersApiResponse),
-      footer: getFooterProps(config),
     },
     wrapper: {
-      metadata: getDefaultPageMetadata({
+      metadata: {
+        title: 'ZK Catalog – L2BEAT',
+        description: 'A catalog of the ZK projects with detailed research.',
         url: 'https://l2beat.com/zk-catalog',
-        // TODO: Add image
-        image: '',
-      }),
+        image: 'https://l2beat.com/meta-images/pages/og-zk-catalog.png',
+      },
       banner: config.features.banner,
     },
   }

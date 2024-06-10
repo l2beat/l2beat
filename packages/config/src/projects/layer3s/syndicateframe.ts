@@ -11,6 +11,7 @@ export const syndicateframe: Layer3 = opStackL3({
   hostChain: ProjectId('base'),
   display: {
     name: 'Syndicate Frame Chain',
+    shortName: 'Syndicate',
     slug: 'syndicateframe',
     description:
       'Syndicate Frame Chain is an OP Stack L3 on Base for Farcaster Frame developers.',
@@ -26,7 +27,10 @@ export const syndicateframe: Layer3 = opStackL3({
       repositories: [
         'https://github.com/WillPapper/syndicate-farcaster-frame-starter',
       ],
-      socialMedia: ['https://warpcast.com/syndicate'],
+      socialMedia: [
+        'https://warpcast.com/syndicate',
+        'https://x.com/syndicateio',
+      ],
     },
     activityDataSource: 'Blockchain RPC',
   },

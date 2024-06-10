@@ -20,7 +20,7 @@ export function PageContent({
       className={cn(
         'max-w-[1296px]',
         type === 'article' && 'max-w-[816px]',
-        'mx-auto h-full leading-[1.15] md:px-12',
+        'mx-auto leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
         className,
       )}

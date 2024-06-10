@@ -1,9 +1,12 @@
-import createNextIntlPlugin from 'next-intl/plugin'
+import createVercelToolbarPlugin from '@vercel/toolbar/plugins/next'
 import { withPlausibleProxy as createPlausibleProxyPlugin } from 'next-plausible'
-import { env } from './src/env.js'
+import './src/env.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['assets.coingecko.com'],
+  },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async rewrites() {
     return {
@@ -12,7 +15,9 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: `${env.FALLBACK_REWRITE_DESTINATION}/:path*`,
+          // NOTE(piotradamczyk): Unfortunately using an env variable here
+          // doesn't work for some reason, so we have to hardcode the URL.
+          destination: `https://l2beat-production.vercel.app/:path*`,
         },
       ],
     }
@@ -69,10 +74,20 @@ const nextConfig = {
 
     return config
   },
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
 }
 
 function createNextConfig() {
-  const plugins = [createPlausibleProxyPlugin(), createNextIntlPlugin()]
+  const plugins = [createPlausibleProxyPlugin(), createVercelToolbarPlugin()]
 
   return plugins.reduce((config, plugin) => plugin(config), nextConfig)
 }

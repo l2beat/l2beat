@@ -61,7 +61,7 @@ function getScalingFinalityViewEntry(
     data: getFinalityData(finalityProjectData, project),
     finalizationPeriod: project.display.finality?.finalizationPeriod
       ? formatSeconds(project.display.finality.finalizationPeriod, {
-          fullUnit: true,
+          fullUnit: false,
         })
       : 'None',
   }

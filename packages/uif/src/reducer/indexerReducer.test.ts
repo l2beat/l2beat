@@ -58,9 +58,10 @@ describe(indexerReducer.name, () => {
     describe('parent initialized', () => {
       it('invalidates to parent height', () => {
         const initState = getInitialState(1)
+        const configHash = '0x1234'
         const [state, effects] = reduceWithIndexerReducer(initState, [
           { type: 'ParentUpdated', index: 0, safeHeight: 100 },
-          { type: 'Initialized', safeHeight: 200, childCount: 0 },
+          { type: 'Initialized', safeHeight: 200, childCount: 0, configHash },
         ])
 
         expect(state).toEqual({
@@ -68,12 +69,14 @@ describe(indexerReducer.name, () => {
           status: 'invalidating',
           invalidateToHeight: 100,
           safeHeight: 100,
+          configHash,
           height: 200,
           initializedSelf: true,
           forceInvalidate: false,
           parents: [{ safeHeight: 100, initialized: true, waiting: false }],
         })
         expect(effects).toEqual([
+          { type: 'InitializeState', safeHeight: 100, configHash },
           { type: 'SetSafeHeight', safeHeight: 100 },
           { type: 'Invalidate', targetHeight: 100 },
         ])
@@ -81,8 +84,10 @@ describe(indexerReducer.name, () => {
 
       it('invalidates to parent height if parent initializes later', () => {
         const initState = getInitialState(1)
+        const configHash = '0x1234'
+
         const [state, effects] = reduceWithIndexerReducer(initState, [
-          { type: 'Initialized', safeHeight: 200, childCount: 0 },
+          { type: 'Initialized', safeHeight: 200, childCount: 0, configHash },
           { type: 'ParentUpdated', index: 0, safeHeight: 100 },
         ])
 
@@ -91,11 +96,13 @@ describe(indexerReducer.name, () => {
           status: 'invalidating',
           invalidateToHeight: 100,
           safeHeight: 100,
+          configHash,
           height: 200,
           initializedSelf: true,
           parents: [{ safeHeight: 100, initialized: true, waiting: false }],
         })
         expect(effects).toEqual([
+          { type: 'InitializeState', safeHeight: 100, configHash },
           { type: 'SetSafeHeight', safeHeight: 100 },
           { type: 'Invalidate', targetHeight: 100 },
         ])
@@ -103,8 +110,10 @@ describe(indexerReducer.name, () => {
 
       it('invalidates to own height if parent is higher', () => {
         const initState = getInitialState(1)
+        const configHash = '0x1234'
+
         const [state, effects] = reduceWithIndexerReducer(initState, [
-          { type: 'Initialized', safeHeight: 200, childCount: 0 },
+          { type: 'Initialized', safeHeight: 200, childCount: 0, configHash },
           { type: 'ParentUpdated', index: 0, safeHeight: 300 },
         ])
 
@@ -113,11 +122,13 @@ describe(indexerReducer.name, () => {
           status: 'invalidating',
           invalidateToHeight: 200,
           safeHeight: 200,
+          configHash,
           height: 200,
           initializedSelf: true,
           parents: [{ safeHeight: 300, initialized: true, waiting: false }],
         })
         expect(effects).toEqual([
+          { type: 'InitializeState', safeHeight: 200, configHash },
           { type: 'SetSafeHeight', safeHeight: 200 },
           { type: 'Invalidate', targetHeight: 200 },
         ])
@@ -125,9 +136,11 @@ describe(indexerReducer.name, () => {
 
       it('waits for all the parents', () => {
         const initState = getInitialState(3)
+        const configHash = '0x1234'
+
         // initialize and 2 parents update
         const [state, effects] = reduceWithIndexerReducer(initState, [
-          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+          { type: 'Initialized', safeHeight: 100, childCount: 0, configHash },
           { type: 'ParentUpdated', index: 0, safeHeight: 50 },
           { type: 'ParentUpdated', index: 1, safeHeight: 150 },
         ])
@@ -136,6 +149,7 @@ describe(indexerReducer.name, () => {
         expect(state).toEqual({
           ...initState,
           height: 100,
+          configHash,
           initializedSelf: true,
           parents: [
             { safeHeight: 50, initialized: true, waiting: false },
@@ -154,6 +168,7 @@ describe(indexerReducer.name, () => {
           ...initState,
           status: 'invalidating',
           height: 100,
+          configHash,
           invalidateToHeight: 50,
           safeHeight: 50,
           initializedSelf: true,
@@ -164,6 +179,7 @@ describe(indexerReducer.name, () => {
           ],
         })
         expect(effects2).toEqual([
+          { type: 'InitializeState', safeHeight: 50, configHash },
           { type: 'SetSafeHeight', safeHeight: 50 },
           { type: 'Invalidate', targetHeight: 50 },
         ])
@@ -535,8 +551,10 @@ describe(indexerReducer.name, () => {
     describe('root indexer', () => {
       it('does not invalidate on startup', () => {
         const initState = getInitialState(0)
+        const configHash = '0x1234'
+
         const [state, effects] = reduceWithIndexerReducer(initState, [
-          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+          { type: 'Initialized', safeHeight: 100, childCount: 0, configHash },
         ])
 
         expect(state).toEqual({
@@ -544,14 +562,20 @@ describe(indexerReducer.name, () => {
           initializedSelf: true,
           status: 'idle',
           height: 100,
+          configHash,
+
           safeHeight: 100,
           invalidateToHeight: 100,
         })
-        expect(effects).toEqual([{ type: 'SetSafeHeight', safeHeight: 100 }])
+        expect(effects).toEqual([
+          { type: 'InitializeState', safeHeight: 100, configHash },
+          { type: 'SetSafeHeight', safeHeight: 100 },
+        ])
       })
 
       it('runs the first tick', () => {
         const initState = getInitialState(0)
+
         const [state1, effects1] = reduceWithIndexerReducer(initState, [
           { type: 'Initialized', safeHeight: 100, childCount: 0 },
           { type: 'RequestTick' },

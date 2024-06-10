@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xfc59e3d4fa7cefae35aae283c188f05832d028ce
+
+# Diff at Wed, 22 May 2024 16:03:17 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@7eae7b47a410c2b8cc7e6a7d7a0bc841a31c6e83 block: 19767570
+- current block number: 19926484
+
+## Description
+
+Total supply reduction of the PNT token after a PNT burn in [this transaction](https://dashboard.tenderly.co/tx/mainnet/0x3bba4fb6de00dd38df3ad68e51c19fe575a95a296e0632028f101c5199b6f714), which looks like a hack:
+
+- flashloan from balancer
+- used private tx relay
+- unverified deployed contract used for attack
+- attacker funded by and mixed to railgun
+- very complicated tx, only 2 eth stolen it seems
+
+## Watched changes
+
+```diff
+    contract PNT (0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD) {
+    +++ description: None
+      values.totalSupply:
+-        "87975228709640845629432729"
++        "87973007722997040030171772"
+    }
+```
+
 Generated with discovered.json: 0x7e4c2d53c6a581dfde5f9db818b3de1fe4e1cd1e
 
 # Diff at Thu, 28 Mar 2024 10:34:28 GMT:

@@ -18,7 +18,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
       className={cn(
         'hidden w-full items-center justify-around',
         pages.length < 8 && 'md:flex',
-        pages.length === 8 && 'md:grid md:grid-cols-4 lg:flex',
+        pages.length === 8 && 'lg:flex md:grid md:grid-cols-4',
         'rounded-lg border-2 border-gray-200 dark:border-gray-850',
       )}
     >
@@ -28,7 +28,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
           <li
             key={i}
             className={cn(
-              'relative h-16 w-full border-gray-200 text-[17px] font-bold dark:border-gray-850',
+              'relative h-16 w-full border-gray-200 font-bold text-[17px] dark:border-gray-850',
               pages.length < 8 &&
                 i !== pages.length - 1 &&
                 'border-r-2 border-r-transparent',
@@ -37,9 +37,9 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
                 !page.selected &&
                 !pages[i + 1]?.selected &&
                 'border-r-gray-200 dark:border-r-gray-850',
-              pages.length === 8 && (i + 1) % 4 !== 0 && 'border-r-2 ',
+              pages.length === 8 && (i + 1) % 4 !== 0 && 'border-r-2',
               pages.length === 8 && i === 3 && 'lg:border-r-2',
-              pages.length === 8 && i >= 4 && 'md:border-t-2 lg:border-t-0',
+              pages.length === 8 && i >= 4 && 'lg:border-t-0 md:border-t-2',
               page.selected && [
                 'before:absolute',
                 'before:z-10',

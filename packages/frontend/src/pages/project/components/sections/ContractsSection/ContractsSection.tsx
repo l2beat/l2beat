@@ -15,9 +15,12 @@ import { ContractsUpdated } from './ContractsUpdated'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
+  chainName: string
+  nativeChainName: string
   title: string
   sectionOrder: number
   contracts: TechnologyContract[]
+  nativeContracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
@@ -42,6 +45,10 @@ export function ContractsSection(props: ContractsSectionProps) {
     props.contracts,
     (c) => c.implementationHasChanged,
   )
+  const [changedNativeContracts, unchangedNativeContracts] = partition(
+    props.nativeContracts,
+    (c) => c.implementationHasChanged,
+  )
   const [changedEscrows, unchangedEscrows] = partition(
     props.escrows,
     (c) => c.implementationHasChanged,
@@ -61,13 +68,13 @@ export function ContractsSection(props: ContractsSectionProps) {
       {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"
           />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-gray-500 text-xs dark:text-gray-600">
             A diagram of the smart contract architecture
           </figcaption>
         </figure>
@@ -75,7 +82,8 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.contracts.length > 0 && (
         <>
           <h3 className="font-bold">
-            The system consists of the following smart contracts:
+            The system consists of the following smart contracts on the host
+            chain ({props.chainName}):
           </h3>
           <div className="my-4">
             {unchangedContracts.map((contract, i) => (
@@ -91,6 +99,33 @@ export function ContractsSection(props: ContractsSectionProps) {
             {changedContracts.length > 0 && (
               <ImplementationHasChangedContracts
                 contracts={changedContracts}
+                manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                verificationStatus={props.verificationStatus}
+              />
+            )}
+          </div>
+        </>
+      )}
+      {props.nativeContracts.length > 0 && (
+        <>
+          <h3 className="font-bold">
+            The system consists of the following smart contracts on{' '}
+            {props.nativeChainName}:
+          </h3>
+          <div className="my-4">
+            {unchangedNativeContracts.map((contract, i) => (
+              <React.Fragment key={i}>
+                <ContractEntry
+                  contract={contract}
+                  verificationStatus={props.verificationStatus}
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                  className="my-4"
+                />
+              </React.Fragment>
+            ))}
+            {changedNativeContracts.length > 0 && (
+              <ImplementationHasChangedContracts
+                contracts={changedNativeContracts}
                 manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                 verificationStatus={props.verificationStatus}
               />
@@ -145,7 +180,7 @@ function ImplementationHasChangedContracts(props: {
   manuallyVerifiedContracts: ManuallyVerifiedContracts
 }) {
   return (
-    <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
+    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
         There are implementation changes and part of the information might be
         outdated.

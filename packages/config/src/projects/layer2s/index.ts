@@ -26,6 +26,8 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { everclear } from './everclear'
+import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -56,7 +58,9 @@ import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
+import { move } from './move'
 import { myria } from './myria'
+import { myshell } from './myshell'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -72,6 +76,7 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
@@ -87,6 +92,7 @@ import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swell } from './swell'
+import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -96,6 +102,7 @@ import { Layer2 } from './types'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
+import { xpla } from './xpla'
 import { zentachain } from './zentachain'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
@@ -139,6 +146,8 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  everclear,
+  form,
   frame,
   fraxtal,
   fuel,
@@ -168,7 +177,9 @@ export const layer2s: Layer2[] = [
   mint,
   mode,
   morph,
+  move,
   myria,
+  myshell,
   nil,
   nova,
   oev,
@@ -187,6 +198,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   redstone,
+  real,
   reya,
   rhinofi,
   rise,
@@ -199,14 +211,16 @@ export const layer2s: Layer2[] = [
   stealthchain,
   superseed,
   swell,
+  sxt,
   taiko,
   tanx,
   ten,
   termstructure,
   tradable,
   world,
-  xlayer,
   xchain,
+  xlayer,
+  xpla,
   zentachain,
   zircuit,
   zkcandy,

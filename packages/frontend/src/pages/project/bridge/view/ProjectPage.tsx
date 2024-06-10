@@ -1,15 +1,8 @@
 import React from 'react'
-
-import {
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
 import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
-import { cn } from '../../../../utils/cn'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
@@ -22,10 +15,8 @@ import {
 } from './BridgeProjectHeader'
 
 export interface ProjectPageProps {
-  navbar: NavbarProps
   projectHeader: BridgeProjectHeaderProps
   projectDetails: ProjectDetailsProps
-  footer: FooterProps
 }
 
 export function ProjectPage(props: ProjectPageProps) {
@@ -35,8 +26,7 @@ export function ProjectPage(props: ProjectPageProps) {
   const isNavigationEmpty = navigationSections.length === 0
 
   return (
-    <>
-      <Navbar {...props.navbar} />
+    <DashboardLayout>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-40 md:hidden">
           <MobileProjectNavigation sections={props.projectDetails.items} />
@@ -68,11 +58,6 @@ export function ProjectPage(props: ProjectPageProps) {
         )}
       </PageContent>
       <ScrollToTopButton />
-      <Footer
-        className={cn(isNavigationEmpty && 'mt-0 md:mt-20')}
-        narrow
-        {...props.footer}
-      />
-    </>
+    </DashboardLayout>
   )
 }

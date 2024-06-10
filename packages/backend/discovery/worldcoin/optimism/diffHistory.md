@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x88284815709463759780993a0b5701dc39b5b6de
+
+# Diff at Wed, 29 May 2024 15:06:51 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 120597605
+- current block number: 120698212
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 120597605 (main branch discovery), not current.
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
+Generated with discovered.json: 0xa60c828e6991456efad02a8d4a404f080ec9a992
+
+# Diff at Mon, 27 May 2024 07:13:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e3af44de7f5996e5fc7d7b401325abe876105664 block: 119822353
+- current block number: 120597605
+
+## Description
+
+Ignore values are updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 119822353 (main branch discovery), not current.
+
+```diff
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      values.latestRoot:
+-        "20915762964411057304698085615437664390231699052784062947202998090988652794869"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20 (0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1) {
+    +++ description: None
+      name:
+-        "OptimismMintableERC20"
++        "WLD token"
+    }
+```
+
 Generated with discovered.json: 0xa9bf94a954ea2ddd41e48b84f2553d0724ba6714
 
 # Diff at Thu, 09 May 2024 08:31:47 GMT:

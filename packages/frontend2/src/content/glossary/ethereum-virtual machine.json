@@ -1,0 +1,5 @@
+{
+  "term": "Ethereum Virtual Machine (EVM)",
+  "definition": "A stack-based virtual machine that executes bytecode. In Ethereum, the execution model specifies how the system state is altered given a series of bytecode instructions and a small tuple of environmental data. In the context of rollups, the EVM is a choice of execution environment that rollups could implement, as in the case of EVM ZK-Rollups (ZK-EVMs) and EVM optimistic rollups.",
+  "isSpicy": false
+}

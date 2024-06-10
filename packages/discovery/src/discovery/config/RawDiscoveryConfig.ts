@@ -12,6 +12,22 @@ export const ValueType = z.enum([
   'PERMISSION',
 ])
 
+export const StackRole = z.enum([
+  'Sequencer',
+  'Proposer',
+  'Challenger',
+  'Guardian',
+  'Validator',
+])
+
+export const Permission = z.enum(['admin', 'owner'])
+
+export const StackCategory = z.enum([
+  'Core',
+  'Gateways&Escrows',
+  'Upgrades&Governance',
+])
+
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
@@ -19,7 +35,26 @@ export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   description: z.string().nullable().optional(),
+  displayName: z.string().nullable().optional(),
   severity: z.optional(ContractFieldSeverity).nullable(),
+  target: z
+    .object({
+      description: z.string().nullable().optional(),
+      template: z.string().nullable().optional(),
+      role: z
+        .union([StackRole, z.array(StackRole)])
+        .nullable()
+        .optional(),
+      category: z
+        .union([StackCategory, z.array(StackCategory)])
+        .nullable()
+        .optional(),
+      permission: z
+        .union([Permission, z.array(Permission)])
+        .nullable()
+        .optional(),
+    })
+    .optional(),
   type: z
     .union([ValueType, z.array(ValueType)])
     .nullable()

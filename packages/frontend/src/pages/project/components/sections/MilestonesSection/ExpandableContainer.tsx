@@ -37,7 +37,7 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
       >
         <span
           data-role="expandable-container-button-text"
-          className="whitespace-pre text-sm font-bold"
+          className="whitespace-pre font-bold text-sm"
         >
           Show more
         </span>

@@ -7,17 +7,15 @@
     "yarn": ">=1.22.0 <2"
   },
   "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
+    "packages": ["packages/*"]
   },
+  "packageManager": "yarn@1.22.19",
   "scripts": {
-    "build": "turbo run build --filter=!asset-risk --filter=!frontend2",
-    "build:asset-risk": "turbo run build --filter=asset-risk",
-    "build:backend": "turbo run build --filter=backend",
-    "build:frontend": "turbo run build --filter=frontend",
-    "build:frontend2": "turbo run build --filter=frontend2",
-    "build:dependencies": "turbo run build --filter=frontend^... --filter=frontend2^... --filter=backend^... --filter=asset-risk^...",
+    "build": "turbo run build",
+    "build:backend": "turbo run build --filter=@l2beat/backend",
+    "build:frontend": "turbo run build --filter=@l2beat/frontend",
+    "build:frontend2": "turbo run build --filter=@l2beat/frontend2",
+    "build:dependencies": "turbo run build --filter=@l2beat/frontend^... --filter=@l2beat/frontend2^... --filter=@l2beat/backend^...",
     "clean": "turbo run clean",
     "fix": "yarn lint:fix && yarn format:fix",
     "format": "wsrun -ecam format",
@@ -26,15 +24,15 @@
     "lint:fix": "wsrun -ecam lint:fix",
     "start": "cd packages/backend && yarn start",
     "test": "turbo run test -- --reporter progress",
-    "test:exclude-backend": "turbo run test --filter=!backend",
+    "test:exclude-backend": "turbo run test --filter=!@l2beat/backend",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
-    "heroku-postbuild": "yarn build:backend",
+    "heroku-postbuild": "yarn build:backend && yarn install --production",
     "checkout": "yarn clean && yarn && yarn build"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
     "@biomejs/biome": "1.7.0",
+    "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
@@ -44,8 +42,8 @@
     "esbuild-register": "^3.5.0",
     "mocha": "^10.2.0",
     "prettier": "^3.2.5",
-    "turbo": "^1.12.2",
     "ts-node": "^10.9.1",
+    "turbo": "^2.0.1",
     "typescript": "^5.3.3",
     "wait-for-expect": "^3.0.2",
     "wsrun": "^5.2.4"

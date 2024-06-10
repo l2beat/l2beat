@@ -3,63 +3,12 @@ import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 export {}
 
 import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
-import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
+import { PriceRow } from '../../modules/tvl2/repositories/PriceRepository'
 import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerStateRow } from '../../tools/uif/IndexerStateRepository'
 
 declare module 'knex/types/tables' {
-  interface BlockNumberRow {
-    unix_timestamp: Date
-    block_number: number
-    chain_id: number
-  }
-
-  interface PriceRow {
-    asset_id: string
-    price_usd: number
-    unix_timestamp: Date
-  }
-
-  interface BalanceRow {
-    unix_timestamp: Date
-    holder_address: string
-    asset_id: string
-    balance: string
-    chain_id: number
-  }
-
-  interface ReportRow {
-    unix_timestamp: Date
-    project_id: string
-    asset_id: string
-    report_type: string
-    chain_id: number
-    asset_amount: string
-    usd_value: string
-    eth_value: string
-  }
-
-  interface AggregatedReportRow {
-    unix_timestamp: Date
-    project_id: string
-    usd_value: string
-    eth_value: string
-    report_type: string
-  }
-
-  interface ReportStatusRow {
-    config_hash: string
-    unix_timestamp: Date
-    chain_id: number
-    report_type: string
-  }
-
-  interface BalanceStatusRow {
-    chain_id: number
-    config_hash: string
-    unix_timestamp: Date
-  }
-
   interface SequenceProcessorRow {
     id: string
     last_processed: number
@@ -126,32 +75,6 @@ declare module 'knex/types/tables' {
     block_number: number
     diff_json_blob: string
     chain_id: number
-  }
-
-  interface TotalSupplyRow {
-    unix_timestamp: Date
-    asset_id: string
-    total_supply: string
-    chain_id: number
-  }
-
-  interface TotalSupplyStatusRow {
-    chain_id: number
-    config_hash: string
-    unix_timestamp: Date
-  }
-
-  interface CirculatingSupplyRow {
-    unix_timestamp: Date
-    asset_id: string
-    circulating_supply: string
-    chain_id: number
-  }
-
-  interface CirculatingSupplyStatusRow {
-    chain_id: number
-    config_hash: string
-    unix_timestamp: Date
   }
 
   interface LivenessRow {
@@ -226,27 +149,20 @@ declare module 'knex/types/tables' {
     block_number: number
   }
 
-  interface IndexerStateRow {
-    indexer_id: string
-    safe_height: number
-    min_timestamp: Date | undefined
-  }
-
   interface TvlCleanerRow {
     repository_name: string
     hourly_cleaned_until: Date
     six_hourly_cleaned_until: Date
   }
 
+  interface VerifierStatusRow {
+    address: string
+    chain_id: number
+    last_used: Date
+    last_updated: Date
+  }
+
   interface Tables {
-    coingecko_prices: PriceRow
-    block_numbers: BlockNumberRow
-    balances: BalanceRow
-    balances_status: BalanceStatusRow
-    reports: ReportRow
-    reports_status: ReportStatusRow
-    aggregated_reports: AggregatedReportRow
-    aggregated_reports_status: ReportStatusRow
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
     'activity.block': BlockTransactionCountRow
@@ -254,10 +170,6 @@ declare module 'knex/types/tables' {
     'activity.daily_count_view': DailyTransactionCountRow
     update_monitor: UpdateMonitorRow
     update_notifier: UpdateNotifierRow
-    total_supplies: TotalSupplyRow
-    total_supplies_status: TotalSupplyStatusRow
-    circulating_supplies: CirculatingSupplyRow
-    circulating_supplies_status: CirculatingSupplyStatusRow
     liveness: LivenessRow
     discovery_cache: DiscoveryCacheRow
     daily_discovery: DiscoveryHistoryRow
@@ -266,12 +178,14 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
+    l2_costs_prices: L2CostsPricesRow
     aggregated_l2_costs: AggregatedL2CostsRow
-    prices: PriceRow2
+    prices: PriceRow
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
     values: ValueRow
+    verifier_state: VerifierStatusRow
   }
 }
 

@@ -24,6 +24,7 @@
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
     // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
     // TO HERE ----------------------------------^
@@ -60,6 +61,7 @@
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault Kinto",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": "ETHFI Vault Kinto",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
     // Reya
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya"
     // TO HERE ----------------------------------^
@@ -208,6 +210,7 @@
     "wstETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "DAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "ETHFI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     // Reya
     "USDC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
     // TO HERE ----------------------------------^

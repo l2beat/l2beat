@@ -25,8 +25,7 @@ export function TokenControls({
   }
 
   return (
-    // <div className={cn('flex h-full')} data-role="chart-token-element">
-    <div className={cn('hidden h-full')} data-role="chart-token-element">
+    <div className={cn('flex h-full')} data-role="chart-token-element">
       <RichSelect
         label="Tokens"
         id="token-select"
@@ -56,12 +55,12 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
         (p, i) =>
           p.tokens.length > 0 && (
             <div key={i}>
-              <div className={`text-sm font-bold ${p.titleColor}`}>
+              <div className={`font-bold text-sm${p.titleColor}`}>
                 {p.title}
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="grid grid-cols-1 gap-x-6 md:grid-cols-2 lg:grid-cols-3"
+                className="grid grid-cols-1 gap-x-6 lg:grid-cols-3 md:grid-cols-2"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (
@@ -72,7 +71,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
                     key={j}
                   >
                     <img src={token.iconUrl} className="size-4 rounded-full" />
-                    <span className="text-sm font-bold">{token.name}</span> (
+                    <span className="font-bold text-sm">{token.name}</span> (
                     {token.info.symbol})
                   </RichSelect.Item>
                 ))}

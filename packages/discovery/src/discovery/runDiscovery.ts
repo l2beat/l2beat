@@ -58,7 +58,6 @@ export async function runDiscovery(
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
-    skipHints: config.skipHints,
   })
 
   const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
@@ -109,7 +108,6 @@ export async function dryRunDiscovery(
   const diff = diffDiscovery(
     discoveredYesterday.contracts,
     discovered.contracts,
-    projectConfig,
   )
 
   if (diff.length > 0) {

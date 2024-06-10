@@ -248,16 +248,15 @@ describe(executeHandlers.name, () => {
     }
 
     const provider = mockObject<DiscoveryProvider>()
-    await expect(
-      executeHandlers(
-        provider,
-        mockObject<MulticallClient>(),
-        [new FunkyHandler()],
-        EthereumAddress.random(),
-        BLOCK_NUMBER,
-        DiscoveryLogger.SILENT,
-      ),
-    ).toBeRejectedWith('Error executing handler: foo')
+    const values = await executeHandlers(
+      provider,
+      mockObject<MulticallClient>(),
+      [new FunkyHandler()],
+      EthereumAddress.random(),
+      BLOCK_NUMBER,
+      DiscoveryLogger.SILENT,
+    )
+    expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
   })
 
   it('handles multicallable handlers', async () => {

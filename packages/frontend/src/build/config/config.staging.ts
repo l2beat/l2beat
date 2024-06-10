@@ -1,5 +1,5 @@
-import { common } from './common'
 import { Config } from './Config'
+import { common } from './common'
 
 export function getStagingConfig(): Config {
   return {
@@ -7,7 +7,6 @@ export function getStagingConfig(): Config {
     features: {
       ...common.features,
       buildAllProjectPages: true,
-      layer3sTvl: true,
     },
     backend: {
       apiUrl: 'https://staging.l2beat.com',

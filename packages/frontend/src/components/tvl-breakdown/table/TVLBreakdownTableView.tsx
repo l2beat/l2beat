@@ -15,8 +15,6 @@ interface Props<
   items: T[]
   columns: ColumnConfig<T>[]
   rows?: RowConfig<T>
-  type?: 'NMV' | 'EBV'
-  empty?: boolean
 }
 
 export interface ColumnConfig<T> {
@@ -44,7 +42,7 @@ export function TVLBreakdownTableView<
     assetId?: AssetId
     escrows?: object[]
   },
->({ items, columns, rows, empty, type }: Props<T>) {
+>({ items, columns, rows }: Props<T>) {
   const highlightedColumnClassNames =
     'relative after:content-[""] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:-z-1 after:bg-gray-100 after:dark:bg-[#24202C]'
 
@@ -52,19 +50,19 @@ export function TVLBreakdownTableView<
     <div
       className={cn(
         'overflow-x-auto whitespace-pre text-base',
-        '-mx-4 w-[calc(100%_+_32px)] px-4 md:-mx-12 md:w-[calc(100%_+_96px)] md:px-12',
+        '-mx-4 md:-mx-12 w-[calc(100%_+_32px)] px-4 md:w-[calc(100%_+_96px)] md:px-12',
       )}
       data-role="table"
     >
       <table className="w-full border-collapse border-b border-b-black/10 text-left dark:border-b-white/25">
         <thead>
-          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 md:bg-black/10 dark:md:bg-white/10">
+          <tr className="border-b border-b-black/10 dark:border-b-white/25 md:border-b-0 dark:md:bg-white/10 md:bg-black/10">
             {columns.map((column, i) => {
               return (
                 <th
                   key={i}
                   className={cn(
-                    'w-1/5 whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
+                    'w-1/5 whitespace-pre py-2 pr-2 font-medium text-gray-500 text-sm uppercase last:rounded-r first:rounded-l last:md:pr-6 last:pr-2 first:md:pl-6 first:pl-2 dark:text-gray-50',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}
@@ -107,7 +105,7 @@ export function TVLBreakdownTableView<
                 {...rest}
                 className={cn(
                   'group',
-                  'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
+                  'border-b border-b-black/10 dark:border-b-zinc-700 md:border-b-0 dark:hover:bg-white/5 hover:bg-black/5 hover:shadow-sm',
                   rowClassName,
                 )}
                 data-role={
@@ -122,7 +120,7 @@ export function TVLBreakdownTableView<
                     <td
                       key={j}
                       className={cn(
-                        'h-9 py-2 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
+                        'h-9 py-2 pr-2 md:h-10 last:rounded-r first:rounded-l last:md:pr-6 last:pr-2 first:md:pl-6 first:pl-2 md:pl-4',
                         column.highlight && highlightedColumnClassNames,
                         column.align === 'right' && 'text-right',
                         column.align === 'center' && 'text-center',
@@ -144,24 +142,6 @@ export function TVLBreakdownTableView<
             )
           })}
         </tbody>
-        {empty && (
-          <tr>
-            <td colSpan={5}>
-              <div className="flex h-20 w-full items-center justify-center text-[13px] font-normal text-[#70737D]">
-                No {type === 'NMV' ? 'natively minted ' : 'externally bridged '}
-                tokens are tracked for this chain. Request a token&nbsp;
-                <a
-                  href="https://forms.gle/fQFsC5g1LgG5z12T7"
-                  target="_blank"
-                  className="text-blue-700 underline dark:text-blue-500"
-                >
-                  here
-                </a>
-                .
-              </div>
-            </td>
-          </tr>
-        )}
       </table>
     </div>
   )

@@ -13,6 +13,8 @@ export interface ScalingProjectPermission {
   chain?: string
   /** List of source code permalinks and useful materials */
   references?: ScalingProjectReference[]
+  /** List of accounts that are participants in this permission, mainly used for MultiSigs */
+  participants?: ScalingProjectPermissionedAccount[]
 }
 
 export interface ScalingProjectPermissionedAccount {

@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
 import { DataAvailabilityPagesData } from '../types'
@@ -16,8 +15,6 @@ export function getProps(
         [...config.layer2s, ...config.layer3s],
         pagesData,
       ),
-      navbar: getNavbarProps(config, 'scaling'),
-      footer: getFooterProps(config),
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

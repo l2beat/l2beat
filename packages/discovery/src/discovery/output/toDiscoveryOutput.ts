@@ -39,6 +39,8 @@ export function processAnalysis(
           name: x.name,
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
+          template: x.extendedTemplate?.template,
+          ignoreInWatchMode: x.ignoreInWatchMode,
           upgradeability: x.upgradeability,
           implementations:
             Object.keys(x.implementations).length === 0

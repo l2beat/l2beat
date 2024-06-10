@@ -49,6 +49,7 @@ export const aevo: Layer2 = opStackL2({
   },
   transactionApi: {
     type: 'rpc',
+    defaultUrl: 'https://l2-aevo-mainnet-prod-0.t.conduit.xyz/',
     startBlock: 1,
     defaultCallsPerMinute: 800,
     assessCount: subtractOne,
@@ -61,12 +62,19 @@ export const aevo: Layer2 = opStackL2({
       link: 'https://aevo.mirror.xyz/hV7VYkpk7caoYl2DbOFcSaZRRrK-8NeWqKczrgUff6k',
       date: '2023-06-14T00:00:00.00Z',
       description:
-        'Aevo removed the whitelist and opened the mainnet to the public.',
+        'Aevo removes the whitelist and opens the mainnet to the public.',
     },
     {
       name: 'Aevo switches to Celestia',
       link: 'https://twitter.com/aevoxyz/status/1750013642278633510',
       date: '2024-01-16T00:00:00.00Z',
+      description: 'Aevo starts using Celestia for data availability.',
+    },
+    {
+      name: 'AEVO Token Airdrop',
+      link: 'https://aevo.mirror.xyz/5LfLIxt_lfdoVBUTtdofAVU6YXioBzGkbhtUWnaRT-U',
+      date: '2024-03-13T00:00:00.00Z',
+      description: 'AEVO token launches.',
     },
   ],
   nonTemplatePermissions: [

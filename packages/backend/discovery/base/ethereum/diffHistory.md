@@ -1,3 +1,111 @@
+Generated with discovered.json: 0x3fb675a73e1e8085d38028aa1f98962a1c4c9a7e
+
+# Diff at Mon, 10 Jun 2024 09:30:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a695176fbb0fada448fda5610aee2cfe2ad4bb92 block: 19982126
+- current block number: 20060546
+
+## Description
+
+Change one MS signer and raise L2 gas limit.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        75000000
++        90000000
+    }
+```
+
+```diff
+    contract BaseMultisig (0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      values.getOwners.2:
+-        "0x1d0D1f61137E457d4CF13146bBFA9F07B33f8Ec5"
++        "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993"
+    }
+```
+
+Generated with discovered.json: 0xc786e1756e9e6064e46a72832b95c71d354efde0
+
+# Diff at Thu, 30 May 2024 10:40:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@765e34e8ea83c27680317d1368831e27e3399064 block: 19974223
+- current block number: 19982126
+
+## Description
+
+One new signer is added to the Guardian Multisig: `0x73565876170a336Fa02fDe34EeD03E3121f70bA6`.
+
+## Watched changes
+
+```diff
+    contract GuardianMultisig (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      upgradeability.threshold:
+-        "3 of 8 (38%)"
++        "3 of 9 (33%)"
+      values.getOwners.8:
++        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.getOwners.7:
+-        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
++        "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2"
+      values.getOwners.6:
+-        "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2"
++        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
+      values.getOwners.5:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
+      values.getOwners.4:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+      values.getOwners.3:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.getOwners.2:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
+      values.getOwners.1:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.getOwners.0:
+-        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
++        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+    }
+```
+
+Generated with discovered.json: 0xc1355c527c2a1eb878b3551991fd884894a63382
+
+# Diff at Wed, 29 May 2024 08:09:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4844a9bf46315ea8d6de75161e4361325faaa106 block: 19566961
+- current block number: 19974223
+
+## Description
+
+Gas limit on L2 is raised further. With a block time of 2s and elasticity of 10x, this currently puts Base at 3,75 GGas/s on average. This is 3x Ethereum Mainnet's 1,25 GGas/s and has a much higher surge scaling buffer. (elasticity)
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        75000000
+    }
+```
+
 Generated with discovered.json: 0xaa51ff292601beab89225f2adc6e62ead95a27de
 
 # Diff at Tue, 02 Apr 2024 08:35:50 GMT:

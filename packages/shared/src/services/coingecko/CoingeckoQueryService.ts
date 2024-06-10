@@ -12,7 +12,7 @@ import { CoinMarketChartRangeData } from './model'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 const SECONDS_IN_DAY = 24 * 60 * 60
-export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 3
+export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 14
 
 export interface QueryResultPoint {
   value: number

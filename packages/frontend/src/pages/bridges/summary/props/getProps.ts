@@ -1,5 +1,4 @@
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { Wrapped } from '../../../Page'
 import { getDefaultPageMetadata } from '../../../metadata'
@@ -13,12 +12,10 @@ export function getProps(
 ): Wrapped<BridgesSummaryPageProps> {
   return {
     props: {
-      navbar: getNavbarProps(config, 'bridges'),
       tvlView: getBridgesSummaryView(
         [...config.bridges, ...config.layer2s],
         pagesData,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApis: [

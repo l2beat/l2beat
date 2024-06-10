@@ -16,9 +16,8 @@ export function getIgnoreInWatchMode(
   viewABI: ethers.utils.Interface,
 ) {
   let ignoreInWatchMode: DashboardContractField[] | undefined = undefined
-  const override = config.overrides.get(contract.address)
-  if (override.ignoreInWatchMode) {
-    ignoreInWatchMode = override.ignoreInWatchMode.map((field) => {
+  if (contract.ignoreInWatchMode) {
+    ignoreInWatchMode = contract.ignoreInWatchMode.map((field) => {
       return {
         name: getFieldName(viewABI, field),
         values: getValues(discovery, contract, field),

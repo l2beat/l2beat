@@ -8,6 +8,7 @@ import {
   flattenFirstSource,
   removeComments,
 } from '../../flatten/utils'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   DiscoveryContract,
   RawDiscoveryConfig,
@@ -17,9 +18,11 @@ import { readJsonc } from '../utils/readJsonc'
 
 const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
-const TEMPLATE_SIMILARITY_THRESHOLD = 0.55
+const TEMPLATE_SIMILARITY_THRESHOLD = 0.9
 
 export class TemplateService {
+  private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
+
   constructor(
     private readonly rootPath: string = '',
     private readonly similarityThreshold: number = TEMPLATE_SIMILARITY_THRESHOLD,
@@ -78,11 +81,39 @@ export class TemplateService {
     return result
   }
 
-  readContractTemplate(template: string): DiscoveryContract {
+  loadContractTemplate(template: string): DiscoveryContract {
+    const loadedTemplate = this.loadedTemplates[template]
+    if (loadedTemplate !== undefined) {
+      return loadedTemplate
+    }
     const templateJsonc = readJsonc(
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
-    return DiscoveryContract.parse(templateJsonc)
+    const parsed = DiscoveryContract.parse(templateJsonc)
+    this.loadedTemplates[template] = parsed
+    return parsed
+  }
+
+  applyTemplateOnContractOverrides(
+    contractOverrides: ContractOverrides,
+    template: string,
+  ): ContractOverrides {
+    return {
+      name: contractOverrides.name,
+      address: contractOverrides.address,
+      ...this.applyTemplate(contractOverrides, template),
+    }
+  }
+
+  applyTemplate(
+    contract: DiscoveryContract,
+    template: string,
+  ): DiscoveryContract {
+    const templateJson = this.loadContractTemplate(template)
+    return DiscoveryContract.parse({
+      ...templateJson,
+      ...contract,
+    })
   }
 
   inlineTemplates(rawConfig: RawDiscoveryConfig): void {
@@ -91,12 +122,10 @@ export class TemplateService {
     }
     for (const [name, contract] of Object.entries(rawConfig.overrides)) {
       if (contract.extends !== undefined) {
-        const templateJson = this.readContractTemplate(contract.extends)
-        const updatedContract = DiscoveryContract.parse({
-          ...templateJson,
-          ...contract,
-        })
-        rawConfig.overrides[name] = updatedContract
+        rawConfig.overrides[name] = this.applyTemplate(
+          contract,
+          contract.extends,
+        )
       }
     }
   }
