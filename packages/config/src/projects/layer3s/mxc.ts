@@ -59,9 +59,9 @@ export const mxc: Layer3 = {
         }),
       },
       {
-        includeInTotal: false,
-        chain: 'arbitrum',
         ...discovery.getEscrowDetails({
+          includeInTotal: false,
+          chain: 'arbitrum',
           address: EthereumAddress(
             '0xC31a6C0C1087BBB6E6660F27014aD1321591c641',
           ),

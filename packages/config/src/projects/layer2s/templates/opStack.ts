@@ -709,9 +709,9 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         {
-          chain: templateVars.hostChain,
-          includeInTotal: false,
           ...templateVars.discovery.getEscrowDetails({
+            chain: templateVars.hostChain,
+            includeInTotal: false,
             address: portal.address,
             tokens: optimismPortalTokens,
             description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -721,9 +721,9 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           }),
         },
         {
-          chain: templateVars.hostChain,
-          includeInTotal: false,
           ...templateVars.discovery.getEscrowDetails({
+            chain: templateVars.hostChain,
+            includeInTotal: false,
             address: l1StandardBridgeEscrow,
             tokens: templateVars.l1StandardBridgeTokens ?? '*',
             description:
