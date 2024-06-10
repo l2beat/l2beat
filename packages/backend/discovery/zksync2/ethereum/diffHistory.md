@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9d13e77ec72fc4421198bbb5fca0598df52f3e69
+Generated with discovered.json: 0x9f979e5bf69b5ecdc9ce04d49facfeca95ab69ee
 
-# Diff at Mon, 10 Jun 2024 11:20:35 GMT:
+# Diff at Mon, 10 Jun 2024 13:45:17 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@e461ce92143e7c3cc87a0a365cc0690be1d348d7 block: 20040416
-- current block number: 20061096
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5076f0f120afd8d9006d198d9d9c9bf0f5327f31 block: 20040416
+- current block number: 20061811
 
 ## Description
 
@@ -34,6 +34,8 @@ discovery. Values are for block 20040416 (main branch discovery), not current.
       name:
 -        "zkSync"
 +        "ZKsync"
+      values.txFilterer:
++        []
     }
 ```
 
