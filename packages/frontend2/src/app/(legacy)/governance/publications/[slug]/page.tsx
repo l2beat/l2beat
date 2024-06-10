@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { Article } from '~/app/_components/markdown/article'
-import { getOpenGraphImageUrl } from '~/app/api/og-image/_utils/get-open-graph-image-url'
 import { getCollection, getCollectionEntry } from '~/content/getCollection'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
@@ -12,6 +11,7 @@ import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../../_utils/get-governance-publication-entry'
+import { getGovernanceOpenGraphImageUrl } from '../og-image/_utils/get-open-graph-image-url'
 
 interface Props {
   params: {
@@ -37,6 +37,9 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       url: `/governance/publications/${publication.id}`,
+      images: [
+        getGovernanceOpenGraphImageUrl({ title: publication.data.title }),
+      ],
     },
   })
 }
@@ -61,8 +64,7 @@ export default function Page({ params }: Props) {
         )}
         <Image
           alt={`${publicationEntry.title} publication thumbnail`}
-          src={getOpenGraphImageUrl({
-            type: 'governance',
+          src={getGovernanceOpenGraphImageUrl({
             title: publicationEntry.title,
           })}
           className="mb-12 w-full rounded-lg"

@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { FullPageHeader } from '~/app/_components/full-page-header'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
-import { getOpenGraphImageUrl } from '~/app/api/og-image/_utils/get-open-graph-image-url'
 import { getCollection } from '~/content/getCollection'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../_utils/get-governance-publication-entry'
+import { getGovernanceOpenGraphImageUrl } from './og-image/_utils/get-open-graph-image-url'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance publications - L2BEAT',
@@ -63,8 +63,7 @@ function PublicationCard({
   return (
     <LinkWithThumbnail
       href={`/governance/publications/${publication.id}`}
-      src={getOpenGraphImageUrl({
-        type: 'governance',
+      src={getGovernanceOpenGraphImageUrl({
         title: publication.title,
       })}
       title={publication.shortTitle ?? publication.title}

@@ -1,14 +1,19 @@
 import { ImageResponse } from 'next/og'
-import React from 'react'
-import { loadFont } from '~/utils/opengraph-image/load-font'
 
-export async function getGovernancePublicationTemplate(req: Request) {
+export const runtime = 'edge'
+export const revalidate = false
+
+export async function GET(req: Request) {
+  if (!req.url) return new Response(null, { status: 404 })
+
   const { searchParams } = new URL(req.url)
   const title = searchParams.get('title')
 
   if (!title) return new Response('No title provided', { status: 401 })
 
-  const corsarioVf = await loadFont('corsario-vf')
+  const corsarioVf = await fetch(
+    new URL('../../../../../fonts/corsario-vf.ttf', import.meta.url),
+  ).then((res) => res.arrayBuffer())
   return new ImageResponse(
     <div
       style={{
