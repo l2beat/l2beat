@@ -1,0 +1,25 @@
+{
+  "name": "@l2beat/database",
+  "private": true,
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "mocha",
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "db:generate": "prisma generate",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint": "biome check --formatter-enabled=false .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "kysely": "^0.27.3",
+    "prisma": "^5.15.0"
+  },
+  "devDependencies": {
+    "prisma-kysely": "^1.8.0"
+  }
+}
