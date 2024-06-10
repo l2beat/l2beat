@@ -4414,7 +4414,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4433,7 +4433,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4452,7 +4452,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4471,7 +4471,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4490,7 +4490,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4607,7 +4607,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4626,7 +4626,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 10,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4768,120 +4768,6 @@
       }
     },
     {
-      "id": "fraxtal:frax-frax",
-      "name": "Frax",
-      "coingeckoId": "frax",
-      "address": "0xFc00000000000000000000000000000000000001",
-      "symbol": "FRAX",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1608508800,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
-      "id": "fraxtal:fpi-frax-price-index",
-      "name": "Frax Price Index",
-      "coingeckoId": "frax-price-index",
-      "address": "0xFc00000000000000000000000000000000000003",
-      "symbol": "FPI",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1649462400,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
-      "id": "fraxtal:fpis-frax-price-index-share",
-      "name": "Frax Price Index Share",
-      "coingeckoId": "frax-price-index-share",
-      "address": "0xfc00000000000000000000000000000000000004",
-      "symbol": "FPIS",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1649462400,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
-      "id": "fraxtal:fxs-frax-share",
-      "name": "Frax Share",
-      "coingeckoId": "frax-share",
-      "address": "0xFc00000000000000000000000000000000000002",
-      "symbol": "FXS",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1608508800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
-      "id": "fraxtal:sfrax-staked-frax",
-      "name": "Staked Frax",
-      "coingeckoId": "staked-frax",
-      "address": "0xfc00000000000000000000000000000000000008",
-      "symbol": "sFRAX",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1708387200,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
-      "id": "fraxtal:sfrxeth-staked-frax-ether",
-      "name": "Staked Frax Ether",
-      "coingeckoId": "staked-frax-ether",
-      "address": "0xFC00000000000000000000000000000000000005",
-      "symbol": "sfrxETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1706810711,
-      "coingeckoListingTimestamp": 1669852800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
-      "chainId": 252,
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      }
-    },
-    {
       "id": "kroma:wemix.e-wemix.e",
       "name": "WEMIX.e",
       "coingeckoId": "wemix-token",
@@ -4911,7 +4797,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 288,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4944,7 +4830,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4963,7 +4849,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -4982,7 +4868,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5001,7 +4887,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5020,7 +4906,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5054,7 +4940,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 324,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5247,7 +5133,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5266,7 +5152,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5285,7 +5171,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5304,7 +5190,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5323,7 +5209,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5342,7 +5228,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -5361,7 +5247,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 1101,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6064,7 +5950,7 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6083,7 +5969,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6102,7 +5988,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6121,7 +6007,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6140,7 +6026,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6411,7 +6297,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -6430,7 +6316,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
