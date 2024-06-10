@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2b1c05174dac82517ca8bd894626a647c7cc0ba0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added the AxelarGasService, which allows users to pay for native gas at the destination with tokens or ETH and manages refunds.
 
 ## Watched changes
 
