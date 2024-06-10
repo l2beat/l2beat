@@ -112,7 +112,6 @@ export class ProjectDiscovery {
     upgradableBy,
     upgradeDelay,
     isUpcoming,
-    isLayer3,
     chain,
     includeInTotal,
   }: {
@@ -124,7 +123,6 @@ export class ProjectDiscovery {
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
-    isLayer3?: boolean
     chain?: string
     includeInTotal?: boolean
   }): ScalingProjectEscrow {
@@ -151,7 +149,6 @@ export class ProjectDiscovery {
       tokens,
       contract,
       isUpcoming,
-      isLayer3,
       chain,
       includeInTotal,
     }
