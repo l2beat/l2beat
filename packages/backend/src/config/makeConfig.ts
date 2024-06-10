@@ -232,7 +232,6 @@ export function makeConfig(
       'implementationChangeReporter',
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
 
     // Must be last
     flags: flags.getResolved(),

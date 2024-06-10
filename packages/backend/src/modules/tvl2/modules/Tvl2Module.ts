@@ -108,7 +108,7 @@ export function createTvl2Module(
 
     await priceModule.start()
 
-    if (config.tvlCleanerEnabled) {
+    if (config.tvl2 && config.tvl2.tvlCleanerEnabled) {
       tvlCleaner.start()
     }
 

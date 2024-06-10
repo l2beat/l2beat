@@ -37,7 +37,6 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
-  readonly tvlCleanerEnabled: boolean
   readonly verifiers: boolean
 }
 
@@ -86,6 +85,7 @@ export interface Tvl2Config {
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly projectsExcludedFromApi: string[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TrackedTxsConfig {
