@@ -1,6 +1,6 @@
-import { DB } from './generated/types'
-import { Pool, PoolConfig } from 'pg'
 import { Kysely, PostgresDialect } from 'kysely'
+import { Pool, PoolConfig } from 'pg'
+import { DB } from './generated/types'
 
 export class PostgresDatabase extends Kysely<DB> {
   constructor(config?: PoolConfig) {

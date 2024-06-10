@@ -1,5 +1,5 @@
-import { PostgresDatabase } from './kysely'
 import { PoolConfig } from 'pg'
+import { PostgresDatabase } from './kysely'
 import { TokensRepository } from './tokens/repository'
 
 export function createRepositories(config?: PoolConfig) {
