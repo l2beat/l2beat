@@ -26,6 +26,7 @@ export const lightlink: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['LL'],
   transactionApi: {
     type: 'rpc',
     startBlock: 1, // 1674578628
