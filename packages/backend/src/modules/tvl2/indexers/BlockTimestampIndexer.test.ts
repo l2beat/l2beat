@@ -4,11 +4,11 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
+import { HourlyIndexer } from './HourlyIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
   beforeEach(() => {
