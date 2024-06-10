@@ -43,7 +43,7 @@ export const metis: Layer2 = {
     category: 'Optimium',
     links: {
       websites: ['https://metis.io'],
-      apps: [],
+      apps: ['https://bridge.metis.io'],
       documentation: ['https://docs.metis.io'],
       explorers: [
         'https://andromeda-explorer.metis.io',
@@ -56,6 +56,7 @@ export const metis: Layer2 = {
         'https://discord.com/invite/metis',
         'https://youtube.com/@Metis_L2',
         'https://t.me/MetisL2',
+        'https://instagram.com/metisl2/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -329,6 +330,13 @@ export const metis: Layer2 = {
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
+    },
+    {
+      name: 'Decentralized sequencer upgrade',
+      link: 'https://metisl2.medium.com/metis-makes-history-ethereum-l2-upgrade-pioneers-decentralized-sequencer-3a0a470065b2',
+      date: '2024-03-13T00:00:00Z',
+      description:
+        'Metis is set to embark on an upgrade, marking the decentralization of its sequencer.',
     },
   ],
 }
