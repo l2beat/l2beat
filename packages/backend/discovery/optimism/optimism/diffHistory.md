@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xec17f2fff261e3469c3f09d3f20b08213440ff78
+
+# Diff at Mon, 10 Jun 2024 19:27:24 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d3c8c03ba1310e94fe51ccffffb90b46e5ec9ea9 block: 121202053
+- current block number: 121224426
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract InternalProxyAdminOwnerMultisig1 (0x28B1eE885034ccD2d5Fa228a9A3157390D27177C)
+    +++ description: None
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.blobBaseFee:
+-        1
++        3
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.blobBaseFee:
+-        1
++        3
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      values.owner:
+-        "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe"
++        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2ProxyAdminOwner (0x7871d1187A97cbbE40710aC119AA3d412944e4Fe)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2.sol => /dev/null                  | 1031 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   34 -
+ .../GnosisSafeL2.sol => /dev/null                  | 1031 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   34 -
+ 4 files changed, 2130 deletions(-)
+```
+
 Generated with discovered.json: 0xf3841b075c5c5f1392147ee9bf27462c6692ba7e
 
 # Diff at Mon, 10 Jun 2024 07:01:37 GMT:
