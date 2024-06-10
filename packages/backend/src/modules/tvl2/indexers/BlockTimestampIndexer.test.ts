@@ -8,7 +8,6 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
-import { HourlyIndexer } from './HourlyIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
   beforeEach(() => {
@@ -34,7 +33,7 @@ describe(BlockTimestampIndexer.name, () => {
       const chain = 'ethereum'
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
@@ -70,7 +69,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
@@ -95,7 +94,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
