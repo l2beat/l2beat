@@ -25,7 +25,7 @@ import {
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
-import { getChainTvlConfig, getChainsWithTokens } from './tvl'
+import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
 export function getTvl2Config(
   flags: FeatureFlags,
