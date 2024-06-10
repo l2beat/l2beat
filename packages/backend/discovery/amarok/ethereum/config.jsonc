@@ -57,6 +57,7 @@
           }
         },
         "ROUTERS": {
+          "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.",
           "handler": {
             "type": "arrayFromTwoEvents",
             "addEvent": "event RouterAdded(address indexed router, address caller)",

@@ -1,13 +1,21 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 19911056,
-  "configHash": "0xaf9d1fe32dd3a6ab3e97438d76c0b0525d3d1ed75c1629ae246d43e180cfdf68",
-  "version": 4,
+  "blockNumber": 20059566,
+  "configHash": "0x1a12664e10041598782b1d1f7725d79855bf607217497fd8bb0cde4a297c72a1",
+  "version": 5,
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
       "address": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
+      "ignoreInWatchMode": [
+        "getLastCompletedSnapshotId",
+        "lastSentBlock",
+        "outboundRoot",
+        "proposedTimestamp",
+        "proposed",
+        "rateLimitBlocks"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -19,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 953448,
+        "getLastCompletedSnapshotId": 954444,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -29,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x4c8dadd0cda55e6f1946fea525a859dff71c309f96768d53eaba1f3fd6c1b2b7",
+        "outboundRoot": "0xf875af77bb1c0fbefb72e236d1ea3b5ed78ef97296930fcff155e585cf84bc98",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -47,6 +55,7 @@
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -56,7 +65,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "119168233648266392145019141",
+        "totalSupply": "119729686542896579824192530",
         "totalSupplyAt": []
       }
     },
@@ -94,6 +103,7 @@
     {
       "name": "NewOptimismHubConnector",
       "address": "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -117,6 +127,7 @@
     {
       "name": "xLayerZkHubConnector",
       "address": "0x279fDA9AdDB854541f0bb86733d924e28c24c625",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -158,6 +169,8 @@
     {
       "name": "Connext Multisig",
       "address": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -192,6 +205,7 @@
     {
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+      "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -199,7 +213,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1716207131,
+        "getCurrentTime": 1718000003,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -209,6 +223,15 @@
     {
       "name": "RootManager",
       "address": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A",
+      "ignoreInWatchMode": [
+        "domains",
+        "domainsHash",
+        "lastSavedAggregateRootTimestamp",
+        "getPendingInboundRootsCount",
+        "pendingInboundRoots",
+        "proposedTimestamp",
+        "proposed"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -245,7 +268,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1716206183,
+        "lastSavedAggregateRootTimestamp": 1717997147,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -254,7 +277,7 @@
         "paused": false,
         "pendingInboundRoots": [170, 169],
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "proposedAggregateRootHash": "0x181dafb614d5dd37a4b3cb7dfe04f968ba71c531cf9089ce640514ea7d3df44d",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -264,6 +287,7 @@
     {
       "name": "LineaHubConnector",
       "address": "0x56Ab287e5c33Ee70158c951f34818bd095446255",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -285,6 +309,7 @@
     {
       "name": "MantleHubConnector",
       "address": "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -308,6 +333,7 @@
     {
       "name": "OptimismHubConnector",
       "address": "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -331,6 +357,7 @@
     {
       "name": "WatcherManager",
       "address": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d",
+      "ignoreInWatchMode": ["proposedTimestamp", "proposed"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -351,6 +378,7 @@
     {
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+      "ignoreInWatchMode": ["numProposals"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -369,6 +397,7 @@
     {
       "name": "ModeHubConnector",
       "address": "0x7b2bE683266909A6a4068e743083dd40621d663E",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -426,6 +455,7 @@
     {
       "name": "PolygonZkHubConnector",
       "address": "0x7ed49D0a13255802A281C08688563bd8D5f726b1",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -447,6 +477,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -465,13 +497,14 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 622,
+        "nonce": 634,
         "VERSION": "1.3.0"
       }
     },
     {
       "name": "ArbitrumHubConnector",
       "address": "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -498,6 +531,7 @@
     {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
@@ -737,7 +771,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 46694,
+        "nonce": 51528,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -790,7 +824,8 @@
           "0x5f4E31F4F402E368743bF29954f80f7C4655EA68",
           "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef",
           "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1",
-          "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B"
+          "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B",
+          "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc"
@@ -818,6 +853,7 @@
     {
       "name": "OptimismV0HubConnector",
       "address": "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -841,6 +877,7 @@
     {
       "name": "WormholeHubConnector",
       "address": "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -865,6 +902,7 @@
     {
       "name": "PolygonHubConnector",
       "address": "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -890,6 +928,7 @@
     {
       "name": "GnosisHubConnector",
       "address": "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -914,6 +953,7 @@
     {
       "name": "NewWormholeHubConnector",
       "address": "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b",
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -956,6 +996,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
     "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
     "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0",
@@ -980,6 +1021,7 @@
     "0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5",
     "0x6FD84ba95525c4cCd218F2f16F646A08B4b0a598",
     "0x76CF58cE587bC928fcc5aD895555fd040E06C61a",
+    "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265",
     "0x7ce49752fFA7055622f444df3c69598748cb2E5f",
     "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
     "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
