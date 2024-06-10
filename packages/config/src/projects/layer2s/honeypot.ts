@@ -30,14 +30,20 @@ export const honeypot: Layer2 = {
 
     links: {
       websites: ['https://cartesi.io/'],
-      apps: [],
+      apps: ['https://explorer.cartesi.io/stake'],
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
-      explorers: ['https://cartesiscan.io/'],
+      explorers: ['https://cartesiscan.io/', 'https://explorer.cartesi.io/'],
       repositories: ['https://github.com/cartesi/honeypot'],
       socialMedia: [
         'https://twitter.com/cartesiproject',
         'https://discord.gg/G2tCH5KkcM',
         'https://cartesi.io/blog/',
+        'https://reddit.com/r/cartesi/',
+        'https://youtube.com/cartesiproject',
+        'https://t.me/cartesiproject',
+        'https://linkedin.com/company/cartesiproject',
+        'https://instagram.com/cartesiproject/',
+        'https://medium.com/cartesi',
       ],
     },
     liveness: {
