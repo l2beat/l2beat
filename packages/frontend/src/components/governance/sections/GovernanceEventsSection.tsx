@@ -49,12 +49,14 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         <p className="font-semibold text-lg leading-tight">{event.title}</p>
         <Link
           href={event.link}
-          className="mt-2"
-          textClassName={cn('text-xs', event.highlighted && 'text-white')}
+          className={cn(
+            'mt-2 flex items-center justify-center gap-1 text-xs',
+            event.highlighted && 'text-white',
+          )}
           type={event.highlighted ? 'plain' : 'primary'}
         >
           {hostname}
-          {<OutLinkIcon />}
+          <OutLinkIcon />
         </Link>
       </div>
       <div>

@@ -74,9 +74,9 @@ function Header(props: ZkCatalogProjectPageProps) {
         <ProjectHeader {...props.details} />
         {props.details.linkToMainProjectDetails ? (
           <Link
+            className="mt-1 md:mt-0"
             href={props.details.linkToMainProjectDetails}
             showArrow
-            textClassName="mt-1 md:mt-0"
           >
             View project's detail page
           </Link>
