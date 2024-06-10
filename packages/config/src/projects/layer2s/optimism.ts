@@ -451,6 +451,7 @@ export const optimism: Layer2 = {
       discovery.getContractDetails('MIPS', {}),
       discovery.getContractDetails('AnchorStateRegistry', {}),
       discovery.getContractDetails('PreimageOracle', {}),
+      discovery.getContractDetails('DelayedWETH', {}),
       discovery.getContractDetails('SuperchainConfig', {
         description:
           'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
