@@ -33,7 +33,7 @@ export function ScalingLegend() {
       <p className="flex gap-1">
         <ZkSyncLiteIcon className="-top-0.5 relative min-w-[24px]" />
         <span>&ndash;</span>
-        <span>This project is based on zkSync Lite&apos;s code base.</span>
+        <span>This project is based on ZKsync Lite&apos;s code base.</span>
       </p>
       <p className="flex gap-1">
         <ZKStackIcon className="-top-0.5 relative min-w-[24px]" />

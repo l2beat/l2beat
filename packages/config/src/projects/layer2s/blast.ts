@@ -194,5 +194,11 @@ export const blast: Layer2 = opStackL2({
       description:
         'The Munchables exploiter is prohibited from forcing transactions.',
     },
+    {
+      name: 'Blast Mainnet starts using blobs',
+      link: 'https://x.com/Blast_L2/status/1793686918506623032',
+      date: '2024-05-27T00:00:00Z',
+      description: 'Blast Mainnet starts publishing data to blobs.',
+    },
   ],
 })

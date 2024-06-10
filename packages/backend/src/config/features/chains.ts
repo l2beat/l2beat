@@ -44,13 +44,13 @@ export function getChainTvlConfig(
     throw new Error('Missing minTimestampForTvl for chain: ' + chain)
   }
 
-  if (!chainConfig.explorerApi) {
-    throw new Error('Missing explorerApi for chain: ' + chain)
-  }
-
   if (!isEnabled) {
     return { chain }
   }
+
+  const project =
+    layer2s.find((layer2) => layer2.id === projectId) ??
+    layer3s.find((layer3) => layer3.id === projectId)
 
   const ENV_NAME = chain.toUpperCase()
   return {
@@ -58,10 +58,12 @@ export function getChainTvlConfig(
     config: {
       projectId,
       chainId: ChainId(chainConfig.chainId),
-      providerUrl: env.string([
-        `${ENV_NAME}_RPC_URL_FOR_TVL`,
-        `${ENV_NAME}_RPC_URL`,
-      ]),
+      providerUrl: env.string(
+        [`${ENV_NAME}_RPC_URL_FOR_TVL`, `${ENV_NAME}_RPC_URL`],
+        project?.config.transactionApi?.type === 'rpc'
+          ? project.config.transactionApi.defaultUrl
+          : undefined,
+      ),
       providerCallsPerMinute: env.integer(
         [
           `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_TVL`,
@@ -69,8 +71,8 @@ export function getChainTvlConfig(
         ],
         DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
-      blockNumberProviderConfig:
-        chainConfig.explorerApi.type === 'etherscan'
+      blockNumberProviderConfig: chainConfig.explorerApi
+        ? chainConfig.explorerApi.type === 'etherscan'
           ? {
               type: chainConfig.explorerApi.type,
               etherscanApiKey: env.string([
@@ -82,7 +84,8 @@ export function getChainTvlConfig(
           : {
               type: chainConfig.explorerApi.type,
               blockscoutApiUrl: chainConfig.explorerApi.url,
-            },
+            }
+        : undefined,
       minBlockTimestamp:
         options?.minTimestamp ?? chainConfig.minTimestampForTvl,
       multicallConfig: (chainConfig.multicallContracts ?? []).map(

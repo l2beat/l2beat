@@ -393,6 +393,12 @@ export const taiko: Layer2 = {
   ],
   milestones: [
     {
+      name: 'TKO Token Airdrop',
+      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      date: '2024-06-05T00:00:00.00Z',
+      description: 'TKO token launches.',
+    },
+    {
       name: 'Taiko Mainnet Launch',
       link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',

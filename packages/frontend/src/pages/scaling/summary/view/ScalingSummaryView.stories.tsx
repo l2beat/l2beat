@@ -1247,7 +1247,7 @@ const meta = {
         },
       },
       {
-        name: 'zkSync Era',
+        name: 'ZKsync Era',
         shortName: undefined,
         slug: 'zksync-era',
         provider: 'ZK Stack',

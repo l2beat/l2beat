@@ -3,16 +3,17 @@ import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import { ScrollToTopButton } from '~/app/_components/scroll-to-top-button'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { faqItems } from './faq-items'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'FAQ - L2BEAT',
   description:
     'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
   openGraph: {
     url: '/faq',
   },
-}
+})
 
 export default async function Page() {
   const faqItemsWithId = faqItems.map((item) => ({

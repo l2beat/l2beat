@@ -95,6 +95,7 @@ import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
@@ -214,6 +215,7 @@ export const layer2s: Layer2[] = [
   sxt,
   taiko,
   tanx,
+  telos,
   ten,
   termstructure,
   tradable,

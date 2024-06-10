@@ -38,7 +38,7 @@ export const zkspace: Layer2 = {
     description:
       'ZKSpace consists of three main parts: an AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
     purposes: ['NFT', 'AMM', 'Payments'],
-    provider: 'zkSync Lite',
+    provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {
@@ -57,7 +57,7 @@ export const zkspace: Layer2 = {
     },
     liveness: {
       explanation:
-        'ZK Space is a ZK rollup based on zkSync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+        'ZK Space is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
     finality: {
       finalizationPeriod: 0,

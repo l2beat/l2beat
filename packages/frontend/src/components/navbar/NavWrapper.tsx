@@ -3,6 +3,7 @@ import { usePageBuildContext } from '../../build/pageBuildContext'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
 import { LogoSmall } from '../LogoSmall'
+import { OverflowWrapper } from '../OverflowWrapper'
 import {
   ActivityIcon,
   MenuCloseIcon,
@@ -241,11 +242,8 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
         </div>
       </div>
       {currentGroup && (
-        <div
-          className="scrollbar-hide w-full overflow-x-scroll border-gray-200 border-b text-center dark:border-gray-850"
-          data-role="sidenav-mobile-tabs"
-        >
-          <div className="m-auto inline-flex flex-row gap-2 px-4 py-2">
+        <OverflowWrapper>
+          <div className="mx-auto flex w-fit flex-row gap-2 px-4 py-2">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
@@ -256,16 +254,14 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
                       link.href === path &&
                         'border-0 bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] px-[calc(1rem_+_1px)] py-[calc(0.53125rem_+_1px)] text-white',
                     )}
-                    data-sidenav-mobile-tabs-active={
-                      link.href === path ? 'true' : 'false'
-                    }
+                    data-selected={link.href === path ? 'true' : 'false'}
                   >
                     {link.title}
                   </div>
                 </a>
               ))}
           </div>
-        </div>
+        </OverflowWrapper>
       )}
     </div>
   )

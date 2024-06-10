@@ -19,7 +19,7 @@ const meta = {
         shortName: undefined,
         slug: 'zkswap',
         purposes: ['AMM'],
-        provider: 'zkSync Lite',
+        provider: 'ZKsync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -109,7 +109,7 @@ const meta = {
         shortName: undefined,
         slug: 'zkswap2',
         purposes: ['AMM'],
-        provider: 'zkSync Lite',
+        provider: 'ZKsync Lite',
         category: 'ZK Rollup',
         warning:
           'Version 3 of the protocol called ZkSpace is available and users are encouraged to move their assets there.',
@@ -426,7 +426,7 @@ const meta = {
         stage: { stage: 'NotApplicable' },
       },
       {
-        name: 'zkSync Era',
+        name: 'ZKsync Era',
         shortName: undefined,
         slug: 'zksync-era',
         purposes: ['AMM'],

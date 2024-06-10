@@ -5,14 +5,15 @@ import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { OutLink } from '~/app/_components/out-link'
 import { showGitcoinOption } from '~/flags'
 import OutLinkIcon from '~/icons/outlink.svg'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { fundingSources } from './funding-sources'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'Donate - L2BEAT',
   openGraph: {
     url: '/donate',
   },
-}
+})
 
 export default async function Page() {
   const gitcoinOption = await showGitcoinOption()
@@ -40,7 +41,7 @@ export default async function Page() {
       linkURL: `https://optimistic.etherscan.io/address/${donateAddress}`,
     },
     {
-      name: 'zkSync Lite',
+      name: 'ZKsync Lite',
       linkURL: `https://zkscan.io/explorer/accounts/${donateAddress}`,
     },
     gitcoinOption && {
