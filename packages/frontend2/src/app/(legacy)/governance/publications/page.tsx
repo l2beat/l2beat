@@ -8,7 +8,6 @@ import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../_utils/get-governance-publication-entry'
-import { getGovernanceOpenGraphImageUrl } from './og-image/_utils/get-open-graph-image-url'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance publications - L2BEAT',
@@ -63,9 +62,7 @@ function PublicationCard({
   return (
     <LinkWithThumbnail
       href={`/governance/publications/${publication.id}`}
-      src={getGovernanceOpenGraphImageUrl({
-        title: publication.title,
-      })}
+      src={`/meta-images/governance/publications/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">

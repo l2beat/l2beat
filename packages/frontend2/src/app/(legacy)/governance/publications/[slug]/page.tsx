@@ -11,7 +11,6 @@ import {
   type GovernancePublicationEntry,
   getGovernancePublicationEntry,
 } from '../../_utils/get-governance-publication-entry'
-import { getGovernanceOpenGraphImageUrl } from '../og-image/_utils/get-open-graph-image-url'
 
 interface Props {
   params: {
@@ -37,9 +36,7 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       url: `/governance/publications/${publication.id}`,
-      images: [
-        getGovernanceOpenGraphImageUrl({ title: publication.data.title }),
-      ],
+      images: [`/meta-images/governance/publications/${publication.id}.png`],
     },
   })
 }
@@ -64,9 +61,7 @@ export default function Page({ params }: Props) {
         )}
         <Image
           alt={`${publicationEntry.title} publication thumbnail`}
-          src={getGovernanceOpenGraphImageUrl({
-            title: publicationEntry.title,
-          })}
+          src={`/meta-images/governance/publications/${publication.id}.png`}
           className="mb-12 w-full rounded-lg"
           width={1200}
           height={674}

@@ -3,7 +3,6 @@ import React from 'react'
 import { Button } from '~/app/_components/button'
 import { LinkWithThumbnail } from '~/app/_components/link-with-thumbnail'
 import { type GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
-import { getGovernanceOpenGraphImageUrl } from '../../publications/og-image/_utils/get-open-graph-image-url'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
 
 interface Props {
@@ -49,9 +48,7 @@ interface PublicationProps {
 function Publication({ publication }: PublicationProps) {
   return (
     <LinkWithThumbnail
-      src={getGovernanceOpenGraphImageUrl({
-        title: publication.title,
-      })}
+      src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
