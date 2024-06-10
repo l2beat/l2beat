@@ -12,7 +12,11 @@
         "build/**",
         ".next/**",
         "!.next/cache/**",
-        "dist/**",
+        "dist/**"
+      ]
+    },
+    "db:generate": {
+      "outputs": [
         "src/kysely/generated/**"
       ]
     },
