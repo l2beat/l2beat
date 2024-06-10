@@ -15,7 +15,7 @@ export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
       <Checkbox
         role="toggle-ethereum-activity"
         id="ethereum-activity"
-        className="transition-colors duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none group-data-[interactivity-disabled]/chart:bg-gray-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700"
+        className="transition-colors duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none dark:group-data-[interactivity-disabled]/chart:bg-zinc-700 group-data-[interactivity-disabled]/chart:bg-gray-200"
         checkIconClassName="group-data-[interactivity-disabled]/chart:opacity-0 transition-opacity duration-200"
         label={
           <span className="flex items-center gap-2 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:opacity-0">

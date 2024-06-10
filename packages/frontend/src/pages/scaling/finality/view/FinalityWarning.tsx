@@ -4,7 +4,7 @@ import { Link } from '../../../../components/Link'
 
 export function FinalityWarning() {
   return (
-    <p className="my-4 rounded-lg bg-yellow-500 p-2 text-center text-xs font-medium text-black">
+    <p className="my-4 rounded-lg bg-yellow-500 p-2 text-center font-medium text-black text-xs">
       Please note, the values on the page reflect the time required to achieve
       ordering finality, at which point transactions cannot be reverted or
       reordered. For simplicity, they do not include the overhead time to reach

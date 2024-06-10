@@ -41,27 +41,27 @@ export function VerifiedCountWithDetails(props: Props) {
   }
 
   return (
-    <div className="flex gap-1.5 items-center leading-none">
+    <div className="flex items-center gap-1.5 leading-none">
       <span>{props.verifiers.length}</span>
-      <div className="text-zinc-500 dark:text-gray-50 font-medium text-base select-none">
+      <div className="select-none font-medium text-base text-zinc-500 dark:text-gray-50">
         (
         <div className="inline-flex items-center gap-1">
           {successfullyVerifiedCount > 0 ? (
             <div className="flex items-center">
               <span>{successfullyVerifiedCount}</span>
-              <VerifiedIcon className="size-4 inline" />
+              <VerifiedIcon className="inline size-4" />
             </div>
           ) : null}
           {notVerifiedCount > 0 ? (
             <div className="flex items-center">
               <span>{notVerifiedCount}</span>
-              <CircleQuestionMark className="size-4 inline" />
+              <CircleQuestionMark className="inline size-4" />
             </div>
           ) : null}
           {unsuccessfullyVerifiedCount > 0 ? (
             <div className="flex items-center">
               <span>{unsuccessfullyVerifiedCount}</span>
-              <UnverifiedIcon className="size-4 inline fill-red-700 dark:fill-red-300" />
+              <UnverifiedIcon className="inline size-4 fill-red-700 dark:fill-red-300" />
             </div>
           ) : null}
         </div>

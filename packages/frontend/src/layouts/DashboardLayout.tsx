@@ -28,10 +28,10 @@ export function DashboardLayout(props: DashboardLayoutProps) {
           'min-h-[calc(100vh_-_5rem)]',
           // When using the legacy layout we need to take header height into account
           !scalingOrBridges &&
-            'max-w-none px-0 md:px-0 min-h-[calc(100vh_-_13.5rem)]',
+            'min-h-[calc(100vh_-_13.5rem)] max-w-none px-0 md:px-0',
         )}
       >
-        <main className={cn(!!scalingOrBridges && 'mt-4 md:mt-12 relative')}>
+        <main className={cn(!!scalingOrBridges && 'relative mt-4 md:mt-12')}>
           {props.children}
           {scalingOrBridges && (
             <>

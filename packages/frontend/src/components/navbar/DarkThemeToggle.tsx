@@ -14,11 +14,11 @@ export function DarkThemeToggle({ withText }: DarkThemeToggleProps) {
       title="Change color scheme"
     >
       <SunIcon
-        className="w-5 h-5 hidden dark:block"
+        className="hidden h-5 w-5 dark:block"
         aria-label="Toggle light mode"
       />
       <MoonIcon
-        className="w-5 h-5 block dark:hidden"
+        className="block h-5 w-5 dark:hidden"
         aria-label="Toggle dark mode"
       />
       {withText && (

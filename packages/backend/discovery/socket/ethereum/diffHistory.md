@@ -1,3 +1,190 @@
+Generated with discovered.json: 0xbe317c9e768213ce5e497506ebe8b1b047248dae
+
+# Diff at Sun, 09 Jun 2024 14:05:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 19938250
+- current block number: 20054750
+
+## Description
+
+### New owner EOA
+
+The owner of some switchboards is changed from socketadmin.eth the another EOA (`0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836`).
+
+### New plugs and vaults
+
+1) New vaults for Lyra-associated 'covered call'-tokens are deployed on Ethereum with Blast, Base, Arbitrum, Lyra, Mode and Optimism as their destinations. They are not yet used and therefore not yet added.
+2) The Kinto WETH vault now has non-zero TVL and is added to socket.ts.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.54:
++        "0x8843557Fd6005d617A735731BF1bAb0461af55E4"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.53:
++        "0xDBa83C0C654DB1cd914FA2710bA743e925B53086"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.52:
++        "0x716c339F41eAcfE2dc4775052411394A2Ed04743"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.51:
++        "0xd0711b9eBE84b778483709CDe62BacFDBAE13623"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.50:
++        "0x2B93891dc80ab9696814615f553fd15a3b98d3a2"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.49:
++        "0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.48:
++        "0x876b81F74AD47cF10e5D62aAAc80f9E99f5587FC"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.47:
++        "0xDABF17a0f13290E85a347119deEb8539B41eF4eB"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.46:
++        "0xA72bc51f800127621d4Ab541E7Bb70B86Fe88F0F"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.45:
++        "0x3685306641fB02804E9384C3af09Fa9B62199d7e"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.44:
++        "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87"
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract ExecutionManager (0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0) {
+    +++ description: None
+      values.owner:
+-        "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19938250 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract WETH Vault Kinto (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb73f0ccce9db7a2bbe57ebc5e399a2dcd7210bb0
 
 # Diff at Fri, 24 May 2024 07:28:37 GMT:

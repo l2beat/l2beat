@@ -12,9 +12,9 @@ const squareVariants = cva('rounded', {
       canonical: 'bg-purple-100',
       external: 'bg-yellow-200',
       native: 'bg-pink-100',
-      associated: 'dark:bg-rose-700 bg-rose-500',
-      ether: 'dark:bg-green-200 bg-green-900',
-      stable: 'dark:bg-teal-400 bg-teal-500',
+      associated: 'bg-rose-500 dark:bg-rose-700',
+      ether: 'bg-green-900 dark:bg-green-200',
+      stable: 'bg-teal-500 dark:bg-teal-400',
       other: 'bg-sky-600',
     },
     size: {
