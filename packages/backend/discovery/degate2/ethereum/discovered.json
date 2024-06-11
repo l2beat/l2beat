@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18554408,
   "configHash": "0x7befc624585842508052542a84407ecb7361a1fca4ba19c41768e2419f174743",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -55,6 +55,7 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -77,6 +78,14 @@
     {
       "name": "ExchangeV3",
       "address": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getMerkleAssetRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "state"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -85,20 +94,20 @@
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
         "getBlockHeight": 669,
-        "getConstants": [
-          "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-          1000000,
-          1296000,
-          604800,
-          4294967296,
-          4294967296,
-          604800,
-          2592000,
-          83,
-          1296000,
-          "250000000000000000",
-          18
-        ],
+        "getConstants": {
+          "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+          "MAX_OPEN_FORCED_REQUESTS": 1000000,
+          "MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE": 1296000,
+          "TIMESTAMP_HALF_WINDOW_SIZE_IN_SECONDS": 604800,
+          "MAX_NUM_ACCOUNTS": 4294967296,
+          "MAX_NUM_TOKENS": 4294967296,
+          "MIN_AGE_PROTOCOL_FEES_UNTIL_UPDATED": 604800,
+          "MIN_TIME_IN_SHUTDOWN": 2592000,
+          "TX_DATA_AVAILABILITY_SIZE": 83,
+          "MAX_AGE_DEPOSIT_UNTIL_WITHDRAWABLE_UPPERBOUND": 1296000,
+          "MAX_FORCED_WITHDRAWAL_FEE": "250000000000000000",
+          "DEFAULT_PROTOCOL_FEE_BIPS": 18
+        },
         "getDepositContract": "0xF13e21653AEB763595D5E4baA1dC115689Da49b9",
         "getDomainSeparator": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
         "getExchangeStake": 0,
@@ -107,7 +116,13 @@
         "getMerkleAssetRoot": "0x283ac2bab64178991cdb4156f843b367540c45c11400983c570a1bd56ef6a6e3",
         "getMerkleRoot": "0x1b679a6541cc6fff615954e4fd3bac89b29feb4ad7878d2d93e2c91d46740a09",
         "getNumAvailableForcedSlots": 1000000,
-        "getProtocolFeeValues": [0, 18, 18, 0, 18],
+        "getProtocolFeeValues": {
+          "syncedAt": 0,
+          "protocolFeeBips": 18,
+          "previousProtocolFeeBips": 18,
+          "executeTimeOfNextProtocolFeeBips": 0,
+          "nextProtocolFeeBips": 18
+        },
         "isInWithdrawalMode": false,
         "isShutdown": true,
         "loopringV3": "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
@@ -118,21 +133,36 @@
             "timestamp": 1699762379
           }
         ],
-        "state": [
-          1296000,
-          "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
-          "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
-          "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
-          "0x0000000000000000000000000000000000000000",
-          "0xF13e21653AEB763595D5E4baA1dC115689Da49b9",
-          [5000, 4999, 18345986, 1, 4480000000000000],
-          "0x1b679a6541cc6fff615954e4fd3bac89b29feb4ad7878d2d93e2c91d46740a09",
-          "0x283ac2bab64178991cdb4156f843b367540c45c11400983c570a1bd56ef6a6e3",
-          669,
-          0,
-          [0, 18, 18, 0, 18],
-          [1699762379, 0]
-        ],
+        "state": {
+          "maxAgeDepositUntilWithdrawable": 1296000,
+          "DOMAIN_SEPARATOR": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
+          "loopring": "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
+          "blockVerifier": "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
+          "agentRegistry": "0x0000000000000000000000000000000000000000",
+          "depositContract": "0xF13e21653AEB763595D5E4baA1dC115689Da49b9",
+          "depositState": {
+            "freeDepositMax": 5000,
+            "freeDepositRemained": 4999,
+            "lastDepositBlockNum": 18345986,
+            "freeSlotPerBlock": 1,
+            "depositFee": 4480000000000000
+          },
+          "merkleRoot": "0x1b679a6541cc6fff615954e4fd3bac89b29feb4ad7878d2d93e2c91d46740a09",
+          "merkleAssetRoot": "0x283ac2bab64178991cdb4156f843b367540c45c11400983c570a1bd56ef6a6e3",
+          "numBlocks": 669,
+          "numPendingForcedTransactions": 0,
+          "protocolFeeData": {
+            "syncedAt": 0,
+            "protocolFeeBips": 18,
+            "previousProtocolFeeBips": 18,
+            "executeTimeOfNextProtocolFeeBips": 0,
+            "nextProtocolFeeBips": 18
+          },
+          "modeTime": {
+            "shutdownModeStartTime": 1699762379,
+            "withdrawalModeStartTime": 0
+          }
+        },
         "version": "0.1.0"
       },
       "derivedName": "ExchangeV3"
@@ -152,6 +182,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
     "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a",
     "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",

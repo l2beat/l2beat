@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describeDatabase(PriceRepository.name, (database) => {
@@ -125,6 +126,11 @@ describeDatabase(PriceRepository.name, (database) => {
 
     expect(results).toEqual([])
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) =>
+    saved('a', timestamp, 1),
+  )
 })
 
 function saved(id: string, timestamp: UnixTime, priceUsd: number): PriceRecord {

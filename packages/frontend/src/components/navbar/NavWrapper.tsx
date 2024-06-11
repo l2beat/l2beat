@@ -3,6 +3,7 @@ import { usePageBuildContext } from '../../build/pageBuildContext'
 import { cn } from '../../utils/cn'
 import { Logo } from '../Logo'
 import { LogoSmall } from '../LogoSmall'
+import { OverflowWrapper } from '../OverflowWrapper'
 import {
   ActivityIcon,
   MenuCloseIcon,
@@ -241,11 +242,8 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
         </div>
       </div>
       {currentGroup && (
-        <div
-          className="scrollbar-hide w-full overflow-x-scroll border-gray-200 border-b text-center dark:border-gray-850"
-          data-role="sidenav-mobile-tabs"
-        >
-          <div className="m-auto inline-flex flex-row gap-2 px-4 py-2">
+        <OverflowWrapper>
+          <div className="mx-auto flex w-fit flex-row gap-2 px-4 py-2">
             {currentGroup.links
               .filter((link) => link.enabled)
               .map((link) => (
@@ -256,16 +254,14 @@ function MobileNavBar({ links }: { links: NavbarLinkGroups }) {
                       link.href === path &&
                         'border-0 bg-[linear-gradient(90deg,_#7E41CC_0%,_#FF46C0_100%)] px-[calc(1rem_+_1px)] py-[calc(0.53125rem_+_1px)] text-white',
                     )}
-                    data-sidenav-mobile-tabs-active={
-                      link.href === path ? 'true' : 'false'
-                    }
+                    data-selected={link.href === path ? 'true' : 'false'}
                   >
                     {link.title}
                   </div>
                 </a>
               ))}
           </div>
-        </div>
+        </OverflowWrapper>
       )}
     </div>
   )
@@ -291,7 +287,7 @@ export function Sidenav({
 }) {
   const { config, path } = usePageBuildContext()
   const sharedSizeClasses = cn(
-    'h-[100dvh] h-screen w-full 2xl:w-[280px] xl:w-[240px]',
+    'h-screen w-full [@supports(height:100dvh)]:h-dvh 2xl:w-[280px] xl:w-[240px]',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 
@@ -353,17 +349,8 @@ export function Sidenav({
                 <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
               )}
               <NavSmallLink title="Donate" href={'/donate'} />
-              {config.features.governancePage ? (
-                <NavSmallLink title="Governance" href={'/governance'} />
-              ) : (
-                <NavSmallLink
-                  title="Governance"
-                  href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
-                />
-              )}
-              {config.features.glossary && (
-                <NavSmallLink title="Glossary" href="/glossary" />
-              )}
+              <NavSmallLink title="Governance" href={'/governance'} />
+              <NavSmallLink title="Glossary" href="/glossary" />
               <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
                 Jobs
                 {config.features.hiringBadge && <HiringBadge />}
@@ -454,17 +441,8 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
               <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
             )}
             <LegacyNavBarLink title="Donate" href={'/donate'} />
-            {config.features.governancePage ? (
-              <LegacyNavBarLink title="Governance" href={'/governance'} />
-            ) : (
-              <LegacyNavBarLink
-                title="Governance"
-                href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
-              />
-            )}
-            {config.features.glossary && (
-              <LegacyNavBarLink title="Glossary" href="/glossary" />
-            )}
+            <LegacyNavBarLink title="Governance" href="/governance" />
+            <LegacyNavBarLink title="Glossary" href="/glossary" />
             <LegacyNavBarLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
               {config.features.hiringBadge && <HiringBadge />}

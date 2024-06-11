@@ -86,6 +86,7 @@ export const blast: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
+    coingeckoPlatform: 'blast',
     chainId: 81457,
     explorerUrl: 'https://blastscan.io/',
     explorerApi: {
@@ -193,6 +194,12 @@ export const blast: Layer2 = opStackL2({
       date: '2024-03-26T00:00:00Z',
       description:
         'The Munchables exploiter is prohibited from forcing transactions.',
+    },
+    {
+      name: 'Blast Mainnet starts using blobs',
+      link: 'https://x.com/Blast_L2/status/1793686918506623032',
+      date: '2024-05-27T00:00:00Z',
+      description: 'Blast Mainnet starts publishing data to blobs.',
     },
   ],
 })

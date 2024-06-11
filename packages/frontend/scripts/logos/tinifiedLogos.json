@@ -127,7 +127,7 @@
   "zkspace.png": "53b3c706260df72fc6e27d900868e939",
   "zkswap.png": "e8f5fd80249102bf1560b398e039fae1",
   "zkswap2.png": "e8f5fd80249102bf1560b398e039fae1",
-  "zksync-era.png": "c281dc32ede8a71260980844a437be5e",
+  "zksync-era.png": "f237f2232adcbf1d04343a374d88b83a",
   "zksync-lite.png": "cd2c7eefef741247b9b2a0b902c4eb31",
   "zora.png": "4c9d7f79f415b69eeee25d4ddf6a5bd4",
   "orderly.png": "a4c6a531e943b3aa8c3f98d5f1028830",
@@ -155,7 +155,7 @@
   "edgeless.png": "eaf6ad8bda7346ed11e1d7e37ab38e7f",
   "zircuit.png": "1f7e960ac0cf13618f5f776d6f94bb68",
   "swell.png": "94ef311aa7ab3842f4c8af7860a5e675",
-  "kakarotzkevm.png": "8868ed645ac41904f4cbd0c8a9ca7849",
+  "kakarotzkevm.png": "04f4682ec3ac85a289c760076f595263",
   "cyber.png": "aad60ea078b119a029dd886340f19c14",
   "world.png": "d9a2a197bb68caf9a56562b43ded8590",
   "rise.png": "974df37d89dc06f48a703b0dffa13ec8",
@@ -178,5 +178,7 @@
   "everclear.png": "2af33fb4db1e24e6b71fd6c6c65baa84",
   "worldcoin-semaphore.png": "d9a2a197bb68caf9a56562b43ded8590",
   "worldcoin-smtb.png": "d9a2a197bb68caf9a56562b43ded8590",
-  "real.png": "0eef0e358243b50ea7d9b816f8c649aa"
+  "real.png": "0eef0e358243b50ea7d9b816f8c649aa",
+  "move.png": "9ed8f1e3aac22be9d6635e735c969c9a",
+  "telos.png": "73af1c1eae53546ea2c8c1c13530011d"
 }

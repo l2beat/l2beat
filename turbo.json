@@ -6,7 +6,8 @@
   "tasks": {
     "build": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "db:generate"
       ],
       "outputs": [
         "build/**",
@@ -15,9 +16,15 @@
         "dist/**"
       ]
     },
+    "db:generate": {
+      "outputs": [
+        "src/kysely/generated/**"
+      ]
+    },
     "typecheck": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "db:generate"
       ],
       "inputs": [
         "**/*.ts",
@@ -26,7 +33,8 @@
     },
     "test": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "db:generate"
       ],
       "inputs": [
         "**/*.ts",
@@ -37,7 +45,8 @@
     },
     "lint": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "db:generate"
       ]
     },
     "format": {},

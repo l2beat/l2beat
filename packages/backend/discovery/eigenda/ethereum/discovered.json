@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19925902,
   "configHash": "0xb56edcec5a60d117451653c0c7dce41fdc35ce284a4171f3bec6c5370ff590dd",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -73,6 +73,7 @@
     {
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+      "template": "eigenlayer/EjectionManager",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa",
@@ -105,6 +106,7 @@
     {
       "name": "eigenDAServiceManager",
       "address": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+      "ignoreInWatchMode": ["batchId", "taskNumber"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1",

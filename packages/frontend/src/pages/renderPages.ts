@@ -2,12 +2,7 @@ import { Config } from '../build/config'
 import { Page, PagesData } from './Page'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
-import { getDonatePage } from './donate'
-import { getFaqPage } from './faq'
 import { getGlossaryPage } from './glossary'
-import { getGovernancePage } from './governance/index'
-import { getGovernancePublicationPages } from './governance/publication'
-import { getGovernancePublicationsPage } from './governance/publications'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { getBridgeProjectPages } from './project/bridge'
@@ -25,7 +20,7 @@ import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
 import { getZkCatalogPage } from './zk-catalog'
 
-export async function renderPages(config: Config, pagesData: PagesData) {
+export function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
 
   const {
@@ -42,8 +37,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   pages.push(getRiskPage(config, pagesData))
   pages.push(getSummaryPage(config, pagesData))
-  pages.push(getFaqPage(config))
-  pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
 
@@ -94,15 +87,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  if (config.features.governancePage) {
-    pages.push(getGovernancePage())
-    pages.push(getGovernancePublicationsPage(config))
-    pages.push(...getGovernancePublicationPages())
-  }
-
-  if (config.features.glossary) {
-    pages.push(getGlossaryPage(config))
-  }
+  pages.push(getGlossaryPage(config))
 
   pages.push(
     getScalingDataAvailabilityPage(config, {

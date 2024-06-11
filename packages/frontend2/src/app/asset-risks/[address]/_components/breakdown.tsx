@@ -2,8 +2,8 @@
 import { indexOf, max, sum } from 'lodash'
 import { useEffect, useRef } from 'react'
 import { type ClassNameValue } from 'tailwind-merge'
-import { formatNumberWithCommas } from '~/app/utils/format-number'
 import { cn } from '~/utils/cn'
+import { formatNumberWithCommas } from '~/utils/format-number'
 
 type BreakdownValue = {
   name: string

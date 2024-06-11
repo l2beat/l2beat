@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19882097,
   "configHash": "0x5c2e13725be665937c712e81a269b21125759be2198f03a5b419fed3924fecc0",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -57,6 +57,7 @@
     {
       "name": "XLayerValidiumEtrog",
       "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+      "ignoreInWatchMode": ["lastAccInputHash"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
@@ -125,6 +126,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08",
     "0x491619874b866c3cDB7C8553877da223525ead01",
     "0x4a11078a99b118BbFee78a5c187D98D264360433",

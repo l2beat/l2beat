@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825381,
   "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -57,6 +57,8 @@
     {
       "name": "GnosisSafe",
       "address": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -81,6 +83,13 @@
     {
       "name": "StarkExchange",
       "address": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",

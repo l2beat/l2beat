@@ -1,3 +1,194 @@
+Generated with discovered.json: 0x9ac2d489ada66219337ac35236a4c77104d708c5
+
+# Diff at Mon, 10 Jun 2024 13:45:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5076f0f120afd8d9006d198d9d9c9bf0f5327f31 block: 20040416
+- current block number: 20061811
+
+## Description
+
+Remove the deprecated constructorArgs from the config.
+Add trigger for all new chains that are created (even with a different STM).
+
+For v24 upgrade below, there is now also an [informative diff audit by OpenZeppelin](https://blog.openzeppelin.com/zksync-state-transition-diff-audit).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20040416 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated:
++        [{"chainId":324,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x71d84c3404a6ae258E6471d4934B96a2033F9438"}]
+    }
+```
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      name:
+-        "zkSync"
++        "ZKsync"
+      values.txFilterer:
++        []
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.constructorArgs:
+-        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+    }
+```
+
+Generated with discovered.json: 0x93ee29c36171713f01b80b6748356bdbc622eb7a
+
+# Diff at Fri, 07 Jun 2024 14:02:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bb1e924130ed617ad936049f31500ae091525180 block: 20034095
+- current block number: 20040416
+
+## Description
+
+Upgrade v24 - VM version 1.5.0. (was initially scheduled for May 13)
+
+[CHANGELOG](https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519)
+
+Main points:
+- New shared L1 escrow and Bridgehub for zkSync Era and all future ZK stack chains 
+- New StateTransitionManager (shared proof verification for ZK stack chains with the same EVM implementation, currently only one)
+
+### New architecture summary
+
+Each ZK stack chain including zkSync Era has its own diamond contract similar to the old model, with all chain-specific logic inside. ZK stack chains with the same EVM logic can share a State Transition Manager (STM), which is responsible for proof verification for each connected chain. The multiple future STMs in turn are connected through the single Bridgehub, which allows L1 to L2 and L2 to L2 message passing. Below it is the shared bridge for all registered ZK stack chains.
+
+### Changes to the zkSync Era diamond
+#### AdminFacet.sol
+
+- L1--> L2 Transaction filtering (can set tx filtering contract)
+- Governor role removed (onlyGovernor functions are now mostly onlySTM)
+- VerifierParams moved to STM
+- Support for custom native token ('basetoken')
+- Function `upgradeChainFromVersion()` added: Allows to upgrade the diamond with preformed calldata (can be used for synchronous upgrading of multiple chains in the future)
+
+#### ExecutorFacet.sol
+
+- Support for more Blobs in one transaction (6, up from 2)
+- ChainID can be added to committing, proving, executing, reverting of batches
+- `PubdataPricingMode.Validium` implemented (was not usable before)
+- New upgrade logic in `commitBatches()`: L2 upgrade will be logged on L1
+
+### MailBoxFacet.sol
+
+- New function `transferEthToSharedBridge()` can be used to move all ETH to a shared bridge by the `BaseTokenBridge` address
+- `requestL2Transaction()` is still available, but can also be accessed via Bridgehub
+
+## L1ERC20Bridge.sol (old)
+
+Will be deprecated and funds are already being moved off of this bridge to the new shared one. Can still be used though as it has the `IL1SharedBridge` Interface to forward transactions to the new shared bridge.
+
+## StateTransitionManager.sol (added)
+
+Implements admin, freezing and upgrade logic for the chains that are registered to it. (heavily interfaces with the diamond contracts) Also interfaces with the proof verification and the validator timelock of zkSync Era. Future diamond contracts for rollups that share their evm and proving logic can share an STM.
+
+## Bridgehub.sol (added)
+
+Singular central hub contract acting as a bridge gateway / proxy between the shared bridge and the individual mailboxes of the registered diamond contracts. 
+
+All L1 <-> L2 ccommunication is handled here.
+
+## L1SharedBridge.sol (added)
+
+Shared bridge contract that can store all ERC-20 tokens and ETH, WETH for all chains. Has a mapping of token balances for each chain and backwards compatibility for the old ZkSync Era bridge.
+
+Deposits and Withdrawals for all registered chains are handled here.
+
+Has legacy functions that interface with the old ZkSync Era bridge for backwards compatibility.
+
+## GenesisUpgrade.sol (added)
+
+Stores the initial chain creation parameters for chains that register with the STM. In this case these are the chain creation parameters for ZkSync Era and its associated STM, and all potential future chains that want to use the same STM ad Era.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        484290
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        484290
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xb88380066d84222045097f0fad44e876c361dc27f5367d46decb294ba1a7d29c"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20034095 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.zksyncEraDiamond:
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.zksyncEraSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock_NEW (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock_NEW"
++        "ValidatorTimelock"
+      values.constructorArgs:
++        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+      values.revertedBlocks:
++        []
+      values.validatorsAdded:
++        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      values.validatorsRemoved:
++        []
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock_deprecated"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.L1_WETH_TOKEN:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
 Generated with discovered.json: 0x3a4dd94fb8e0bcc87ffc7593dfc1c7aff5188b10
 
 # Diff at Thu, 06 Jun 2024 16:52:10 GMT:

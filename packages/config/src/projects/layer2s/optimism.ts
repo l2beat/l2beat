@@ -19,6 +19,10 @@ const l2Upgradability = {
 }
 
 export const optimism: Layer2 = opStackL2({
+  isUnderReview: true,
+  stage: {
+    stage: 'UnderReview',
+  },
   discovery,
   display: {
     name: 'OP Mainnet',
@@ -40,7 +44,6 @@ export const optimism: Layer2 = opStackL2({
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
         'https://optimism.mirror.xyz/',
-        'https://twitter.com/OptimismFND',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
         'https://twitch.tv/optimismpbc',

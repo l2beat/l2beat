@@ -29,7 +29,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     name: 'First ZK Rollup (for payments)',
     date: '2020-06-18T00:00:00Z',
     link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
-    description: 'zkSync 1.0 is live, bringing first ZK Rollup for payments.',
+    description: 'ZKsync 1.0 is live, bringing first ZK Rollup for payments.',
   },
   {
     name: 'Ethereum Rollup centric future',
@@ -106,7 +106,7 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     date: '2023-03-24T00:00:00Z',
     link: 'https://blog.matter-labs.io/gm-zkevm-171b12a26b36',
     description:
-      'zkSync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
+      'ZKsync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
   },
   {
     name: 'EIP-4844 (Protodanksharding) is live on mainnet',

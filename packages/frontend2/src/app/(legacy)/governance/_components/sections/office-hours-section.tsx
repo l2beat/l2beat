@@ -23,7 +23,11 @@ export function OfficeHoursSection({ className }: Props) {
           To promote transparency and communication as delegates, we&apos;re
           hosting recurring Office Hours on Google Meets.
         </p>
-        <OfficeHoursIllustration className="mt-4 w-full" />
+        <OfficeHoursIllustration
+          width={400}
+          height={82}
+          className="mt-4 w-full"
+        />
         <p className="mt-4 text-sm">
           During the Office Hours, anyone is able to reach L2BEAT&apos;s
           governance team, which consists of{' '}

@@ -7,7 +7,7 @@ export const lens: Layer2 = upcomingL2({
     name: 'Lens',
     slug: 'lens',
     description:
-      "Lens Network is the main social networking hub for the entire user base of Lens Protocol, built using zkSync's ZK Stack technology.",
+      "Lens Network is the main social networking hub for the entire user base of Lens Protocol, built using ZKsync's ZK Stack technology.",
     purposes: ['Social'],
     category: 'Validium',
     provider: 'ZK Stack',

@@ -30,7 +30,7 @@ export function RequiredTools(props: Props) {
             <td className="pr-4 text-sm md:text-base">{item.version}</td>
             <td className="pr-4">
               {item.link ? (
-                <Link href={item.link} textClassName="text-sm md:text-base">
+                <Link href={item.link} className="text-sm md:text-base">
                   <span className="hidden md:block">More information</span>
                   <span className="md:hidden">More info</span>
                 </Link>
