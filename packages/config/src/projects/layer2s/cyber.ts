@@ -31,13 +31,18 @@ export const cyber: Layer2 = opStackL2({
     purposes: ['Universal', 'Social'],
     links: {
       websites: ['https://cyber.co/'],
-      apps: ['https://cyber-bridge.alt.technology/', 'https://cyber.co/stake'],
+      apps: [
+        'https://cyber-bridge.alt.technology/',
+        'https://cyber.co/stake',
+        'https://wallet.cyber.co/',
+      ],
       documentation: ['https://docs.cyber.co/'],
       explorers: ['https://cyberscan.co/'],
       repositories: ['https://github.com/cyberconnecthq'],
       socialMedia: [
         'https://twitter.com/cyberconnecthq',
         'https://discord.com/invite/cUc8VRGmPs',
+        'https://cyber.co/blog',
       ],
     },
     activityDataSource: 'Blockchain RPC',
