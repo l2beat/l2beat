@@ -40,6 +40,7 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
           template: x.extendedTemplate?.template,
+          ...(x.combinedMeta ?? {}),
           ignoreInWatchMode: x.ignoreInWatchMode,
           upgradeability: x.upgradeability,
           implementations:

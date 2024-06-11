@@ -9,13 +9,6 @@ import { isEqual } from 'lodash'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
-import {
-  ContractFieldSeverity,
-  Permission,
-  StackCategory,
-  StackRole,
-  ValueType,
-} from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -25,18 +18,9 @@ import {
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
-import { getTargetsMeta } from './metaUtils'
+import { ContractMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
-
-export interface ContractMeta {
-  descriptions?: string[]
-  roles?: Set<StackRole>
-  permissions?: { [address: string]: Set<Permission> }
-  category?: Set<StackCategory>
-  types?: Set<ValueType>
-  severity?: ContractFieldSeverity
-}
 
 export interface AnalyzedContract {
   type: 'Contract'
@@ -199,9 +183,16 @@ export class AddressAnalyzer {
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
-      selfMeta: overrides?.description
-        ? { descriptions: [overrides.description] }
-        : undefined,
+      selfMeta: {
+        descriptions: overrides?.description
+          ? [overrides?.description]
+          : undefined,
+        roles: undefined,
+        permissions: undefined,
+        category: undefined,
+        severity: undefined,
+        types: undefined,
+      },
       targetsMeta,
     }
   }

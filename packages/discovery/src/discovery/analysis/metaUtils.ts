@@ -4,15 +4,65 @@ import { ContractValue } from '@l2beat/discovery-types'
 import {
   ContractFieldSeverity,
   DiscoveryContractField,
+  Permission,
+  StackCategory,
+  StackRole,
+  ValueType,
 } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
-import { ContractMeta } from './AddressAnalyzer'
+import { Analysis } from './AddressAnalyzer'
+
+type AddressToMetaMap = { [address: string]: ContractMeta }
+
+// using `| undefined` for strong type safety,
+// making sure ever field of meta is always processed.
+export interface ContractMeta {
+  descriptions: string[] | undefined
+  roles: Set<StackRole> | undefined
+  permissions: { [permission: string]: Set<EthereumAddress> } | undefined
+  category: Set<StackCategory> | undefined
+  types: Set<ValueType> | undefined
+  severity: ContractFieldSeverity | undefined
+}
+
+export function mergeContractMeta(
+  a?: ContractMeta,
+  b?: ContractMeta,
+): ContractMeta | undefined {
+  const result: ContractMeta = {
+    descriptions: concatArrays(a?.descriptions, b?.descriptions),
+    roles: mergeSets(a?.roles, b?.roles),
+    permissions: mergePermissions(a?.permissions, b?.permissions),
+    category: mergeSets(a?.category, b?.category),
+    types: mergeSets(a?.types, b?.types),
+    severity: findHighestSeverity(a?.severity, b?.severity),
+  }
+  return isEmptyObject(result) ? undefined : result
+}
+
+export function mergePermissions(
+  a: ContractMeta['permissions'] = {},
+  b: ContractMeta['permissions'] = {},
+): ContractMeta['permissions'] | undefined {
+  const result: ContractMeta['permissions'] = {}
+  const combinedKeys = new Set([
+    ...Object.keys(a ?? {}),
+    ...Object.keys(b ?? {}),
+  ])
+  for (const key of combinedKeys) {
+    const merged = mergeSets(a[key], b[key])
+    if (merged !== undefined) {
+      result[key] = merged
+    }
+  }
+  return isEmptyObject(result) ? undefined : result
+}
 
 export function getTargetsMeta(
-  sourceAddress: EthereumAddress,
+  self: EthereumAddress,
   handlerResults: HandlerResult[],
   fields: { [address: string]: DiscoveryContractField },
-): { [address: string]: ContractMeta } | undefined {
+): AddressToMetaMap | undefined {
   const result: Record<string, ContractMeta> = {}
   for (const handlerResult of handlerResults) {
     const target = fields?.[handlerResult.field]?.target
@@ -23,7 +73,7 @@ export function getTargetsMeta(
       for (const address of addresses) {
         const meta = mergeContractMeta(
           result[address],
-          targetConfigToMeta(sourceAddress, target),
+          targetConfigToMeta(self, target),
         )
         if (meta) {
           result[address] = meta
@@ -35,7 +85,7 @@ export function getTargetsMeta(
 }
 
 export function targetConfigToMeta(
-  address: EthereumAddress,
+  self: EthereumAddress,
   target: DiscoveryContractField['target'],
 ): ContractMeta | undefined {
   if (target === undefined) {
@@ -44,13 +94,22 @@ export function targetConfigToMeta(
   const result: ContractMeta = {
     descriptions: target.description ? [target.description] : undefined,
     roles: toSet(target.role),
+    permissions: getTargetPermissions(self, toSet(target.permission)),
     category: toSet(target.category),
-  }
-  const permissions = toSet(target.permission)
-  if (permissions !== undefined) {
-    result.permissions = { [address.toString()]: permissions }
+    types: undefined,
+    severity: undefined,
   }
   return isEmptyObject(result) ? undefined : result
+}
+
+export function getTargetPermissions(
+  self: EthereumAddress,
+  permission?: Set<Permission>,
+): ContractMeta['permissions'] | undefined {
+  if (permission === undefined) {
+    return undefined
+  }
+  return Object.fromEntries([...permission].map((p) => [p, new Set([self])]))
 }
 
 export function getAddresses(
@@ -102,45 +161,6 @@ export function concatArrays<T>(
   return [...(a ?? []), ...(b ?? [])]
 }
 
-export function mergeContractMeta(
-  a: ContractMeta | undefined,
-  b: ContractMeta | undefined,
-): ContractMeta | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  a ??= {}
-  b ??= {}
-  const result: ContractMeta = {
-    descriptions: concatArrays(a.descriptions, b.descriptions),
-    roles: mergeSets(a.roles, b.roles),
-    permissions: mergePermissions(a.permissions, b.permissions),
-    category: mergeSets(a.category, b.category),
-    types: mergeSets(a.types, b.types),
-    severity: findHighestSeverity(a.severity, b.severity),
-  }
-  return result
-}
-
-export function mergePermissions(
-  a: ContractMeta['permissions'] | undefined,
-  b: ContractMeta['permissions'] | undefined,
-): ContractMeta['permissions'] | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  a ??= {}
-  b ??= {}
-  const result: ContractMeta['permissions'] = {}
-  for (const [address, permissions] of Object.entries(a)) {
-    const merged = mergeSets(permissions, b[address])
-    if (merged) {
-      result[address] = merged
-    }
-  }
-  return result
-}
-
 export function findHighestSeverity(
   a: ContractFieldSeverity | undefined,
   b: ContractFieldSeverity | undefined,
@@ -162,4 +182,22 @@ function isEmptyObject(obj: object): boolean {
     Object.keys(obj).length === 0 ||
     Object.values(obj).every((value) => value === undefined)
   )
+}
+
+export function invertMeta(analysisList: Analysis[]): AddressToMetaMap {
+  const result: AddressToMetaMap = {}
+  for (const analysis of analysisList) {
+    if (analysis.type === 'Contract') {
+      const targetsMeta = analysis.targetsMeta
+      if (targetsMeta !== undefined) {
+        for (const [targetAddress, targetMeta] of Object.entries(targetsMeta)) {
+          const merged = mergeContractMeta(result[targetAddress], targetMeta)
+          if (merged) {
+            result[targetAddress] = merged
+          }
+        }
+      }
+    }
+  }
+  return result
 }

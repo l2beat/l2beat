@@ -6,9 +6,9 @@ import {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
-  ContractMeta,
+  AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
-import { mergeContractMeta } from '../analysis/metaUtils'
+import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -18,7 +18,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 5
+export const DISCOVERY_LOGIC_VERSION = 6
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -129,20 +129,15 @@ export class DiscoveryEngine {
       depth++
     }
 
-    for (const [address, analysis] of Object.entries(resolved)) {
-      if (analysis.type === 'Contract') {
-        let combinedMeta: ContractMeta = {
-          ...analysis.selfMeta,
-        }
-        for (const [_other, otherAnalysis] of Object.entries(resolved)) {
-          if (otherAnalysis.type === 'Contract') {
-            const referencedMeta = (otherAnalysis.targetsMeta ?? {})[address]
-            combinedMeta = mergeContractMeta(combinedMeta, referencedMeta) ?? {}
-          }
-        }
-        analysis.combinedMeta = combinedMeta
-      }
-    }
+    const inverted = invertMeta(Object.values(resolved))
+    Object.values(resolved)
+      .filter((a): a is AnalyzedContract => a.type === 'Contract')
+      .forEach((a) => {
+        a.combinedMeta = mergeContractMeta(
+          a.selfMeta,
+          inverted[a.address.toString()],
+        )
+      })
 
     this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))
