@@ -1,9 +1,9 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 216537364,
+  "blockNumber": 220737963,
   "configHash": "0xdd9bb837e819f84b14a6a1c4123e804d873f5c6fa611773cc0d17677ed8d2140",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "OneStepProverMemory",
@@ -47,6 +47,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
+      "template": "orbitstack/SequencerInbox",
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -56,7 +57,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1712958598,
       "values": {
-        "batchCount": 702,
+        "batchCount": 946,
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "dacKeyset": {
@@ -67,11 +68,16 @@
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [17280, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 17280,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3388
+        "totalDelayedMessagesRead": 4065
       },
       "derivedName": "SequencerInbox"
     },
@@ -97,12 +103,12 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 3389,
+        "delayedMessageCount": 4070,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 702,
-        "sequencerReportedSubMessageCount": 94937
+        "sequencerMessageCount": 946,
+        "sequencerReportedSubMessageCount": 219653
       },
       "derivedName": "ERC20Bridge"
     },
@@ -157,6 +163,7 @@
     {
       "name": "Caldera Multisig",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -262,6 +269,7 @@
     {
       "name": "RollupProxy",
       "address": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
+      "template": "orbitstack/RollupProxy",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -287,12 +295,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 544,
+        "firstUnresolvedNode": 593,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 543,
-        "latestNodeCreated": 569,
+        "latestConfirmed": 592,
+        "latestNodeCreated": 618,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",

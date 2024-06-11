@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19910271,
   "configHash": "0x7cd67833717c8fc99d9a7dc20d52f5ff29aae14fef6015a58284f3bb682def22",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "Committee",
@@ -46,6 +46,13 @@
     {
       "name": "StarkExchange",
       "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
@@ -122,6 +129,8 @@
     {
       "name": "ProxyGovernanceMultisig",
       "address": "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

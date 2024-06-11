@@ -7,7 +7,7 @@ export const xpla: Layer2 = upcomingL2({
     name: 'zkXPLA',
     slug: 'xpla',
     description:
-      "XPLA is a global content powerhouse acting as the hub for digital media. The zkXPLA chain, built on zkSync's ZK Stack technology, will optimize the deployment of games by publishers and developers and offer a seamless end-to-end gaming environment.",
+      "XPLA is a global content powerhouse acting as the hub for digital media. The zkXPLA chain, built on ZKsync's ZK Stack technology, will optimize the deployment of games by publishers and developers and offer a seamless end-to-end gaming environment.",
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
     provider: 'ZK Stack',

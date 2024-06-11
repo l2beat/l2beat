@@ -43,7 +43,7 @@ export const metis: Layer2 = {
     category: 'Optimium',
     links: {
       websites: ['https://metis.io'],
-      apps: [],
+      apps: ['https://bridge.metis.io'],
       documentation: ['https://docs.metis.io'],
       explorers: [
         'https://andromeda-explorer.metis.io',
@@ -56,6 +56,7 @@ export const metis: Layer2 = {
         'https://discord.com/invite/metis',
         'https://youtube.com/@Metis_L2',
         'https://t.me/MetisL2',
+        'https://instagram.com/metisl2/',
       ],
     },
     activityDataSource: 'Blockchain RPC',

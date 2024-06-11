@@ -139,9 +139,6 @@
         }
       }
     },
-    "SecurityCouncil": {
-      "ignoreMethods": ["nonce"]
-    },
     "GlobalExitRootV2": {
       "ignoreMethods": [
         "getLastGlobalExitRoot",
@@ -160,9 +157,6 @@
       ],
       "ignoreInWatchMode": ["getRoot"],
       "fields": {}
-    },
-    "RollupManagerAdminMultisig": {
-      "ignoreMethods": ["nonce"]
     },
     "AstarValidiumDAC": {
       "ignoreDiscovery": true // already fetched in Astar

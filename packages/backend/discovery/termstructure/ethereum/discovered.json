@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20019330,
   "configHash": "0x0abc07c2a3779ca4b18c3453b50574892390d318d2859f27993356e87052d1c4",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "ZkTrueUp",
@@ -86,9 +86,9 @@
           "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
         ],
         "facets": [
-          [
-            "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
-            [
+          {
+            "target": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
+            "selectors": [
               "0x2c408059",
               "0x91423765",
               "0x1f931c1c",
@@ -102,10 +102,10 @@
               "0xf2fde38b",
               "0x79ba5097"
             ]
-          ],
-          [
-            "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
-            [
+          },
+          {
+            "target": "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
+            "selectors": [
               "0xc1bc0619",
               "0x882f3e16",
               "0x17d0d617",
@@ -119,10 +119,10 @@
               "0xd9caed12",
               "0xa7d7a8e4"
             ]
-          ],
-          [
-            "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3",
-            [
+          },
+          {
+            "target": "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3",
+            "selectors": [
               "0xd5e682e8",
               "0x940cc664",
               "0x063ca418",
@@ -131,14 +131,14 @@
               "0xd43f8aaa",
               "0x5437988d"
             ]
-          ],
-          [
-            "0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c",
-            ["0x5c38449e", "0x2ed22f2d", "0x7f9cb3be"]
-          ],
-          [
-            "0x84283289D7E57a2f5b80ddA065AC99450eB44cb6",
-            [
+          },
+          {
+            "target": "0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c",
+            "selectors": ["0x5c38449e", "0x2ed22f2d", "0x7f9cb3be"]
+          },
+          {
+            "target": "0x84283289D7E57a2f5b80ddA065AC99450eB44cb6",
+            "selectors": [
               "0x1887a683",
               "0xea05d8ff",
               "0x044d6d6f",
@@ -149,10 +149,10 @@
               "0xe5a4afd1",
               "0xc5aeb533"
             ]
-          ],
-          [
-            "0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9",
-            [
+          },
+          {
+            "target": "0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9",
+            "selectors": [
               "0xe45004e1",
               "0x756d39b4",
               "0x5597bf6f",
@@ -181,10 +181,10 @@
               "0x59df8371",
               "0x359521cf"
             ]
-          ],
-          [
-            "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
-            [
+          },
+          {
+            "target": "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
+            "selectors": [
               "0x0d874ce4",
               "0x364c8cfe",
               "0x632a5607",
@@ -204,10 +204,10 @@
               "0x70ab1eb6",
               "0x00e898bf"
             ]
-          ],
-          [
-            "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC",
-            [
+          },
+          {
+            "target": "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC",
+            "selectors": [
               "0xf3ab65b4",
               "0xa9ca69af",
               "0xf1537686",
@@ -218,10 +218,10 @@
               "0x76e11286",
               "0x3e35af24"
             ]
-          ],
-          [
-            "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295",
-            [
+          },
+          {
+            "target": "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295",
+            "selectors": [
               "0x1ead9052",
               "0x927da105",
               "0xf7888aec",
@@ -232,10 +232,10 @@
               "0x1d665c16",
               "0xda1e3fa8"
             ]
-          ],
-          [
-            "0x882aBFb2F6A67d36350499991638044e8Bd83a72",
-            [
+          },
+          {
+            "target": "0x882aBFb2F6A67d36350499991638044e8Bd83a72",
+            "selectors": [
               "0x6635408f",
               "0xcf3d84c1",
               "0xb0f29c4c",
@@ -243,7 +243,7 @@
               "0xabf2aed3",
               "0x2cee1e58"
             ]
-          ]
+          }
         ],
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "getAccountNum": 14,
@@ -252,7 +252,11 @@
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
         "getFlashLoanPremium": 3,
-        "getFundWeight": [0, 0, 10000],
+        "getFundWeight": {
+          "treasury": 0,
+          "insurance": 0,
+          "vault": 10000
+        },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
         "getL1RequestNum": [55, 55, 55],
@@ -281,6 +285,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -304,6 +310,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -382,6 +390,8 @@
     {
       "name": "TermStructureMultisig",
       "address": "0xa00d50A40B1635D293c87BA36503bD2504b5D818",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -406,6 +416,8 @@
     {
       "name": "GnosisSafe",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

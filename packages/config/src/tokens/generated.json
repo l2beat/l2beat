@@ -2086,6 +2086,21 @@
       "formula": "locked"
     },
     {
+      "id": "ll-lightlink",
+      "name": "LightLink",
+      "coingeckoId": "lightlink",
+      "address": "0x0921799CB1d702148131024d18fCdE022129Dc73",
+      "symbol": "LL",
+      "decimals": 18,
+      "deploymentTimestamp": 1708060619,
+      "coingeckoListingTimestamp": 1713916800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35357/large/lightlink-ticker-200.png?1708362303",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "steth-liquid-staked-ether-2.0",
       "name": "Liquid staked Ether 2.0",
       "coingeckoId": "staked-ether",
@@ -5703,6 +5718,25 @@
       "formula": "totalSupply"
     },
     {
+      "id": "base:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1713838717,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 8453,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "mode:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -6403,6 +6437,25 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "arbitrum:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1701625072,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "arbitrum:xai-xai",
       "name": "Xai",
       "coingeckoId": "xai-blockchain",
@@ -6594,6 +6647,25 @@
       }
     },
     {
+      "id": "linea:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1712853058,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 59144,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "linea:zero-zerolend",
       "name": "ZeroLend",
       "coingeckoId": "zerolend",
@@ -6691,6 +6763,25 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Blast"
+      }
+    },
+    {
+      "id": "blast:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1712897077,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {

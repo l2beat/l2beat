@@ -7,7 +7,7 @@ export const sophon: Layer2 = upcomingL2({
     name: 'Sophon',
     slug: 'sophon',
     description:
-      "Sophon is a community-driven and entertainment-focused ecosystem built on top of a modular rollup stack leveraging zkSync's ZK Stack technology.",
+      "Sophon is a community-driven and entertainment-focused ecosystem built on top of a modular rollup stack leveraging ZKsync's ZK Stack technology.",
     purposes: ['Universal'],
     category: 'Validium',
     provider: 'ZK Stack',

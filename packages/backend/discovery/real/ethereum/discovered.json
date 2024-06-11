@@ -152,7 +152,12 @@
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
@@ -260,6 +265,8 @@
     {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

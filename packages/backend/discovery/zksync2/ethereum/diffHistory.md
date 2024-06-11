@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x9ac2d489ada66219337ac35236a4c77104d708c5
+
+# Diff at Mon, 10 Jun 2024 13:45:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5076f0f120afd8d9006d198d9d9c9bf0f5327f31 block: 20040416
+- current block number: 20061811
+
+## Description
+
+Remove the deprecated constructorArgs from the config.
+Add trigger for all new chains that are created (even with a different STM).
+
+For v24 upgrade below, there is now also an [informative diff audit by OpenZeppelin](https://blog.openzeppelin.com/zksync-state-transition-diff-audit).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20040416 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated:
++        [{"chainId":324,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x71d84c3404a6ae258E6471d4934B96a2033F9438"}]
+    }
+```
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      name:
+-        "zkSync"
++        "ZKsync"
+      values.txFilterer:
++        []
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.constructorArgs:
+-        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+    }
+```
+
 Generated with discovered.json: 0x93ee29c36171713f01b80b6748356bdbc622eb7a
 
 # Diff at Fri, 07 Jun 2024 14:02:15 GMT:

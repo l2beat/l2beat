@@ -4,7 +4,6 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { BlockTimestampService } from '../services/BlockTimestampService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -34,7 +33,7 @@ describe(BlockTimestampIndexer.name, () => {
       const chain = 'ethereum'
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
@@ -70,7 +69,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
@@ -95,7 +94,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
-        parents: [mockObject<HourlyIndexer>({ subscribe: () => {} })],
+        parents: [],
         blockTimestampService: mockObject<BlockTimestampService>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
