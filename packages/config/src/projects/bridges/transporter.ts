@@ -36,14 +36,14 @@ export const transporter: Bridge = {
     sourceUpgradeability: {
       value: 'Yes',
       description:
-        'Vaults can be individually upgradable and the security assumptions must be individually assessed for each individual vault.',
+        '',
       sentiment: 'bad',
     },
     destinationToken: {
       ...RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:
         RISK_VIEW.CANONICAL_OR_WRAPPED.description +
-        ' Tokens transferred end up as ERC20 proxies, some of them are upgradable. The contract is named UChildERC20Proxy.',
+        ' ',
     },
   },
   technology: {
@@ -68,13 +68,15 @@ export const transporter: Bridge = {
       references: [],
     },
     validation: {
-      name: 'Various switchboards',
+      name: 'Oracle Network',
       description:
-        'Vaults can use any registered switchboards. The validation model is chosen by the switchboard and their security can vary from using a canonical bridge to a third-party validation model.',
+        `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.
+        Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
+        of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root, the second oracle committee can execute them on the destination chain.`,
       references: [
         {
-          text: 'Protocol Design - Socket Documentation',
-          href: 'https://developer.socket.tech/Learn/protocol-design#architecture',
+          text: 'Risk Management Network',
+          href: 'https://docs.chain.link/ccip/concepts#risk-management-network',
         },
       ],
       risks: [
@@ -94,7 +96,6 @@ export const transporter: Bridge = {
           isCritical: true,
         },
       ],
-      isIncomplete: true,
     },
   },
   config: {
@@ -372,33 +373,36 @@ export const transporter: Bridge = {
     ],
   },
   contracts: {
-    // this is not a full list of contracts - there would be too many. There should be a comment saying that example Line is listed here.
+    // this is not a full list of contracts - there would be too many.
     addresses: [
       discovery.getContractDetails(
         'Router',
-        'Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.',
+        `Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.
+        This is an example Router contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
       ),
       discovery.getContractDetails(
         'OnRamp1',
-        'OnRamp for outgoing messages to Arbitrum.',
+        `OnRamp for outgoing messages to Arbitrum.
+        This is an example OnRamp contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
       ),
       discovery.getContractDetails(
         'OffRamp1',
-        'OffRamp for incoming messages from Arbitrum.',
+        `OffRamp for incoming messages from Arbitrum.
+        This is an example OffRamp contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
       ),
       discovery.getContractDetails(
         'CommitStore1',
-        'CommitStore for storing incoming message roots from Arbitrum.',
+        `CommitStore for storing incoming message roots from Arbitrum.
+        This is an example CommitStore contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    isIncomplete: true,
   },
   permissions: [
     {
-      name: 'Teleport Owner',
+      name: '',
       description:
-        'Account privileged to set up different roles in the main Socket contract and owner of the Socket USDC vault associated with Reya.',
+        '',
       accounts: [discovery.getPermissionedAccount('Router', 'owner')],
     },
   ],
