@@ -20,7 +20,7 @@ model BridgeEscrow {
   canonicalNetworkId String?         @db.Char(21)
   canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
   tokens             Token[]
-  updatedAt          DateTime        @updatedAt
+  updatedAt          DateTime        @default(now()) @updatedAt
   createdAt          DateTime        @default(now())
 
   @@unique([networkId, address])
@@ -40,7 +40,7 @@ model ExternalBridge {
   tokens  TokenBridge[]
   escrows BridgeEscrow[]
 
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
 }
 
@@ -55,7 +55,7 @@ model Deployment {
   to              String?
   isDeployerEoa   Boolean?
   sourceAvailable Boolean
-  updatedAt       DateTime  @updatedAt
+  updatedAt       DateTime  @default(now()) @updatedAt
   createdAt       DateTime  @default(now())
 }
 
@@ -68,7 +68,7 @@ model NetworkRpc {
   networkId String   @db.Char(21)
   network   Network  @relation(fields: [networkId], references: [id])
   url       String
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
 }
 
@@ -79,7 +79,7 @@ model NetworkExplorer {
   type      ExplorerType
   url       String
   apiKey    String
-  updatedAt DateTime     @updatedAt
+  updatedAt DateTime     @default(now()) @updatedAt
   createdAt DateTime     @default(now())
 
   @@unique(networkId)
@@ -113,7 +113,7 @@ model TokenBridge {
   targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
   externalBridgeId String?         @db.Char(21)
   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-  updatedAt        DateTime        @updatedAt
+  updatedAt        DateTime        @default(now()) @updatedAt
   createdAt        DateTime        @default(now())
 }
 
@@ -128,7 +128,7 @@ model TokenMeta {
   decimals     Int?
   logoUrl      String?  @db.VarChar(256)
   contractName String?  @db.VarChar(256)
-  updatedAt    DateTime @updatedAt
+  updatedAt    DateTime @default(now()) @updatedAt
   createdAt    DateTime @default(now())
 
   @@unique([tokenId, source])
@@ -144,7 +144,7 @@ model Token {
   bridgedTo   TokenBridge[]  @relation("bridgedTo")
   bridgedFrom TokenBridge?   @relation("bridgedFrom")
   escrows     BridgeEscrow[]
-  updatedAt   DateTime       @updatedAt
+  updatedAt   DateTime       @default(now()) @updatedAt
   createdAt   DateTime       @default(now())
 
   @@unique([networkId, address])
@@ -155,6 +155,6 @@ model Cache {
   value       String
   chainId     Int
   blockNumber Int?
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @updatedAt
+  createdAt   DateTime @default(now())
 }

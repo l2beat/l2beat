@@ -15,6 +15,7 @@ export class TokenMetaRepository {
           source: (excluded) => excluded.ref('excluded.source'),
         }),
       )
+      .returning('TokenMeta.id')
       .execute()
   }
 }

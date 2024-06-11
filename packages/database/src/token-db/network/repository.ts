@@ -1,4 +1,4 @@
-import { Insertable } from 'kysely'
+import { Insertable, Updateable } from 'kysely'
 import { PostgresDatabase } from '../../kysely'
 import { Network } from '../../kysely/generated/types'
 import { joinExplorer, joinRpc } from './join'
@@ -19,6 +19,14 @@ export class NetworkRepository {
       .execute()
   }
 
+  findWithCoingecko() {
+    return this.db
+      .selectFrom('Network')
+      .where('Network.coingeckoId', 'is not', null)
+      .selectAll()
+      .execute()
+  }
+
   upsertMany(data: Insertable<Network>[]) {
     return this.db
       .insertInto('Network')
@@ -28,6 +36,14 @@ export class NetworkRepository {
           coingeckoId: (excluded) => excluded.ref('excluded.coingeckoId'),
         }),
       )
+      .execute()
+  }
+
+  updateWhereCoinGeckoId(coingeckoId: string, data: Updateable<Network>) {
+    return this.db
+      .updateTable('Network')
+      .set(data)
+      .where('Network.coingeckoId', '=', coingeckoId)
       .execute()
   }
 }

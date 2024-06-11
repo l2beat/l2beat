@@ -15,6 +15,7 @@ export class TokenRepository {
           address: (excluded) => excluded.ref('excluded.address'),
         }),
       )
+      .returning('Token.id')
       .execute()
   }
 
@@ -92,9 +93,7 @@ export class TokenRepository {
     return this.db
       .selectFrom('Token')
       .selectAll()
-      .where((eb) =>
-        eb.or(constraints.ids.map((id) => eb('Token.id', '=', id))),
-      )
+      .where('Token.id', 'in', constraints.ids)
       .execute()
   }
 }
