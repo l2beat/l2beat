@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 20059566,
-  "configHash": "0x1a12664e10041598782b1d1f7725d79855bf607217497fd8bb0cde4a297c72a1",
+  "configHash": "0xf9227719176a881656b1ceffcdbcc0b5a01b56bb19eaf10dd7a44ddfc7ccf760",
   "version": 5,
   "contracts": [
     {
@@ -443,6 +443,7 @@
           "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"
         ],
         "getThreshold": 1,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"

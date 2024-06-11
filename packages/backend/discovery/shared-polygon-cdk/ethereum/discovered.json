@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 19967357,
-  "configHash": "0xef58277a5dda7e3788583c386d1bf9d251cfa69d9b4b1d29f0931021ba93adc0",
+  "configHash": "0x5a529688ea8025268a685477ce2ad5456c44973fc921aa33acd1788df6949b29",
   "version": 5,
   "contracts": [
     {
@@ -50,6 +50,7 @@
           "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
         ],
         "getThreshold": 2,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -106,6 +107,7 @@
           "0x21887c89368bf918346c62460e0c339113801C28"
         ],
         "getThreshold": 6,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

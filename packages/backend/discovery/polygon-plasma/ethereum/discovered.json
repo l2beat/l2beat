@@ -2,7 +2,7 @@
   "name": "polygon-plasma",
   "chain": "ethereum",
   "blockNumber": 19532081,
-  "configHash": "0x3cec333902cf22e442ca0b353080c466156a67bdb3d8be0ad3c6596730aeb799",
+  "configHash": "0x1771004305f2c2969af28c971c0309897d699e9544a8fe58779cf9a3109c2a73",
   "version": 5,
   "contracts": [
     {
@@ -451,6 +451,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
+        "nonce": 198,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"

@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "blockNumber": 19927721,
-  "configHash": "0x17208eec8fac7f7a71ca41192fe0227e61aee8976f11df132e523bfab7f5eabc",
+  "configHash": "0x54dc07a6df929a8b9aa383c904b50b54cf1e8d36588b9c27c71fad7d2f845d80",
   "version": 5,
   "contracts": [
     {
@@ -127,6 +127,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 4,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

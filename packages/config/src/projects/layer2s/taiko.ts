@@ -63,7 +63,7 @@ const NumGuardiansProver = discovery.getContractValue<string[]>(
   'numGuardians',
 )
 
-const TaikoChainConfig = discovery.getContractValue<string>(
+const TaikoChainConfig = discovery.getContractValue<{ [key: string]: (number | string) }>(
   'TaikoL1Contract',
   'getConfig',
 )
@@ -75,7 +75,7 @@ const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
 const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
 const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
 
-const LivenessBond = utils.formatEther(TaikoChainConfig[5])
+const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),

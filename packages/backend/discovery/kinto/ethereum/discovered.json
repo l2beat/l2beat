@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 19976230,
-  "configHash": "0xecb82fa3dbc7e494c2271cc61d747d203d03c920e660856ec0cedd9e3756e014",
+  "configHash": "0xbf8a75c2324bf6c697e8835ddf2906d4c888f2d365a9eadc973c59039013627c",
   "version": 5,
   "contracts": [
     {
@@ -68,6 +68,7 @@
           "0x94561e98DD5E55271f91A103e4979aa6C493745E"
         ],
         "getThreshold": 3,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
