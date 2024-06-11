@@ -43,9 +43,13 @@
     "0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34": "PreimageOracle",
     "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0": "PermissionedDisputeGame",
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
-    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
+    "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14": "DelayedWETH"
   },
   "overrides": {
+    "DelayedWETH": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     "AddressManager": {
       "fields": {
         "BondManager": {
@@ -325,6 +329,7 @@
       "ignoreInWatchMode": ["getNextSequenceId"]
     },
     "DisputeGameFactory": {
+      "ignoreInWatchMode": ["gameCount"],
       "ignoreMethods": ["gameAtIndex"],
       "fields": {
         "gameImpls": {
