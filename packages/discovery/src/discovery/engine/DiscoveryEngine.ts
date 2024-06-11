@@ -6,7 +6,9 @@ import {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
+  ContractMeta,
 } from '../analysis/AddressAnalyzer'
+import { mergeContractMeta } from '../analysis/metaUtils'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -125,6 +127,21 @@ export class DiscoveryEngine {
       )
 
       depth++
+    }
+
+    for (const [address, analysis] of Object.entries(resolved)) {
+      if (analysis.type === 'Contract') {
+        let combinedMeta: ContractMeta = {
+          ...analysis.selfMeta,
+        }
+        for (const [_other, otherAnalysis] of Object.entries(resolved)) {
+          if (otherAnalysis.type === 'Contract') {
+            const referencedMeta = (otherAnalysis.targetsMeta ?? {})[address]
+            combinedMeta = mergeContractMeta(combinedMeta, referencedMeta) ?? {}
+          }
+        }
+        analysis.combinedMeta = combinedMeta
+      }
     }
 
     this.logger.flushServer(config.name)

@@ -12,7 +12,7 @@ export function getTargetsMeta(
   sourceAddress: EthereumAddress,
   handlerResults: HandlerResult[],
   fields: { [address: string]: DiscoveryContractField },
-): { [address: string]: ContractMeta } {
+): { [address: string]: ContractMeta } | undefined {
   const result: Record<string, ContractMeta> = {}
   for (const handlerResult of handlerResults) {
     const target = fields?.[handlerResult.field]?.target
@@ -31,7 +31,7 @@ export function getTargetsMeta(
       }
     }
   }
-  return result
+  return isEmptyObject(result) ? undefined : result
 }
 
 export function targetConfigToMeta(
@@ -50,7 +50,7 @@ export function targetConfigToMeta(
   if (permissions !== undefined) {
     result.permissions = { [address.toString()]: permissions }
   }
-  return result
+  return isEmptyObject(result) ? undefined : result
 }
 
 export function getAddresses(
@@ -155,4 +155,11 @@ export function findHighestSeverity(
     return 'MEDIUM'
   }
   return 'LOW'
+}
+
+function isEmptyObject(obj: object): boolean {
+  return (
+    Object.keys(obj).length === 0 ||
+    Object.values(obj).every((value) => value === undefined)
+  )
 }

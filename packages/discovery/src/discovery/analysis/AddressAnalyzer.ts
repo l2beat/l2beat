@@ -55,7 +55,7 @@ export interface AnalyzedContract {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
-  selfMeta?: Omit<ContractMeta, 'descriptions'> & { description: string }
+  selfMeta?: ContractMeta
   targetsMeta?: Record<string, ContractMeta>
   combinedMeta?: ContractMeta
 }
@@ -200,7 +200,7 @@ export class AddressAnalyzer {
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
       selfMeta: overrides?.description
-        ? { description: overrides.description }
+        ? { descriptions: [overrides.description] }
         : undefined,
       targetsMeta,
     }
