@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20063644,
-  "configHash": "0x230af6dfce6f5602df524d32f807718555a53d94f3bea3401568434f77f4a270",
+  "blockNumber": 20067517,
+  "configHash": "0xe6e46ea1743eefc1dc4586ae3a787e17fbe507474d1a9eb85f56130b9d535080",
   "version": 5,
   "contracts": [
     {
@@ -15,12 +15,7 @@
       "values": {
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "getRequiredThreshold": [
-          0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15,
-          16, 17, 18, 18, 19, 20, 21, 21, 22, 23, 24, 24, 25, 26, 27, 27, 28,
-          29, 30, 30, 31, 32, 33, 33, 34, 35, 36, 36, 37, 38, 39, 39, 40, 41,
-          42, 42, 43, 44, 45, 45, 46, 47, 48, 48, 49, 50, 51, 51, 52, 53, 54,
-          54, 55, 56, 57, 57, 58, 59, 60, 60, 61, 62, 63, 63, 64, 65, 66, 66,
-          67, 68, 69, 69, 70, 71, 72, 72, 73, 74, 75
+          0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15
         ],
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
         "livenessInterval": 8467200,
@@ -29,9 +24,6 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "errors": {
-        "getRequiredThreshold": "Too many values. Provide a higher maxLength value"
       },
       "derivedName": "LivenessModule"
     },
@@ -184,7 +176,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292738186",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292738299",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -662,7 +654,7 @@
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1301449, 20063643],
+        "params": [1000000000, 1471882, 20067508],
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "respectedGameType": 0,
@@ -793,7 +785,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "567594000000000000",
+        "totalSupply": "1607594000000000000",
         "version": "1.0.0"
       }
     },
@@ -808,7 +800,7 @@
       "implementations": ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"],
       "sinceTimestamp": 1715887043,
       "values": {
-        "gameCount": 10,
+        "gameCount": 23,
         "gameImpls": [
           "0x4146DF64D83acB0DcB0c1a4884a16f090165e122",
           "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0",

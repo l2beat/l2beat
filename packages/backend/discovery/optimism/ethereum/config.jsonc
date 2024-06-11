@@ -10,7 +10,7 @@
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
     "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
-    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
   ],
   "names": {
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
@@ -43,7 +43,7 @@
     "0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34": "PreimageOracle",
     "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0": "PermissionedDisputeGame",
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
-    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
   },
   "overrides": {
     "AddressManager": {
@@ -52,156 +52,156 @@
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["BondManager"]
-          }
+            "args": ["BondManager"],
+          },
         },
         "OVM_L2CrossDomainMessenger": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_L2CrossDomainMessenger"]
-          }
+            "args": ["OVM_L2CrossDomainMessenger"],
+          },
         },
         "OVM_DecompressionPrecompileAddress": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_DecompressionPrecompileAddress"]
-          }
+            "args": ["OVM_DecompressionPrecompileAddress"],
+          },
         },
         "OVM_Sequencer": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_Sequencer"]
-          }
+            "args": ["OVM_Sequencer"],
+          },
         },
         "OVM_Proposer": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_Proposer"]
-          }
+            "args": ["OVM_Proposer"],
+          },
         },
         "OVM_ChainStorageContainer_CTC_batches": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-CTC-batches"]
-          }
+            "args": ["OVM_ChainStorageContainer-CTC-batches"],
+          },
         },
         "OVM_ChainStorageContainer_CTC_queue": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-CTC-queue"]
-          }
+            "args": ["OVM_ChainStorageContainer-CTC-queue"],
+          },
         },
         "OVM_ChainStorageContainer_SCC_batches": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_ChainStorageContainer-SCC-batches"]
-          }
+            "args": ["OVM_ChainStorageContainer-SCC-batches"],
+          },
         },
         "OVM_CanonicalTransactionChain": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_CanonicalTransactionChain"]
-          }
+            "args": ["OVM_CanonicalTransactionChain"],
+          },
         },
         "OVM_StateCommitmentChain": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_StateCommitmentChain"]
-          }
+            "args": ["OVM_StateCommitmentChain"],
+          },
         },
         "OVM_BondManager": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_BondManager"]
-          }
+            "args": ["OVM_BondManager"],
+          },
         },
         "Proxy__OVM_L1CrossDomainMessenger": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["Proxy__OVM_L1CrossDomainMessenger"]
-          }
+            "args": ["Proxy__OVM_L1CrossDomainMessenger"],
+          },
         },
         "OVM_ExecutionManager": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_ExecutionManager"]
-          }
+            "args": ["OVM_ExecutionManager"],
+          },
         },
         "OVM_FraudVerifier": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_FraudVerifier"]
-          }
+            "args": ["OVM_FraudVerifier"],
+          },
         },
         "OVM_StateManagerFactory": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_StateManagerFactory"]
-          }
+            "args": ["OVM_StateManagerFactory"],
+          },
         },
         "OVM_StateTransitionerFactory": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_StateTransitionerFactory"]
-          }
+            "args": ["OVM_StateTransitionerFactory"],
+          },
         },
         "OVM_SafetyChecker": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_SafetyChecker"]
-          }
+            "args": ["OVM_SafetyChecker"],
+          },
         },
         "OVM_L1MultiMessageRelayer": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["OVM_L1MultiMessageRelayer"]
-          }
+            "args": ["OVM_L1MultiMessageRelayer"],
+          },
         },
         "Proxy__OVM_L1StandardBridge": {
           "handler": {
             "type": "call",
             "method": "getAddress",
-            "args": ["Proxy__OVM_L1StandardBridge"]
-          }
-        }
-      }
+            "args": ["Proxy__OVM_L1StandardBridge"],
+          },
+        },
+      },
     },
     "SCCStorageContainerBatches_OLD": {
-      "ignoreMethods": ["get"]
+      "ignoreMethods": ["get"],
     },
     "CTCStorageContainerQueue": {
-      "ignoreMethods": ["get"]
+      "ignoreMethods": ["get"],
     },
     "CTCStorageContainerBatches_OLD": {
-      "ignoreMethods": ["get"]
+      "ignoreMethods": ["get"],
     },
     "CTCStorageContainerBatches": {
       "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
     },
     "SCCStorageContainerBatches": {
       "ignoreMethods": ["get"],
-      "ignoreInWatchMode": ["getGlobalMetadata", "length"]
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
     },
     "CanonicalTransactionChain_OLD": {
-      "ignoreMethods": ["getQueueElement"]
+      "ignoreMethods": ["getQueueElement"],
     },
     "CanonicalTransactionChain": {
       "ignoreMethods": ["getQueueElement"],
@@ -212,21 +212,21 @@
         "getNumPendingQueueElements",
         "getQueueLength",
         "getTotalBatches",
-        "getTotalElements"
-      ]
+        "getTotalElements",
+      ],
     },
     "StateCommitmentChain": {
       "ignoreInWatchMode": [
         "getLastSequencerTimestamp",
         "getTotalBatches",
-        "getTotalElements"
-      ]
+        "getTotalElements",
+      ],
     },
     "FoundationMultisig_2": {
-      "ignoreInWatchMode": ["nonce"]
+      "ignoreInWatchMode": ["nonce"],
     },
     "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": {
-      "ignoreInWatchMode": ["nonce"]
+      "ignoreInWatchMode": ["nonce"],
     },
     "L1DAITokenBridge": {
       "ignoreRelatives": [
@@ -234,33 +234,33 @@
         "l2DAITokenBridge",
         "l2Token",
         "l2Token",
-        "messenger"
-      ]
+        "messenger",
+      ],
     },
     "SynthetixMultisig": {
-      "ignoreInWatchMode": ["nonce"]
+      "ignoreInWatchMode": ["nonce"],
     },
     "L2OutputOracle": {
       "ignoreMethods": [
         "getL2OutputAfter",
         "getL2OutputIndexAfter",
-        "getL2Output"
+        "getL2Output",
       ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
-        "latestOutputIndex"
+        "latestOutputIndex",
       ],
       "fields": {
         "deletedOutputs": {
           "handler": {
             "type": "stateFromEvent",
             "event": "OutputsDeleted",
-            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
-          }
-        }
-      }
+            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"],
+          },
+        },
+      },
     },
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
@@ -268,13 +268,13 @@
       "fields": {
         "paused": {
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
-          "severity": "HIGH"
-        }
-      }
+          "severity": "HIGH",
+        },
+      },
     },
     "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
+      "ignoreInWatchMode": ["messageNonce"],
     },
     "SystemConfig": {
       "fields": {
@@ -283,46 +283,46 @@
           "handler": {
             "type": "call",
             "method": "function batcherHash() view returns (address)",
-            "args": []
-          }
+            "args": [],
+          },
         },
         "opStackDA": {
           "handler": {
             "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
+            "sequencerAddress": "{{ batcherHash }}",
+          },
         },
         "sequencerInbox": {
           "handler": {
             "type": "opStackSequencerInbox",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
+            "sequencerAddress": "{{ batcherHash }}",
+          },
         },
         "gasLimit": {
           "description": "Gas limit for blocks on L2.",
-          "severity": "LOW"
-        }
+          "severity": "LOW",
+        },
       },
-      "ignoreInWatchMode": ["scalar"]
+      "ignoreInWatchMode": ["scalar"],
     },
     "wstETHEscrow": {
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {
           "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
+            "type": "accessControl",
+          },
+        },
+      },
     },
     "wstETHEscrowAdmin": {
-      "ignoreDiscovery": true
+      "ignoreDiscovery": true,
     },
     "LidoEmergencyBrakeMultisig": {
-      "ignoreDiscovery": true
+      "ignoreDiscovery": true,
     },
     "FeesCollector": {
-      "ignoreInWatchMode": ["getNextSequenceId"]
+      "ignoreInWatchMode": ["getNextSequenceId"],
     },
     "DisputeGameFactory": {
       "ignoreMethods": ["gameAtIndex"],
@@ -330,42 +330,43 @@
         "gameImpls": {
           "handler": {
             "type": "array",
-            "length": 5
-          }
+            "length": 5,
+          },
         },
         "initBonds": {
           "handler": {
             "type": "array",
-            "length": 5
-          }
-        }
-      }
+            "length": 5,
+          },
+        },
+      },
     },
     "FaultDisputeGame": {
       "ignoreMethods": [
         "getNumToResolve",
         "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
+        "resolvedSubgames",
+      ],
     },
     "PreimageOracle": {
-      "ignoreMethods": ["zeroHashes"]
+      "ignoreMethods": ["zeroHashes"],
     },
     "PermissionedDisputeGame": {
       "ignoreMethods": [
         "getNumToResolve",
         "resolutionCheckpoints",
-        "resolvedSubgames"
-      ]
+        "resolvedSubgames",
+      ],
     },
     "LivenessModule": {
       "fields": {
         "getRequiredThreshold": {
           "handler": {
-            "type": "array"
-          }
-        }
-      }
-    }
-  }
+            "type": "array",
+            "length": 20,
+          },
+        },
+      },
+    },
+  },
 }
