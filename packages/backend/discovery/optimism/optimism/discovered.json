@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 121224472,
+  "blockNumber": 121250937,
   "configHash": "0xbaad1d82a2b8b919da5cd901ace58fea1f0703c97d30191ab524240bf1b276aa",
   "version": 5,
   "contracts": [
@@ -63,7 +63,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637501",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637564",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -90,13 +90,13 @@
       "values": {
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 3,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 18367210213,
+        "l1BaseFee": 16056580902,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -205,18 +205,18 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 18367210213,
+        "basefee": 16056580902,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 3,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x624d1dc1e575a805e21b2087ea3cb2c9db0f41b471da81a80e16ff97c613e15d",
+        "hash": "0x94c718f26a80991be1082f037418bd0cefad0aaaef6250940e41481258765dac",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20063507,
-        "sequenceNumber": 10,
-        "timestamp": 1718047571,
+        "number": 20067889,
+        "sequenceNumber": 3,
+        "timestamp": 1718100503,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
