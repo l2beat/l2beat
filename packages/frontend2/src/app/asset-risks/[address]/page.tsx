@@ -1,5 +1,5 @@
 import generatedJson from '@l2beat/config/src/tokens/generated.json'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import type { SetOptional, SetRequired } from 'type-fest'
 import { http, type Hex, createPublicClient, isAddress, parseAbi } from 'viem'
 
@@ -10,6 +10,7 @@ import { DetailsHeader } from './_components/details-header'
 import { Disclaimer } from './_components/disclaimer'
 import { TokensTable } from './_components/table/tokens-table'
 import { getChain, getChainStage } from './_utils/chains'
+import { showAssetRisks } from '~/flags'
 
 type Token = Omit<(typeof generatedJson.tokens)[number], 'address'> & {
   address?: Hex
@@ -48,6 +49,12 @@ export async function generateMetadata({ params: { address } }: Props) {
 }
 
 export default async function Page({ params: { address } }: Props) {
+  const enabled = await showAssetRisks()
+
+  if (!enabled) {
+    return notFound()
+  }
+
   if (!isAddress(address)) {
     return redirect('/')
   }
