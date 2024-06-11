@@ -93,7 +93,7 @@ export const transporter: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'oracle network is compromised and Risk Management Network fails to halt ("curse") the network.',
+          text: 'oracle network is compromised and Risk Management Network fails to halt ("curse") the bridge.',
           isCritical: true,
         },
       ],
