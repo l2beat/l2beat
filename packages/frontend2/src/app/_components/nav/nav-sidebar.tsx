@@ -1,11 +1,6 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import {
-  showGlossary,
-  showGovernancePage,
-  showHiringBadge,
-  showZkCatalog,
-} from '~/flags'
+import { showHiringBadge } from '~/flags'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
@@ -28,12 +23,7 @@ export async function NavSidebar({
   logoLink: string
   legacyNav: boolean
 }) {
-  const [zkCatalog, governance, hiringBadge, glossary] = await Promise.all([
-    showZkCatalog(),
-    showGovernancePage(),
-    showHiringBadge(),
-    showGlossary(),
-  ])
+  const hiringBadge = await showHiringBadge()
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row justify-between items-center">
@@ -70,21 +60,14 @@ export async function NavSidebar({
         <NavDivider />
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
-          {zkCatalog && <NavSmallLink title="ZK Catalog" href="/zk-catalog" />}
+          <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
           <NavSmallLink title="Donate" href="/donate" />
-          {governance ? (
-            <NavSmallLink
-              title="Governance"
-              href="/governance"
-              activeBehavior={{ type: 'prefix', prefix: '/governance' }}
-            />
-          ) : (
-            <NavSmallLink
-              title="Governance"
-              href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
-            />
-          )}
-          {glossary && <NavSmallLink title="Glossary" href="/glossary" />}
+          <NavSmallLink
+            title="Governance"
+            href="/governance"
+            activeBehavior={{ type: 'prefix', prefix: '/governance' }}
+          />
+          <NavSmallLink title="Glossary" href="/glossary" />
           <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
             Jobs
             {hiringBadge && <HiringBadge />}

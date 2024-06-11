@@ -5,7 +5,6 @@ import React from 'react'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { CustomLink } from '~/app/_components/custom-link'
 import { FullPageHeader } from '~/app/_components/full-page-header'
-import { getCollection } from '~/content/getCollection'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { GovernanceHeaderIllustration } from './_assets/governance-header'
@@ -16,6 +15,7 @@ import { OurMissionSection } from './_components/sections/our-mission-section'
 import { RecentPublicationsSection } from './_components/sections/recent-publications-section'
 import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from './_utils/get-governance-publication-entry'
+import { getCollection } from '~/content/get-collection'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance - L2BEAT',
@@ -58,7 +58,7 @@ export default function Page() {
 }
 
 function Header() {
-  const delegatedProjects = getCollection('delegatedProjects')
+  const delegatedProjects = getCollection('delegated-projects')
   const chunkedProjects = chunk(delegatedProjects, 3)
 
   return (
