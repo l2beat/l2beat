@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -83,6 +83,8 @@
     {
       "name": "AggregationRouterV4Owner",
       "address": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -132,6 +134,17 @@
     {
       "name": "StarkExchangeUSDC",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
@@ -226,6 +239,8 @@
     {
       "name": "PerpetualGovernanceMultisig",
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -250,6 +265,17 @@
     {
       "name": "StarkExchangeUSDT",
       "address": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",

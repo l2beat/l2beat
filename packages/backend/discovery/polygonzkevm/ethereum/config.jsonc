@@ -36,9 +36,6 @@
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalBridgedDAI"]
     },
-    "EscrowsAdmin": {
-      "ignoreMethods": ["nonce"]
-    },
     "PolygonZkEVMEtrog": {
       "ignoreInWatchMode": ["lastAccInputHash"]
     }

@@ -14,11 +14,11 @@ const sections: ProjectDetailsSection[] = range(10).map(() => ({
     title: 'Example',
     sectionOrder: 1,
     issueLink:
-      'https://github.com/l2beat/l2beat/issues/new?title=Problem: zkSync Era project page&labels=website',
+      'https://github.com/l2beat/l2beat/issues/new?title=Problem: ZKsync Era project page&labels=website',
     editLink:
       'https://github.com/l2beat/l2beat/edit/main/packages/config/src/layer2s/zksync-era.ts',
     description:
-      'zkSync Era is a general-purpose zk-rollup platform aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.',
+      'ZKsync Era is a general-purpose zk-rollup platform aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.',
     detailedDescription:
       'It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
   },

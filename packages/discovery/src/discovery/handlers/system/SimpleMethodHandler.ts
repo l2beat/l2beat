@@ -74,6 +74,7 @@ export class SimpleMethodHandler implements MulticallableHandler {
     return {
       field: this.field,
       value: decodeMethodResult(abi, this.fragment, response.data),
+      fragment: this.fragment,
     }
   }
 }

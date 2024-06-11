@@ -16,9 +16,9 @@ import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { Configuration } from '../../../tools/uif/multi/types'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
+import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
@@ -86,19 +86,21 @@ function createChainModule(
   }
   logger = logger.tag(chain)
 
-  const blockTimestampProvider =
-    chainConfig.config.blockNumberProviderConfig.type === 'etherscan'
+  const blockNumberProviderConfig = chainConfig.config.blockNumberProviderConfig
+  const blockTimestampProvider = blockNumberProviderConfig
+    ? blockNumberProviderConfig.type === 'etherscan'
       ? peripherals.getClient(EtherscanClient, {
-          apiKey: chainConfig.config.blockNumberProviderConfig.etherscanApiKey,
-          url: chainConfig.config.blockNumberProviderConfig.etherscanApiUrl,
+          apiKey: blockNumberProviderConfig.etherscanApiKey,
+          url: blockNumberProviderConfig.etherscanApiUrl,
           minTimestamp: chainConfig.config.minBlockTimestamp,
           chainId: chainConfig.config.chainId,
         })
       : peripherals.getClient(BlockscoutClient, {
-          url: chainConfig.config.blockNumberProviderConfig.blockscoutApiUrl,
+          url: blockNumberProviderConfig.blockscoutApiUrl,
           minTimestamp: chainConfig.config.minBlockTimestamp,
           chainId: chainConfig.config.chainId,
         })
+    : undefined
 
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19724145,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -72,6 +72,7 @@
     {
       "name": "Liquidity Network",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
+      "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -239,6 +240,7 @@
     {
       "name": "SimpleGovernance",
       "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+      "ignoreInWatchMode": ["nextProposalId"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -264,6 +266,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
     "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
     "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",

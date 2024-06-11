@@ -3,11 +3,25 @@
   "chain": "ethereum",
   "blockNumber": 19531401,
   "configHash": "0x4af8375cccf9b10109218a189531c737b3fd7e2a9b929dcae68abc66eedb1c54",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "USDC_POOL",
       "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -78,6 +92,20 @@
     {
       "name": "USDT_POOL",
       "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -150,6 +178,20 @@
     {
       "name": "DAI_POOL",
       "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+      "ignoreInWatchMode": [
+        "a",
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "adminFeeShareBP",
+        "d",
+        "feeShareBP",
+        "getPrice",
+        "getY",
+        "PP",
+        "tokenBalance",
+        "totalLpAmount",
+        "vUsdBalance"
+      ],
       "upgradeability": {
         "type": "immutable"
       },

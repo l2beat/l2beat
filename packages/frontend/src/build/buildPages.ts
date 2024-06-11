@@ -120,7 +120,7 @@ async function main() {
       implementationChange,
       verifiersApiResponse,
     }
-    await renderPages(config, pagesData)
+    renderPages(config, pagesData)
     console.timeEnd('[BUILDING PAGES]')
   } catch (e) {
     console.error(e)

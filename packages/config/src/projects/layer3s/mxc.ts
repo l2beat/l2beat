@@ -48,8 +48,8 @@ export const mxc: Layer3 = {
   config: {
     escrows: [
       {
-        chain: 'ethereum',
         ...discovery_ethereum.getEscrowDetails({
+          chain: 'ethereum',
           address: EthereumAddress(
             '0x7C954170305b11572522313b6AD514070ce0339c',
           ),

@@ -11,7 +11,7 @@ export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull className={className}>
       <GovernanceCardHeader>Our mission</GovernanceCardHeader>
-      <p className="mt-6 text-base md:text-sm">
+      <div className="mt-6 text-base md:text-sm">
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
@@ -45,7 +45,7 @@ export function OurMissionSection({ className }: Props) {
             we can&apos;t see the code, we can&apos;t trust it.
           </li>
         </ul>
-      </p>
+      </div>
       <div className="mt-6 flex gap-3 rounded-lg bg-[#F7DEEB] p-4 dark:bg-[#3A1929]">
         <HeartIcon className="shrink-0" />
         <span className="text-balance text-base font-medium md:text-sm">

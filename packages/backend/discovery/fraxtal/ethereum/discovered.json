@@ -118,14 +118,14 @@
         "optimismPortal": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
         "overhead": 0,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          10000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 10000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279131187530910712656",
         "sequencerInbox": "0xfF000000000000000000000000000000000420fC",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
@@ -178,7 +178,11 @@
         "L2_ORACLE": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Oracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [10000000, 490798, 20032024],
+        "params": {
+          "prevBaseFee": 10000000,
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 20032024
+        },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "SYSTEM_CONFIG": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
