@@ -113,6 +113,8 @@ export class ProjectDiscovery {
     upgradeDelay,
     isUpcoming,
     includeInTotal,
+    isHistorical,
+    untilTimestamp,
   }: {
     address: EthereumAddress
     name?: string
@@ -123,6 +125,8 @@ export class ProjectDiscovery {
     upgradeDelay?: string
     isUpcoming?: boolean
     includeInTotal?: boolean
+    isHistorical?: boolean
+    untilTimestamp?: UnixTime
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -150,6 +154,8 @@ export class ProjectDiscovery {
       chain: this.chain,
       includeInTotal:
         includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+      isHistorical,
+      untilTimestamp,
     }
   }
 

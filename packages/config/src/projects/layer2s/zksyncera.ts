@@ -154,19 +154,15 @@ export const zksyncera: Layer2 = {
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
       }),
-      {
-        ...discovery.getEscrowDetails({
-          address: EthereumAddress(
-            '0x32400084C286CF3E17e7B677ea9583e60a000324',
-          ),
-          sinceTimestamp: new UnixTime(1676268575),
-          tokens: ['ETH'],
-          description: 'Main rollup contract of ZKsync Era.',
-          ...upgrades,
-        }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
+        sinceTimestamp: new UnixTime(1676268575),
+        tokens: ['ETH'],
+        description: 'Main rollup contract of ZKsync Era.',
+        ...upgrades,
         isHistorical: true,
         untilTimestamp: new UnixTime(1717922458),
-      },
+      }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
         sinceTimestamp: new UnixTime(1676367083),
