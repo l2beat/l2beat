@@ -15,6 +15,7 @@ export default async function Layout({
   const enabled = await showAssetRisks()
 
   console.log('ASSET RISK ENABLED: ' + enabled)
+  console.log('ENV: ' + JSON.stringify(process.env.FEATURE_FLAG_ASSET_RISKS))
 
   if (!enabled) {
     return notFound()
