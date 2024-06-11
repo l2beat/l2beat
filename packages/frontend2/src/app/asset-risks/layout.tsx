@@ -1,8 +1,10 @@
 import { type Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import { showAssetRisks } from '~/flags'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { Web3Provider } from './_components/web3-provider'
+import { showAssetRisks } from '~/flags'
+import { notFound } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'L2BEAT - Asset Risks',
@@ -13,9 +15,6 @@ export default async function Layout({
   children,
 }: { children: React.ReactNode }) {
   const enabled = await showAssetRisks()
-
-  console.log('ASSET RISK ENABLED: ' + enabled)
-  console.log('ENV: ' + JSON.stringify(process.env.FEATURE_FLAG_ASSET_RISKS))
 
   if (!enabled) {
     return notFound()
