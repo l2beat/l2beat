@@ -2550,5 +2550,68 @@
       },
       "coingeckoId": "merlin-s-seal-btc"
     }
+  ],
+  "real": [
+    {
+      "symbol": "USTB",
+      "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      },
+      "coingeckoId": "real-us-t-bill"
+    },
+    {
+      "symbol": "PEARL",
+      "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "pearl"
+    },
+    {
+      "symbol": "arcUSD",
+      "address": "0xaec9e50e3397f9ddc635c6c429c8c7eca418a143",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      },
+      "coingeckoId": "arcana-2"
+    },
+    {
+      "symbol": "WREETH",
+      "address": "0x90c6e93849e06ec7478ba24522329d14a5954df4",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      },
+      "coingeckoId": "wrapped-real-ether"
+    },
+    {
+      "symbol": "RWA",
+      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "UKRE",
+      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "CVR",
+      "address": "0xB08F026f8a096E6d92eb5BcbE102c273A7a2d51C",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "MORE",
+      "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
+      "type": "NMV",
+      "formula": "totalSupply"
+    }
   ]
 }
