@@ -16,14 +16,12 @@ const nextConfig = {
         {
           source: '/:path*',
           has: [{ type: 'host', value: '.*localhost.*' }],
-          destination:
-            'http://127.0.0.1:8080/:path*',
+          destination: 'http://127.0.0.1:8080/:path*',
         },
         {
           source: '/:path*',
           has: [{ type: 'host', value: '.*staging.*' }],
-          destination:
-            'https://l2beat-staging.vercel.app/:path*',
+          destination: 'https://l2beat-staging.vercel.app/:path*',
         },
         {
           source: '/:path*',
