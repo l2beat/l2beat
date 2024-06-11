@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcdc90bb6388c55e255d4a3642355937c3232daf1
+
+# Diff at Tue, 11 Jun 2024 12:06:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b482f34b787e8546115b599d38d66643fc47a24 block: 215490223
+- current block number: 220722589
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 215490223 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: None
+      values.maxTimeVariation:
+-        [5760,48,86400,3600]
++        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+    }
+```
+
 Generated with discovered.json: 0xe27c45aa1fa1e8e953b3fd2fd42d53e971cb449f
 
 # Diff at Mon, 27 May 2024 07:16:25 GMT:

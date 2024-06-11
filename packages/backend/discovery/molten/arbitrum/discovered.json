@@ -1,9 +1,9 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 216517911,
+  "blockNumber": 220722783,
   "configHash": "0x86fe0a45bc04bdb7aed62a03ebb48345ba252d7096fcce7a6798fb0c978ccf55",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "OneStepProverMemory",
@@ -28,6 +28,7 @@
     {
       "name": "RollupProxy",
       "address": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
+      "template": "orbitstack/RollupProxy",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -53,12 +54,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 170,
+        "firstUnresolvedNode": 219,
         "inbox": "0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 169,
-        "latestNodeCreated": 195,
+        "latestConfirmed": 218,
+        "latestNodeCreated": 244,
         "loserStakeEscrow": "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -95,7 +96,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1712019082,
       "values": {
-        "batchCount": 1445,
+        "batchCount": 3068,
         "batchPosters": ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"],
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "dacKeyset": {
@@ -106,11 +107,16 @@
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [17280, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 17280,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1524
+        "totalDelayedMessagesRead": 3148
       },
       "derivedName": "SequencerInbox"
     },
@@ -173,7 +179,7 @@
       "sinceTimestamp": 1708973862,
       "values": {
         "BP_DENOMINATOR": 10000,
-        "circulatingSupply": "173062857920995254352723",
+        "circulatingSupply": "244163270767195254352723",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "defaultFeeBp": 10,
@@ -188,13 +194,15 @@
         "sharedDecimals": 8,
         "symbol": "MOLTEN",
         "token": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
-        "totalSupply": "173062857920995254352723"
+        "totalSupply": "244163270767195254352723"
       },
       "derivedName": "Molten"
     },
     {
       "name": "Caldera Multisig",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -396,12 +404,12 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 1525,
+        "delayedMessageCount": 3150,
         "nativeToken": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 1445,
-        "sequencerReportedSubMessageCount": 1028206
+        "sequencerMessageCount": 3068,
+        "sequencerReportedSubMessageCount": 2500784
       },
       "derivedName": "ERC20Bridge"
     },

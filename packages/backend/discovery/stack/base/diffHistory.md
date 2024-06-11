@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2428397998ce4d9b218cb2122c8b2515ff938cf8
+
+# Diff at Tue, 11 Jun 2024 13:17:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b482f34b787e8546115b599d38d66643fc47a24 block: 12893975
+- current block number: 15661242
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 12893975 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x52c901666Cfc8AeE9b46A3b7C101688351529B37) {
+    +++ description: None
+      values.resourceConfig:
+-        [20000000,10,8,1000000000,1000000,"340282366920938463463374607431768211455"]
++        {"maxResourceLimit":20000000,"elasticityMultiplier":10,"baseFeeMaxChangeDenominator":8,"minimumBaseFee":1000000000,"systemTxMaxGas":1000000,"maximumBaseFee":"340282366920938463463374607431768211455"}
+    }
+```
+
 Generated with discovered.json: 0x25698f6aa8b455f39fab9dd5b810ec5ebe52c1ec
 
 # Diff at Fri, 05 Apr 2024 09:13:03 GMT:
