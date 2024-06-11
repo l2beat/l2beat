@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { ContractParameters } from '@l2beat/discovery-types'
 import {
   CONTRACTS,
   DERIVATION,
@@ -16,15 +17,14 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
+import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { OPERATOR } from '../../common/operator'
+import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { ContractParameters } from '@l2beat/discovery-types'
-import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
-import { OPERATOR } from '../../common/operator'
-import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
