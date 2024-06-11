@@ -1,8 +1,8 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { env } from '~/env'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { Web3Provider } from './_components/web3-provider'
-import { env } from '~/env'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'L2BEAT - Asset Risks',
