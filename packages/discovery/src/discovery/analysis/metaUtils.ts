@@ -65,7 +65,8 @@ export function getTargetsMeta(
 ): AddressToMetaMap | undefined {
   const result: Record<string, ContractMeta> = {}
   for (const handlerResult of handlerResults) {
-    const target = fields?.[handlerResult.field]?.target
+    const field = fields?.[handlerResult.field]
+    const target = field?.target
     if (target) {
       const addresses = getAddresses(handlerResult.value).map((a) =>
         a.toString(),
@@ -73,7 +74,7 @@ export function getTargetsMeta(
       for (const address of addresses) {
         const meta = mergeContractMeta(
           result[address],
-          targetConfigToMeta(self, target),
+          targetConfigToMeta(self, field, target),
         )
         if (meta) {
           result[address] = meta
@@ -86,6 +87,7 @@ export function getTargetsMeta(
 
 export function targetConfigToMeta(
   self: EthereumAddress,
+  field: DiscoveryContractField,
   target: DiscoveryContractField['target'],
 ): ContractMeta | undefined {
   if (target === undefined) {
@@ -96,8 +98,8 @@ export function targetConfigToMeta(
     roles: toSet(target.role),
     permissions: getTargetPermissions(self, toSet(target.permission)),
     category: toSet(target.category),
-    types: undefined,
-    severity: undefined,
+    types: toSet(field.type),
+    severity: Array.from(toSet(field.severity) ?? [])[0],
   }
   return isEmptyObject(result) ? undefined : result
 }
