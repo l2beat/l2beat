@@ -2,6 +2,7 @@ import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import matter from 'gray-matter'
+import MarkdownIt from 'markdown-it'
 import { type z } from 'zod'
 
 import { startsWithLetterOrNumber } from '~/utils/starts-with-letter-or-number'
@@ -130,13 +131,14 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
   const parsedFile = matter(file.toString())
 
   const data = contentEntry.schema.parse(parsedFile.data)
+  const content = MarkdownIt().render(parsedFile.content)
   const excerpt = getExcerpt(parsedFile.content)
   const readTimeInMinutes = getReadTimeInMinutes(parsedFile.content)
 
   return {
     id,
     data,
-    content: parsedFile.content,
+    content,
     excerpt,
     readTimeInMinutes,
   }

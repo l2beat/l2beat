@@ -1,7 +1,7 @@
 import React from 'react'
 import { CopyButton } from '~/app/_components/copy-button'
 
-import { type CollectionEntry } from '~/content/getCollection'
+import { type CollectionEntry } from '~/content/get-collection'
 import ChiliIcon from '~/icons/chili.svg'
 
 interface Props {

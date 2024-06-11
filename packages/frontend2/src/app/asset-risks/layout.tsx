@@ -4,6 +4,8 @@ import { showAssetRisks } from '~/flags'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { Web3Provider } from './_components/web3-provider'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = getDefaultMetadata({
   title: 'L2BEAT - Asset Risks',
   description: 'Get your asset risks report for your L2 assets.',
