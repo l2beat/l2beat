@@ -85,6 +85,7 @@ export interface Tvl2Config {
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly projectsExcludedFromApi: string[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TrackedTxsConfig {
