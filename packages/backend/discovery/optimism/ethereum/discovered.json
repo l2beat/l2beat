@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20067517,
-  "configHash": "0xe6e46ea1743eefc1dc4586ae3a787e17fbe507474d1a9eb85f56130b9d535080",
+  "blockNumber": 20069391,
+  "configHash": "0x81b822153354640628f0cbfdea73c93ad02f0d19ffa932cecf6ec43b31f434da",
   "version": 5,
   "contracts": [
     {
@@ -131,14 +131,14 @@
         "optimismPortal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "overhead": 0,
         "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279134670530344387928",
         "sequencerInbox": "0xFF00000000000000000000000000000000000010",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
@@ -176,7 +176,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292738299",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292738334",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -210,11 +210,11 @@
         "createdAt": 0,
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "gameCreator": "0x0000000000000000000000000000000000000000",
-        "gameData": [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
+        "gameData": {
+          "gameType_": 0,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
         "gameType": 0,
         "getChallengerDuration": [],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -228,10 +228,10 @@
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
-        "startingOutputRoot": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          0
-        ],
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
         "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "status": 0,
         "version": "1.2.0",
@@ -654,7 +654,11 @@
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1471882, 20067508],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 980060,
+          "prevBlockNum": 20069298
+        },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
         "respectedGameType": 0,
@@ -771,6 +775,7 @@
     {
       "name": "DelayedWETH",
       "address": "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x97988d5624F1ba266E1da305117BCf20713bee08",
@@ -785,13 +790,15 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "1607594000000000000",
+        "totalSupply": "2087594000000000000",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "DisputeGameFactory",
       "address": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "ignoreInWatchMode": ["gameCount"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
@@ -800,7 +807,7 @@
       "implementations": ["0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"],
       "sinceTimestamp": 1715887043,
       "values": {
-        "gameCount": 23,
+        "gameCount": 29,
         "gameImpls": [
           "0x4146DF64D83acB0DcB0c1a4884a16f090165e122",
           "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0",
@@ -831,11 +838,11 @@
         "createdAt": 0,
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "gameCreator": "0x0000000000000000000000000000000000000000",
-        "gameData": [
-          1,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
+        "gameData": {
+          "gameType_": 1,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
         "gameType": 1,
         "getChallengerDuration": [],
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -850,10 +857,10 @@
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 30,
         "startingBlockNumber": 0,
-        "startingOutputRoot": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          0
-        ],
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2BlockNumber": 0
+        },
         "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "status": 0,
         "version": "1.2.0",

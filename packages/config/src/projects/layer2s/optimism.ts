@@ -91,6 +91,7 @@ export const optimism: Layer2 = {
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
+    provider: 'OP Stack',
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     purposes: ['Universal'],
@@ -198,6 +199,25 @@ export const optimism: Layer2 = {
           from: sequencerAddress,
           to: sequencerInbox,
           sinceTimestampInclusive: genesisTimestamp,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdfe97868233d1aa22e815a266982f2cf17685a27',
+          ),
+          selector: '0x9aaab648',
+          functionSignature:
+            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          sinceTimestampInclusive: new UnixTime(1660662182),
+          untilTimestampExclusive: new UnixTime(
+            disputeGameFactory.sinceTimestamp ?? 1715887043,
+          ),
         },
       },
       {
@@ -424,6 +444,11 @@ export const optimism: Layer2 = {
     },
   ),
   permissions: [
+    {
+      name: 'Sequencer',
+      accounts: [discovery.formatPermissionedAccount(sequencerAddress)],
+      description: 'Central actor allowed to submit transaction batches to L1.',
+    },
     discovery.contractAsPermissioned(
       discovery.getContract('ProxyAdmin'),
       'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, SuperchainConfig, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
