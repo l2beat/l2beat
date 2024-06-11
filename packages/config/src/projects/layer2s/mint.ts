@@ -15,7 +15,7 @@ export const mint: Layer2 = opStackL2({
     purposes: ['Universal', 'NFT'],
     links: {
       websites: ['https://mintchain.io/'],
-      apps: ['https://bridge.mintchain.io/','https://mintchain.io/faucet'],
+      apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
       documentation: ['https://docs.mintchain.io/'],
       explorers: ['https://explorer.mintchain.io'],
       repositories: ['https://github.com/Mint-Blockchain'],
