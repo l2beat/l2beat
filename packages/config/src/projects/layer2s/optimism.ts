@@ -189,7 +189,7 @@ export const optimism: Layer2 = {
         query: {
           formula: 'functionCall',
           address: disputeGameFactory.address,
-          selector: '0x9aaab648',
+          selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
           sinceTimestampInclusive: new UnixTime(
@@ -411,6 +411,13 @@ export const optimism: Layer2 = {
       'ProxyAdminOwner',
       'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
     ),
+    {
+      name: 'Guardian',
+      description: '',
+      accounts: [
+        discovery.getPermissionedAccount('FoundationMultisig_2', 'owner'),
+      ],
+    },
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
       'Member of the ProxyAdminOwner.',
@@ -442,7 +449,7 @@ export const optimism: Layer2 = {
     {
       name: 'L2ProxyAdminOwner',
       description:
-        'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
+        'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1 ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
       accounts: [l2Discovery.getPermissionedAccount('L2ProxyAdmin', 'owner')],
     },
     ...l2Discovery.getMultisigPermission(
