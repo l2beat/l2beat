@@ -86,6 +86,7 @@ export const blast: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
+    coingeckoPlatform: 'blast',
     chainId: 81457,
     explorerUrl: 'https://blastscan.io/',
     explorerApi: {
