@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19697841,
   "configHash": "0x9c628ef53d5df4a52efd65a746364009f1b4a4a29af37d4add10ac3937d1f279",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "TokenImplementation",
@@ -16,15 +16,15 @@
         "chainId": 0,
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0x0cf2c709fa7ea9acd67676f52f3dbf86e5aff34b6cdc82219ec4212ea2e0569f",
-        "eip712Domain": [
-          "0x1f",
-          "",
-          "1",
-          1,
-          "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
-          "0xbf53adb76067fdab0d008aef3ad8b28bbb63c2ce4c2b63394ede73f01a70c865",
-          []
-        ],
+        "eip712Domain": {
+          "domainFields": "0x1f",
+          "domainName": "",
+          "domainVersion": "1",
+          "domainChainId": 1,
+          "domainVerifyingContract": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
+          "domainSalt": "0xbf53adb76067fdab0d008aef3ad8b28bbb63c2ce4c2b63394ede73f01a70c865",
+          "domainExtensions": []
+        },
         "name": "",
         "nativeContract": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "owner": "0x0000000000000000000000000000000000000000",
@@ -108,6 +108,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
     "0x107A0086b32d7A0977926A205131d8731D39cbEB",
     "0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
