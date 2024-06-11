@@ -63,7 +63,8 @@
     "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
     "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": "Router2",
 
-    "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway"
+    "0xB9281d9d494EE5b8b06f5ECb43bE37684804b818": "ChainlinkCcipGateway",
+    "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "RBACTimelock"
   },
   "overrides": {
     "OnRamp9": { "extends": "transporter/OnRampV2" },
@@ -90,6 +91,15 @@
     },
     "EtherSenderReceiver": {
       "ignoreMethods": ["i_weth"]
+    },
+    "RBACTimelock": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
     }
   }
 }

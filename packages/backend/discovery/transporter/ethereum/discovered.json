@@ -1,13 +1,14 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20026089,
-  "configHash": "0x3ba157497c0bc83b9e2bf6c62a23a61a37d8f2a14b01bf30c1b5802c624c7025",
-  "version": 4,
+  "blockNumber": 20067895,
+  "configHash": "0x2c67c0de2accecd0fb2fe7ca29ed33c47985fc34969912a175de5e863dc96cc1",
+  "version": 5,
   "contracts": [
     {
       "name": "PriceRegistry",
       "address": "0x020082A7a9c2510e1921116001152DEE4da81985",
+      "template": "transporter/PriceRegistry",
       "upgradeability": {
         "type": "immutable"
       },
@@ -32,6 +33,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x047204D42d93a6471F7c9Ec94292B4B00E8e0786",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -54,6 +56,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x057152DB365B47851B0A0bd431644b8eE21fE1b4",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -84,6 +87,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x06f9817a91595E1B595F789Fb91529e8651da9B8",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -115,7 +119,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 0,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 67298,
+        "nextAvailableNonce": 69528,
         "owner": "0x4aA5bF962852DcC59695F600d346D3F751B0D920",
         "paused": false,
         "pauser": "0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
@@ -128,6 +132,7 @@
     {
       "name": "OffRamp7",
       "address": "0x0af338F0E314c7551bcE0EF516d46d855b0Ee395",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -136,7 +141,7 @@
         "commitStore": ["0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76"],
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -176,6 +181,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x0C291Ae31730901515e5C46406A6ba2d88c1f4aA",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -202,6 +208,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x0DAFed8dAF42040dB2c6227ca2AEB14D9C8B2602",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -224,6 +231,7 @@
     {
       "name": "OnRamp11",
       "address": "0x0f27c8532457b66D6037141DEB0ed479Dad04B3c",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -231,7 +239,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -274,6 +282,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -290,8 +299,92 @@
       }
     },
     {
+      "name": "ManyChainMultiSig",
+      "address": "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689096839,
+      "values": {
+        "getConfig": [
+          [
+            ["0x06e5891D9b2Ee77740355A309BAF49caaB672f98", 0, 8],
+            ["0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC", 1, 8],
+            ["0x180159135c9b93C59d16eA1A690e465D22c5EB67", 2, 6],
+            ["0x1c6460cfe32916196f6977b5442b0F98A826D880", 3, 11],
+            ["0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922", 4, 12],
+            ["0x2b73763722378AB2013CB0877946f69fC3727Fd8", 5, 5],
+            ["0x2B88575011C5E11389ddB50D28d31C7d06B352A0", 6, 1],
+            ["0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6", 7, 1],
+            ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89", 8, 10],
+            ["0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3", 9, 4],
+            ["0x41eAdbc688797a02bfaBE48472995833489ce69D", 10, 10],
+            ["0x43640F208956c7D49e04F40FF95dF818643B76aA", 11, 1],
+            ["0x480496c0884D61F2f56707Adb11697F8018898c2", 12, 12],
+            ["0x48A094F7A354d8faD7263EA2a82391d105DF6628", 13, 4],
+            ["0x4e509C60b3e916644dE441298595FeD12C4AC926", 14, 1],
+            ["0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd", 15, 8],
+            ["0x570F41d83b1031d382F641B9a532A8D7CBd7a695", 16, 1],
+            ["0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6", 17, 3],
+            ["0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8", 18, 3],
+            ["0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7", 19, 1],
+            ["0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae", 20, 1],
+            ["0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4", 21, 8],
+            ["0x7052cB84079905400ea52B635cAb6a275fDA8823", 22, 10],
+            ["0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5", 23, 7],
+            ["0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514", 24, 11],
+            ["0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0", 25, 2],
+            ["0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374", 26, 6],
+            ["0x9079410666ED02725ee9d148398Cee26397c2A36", 27, 1],
+            ["0x925d7Ea0ADe586DBFd56a942bb297286cE428C79", 28, 1],
+            ["0x9453E18f03A36E2A2c70598De520bD24434D2d1D", 29, 7],
+            ["0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882", 30, 12],
+            ["0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e", 31, 12],
+            ["0xA3177f64efE98422E782bC17BE7971F01187B7cF", 32, 1],
+            ["0xa35B7219521134cAF52DccAD44d604335b64a4fB", 33, 5],
+            ["0xa42c8570771240D1e2F3211064a7C7472Cc05b7D", 34, 8],
+            ["0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a", 35, 2],
+            ["0xA8030F40032E88552519EDFc448523d677B29661", 36, 12],
+            ["0xAe735fd5e74887064DFf99C637f291caE5485A75", 37, 11],
+            ["0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7", 38, 12],
+            ["0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7", 39, 6],
+            ["0xd3094f770579AFd66711847cE9E9C42D10BA2264", 40, 5],
+            ["0xd3E2da792E806556517124f03F12e557045951E7", 41, 7],
+            ["0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7", 42, 12],
+            ["0xE062e7D123AC8dF480C56147f911144F55C10f88", 43, 10],
+            ["0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0", 44, 12]
+          ],
+          [
+            3, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ],
+          [
+            0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 9, 9, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        ],
+        "getOpCount": 45,
+        "getRoot": [
+          "0x2e56114e572f2eb9d14c448c131e5e9d4d6b2b2f252000d5d855628c5c21fb94",
+          1716865428
+        ],
+        "getRootMetadata": [
+          1,
+          "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
+          36,
+          45,
+          false
+        ],
+        "MAX_NUM_SIGNERS": 200,
+        "NUM_GROUPS": 32,
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
       "name": "CommitStore2",
       "address": "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -299,7 +392,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 6,
-        "getLatestPriceEpochAndRound": 374273,
+        "getLatestPriceEpochAndRound": 858113,
         "getStaticConfig": [
           "5009297550715157269",
           "465200170687744372",
@@ -328,6 +421,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x123ed44f3B863a684437Ebf18F8a744c250Ee5cA",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -355,6 +449,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x1580C7d4754f5671626e42f0372D56104B092CFA",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -377,6 +472,7 @@
     {
       "name": "OffRamp10",
       "address": "0x1C207dabc46902dF9028b27D6d301c3849b2D12c",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -385,7 +481,7 @@
         "commitStore": ["0x40c558575093eC1099CC21B020d9b8D13c74417F"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -424,6 +520,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x1e28DD4b559a7fF546b1e84691129508b2C9C3D3",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -450,6 +547,7 @@
     {
       "name": "CommitStore11",
       "address": "0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -486,6 +584,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x21377fe476Fb8587CbAFd47155093597Fa4df45E",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -506,6 +605,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x2764910B500689BbC9DB16c7AD61c6DD32FDE73B",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -524,14 +624,15 @@
     {
       "name": "CommitStore5",
       "address": "0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701286199,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1655,
-        "getLatestPriceEpochAndRound": 376322,
+        "getExpectedNextSequenceNumber": 1720,
+        "getLatestPriceEpochAndRound": 856579,
         "getStaticConfig": [
           "5009297550715157269",
           "6433500567565415381",
@@ -560,6 +661,7 @@
     {
       "name": "CommitStore14",
       "address": "0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -596,6 +698,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x2dd317E7e36544C5222818F228d607c209517470",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -670,14 +773,15 @@
     {
       "name": "CommitStore1",
       "address": "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701802727,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 730,
-        "getLatestPriceEpochAndRound": 375299,
+        "getExpectedNextSequenceNumber": 764,
+        "getLatestPriceEpochAndRound": 851457,
         "getStaticConfig": [
           "5009297550715157269",
           "5142893604156789321",
@@ -706,6 +810,7 @@
     {
       "name": "OnRamp12",
       "address": "0x333f976915195ba9044fD0cd603cEcE936f6264e",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -713,7 +818,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -771,6 +876,7 @@
     {
       "name": "OnRamp2",
       "address": "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -778,7 +884,7 @@
       "values": {
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -795,10 +901,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1664,
-        "getNopFeesJuels": "1041974829029984275",
+        "getExpectedNextSequenceNumber": 1729,
+        "getNopFeesJuels": "3027226006499236509",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7726764077327792733",
+        "linkAvailableForPayment": "6140133755147726861",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -833,6 +939,7 @@
     {
       "name": "OffRamp1",
       "address": "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -841,7 +948,7 @@
         "commitStore": ["0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -881,6 +988,7 @@
     {
       "name": "CommitStore12",
       "address": "0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -917,6 +1025,7 @@
     {
       "name": "OnRamp4",
       "address": "0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -924,7 +1033,7 @@
       "values": {
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -941,10 +1050,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1308,
-        "getNopFeesJuels": "2215126805413807531",
+        "getExpectedNextSequenceNumber": 1368,
+        "getNopFeesJuels": "6474030492695749152",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7280730664695515437",
+        "linkAvailableForPayment": "3021826977413573816",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -973,6 +1082,7 @@
     {
       "name": "CommitStore10",
       "address": "0x40c558575093eC1099CC21B020d9b8D13c74417F",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1022,6 +1132,7 @@
     {
       "name": "OffRamp9",
       "address": "0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1030,7 +1141,7 @@
         "commitStore": ["0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -1069,6 +1180,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x44622f4604353E4815A4212d5a3dD137A1C7FF14",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1092,6 +1204,41 @@
       },
       "sinceTimestamp": 1689097535,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "ADMIN_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": [
+              "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
+              "0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x82b8A19497fA25575f250a3DcFfCD2562B575A2e"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": [
+              "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
+              "0xAD97C0270a243270136E40278155C12ce7C7F87B",
+              "0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf",
+              "0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF",
+              "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc"
+            ]
+          },
+          "BYPASSER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x117ec8aD107976e1dBCc21717ff78407Bc36aADc"]
+          }
+        },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "BYPASSER_ROLE": "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d",
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -1101,19 +1248,65 @@
         "getBlockedFunctionSelectorCount": 0,
         "getMinDelay": 86400,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "derivedName": "RBACTimelock"
+    },
+    {
+      "name": "EVM2EVMOnRamp",
+      "address": "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65",
+      "template": "transporter/OnRamp",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1717182935,
+      "values": {
+        "currentRateLimiterState": [
+          "2000000000000000000000000",
+          1718100575,
+          true,
+          "2000000000000000000000000",
+          "555550000000000000000"
+        ],
+        "getDynamicConfig": [
+          "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          1,
+          350000,
+          16,
+          0,
+          16,
+          0,
+          "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+          30000,
+          3000000
+        ],
+        "getExpectedNextSequenceNumber": 2,
+        "getNopFeesJuels": "28708080723279580",
+        "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
+        "linkAvailableForPayment": "-28708080723279580",
+        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "staticConfigAddresses": [
+          "0x0000000000000000000000000000000000000000",
+          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        ],
+        "staticConfigChains": ["5009297550715157269", "7264351850409363825"],
+        "tokenAddresses": [],
+        "tokenPools": [],
+        "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       }
     },
     {
       "name": "CommitStore4",
       "address": "0x4af4B497c998007eF83ad130318eB2b925a79dc8",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701285563,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1180,
-        "getLatestPriceEpochAndRound": 377857,
+        "getExpectedNextSequenceNumber": 1221,
+        "getLatestPriceEpochAndRound": 851203,
         "getStaticConfig": [
           "5009297550715157269",
           "3734403246176062136",
@@ -1142,6 +1335,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x4C3aEe10334461F1f33c0A8843424de3F8fb7709",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1160,6 +1354,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x50f6631B377be52E132DF35a2F05eA54fda882ac",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1188,6 +1383,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x55562A08104837FF55E3A66c49A1419b6311c1E6",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1212,6 +1408,7 @@
     {
       "name": "OffRamp5",
       "address": "0x569940e02D4425eac61A7601632eC00d69f75c17",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1220,7 +1417,7 @@
         "commitStore": ["0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE"],
         "currentRateLimiterState": [
           "1000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "1000000000000000000000000",
           "277000000000000000000"
@@ -1260,6 +1457,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x57D3bb46aF4A9b210FAE046796013090D428475F",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1287,6 +1485,7 @@
     {
       "name": "OffRamp12",
       "address": "0x61135E701a2214C170c5F596D0067798FEfbaaE4",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1295,7 +1494,7 @@
         "commitStore": ["0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -1334,6 +1533,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x619ED9fE2E5CfD9FAE364E703b60eA776Bb5924E",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1373,6 +1573,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x69c24c970B65e22Ac26864aF10b2295B7d78f93A",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1395,6 +1596,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x6ce8b799002BbECc7df94c18BF150B3b0E4A28F4",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1417,6 +1619,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x6dDF2F3f93688dfc9d37DF7078982cE8E6494DB2",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1439,6 +1642,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x6Ff6BF3BF8af2e419DDC7BF038aFa5EB92b6cD7e",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1461,6 +1665,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x73aEB5ECA03Ad587B8Fdcc2B61f9fb4D2e3D90c1",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1481,14 +1686,15 @@
     {
       "name": "CommitStore",
       "address": "0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1717183043,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1,
-        "getLatestPriceEpochAndRound": 0,
+        "getExpectedNextSequenceNumber": 2,
+        "getLatestPriceEpochAndRound": 726275,
         "getStaticConfig": [
           "5009297550715157269",
           "7264351850409363825",
@@ -1516,6 +1722,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x78196436aF11b948c7036424B1ceA711fAdAd288",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1534,6 +1741,7 @@
     {
       "name": "CommitStore13",
       "address": "0x7986C9892389854cAAbAC785ff18123B0070a5Fd",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1570,6 +1778,7 @@
     {
       "name": "OffRamp3",
       "address": "0x7Afe7088aff57173565F4b034167643AA8b9171c",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1578,7 +1787,7 @@
         "commitStore": ["0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -1618,6 +1827,7 @@
     {
       "name": "Router",
       "address": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+      "template": "transporter/Router",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1653,7 +1863,8 @@
           "15971525489660198786": "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7",
           "5142893604156789321": "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4",
           "465200170687744372": "0xF538dA6c673A30338269655f4e019B71ba58CFd4",
-          "1346049177634351622": "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa"
+          "1346049177634351622": "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
+          "7264351850409363825": "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65"
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -1663,6 +1874,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x8272dbBA30f14900b22b4bfC8DB4E88B02bA413a",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1685,6 +1897,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0x8291a8E8dCF429e2FA7d032bF3E583ee959F3B06",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1709,8 +1922,17 @@
       }
     },
     {
+      "name": "CallProxy",
+      "address": "0x82b8A19497fA25575f250a3DcFfCD2562B575A2e",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689097595
+    },
+    {
       "name": "BurnMintTokenPool",
       "address": "0x8300e89e82A840176eb250EcDA0A7dBDb4a6B12D",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1729,6 +1951,7 @@
     {
       "name": "CommitStore",
       "address": "0x831097033C88c82a7F1897b168Aa88cC44540C8f",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1736,7 +1959,7 @@
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
         "getExpectedNextSequenceNumber": 6,
-        "getLatestPriceEpochAndRound": 375809,
+        "getLatestPriceEpochAndRound": 858369,
         "getStaticConfig": [
           "5009297550715157269",
           "1346049177634351622",
@@ -1764,6 +1987,7 @@
     {
       "name": "OnRamp1",
       "address": "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1771,7 +1995,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -1788,10 +2012,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 780,
-        "getNopFeesJuels": "593675744498469445",
+        "getExpectedNextSequenceNumber": 819,
+        "getNopFeesJuels": "2096923341109070027",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4745226274803959190",
+        "linkAvailableForPayment": "3241978678193358608",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1824,14 +2048,15 @@
     {
       "name": "CommitStore3",
       "address": "0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701457415,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1452,
-        "getLatestPriceEpochAndRound": 378881,
+        "getExpectedNextSequenceNumber": 1498,
+        "getLatestPriceEpochAndRound": 855043,
         "getStaticConfig": [
           "5009297550715157269",
           "11344663589394136015",
@@ -1875,6 +2100,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0x8BcD7e48Dd2104ed83eb1CE0c6E7610604AE9062",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1899,6 +2125,7 @@
     {
       "name": "CommitStore9",
       "address": "0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1935,6 +2162,7 @@
     {
       "name": "PriceRegistry",
       "address": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+      "template": "transporter/PriceRegistry",
       "upgradeability": {
         "type": "immutable"
       },
@@ -1964,14 +2192,15 @@
     {
       "name": "CommitStore6",
       "address": "0x8DC27D621c41a32140e22E2a4dAf1259639BAe04",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701287747,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 2266,
-        "getLatestPriceEpochAndRound": 377858,
+        "getExpectedNextSequenceNumber": 2370,
+        "getLatestPriceEpochAndRound": 852995,
         "getStaticConfig": [
           "5009297550715157269",
           "15971525489660198786",
@@ -2000,6 +2229,7 @@
     {
       "name": "OnRamp5",
       "address": "0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2007,7 +2237,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2024,10 +2254,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1559,
-        "getNopFeesJuels": "1843107376764494843",
+        "getExpectedNextSequenceNumber": 1620,
+        "getNopFeesJuels": "4888950046622692129",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "9288050172940952666",
+        "linkAvailableForPayment": "7447529005249397593",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2066,6 +2296,7 @@
     {
       "name": "OnRamp3",
       "address": "0x925228D7B82d883Dde340A55Fe8e6dA56244A22C",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2073,7 +2304,7 @@
       "values": {
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2090,10 +2321,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 2370,
-        "getNopFeesJuels": "2466765175847322885",
+        "getExpectedNextSequenceNumber": 2483,
+        "getNopFeesJuels": "10427634779787525200",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3372235031343134119",
+        "linkAvailableForPayment": "5763970765859523346",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2195,12 +2426,13 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "BetSwirl v2",
         "symbol": "BETS",
-        "totalSupply": "2560404381863915449432886135"
+        "totalSupply": "2561100099887476449432886135"
       }
     },
     {
       "name": "BurnMintTokenPool",
       "address": "0x9797E886EDe987AEf6A62885dFD6CcA885D828E6",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2227,14 +2459,15 @@
     {
       "name": "CommitStore8",
       "address": "0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701287831,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 1663,
-        "getLatestPriceEpochAndRound": 376066,
+        "getExpectedNextSequenceNumber": 1736,
+        "getLatestPriceEpochAndRound": 855299,
         "getStaticConfig": [
           "5009297550715157269",
           "4949039107694359620",
@@ -2263,6 +2496,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xa008534BF96b61d9D33aD64aAD463bc6D300cd91",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2283,6 +2517,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0xa17698199466E71bAFC31F226db341B7840701E7",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2301,6 +2536,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xa370CEcd451ecf15c2A01ec47762E967dF7574DA",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2323,6 +2559,7 @@
     {
       "name": "USDCTokenPool",
       "address": "0xA81f4AB595dE5C14759245DE5ce9899D380FeFda",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2358,6 +2595,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xA82A87a9b6550e89dd8a7C8a1E3e421974eaf858",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2378,8 +2616,118 @@
       }
     },
     {
+      "name": "ManyChainMultiSig",
+      "address": "0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689394931,
+      "values": {
+        "getConfig": [
+          [
+            ["0x06e5891D9b2Ee77740355A309BAF49caaB672f98", 0, 1],
+            ["0x0c44E75A018d846C12CDcFFcD15C34aC0bd7eB60", 1, 1],
+            ["0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC", 2, 1],
+            ["0x2E3f1E5A392366975A99744f95d06C28225b1e32", 3, 1],
+            ["0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C", 4, 1],
+            ["0xa2E004594939e2Dd4cBb680536576f6d5B435077", 5, 1],
+            ["0xAf8553D478235210bea964AE1900C068753b1799", 6, 1],
+            ["0xF081825b65C366D2bD3Ee7ebC28a66C76474cdEA", 7, 1]
+          ],
+          [
+            1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ],
+          [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        ],
+        "getOpCount": 0,
+        "getRoot": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          0
+        ],
+        "getRootMetadata": [
+          0,
+          "0x0000000000000000000000000000000000000000",
+          0,
+          0,
+          false
+        ],
+        "MAX_NUM_SIGNERS": 200,
+        "NUM_GROUPS": 32,
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ManyChainMultiSig",
+      "address": "0xAD97C0270a243270136E40278155C12ce7C7F87B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689096875,
+      "values": {
+        "getConfig": [
+          [
+            ["0x180159135c9b93C59d16eA1A690e465D22c5EB67", 0, 6],
+            ["0x2b73763722378AB2013CB0877946f69fC3727Fd8", 1, 5],
+            ["0x2B88575011C5E11389ddB50D28d31C7d06B352A0", 2, 1],
+            ["0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6", 3, 1],
+            ["0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3", 4, 4],
+            ["0x43640F208956c7D49e04F40FF95dF818643B76aA", 5, 1],
+            ["0x48A094F7A354d8faD7263EA2a82391d105DF6628", 6, 4],
+            ["0x4e509C60b3e916644dE441298595FeD12C4AC926", 7, 1],
+            ["0x570F41d83b1031d382F641B9a532A8D7CBd7a695", 8, 1],
+            ["0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6", 9, 3],
+            ["0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8", 10, 3],
+            ["0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7", 11, 1],
+            ["0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae", 12, 1],
+            ["0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5", 13, 7],
+            ["0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0", 14, 2],
+            ["0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374", 15, 6],
+            ["0x9079410666ED02725ee9d148398Cee26397c2A36", 16, 1],
+            ["0x925d7Ea0ADe586DBFd56a942bb297286cE428C79", 17, 1],
+            ["0x9453E18f03A36E2A2c70598De520bD24434D2d1D", 18, 7],
+            ["0xA3177f64efE98422E782bC17BE7971F01187B7cF", 19, 1],
+            ["0xa35B7219521134cAF52DccAD44d604335b64a4fB", 20, 5],
+            ["0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a", 21, 2],
+            ["0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7", 22, 6],
+            ["0xd3094f770579AFd66711847cE9E9C42D10BA2264", 23, 5],
+            ["0xd3E2da792E806556517124f03F12e557045951E7", 24, 7]
+          ],
+          [
+            1, 6, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ],
+          [
+            0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        ],
+        "getOpCount": 0,
+        "getRoot": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          0
+        ],
+        "getRootMetadata": [
+          1,
+          "0xAD97C0270a243270136E40278155C12ce7C7F87B",
+          0,
+          0,
+          true
+        ],
+        "MAX_NUM_SIGNERS": 200,
+        "NUM_GROUPS": 32,
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
       "name": "OffRamp4",
       "address": "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2388,7 +2736,7 @@
         "commitStore": ["0x4af4B497c998007eF83ad130318eB2b925a79dc8"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -2428,6 +2776,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xb854536206EB6C1013b1642b576196E5EF19D7BA",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2466,6 +2815,7 @@
     {
       "name": "OffRamp11",
       "address": "0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2474,7 +2824,7 @@
         "commitStore": ["0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2513,6 +2863,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0xBF7cb652A2d5ed3BFc3832Ef8Af33Ffb0cDc0982",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2531,6 +2882,8 @@
     {
       "name": "GnosisSafe",
       "address": "0xc07556a0Bd177F8de4D077f449C2653A072F3798",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -2559,6 +2912,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2571,12 +2925,15 @@
         "getOffRamps": [
           "0xfF51C00546AA3d9051a4B96Ae81346E14709CD24",
           "0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5",
-          "0xdf85c8381954694E74abD07488f452b4c2Cddfb3"
+          "0xdf85c8381954694E74abD07488f452b4c2Cddfb3",
+          "0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46",
+          "0xE8af3b68eDfFf65Ce48648009982380701f09B92"
         ],
         "getOnRamps": [
           "0xe2Eb229e88F56691e96bb98256707Bc62160FE73",
           "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4",
-          "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7"
+          "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7",
+          "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa"
         ],
         "getToken": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
@@ -2585,6 +2942,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xc43c01026128Aa758A65D12dB6a72CE4DD778dF2",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2628,6 +2986,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0xc62c311FE64abf19CF33195e15c188Ca6d1AaD3e",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2652,6 +3011,7 @@
     {
       "name": "OffRamp13",
       "address": "0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2660,7 +3020,7 @@
         "commitStore": ["0x7986C9892389854cAAbAC785ff18123B0070a5Fd"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -2699,6 +3059,7 @@
     {
       "name": "OnRamp7",
       "address": "0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2706,7 +3067,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2723,10 +3084,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 1190,
-        "getNopFeesJuels": "500808696856894324",
+        "getExpectedNextSequenceNumber": 1228,
+        "getNopFeesJuels": "1781691736499577827",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4902553613554075986",
+        "linkAvailableForPayment": "3621670573911392483",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2751,6 +3112,7 @@
     {
       "name": "OnRamp9",
       "address": "0xCC19bC4D43d17eB6859F0d22BA300967C97780b0",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2758,7 +3120,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -2792,6 +3154,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0xcd196D3905AfA0eCB4e0e62C2D7d6c52f9C73526",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2819,6 +3182,7 @@
     {
       "name": "OnRamp10",
       "address": "0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2826,7 +3190,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -2860,6 +3224,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xd1b3015ceFCAC84dB3EFCBB18FBdd50BA5aF49DE",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2882,14 +3247,15 @@
     {
       "name": "CommitStore7",
       "address": "0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76",
+      "template": "transporter/CommitStore",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1701286319,
       "values": {
         "getDynamicConfig": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
-        "getExpectedNextSequenceNumber": 628,
-        "getLatestPriceEpochAndRound": 374017,
+        "getExpectedNextSequenceNumber": 665,
+        "getLatestPriceEpochAndRound": 857603,
         "getStaticConfig": [
           "5009297550715157269",
           "4051577828743386545",
@@ -2918,6 +3284,7 @@
     {
       "name": "EVM2EVMOffRamp",
       "address": "0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2926,7 +3293,7 @@
         "commitStore": ["0x831097033C88c82a7F1897b168Aa88cC44540C8f"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -2963,8 +3330,44 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0",
+        "modules": [],
+        "threshold": "6 of 12 (50%)"
+      },
+      "implementations": ["0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0"],
+      "sinceTimestamp": 1689260771,
+      "values": {
+        "domainSeparator": "0x4b48316c8545b9cd2ebf3323a3bb90dbc01a898080a791d95fd4f02d8b0660c5",
+        "getChainId": 1,
+        "getOwners": [
+          "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
+          "0x7052cB84079905400ea52B635cAb6a275fDA8823",
+          "0xE062e7D123AC8dF480C56147f911144F55C10f88",
+          "0x41eAdbc688797a02bfaBE48472995833489ce69D",
+          "0x1c6460cfe32916196f6977b5442b0F98A826D880",
+          "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
+          "0xAe735fd5e74887064DFf99C637f291caE5485A75",
+          "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC",
+          "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+          "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
+          "0x06e5891D9b2Ee77740355A309BAF49caaB672f98",
+          "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
+        ],
+        "getThreshold": 6,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "LockReleaseTokenPool",
       "address": "0xdCa0A2341ed5438E06B9982243808A76B9ADD6d0",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2991,6 +3394,7 @@
     {
       "name": "OnRamp13",
       "address": "0xdF1d7FD22aC3aB5171E275796f123224039f3b24",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -2998,7 +3402,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3032,6 +3436,7 @@
     {
       "name": "OffRamp6",
       "address": "0xdf85c8381954694E74abD07488f452b4c2Cddfb3",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3040,7 +3445,7 @@
         "commitStore": ["0x8DC27D621c41a32140e22E2a4dAf1259639BAe04"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3080,6 +3485,7 @@
     {
       "name": "OnRamp6",
       "address": "0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3087,7 +3493,7 @@
       "values": {
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3104,10 +3510,10 @@
           30000,
           3000000
         ],
-        "getExpectedNextSequenceNumber": 3652,
-        "getNopFeesJuels": "3494018689037061214",
+        "getExpectedNextSequenceNumber": 3866,
+        "getNopFeesJuels": "10149343943013244662",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8226132760935440922",
+        "linkAvailableForPayment": "2212708908298677572",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3160,6 +3566,7 @@
     {
       "name": "OnRamp14",
       "address": "0xe2Eb229e88F56691e96bb98256707Bc62160FE73",
+      "template": "transporter/OnRampV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3167,7 +3574,7 @@
       "values": {
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -3219,6 +3626,7 @@
     {
       "name": "LockReleaseTokenPool",
       "address": "0xE2F0dad85D504aa046b9F704a426fD6C5493e366",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3239,8 +3647,62 @@
       }
     },
     {
+      "name": "ManyChainMultiSig",
+      "address": "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689096911,
+      "values": {
+        "getConfig": [
+          [
+            ["0x06e5891D9b2Ee77740355A309BAF49caaB672f98", 0, 4],
+            ["0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC", 1, 4],
+            ["0x1c6460cfe32916196f6977b5442b0F98A826D880", 2, 2],
+            ["0x20a446033409CeB9c541A89b2B4F114d79Aa1840", 3, 3],
+            ["0x41eAdbc688797a02bfaBE48472995833489ce69D", 4, 1],
+            ["0x480496c0884D61F2f56707Adb11697F8018898c2", 5, 1],
+            ["0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd", 6, 4],
+            ["0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4", 7, 4],
+            ["0x7052cB84079905400ea52B635cAb6a275fDA8823", 8, 1],
+            ["0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6", 9, 3],
+            ["0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514", 10, 2],
+            ["0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429", 11, 3],
+            ["0xa42c8570771240D1e2F3211064a7C7472Cc05b7D", 12, 4],
+            ["0xAe735fd5e74887064DFf99C637f291caE5485A75", 13, 2],
+            ["0xE062e7D123AC8dF480C56147f911144F55C10f88", 14, 3]
+          ],
+          [
+            3, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ],
+          [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+          ]
+        ],
+        "getOpCount": 767,
+        "getRoot": [
+          "0xfa9de5d1663d87e81d872dd46bde2c481d4b9a898e11cadd06ceb7b57ced0438",
+          1718291524
+        ],
+        "getRootMetadata": [
+          1,
+          "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
+          764,
+          767,
+          false
+        ],
+        "MAX_NUM_SIGNERS": 200,
+        "NUM_GROUPS": 32,
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
       "name": "Router2",
       "address": "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
+      "template": "transporter/RouterV2",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3266,6 +3728,7 @@
     {
       "name": "EVM2EVMOffRamp",
       "address": "0xE8af3b68eDfFf65Ce48648009982380701f09B92",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3274,7 +3737,7 @@
         "commitStore": ["0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e"],
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3313,6 +3776,7 @@
     {
       "name": "OffRamp2",
       "address": "0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3321,7 +3785,7 @@
         "commitStore": ["0x118a9389960F86390A4F14ce4C95D6ff076C6bFC"],
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3361,6 +3825,7 @@
     {
       "name": "BurnMintTokenPool",
       "address": "0xeaE89E53B8317CaB04165F5323285252D5669B73",
+      "template": "transporter/TokenPool",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3379,6 +3844,7 @@
     {
       "name": "EVM2EVMOnRamp",
       "address": "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3386,7 +3852,7 @@
       "values": {
         "currentRateLimiterState": [
           "2000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "2000000000000000000000000",
           "555550000000000000000"
@@ -3414,14 +3880,15 @@
           "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         ],
         "staticConfigChains": ["5009297550715157269", "1346049177634351622"],
-        "tokenAddresses": [],
-        "tokenPools": [],
+        "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
       }
     },
     {
       "name": "OffRamp8",
       "address": "0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3430,7 +3897,7 @@
         "commitStore": ["0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749"],
         "currentRateLimiterState": [
           "5000000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "5000000000000000000000000",
           "1389000000000000000000"
@@ -3505,6 +3972,7 @@
     {
       "name": "OnRamp8",
       "address": "0xF538dA6c673A30338269655f4e019B71ba58CFd4",
+      "template": "transporter/OnRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3512,7 +3980,7 @@
       "values": {
         "currentRateLimiterState": [
           "100000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "100000000000000000000000",
           "167000000000000000000"
@@ -3561,6 +4029,7 @@
     {
       "name": "OffRamp14",
       "address": "0xfF51C00546AA3d9051a4B96Ae81346E14709CD24",
+      "template": "transporter/OffRamp",
       "upgradeability": {
         "type": "immutable"
       },
@@ -3569,7 +4038,7 @@
         "commitStore": ["0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77"],
         "currentRateLimiterState": [
           "600000000000000000000000",
-          1717596059,
+          1718100575,
           true,
           "600000000000000000000000",
           "167000000000000000000"
@@ -3619,48 +4088,96 @@
     "0x0000000000000000000000000000000000000001",
     "0x01430Aa44F14007c8d5Ddc011FA63dCcE7878dC8",
     "0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85",
+    "0x06e5891D9b2Ee77740355A309BAF49caaB672f98",
     "0x0Bf40b034872D0b364f3DCec04C7434a4Da1C8d9",
+    "0x0c44E75A018d846C12CDcFFcD15C34aC0bd7eB60",
     "0x0F246651F1c2275B4E14d8ae166D1fd3Af05c405",
+    "0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC",
     "0x162A8E51E69D72a4bA462220aE9A2E94e44d753F",
+    "0x180159135c9b93C59d16eA1A690e465D22c5EB67",
     "0x190bcE84CF2d500B878966F4Cf98a50d78f2675E",
     "0x1c6460cfe32916196f6977b5442b0F98A826D880",
     "0x1f17D464652f5Bd74a03446FeA20590CCfB3332D",
+    "0x20a446033409CeB9c541A89b2B4F114d79Aa1840",
+    "0x21Ac2a1d6ee437FB11a6F1933C5D1d22c714B922",
     "0x27C96A8a2f70a8408aD6c620717a3bDaA54bb10b",
+    "0x2b73763722378AB2013CB0877946f69fC3727Fd8",
+    "0x2B88575011C5E11389ddB50D28d31C7d06B352A0",
+    "0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6",
+    "0x2E3f1E5A392366975A99744f95d06C28225b1e32",
     "0x31e16F375531F8d77E027ff935e1114eD62D797b",
+    "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
     "0x358a85e032aA9507a1303683b2B6A1d1cac3c252",
+    "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
     "0x3D3817270db2b89e9F68bA27297fb4672082f942",
     "0x41eAdbc688797a02bfaBE48472995833489ce69D",
+    "0x43640F208956c7D49e04F40FF95dF818643B76aA",
+    "0x480496c0884D61F2f56707Adb11697F8018898c2",
+    "0x48A094F7A354d8faD7263EA2a82391d105DF6628",
     "0x4aA5bF962852DcC59695F600d346D3F751B0D920",
+    "0x4e509C60b3e916644dE441298595FeD12C4AC926",
     "0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88",
     "0x55183Db1d2aE0b63e4c92A64bEF2CBfc2032B127",
+    "0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd",
+    "0x570F41d83b1031d382F641B9a532A8D7CBd7a695",
     "0x5A5A8C7E8448484Cf3458d7f426876E79c529f41",
     "0x5aC189Db4351787516d2E6Fc628BF762ce684326",
+    "0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
+    "0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8",
     "0x65cBcdbE95567A8F9519242f9C52F65E8067021B",
+    "0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7",
     "0x6b0b72E63764101Fc4d5BD914B107987041578C4",
+    "0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
+    "0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+    "0x6F9dc914D7E124FF68c8618CC3C00b17B15F9b4C",
     "0x6Fa60A88b42AFb0aEe6488826A58864B192442ad",
     "0x7052cB84079905400ea52B635cAb6a275fDA8823",
+    "0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
+    "0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6",
     "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
     "0x7A0a06735E41dc59F90228686f44bf2E13CC1724",
+    "0x7AF3C2b54eE2f170b8104222eB4EDf2511f5d9d0",
+    "0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
+    "0x803CBD1e4d722eCf8247c6c9CDab4fC87DBAf429",
     "0x817ae4109dC0f21E437b94c899962690514Ba09f",
     "0x8a9A13A106cB89E15410B2AB4488135155032169",
+    "0x9079410666ED02725ee9d148398Cee26397c2A36",
+    "0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
+    "0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
     "0x96D16c491aDA31f609eC72Ae33018b8B7e80EB41",
     "0x98dd9E9b8AE458225119Ab5B8c947A9d1cd0B648",
+    "0x9d0D65cd6e46B86f88fF021d8f5EE58fe8ce2882",
+    "0x9E318D85D42F7e5b8B4fb2fB2d706C4c04D1549e",
+    "0xa2E004594939e2Dd4cBb680536576f6d5B435077",
+    "0xA3177f64efE98422E782bC17BE7971F01187B7cF",
+    "0xa35B7219521134cAF52DccAD44d604335b64a4fB",
+    "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
+    "0xA4dBFFb1da5a05F715c822FCD262dB3E0031f00a",
+    "0xA8030F40032E88552519EDFc448523d677B29661",
     "0xad1b1F2A6DD55627e3893B771A00Cd43F69DcE35",
     "0xAE0e486Fa6577188d586A8e4c12360FB82E2a386",
     "0xAe735fd5e74887064DFf99C637f291caE5485A75",
+    "0xAf8553D478235210bea964AE1900C068753b1799",
     "0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
     "0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2",
     "0xbD5F9C193a7fEF5D578C55Ddfe4d08d6BCc15648",
     "0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581",
+    "0xC19Beb494BA0bC57e5F967706A24bAFb6Da7BCD7",
     "0xc809b0216B149cc301Cb203EDD84FCdB8F15C4ed",
+    "0xc90788d9168f83dec518Ab7c0445Ad1Ec53554D7",
     "0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386",
     "0xCe11020D56e5FDbfE46D9FC3021641FfbBB5AdEE",
     "0xD0701FcC7818c31935331B02Eb21e91eC71a1704",
+    "0xd3094f770579AFd66711847cE9E9C42D10BA2264",
+    "0xd3E2da792E806556517124f03F12e557045951E7",
     "0xD44371bFDe87f2db3eA6Df242091351A06c2e181",
+    "0xd844665361adBa29CD1259ebDe9b547ECe2ab0E7",
     "0xDEA286dc0E01Cb4755650A6CF8d1076b454eA1cb",
     "0xE062e7D123AC8dF480C56147f911144F55C10f88",
     "0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771",
     "0xE2fEfe09E74b921CbbFF229E7cD40009231501CA",
+    "0xECDd1737E54530D7b05Ad309B9B365CDc0084FD0",
+    "0xF081825b65C366D2bD3Ee7ebC28a66C76474cdEA",
     "0xFd77c53AA4eF0E3C01f5Ac012BF7Cc7A3ECf5168"
   ],
   "abis": {
@@ -4245,6 +4762,49 @@
       "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
+    ],
+    "0x117ec8aD107976e1dBCc21717ff78407Bc36aADc": [
+      "error CallReverted(bytes error)",
+      "error GroupTreeNotWellFormed()",
+      "error InsufficientSigners()",
+      "error InvalidSigner()",
+      "error MissingConfig()",
+      "error OutOfBoundsGroup()",
+      "error OutOfBoundsGroupQuorum()",
+      "error OutOfBoundsNumOfSigners()",
+      "error PendingOps()",
+      "error PostOpCountReached()",
+      "error ProofCannotBeVerified()",
+      "error RootExpired()",
+      "error SignedHashAlreadySeen()",
+      "error SignerGroupsLengthMismatch()",
+      "error SignerInDisabledGroup()",
+      "error SignersAddressesMustBeStrictlyIncreasing()",
+      "error ValidUntilHasAlreadyPassed()",
+      "error WrongChainId()",
+      "error WrongMultiSig()",
+      "error WrongNonce()",
+      "error WrongPostOpCount()",
+      "error WrongPreOpCount()",
+      "event ConfigSet(tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents) config, bool isRootCleared)",
+      "event NewRoot(bytes32 indexed root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata)",
+      "event OpExecuted(uint40 indexed nonce, address to, bytes data, uint256 value)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function MAX_NUM_SIGNERS() view returns (uint8)",
+      "function NUM_GROUPS() view returns (uint8)",
+      "function acceptOwnership()",
+      "function execute(tuple(uint256 chainId, address multiSig, uint40 nonce, address to, uint256 value, bytes data) op, bytes32[] proof)",
+      "function getConfig() view returns (tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents))",
+      "function getOpCount() view returns (uint40)",
+      "function getRoot() view returns (bytes32 root, uint32 validUntil)",
+      "function getRootMetadata() view returns (tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot))",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setConfig(address[] signerAddresses, uint8[] signerGroups, uint8[32] groupQuorums, uint8[32] groupParents, bool clearRoot)",
+      "function setRoot(bytes32 root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata, bytes32[] metadataProof, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures)",
+      "function transferOwnership(address newOwner)"
     ],
     "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address armProxy) staticConfig)",
@@ -4865,6 +5425,55 @@
       "function setOnRampRateLimiterConfig(address onRamp, tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
       "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
       "function transferOwnership(address to)"
+    ],
+    "0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B": [
       "error CallReverted(bytes error)",
@@ -5578,6 +6187,83 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unblockFunctionSelector(bytes4 selector)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65": [
+      "constructor(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig, tuple(address token, address pool)[] tokensAndPools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig, tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeTokenConfigs, tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] tokenTransferFeeConfigArgs, tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error BadARMSignal()",
+      "error BucketOverfilled()",
+      "error CannotSendZeroTokens()",
+      "error InsufficientBalance()",
+      "error InvalidAddress(bytes encodedAddress)",
+      "error InvalidChainSelector(uint64 chainSelector)",
+      "error InvalidConfig()",
+      "error InvalidExtraArgsTag()",
+      "error InvalidNopAddress(address nop)",
+      "error InvalidTokenPoolConfig()",
+      "error InvalidWithdrawParams()",
+      "error LinkBalanceNotSettled()",
+      "error MaxFeeBalanceReached()",
+      "error MessageGasLimitTooHigh()",
+      "error MessageTooLarge(uint256 maxSize, uint256 actualSize)",
+      "error MustBeCalledByRouter()",
+      "error NoFeesToPay()",
+      "error NoNopsToPay()",
+      "error NotAFeeToken(address token)",
+      "error OnlyCallableByAdminOrOwner()",
+      "error OnlyCallableByOwnerOrAdmin()",
+      "error OnlyCallableByOwnerOrAdminOrNop()",
+      "error PoolAlreadyAdded()",
+      "error PoolDoesNotExist(address token)",
+      "error PriceNotFoundForToken(address token)",
+      "error RouterMustSetOriginalSender()",
+      "error SourceTokenDataTooLarge(address token)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenPoolMismatch()",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error TooManyNops()",
+      "error UnsupportedNumberOfTokens()",
+      "error UnsupportedToken(address token)",
+      "event AdminSet(address newAdmin)",
+      "event CCIPSendRequested(tuple(uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId) message)",
+      "event ConfigSet(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "event FeeConfigSet(tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeConfig)",
+      "event NopPaid(address indexed nop, uint256 amount)",
+      "event NopsSet(uint256 nopWeightsTotal, tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event PoolAdded(address token, address pool)",
+      "event PoolRemoved(address token, address pool)",
+      "event TokenTransferFeeConfigSet(tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] transferFeeConfig)",
+      "function acceptOwnership()",
+      "function applyPoolUpdates(tuple(address token, address pool)[] removes, tuple(address token, address pool)[] adds)",
+      "function currentRateLimiterState() view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function forwardFromRouter(uint64 destChainSelector, tuple(bytes receiver, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, address feeToken, bytes extraArgs) message, uint256 feeTokenAmount, address originalSender) returns (bytes32)",
+      "function getDynamicConfig() view returns (tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "function getExpectedNextSequenceNumber() view returns (uint64)",
+      "function getFee(uint64 destChainSelector, tuple(bytes receiver, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, address feeToken, bytes extraArgs) message) view returns (uint256 feeTokenAmount)",
+      "function getFeeTokenConfig(address token) view returns (tuple(uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled) feeTokenConfig)",
+      "function getNopFeesJuels() view returns (uint96)",
+      "function getNops() view returns (tuple(address nop, uint16 weight)[] nopsAndWeights, uint256 weightsTotal)",
+      "function getPoolBySourceToken(uint64, address sourceToken) view returns (address)",
+      "function getSenderNonce(address sender) view returns (uint64)",
+      "function getStaticConfig() view returns (tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy))",
+      "function getSupportedTokens(uint64) view returns (address[])",
+      "function getTokenLimitAdmin() view returns (address)",
+      "function getTokenTransferFeeConfig(address token) view returns (tuple(uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead) tokenTransferFeeConfig)",
+      "function linkAvailableForPayment() view returns (int256)",
+      "function owner() view returns (address)",
+      "function payNops()",
+      "function setAdmin(address newAdmin)",
+      "function setDynamicConfig(tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "function setFeeTokenConfig(tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeTokenConfigArgs)",
+      "function setNops(tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "function setRateLimiterConfig(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "function setTokenTransferFeeConfig(tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] tokenTransferFeeConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)",
+      "function withdrawNonLinkFees(address feeToken, address to)"
     ],
     "0x4af4B497c998007eF83ad130318eB2b925a79dc8": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address armProxy) staticConfig)",
@@ -6802,6 +7488,9 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
+    "0x82b8A19497fA25575f250a3DcFfCD2562B575A2e": [
+      "constructor(address target)"
+    ],
     "0x8300e89e82A840176eb250EcDA0A7dBDb4a6B12D": [
       "constructor(address token, address[] allowlist, address armProxy, address router)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -7877,6 +8566,92 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)",
       "function withdrawLiquidity(uint256 amount)"
+    ],
+    "0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF": [
+      "error CallReverted(bytes error)",
+      "error GroupTreeNotWellFormed()",
+      "error InsufficientSigners()",
+      "error InvalidSigner()",
+      "error MissingConfig()",
+      "error OutOfBoundsGroup()",
+      "error OutOfBoundsGroupQuorum()",
+      "error OutOfBoundsNumOfSigners()",
+      "error PendingOps()",
+      "error PostOpCountReached()",
+      "error ProofCannotBeVerified()",
+      "error RootExpired()",
+      "error SignedHashAlreadySeen()",
+      "error SignerGroupsLengthMismatch()",
+      "error SignerInDisabledGroup()",
+      "error SignersAddressesMustBeStrictlyIncreasing()",
+      "error ValidUntilHasAlreadyPassed()",
+      "error WrongChainId()",
+      "error WrongMultiSig()",
+      "error WrongNonce()",
+      "error WrongPostOpCount()",
+      "error WrongPreOpCount()",
+      "event ConfigSet(tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents) config, bool isRootCleared)",
+      "event NewRoot(bytes32 indexed root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata)",
+      "event OpExecuted(uint40 indexed nonce, address to, bytes data, uint256 value)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function MAX_NUM_SIGNERS() view returns (uint8)",
+      "function NUM_GROUPS() view returns (uint8)",
+      "function acceptOwnership()",
+      "function execute(tuple(uint256 chainId, address multiSig, uint40 nonce, address to, uint256 value, bytes data) op, bytes32[] proof)",
+      "function getConfig() view returns (tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents))",
+      "function getOpCount() view returns (uint40)",
+      "function getRoot() view returns (bytes32 root, uint32 validUntil)",
+      "function getRootMetadata() view returns (tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot))",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setConfig(address[] signerAddresses, uint8[] signerGroups, uint8[32] groupQuorums, uint8[32] groupParents, bool clearRoot)",
+      "function setRoot(bytes32 root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata, bytes32[] metadataProof, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0xAD97C0270a243270136E40278155C12ce7C7F87B": [
+      "error CallReverted(bytes error)",
+      "error GroupTreeNotWellFormed()",
+      "error InsufficientSigners()",
+      "error InvalidSigner()",
+      "error MissingConfig()",
+      "error OutOfBoundsGroup()",
+      "error OutOfBoundsGroupQuorum()",
+      "error OutOfBoundsNumOfSigners()",
+      "error PendingOps()",
+      "error PostOpCountReached()",
+      "error ProofCannotBeVerified()",
+      "error RootExpired()",
+      "error SignedHashAlreadySeen()",
+      "error SignerGroupsLengthMismatch()",
+      "error SignerInDisabledGroup()",
+      "error SignersAddressesMustBeStrictlyIncreasing()",
+      "error ValidUntilHasAlreadyPassed()",
+      "error WrongChainId()",
+      "error WrongMultiSig()",
+      "error WrongNonce()",
+      "error WrongPostOpCount()",
+      "error WrongPreOpCount()",
+      "event ConfigSet(tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents) config, bool isRootCleared)",
+      "event NewRoot(bytes32 indexed root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata)",
+      "event OpExecuted(uint40 indexed nonce, address to, bytes data, uint256 value)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function MAX_NUM_SIGNERS() view returns (uint8)",
+      "function NUM_GROUPS() view returns (uint8)",
+      "function acceptOwnership()",
+      "function execute(tuple(uint256 chainId, address multiSig, uint40 nonce, address to, uint256 value, bytes data) op, bytes32[] proof)",
+      "function getConfig() view returns (tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents))",
+      "function getOpCount() view returns (uint40)",
+      "function getRoot() view returns (bytes32 root, uint32 validUntil)",
+      "function getRootMetadata() view returns (tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot))",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setConfig(address[] signerAddresses, uint8[] signerGroups, uint8[32] groupQuorums, uint8[32] groupParents, bool clearRoot)",
+      "function setRoot(bytes32 root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata, bytes32[] metadataProof, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7": [
       "constructor(tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address armProxy) staticConfig, address[] sourceTokens, address[] pools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
@@ -8961,6 +9736,9 @@
       "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32)",
       "function typeAndVersion() view returns (string)"
     ],
+    "0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf": [
+      "constructor(address _singleton)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -9453,6 +10231,49 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)",
       "function withdrawLiquidity(uint256 amount)"
+    ],
+    "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F": [
+      "error CallReverted(bytes error)",
+      "error GroupTreeNotWellFormed()",
+      "error InsufficientSigners()",
+      "error InvalidSigner()",
+      "error MissingConfig()",
+      "error OutOfBoundsGroup()",
+      "error OutOfBoundsGroupQuorum()",
+      "error OutOfBoundsNumOfSigners()",
+      "error PendingOps()",
+      "error PostOpCountReached()",
+      "error ProofCannotBeVerified()",
+      "error RootExpired()",
+      "error SignedHashAlreadySeen()",
+      "error SignerGroupsLengthMismatch()",
+      "error SignerInDisabledGroup()",
+      "error SignersAddressesMustBeStrictlyIncreasing()",
+      "error ValidUntilHasAlreadyPassed()",
+      "error WrongChainId()",
+      "error WrongMultiSig()",
+      "error WrongNonce()",
+      "error WrongPostOpCount()",
+      "error WrongPreOpCount()",
+      "event ConfigSet(tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents) config, bool isRootCleared)",
+      "event NewRoot(bytes32 indexed root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata)",
+      "event OpExecuted(uint40 indexed nonce, address to, bytes data, uint256 value)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function MAX_NUM_SIGNERS() view returns (uint8)",
+      "function NUM_GROUPS() view returns (uint8)",
+      "function acceptOwnership()",
+      "function execute(tuple(uint256 chainId, address multiSig, uint40 nonce, address to, uint256 value, bytes data) op, bytes32[] proof)",
+      "function getConfig() view returns (tuple(tuple(address addr, uint8 index, uint8 group)[] signers, uint8[32] groupQuorums, uint8[32] groupParents))",
+      "function getOpCount() view returns (uint40)",
+      "function getRoot() view returns (bytes32 root, uint32 validUntil)",
+      "function getRootMetadata() view returns (tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot))",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setConfig(address[] signerAddresses, uint8[] signerGroups, uint8[32] groupQuorums, uint8[32] groupParents, bool clearRoot)",
+      "function setRoot(bytes32 root, uint32 validUntil, tuple(uint256 chainId, address multiSig, uint40 preOpCount, uint40 postOpCount, bool overridePreviousRoot) metadata, bytes32[] metadataProof, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xE561d5E02207fb5eB32cca20a699E0d8919a1476": [
       "constructor(address wrappedNative, address armProxy)",

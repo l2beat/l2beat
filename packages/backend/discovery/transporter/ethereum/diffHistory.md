@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x796546b92ade5e1d6b27c87e0fd4de3ec8ed5b64
+Generated with discovered.json: 0x9443180ce87f12b0dbecaa84bc63318c33f6867f
 
-# Diff at Wed, 05 Jun 2024 14:01:22 GMT:
+# Diff at Tue, 11 Jun 2024 10:09:59 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 20026089
+- current block number: 20067895
 
 ## Description
 
@@ -68,6 +68,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract BurnMintTokenPool (0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ManyChainMultiSig (0x117ec8aD107976e1dBCc21717ff78407Bc36aADc)
     +++ description: None
 ```
 
@@ -211,6 +217,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract EVM2EVMOnRamp (0x466a078d17e3706a9414ACc48029EE9Bae4C9b65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8)
     +++ description: None
 ```
@@ -337,6 +349,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract CallProxy (0x82b8A19497fA25575f250a3DcFfCD2562B575A2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract BurnMintTokenPool (0x8300e89e82A840176eb250EcDA0A7dBDb4a6B12D)
     +++ description: None
 ```
@@ -451,6 +469,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract ManyChainMultiSig (0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ManyChainMultiSig (0xAD97C0270a243270136E40278155C12ce7C7F87B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OffRamp4 (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7)
     +++ description: None
 ```
@@ -559,6 +589,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract GnosisSafe (0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract LockReleaseTokenPool (0xdCa0A2341ed5438E06B9982243808A76B9ADD6d0)
     +++ description: None
 ```
@@ -590,6 +626,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LockReleaseTokenPool (0xE2F0dad85D504aa046b9F704a426fD6C5493e366)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ManyChainMultiSig (0xE53289F32c8E690b7173aA33affE9B6B0CB0012F)
     +++ description: None
 ```
 
