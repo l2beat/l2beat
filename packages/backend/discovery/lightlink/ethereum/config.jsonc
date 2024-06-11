@@ -64,6 +64,7 @@
         "chain", // too many values
         "getHeaderByNum" // too many values
       ],
+      "ignoreInWatchMode": ["chainHead", "getHead"],
       "fields": {
         "proxiableUUID": {
           "handler": {
