@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { RootIndexer } from '@l2beat/uif'
+import { Gauge } from 'prom-client'
 
-import { Clock } from '../../tools/Clock'
+import { Clock } from '../../../tools/Clock'
 
 export class HourlyIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly module?: string,
   ) {
     super(logger)
   }
@@ -21,7 +21,13 @@ export class HourlyIndexer extends RootIndexer {
 
   tick(): Promise<number> {
     const time = this.clock.getLastHour().toNumber()
+    targetTimestamp.set(time)
 
     return Promise.resolve(time)
   }
 }
+
+const targetTimestamp = new Gauge({
+  name: 'tvl_target_timestamp',
+  help: 'Value showing the target timestamp of the system',
+})
