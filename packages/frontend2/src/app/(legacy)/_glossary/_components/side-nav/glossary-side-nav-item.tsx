@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { type CollectionEntry } from '~/content/getCollection'
+import { type CollectionEntry } from '~/content/get-collection'
 import ChiliIcon from '~/icons/chili.svg'
 import { cn } from '~/utils/cn'
 
