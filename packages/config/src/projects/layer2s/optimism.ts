@@ -7,7 +7,6 @@ import {
 
 import { ContractParameters } from '@l2beat/discovery-types'
 import {
-  CONTRACTS,
   DERIVATION,
   EXITS,
   MILESTONES,
@@ -55,6 +54,16 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 const maxClockDuration = discovery.getContractValue<number>(
   'FaultDisputeGame',
   'maxClockDuration',
+)
+
+const disputeGameFinalityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal',
+  'disputeGameFinalityDelaySeconds',
+)
+
+const proofMaturityDelaySeconds = discovery.getContractValue<number>(
+  'OptimismPortal',
+  'proofMaturityDelaySeconds',
 )
 
 const sequencerAddress = EthereumAddress(
@@ -334,11 +343,15 @@ export const optimism: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR(
-          'optimistic',
-          'merkle proof',
-          FINALIZATION_PERIOD_SECONDS, // TODO: decide whether to add the other delay
-        ),
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxClockDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
         references: [
           {
             text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
