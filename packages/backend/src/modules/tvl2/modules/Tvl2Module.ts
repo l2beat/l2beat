@@ -46,7 +46,7 @@ export function createTvl2Module(
 
   const idConverter = new IdConverter(config.tvl2.prices)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tvl')
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceModule = createPriceModule(
     config.tvl2,
