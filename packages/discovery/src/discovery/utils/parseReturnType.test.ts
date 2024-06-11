@@ -6,7 +6,7 @@ function BaseT(typeName: string): Type {
 }
 
 function ArrayT(length: number | 'dynamic', type: any): Type {
-  return { kind: 'array', length, type }
+  return { kind: 'array', length, childType: type }
 }
 
 function TupleT(elements: any[]): Type {

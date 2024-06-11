@@ -13,7 +13,7 @@ interface BaseType {
 interface ArrayType {
   kind: 'array'
   length: number | 'dynamic'
-  type: Type
+  childType: Type
 }
 
 interface TupleType {
@@ -24,7 +24,7 @@ interface TupleType {
   }[]
 }
 
-export function parseReturnType(returnType: string): Type {
+export function parseReturnType(returnType: string): TupleType {
   assert(
     returnType.startsWith('(') && returnType.endsWith(')'),
     'Return type must have parentheses around it',
@@ -34,7 +34,7 @@ export function parseReturnType(returnType: string): Type {
   return getReturnType(fragment)
 }
 
-export function getReturnType(fragment: utils.FunctionFragment): Type {
+export function getReturnType(fragment: utils.FunctionFragment): TupleType {
   assert(fragment.outputs !== undefined)
 
   return {
@@ -51,7 +51,7 @@ function parseEthersParamType(paramType: ParamType): Type {
     return {
       kind: 'array',
       length: paramType.arrayLength === -1 ? 'dynamic' : paramType.arrayLength,
-      type: parseEthersParamType(paramType.arrayChildren),
+      childType: parseEthersParamType(paramType.arrayChildren),
     }
   }
 
