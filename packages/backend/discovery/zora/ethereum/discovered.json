@@ -1,10 +1,52 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 20032759,
-  "configHash": "0xbf4b72151b34e9a5872927c2ed72d96ca7cd301807554c1beccd204094fefaec",
+  "blockNumber": 20073649,
+  "configHash": "0xd13302d6a275e2febd912ad610a77780313e4647bdb7e24c7edfd04abbc8a3f3",
   "version": 5,
   "contracts": [
+    {
+      "name": "LivenessModule",
+      "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1717149791,
+      "values": {
+        "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+        "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+        "livenessInterval": 8467200,
+        "minOwners": 8,
+        "ownershipTransferredToFallback": false,
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "thresholdPercentage": 75,
+        "version": "1.2.0"
+      },
+      "derivedName": "LivenessModule"
+    },
+    {
+      "name": "GuardianMultisig",
+      "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": ["0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"],
+        "threshold": "1 of 1 (100%)"
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1716902219,
+      "values": {
+        "domainSeparator": "0x441442b08d4fdc9877b881d21b5394f2af9aa0f41ef7184f54e10664ea757773",
+        "getChainId": 1,
+        "getOwners": ["0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"],
+        "getThreshold": 1,
+        "nonce": 1,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
     {
       "name": "OptimismPortal",
       "address": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
@@ -18,15 +60,15 @@
       "implementations": ["0x2D778797049FE9259d947D1ED8e5442226dFB589"],
       "sinceTimestamp": 1686694031,
       "values": {
-        "guardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
-        "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "GUARDIAN": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Oracle": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 20032751
+          "prevBlockNum": 20073627
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -35,6 +77,18 @@
         "version": "2.5.0"
       },
       "derivedName": "OptimismPortal"
+    },
+    {
+      "name": "LivenessGuard",
+      "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1717149791,
+      "values": {
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "version": "1.0.0"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -80,7 +134,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 31,
+        "nonce": 34,
         "VERSION": "1.3.0"
       }
     },
@@ -150,10 +204,24 @@
           "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
         ],
         "getThreshold": 2,
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "DeputyGuardianModule",
+      "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1717149791,
+      "values": {
+        "deputyGuardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
+        "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+        "version": "1.1.0"
+      }
     },
     {
       "name": "L1ERC721Bridge",
@@ -202,7 +270,7 @@
           "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
         ],
         "getThreshold": 5,
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -219,7 +287,7 @@
       "implementations": ["0x53c165169401764778F780a69701385eb0FF19B7"],
       "sinceTimestamp": 1705954799,
       "values": {
-        "guardian": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+        "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
@@ -281,10 +349,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 15489180,
-        "latestOutputIndex": 8829,
-        "nextBlockNumber": 15490980,
-        "nextOutputIndex": 8830,
+        "latestBlockNumber": 15735780,
+        "latestOutputIndex": 8966,
+        "nextBlockNumber": 15737580,
+        "nextOutputIndex": 8967,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -358,8 +426,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 13 (31%)"
+        "modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
+        "threshold": "10 of 13 (77%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1707420419,
@@ -381,8 +449,8 @@
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "0xE895076cD050F1f042d1040E47b5929bE989E514"
         ],
-        "getThreshold": 4,
-        "nonce": 2,
+        "getThreshold": 10,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -494,7 +562,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621913",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621933",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -580,6 +648,26 @@
     "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
   ],
   "abis": {
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
+      "constructor(address _safe, address _livenessGuard, uint256 _livenessInterval, uint256 _minOwners, uint256 _thresholdPercentage, address _fallbackOwner)",
+      "error OwnerRemovalFailed(string)",
+      "event OwnershipTransferredToFallback()",
+      "event RemovedOwner(address indexed owner)",
+      "function canRemove(address _owner) view returns (bool canRemove_)",
+      "function fallbackOwner() view returns (address fallbackOwner_)",
+      "function getRequiredThreshold(uint256 _numOwners) view returns (uint256 threshold_)",
+      "function livenessGuard() view returns (address livenessGuard_)",
+      "function livenessInterval() view returns (uint256 livenessInterval_)",
+      "function minOwners() view returns (uint256 minOwners_)",
+      "function ownershipTransferredToFallback() view returns (bool)",
+      "function removeOwners(address[] _previousOwners, address[] _ownersToRemove)",
+      "function safe() view returns (address safe_)",
+      "function thresholdPercentage() view returns (uint256 thresholdPercentage_)",
+      "function version() view returns (string)"
+    ],
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
+      "constructor(address _singleton)"
+    ],
     "0x1a0ad011913A150f69f6A19DF447A0CfD9551054": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -589,6 +677,16 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": [
+      "constructor(address _safe)",
+      "event OwnerRecorded(address owner)",
+      "function checkAfterExecution(bytes32, bool)",
+      "function checkTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, address msgSender)",
+      "function lastLive(address) view returns (uint256)",
+      "function safe() view returns (address safe_)",
+      "function showLiveness()",
+      "function version() view returns (string)"
     ],
     "0x2D778797049FE9259d947D1ED8e5442226dFB589": [
       "constructor()",
@@ -714,6 +812,23 @@
     ],
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
       "constructor(address _singleton)"
+    ],
+    "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8": [
+      "constructor(address _safe, address _superchainConfig, address _deputyGuardian)",
+      "error ExecutionFailed(string)",
+      "error Unauthorized()",
+      "event DisputeGameBlacklisted(address indexed game)",
+      "event Paused(string identifier)",
+      "event RespectedGameTypeSet(uint32 indexed gameType, uint64 indexed updatedAt)",
+      "event Unpaused()",
+      "function blacklistDisputeGame(address _portal, address _game)",
+      "function deputyGuardian() view returns (address deputyGuardian_)",
+      "function pause()",
+      "function safe() view returns (address safe_)",
+      "function setRespectedGameType(address _portal, uint32 _gameType)",
+      "function superchainConfig() view returns (address superchainConfig_)",
+      "function unpause()",
+      "function version() view returns (string)"
     ],
     "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF": [
       "constructor()",

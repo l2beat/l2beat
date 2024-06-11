@@ -20,9 +20,14 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
     "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig" // Conduit Multisig
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
   },
   "overrides": {
+    "LivenessModule": {
+      "ignoreMethods": ["getRequiredThreshold"]
+    },
     "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf": {
       "extends": "opstack/OptimismMintableERC20Factory"
     },
