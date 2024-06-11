@@ -1,3 +1,4 @@
+import React from 'react'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { Footer } from '~/app/_components/footer'
 import { NavLayout } from '~/app/_components/nav/nav-layout'

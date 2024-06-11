@@ -1,3 +1,4 @@
+import React from 'react'
 import { DASummaryTable } from './_components/DASummaryTable'
 
 export default function Page() {

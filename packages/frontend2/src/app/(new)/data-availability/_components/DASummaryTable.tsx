@@ -57,7 +57,6 @@ const columns = [
   }),
   columnHelper.accessor('daLayer', {
     header: 'DA Layer',
-    cell: (ctx) => ctx.getValue(),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
