@@ -10,6 +10,7 @@ import {
   parseReturnType,
 } from '../utils/parseReturnType'
 import { HandlerResult } from './Handler'
+import { TypeConverters } from '../type-casters'
 
 export function getValuesAndErrors(
   results: HandlerResult[],
@@ -93,6 +94,15 @@ function reencodeType(value: ContractValue, paramType: Type): ContractValue {
     })
 
     return asObjectIfValidKeys(entries)
+  }
+
+
+  const firstLetterIsUpperCase = (str: string) => str[0] === str[0]?.toUpperCase()
+  if(firstLetterIsUpperCase(paramType.typeName)) {
+      assert(paramType.typeName in TypeConverters, `Type ${paramType.typeName} is not supported`)
+
+      const typeConverter = TypeConverters[paramType.typeName as keyof typeof TypeConverters]
+      return typeConverter.cast({}, value)
   }
 
   return value
