@@ -403,6 +403,10 @@ export const optimism: Layer2 = {
     },
   ),
   permissions: [
+    discovery.contractAsPermissioned(
+      discovery.getContract('ProxyAdmin'),
+      'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, SuperchainConfig, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
+    ),
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
       'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
