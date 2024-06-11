@@ -6,6 +6,15 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
+} from '~/app/_components/table'
 import { formatNumber } from '~/utils/format-number'
 
 type DataAvailabilityProvider = {
@@ -92,56 +101,34 @@ export function DASummaryTable() {
   })
 
   return (
-    <table className="w-full text-left">
-      <thead>
+    <Table>
+      <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
+          <TableHeaderRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                className="whitespace-pre py-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50 w-0 pr-l pr-3 last:pr-0 md:pr-4"
-              >
+              <TableHead key={header.id}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
                     )}
-              </th>
+              </TableHead>
             ))}
-          </tr>
+          </TableHeaderRow>
         ))}
-      </thead>
-      <tbody>
+      </TableHeader>
+      <TableBody>
         {table.getRowModel().rows.map((row) => (
-          <tr
-            key={row.id}
-            className="group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700 hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]"
-          >
+          <TableRow key={row.id}>
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="h-9 md:h-14">
+              <TableCell key={cell.id} className="h-9 md:h-14">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
+              </TableCell>
             ))}
-          </tr>
+          </TableRow>
         ))}
-      </tbody>
-      <tfoot>
-        {table.getFooterGroups().map((footerGroup) => (
-          <tr key={footerGroup.id}>
-            {footerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.footer,
-                      header.getContext(),
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </tfoot>
-    </table>
+      </TableBody>
+    </Table>
   )
 }
