@@ -17,7 +17,7 @@ const CENTRALIZED_OPERATOR: ScalingProjectTechnologyChoice = {
 const CENTRALIZED_SEQUENCER: ScalingProjectTechnologyChoice = {
   name: 'The system has a centralized sequencer',
   description:
-    'While proposing blocks is open to anyone the system employs a privileged sequencer that has priority for submitting transaction batches and ordering transactions.',
+    'While forcing transaction is open to anyone the system employs a privileged sequencer that has priority for submitting transaction batches and ordering transactions.',
   risks: [FRONTRUNNING_RISK],
   references: [],
 }
