@@ -245,7 +245,7 @@ export const optimism: Layer2 = {
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
-      ...RISK_VIEW.STATE_FP,
+      ...RISK_VIEW.STATE_FP_INT,
       sources: [
         {
           contract: 'DisputeGameFactory',
