@@ -17,6 +17,7 @@ export async function LegacyNavbar({
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+  const zkCatalog = env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG
 
   return (
     <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
@@ -46,7 +47,9 @@ export async function LegacyNavbar({
           <div className="h-8 w-px bg-gray-300 dark:bg-gray-700 hidden 2xl:block" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
-            <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
+            {zkCatalog && (
+              <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
+            )}
             <LegacyNavLink title="Donate" href="/donate" />
             <LegacyNavLink title="Governance" href="/governance" />
             <LegacyNavLink title="Glossary" href="/glossary" />

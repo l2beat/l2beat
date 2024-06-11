@@ -1,10 +1,8 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { showAssetRisks } from '~/flags'
+import { env } from '~/env'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { Web3Provider } from './_components/web3-provider'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'L2BEAT - Asset Risks',
@@ -14,9 +12,7 @@ export const metadata: Metadata = getDefaultMetadata({
 export default async function Layout({
   children,
 }: { children: React.ReactNode }) {
-  const enabled = await showAssetRisks()
-
-  if (!enabled) {
+  if (!env.NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS) {
     return notFound()
   }
 
