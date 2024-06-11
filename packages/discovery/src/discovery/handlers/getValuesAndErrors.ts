@@ -26,43 +26,32 @@ function reencodeWithABI(
   value: ContractValue,
   fragment: utils.FunctionFragment | undefined,
 ): ContractValue {
-  if (fragment === undefined) {
+  if (fragment === undefined || fragment.outputs === undefined) {
     return value
   }
 
-  if (fragment.outputs !== undefined) {
-    const outputs = fragment.outputs
-    if (outputs.length === 1 && outputs[0] !== undefined) {
-      return reencodeType(value, outputs[0])
-    } else {
-      assert(Array.isArray(value))
-      const names = outputs.map((o) => o.name)
-      const entries = names.map((name, i) => {
-        const element = value[i]
-        const output = outputs[i]
-        assert(element !== undefined)
-        assert(output !== undefined)
-        return [name, reencodeType(element, output)]
-      })
+  const outputs = fragment.outputs
+  if (outputs.length === 1 && outputs[0] !== undefined) {
+    return reencodeType(value, outputs[0])
+  } else {
+    assert(Array.isArray(value))
+    const names = outputs.map((o) => o.name)
+    const entries = names.map((name, i) => {
+      const element = value[i]
+      const output = outputs[i]
+      assert(element !== undefined)
+      assert(output !== undefined)
+      return [name, reencodeType(element, output)]
+    })
 
-      if (entries.every((e) => e[0] !== null)) {
-        return Object.fromEntries(entries)
-      } else {
-        return entries.map((e) => e[1] as ContractValue)
-      }
-    }
+    return asObjectIfValidKeys(entries)
   }
-
-  return value
 }
 
 function reencodeType(
   value: ContractValue,
   paramType: ParamType,
 ): ContractValue {
-  if (!valueShapeMatchesType(value, paramType)) {
-    console.log(value, paramType)
-  }
   assert(valueShapeMatchesType(value, paramType))
 
   if (paramType.arrayLength !== null) {
@@ -79,11 +68,7 @@ function reencodeType(
       return [component.name, reencodeType(v, component)]
     })
 
-    if (entries.every((e) => e[0] !== null)) {
-      return Object.fromEntries(entries)
-    } else {
-      return entries.map((e) => e[1] as ContractValue)
-    }
+    return asObjectIfValidKeys(entries)
   }
 
   return value
@@ -119,4 +104,12 @@ function valueShapeMatchesType(
   }
 
   return !valueIsArray
+}
+
+function asObjectIfValidKeys(entries: ContractValue[][]): ContractValue {
+  if (entries.every((e) => e[0] !== null)) {
+    return Object.fromEntries(entries)
+  } else {
+    return entries.map((e) => e[1] as ContractValue)
+  }
 }
