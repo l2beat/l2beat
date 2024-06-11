@@ -1,8 +1,8 @@
 import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { showAssetRisks } from '~/flags'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { Web3Provider } from './_components/web3-provider'
-import { showAssetRisks } from '~/flags'
-import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 
