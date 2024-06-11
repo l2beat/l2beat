@@ -88,12 +88,12 @@ export const transporter: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'Oracle network fails to facilitate the transfer.',
+          text: 'oracle network fails to facilitate the transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'Oracle network is compromised and Risk Management Network fails to halt ("curse") the network.',
+          text: 'oracle network is compromised and Risk Management Network fails to halt ("curse") the network.',
           isCritical: true,
         },
       ],
