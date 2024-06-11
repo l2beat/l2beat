@@ -411,20 +411,17 @@ export const optimism: Layer2 = {
       'ProxyAdminOwner',
       'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
     ),
-    {
-      name: 'Guardian',
-      description: '',
-      accounts: [
-        discovery.getPermissionedAccount('FoundationMultisig_2', 'owner'),
-      ],
-    },
+    ...discovery.getMultisigPermission(
+      'GuardianMultisig',
+      'Address allowed to pause withdrawals or blacklist dispute games in case of an emergency. It is controlled by the Security Council multisig, but a module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+    ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
       'Member of the ProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      'Member of the ProxyAdminOwner.',
+      'Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.',
       [
         {
           text: 'Security Council members - Optimism Collective forum',
