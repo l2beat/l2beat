@@ -1,13 +1,14 @@
 {
   "name": "syndicateframe",
   "chain": "base",
-  "blockNumber": 13275713,
+  "blockNumber": 15661223,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
@@ -18,7 +19,7 @@
       "sinceTimestamp": 1707369335,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620334",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620346",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -35,6 +36,12 @@
     {
       "name": "L2OutputOracle",
       "address": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6042DE5a64709d8d4bBb227891AD886ECff49c6d",
@@ -47,10 +54,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2985120,
-        "latestOutputIndex": 4145,
-        "nextBlockNumber": 2985840,
-        "nextOutputIndex": 4146,
+        "latestBlockNumber": 5370480,
+        "latestOutputIndex": 7458,
+        "nextBlockNumber": 5371200,
+        "nextOutputIndex": 7459,
         "PROPOSER": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1707367873,
@@ -62,6 +69,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x52fA397D799f1CE416a2089B964Aa293c347994F",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2",
@@ -73,7 +81,11 @@
         "GUARDIAN": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
         "L2_ORACLE": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 13200938],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 15105497
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
         "version": "1.7.2"
@@ -94,6 +106,7 @@
     {
       "name": "SystemConfig",
       "address": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
+      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A",
@@ -111,14 +124,14 @@
         },
         "overhead": 2100,
         "owner": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 1000000,
         "sequencerInbox": "0x97395dd253E2d096A0CaA62a574895c3C2F2b2e0",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
