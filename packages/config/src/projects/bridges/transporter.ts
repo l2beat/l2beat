@@ -33,7 +33,7 @@ export const transporter: Bridge = {
     description: 'Transporter is a Token Bridge based on CCIP network.',
     detailedDescription:
       'Transporter is a hybrid bridge that can work either as a Token Bridge or Liqudity Network depending on the requirements of tokens.\
-      It is using Chainlink CCIP standard for cross-chain communication.',
+      It is using Chainlink CCIP standard for cross-chain communication, and it makes use of a secondary network of nodes, called Risk Management Network, responsible for validating the messages or halt the bridge.',
   },
   riskView: {
     validatedBy: {
@@ -45,8 +45,8 @@ export const transporter: Bridge = {
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: '',
-      sentiment: 'bad',
+      description: `Configuration changes and upgrades to CCIP are executed through the RBACTimelock smart contract. Upgrades to the source contracts can be proposed by Timelock Proposers and executed with a ${upgradeDelayString} delay. Pending timelock operations can be canceled by Timelock Cancellers.`,
+      sentiment: 'warning',
     },
     destinationToken: {
       ...RISK_VIEW.CANONICAL_OR_WRAPPED,
@@ -78,7 +78,7 @@ export const transporter: Bridge = {
       name: 'Oracle Network',
       description: `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.
         Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
-        of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root, the second oracle committee can execute them on the destination chain.`,
+        of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [
         {
           text: 'Risk Management Network',
@@ -88,17 +88,12 @@ export const transporter: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'watchers fail to facilitate the transfer.',
+          text: 'Oracle network fails to facilitate the transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'watchers submit fraudulent block hash and relay fraudulent transfer.',
-          isCritical: true,
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'the Socket Vault owners change the Vault configuration.',
+          text: 'Oracle network is compromised and Risk Management Network fails to halt ("curse") the network.',
           isCritical: true,
         },
       ],
@@ -408,7 +403,7 @@ export const transporter: Bridge = {
         })(),
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: [
     {
@@ -449,11 +444,11 @@ export const transporter: Bridge = {
         'Proposers of the RBACTimelock contract. Can propose upgrades.',
     },
     {
-      name: 'Timelock Cancelers',
+      name: 'Timelock Cancellers',
       accounts: (() => {
         const timelockRoles = discovery.getAccessControlField(
           'RBACTimelock',
-          'PROPOSER_ROLE',
+          'CANCELLER_ROLE',
         ).members
         const members = timelockRoles.map((member) =>
           discovery.formatPermissionedAccount(member),
@@ -476,7 +471,7 @@ export const transporter: Bridge = {
         return members
       })(),
       description:
-        'Executors of the RBACTimelock contract. Can execute pending upgrades.',
+        'Contract through which RBACTimelock proposals are executed. Proposals execution can be initiated by anyone.',
     },
   ],
   knowledgeNuggets: [],
