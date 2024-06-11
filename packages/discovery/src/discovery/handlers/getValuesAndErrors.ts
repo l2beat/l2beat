@@ -13,7 +13,7 @@ import { HandlerResult } from './Handler'
 
 export function getValuesAndErrors(
   results: HandlerResult[],
-  fieldOverrides: DiscoveryContract['fields'],
+  fieldOverrides?: DiscoveryContract['fields'],
 ): {
   values: ContractParameters['values']
   errors: ContractParameters['errors']
