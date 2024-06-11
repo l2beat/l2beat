@@ -35,15 +35,12 @@ export const transporter: Bridge = {
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description:
-        '',
+      description: '',
       sentiment: 'bad',
     },
     destinationToken: {
       ...RISK_VIEW.CANONICAL_OR_WRAPPED,
-      description:
-        RISK_VIEW.CANONICAL_OR_WRAPPED.description +
-        ' ',
+      description: RISK_VIEW.CANONICAL_OR_WRAPPED.description + ' ',
     },
   },
   technology: {
@@ -69,8 +66,7 @@ export const transporter: Bridge = {
     },
     validation: {
       name: 'Oracle Network',
-      description:
-        `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.
+      description: `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.
         Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root, the second oracle committee can execute them on the destination chain.`,
       references: [
@@ -401,8 +397,7 @@ export const transporter: Bridge = {
   permissions: [
     {
       name: '',
-      description:
-        '',
+      description: '',
       accounts: [discovery.getPermissionedAccount('Router', 'owner')],
     },
   ],
