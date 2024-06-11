@@ -2,10 +2,19 @@ import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { utils } from 'ethers'
 
 import { assert } from '@l2beat/backend-tools'
-import { Type, getReturnType } from '../utils/parseReturnType'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import {
+  TupleType,
+  Type,
+  getReturnType,
+  parseReturnType,
+} from '../utils/parseReturnType'
 import { HandlerResult } from './Handler'
 
-export function getValuesAndErrors(results: HandlerResult[]): {
+export function getValuesAndErrors(
+  results: HandlerResult[],
+  fieldOverrides: DiscoveryContract['fields'],
+): {
   values: ContractParameters['values']
   errors: ContractParameters['errors']
 } {
@@ -13,7 +22,13 @@ export function getValuesAndErrors(results: HandlerResult[]): {
   const errors: ContractParameters['errors'] = {}
   for (const result of results) {
     if (result.value !== undefined) {
-      values[result.field] = reencodeWithABI(result.value, result.fragment)
+      const returnType = (fieldOverrides ?? {})[result.field]?.returnType
+      if (returnType !== undefined && returnType !== null) {
+        const type = parseReturnType(returnType)
+        values[result.field] = reencodeWithReturnType(result.value, type)
+      } else {
+        values[result.field] = reencodeWithABI(result.value, result.fragment)
+      }
     }
     if (result.error !== undefined) {
       errors[result.field] = result.error
@@ -31,6 +46,13 @@ function reencodeWithABI(
   }
 
   const type = getReturnType(fragment)
+  return reencodeWithReturnType(value, type)
+}
+
+function reencodeWithReturnType(
+  value: ContractValue,
+  type: TupleType,
+): ContractValue {
   if (type.elements.length === 1) {
     const firstElement = type.elements[0]
     assert(firstElement !== undefined)
@@ -51,7 +73,7 @@ function reencodeWithABI(
 }
 
 function reencodeType(value: ContractValue, paramType: Type): ContractValue {
-  assert(valueShapeMatchesType(value, paramType))
+  assert(valueShapeMatchesType(value, paramType), "The data shape of the value doesn't match the type")
 
   if (paramType.kind === 'array') {
     const array = value as ContractValue[]
