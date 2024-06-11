@@ -254,9 +254,7 @@ export const optimism: Layer2 = {
           ],
         },
       ],
-      secondLine: `${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} challenge period`,
+      secondLine: `${formatSeconds(maxClockDuration)} challenge period`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS), // TODO: find out the max delay in the worst case challenge
