@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x4c3e6d4287d6b95b14403fe87d31dddfa7fcf6f0
+
+# Diff at Tue, 11 Jun 2024 15:10:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b9a39f700e84af1cffa010ce0e20e64b23a4c64 block: 20067517
+- current block number: 20069391
+
+## Description
+
+Config related, ignore spam.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20067517 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.resourceConfig:
+-        [20000000,10,8,1000000000,1000000,"340282366920938463463374607431768211455"]
++        {"maxResourceLimit":20000000,"elasticityMultiplier":10,"baseFeeMaxChangeDenominator":8,"minimumBaseFee":1000000000,"systemTxMaxGas":1000000,"maximumBaseFee":"340282366920938463463374607431768211455"}
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122) {
+    +++ description: None
+      values.gameData:
+-        [0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"gameType_":0,"rootClaim_":"0x0000000000000000000000000000000000000000000000000000000000000000","extraData_":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.startingOutputRoot:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000",0]
++        {"root":"0x0000000000000000000000000000000000000000000000000000000000000000","l2BlockNumber":0}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0) {
+    +++ description: None
+      values.gameData:
+-        [1,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"gameType_":1,"rootClaim_":"0x0000000000000000000000000000000000000000000000000000000000000000","extraData_":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.startingOutputRoot:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000",0]
++        {"root":"0x0000000000000000000000000000000000000000000000000000000000000000","l2BlockNumber":0}
+    }
+```
+
 Generated with discovered.json: 0x5794d6cdac900458e007cfc157f752ad75a4602b
 
 # Diff at Tue, 11 Jun 2024 08:53:37 GMT:
