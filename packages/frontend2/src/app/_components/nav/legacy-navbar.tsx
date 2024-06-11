@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import { showHiringBadge } from '~/flags'
+import { env } from '~/env'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
@@ -16,7 +16,7 @@ export async function LegacyNavbar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
-  const hiringBadge = await showHiringBadge()
+  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
 
   return (
     <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">

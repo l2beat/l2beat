@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import { showHiringBadge } from '~/flags'
+import { env } from '~/env'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
@@ -23,7 +23,7 @@ export async function NavSidebar({
   logoLink: string
   legacyNav: boolean
 }) {
-  const hiringBadge = await showHiringBadge()
+  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row justify-between items-center">
