@@ -12,10 +12,15 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
-import { Tvl2Controller } from '../api/Tvl2Controller'
+import { ControllerService } from '../api/ControllerService'
+import {
+  Tvl2Controller,
+  Tvl2ControllerDependencies,
+} from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
+import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
+import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
