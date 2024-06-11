@@ -73,7 +73,10 @@ function reencodeWithReturnType(
 }
 
 function reencodeType(value: ContractValue, paramType: Type): ContractValue {
-  assert(valueShapeMatchesType(value, paramType), "The data shape of the value doesn't match the type")
+  assert(
+    valueShapeMatchesType(value, paramType),
+    "The data shape of the value doesn't match the type",
+  )
 
   if (paramType.kind === 'array') {
     const array = value as ContractValue[]
