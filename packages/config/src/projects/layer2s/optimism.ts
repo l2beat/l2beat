@@ -48,8 +48,8 @@ const l2Upgradability = {
 }
 
 const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
+  'OptimismPortal',
+  'proofMaturityDelaySeconds',
 )
 
 const sequencerAddress = EthereumAddress(
@@ -60,7 +60,7 @@ const sequencerInbox = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
-const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
 const genesisTimestamp = new UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
@@ -189,12 +189,12 @@ export const optimism: Layer2 = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: disputeGameFactory.address,
           selector: '0x9aaab648',
           functionSignature:
-            'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+            'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
           sinceTimestampInclusive: new UnixTime(
-            l2OutputOracle.sinceTimestamp ?? genesisTimestamp.toNumber(),
+            disputeGameFactory.sinceTimestamp ?? genesisTimestamp.toNumber(),
           ),
         },
       },
@@ -377,26 +377,32 @@ export const optimism: Layer2 = {
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   permissions: [
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
@@ -430,10 +436,12 @@ export const optimism: Layer2 = {
       l2Discovery.getContract('L2ProxyAdmin'),
       'Admin of L2CrossDomainMessenger, GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L1BlockNumber, L2ERC721Bridge, L1Block, L1ToL2MessagePasser, OptimismMintableERC721Factory, BaseFeeVault, L1FeeVault, SchemaRegistry and EAS contracts.',
     ),
-    ...l2Discovery.getMultisigPermission(
-      'L2ProxyAdminOwner',
-      'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned to the aliased address of the L1 ProxyAdminOwner.',
-    ),
+    {
+      name: 'L2ProxyAdminOwner',
+      description:
+        'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
+      accounts: [l2Discovery.getPermissionedAccount('L2ProxyAdmin', 'owner')],
+    },
     ...l2Discovery.getMultisigPermission(
       'MintManagerOwner',
       'Owner of the MintManager. It can change the OP token owner to a different MintManager and therefore change the inflation policy.',
