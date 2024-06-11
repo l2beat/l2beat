@@ -15,6 +15,18 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
+          has: [{ type: 'host', value: '.*localhost.*' }],
+          destination:
+            'http://localhost:8080/:path*',
+        },
+        {
+          source: '/:path*',
+          has: [{ type: 'host', value: '.*staging.*' }],
+          destination:
+            'https://l2beat-staging.vercel.app/:path*',
+        },
+        {
+          source: '/:path*',
           // NOTE(piotradamczyk): Unfortunately using an env variable here
           // doesn't work for some reason, so we have to hardcode the URL.
           destination: `https://l2beat-production.vercel.app/:path*`,
