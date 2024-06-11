@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532023,
   "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",
@@ -17,6 +17,8 @@
     {
       "name": "RecoveryManager",
       "address": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -92,6 +94,8 @@
     {
       "name": "Governor",
       "address": "0x5Fa96B622D1F4e920b92040c10fA297ca496ad37",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -150,6 +154,7 @@
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
+      "ignoreInWatchMode": ["committedRoot"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0x10a432946e24C49866c243a13BE7205B3EF929ee",
@@ -195,6 +200,8 @@
     {
       "name": "GnosisSafe",
       "address": "0xBcd15f82Ae461335257d0851A18948784cF79E9d",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -233,6 +240,7 @@
     {
       "name": "HomeBeaconProxy",
       "address": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
+      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0x9E4C2547307e221383A4bcba6065389C69Bd4628",
@@ -252,10 +260,10 @@
         "queueLength": 0,
         "root": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
         "state": 1,
-        "suggestUpdate": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
+        "suggestUpdate": {
+          "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
         "tree": 2247,
         "updater": "0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
         "updaterManager": "0x2CC80EE8a3f9c85309866F4C6BDF82f6846891EC",

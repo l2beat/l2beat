@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531425,
   "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "TreasuryV2",
@@ -80,6 +80,8 @@
     {
       "name": "Aptos Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -130,6 +132,8 @@
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -156,6 +160,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
     "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
     "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",

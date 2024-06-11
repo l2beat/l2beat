@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532207,
   "configHash": "0x00386bee018153f5ccd18d3bc0cd5c5dbe5cc420fe92706140f661856f134387",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "Factory",
@@ -38,6 +38,16 @@
     {
       "name": "DAI Pool",
       "address": "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -88,6 +98,16 @@
     {
       "name": "SG-ETH Pool",
       "address": "0x101816545F6bd2b1076434B54383a1E633390A2E",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -170,6 +190,16 @@
     {
       "name": "WOO Pool",
       "address": "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -299,6 +329,16 @@
     {
       "name": "USDT Pool",
       "address": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -436,6 +476,16 @@
     {
       "name": "USDT Pool2",
       "address": "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -523,6 +573,16 @@
     {
       "name": "sUSD Pool",
       "address": "0x590d4f8A68583639f215f675F3a259Ed84790580",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -587,6 +647,8 @@
     {
       "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -637,6 +699,16 @@
     {
       "name": "USDD Pool",
       "address": "0x692953e758c3669290cb1677180c64183cEe374e",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -766,6 +838,16 @@
     {
       "name": "MAI Pool",
       "address": "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -811,6 +893,16 @@
     {
       "name": "mETH Pool",
       "address": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -883,6 +975,8 @@
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -930,6 +1024,16 @@
     {
       "name": "METIS Pool",
       "address": "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -997,6 +1101,16 @@
     {
       "name": "USDC Pool",
       "address": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -1089,6 +1203,16 @@
     {
       "name": "LUSD Pool",
       "address": "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -1130,6 +1254,16 @@
     {
       "name": "Frax Pool",
       "address": "0xfA0F307783AC21C39E939ACFF795e27b650F6e68",
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -1171,6 +1305,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
     "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
     "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",

@@ -3,11 +3,12 @@
   "chain": "ethereum",
   "blockNumber": 19811607,
   "configHash": "0x9eb1a3eb20decdb8382eb8b7f5f17850cb57d755c28eb61bdabb00d662d70212",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
       "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+      "ignoreInWatchMode": ["txFeeBalance"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -35,6 +36,22 @@
     {
       "name": "RollupProcessor",
       "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+      "ignoreInWatchMode": [
+        "dataRoot",
+        "dataSize",
+        "getEscapeHatchStatus",
+        "getTotalDeposited",
+        "getTotalFees",
+        "getTotalPendingDeposit",
+        "getTotalWithdrawn",
+        "nextRollupId",
+        "nullRoot",
+        "rootRoot",
+        "totalDeposited",
+        "totalFees",
+        "totalPendingDeposit",
+        "totalWithdrawn"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -116,6 +133,8 @@
     {
       "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -139,6 +158,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
     "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
     "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",

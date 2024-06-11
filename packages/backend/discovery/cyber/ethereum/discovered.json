@@ -96,7 +96,11 @@
         "L2_ORACLE": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Oracle": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 21000, 20032435],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 21000,
+          "prevBlockNum": 20032435
+        },
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "SYSTEM_CONFIG": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
@@ -208,14 +212,14 @@
         "optimismPortal": "0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99",
         "overhead": 180,
         "owner": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 40000,
         "sequencerInbox": "0xfF00000000000000000000000000000000001d88",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",

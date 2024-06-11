@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017490,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -111,6 +111,7 @@
     {
       "name": "OwnerMultisig",
       "address": "0xD2C37fC6fD89563187f3679304975655e448D192",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

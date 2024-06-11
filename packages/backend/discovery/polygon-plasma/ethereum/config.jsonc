@@ -146,9 +146,6 @@
     },
     "MaticWETH": {
       "ignoreInWatchMode": ["totalSupply"]
-    },
-    "PolygonMultisig": {
-      "ignoreMethods": ["nonce"]
     }
   }
 }
