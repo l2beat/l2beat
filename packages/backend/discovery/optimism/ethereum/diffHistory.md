@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5794d6cdac900458e007cfc157f752ad75a4602b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Introduction of permissionless fraud proofs and permissions update to be Stage 1.
 
 ## Watched changes
 
