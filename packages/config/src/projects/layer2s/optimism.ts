@@ -603,7 +603,12 @@ export const optimism: Layer2 = {
         ...l2Upgradability,
       }),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC('0d')],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+      },
+    ],
   },
   upgradesAndGovernance:
     'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The ProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
