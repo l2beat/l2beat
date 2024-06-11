@@ -65,6 +65,11 @@ const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const genesisTimestamp = new UnixTime(1686074603)
 const portal = discovery.getContract('OptimismPortal')
 
+const livenessInterval = discovery.getContractValue<number>(
+  'LivenessModule',
+  'livenessInterval',
+)
+
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
@@ -421,7 +426,9 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      'Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.',
+      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
+        livenessInterval,
+      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
