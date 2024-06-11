@@ -1,9 +1,9 @@
+import { Insertable } from 'kysely'
 import { PostgresDatabase } from '../../kysely'
 import { Network } from '../../kysely/generated/types'
-import { Clean } from '../../utils'
 import { joinExplorer, joinRpc } from './join'
 
-export class NetworksRepository {
+export class NetworkRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   findMany() {
@@ -19,7 +19,7 @@ export class NetworksRepository {
       .execute()
   }
 
-  upsertMany(data: Clean<Network>[]) {
+  upsertMany(data: Insertable<Network>[]) {
     return this.db
       .insertInto('Network')
       .values(data)
