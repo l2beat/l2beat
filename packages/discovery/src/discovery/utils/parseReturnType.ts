@@ -5,18 +5,18 @@ import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
 
 export type Type = BaseType | ArrayType | TupleType
 
-interface BaseType {
+export interface BaseType {
   kind: 'base'
   typeName: string
 }
 
-interface ArrayType {
+export interface ArrayType {
   kind: 'array'
   length: number | 'dynamic'
   childType: Type
 }
 
-interface TupleType {
+export interface TupleType {
   kind: 'tuple'
   elements: {
     name?: string

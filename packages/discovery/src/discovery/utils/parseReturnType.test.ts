@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { Type, parseReturnType } from './parseReturnType'
+import { TupleType, Type, parseReturnType } from './parseReturnType'
 
 function BaseT(typeName: string): Type {
   return { kind: 'base', typeName }
@@ -9,7 +9,7 @@ function ArrayT(length: number | 'dynamic', type: any): Type {
   return { kind: 'array', length, childType: type }
 }
 
-function TupleT(elements: any[]): Type {
+function TupleT(elements: any[]): TupleType {
   return { kind: 'tuple', elements }
 }
 
