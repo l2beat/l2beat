@@ -52,6 +52,11 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'proofMaturityDelaySeconds',
 )
 
+const maxClockDuration = discovery.getContractValue<number>(
+  'FaultDisputeGame',
+  'maxClockDuration',
+)
+
 const sequencerAddress = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
 )
@@ -105,11 +110,11 @@ export const optimism: Layer2 = {
       },
       explanation: `OP Mainnet is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
+      )} or until it gets published. The state root gets confirmed ${formatSeconds(
+        maxClockDuration,
       )} after it has been posted.`,
     },
-    finality: { finalizationPeriod: FINALIZATION_PERIOD_SECONDS },
+    finality: { finalizationPeriod: maxClockDuration },
   },
   config: {
     associatedTokens: ['OP'],
@@ -254,7 +259,7 @@ export const optimism: Layer2 = {
       )} challenge period`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS), // TODO: find out the max delay in the worst case challenge
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
