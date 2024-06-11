@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react'
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { Link } from '../../../../components/Link'
 import { Markdown } from '../../../../components/Markdown'
+import { PageContent } from '../../../../components/PageContent'
 import { InfoIcon } from '../../../../components/icons'
 import {
   Tooltip,
@@ -32,24 +33,26 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
 export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
   return (
     <DashboardLayout>
-      <div className="md:!bg-transparent bg-gray-100 px-4 pt-8 pb-6 dark:bg-zinc-900 md:px-0 md:pt-[72px] md:pb-0">
-        <Breadcrumbs icon={props.details.icon} title={props.details.title} />
-        <Header {...props} />
-      </div>
-      <div className="mt-8 space-y-10 px-4 md:mt-16 md:px-0">
-        <Section title="List of verifiers">
-          <Verifiers
-            items={props.details.verifiers}
-            askForVerificationLink={props.askForVerificationLink}
-          />
-        </Section>
-        <Section title="Description">
-          <Markdown>{props.details.description}</Markdown>
-        </Section>
-        <Section title="List of required tools">
-          <RequiredTools items={props.details.requiredTools} />
-        </Section>
-      </div>
+      <PageContent>
+        <div className="md:!bg-transparent bg-gray-100 px-4 pt-8 pb-6 dark:bg-zinc-900 md:px-0 md:pt-[72px] md:pb-0">
+          <Breadcrumbs icon={props.details.icon} title={props.details.title} />
+          <Header {...props} />
+        </div>
+        <div className="mt-8 space-y-10 px-4 md:mt-16 md:px-0">
+          <Section title="List of verifiers">
+            <Verifiers
+              items={props.details.verifiers}
+              askForVerificationLink={props.askForVerificationLink}
+            />
+          </Section>
+          <Section title="Description">
+            <Markdown>{props.details.description}</Markdown>
+          </Section>
+          <Section title="List of required tools">
+            <RequiredTools items={props.details.requiredTools} />
+          </Section>
+        </div>
+      </PageContent>
     </DashboardLayout>
   )
 }
@@ -74,9 +77,9 @@ function Header(props: ZkCatalogProjectPageProps) {
         <ProjectHeader {...props.details} />
         {props.details.linkToMainProjectDetails ? (
           <Link
+            className="mt-1 md:mt-0"
             href={props.details.linkToMainProjectDetails}
             showArrow
-            textClassName="mt-1 md:mt-0"
           >
             View project's detail page
           </Link>

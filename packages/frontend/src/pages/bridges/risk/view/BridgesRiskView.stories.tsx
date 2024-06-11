@@ -709,7 +709,7 @@ const meta = {
       },
       {
         type: 'layer2',
-        name: 'zkSync Era',
+        name: 'ZKsync Era',
         shortName: undefined,
         slug: 'zksync-era',
         warning:
@@ -718,7 +718,7 @@ const meta = {
         isVerified: true,
         category: 'ZK Rollup',
         destination: {
-          value: 'zkSync Era',
+          value: 'ZKsync Era',
           description: '',
           sentiment: 'neutral',
         },

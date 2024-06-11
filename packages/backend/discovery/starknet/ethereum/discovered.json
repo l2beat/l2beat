@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19718686,
   "configHash": "0x98da4e6c31fa9b40de07cce9402d0fad27eb9676dd9d2fc8b34cdc07ec023f67",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "BridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -211,6 +213,8 @@
     {
       "name": "ProxyMultisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -238,6 +242,8 @@
     {
       "name": "ImplementationMultisig",
       "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -492,6 +498,12 @@
     {
       "name": "Starknet",
       "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
@@ -1016,6 +1028,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x0000000000000000000000000000000000455448",
     "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
     "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",

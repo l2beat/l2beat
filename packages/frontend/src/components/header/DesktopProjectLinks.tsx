@@ -52,7 +52,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
       <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1.5 font-medium text-white text-xs transition-colors">
         <Link
           href={projectLink.links[0]}
-          className="flex flex-row items-center gap-1.5"
+          className="flex items-center gap-1.5"
           underline={false}
         >
           <ProjectLinkIcon name={projectLink.name} />

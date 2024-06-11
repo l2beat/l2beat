@@ -7,7 +7,7 @@
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
   ],
   "names": {
-    "0x32400084C286CF3E17e7B677ea9583e60a000324": "zkSync",
+    "0x32400084C286CF3E17e7B677ea9583e60a000324": "ZKsync",
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": "L1ERC20Bridge",
     "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": "ValidatorTimelock_deprecated",
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
@@ -23,6 +23,18 @@
     "BridgeHub": {
       "ignoreMethods": ["baseToken", "stateTransitionManager"],
       "fields": {
+        "chainsCreated": {
+          "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "NewChain",
+            "returnParams": [
+              "chainId",
+              "stateTransitionManager",
+              "chainGovernance"
+            ]
+          }
+        },
         "zksyncEraDiamond": {
           "handler": {
             "type": "call",
@@ -50,7 +62,7 @@
     "L1SharedBridge": {
       "ignoreMethods": ["l2BridgeAddress", "L1_WETH_TOKEN"]
     },
-    "zkSync": {
+    "ZKsync": {
       "ignoreMethods": [
         "l2LogsRootHash",
         "storedBlockHash",
@@ -70,8 +82,18 @@
         "getFirstUnprocessedPriorityTx"
       ],
       "fields": {
+        "txFilterer": {
+          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "NewTransactionFilterer",
+            "returnParams": ["oldTransactionFilterer", "newTransactionFilterer"]
+          }
+        },
         "validators": {
-          // this does not catch validators changed through an upgrade of the diamond (this is about the validator role in the executor (usually held by the validatorTimelock), not the validators of the ValidatorTimelock)
+          // this does not catch validators changed through an upgrade of the diamond, but current constructor does not have a validator field
+          // (this is about the validator role in the executor (usually held by the validatorTimelock), not the validators of the ValidatorTimelock)
           "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorStatusUpdate",
@@ -104,15 +126,6 @@
               "totalBlocksVerified",
               "totalBlocksExecuted"
             ]
-          }
-        },
-        // the 3 following allow us to get an array of validators without creating a new handler
-        // construnctorArgs._validators u validatorsAdded n validatorsRemoved
-        // where u is the union of the 2 sets and n is intersection
-        "constructorArgs": {
-          "handler": {
-            "type": "constructorArgs",
-            "nameArgs": true
           }
         },
         "validatorsAdded": {

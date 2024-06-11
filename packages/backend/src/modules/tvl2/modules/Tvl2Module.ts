@@ -7,10 +7,10 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
+import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
@@ -46,7 +46,7 @@ export function createTvl2Module(
 
   const idConverter = new IdConverter(config.tvl2.prices)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tvl')
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceModule = createPriceModule(
     config.tvl2,

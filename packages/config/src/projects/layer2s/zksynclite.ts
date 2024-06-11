@@ -55,12 +55,12 @@ export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
   display: {
-    name: 'zkSync Lite',
+    name: 'ZKsync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
+      'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments'],
-    provider: 'zkSync Lite',
+    provider: 'ZKsync Lite',
     category: 'ZK Rollup',
 
     links: {
@@ -80,7 +80,7 @@ export const zksynclite: Layer2 = {
     activityDataSource: 'Explorer API',
     liveness: {
       explanation:
-        'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+        'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
     },
     finality: {
       finalizationPeriod: 0,
@@ -270,7 +270,7 @@ export const zksynclite: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'Validity proofs - zkSync FAQ',
+          text: 'Validity proofs - ZKsync FAQ',
           href: 'https://zksync.io/faq/security.html#validity-proofs',
         },
         {
@@ -283,7 +283,7 @@ export const zksynclite: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Cryptography used - zkSync FAQ',
+          text: 'Cryptography used - ZKsync FAQ',
           href: 'https://zksync.io/faq/security.html#cryptography-used',
         },
         {
@@ -296,7 +296,7 @@ export const zksynclite: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Overview - zkSync documentation',
+          text: 'Overview - ZKsync documentation',
           href: 'https://zksync.io/dev/#overview',
         },
 
@@ -310,7 +310,7 @@ export const zksynclite: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'How decentralized is zkSync - zkSync FAQ',
+          text: 'How decentralized is ZKsync - ZKsync FAQ',
           href: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
         },
         {
@@ -323,7 +323,7 @@ export const zksynclite: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'Priority queue - zkSync FAQ',
+          text: 'Priority queue - ZKsync FAQ',
           href: 'https://zksync.io/faq/security.html#priority-queue',
         },
         {
@@ -341,7 +341,7 @@ export const zksynclite: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         references: [
           {
-            text: 'Withdrawing funds - zkSync documentation',
+            text: 'Withdrawing funds - ZKsync documentation',
             href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
@@ -350,7 +350,7 @@ export const zksynclite: Layer2 = {
         ...EXITS.FORCED(),
         references: [
           {
-            text: 'Withdrawing funds - zkSync documentation',
+            text: 'Withdrawing funds - ZKsync documentation',
             href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
@@ -367,11 +367,11 @@ export const zksynclite: Layer2 = {
         ...EXITS.EMERGENCY('Exodus Mode', 'zero knowledge proof'),
         references: [
           {
-            text: 'Withdrawing funds - zkSync documentation',
+            text: 'Withdrawing funds - ZKsync documentation',
             href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
-            text: 'README.md - zkSync Exit Tool',
+            text: 'README.md - ZKsync Exit Tool',
             href: 'https://github.com/matter-labs/zksync/tree/master/infrastructure/exit-tool',
           },
           {
@@ -404,7 +404,7 @@ export const zksynclite: Layer2 = {
       ),
       discovery.getContractDetails('TokenGovernance', {
         description:
-          'Allows anyone to add new ERC20 tokens to zkSync Lite given sufficient payment.',
+          'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
         upgradableBy: ['ZkSync Multisig'],
         upgradeDelay: 'No delay',
         references: [
@@ -432,7 +432,7 @@ export const zksynclite: Layer2 = {
     nodeSoftware: `The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).`,
     compressionScheme: 'No compression, transactions are always the same size.',
     genesisState:
-      'There is no genesis file nor regenesis for zkSync Lite. By default, all accounts were empty at the beginning.',
+      'There is no genesis file nor regenesis for ZKsync Lite. By default, all accounts were empty at the beginning.',
     dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
   },
   permissions: [
@@ -475,17 +475,17 @@ export const zksynclite: Layer2 = {
   ],
   milestones: [
     {
-      name: 'zkSync 1.0 launch',
+      name: 'ZKsync 1.0 launch',
       link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: '2020-06-18T00:00:00Z',
       description:
-        'zkSync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
+        'ZKsync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
     },
     {
       name: 'Rebranding',
-      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=zkSync%201.0%20is%20now%20zkSync%20Lite',
+      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
-      description: 'zkSync becomes zkSync Lite.',
+      description: 'ZKsync becomes ZKsync Lite.',
     },
   ],
 }

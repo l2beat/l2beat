@@ -100,9 +100,9 @@ export const xai: Layer3 = orbitStackL3({
   },
   nonTemplateEscrows: [
     {
-      chain: 'arbitrum',
-      includeInTotal: false,
       ...discovery.getEscrowDetails({
+        chain: 'arbitrum',
+        includeInTotal: false,
         address: EthereumAddress('0xb591cE747CF19cF30e11d656EB94134F523A9e77'),
         tokens: '*',
         description:

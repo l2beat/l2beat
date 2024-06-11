@@ -16,8 +16,6 @@ interface OldProjectEscrow {
   newVersion?: false
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
   chain?: string
   /** Inclusive */
   untilTimestamp?: UnixTime
@@ -39,8 +37,6 @@ interface NewProjectEscrow {
   newVersion?: true
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
   chain?: string

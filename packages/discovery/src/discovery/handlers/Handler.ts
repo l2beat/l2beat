@@ -1,5 +1,6 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
@@ -12,6 +13,7 @@ export interface HandlerResult {
   field: string
   value?: ContractValue
   error?: string
+  fragment?: utils.FunctionFragment
   ignoreRelative?: boolean
 }
 

@@ -3,11 +3,12 @@
   "chain": "ethereum",
   "blockNumber": 19927693,
   "configHash": "0x40ef5e7ec6070e99fc0753c31b29859c9086903a0d48af264137629c2d536643",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
@@ -52,14 +53,14 @@
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 68400,
         "sequencerInbox": "0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -103,6 +104,8 @@
     {
       "name": "ChallengerMultisig",
       "address": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -131,6 +134,8 @@
     {
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -160,6 +165,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e",
@@ -171,7 +177,11 @@
         "GUARDIAN": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "L2_ORACLE": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19910610],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 19910610
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
         "version": "1.7.2"
@@ -194,6 +204,12 @@
     {
       "name": "L2OutputOracle",
       "address": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6",
