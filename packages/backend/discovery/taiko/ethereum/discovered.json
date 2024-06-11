@@ -48,8 +48,21 @@
           "checkEOAForCalldataDA": true
         },
         "getStateVariables": [
-          [19923613, 1716358991, 47805, 1718042807],
-          [51218, 47836, false, 0, 0, 0, 1716571955]
+          {
+            "genesisHeight": 19923613,
+            "genesisTimestamp": 1716358991,
+            "lastSyncedBlockId": 47805,
+            "lastSynecdAt": 1718042807
+          },
+          {
+            "numBlocks": 51218,
+            "lastVerifiedBlockId": 47836,
+            "provingPaused": false,
+            "__reservedB1": 0,
+            "__reservedB2": 0,
+            "__reservedB3": 0,
+            "lastUnpausedAt": 1716571955
+          }
         ],
         "impl": "0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
         "inNonReentrant": false,
@@ -67,13 +80,39 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 47805, 1718042807],
-        "slotB": [51218, 47836, false, 0, 0, 0, 1716571955],
-        "state": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 47805, 1718042807],
-          [51218, 47836, false, 0, 0, 0, 1716571955]
-        ],
+        "slotA": {
+          "genesisHeight": 19923613,
+          "genesisTimestamp": 1716358991,
+          "lastSyncedBlockId": 47805,
+          "lastSynecdAt": 1718042807
+        },
+        "slotB": {
+          "numBlocks": 51218,
+          "lastVerifiedBlockId": 47836,
+          "provingPaused": false,
+          "__reservedB1": 0,
+          "__reservedB2": 0,
+          "__reservedB3": 0,
+          "lastUnpausedAt": 1716571955
+        },
+        "state": {
+          "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "slotA": {
+            "genesisHeight": 19923613,
+            "genesisTimestamp": 1716358991,
+            "lastSyncedBlockId": 47805,
+            "lastSynecdAt": 1718042807
+          },
+          "slotB": {
+            "numBlocks": 51218,
+            "lastVerifiedBlockId": 47836,
+            "provingPaused": false,
+            "__reservedB1": 0,
+            "__reservedB2": 0,
+            "__reservedB3": 0,
+            "lastUnpausedAt": 1716571955
+          }
+        },
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "taiko_token": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",

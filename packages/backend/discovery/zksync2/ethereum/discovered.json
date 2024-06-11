@@ -212,11 +212,11 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": [
-          "0xd6f952eb2531fb1a787b415c936d5a407757f1b9c68d7c992db2da59b211f9e8",
-          1717940195,
-          0
-        ],
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0xd6f952eb2531fb1a787b415c936d5a407757f1b9c68d7c992db2da59b211f9e8",
+          "expirationTimestamp": 1717940195,
+          "layer2Tip": 0
+        },
         "txFilterer": [],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
       },
