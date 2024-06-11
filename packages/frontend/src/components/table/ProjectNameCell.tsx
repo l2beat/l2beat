@@ -59,13 +59,26 @@ export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
           </Tooltip>
         </span>
       )}
-      {project.showProjectUnderReview && (
+      {project.showProjectUnderReview && !project.hasImplementationChanged && (
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
               <UnderReviewIcon className="relative top-px size-4" />
             </TooltipTrigger>
             <TooltipContent>This project is under review.</TooltipContent>
+          </Tooltip>
+        </span>
+      )}
+      {project.showProjectUnderReview && project.hasImplementationChanged && (
+        <span className="pl-1.5">
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <UnderReviewIcon className="relative top-px size-4" />
+            </TooltipTrigger>
+            <TooltipContent>
+              There are implementation changes and part of the information might
+              be outdated. The project is under review.
+            </TooltipContent>
           </Tooltip>
         </span>
       )}
@@ -79,15 +92,15 @@ export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
           </Tooltip>
         </span>
       )}
-      {project.hasImplementationChanged && (
+      {project.hasImplementationChanged && !project.showProjectUnderReview && (
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
               <UnderReviewIcon className="relative top-px size-4" />
             </TooltipTrigger>
             <TooltipContent>
-              There are unhandled implementation changes. The project is under
-              review and part of the information might be outdated.
+              There are implementation changes and part of the information might
+              be outdated.
             </TooltipContent>
           </Tooltip>
         </span>

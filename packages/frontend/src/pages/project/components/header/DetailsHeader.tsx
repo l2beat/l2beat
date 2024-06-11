@@ -14,7 +14,6 @@ import { cn } from '../../../../utils/cn'
 import { RiskValues } from '../../../../utils/risks/types'
 import { ProjectLink } from '../../types'
 import { ArchivedBar } from './ArchivedBar'
-import { ImplementationUnderReviewBar } from './ImplementationUnderReviewBar'
 import { ProjectHeader } from './ProjectHeader'
 import { UnderReviewBar } from './UnderReviewBar'
 import { UpcomingBar } from './UpcomingBar'
@@ -64,9 +63,14 @@ export function DetailsHeader(props: HeaderProps) {
             )}
             {props.isArchived && <ArchivedBar />}
             {props.isUpcoming && <UpcomingBar />}
-            {props.isUnderReview && <UnderReviewBar />}
-            {props.isImplementationUnderReview && (
-              <ImplementationUnderReviewBar />
+            {props.isUnderReview && !props.isImplementationUnderReview && (
+              <UnderReviewBar text="This project is under review." />
+            )}
+            {props.isImplementationUnderReview && !props.isUnderReview && (
+              <UnderReviewBar text="There are implementation changes and part of the information might be outdated." />
+            )}
+            {props.isImplementationUnderReview && props.isUnderReview && (
+              <UnderReviewBar text="There are implementation changes and part of the information might be outdated. The project is under review." />
             )}
             {props.warning && (
               <WarningBar
