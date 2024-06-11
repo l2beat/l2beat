@@ -506,7 +506,7 @@ export const optimism: Layer2 = {
     addresses: [
       discovery.getContractDetails('OptimismPortal', {
         description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. This contract stores the following tokens: ETH.',
+          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('L1CrossDomainMessenger', {
