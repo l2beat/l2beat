@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 20063644,
-  "configHash": "0xa4009b9214191fa03b12af03bcf8a602ab842cb883666ab3cee1530cec001515",
+  "configHash": "0x230af6dfce6f5602df524d32f807718555a53d94f3bea3401568434f77f4a270",
   "version": 5,
   "contracts": [
     {
@@ -14,7 +14,14 @@
       "sinceTimestamp": 1717149791,
       "values": {
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
-        "getRequiredThreshold": [0, 1, 2, 3, 3],
+        "getRequiredThreshold": [
+          0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15,
+          16, 17, 18, 18, 19, 20, 21, 21, 22, 23, 24, 24, 25, 26, 27, 27, 28,
+          29, 30, 30, 31, 32, 33, 33, 34, 35, 36, 36, 37, 38, 39, 39, 40, 41,
+          42, 42, 43, 44, 45, 45, 46, 47, 48, 48, 49, 50, 51, 51, 52, 53, 54,
+          54, 55, 56, 57, 57, 58, 59, 60, 60, 61, 62, 63, 63, 64, 65, 66, 66,
+          67, 68, 69, 69, 70, 71, 72, 72, 73, 74, 75
+        ],
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
         "livenessInterval": 8467200,
         "minOwners": 8,
@@ -24,8 +31,9 @@
         "version": "1.2.0"
       },
       "errors": {
-        "getRequiredThreshold": "Too many values. Update configuration to explore fully"
-      }
+        "getRequiredThreshold": "Too many values. Provide a higher maxLength value"
+      },
+      "derivedName": "LivenessModule"
     },
     {
       "name": "GuardianMultisig",
