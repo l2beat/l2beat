@@ -24,6 +24,7 @@ export async function NavSidebar({
   legacyNav: boolean
 }) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+  const zkCatalog = env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row justify-between items-center">
@@ -60,7 +61,7 @@ export async function NavSidebar({
         <NavDivider />
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
-          <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
+          {zkCatalog && <NavSmallLink title="ZK Catalog" href="/zk-catalog" />}
           <NavSmallLink title="Donate" href="/donate" />
           <NavSmallLink
             title="Governance"
