@@ -1,0 +1,72 @@
+import { assert } from '@l2beat/backend-tools'
+import { utils } from 'ethers'
+import { ParamType } from 'ethers/lib/utils'
+import { toFunctionFragment } from '../handlers/utils/toFunctionFragment'
+
+export type Type = BaseType | ArrayType | TupleType
+
+interface BaseType {
+  kind: 'base'
+  typeName: string
+}
+
+interface ArrayType {
+  kind: 'array'
+  length: number | 'dynamic'
+  type: Type
+}
+
+interface TupleType {
+  kind: 'tuple'
+  elements: {
+    name?: string
+    type: Type
+  }[]
+}
+
+export function parseReturnType(returnType: string): Type {
+  assert(
+    returnType.startsWith('(') && returnType.endsWith(')'),
+    'Return type must have parentheses around it',
+  )
+  const virtualMethod = `function f() returns ${returnType}`
+  const fragment = toFunctionFragment(virtualMethod)
+  return getReturnType(fragment)
+}
+
+export function getReturnType(fragment: utils.FunctionFragment): Type {
+  assert(fragment.outputs !== undefined)
+
+  return {
+    kind: 'tuple',
+    elements: fragment.outputs.map((output) => ({
+      name: output.name === null ? undefined : output.name,
+      type: parseEthersParamType(output),
+    })),
+  }
+}
+
+function parseEthersParamType(paramType: ParamType): Type {
+  if (paramType.arrayLength !== null) {
+    return {
+      kind: 'array',
+      length: paramType.arrayLength === -1 ? 'dynamic' : paramType.arrayLength,
+      type: parseEthersParamType(paramType.arrayChildren),
+    }
+  }
+
+  if (paramType.components !== null) {
+    return {
+      kind: 'tuple',
+      elements: paramType.components.map((output) => ({
+        name: output.name === null ? undefined : output.name,
+        type: parseEthersParamType(output),
+      })),
+    }
+  }
+
+  return {
+    kind: 'base',
+    typeName: paramType.type,
+  }
+}
