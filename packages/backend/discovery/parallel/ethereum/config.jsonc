@@ -103,6 +103,6 @@
     },
     "L1WETHGateway": {
       "ignoreMethods": ["l1Weth"]
-    },
+    }
   }
 }

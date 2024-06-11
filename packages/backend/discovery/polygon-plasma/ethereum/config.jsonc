@@ -146,6 +146,6 @@
     },
     "MaticWETH": {
       "ignoreInWatchMode": ["totalSupply"]
-    },
+    }
   }
 }

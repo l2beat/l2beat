@@ -63,10 +63,9 @@ const NumGuardiansProver = discovery.getContractValue<string[]>(
   'numGuardians',
 )
 
-const TaikoChainConfig = discovery.getContractValue<{ [key: string]: (number | string) }>(
-  'TaikoL1Contract',
-  'getConfig',
-)
+const TaikoChainConfig = discovery.getContractValue<{
+  [key: string]: number | string
+}>('TaikoL1Contract', 'getConfig')
 
 const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes

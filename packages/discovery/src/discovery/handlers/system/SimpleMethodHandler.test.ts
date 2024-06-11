@@ -4,8 +4,8 @@ import { expect, mockObject } from 'earl'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { MulticallClient } from '../../provider/multicall/MulticallClient'
-import { SimpleMethodHandler } from './SimpleMethodHandler'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
+import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
   const BLOCK_NUMBER = 1234
@@ -94,10 +94,7 @@ describe(SimpleMethodHandler.name, () => {
       const method = 'function balanceOf() view returns (uint256)'
       const fragment = toFunctionFragment(method)
 
-      const handler = new SimpleMethodHandler(
-          method,
-        DiscoveryLogger.SILENT,
-      )
+      const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
       expect(handler.field).toEqual('balanceOf')
       const encoded = handler.encode(address)
       expect(encoded).toEqual([
