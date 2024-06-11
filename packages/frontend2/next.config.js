@@ -17,7 +17,7 @@ const nextConfig = {
           source: '/:path*',
           has: [{ type: 'host', value: '.*localhost.*' }],
           destination:
-            'http://localhost:8080/:path*',
+            'http://127.0.0.1:8080/:path*',
         },
         {
           source: '/:path*',
