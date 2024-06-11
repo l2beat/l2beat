@@ -1,3 +1,5 @@
+import { assert } from '@l2beat/shared-pure'
+
 const units = ['', 'K', 'M', 'B', 'T']
 
 const HAIR_SPACE = '\u200a'
@@ -25,7 +27,10 @@ export function formatNumber(value: number, decimals = 2): string {
   const roundedDownValue =
     Math.floor(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
-  return roundedDownValue.toFixed(decimals) + withSpace(units[unitIndex])
+  const unit = units[unitIndex]
+  assert(unit, `No unit for value ${value}`)
+
+  return roundedDownValue.toFixed(decimals) + withSpace(unit)
 }
 
 function withSpace(unit: string) {

@@ -2,11 +2,11 @@
 
 import {
   createColumnHelper,
-  useReactTable,
-  getCoreRowModel,
   flexRender,
+  getCoreRowModel,
+  useReactTable,
 } from '@tanstack/react-table'
-import { formatNumber } from '~/utils/formatNumber'
+import { formatNumber } from '~/utils/format-number'
 
 type DataAvailabilityProvider = {
   daLayer: string
