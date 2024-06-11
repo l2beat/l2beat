@@ -449,17 +449,58 @@ export const optimism: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('OptimismPortal', {}),
-      discovery.getContractDetails('L1CrossDomainMessenger', {}),
-      discovery.getContractDetails('L1StandardBridge', {}),
-      discovery.getContractDetails('L1ERC721Bridge', {}),
-      discovery.getContractDetails('SystemConfig', {}),
-      discovery.getContractDetails('DisputeGameFactory', {}),
-      discovery.getContractDetails('FaultDisputeGame', {}),
-      discovery.getContractDetails('MIPS', {}),
-      discovery.getContractDetails('AnchorStateRegistry', {}),
-      discovery.getContractDetails('PreimageOracle', {}),
-      discovery.getContractDetails('DelayedWETH', {}),
+      discovery.getContractDetails('OptimismPortal', {
+        description:
+          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. This contract stores the following tokens: ETH.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1CrossDomainMessenger', {
+        description:
+          'The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract’s replay function.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1StandardBridge', {
+        description:
+          'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('L1ERC721Bridge', {
+        description:
+          'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('SystemConfig', {
+        description:
+          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('DisputeGameFactory', {
+        description:
+          'The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('FaultDisputeGame', {
+        description:
+          'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
+      }),
+      discovery.getContractDetails('MIPS', {
+        description:
+          'The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.',
+      }),
+      discovery.getContractDetails('AnchorStateRegistry', {
+        description:
+          'Contains the latest confirmed state root that can be used as a starting point in a dispute game.',
+        ...l1Upgradeability,
+      }),
+      discovery.getContractDetails('PreimageOracle', {
+        description:
+          'The PreimageOracle contract is used to load the required data from L1 for a dispute game.',
+      }),
+      discovery.getContractDetails('DelayedWETH', {
+        description:
+          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the ProxyAdminOwner multisig.',
+        ...l1Upgradeability,
+      }),
       discovery.getContractDetails('SuperchainConfig', {
         description:
           'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
