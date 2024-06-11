@@ -100,8 +100,55 @@ export const real: Layer2 = orbitStackL2({
       name: 'Re.al Mainnet Launch',
       link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/FL4Ewx3CKsFEfMFsU7DZ-cIdhZc05aChfASQ1t-SQ-A',
       date: '2024-05-15T00:00:00Z',
-      description:
-        'Re.al launches its mainnet with some initial dapps deployed.',
+      description: 'Re.al launches its mainnet with some initial dapps deployed.',
+    },
+    {
+      name: 'Arcana Launch',
+      link: 'https://arcana.finance',
+      date: '2024-05-15T00:00:00Z',
+      description: 'Arcana protocol launches their platform on re.al chain.',
+    },
+    {
+      name: 'Arcana Points Program Launched',
+      link: 'https://arcana.finance/points',
+      date: '2024-05-17T00:00:00Z',
+      description: 'Arcana protocol launches their points program for arcUSD holders.',
+    },
+    {
+      name: 'Re.al Launches $RWA Token and Governance Protocol',
+      link: 'https://www.re.al/app/buy',
+      date: '2024-05-15T00:00:00Z',
+      description: 'Re.al launches their native token and governance protocol.',
+    },
+    {
+      name: 'Tangible Launches USTB',
+      link: 'https://www.coingecko.com/en/coins/real-us-t-bill',
+      date: '2024-05-10T00:00:00Z',
+      description: 'Tangible protocol deployed their US treasury bill backed stable coin, USTB.',
+    },
+    {
+      name: 'Stack Launches $MORE token and Platform',
+      link: 'https://www.stackmore.xyz',
+      date: '2024-05-18T00:00:00Z',
+      description: 'Stack protocol launches their application and $MORE token on Re.al.',
+    },
+    {
+      name: 'Pearl launches Concentrated Liquidity for RWAs',
+      link: 'https://www.pearl.exchange/',
+      date: '2024-05-16T00:00:00Z',
+      description: 'Pearl protocol launches their concentrated liquidity provisions alongside their $PEARL token and governance program.',
+    },
+    {
+      name: 'Caviar Deploys to Re.al',
+      link: 'https://www.pearl.exchange/caviar',
+      date: '2024-05-21T00:00:00Z',
+      description: 'The Caviar project deploys their native $CVR token and platform to Re.al.',
+    },
+    {
+      name: 'Tangible deploys $UKRE token Alongside Baskets Protocol',
+      link: 'https://www.tangible.store/baskets',
+      date: '2024-05-26T00:00:00Z',
+      description: 'Tokenized REITs in the form of "baskets" have been deployed to Re.al. $UKRE being the primary cross-chain token for UK RE Baskets',
     },
   ],
 })
