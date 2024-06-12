@@ -25,12 +25,6 @@ export type PriceConfigIdMap = Map<
   string,
   { assetId: AssetId; priceId: string }
 >
-export type Values = {
-  external: bigint
-  canonical: bigint
-  native: bigint
-}
-export type ValuesMap = Map<number, Values>
 
 export interface ApiProject {
   id: ProjectId

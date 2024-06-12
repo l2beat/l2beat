@@ -1,0 +1,86 @@
+import { TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
+import { SyncOptimizer } from '../../utils/SyncOptimizer'
+import {
+  ValuesForSource,
+  getChartsData,
+  sumValuesPerSource,
+} from '../utils/chartsUtils'
+import { ApiProject, AssociatedToken } from '../utils/types'
+import { ControllerService } from './ControllerService'
+
+interface AggregateTvlServiceDependencies {
+  controllerService: ControllerService
+  syncOptimizer: SyncOptimizer
+}
+
+export class AggregateTvlService {
+  constructor(private readonly $: AggregateTvlServiceDependencies) {}
+
+  async getAggregatedTvl(
+    lastHour: UnixTime,
+    projects: ApiProject[],
+    associatedTokens: AssociatedToken[],
+  ): Promise<TvlApiCharts> {
+    const ethPrices = await this.$.controllerService.getEthPrices()
+
+    const valuesByProjectByTimestamp =
+      await this.$.controllerService.getValuesForProjects(projects, lastHour)
+
+    const aggregate = new Map<number, ValuesForSource>()
+    for (const project of projects) {
+      const valuesByTimestamp =
+        valuesByProjectByTimestamp[project.id.toString()]
+
+      for (const [_timestamp, values] of Object.entries(valuesByTimestamp)) {
+        const timestamp = new UnixTime(+_timestamp)
+        const sum = sumValuesPerSource(values)
+        const aggregateSum = aggregate.get(Number(timestamp))
+        if (!aggregateSum) {
+          aggregate.set(Number(timestamp), sum)
+        } else {
+          aggregateSum.canonical += sum.canonical
+          aggregateSum.external += sum.external
+          aggregateSum.native += sum.native
+        }
+      }
+    }
+
+    const projectsMinTimestamp = projects
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
+
+    const minTimestamp = projectsMinTimestamp.toEndOf('day')
+
+    const dailyStart = minTimestamp
+    const sixHourlyStart = UnixTime.max(
+      this.$.syncOptimizer.sixHourlyCutOff,
+      minTimestamp,
+    ).toEndOf('day')
+    const hourlyStart = UnixTime.max(
+      this.$.syncOptimizer.hourlyCutOff,
+      minTimestamp,
+    )
+
+    const result = getChartsData({
+      dailyStart,
+      sixHourlyStart,
+      hourlyStart,
+      lastHour,
+      aggregate,
+      ethPrices,
+    })
+
+    if (associatedTokens.length > 0) {
+      throw new Error('associated removal not implemented')
+      //   const excluded = await Promise.all(
+      //     associatedTokens.map(async (token) => {
+      //       const data = await this.getTokenChart(x, x.project, lastHour)
+
+      //       result = subtractTokenCharts(result, data, token.type, ethPrices)
+      //     }),
+      //   )
+    }
+
+    return result
+  }
+}

@@ -57,24 +57,7 @@ export class ControllerService {
       valuesByProjectByTimestamp[projectId] = filteredValues
     }
 
-    const projectsMinTimestamp = projects
-      .map((x) => x.minTimestamp)
-      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
-
-    const minTimestamp = projectsMinTimestamp.toEndOf('day')
-
-    return {
-      valuesByProjectByTimestamp,
-      dailyStart: minTimestamp,
-      sixHourlyStart: UnixTime.max(
-        this.$.syncOptimizer.sixHourlyCutOff,
-        minTimestamp,
-      ).toEndOf('day'),
-      hourlyStart: UnixTime.max(
-        this.$.syncOptimizer.hourlyCutOff,
-        minTimestamp,
-      ),
-    }
+    return valuesByProjectByTimestamp
   }
 
   async getPricesAndAmountsForToken(

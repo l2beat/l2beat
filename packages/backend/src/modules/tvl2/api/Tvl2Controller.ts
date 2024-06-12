@@ -17,11 +17,13 @@ import {
 
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './services/ControllerService'
 import {
+  ValuesForSource,
   convertSourceName,
   getChart,
   getChartData,
@@ -36,7 +38,6 @@ import {
   AssociatedToken,
   CanonicalAssetBreakdown,
   PriceConfigIdMap,
-  Values,
 } from './utils/types'
 
 export interface Tvl2ControllerDependencies {
@@ -48,6 +49,7 @@ export interface Tvl2ControllerDependencies {
   minTimestamp: Record<Project['type'], UnixTime>
   chainConverter: ChainConverter
   controllerService: ControllerService
+  syncOptimizer: SyncOptimizer
 }
 
 export class Tvl2Controller {
@@ -56,20 +58,32 @@ export class Tvl2Controller {
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
     const ethPrices = await this.$.controllerService.getEthPrices()
 
-    const {
-      valuesByProjectByTimestamp,
-      hourlyStart,
-      sixHourlyStart,
-      dailyStart,
-    } = await this.$.controllerService.getValuesForProjects(
-      this.$.projects,
-      lastHour,
+    const valuesByProjectByTimestamp =
+      await this.$.controllerService.getValuesForProjects(
+        this.$.projects,
+        lastHour,
+      )
+
+    const projectsMinTimestamp = this.$.projects
+      .map((x) => x.minTimestamp)
+      .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
+
+    const minTimestamp = projectsMinTimestamp.toEndOf('day')
+
+    const dailyStart = minTimestamp
+    const sixHourlyStart = UnixTime.max(
+      this.$.syncOptimizer.sixHourlyCutOff,
+      minTimestamp,
+    ).toEndOf('day')
+    const hourlyStart = UnixTime.max(
+      this.$.syncOptimizer.hourlyCutOff,
+      minTimestamp,
     )
 
     const aggregates = {
-      layer3: new Map<number, Values>(),
-      layer2: new Map<number, Values>(),
-      bridge: new Map<number, Values>(),
+      layer3: new Map<number, ValuesForSource>(),
+      layer2: new Map<number, ValuesForSource>(),
+      bridge: new Map<number, ValuesForSource>(),
     }
 
     const chartsMap = new Map<string, TvlApiCharts>()
@@ -77,7 +91,7 @@ export class Tvl2Controller {
       const valuesByTimestamp =
         valuesByProjectByTimestamp[project.id.toString()]
 
-      const valueSums = new Map<number, Values>()
+      const valueSums = new Map<number, ValuesForSource>()
       for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
         const sum = sumValuesPerSource(values)
         valueSums.set(Number(timestamp), sum)
@@ -102,6 +116,7 @@ export class Tvl2Controller {
           aggregateSum.native += resultForTotal.native
         }
       }
+
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, project.minTimestamp).toEndOf('day'),
         end: lastHour,
@@ -362,114 +377,6 @@ export class Tvl2Controller {
       }
     }
     return tvl
-  }
-
-  async getAggregatedTvl(
-    lastHour: UnixTime,
-    projectSlugs: string[],
-    excludeAssociated: boolean,
-  ): Promise<TvlApiCharts> {
-    const ethPrices = await this.$.controllerService.getEthPrices()
-
-    const projects = this.$.projects.filter((p) =>
-      projectSlugs.includes(p.slug),
-    )
-    const {
-      valuesByProjectByTimestamp,
-      sixHourlyStart,
-      hourlyStart,
-      dailyStart,
-    } = await this.$.controllerService.getValuesForProjects(projects, lastHour)
-
-    const aggregate = new Map<number, Values>()
-    for (const project of projects) {
-      const valuesByTimestamp =
-        valuesByProjectByTimestamp[project.id.toString()]
-
-      for (const [_timestamp, values] of Object.entries(valuesByTimestamp)) {
-        const timestamp = new UnixTime(+_timestamp)
-        const sum = sumValuesPerSource(values)
-        const aggregateSum = aggregate.get(Number(timestamp))
-        if (!aggregateSum) {
-          aggregate.set(Number(timestamp), sum)
-        } else {
-          aggregateSum.canonical += sum.canonical
-          aggregateSum.external += sum.external
-          aggregateSum.native += sum.native
-        }
-      }
-    }
-
-    const dailyData = getChartData({
-      start: dailyStart,
-      end: lastHour,
-      step: [1, 'days'],
-      aggregatedValues: aggregate,
-      ethPrices,
-      chartId: '/tvl/aggregate',
-    })
-
-    const sixHourlyData = getChartData({
-      start: sixHourlyStart,
-      end: lastHour,
-      step: [6, 'hours'],
-      aggregatedValues: aggregate,
-      ethPrices,
-      chartId: '/tvl/aggregate',
-    })
-
-    const hourlyData = getChartData({
-      start: hourlyStart,
-      end: lastHour,
-      step: [1, 'hours'],
-      aggregatedValues: aggregate,
-      ethPrices,
-      chartId: '/tvl/aggregate',
-    })
-
-    const result: TvlApiCharts = {
-      hourly: getChart(hourlyData),
-      sixHourly: getChart(sixHourlyData),
-      daily: getChart(dailyData),
-    }
-
-    if (excludeAssociated) {
-      const projectIds = projects.map((p) => p.id.toString())
-
-      const excluded = await Promise.all(
-        this.$.associatedTokens
-          .filter((e) => projectIds.includes(e.project))
-          .map(async (x) => ({
-            ...x,
-            data: await this.getTokenChart(x, x.project, lastHour),
-          })),
-      )
-
-      for (const e of excluded) {
-        result.hourly = subtractTokenChart(
-          result.hourly,
-          e.data.hourly,
-          e.type,
-          ethPrices,
-        )
-
-        result.sixHourly = subtractTokenChart(
-          result.sixHourly,
-          e.data.sixHourly,
-          e.type,
-          ethPrices,
-        )
-
-        result.daily = subtractTokenChart(
-          result.daily,
-          e.data.daily,
-          e.type,
-          ethPrices,
-        )
-      }
-    }
-
-    return result
   }
 
   async getTokenChart(

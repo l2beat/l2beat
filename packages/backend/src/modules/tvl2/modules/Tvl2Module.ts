@@ -12,12 +12,10 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import {
-  Tvl2Controller,
-  Tvl2ControllerDependencies,
-} from '../api/Tvl2Controller'
+import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
+import { AggregateTvlService } from '../api/services/AggregateTvlService'
 import { ControllerService } from '../api/services/ControllerService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -108,17 +106,31 @@ export function createTvl2Module(
     logger,
   })
 
-  const controllerDependencies = getControllerDependencies(
-    config.tvl2,
+  const aggregatedTvlService = new AggregateTvlService({
     controllerService,
-    new ChainConverter(
-      chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    syncOptimizer,
+  })
+
+  const controllerDependencies = {
+    ...getControllerDependencies(
+      config.tvl2,
+      controllerService,
+      new ChainConverter(
+        chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+      ),
     ),
-  )
+    syncOptimizer,
+  }
 
   const tvlController = new Tvl2Controller(controllerDependencies)
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
-  const tvlRouter = createTvl2Router(tvlController, clock)
+  const tvlRouter = createTvl2Router(
+    tvlController,
+    aggregatedTvlService,
+    controllerDependencies.projects,
+    controllerDependencies.associatedTokens,
+    clock,
+  )
 
   const tvlCleaner = new TvlCleaner(
     clock,
@@ -159,7 +171,7 @@ function getControllerDependencies(
   config: Tvl2Config,
   controllerService: ControllerService,
   chainConverter: ChainConverter,
-): Tvl2ControllerDependencies {
+) {
   const amountConfig = getAmountConfigMap(config)
   const currAmountConfigs = new Map(
     [...amountConfig.values()]

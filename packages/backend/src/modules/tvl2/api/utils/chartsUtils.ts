@@ -2,16 +2,23 @@ import {
   assert,
   ProjectId,
   TokenTvlApiChart,
+  TokenTvlApiCharts,
   TvlApiChart,
+  TvlApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { ValueRecord } from '../../repositories/ValueRepository'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
-import { ValuesMap } from './types'
 
-export function sumValuesPerSource(values: ValueRecord[]) {
+export type ValuesForSource = {
+  external: bigint
+  canonical: bigint
+  native: bigint
+}
+
+export function sumValuesPerSource(values: ValueRecord[]): ValuesForSource {
   return values.reduce(
     (acc, curr) => {
       acc.canonical += curr.canonical
@@ -22,45 +29,79 @@ export function sumValuesPerSource(values: ValueRecord[]) {
     { canonical: 0n, external: 0n, native: 0n },
   )
 }
-export function getChartData({
-  start,
-  end,
-  step,
-  aggregatedValues,
-  chartId,
-  ethPrices,
-}: {
+
+export function getChartsData(props: {
+  dailyStart: UnixTime
+  sixHourlyStart: UnixTime
+  hourlyStart: UnixTime
+  lastHour: UnixTime
+  aggregate: Map<number, ValuesForSource>
+  ethPrices: Map<number, number>
+}): TvlApiCharts {
+  const dailyData = getChartData({
+    start: props.dailyStart,
+    end: props.lastHour,
+    step: [1, 'days'],
+    aggregatedValues: props.aggregate,
+    ethPrices: props.ethPrices,
+    chartId: '/tvl/aggregate',
+  })
+
+  const sixHourlyData = getChartData({
+    start: props.sixHourlyStart,
+    end: props.lastHour,
+    step: [6, 'hours'],
+    aggregatedValues: props.aggregate,
+    ethPrices: props.ethPrices,
+    chartId: '/tvl/aggregate',
+  })
+
+  const hourlyData = getChartData({
+    start: props.hourlyStart,
+    end: props.lastHour,
+    step: [1, 'hours'],
+    aggregatedValues: props.aggregate,
+    ethPrices: props.ethPrices,
+    chartId: '/tvl/aggregate',
+  })
+
+  return {
+    hourly: getChart(hourlyData),
+    sixHourly: getChart(sixHourlyData),
+    daily: getChart(dailyData),
+  }
+}
+
+export function getChartData(props: {
   start: UnixTime
   end: UnixTime
   step: [number, 'hours' | 'days']
-  aggregatedValues: ValuesMap
+  aggregatedValues: Map<number, ValuesForSource>
   ethPrices: Map<number, number>
   chartId: string | ProjectId
 }) {
   const values = []
-  for (let curr = start; curr.lte(end); curr = curr.add(...step)) {
-    const value = aggregatedValues.get(curr.toNumber())
+  for (
+    let curr = props.start;
+    curr.lte(props.end);
+    curr = curr.add(...props.step)
+  ) {
+    const value = props.aggregatedValues.get(curr.toNumber())
     assert(
       value,
       'Value not found for chart ' +
-        chartId.toString() +
+        props.chartId.toString() +
         ' at timestamp ' +
         curr.toString(),
     )
-    const ethPrice = ethPrices.get(curr.toNumber())
+    const ethPrice = props.ethPrices.get(curr.toNumber())
     assert(ethPrice, 'Eth price not found for timestamp ' + curr.toString())
 
     values.push(getChartPoint(curr, ethPrice, value))
   }
   return values
 }
-export function getTokenChartData({
-  start,
-  end,
-  step,
-  amountsAndPrices,
-  decimals,
-}: {
+export function getTokenChartData(props: {
   start: UnixTime
   end: UnixTime
   step: [number, 'days' | 'hours']
@@ -68,8 +109,12 @@ export function getTokenChartData({
   decimals: number
 }) {
   const data: [UnixTime, number, number][] = []
-  for (let curr = start; curr <= end; curr = curr.add(...step)) {
-    const amountAndPrice = amountsAndPrices[curr.toString()]
+  for (
+    let curr = props.start;
+    curr <= props.end;
+    curr = curr.add(...props.step)
+  ) {
+    const amountAndPrice = props.amountsAndPrices[curr.toString()]
     assert(
       amountAndPrice !== undefined,
       'Value not found for timestamp ' + curr.toString(),
@@ -77,11 +122,11 @@ export function getTokenChartData({
     const valueUsd = calculateValue({
       amount: amountAndPrice.amount,
       priceUsd: amountAndPrice.price,
-      decimals,
+      decimals: props.decimals,
     })
     data.push([
       curr,
-      asNumber(amountAndPrice.amount, decimals),
+      asNumber(amountAndPrice.amount, props.decimals),
       asNumber(valueUsd, 2),
     ] as const)
   }
@@ -191,6 +236,25 @@ export function sumCharts(
     ),
   }
 }
+
+export function subtractTokenCharts(
+  main: TvlApiCharts,
+  token: TokenTvlApiCharts,
+  tokenType: 'canonical' | 'external' | 'native',
+  ethPrices: Map<number, number>,
+): TvlApiCharts {
+  return {
+    hourly: subtractTokenChart(main.hourly, token.hourly, tokenType, ethPrices),
+    sixHourly: subtractTokenChart(
+      main.sixHourly,
+      token.sixHourly,
+      tokenType,
+      ethPrices,
+    ),
+    daily: subtractTokenChart(main.daily, token.daily, tokenType, ethPrices),
+  }
+}
+
 export function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,

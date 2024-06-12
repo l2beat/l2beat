@@ -10,8 +10,16 @@ import { z } from 'zod'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
+import { AggregateTvlService } from './services/AggregateTvlService'
+import { ApiProject, AssociatedToken } from './utils/types'
 
-export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
+export function createTvl2Router(
+  controller: Tvl2Controller,
+  aggregatedTvlService: AggregateTvlService,
+  projects: ApiProject[],
+  associatedTokens: AssociatedToken[],
+  clock: Clock,
+) {
   const router = new Router()
 
   router.get(
@@ -54,10 +62,20 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
           .split(',')
           .map((slug) => slug.trim())
 
-        const tvl = await controller.getAggregatedTvl(
+        const filteredProjects = projects.filter((p) =>
+          projectSlugs.includes(p.slug),
+        )
+
+        const projectIds = projects.map((p) => p.id.toString())
+
+        const filteredAssociatedTokens = associatedTokens.filter((e) =>
+          projectIds.includes(e.project),
+        )
+
+        const tvl = await aggregatedTvlService.getAggregatedTvl(
           clock.getLastHour().add(-1, 'hours'),
-          projectSlugs,
-          ctx.query.excludeAssociatedTokens,
+          filteredProjects,
+          filteredAssociatedTokens,
         )
         ctx.body = tvl
       },
