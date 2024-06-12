@@ -2,7 +2,6 @@ import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { RateLimitedProvider } from './RateLimitedProvider'
 
 export interface ContractSource {
   name: string
@@ -21,8 +20,8 @@ export interface ContractDeployment {
 }
 
 export interface RawProviders {
-  baseProvider: providers.JsonRpcProvider | RateLimitedProvider
-  eventProvider: providers.JsonRpcProvider | RateLimitedProvider
+  baseProvider: providers.JsonRpcProvider
+  eventProvider: providers.JsonRpcProvider
   etherscanLikeClient: EtherscanLikeClient
 }
 

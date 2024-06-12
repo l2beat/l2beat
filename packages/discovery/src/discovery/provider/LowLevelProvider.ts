@@ -9,15 +9,12 @@ import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
-import { RateLimitedProvider } from './RateLimitedProvider'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export class LowLevelProvider {
   constructor(
-    private readonly provider: providers.JsonRpcProvider | RateLimitedProvider,
-    private readonly eventProvider:
-      | providers.JsonRpcProvider
-      | RateLimitedProvider,
+    private readonly provider: providers.JsonRpcProvider,
+    private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanLikeClient: EtherscanLikeClient,
   ) {}
 
