@@ -8,7 +8,7 @@ import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const blobStream = {
-  kind: DaBridgeKind.NoBridge,
+  kind: DaBridgeKind.OnChainBridge,
   display: {
     name: 'Blob Stream',
     slug: 'blob-stream',
