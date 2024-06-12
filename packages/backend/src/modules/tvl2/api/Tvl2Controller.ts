@@ -19,7 +19,7 @@ import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './services/ControllerService'
-import { TokenTvlService } from './services/TokenTvlService'
+import { TokenService } from './services/TokenService'
 import {
   ValuesForSource,
   convertSourceName,
@@ -47,7 +47,7 @@ export interface Tvl2ControllerDependencies {
   chainConverter: ChainConverter
   controllerService: ControllerService
   syncOptimizer: SyncOptimizer
-  tokenTvlService: TokenTvlService
+  tokenService: TokenService
 }
 
 export class Tvl2Controller {
@@ -274,11 +274,7 @@ export class Tvl2Controller {
 
         return {
           ...x,
-          data: await this.$.tokenTvlService.getTokenChart(
-            x,
-            project,
-            lastHour,
-          ),
+          data: await this.$.tokenService.getTokenChart(x, project, lastHour),
         }
       }),
     )

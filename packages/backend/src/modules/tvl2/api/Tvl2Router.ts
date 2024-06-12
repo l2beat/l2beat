@@ -12,13 +12,13 @@ import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
 import { AggregateTvlService } from './services/AggregateTvlService'
-import { TokenTvlService } from './services/TokenTvlService'
+import { TokenService } from './services/TokenService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
 export function createTvl2Router(
   controller: Tvl2Controller,
   aggregatedTvlService: AggregateTvlService,
-  tokenTvlService: TokenTvlService,
+  tokenService: TokenService,
   projects: ApiProject[],
   associatedTokens: AssociatedToken[],
   clock: Clock,
@@ -102,7 +102,7 @@ export function createTvl2Router(
         const apiProject = projects.find((p) => p.id === project)
         assert(apiProject, 'Project not found!')
 
-        ctx.body = await tokenTvlService.getTokenChart(
+        ctx.body = await tokenService.getTokenChart(
           { chain, address },
           apiProject,
           clock.getLastHour().add(-1, 'hours'),

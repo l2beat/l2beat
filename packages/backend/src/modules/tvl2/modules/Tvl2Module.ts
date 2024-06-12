@@ -17,7 +17,7 @@ import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregateTvlService } from '../api/services/AggregateTvlService'
 import { ControllerService } from '../api/services/ControllerService'
-import { TokenTvlService } from '../api/services/TokenTvlService'
+import { TokenService } from '../api/services/TokenService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
@@ -123,7 +123,7 @@ export function createTvl2Module(
     syncOptimizer,
   })
 
-  const tokenTvlService = new TokenTvlService({
+  const tokenService = new TokenService({
     controllerService,
     configMapping,
   })
@@ -131,14 +131,14 @@ export function createTvl2Module(
   const tvlController = new Tvl2Controller({
     ...controllerDependencies,
     syncOptimizer,
-    tokenTvlService,
+    tokenService,
   })
 
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const tvlRouter = createTvl2Router(
     tvlController,
     aggregatedTvlService,
-    tokenTvlService,
+    tokenService,
     controllerDependencies.projects,
     controllerDependencies.associatedTokens,
     clock,

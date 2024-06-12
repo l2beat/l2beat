@@ -14,7 +14,7 @@ interface TokenTvlServiceDependencies {
   controllerService: ControllerService
 }
 
-export class TokenTvlService {
+export class TokenService {
   constructor(private readonly $: TokenTvlServiceDependencies) {}
 
   async getTokenChart(
