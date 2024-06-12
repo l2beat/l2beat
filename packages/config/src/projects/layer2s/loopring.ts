@@ -57,6 +57,7 @@ export const loopring: Layer2 = {
       apps: ['https://loopring.io/#/trade'],
       documentation: [
         'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md',
+        'https://docs.loopring.io/',
       ],
       explorers: ['https://explorer.loopring.io/'],
       repositories: ['https://github.com/Loopring/protocols'],
