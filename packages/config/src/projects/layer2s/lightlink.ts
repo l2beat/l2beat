@@ -1,9 +1,18 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { underReviewL2 } from './templates/underReview'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
+} from '../../common'
+import { RISK_VIEW } from '../../common/riskView'
 import { Layer2 } from './types'
 
-export const lightlink: Layer2 = underReviewL2({
-  id: 'lightlink',
+export const lightlink: Layer2 = {
+  id: ProjectId('lightlink'),
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Celestia'],
+    bridge: { type: 'None' },
+    mode: 'Transactions data',
+  }),
   display: {
     name: 'LightLink',
     slug: 'lightlink',
@@ -26,12 +35,26 @@ export const lightlink: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  associatedTokens: ['LL'],
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1, // 1674578628
-    defaultUrl: 'https://replicator.phoenix.lightlink.io/rpc/v1',
-    defaultCallsPerMinute: 500,
+  config: {
+    associatedTokens: ['LL'],
+    escrows: [
+      {
+        address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
+        sinceTimestamp: new UnixTime(1692181067),
+        tokens: ['ETH'],
+      },
+      {
+        address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
+        sinceTimestamp: new UnixTime(1692185219),
+        tokens: '*',
+      },
+    ],
+    transactionApi: {
+      type: 'rpc',
+      startBlock: 1,
+      defaultUrl: 'https://replicator.phoenix.lightlink.io/rpc/v1',
+      defaultCallsPerMinute: 500,
+    },
   },
   chainConfig: {
     name: 'lightlink',
@@ -43,16 +66,67 @@ export const lightlink: Layer2 = underReviewL2({
     },
     minTimestampForTvl: new UnixTime(1692181067),
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
-      sinceTimestamp: new UnixTime(1692181067),
-      tokens: ['ETH'],
+  type: 'layer2',
+  riskView: makeBridgeCompatible({
+    stateValidation: {
+      description: ``,
+      sentiment: 'bad',
+      value: '',
     },
-    {
-      address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
-      sinceTimestamp: new UnixTime(1692185219),
-      tokens: '*',
+    dataAvailability: {
+      ...RISK_VIEW.DATA_CELESTIA(false),
     },
-  ],
-})
+    exitWindow: {
+      description:
+        'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
+      sentiment: 'bad',
+      value: 'None',
+    },
+    sequencerFailure: {
+      description: '',
+      sentiment: 'good',
+      value: '',
+    },
+    proposerFailure: {
+      description: '',
+      sentiment: 'good',
+      value: '',
+    },
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
+  stage: {
+    stage: 'NotApplicable',
+  },
+  technology: {
+    stateCorrectness: {
+      name: '',
+      description: '.',
+      references: [],
+      risks: [],
+    },
+    dataAvailability: {
+      name: '',
+      description: '.',
+      references: [],
+      risks: [],
+    },
+    operator: {
+      name: '',
+      description: '.',
+      references: [],
+      risks: [],
+    },
+    forceTransactions: {
+      name: '',
+      description: '.',
+      references: [],
+      risks: [],
+    },
+    exitMechanisms: [],
+  },
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
+}
