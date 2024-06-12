@@ -1,5 +1,5 @@
 import React from 'react'
-import { DASummaryTable } from './_components/DASummaryTable'
+import { DaSummaryTable } from './_components/DaSummaryTable'
 
 export default function Page() {
   return (
@@ -20,7 +20,7 @@ export default function Page() {
           </p>
         </div>
       </header>
-      <DASummaryTable />{' '}
+      <DaSummaryTable />
     </div>
   )
 }

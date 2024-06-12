@@ -98,7 +98,7 @@ const columns = [
   }),
 ]
 
-export function DASummaryTable() {
+export function DaSummaryTable() {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: 'daLayer',
