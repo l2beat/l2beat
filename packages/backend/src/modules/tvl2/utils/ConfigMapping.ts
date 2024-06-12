@@ -11,7 +11,7 @@ import { createAmountId } from './createAmountId'
 import { AssetId, createAssetId } from './createAssetId'
 import { createPriceId } from './createPriceId'
 
-export class IdConverter {
+export class ConfigMapping {
   prices: Map<AssetId, PriceConfigEntry & { configId: string }>
   amounts: Map<ProjectId, (AmountConfigEntry & { configId: string })[]>
 

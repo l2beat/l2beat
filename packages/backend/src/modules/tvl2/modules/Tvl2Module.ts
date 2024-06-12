@@ -24,7 +24,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
-import { IdConverter } from '../utils/IdConverter'
+import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
 import { createAssetId } from '../utils/createAssetId'
@@ -58,7 +58,10 @@ export function createTvl2Module(
 
   const syncOptimizer = new SyncOptimizer(clock)
 
-  const idConverter = new IdConverter(config.tvl2.prices, config.tvl2.amounts)
+  const configMapping = new ConfigMapping(
+    config.tvl2.prices,
+    config.tvl2.amounts,
+  )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
@@ -79,7 +82,7 @@ export function createTvl2Module(
     syncOptimizer,
     indexerService,
     priceModule,
-    idConverter,
+    configMapping,
   )
 
   const circulatingSuppliesModule = createCirculatingSupplyModule(
@@ -90,7 +93,7 @@ export function createTvl2Module(
     syncOptimizer,
     indexerService,
     priceModule,
-    idConverter,
+    configMapping,
   )
 
   const ethPrice = config.tvl2.prices.find(
@@ -122,7 +125,7 @@ export function createTvl2Module(
 
   const tokenTvlService = new TokenTvlService({
     controllerService,
-    idConverter,
+    configMapping,
   })
 
   const tvlController = new Tvl2Controller({
