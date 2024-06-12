@@ -18,9 +18,9 @@ export class TokenService {
   constructor(private readonly $: Dependencies) {}
 
   async getTokenChart(
-    token: { address: EthereumAddress | 'native'; chain: string },
+    timestamp: UnixTime,
     project: ApiProject,
-    lastHour: UnixTime,
+    token: { address: EthereumAddress | 'native'; chain: string },
   ): Promise<TokenTvlApiCharts> {
     const amountConfigs = this.$.configMapping.getAmountsByProjectAndToken(
       token,
@@ -39,12 +39,12 @@ export class TokenService {
         amountConfigs.map((x) => x.configId),
         priceConfig.configId,
         project.minTimestamp,
-        lastHour,
+        timestamp,
       )
 
     return getTokenCharts(
       dailyStart,
-      lastHour,
+      timestamp,
       amountsAndPrices,
       decimals,
       sixHourlyStart,

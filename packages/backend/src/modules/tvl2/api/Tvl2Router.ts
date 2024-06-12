@@ -12,6 +12,7 @@ import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
 import { AggregatedService } from './services/AggregatedService'
+import { BreakdownService } from './services/BreakdownService'
 import { TokenService } from './services/TokenService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
@@ -19,6 +20,7 @@ export function createTvl2Router(
   controller: Tvl2Controller,
   aggregatedService: AggregatedService,
   tokenService: TokenService,
+  breakdownService: BreakdownService,
   projects: ApiProject[],
   associatedTokens: AssociatedToken[],
   clock: Clock,
@@ -103,9 +105,9 @@ export function createTvl2Router(
         assert(apiProject, 'Project not found!')
 
         ctx.body = await tokenService.getTokenChart(
-          { chain, address },
-          apiProject,
           clock.getLastHour().add(-1, 'hours'),
+          apiProject,
+          { chain, address },
         )
       },
     ),
@@ -114,7 +116,7 @@ export function createTvl2Router(
   router.get(
     ['/api/project-assets-breakdown', '/api/tvl2/breakdown'],
     async (ctx) => {
-      const breakdown = await controller.getTvlBreakdown(
+      const breakdown = await breakdownService.getTvlBreakdown(
         // TODO: This is a temporary solution. We should use the last hour
         // instead of the hour before the last hour.
         // This should be fixed by interpolating the data for the last hour when not every project has data for it.

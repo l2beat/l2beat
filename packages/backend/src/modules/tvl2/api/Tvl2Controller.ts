@@ -1,11 +1,6 @@
 import {
   assert,
   AmountConfigEntry,
-  AssetId,
-  CanonicalAssetBreakdownData,
-  ExternalAssetBreakdownData,
-  NativeAssetBreakdownData,
-  ProjectAssetsBreakdownApiResponse,
   TvlApiCharts,
   TvlApiProject,
   TvlApiResponse,
@@ -33,7 +28,6 @@ import {
   AmountConfigMap,
   ApiProject,
   AssociatedToken,
-  CanonicalAssetBreakdown,
   PriceConfigIdMap,
 } from './utils/types'
 
@@ -271,7 +265,7 @@ export class Tvl2Controller {
 
         return {
           ...x,
-          data: await this.$.tokenService.getTokenChart(x, project, lastHour),
+          data: await this.$.tokenService.getTokenChart(lastHour, project, x),
         }
       }),
     )
@@ -380,137 +374,6 @@ export class Tvl2Controller {
       }
     }
     return tvl
-  }
-
-  async getTvlBreakdown(
-    timestamp: UnixTime,
-  ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const breakdowns = await this.getNewBreakdown(timestamp)
-    return { dataTimestamp: timestamp, breakdowns }
-  }
-
-  private async getNewBreakdown(timestamp: UnixTime) {
-    const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        [...this.$.currAmountConfigs.keys()],
-        timestamp,
-      )
-    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      [...this.$.priceConfigs.values()].map((x) => x.priceId),
-      timestamp,
-    )
-
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
-    const breakdowns: Record<
-      string,
-      {
-        canonical: Map<AssetId, CanonicalAssetBreakdown>
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
-    for (const amount of tokenAmounts) {
-      const config = this.$.currAmountConfigs.get(amount.configId)
-      assert(config, 'Config not found for id ' + amount.configId)
-      let breakdown = breakdowns[config.project]
-      if (!breakdown) {
-        breakdown = {
-          canonical: new Map<AssetId, CanonicalAssetBreakdown>(),
-          external: [],
-          native: [],
-        }
-        breakdowns[config.project] = breakdown
-      }
-
-      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
-      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceConfig.priceId)
-      assert(price, 'Price not found for id ' + amount.configId)
-
-      const amountAsNumber = asNumber(amount.amount, config.decimals)
-      const valueAsNumber = amountAsNumber * price
-
-      switch (config.source) {
-        case 'canonical': {
-          // The canonical logic is the most complex one
-          assert(config.type === 'escrow', 'Only escrow can be canonical')
-          const asset = breakdown.canonical.get(priceConfig.assetId)
-          if (asset) {
-            asset.usdValue += valueAsNumber
-            asset.amount += amountAsNumber
-            asset.escrows.push({
-              amount: amountAsNumber.toString(),
-              usdValue: valueAsNumber.toString(),
-              escrowAddress: config.escrowAddress,
-            })
-          } else {
-            breakdown.canonical.set(priceConfig.assetId, {
-              assetId: priceConfig.assetId,
-              chainId: this.$.chainConverter.toChainId(config.chain),
-              amount: amountAsNumber,
-              usdValue: valueAsNumber,
-              usdPrice: price.toString(),
-              escrows: [
-                {
-                  amount: amountAsNumber.toString(),
-                  usdValue: valueAsNumber.toString(),
-                  escrowAddress: config.escrowAddress,
-                },
-              ],
-            })
-          }
-          break
-        }
-        case 'external':
-          breakdown.external.push({
-            assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
-            usdPrice: price.toString(),
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
-          })
-          break
-        case 'native':
-          breakdown.native.push({
-            assetId: priceConfig.assetId,
-            chainId: this.$.chainConverter.toChainId(config.chain),
-            amount: amountAsNumber.toString(),
-            usdValue: valueAsNumber.toString(),
-            usdPrice: price.toString(),
-            // TODO: force fe to accept "native"
-            tokenAddress:
-              config.address === 'native' ? undefined : config.address,
-          })
-      }
-    }
-    const result: Record<
-      string,
-      {
-        canonical: CanonicalAssetBreakdownData[]
-        external: ExternalAssetBreakdownData[]
-        native: NativeAssetBreakdownData[]
-      }
-    > = {}
-    for (const [project, breakdown] of Object.entries(breakdowns)) {
-      const canonical = [...breakdown.canonical.values()].sort(
-        (a, b) => +b.usdValue - +a.usdValue,
-      )
-
-      result[project] = {
-        canonical: canonical.map((x) => ({
-          ...x,
-          escrows: x.escrows.sort((a, b) => +b.amount - +a.amount),
-          amount: x.amount.toString(),
-          usdValue: x.usdValue.toString(),
-        })),
-        external: breakdown.external.sort((a, b) => +b.usdValue - +a.usdValue),
-        native: breakdown.native.sort((a, b) => +b.usdValue - +a.usdValue),
-      }
-    }
-
-    return result
   }
 
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token

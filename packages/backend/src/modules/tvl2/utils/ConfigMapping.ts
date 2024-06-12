@@ -12,12 +12,28 @@ import { AssetId, createAssetId } from './createAssetId'
 import { createPriceId } from './createPriceId'
 
 export class ConfigMapping {
-  prices: Map<AssetId, PriceConfigEntry & { configId: string }>
-  amounts: Map<ProjectId, (AmountConfigEntry & { configId: string })[]>
+  private pricesByAssetId: Map<AssetId, PriceConfigEntry & { configId: string }>
+  private amountsByConfigId: Map<
+    string,
+    AmountConfigEntry & { configId: string }
+  >
+  private amountsByProject: Map<
+    ProjectId,
+    (AmountConfigEntry & { configId: string })[]
+  >
 
   constructor(prices: PriceConfigEntry[], amounts: AmountConfigEntry[]) {
-    this.prices = getPricesMap(prices)
-    this.amounts = getAmountsMap(amounts)
+    this.pricesByAssetId = getPricesMap(prices)
+    this.amountsByConfigId = getAmountsMap(amounts)
+    this.amountsByProject = getAmountsByProjectMap(amounts)
+  }
+
+  get prices(): (PriceConfigEntry & { configId: string })[] {
+    return [...this.pricesByAssetId.values()]
+  }
+
+  get amounts(): (AmountConfigEntry & { configId: string })[] {
+    return [...this.amountsByConfigId.values()]
   }
 
   getPriceConfigFromAmountConfig(
@@ -25,7 +41,7 @@ export class ConfigMapping {
   ): PriceConfigEntry & { configId: string } {
     const assetId = createAssetId(amountConfig)
 
-    const priceConfig = this.prices.get(assetId)
+    const priceConfig = this.pricesByAssetId.get(assetId)
 
     assert(
       priceConfig,
@@ -42,7 +58,7 @@ export class ConfigMapping {
     },
     project: ApiProject,
   ): (AmountConfigEntry & { configId: string })[] {
-    const projectAmounts = this.amounts.get(project.id)
+    const projectAmounts = this.amountsByProject.get(project.id)
     assert(projectAmounts)
 
     const assetId = createAssetId(token)
@@ -56,6 +72,14 @@ export class ConfigMapping {
 
     return amountConfigs
   }
+
+  getAmountConfig(configId: string) {
+    const config = this.amountsByConfigId.get(configId)
+
+    assert(config, `Config not found ${configId}`)
+
+    return config
+  }
 }
 
 function getPricesMap(prices: PriceConfigEntry[]) {
@@ -68,6 +92,15 @@ function getPricesMap(prices: PriceConfigEntry[]) {
 }
 
 function getAmountsMap(amounts: AmountConfigEntry[]) {
+  const result = new Map<string, AmountConfigEntry & { configId: string }>()
+  for (const p of amounts) {
+    result.set(createAmountId(p), { ...p, configId: createAmountId(p) })
+  }
+
+  return result
+}
+
+function getAmountsByProjectMap(amounts: AmountConfigEntry[]) {
   const groupedEntries = Object.entries(groupBy(amounts, 'project'))
   const amountConfigEntries = groupedEntries.map(([k, v]) => {
     const projectId = ProjectId(k)

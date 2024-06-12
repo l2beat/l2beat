@@ -16,6 +16,7 @@ import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
+import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
@@ -110,12 +111,14 @@ export function createTvl2Module(
     logger,
   })
 
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+
   const controllerDependencies = getControllerDependencies(
     config.tvl2,
     dataService,
-    new ChainConverter(
-      chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-    ),
+    chainConverter,
   )
 
   const aggregatedService = new AggregatedService({
@@ -126,6 +129,13 @@ export function createTvl2Module(
   const tokenService = new TokenService({
     dataService,
     configMapping,
+  })
+
+  const breakdownService = new BreakdownService({
+    dataService,
+    configMapping,
+    syncOptimizer,
+    chainConverter,
   })
 
   const tvlController = new Tvl2Controller({
@@ -139,6 +149,7 @@ export function createTvl2Module(
     tvlController,
     aggregatedService,
     tokenService,
+    breakdownService,
     controllerDependencies.projects,
     controllerDependencies.associatedTokens,
     clock,
