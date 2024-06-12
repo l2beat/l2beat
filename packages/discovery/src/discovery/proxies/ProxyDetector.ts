@@ -43,7 +43,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip2535proxy,
 ]
 
-const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
+export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
