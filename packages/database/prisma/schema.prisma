@@ -10,6 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Test {
-  id Int @id
+model CoingeckoPrice {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp
+  assetId       String   @map("asset_id") @db.VarChar(255)
+  priceUsd      Float    @map("price_usd") @db.Real
+
+  @@id([unixTimestamp, assetId])
+  @@index([assetId], name: "coingecko_prices_asset_id_index")
+  @@index([unixTimestamp], name: "coingecko_prices_unix_timestamp_index")
+  @@map("coingecko_prices")
+}
+
+model Stake {
+  chainId        Int    @id @map("chain_id")
+  totalStake     Float  @map("total_stake") @db.Real
+  thresholdStake Float  @map("threshold_stake") @db.Real
+  assetId        String @map("asset_id")
+
+  @@map("stake")
 }

@@ -1,11 +1,13 @@
 import { PoolConfig } from 'pg'
 import { PostgresDatabase } from './kysely'
-import { TokensRepository } from './tokens/repository'
+import { StakeRepository } from './stake/repository'
 
 export function createRepositories(config?: PoolConfig) {
   const db = new PostgresDatabase(config)
 
   return {
-    tokens: new TokensRepository(db),
+    stake: new StakeRepository(db),
   }
 }
+
+export type { Stake } from './stake'
