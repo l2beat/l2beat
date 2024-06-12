@@ -1,10 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ContractValue } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
@@ -37,6 +37,6 @@ export class SimpleMethodHandler implements Handler {
         error: 'Execution reverted',
       }
     }
-    return { field: this.field, value: value as ContractValue }
+    return { field: this.field, value: toContractValue(value) }
   }
 }

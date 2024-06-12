@@ -5,6 +5,7 @@ import { utils } from 'ethers'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class LimitedArrayHandler implements Handler {
@@ -48,7 +49,7 @@ export class LimitedArrayHandler implements Handler {
         break
       } else {
         if (result.value !== undefined) {
-          values.push(result.value as ContractValue)
+          values.push(toContractValue(result.value))
         }
       }
     }

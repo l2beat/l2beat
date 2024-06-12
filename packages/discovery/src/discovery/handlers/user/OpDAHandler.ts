@@ -62,7 +62,7 @@ export class OpStackDAHandler implements Handler {
     )
     const sequencerAddress = valueToAddress(resolved)
     const last10Txs = await provider.raw(
-      `opSequencerLast100Tx_${sequencerAddress}_${provider.blockNumber}`,
+      `optimism_sequencer_100.${sequencerAddress}.${provider.blockNumber}`,
       ({ etherscanLikeClient }) =>
         etherscanLikeClient.getLast10OutgoingTxs(
           sequencerAddress,

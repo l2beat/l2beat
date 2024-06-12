@@ -46,7 +46,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     ])
 
     const recentEvents = await provider.raw(
-      `arbitrum_sequencer_batches_${address}_${provider.blockNumber}`,
+      `arbitrum_sequencer_batches.${address}.${provider.blockNumber}`,
       ({ eventProvider }) => {
         return eventProvider.getLogs({
           address: address.toString(),

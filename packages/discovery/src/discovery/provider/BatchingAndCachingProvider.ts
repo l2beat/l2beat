@@ -425,7 +425,7 @@ export class BatchingAndCachingProvider {
   async getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined> {
-    const entry = await this.cache.entry('getSource', [address], undefined)
+    const entry = await this.cache.entry('getDeployment', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
       const parsed = JSON.parse(cached)
