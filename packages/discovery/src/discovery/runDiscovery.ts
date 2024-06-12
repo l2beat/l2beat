@@ -3,16 +3,16 @@ import { providers } from 'ethers'
 
 import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
 import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
+import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { Analysis } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
+import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { SQLiteCache } from './provider/SQLiteCache'
-import { HttpClient } from '../utils/HttpClient'
-import { getDiscoveryEngine } from './getDiscoveryEngine'
 
 export async function runDiscovery(
   http: HttpClient,

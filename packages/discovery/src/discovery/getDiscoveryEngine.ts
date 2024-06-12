@@ -1,6 +1,8 @@
+import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig } from '../config/types'
 import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
+import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { TemplateService } from './analysis/TemplateService'
@@ -10,8 +12,6 @@ import { DiscoveryCache, ProviderWithCache } from './provider/ProviderWithCache'
 import { MulticallClient } from './provider/multicall/MulticallClient'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
-import { assert } from '@l2beat/shared-pure'
-import { HttpClient } from '../utils/HttpClient'
 
 export function getDiscoveryEngine(
   chainConfigs: DiscoveryChainConfig[],

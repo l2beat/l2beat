@@ -1,6 +1,6 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
   AddressAnalyzer,
@@ -28,6 +28,11 @@ export class DiscoveryEngine {
   // TODO: remove this, when no longer needed
   getCurrentBlockNumber(): Promise<number> {
     return this.addressAnalyzer.getCurrentBlockNumber()
+  }
+
+  // TODO: remove this, when no longer needed
+  getBlockNumberAt(timestamp: UnixTime): Promise<number> {
+    return this.addressAnalyzer.getBlockNumberAt(timestamp)
   }
 
   async discover(

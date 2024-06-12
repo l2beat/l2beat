@@ -73,6 +73,11 @@ export class AddressAnalyzer {
     return this.provider.getBlockNumber()
   }
 
+  // TODO: remove this, when no longer needed
+  getBlockNumberAt(timestamp: UnixTime): Promise<number> {
+    return this.provider.getBlockNumberAt(timestamp)
+  }
+
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,

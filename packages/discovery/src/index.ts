@@ -7,6 +7,7 @@ export type {
   InversionConfig,
   SingleDiscoveryModuleConfig,
 } from './config/types'
+export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'

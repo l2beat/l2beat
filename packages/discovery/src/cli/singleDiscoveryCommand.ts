@@ -8,8 +8,8 @@ import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
-import { HttpClient } from '../utils/HttpClient'
 import { discover } from '../discovery/runDiscovery'
+import { HttpClient } from '../utils/HttpClient'
 
 export async function singleDiscoveryCommand(
   { singleDiscovery }: DiscoveryCliConfig,

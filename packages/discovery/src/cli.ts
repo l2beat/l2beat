@@ -5,11 +5,11 @@ import { flattenCommand } from './cli/flattenCommand'
 import { handleCli } from './cli/handleCli'
 import { invertCommand } from './cli/invertCommand'
 import { singleDiscoveryCommand } from './cli/singleDiscoveryCommand'
+import { chains } from './config/chains'
 import {
   getChainConfig,
   getDiscoveryCliConfig,
 } from './config/config.discovery'
-import { chains } from './config/chains'
 
 main().catch((e) => {
   console.error(e)

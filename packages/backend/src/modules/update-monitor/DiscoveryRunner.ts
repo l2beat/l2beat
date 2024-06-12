@@ -3,7 +3,6 @@ import {
   ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
-  DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -24,18 +23,17 @@ const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(
-    private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
     readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return await this.discoveryProvider.getBlockNumber()
+    return await this.discoveryEngine.getCurrentBlockNumber()
   }
 
   async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return await this.discoveryProvider.getBlockNumberAt(
+    return await this.discoveryEngine.getBlockNumberAt(
       new UnixTime(timestamp.toNumber()),
     )
   }

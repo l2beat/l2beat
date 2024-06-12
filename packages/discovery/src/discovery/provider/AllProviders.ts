@@ -4,13 +4,13 @@ import { DiscoveryChainConfig } from '../../config/types'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { HttpClient } from '../../utils/HttpClient'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
+import { getBlockNumberTwoProviders } from './DiscoveryProvider'
 import { HighLevelProvider } from './HighLevelProvider'
 import { IProvider, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { DiscoveryCache } from './ProviderWithCache'
 import { ReorgAwareCache } from './ReorgAwareCache'
 import { MulticallClient } from './multicall/MulticallClient'
-import { getBlockNumberTwoProviders } from './DiscoveryProvider'
 
 export class AllProviders {
   private config: Map<
