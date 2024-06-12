@@ -178,6 +178,8 @@ export function filterSources(
         new UnixTime(+timestamp),
       )
 
+      // TODO; add log here that we have too much data in the db
+
       return [
         timestamp,
         values.filter((v) => configuredSources.includes(v.dataSource)),
