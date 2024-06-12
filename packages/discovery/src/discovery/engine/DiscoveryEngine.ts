@@ -36,8 +36,9 @@ export class DiscoveryEngine {
   }
 
   async discover(
+    // TODO: (sz-piotr) add this
+    // provider: IProvider,
     config: DiscoveryConfig,
-    blockNumber: number,
   ): Promise<Analysis[]> {
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}

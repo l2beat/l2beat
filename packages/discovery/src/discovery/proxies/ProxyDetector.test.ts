@@ -1,8 +1,6 @@
 import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-
-import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { Detector, ProxyDetector } from './ProxyDetector'
 
@@ -32,14 +30,13 @@ describe(ProxyDetector.name, () => {
   it('can detect no proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
+    const detector = new ProxyDetector(provider, [
       async () => undefined,
       async () => undefined,
     ])
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
-      DiscoveryLogger.SILENT,
     )
 
     expect(result).toEqual(undefined)
@@ -48,7 +45,7 @@ describe(ProxyDetector.name, () => {
   it('detects the first proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
+    const detector = new ProxyDetector(provider, [
       async () => undefined,
       async () => FIRST_DETAILS,
       async () => undefined,
@@ -57,7 +54,6 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
-      DiscoveryLogger.SILENT,
     )
 
     expect(result).toEqual(FIRST_DETAILS)
@@ -66,7 +62,7 @@ describe(ProxyDetector.name, () => {
   it('detects a manual proxy', async () => {
     const provider = mockObject<DiscoveryProvider>()
 
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [], {
+    const detector = new ProxyDetector(provider, [], {
       'call implementation proxy': async () => FIRST_DETAILS,
       'new Arbitrum proxy': async () => SECOND_DETAILS,
       'zkSync Lite proxy': async () => undefined,
@@ -81,7 +77,7 @@ describe(ProxyDetector.name, () => {
     const result = await detector.detectProxy(
       EthereumAddress.random(),
       BLOCK_NUMBER,
-      DiscoveryLogger.SILENT,
+
       'call implementation proxy',
     )
 

@@ -3,7 +3,7 @@ import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ClassicHandler, HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = z.infer<
@@ -54,16 +54,11 @@ export class AccessControlHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking AccessControl'])
-    const unnamedRoles = await fetchAccessControl(
-      provider,
-      address,
-      blockNumber,
-    )
+    const unnamedRoles = await fetchAccessControl(provider, address)
 
     return {
       field: this.field,
@@ -86,22 +81,17 @@ export interface AccessControlType {
 }
 
 export async function fetchAccessControl(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<Record<string, AccessControlType>> {
-  const logs = await provider.getLogs(
-    address,
+  // TODO: (sz-piotr) Promise.all new provider
+  const logs = await provider.getLogs(address, [
     [
-      [
-        abi.getEventTopic('RoleGranted'),
-        abi.getEventTopic('RoleRevoked'),
-        abi.getEventTopic('RoleAdminChanged'),
-      ],
+      abi.getEventTopic('RoleGranted'),
+      abi.getEventTopic('RoleRevoked'),
+      abi.getEventTopic('RoleAdminChanged'),
     ],
-    0,
-    blockNumber,
-  )
+  ])
 
   const roles: Record<
     string,
