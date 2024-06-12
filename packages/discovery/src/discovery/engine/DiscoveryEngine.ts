@@ -129,15 +129,16 @@ export class DiscoveryEngine {
       depth++
     }
 
-    const inverted = invertMeta(Object.values(resolved))
-    Object.values(resolved)
-      .filter((a): a is AnalyzedContract => a.type === 'Contract')
-      .forEach((a) => {
-        a.combinedMeta = mergeContractMeta(
-          a.selfMeta,
-          inverted[a.address.toString()],
-        )
-      })
+    const analyzedContracts = Object.values(resolved).filter(
+      (a): a is AnalyzedContract => a.type === 'Contract',
+    )
+    const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
+    analyzedContracts.forEach((a) => {
+      a.combinedMeta = mergeContractMeta(
+        a.selfMeta,
+        inverted[a.address.toString()],
+      )
+    })
 
     this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))

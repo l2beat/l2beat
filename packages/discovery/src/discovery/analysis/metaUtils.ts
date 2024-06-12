@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ContractValue } from '@l2beat/discovery-types'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   ContractFieldSeverity,
   DiscoveryContractField,
@@ -10,7 +11,7 @@ import {
   ValueType,
 } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
-import { Analysis } from './AddressAnalyzer'
+import { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
 
@@ -58,26 +59,40 @@ export function mergePermissions(
   return isEmptyObject(result) ? undefined : result
 }
 
+export function getSelfMeta(
+  overrides?: ContractOverrides,
+): ContractMeta | undefined {
+  if (overrides?.description === undefined) {
+    return undefined
+  }
+  return {
+    descriptions: [overrides.description],
+    roles: undefined,
+    permissions: undefined,
+    category: undefined,
+    severity: undefined,
+    types: undefined,
+  }
+}
+
 export function getTargetsMeta(
   self: EthereumAddress,
   handlerResults: HandlerResult[],
   fields: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
   const result: Record<string, ContractMeta> = {}
+
   for (const handlerResult of handlerResults) {
     const field = fields?.[handlerResult.field]
     const target = field?.target
     if (target) {
-      const addresses = getAddresses(handlerResult.value).map((a) =>
-        a.toString(),
-      )
-      for (const address of addresses) {
+      for (const address of getAddresses(handlerResult.value)) {
         const meta = mergeContractMeta(
-          result[address],
+          result[address.toString()],
           targetConfigToMeta(self, field, target),
         )
         if (meta) {
-          result[address] = meta
+          result[address.toString()] = meta
         }
       }
     }
@@ -114,21 +129,22 @@ export function getTargetPermissions(
   return Object.fromEntries([...permission].map((p) => [p, new Set([self])]))
 }
 
-export function getAddresses(
-  value: ContractValue | undefined,
-): EthereumAddress[] {
-  if (Array.isArray(value)) {
-    return value.flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'string') {
-    try {
-      return [EthereumAddress(value)]
-    } catch {
-      return []
-    }
-  }
-  return []
+export function invertMeta(
+  targetsMeta: AnalyzedContract['targetsMeta'][],
+): AddressToMetaMap {
+  const result: AddressToMetaMap = {}
+
+  targetsMeta
+    .filter(isDefined)
+    .flatMap((v) => Object.entries(v))
+    .forEach(([targetAddress, targetMeta]) => {
+      const merged = mergeContractMeta(result[targetAddress], targetMeta)
+      if (merged) {
+        result[targetAddress] = merged
+      }
+    })
+
+  return result
 }
 
 export function toSet<T>(
@@ -186,20 +202,23 @@ function isEmptyObject(obj: object): boolean {
   )
 }
 
-export function invertMeta(analysisList: Analysis[]): AddressToMetaMap {
-  const result: AddressToMetaMap = {}
-  for (const analysis of analysisList) {
-    if (analysis.type === 'Contract') {
-      const targetsMeta = analysis.targetsMeta
-      if (targetsMeta !== undefined) {
-        for (const [targetAddress, targetMeta] of Object.entries(targetsMeta)) {
-          const merged = mergeContractMeta(result[targetAddress], targetMeta)
-          if (merged) {
-            result[targetAddress] = merged
-          }
-        }
-      }
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined
+}
+
+export function getAddresses(
+  value: ContractValue | undefined,
+): EthereumAddress[] {
+  if (Array.isArray(value)) {
+    return value.flatMap((v) => getAddresses(v))
+  } else if (typeof value === 'object') {
+    return Object.values(value).flatMap((v) => getAddresses(v))
+  } else if (typeof value === 'string') {
+    try {
+      return [EthereumAddress(value)]
+    } catch {
+      return []
     }
   }
-  return result
+  return []
 }

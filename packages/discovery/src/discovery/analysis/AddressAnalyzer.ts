@@ -18,7 +18,7 @@ import {
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
-import { ContractMeta, getTargetsMeta } from './metaUtils'
+import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -183,16 +183,7 @@ export class AddressAnalyzer {
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
-      selfMeta: {
-        descriptions: overrides?.description
-          ? [overrides?.description]
-          : undefined,
-        roles: undefined,
-        permissions: undefined,
-        category: undefined,
-        severity: undefined,
-        types: undefined,
-      },
+      selfMeta: getSelfMeta(overrides),
       targetsMeta,
     }
   }
