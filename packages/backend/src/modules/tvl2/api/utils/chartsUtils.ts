@@ -101,6 +101,55 @@ export function getChartData(props: {
   }
   return values
 }
+
+export function getTokenCharts(
+  dailyStart: UnixTime,
+  lastHour: UnixTime,
+  amountsAndPrices: Dictionary<{ amount: bigint; price: number }> = {},
+  decimals: number,
+  sixHourlyStart: UnixTime,
+  hourlyStart: UnixTime,
+): TokenTvlApiCharts {
+  const dailyData = getTokenChartData({
+    start: dailyStart,
+    end: lastHour,
+    step: [1, 'days'],
+    amountsAndPrices,
+    decimals,
+  })
+
+  const sixHourlyData = getTokenChartData({
+    start: sixHourlyStart,
+    end: lastHour,
+    step: [6, 'hours'],
+    amountsAndPrices,
+    decimals,
+  })
+
+  const hourlyData = getTokenChartData({
+    start: hourlyStart,
+    end: lastHour,
+    step: [1, 'hours'],
+    amountsAndPrices,
+    decimals,
+  })
+
+  return {
+    daily: {
+      types: ['timestamp', 'amount', 'valueUsd'],
+      data: dailyData,
+    },
+    sixHourly: {
+      types: ['timestamp', 'amount', 'valueUsd'],
+      data: sixHourlyData,
+    },
+    hourly: {
+      types: ['timestamp', 'amount', 'valueUsd'],
+      data: hourlyData,
+    },
+  }
+}
+
 export function getTokenChartData(props: {
   start: UnixTime
   end: UnixTime

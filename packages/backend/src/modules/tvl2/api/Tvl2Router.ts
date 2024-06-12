@@ -7,15 +7,18 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
 import { AggregateTvlService } from './services/AggregateTvlService'
+import { TokenTvlService } from './services/TokenTvlService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
 export function createTvl2Router(
   controller: Tvl2Controller,
   aggregatedTvlService: AggregateTvlService,
+  tokenTvlService: TokenTvlService,
   projects: ApiProject[],
   associatedTokens: AssociatedToken[],
   clock: Clock,
@@ -36,6 +39,7 @@ export function createTvl2Router(
         if (ctx.query.excludeAssociatedTokens) {
           const excluded = await controller.getExcludedTvl(
             clock.getLastHour().add(-1, 'hours'),
+            projects,
           )
           ctx.body = excluded
         } else {
@@ -95,9 +99,12 @@ export function createTvl2Router(
       async (ctx) => {
         const { chain, project, address } = ctx.query
 
-        ctx.body = await controller.getTokenChart(
+        const apiProject = projects.find((p) => p.id === project)
+        assert(apiProject, 'Project not found!')
+
+        ctx.body = await tokenTvlService.getTokenChart(
           { chain, address },
-          project,
+          apiProject,
           clock.getLastHour().add(-1, 'hours'),
         )
       },

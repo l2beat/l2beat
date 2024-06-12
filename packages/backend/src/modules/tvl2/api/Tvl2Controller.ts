@@ -3,12 +3,9 @@ import {
   AmountConfigEntry,
   AssetId,
   CanonicalAssetBreakdownData,
-  EthereumAddress,
   ExternalAssetBreakdownData,
   NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
-  ProjectId,
-  TokenTvlApiCharts,
   TvlApiCharts,
   TvlApiProject,
   TvlApiResponse,
@@ -22,12 +19,12 @@ import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
 import { ControllerService } from './services/ControllerService'
+import { TokenTvlService } from './services/TokenTvlService'
 import {
   ValuesForSource,
   convertSourceName,
   getChart,
   getChartData,
-  getTokenChartData,
   subtractTokenChart,
   sumCharts,
   sumValuesPerSource,
@@ -50,6 +47,7 @@ export interface Tvl2ControllerDependencies {
   chainConverter: ChainConverter
   controllerService: ControllerService
   syncOptimizer: SyncOptimizer
+  tokenTvlService: TokenTvlService
 }
 
 export class Tvl2Controller {
@@ -263,14 +261,26 @@ export class Tvl2Controller {
   }
 
   // TODO: it is slow an can be optimized via querying for all tokens in a batch
-  async getExcludedTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+  async getExcludedTvl(
+    lastHour: UnixTime,
+    projects: ApiProject[],
+  ): Promise<TvlApiResponse> {
     const tvl = await this.getTvl(lastHour)
 
     const excluded = await Promise.all(
-      this.$.associatedTokens.map(async (x) => ({
-        ...x,
-        data: await this.getTokenChart(x, x.project, lastHour),
-      })),
+      this.$.associatedTokens.map(async (x) => {
+        const project = projects.find((p) => p.id === x.project)
+        assert(project, 'Project not found!')
+
+        return {
+          ...x,
+          data: await this.$.tokenTvlService.getTokenChart(
+            x,
+            project,
+            lastHour,
+          ),
+        }
+      }),
     )
 
     const ethPrices = await this.$.controllerService.getEthPrices()
@@ -377,77 +387,6 @@ export class Tvl2Controller {
       }
     }
     return tvl
-  }
-
-  async getTokenChart(
-    token: { address: EthereumAddress | 'native'; chain: string },
-    project: ProjectId,
-    lastHour: UnixTime,
-  ): Promise<TokenTvlApiCharts> {
-    const projectAmounts = this.$.amountConfig.get(project)
-    assert(projectAmounts)
-
-    const assetId = createAssetId(token)
-    const amountConfigs = projectAmounts.filter(
-      (x) => createAssetId(x) === assetId,
-    )
-    assert(
-      amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
-      'Decimals mismatch!',
-    )
-    const decimals = amountConfigs[0].decimals
-
-    const projectConfig = this.$.projects.find((x) => x.id === project)
-    assert(projectConfig, 'Project not found!')
-    const priceConfig = this.$.priceConfigs.get(assetId)
-    assert(priceConfig, 'PriceId not found!')
-
-    const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
-      await this.$.controllerService.getPricesAndAmountsForToken(
-        amountConfigs.map((x) => x.configId),
-        priceConfig.priceId,
-        projectConfig.minTimestamp,
-        lastHour,
-      )
-
-    const dailyData = getTokenChartData({
-      start: dailyStart,
-      end: lastHour,
-      step: [1, 'days'],
-      amountsAndPrices,
-      decimals,
-    })
-
-    const sixHourlyData = getTokenChartData({
-      start: sixHourlyStart,
-      end: lastHour,
-      step: [6, 'hours'],
-      amountsAndPrices,
-      decimals,
-    })
-
-    const hourlyData = getTokenChartData({
-      start: hourlyStart,
-      end: lastHour,
-      step: [1, 'hours'],
-      amountsAndPrices,
-      decimals,
-    })
-
-    return {
-      daily: {
-        types: ['timestamp', 'amount', 'valueUsd'],
-        data: dailyData,
-      },
-      sixHourly: {
-        types: ['timestamp', 'amount', 'valueUsd'],
-        data: sixHourlyData,
-      },
-      hourly: {
-        types: ['timestamp', 'amount', 'valueUsd'],
-        data: hourlyData,
-      },
-    }
   }
 
   async getTvlBreakdown(
