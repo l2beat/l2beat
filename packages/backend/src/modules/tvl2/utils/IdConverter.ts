@@ -3,18 +3,26 @@ import {
   AmountConfigEntry,
   EthereumAddress,
   PriceConfigEntry,
+  ProjectId,
 } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
+import { ApiProject } from '../api/utils/types'
+import { createAmountId } from './createAmountId'
+import { AssetId, createAssetId } from './createAssetId'
+import { createPriceId } from './createPriceId'
 
 export class IdConverter {
-  prices: Map<string, PriceConfigEntry>
+  prices: Map<AssetId, PriceConfigEntry & { configId: string }>
+  amounts: Map<ProjectId, (AmountConfigEntry & { configId: string })[]>
 
-  constructor(prices: PriceConfigEntry[]) {
-    this.prices = getPriceConfigIds(prices)
+  constructor(prices: PriceConfigEntry[], amounts: AmountConfigEntry[]) {
+    this.prices = getPricesMap(prices)
+    this.amounts = getAmountsMap(amounts)
   }
 
   getPriceConfigFromAmountConfig(
     amountConfig: AmountConfigEntry,
-  ): PriceConfigEntry {
+  ): PriceConfigEntry & { configId: string } {
     const assetId = createAssetId(amountConfig)
 
     const priceConfig = this.prices.get(assetId)
@@ -26,22 +34,47 @@ export class IdConverter {
 
     return priceConfig
   }
+
+  getAmountsByProjectAndToken(
+    token: {
+      address: EthereumAddress | 'native'
+      chain: string
+    },
+    project: ApiProject,
+  ): (AmountConfigEntry & { configId: string })[] {
+    const projectAmounts = this.amounts.get(project.id)
+    assert(projectAmounts)
+
+    const assetId = createAssetId(token)
+    const amountConfigs = projectAmounts.filter(
+      (x) => createAssetId(x) === assetId,
+    )
+    assert(
+      amountConfigs.every((x) => x.decimals === amountConfigs[0].decimals),
+      'Decimals mismatch!',
+    )
+
+    return amountConfigs
+  }
 }
 
-type PriceConfigIdMap = Map<string, PriceConfigEntry>
-
-function getPriceConfigIds(prices: PriceConfigEntry[]): PriceConfigIdMap {
-  const result = new Map<string, PriceConfigEntry>()
+function getPricesMap(prices: PriceConfigEntry[]) {
+  const result = new Map<string, PriceConfigEntry & { configId: string }>()
   for (const p of prices) {
-    result.set(createAssetId(p), p)
+    result.set(createAssetId(p), { ...p, configId: createPriceId(p) })
   }
 
   return result
 }
 
-function createAssetId(asset: {
-  address: EthereumAddress | 'native'
-  chain: string
-}): string {
-  return `${asset.chain}-${asset.address.toString()}`
+function getAmountsMap(amounts: AmountConfigEntry[]) {
+  const groupedEntries = Object.entries(groupBy(amounts, 'project'))
+  const amountConfigEntries = groupedEntries.map(([k, v]) => {
+    const projectId = ProjectId(k)
+    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
+
+    return [projectId, amountWithIds] as const
+  })
+
+  return new Map(amountConfigEntries)
 }

@@ -58,7 +58,7 @@ export function createTvl2Module(
 
   const syncOptimizer = new SyncOptimizer(clock)
 
-  const idConverter = new IdConverter(config.tvl2.prices)
+  const idConverter = new IdConverter(config.tvl2.prices, config.tvl2.amounts)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
@@ -122,8 +122,7 @@ export function createTvl2Module(
 
   const tokenTvlService = new TokenTvlService({
     controllerService,
-    priceConfigs: controllerDependencies.priceConfigs,
-    amountConfig: controllerDependencies.amountConfig,
+    idConverter,
   })
 
   const tvlController = new Tvl2Controller({
