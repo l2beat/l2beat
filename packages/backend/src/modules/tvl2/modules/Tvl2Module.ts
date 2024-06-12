@@ -25,11 +25,11 @@ import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { TvlCleaner } from '../utils/TvlCleaner'
 import { createPriceId } from '../utils/createPriceId'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
-import { TvlCleaner } from './TvlCleaner'
 
 export function createTvl2Module(
   config: Config,
