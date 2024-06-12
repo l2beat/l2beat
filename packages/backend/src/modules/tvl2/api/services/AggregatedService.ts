@@ -6,10 +6,10 @@ import {
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
-import { DatabaseReadingService } from './DatabaseReadingService'
+import { DataService } from './DataService'
 
 interface Dependencies {
-  databaseReadingService: DatabaseReadingService
+  dataService: DataService
   syncOptimizer: SyncOptimizer
 }
 
@@ -21,13 +21,10 @@ export class AggregatedService {
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.$.databaseReadingService.getEthPrices()
+    const ethPrices = await this.$.dataService.getEthPrices()
 
     const valuesByProjectByTimestamp =
-      await this.$.databaseReadingService.getValuesForProjects(
-        projects,
-        lastHour,
-      )
+      await this.$.dataService.getValuesForProjects(projects, lastHour)
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {

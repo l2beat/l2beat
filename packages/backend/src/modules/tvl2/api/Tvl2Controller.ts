@@ -18,7 +18,7 @@ import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
-import { DatabaseReadingService } from './services/DatabaseReadingService'
+import { DataService } from './services/DataService'
 import { TokenService } from './services/TokenService'
 import {
   ValuesForSource,
@@ -45,7 +45,7 @@ export interface Tvl2ControllerDependencies {
   associatedTokens: AssociatedToken[]
   minTimestamp: Record<Project['type'], UnixTime>
   chainConverter: ChainConverter
-  databaseReadingService: DatabaseReadingService
+  dataService: DataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
 }
@@ -54,13 +54,10 @@ export class Tvl2Controller {
   constructor(private readonly $: Tvl2ControllerDependencies) {}
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPrices = await this.$.databaseReadingService.getEthPrices()
+    const ethPrices = await this.$.dataService.getEthPrices()
 
     const valuesByProjectByTimestamp =
-      await this.$.databaseReadingService.getValuesForProjects(
-        this.$.projects,
-        lastHour,
-      )
+      await this.$.dataService.getValuesForProjects(this.$.projects, lastHour)
 
     const projectsMinTimestamp = this.$.projects
       .map((x) => x.minTimestamp)
@@ -279,7 +276,7 @@ export class Tvl2Controller {
       }),
     )
 
-    const ethPrices = await this.$.databaseReadingService.getEthPrices()
+    const ethPrices = await this.$.dataService.getEthPrices()
 
     for (const e of excluded) {
       if (e.includeInTotal) {
@@ -394,15 +391,14 @@ export class Tvl2Controller {
 
   private async getNewBreakdown(timestamp: UnixTime) {
     const tokenAmounts =
-      await this.$.databaseReadingService.getAmountsByConfigIdsAndTimestamp(
+      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices =
-      await this.$.databaseReadingService.getPricesByConfigIdsAndTimestamp(
-        [...this.$.priceConfigs.values()].map((x) => x.priceId),
-        timestamp,
-      )
+    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
+      [...this.$.priceConfigs.values()].map((x) => x.priceId),
+      timestamp,
+    )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdowns: Record<
@@ -521,15 +517,14 @@ export class Tvl2Controller {
   // and keep only the current values in the database.
   private async getBreakdownMap(timestamp: UnixTime) {
     const tokenAmounts =
-      await this.$.databaseReadingService.getAmountsByConfigIdsAndTimestamp(
+      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
         [...this.$.currAmountConfigs.keys()],
         timestamp,
       )
-    const prices =
-      await this.$.databaseReadingService.getPricesByConfigIdsAndTimestamp(
-        [...this.$.priceConfigs.values()].map((x) => x.priceId),
-        timestamp,
-      )
+    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
+      [...this.$.priceConfigs.values()].map((x) => x.priceId),
+      timestamp,
+    )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()

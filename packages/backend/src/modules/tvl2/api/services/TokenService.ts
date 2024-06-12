@@ -7,11 +7,11 @@ import {
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { getTokenCharts } from '../utils/chartsUtils'
 import { ApiProject } from '../utils/types'
-import { DatabaseReadingService } from './DatabaseReadingService'
+import { DataService } from './DataService'
 
 interface Dependencies {
   configMapping: ConfigMapping
-  databaseReadingService: DatabaseReadingService
+  dataService: DataService
 }
 
 export class TokenService {
@@ -35,7 +35,7 @@ export class TokenService {
     const decimals = amountConfigs[0].decimals
 
     const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
-      await this.$.databaseReadingService.getPricesAndAmountsForToken(
+      await this.$.dataService.getPricesAndAmountsForToken(
         amountConfigs.map((x) => x.configId),
         priceConfig.configId,
         project.minTimestamp,

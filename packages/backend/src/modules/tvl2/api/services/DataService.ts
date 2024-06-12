@@ -21,7 +21,7 @@ interface Dependencies {
   logger: Logger
 }
 
-export class DatabaseReadingService {
+export class DataService {
   constructor(private readonly $: Dependencies) {
     this.$.logger = $.logger.for(this)
   }

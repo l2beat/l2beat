@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { Dictionary } from 'lodash'
 import { ValueRecord } from '../../repositories/ValueRepository'
 import { ApiProject } from '../utils/types'
-import { filterSources, filterTimestamps } from './DatabaseReadingService'
+import { filterSources, filterTimestamps } from './DataService'
 
 describe(filterSources.name, () => {
   it('filters out additional values', () => {

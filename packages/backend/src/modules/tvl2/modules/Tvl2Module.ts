@@ -16,7 +16,7 @@ import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
-import { DatabaseReadingService } from '../api/services/DatabaseReadingService'
+import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -101,7 +101,7 @@ export function createTvl2Module(
   )
   assert(ethPrice, 'Eth priceId not found')
 
-  const databaseReadingService = new DatabaseReadingService({
+  const dataService = new DataService({
     amountRepository: peripherals.getRepository(AmountRepository),
     priceRepository: peripherals.getRepository(PriceRepository),
     valueRepository: peripherals.getRepository(ValueRepository),
@@ -112,19 +112,19 @@ export function createTvl2Module(
 
   const controllerDependencies = getControllerDependencies(
     config.tvl2,
-    databaseReadingService,
+    dataService,
     new ChainConverter(
       chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     ),
   )
 
   const aggregatedService = new AggregatedService({
-    databaseReadingService,
+    dataService,
     syncOptimizer,
   })
 
   const tokenService = new TokenService({
-    databaseReadingService,
+    dataService,
     configMapping,
   })
 
@@ -181,7 +181,7 @@ export function createTvl2Module(
 
 function getControllerDependencies(
   config: Tvl2Config,
-  databaseReadingService: DatabaseReadingService,
+  dataService: DataService,
   chainConverter: ChainConverter,
 ) {
   const amountConfig = getAmountConfigMap(config)
@@ -271,7 +271,7 @@ function getControllerDependencies(
     projects,
     associatedTokens,
     minTimestamp,
-    databaseReadingService,
+    dataService,
     chainConverter,
   }
 }
