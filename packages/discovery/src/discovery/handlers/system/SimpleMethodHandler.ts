@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { callMethod } from '../utils/callMethod'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
   readonly field: string
