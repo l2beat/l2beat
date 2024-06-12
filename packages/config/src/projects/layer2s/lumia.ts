@@ -7,7 +7,7 @@ export const lumia: Layer2 = upcomingL2({
     name: 'Lumia',
     slug: 'lumia',
     description:
-      'Lumia is the next-gen modular L2 leveraging EigenDA, RaaS infrastructure, Polygon CDK and AggLayer.',
+      'Lumia is a modular L2 aiming at leveraging Polygon CDK, EigenDA, and AggLayer to achieve enhanced functionality in DeFi applications.',
     purposes: ['Universal', 'Restaking'],
     category: 'Validium',
     provider: 'Polygon',
