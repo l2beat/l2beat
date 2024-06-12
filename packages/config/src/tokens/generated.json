@@ -3061,6 +3061,21 @@
       "formula": "locked"
     },
     {
+      "id": "rbx-rabbitx",
+      "name": "RabbitX",
+      "coingeckoId": "rabbitx",
+      "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
+      "symbol": "RBX",
+      "decimals": 18,
+      "deploymentTimestamp": 1682520515,
+      "coingeckoListingTimestamp": 1682985600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30048/large/RBX.png?1696528970",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "rad-radicle",
       "name": "Radicle",
       "coingeckoId": "radicle",
