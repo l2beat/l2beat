@@ -11,13 +11,13 @@ import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
 import { Tvl2Controller } from './Tvl2Controller'
-import { AggregateTvlService } from './services/AggregateTvlService'
+import { AggregatedService } from './services/AggregatedService'
 import { TokenService } from './services/TokenService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
 export function createTvl2Router(
   controller: Tvl2Controller,
-  aggregatedTvlService: AggregateTvlService,
+  aggregatedService: AggregatedService,
   tokenService: TokenService,
   projects: ApiProject[],
   associatedTokens: AssociatedToken[],
@@ -76,7 +76,7 @@ export function createTvl2Router(
           projectIds.includes(e.project),
         )
 
-        const tvl = await aggregatedTvlService.getAggregatedTvl(
+        const tvl = await aggregatedService.getAggregatedTvl(
           clock.getLastHour().add(-1, 'hours'),
           filteredProjects,
           filteredAssociatedTokens,

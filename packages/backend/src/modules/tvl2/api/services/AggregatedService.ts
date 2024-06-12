@@ -13,7 +13,7 @@ interface AggregateTvlServiceDependencies {
   syncOptimizer: SyncOptimizer
 }
 
-export class AggregateTvlService {
+export class AggregatedService {
   constructor(private readonly $: AggregateTvlServiceDependencies) {}
 
   async getAggregatedTvl(
