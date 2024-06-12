@@ -35,7 +35,6 @@ async function main() {
     const app = new Application(config, logger)
     await app.start()
   } catch (e) {
-    console.error(e)
     logger.error('Failed to start the application', e)
 
     if (isErrorReportingEnabled) {
