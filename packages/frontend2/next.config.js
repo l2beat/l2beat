@@ -98,7 +98,7 @@ const nextConfig = {
   },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async rewrites() {
-    return ({
+    return {
       beforeFiles: [],
       afterFiles: [],
       fallback: [
@@ -117,7 +117,7 @@ const nextConfig = {
           destination: `https://l2beat-production.vercel.app/:path*`,
         },
       ],
-    })
+    }
   },
   // Webpack config for svgr
   webpack(
