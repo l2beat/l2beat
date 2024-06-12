@@ -12,9 +12,9 @@ import { TvlStats, TvlSummary } from '../../../../components/header/TvlSummary'
 import { BigRosette } from '../../../../components/rosette'
 import { cn } from '../../../../utils/cn'
 import { RiskValues } from '../../../../utils/risks/types'
+import { getUnderReviewText } from '../../common/getUnderReviewText'
 import { ProjectLink } from '../../types'
 import { ArchivedBar } from './ArchivedBar'
-import { ImplementationUnderReviewBar } from './ImplementationUnderReviewBar'
 import { ProjectHeader } from './ProjectHeader'
 import { UnderReviewBar } from './UnderReviewBar'
 import { UpcomingBar } from './UpcomingBar'
@@ -64,9 +64,13 @@ export function DetailsHeader(props: HeaderProps) {
             )}
             {props.isArchived && <ArchivedBar />}
             {props.isUpcoming && <UpcomingBar />}
-            {props.isUnderReview && <UnderReviewBar />}
-            {props.isImplementationUnderReview && (
-              <ImplementationUnderReviewBar />
+            {(props.isUnderReview || props.isImplementationUnderReview) && (
+              <UnderReviewBar
+                text={getUnderReviewText(
+                  props.isUnderReview,
+                  props.isImplementationUnderReview,
+                )}
+              />
             )}
             {props.warning && (
               <WarningBar

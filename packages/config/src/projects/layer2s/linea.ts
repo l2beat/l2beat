@@ -83,14 +83,21 @@ export const linea: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
-      apps: [],
+      apps: ['https://bridge.linea.build/', 'https://linea.build/apps'],
       documentation: ['https://docs.linea.build/'],
-      explorers: ['https://explorer.linea.build/', 'https://linea.l2scan.co/'],
-      repositories: [],
+      explorers: [
+        'https://lineascan.build/',
+        'https://explorer.linea.build/',
+        'https://linea.l2scan.co/',
+      ],
+      repositories: [
+        'https://github.com/Consensys?q=linea&type=all&language=&sort=stargazers',
+      ],
       socialMedia: [
         'https://twitter.com/LineaBuild',
         'https://discord.gg/linea',
         'https://linea.mirror.xyz/',
+        'https://community.linea.build/',
       ],
       rollupCodes: 'https://rollup.codes/linea',
     },
