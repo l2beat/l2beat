@@ -119,16 +119,17 @@ export async function discover(
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
 
-  const discoveryEngine = getDiscoveryEngine(
+  const { allProviders, discoveryEngine } = getDiscoveryEngine(
     chainConfigs,
     sqliteCache,
     http,
     logger,
     config.chain,
   )
-  blockNumber ??= await discoveryEngine.getCurrentBlockNumber()
+  blockNumber ??= await allProviders.getLatestBlockNumber(config.chain)
+  const provider = allProviders.get(config.chain, blockNumber)
   return {
-    result: await discoveryEngine.discover(config, blockNumber),
+    result: await discoveryEngine.discover(provider, config),
     blockNumber,
   }
 }

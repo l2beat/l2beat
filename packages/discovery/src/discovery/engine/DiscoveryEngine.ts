@@ -1,6 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
   AddressAnalyzer,
@@ -10,6 +8,7 @@ import {
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
@@ -25,19 +24,8 @@ export class DiscoveryEngine {
     private readonly logger: DiscoveryLogger,
   ) {}
 
-  // TODO: remove this, when no longer needed
-  getCurrentBlockNumber(): Promise<number> {
-    return this.addressAnalyzer.getCurrentBlockNumber()
-  }
-
-  // TODO: remove this, when no longer needed
-  getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return this.addressAnalyzer.getBlockNumberAt(timestamp)
-  }
-
   async discover(
-    // TODO: (sz-piotr) add this
-    // provider: IProvider,
+    provider: IProvider,
     config: DiscoveryConfig,
   ): Promise<Analysis[]> {
     const resolved: Record<string, Analysis> = {}
@@ -82,7 +70,7 @@ export class DiscoveryEngine {
         ),
       )
 
-      // find addresses that are still reachable from initial adresses
+      // find addresses that are still reachable from initial addresses
       const reachableAddresses = gatherReachableAddresses(
         config.initialAddresses,
         relativesGraph,
@@ -109,10 +97,10 @@ export class DiscoveryEngine {
 
           bufferedLogger.log(`Analyzing ${address.toString()}`)
           const analysis = await this.addressAnalyzer.analyze(
+            provider,
             address,
             config.overrides.get(address),
             config.types,
-            blockNumber,
             bufferedLogger,
             templates,
           )
@@ -155,47 +143,6 @@ export class DiscoveryEngine {
     this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))
     return Object.values(resolved)
-  }
-
-  async hasOutputChanged(
-    config: DiscoveryConfig,
-    prevOutput: DiscoveryOutput,
-    blockNumber: number,
-  ): Promise<boolean> {
-    const contracts = prevOutput.contracts
-
-    const contractsChanged = await Promise.all(
-      contracts.map(async (contract) => {
-        const overrides = config.overrides.get(contract.address)
-
-        return await this.addressAnalyzer.hasContractChanged(
-          contract,
-          overrides,
-          config.types,
-          blockNumber,
-          prevOutput.abis,
-        )
-      }),
-    )
-
-    if (contractsChanged.some((x) => x)) {
-      this.logger.log('Some contracts changed')
-      return true
-    }
-
-    const eoas = prevOutput.eoas
-    const eoasChanged = await Promise.all(
-      eoas.map(async (eoa) => {
-        return await this.addressAnalyzer.hasEoaBecomeContract(eoa, blockNumber)
-      }),
-    )
-
-    if (eoasChanged.some((x) => x)) {
-      this.logger.log('Some EOAs became contracts')
-      return true
-    }
-
-    return false
   }
 
   private checkErrors(resolved: Analysis[]): void {

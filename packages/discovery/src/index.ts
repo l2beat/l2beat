@@ -60,3 +60,5 @@ export {
 } from './utils/EtherscanLikeClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
+export { AllProviders } from './discovery/provider/AllProviders'
+export type { IProvider } from './discovery/provider/IProvider'
