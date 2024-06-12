@@ -41,6 +41,10 @@ async function main() {
       await reportIndexError(e)
     }
 
+    // wait 10 seconds for the error to be reported
+    console.log('Waiting 10 seconds for the error to be reported')
+    await new Promise((resolve) => setTimeout(resolve, 10000))
+
     throw e
   }
 }
@@ -60,9 +64,6 @@ async function reportIndexError(e: unknown) {
       event.addMetadata('error', { message: e })
     })
   }
-  // wait 10 seconds for the error to be reported
-  console.log('Waiting 10 seconds for the error to be reported')
-  await new Promise((resolve) => setTimeout(resolve, 10000))
 }
 
 function createLogger(environment: string): Logger {
@@ -97,7 +98,7 @@ function createLogger(environment: string): Logger {
     logLevel: getEnv().string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
     utc: isLocal ? false : true,
     transports: loggerTransports,
-    reportError,
+    reportError: isLocal ? undefined : reportError,
   }
 
   let logger = new Logger(options)
