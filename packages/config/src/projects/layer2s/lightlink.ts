@@ -1,15 +1,20 @@
-import { EthereumAddress, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import {
-  addSentimentToDataAvailability,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
+import {
   EXITS,
   FORCE_TRANSACTIONS,
-  makeBridgeCompatible,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
+  makeBridgeCompatible,
 } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
-import { Layer2 } from './types'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -97,7 +102,8 @@ export const lightlink: Layer2 = {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     },
     proposerFailure: {
-      description: 'Only the whitelisted publisher is allowed to push new state roots to the CSC contract on L1. The LightLink DAO can replace the publisher if a block is successfully challenged.',
+      description:
+        'Only the whitelisted publisher is allowed to push new state roots to the CSC contract on L1. The LightLink DAO can replace the publisher if a block is successfully challenged.',
       sentiment: 'bad',
       value: 'Cannot withdraw',
     },
@@ -111,7 +117,7 @@ export const lightlink: Layer2 = {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
       description:
-      'After some period of time, the published state root is assumed to be correct. For a certain time period, anyone can challenge a block header against some basic validity checks.',
+        'After some period of time, the published state root is assumed to be correct. For a certain time period, anyone can challenge a block header against some basic validity checks.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -127,20 +133,20 @@ export const lightlink: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
+      ...TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
     },
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
-      }
+      },
     ],
   },
   contracts: {
