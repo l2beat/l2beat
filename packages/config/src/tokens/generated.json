@@ -6681,6 +6681,25 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "blast:bwool-bwool",
+      "name": "bWOOL",
+      "coingeckoId": "wolf-game-wool",
+      "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "symbol": "bWOOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1715703713,
+      "coingeckoListingTimestamp": 1637625600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20760/large/KM3RwIVx_400x400.jpg?1696520155",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "id": "blast:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",

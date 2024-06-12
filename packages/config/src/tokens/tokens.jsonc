@@ -2161,6 +2161,16 @@
   ],
   "blast": [
     {
+      "symbol": "bWOOL",
+      "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "ETH",
       "type": "CBV",
       "formula": "totalSupply", // formula does not matter here
