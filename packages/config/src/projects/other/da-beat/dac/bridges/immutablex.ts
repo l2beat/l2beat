@@ -1,7 +1,7 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { immutablex } from '../../../../layer2s/immutablex'
 import {
-  DaAccessabilityRisk,
+  DaAccessibilityRisk,
   DaAttestationSecurityRisk,
   DaExitWindowRisk,
 } from '../../types'
@@ -23,7 +23,7 @@ export const immutableXDac = {
   usedIn: [immutablex.id],
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
-    accessability: DaAccessabilityRisk.NotEnshrined,
+    accessibility: DaAccessibilityRisk.NotEnshrined,
     exitWindow: DaExitWindowRisk.LowOrNoDelay(),
   },
 } satisfies DaBridge

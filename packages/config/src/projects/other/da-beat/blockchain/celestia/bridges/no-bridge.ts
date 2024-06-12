@@ -7,7 +7,7 @@ import { mantapacific } from '../../../../../layer2s/mantapacific'
 import { orderly } from '../../../../../layer2s/orderly'
 import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../../layer3s/stack'
-import { DaAccessabilityRisk, DaExitWindowRisk } from '../../../types'
+import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
 
@@ -33,7 +33,7 @@ export const noBridge = {
     stack.id,
   ],
   risks: {
-    accessability: DaAccessabilityRisk.NotEnshrined,
+    accessibility: DaAccessibilityRisk.NotEnshrined,
     attestations: DaAttestationSecurityRisk.NoBridge,
     exitWindow: DaExitWindowRisk.NoBridge,
   },
