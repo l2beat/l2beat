@@ -10,14 +10,14 @@ import { z } from 'zod'
 import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
-import { Tvl2Controller } from './Tvl2Controller'
 import { AggregatedService } from './services/AggregatedService'
 import { BreakdownService } from './services/BreakdownService'
 import { TokenService } from './services/TokenService'
+import { TvlService } from './services/TvlService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
 export function createTvl2Router(
-  controller: Tvl2Controller,
+  tvlService: TvlService,
   aggregatedService: AggregatedService,
   tokenService: TokenService,
   breakdownService: BreakdownService,
@@ -39,14 +39,16 @@ export function createTvl2Router(
         // If this endpoint is too slow and aggregation layer is to be implemented,
         // remember to add "isAssociated" to createValueId.ts
         if (ctx.query.excludeAssociatedTokens) {
-          const excluded = await controller.getExcludedTvl(
+          const excluded = await tvlService.getExcludedTvl(
             clock.getLastHour().add(-1, 'hours'),
             projects,
+            associatedTokens,
           )
           ctx.body = excluded
         } else {
-          const tvl = await controller.getTvl(
+          const tvl = await tvlService.getTvl(
             clock.getLastHour().add(-1, 'hours'),
+            projects,
           )
           ctx.body = tvl
         }

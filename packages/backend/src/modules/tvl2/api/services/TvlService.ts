@@ -1,20 +1,15 @@
 import {
   assert,
-  AmountConfigEntry,
   TvlApiCharts,
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { Project } from '../../../model/Project'
-import { ChainConverter } from '../../../tools/ChainConverter'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { asNumber } from '../utils/asNumber'
-import { calculateValue } from '../utils/calculateValue'
-import { createAssetId } from '../utils/createAssetId'
-import { DataService } from './services/DataService'
-import { TokenService } from './services/TokenService'
+import { ChainConverter } from '../../../../tools/ChainConverter'
+import { ConfigMapping } from '../../utils/ConfigMapping'
+import { SyncOptimizer } from '../../utils/SyncOptimizer'
+import { asNumber } from '../../utils/asNumber'
+import { calculateValue } from '../../utils/calculateValue'
 import {
   ValuesForSource,
   convertSourceName,
@@ -23,37 +18,32 @@ import {
   subtractTokenCharts,
   sumCharts,
   sumValuesPerSource,
-} from './utils/chartsUtils'
-import {
-  AmountConfigMap,
-  ApiProject,
-  AssociatedToken,
-  PriceConfigIdMap,
-} from './utils/types'
+} from '../utils/chartsUtils'
+import { ApiProject, AssociatedToken } from '../utils/types'
+import { DataService } from './DataService'
+import { TokenService } from './TokenService'
 
-export interface Tvl2ControllerDependencies {
-  amountConfig: AmountConfigMap
-  currAmountConfigs: Map<string, AmountConfigEntry & { configId: string }>
-  priceConfigs: PriceConfigIdMap
-  projects: ApiProject[]
-  associatedTokens: AssociatedToken[]
-  minTimestamp: Record<Project['type'], UnixTime>
-  chainConverter: ChainConverter
+interface Dependencies {
   dataService: DataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
+  configMapping: ConfigMapping
+  chainConverter: ChainConverter
 }
 
-export class Tvl2Controller {
-  constructor(private readonly $: Tvl2ControllerDependencies) {}
+export class TvlService {
+  constructor(private readonly $: Dependencies) {}
 
-  async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
+  async getTvl(
+    lastHour: UnixTime,
+    projects: ApiProject[],
+  ): Promise<TvlApiResponse> {
     const ethPrices = await this.$.dataService.getEthPrices()
 
     const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(this.$.projects, lastHour)
+      await this.$.dataService.getValuesForProjects(projects, lastHour)
 
-    const projectsMinTimestamp = this.$.projects
+    const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)
       .reduce((acc, curr) => UnixTime.min(acc, curr), UnixTime.now())
 
@@ -76,7 +66,7 @@ export class Tvl2Controller {
     }
 
     const chartsMap = new Map<string, TvlApiCharts>()
-    for (const project of this.$.projects) {
+    for (const project of projects) {
       const valuesByTimestamp =
         valuesByProjectByTimestamp[project.id.toString()]
 
@@ -142,9 +132,15 @@ export class Tvl2Controller {
       })
     }
 
+    const minTimestamps = {
+      layer2: getMinTimestamp(projects, 'layer2'),
+      bridge: getMinTimestamp(projects, 'bridge'),
+      layer3: getMinTimestamp(projects, 'layer3'),
+    }
+
     for (const type of ['layer2', 'layer3', 'bridge'] as const) {
       const value = aggregates[type]
-      const minTimestamp = this.$.minTimestamp[type]
+      const minTimestamp = minTimestamps[type]
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, minTimestamp).toEndOf('day'),
         end: lastHour,
@@ -251,15 +247,16 @@ export class Tvl2Controller {
     return result
   }
 
-  // TODO: it is slow an can be optimized via querying for all tokens in a batch
   async getExcludedTvl(
     lastHour: UnixTime,
     projects: ApiProject[],
+    associatedTokens: AssociatedToken[],
   ): Promise<TvlApiResponse> {
-    const tvl = await this.getTvl(lastHour)
+    const tvl = await this.getTvl(lastHour, projects)
 
+    // TODO: it is slow an can be optimized via querying for all tokens in one batch
     const excluded = await Promise.all(
-      this.$.associatedTokens.map(async (x) => {
+      associatedTokens.map(async (x) => {
         const project = projects.find((p) => p.id === x.project)
         assert(project, 'Project not found!')
 
@@ -326,19 +323,22 @@ export class Tvl2Controller {
   private async getBreakdownMap(timestamp: UnixTime) {
     const tokenAmounts =
       await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        [...this.$.currAmountConfigs.keys()],
+        this.$.configMapping.amounts.map((x) => x.configId),
         timestamp,
       )
     const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      [...this.$.priceConfigs.values()].map((x) => x.priceId),
+      this.$.configMapping.prices.map((x) => x.configId),
       timestamp,
     )
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
     for (const amount of tokenAmounts) {
-      const config = this.$.currAmountConfigs.get(amount.configId)
-      assert(config, 'Config not found for id ' + amount.configId)
+      const config = this.$.configMapping.getAmountConfig(amount.configId)
+      if (config.untilTimestamp && config.untilTimestamp.lt(timestamp)) {
+        continue
+      }
+
       let breakdown = breakdownMap.get(config.project)
       if (!breakdown) {
         breakdown = {
@@ -349,9 +349,9 @@ export class Tvl2Controller {
         breakdownMap.set(config.project, breakdown)
       }
 
-      const priceConfig = this.$.priceConfigs.get(createAssetId(config))
-      assert(priceConfig, 'PriceId not found for id ' + amount.configId)
-      const price = pricesMap.get(priceConfig.priceId)
+      const priceConfig =
+        this.$.configMapping.getPriceConfigFromAmountConfig(config)
+      const price = pricesMap.get(priceConfig.configId)
       assert(price, 'Price not found for id ' + amount.configId)
 
       const value = calculateValue({
@@ -372,4 +372,14 @@ export class Tvl2Controller {
     }
     return breakdownMap
   }
+}
+
+function getMinTimestamp(projects: ApiProject[], type: ApiProject['type']) {
+  return projects
+    .filter((x) => x.type === type)
+    .map((x) => x.minTimestamp)
+    .reduce((acc, curr) => {
+      return UnixTime.min(acc, curr)
+    })
+    .toEndOf('day')
 }

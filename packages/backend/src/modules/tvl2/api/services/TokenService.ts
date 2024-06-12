@@ -23,8 +23,8 @@ export class TokenService {
     token: { address: EthereumAddress | 'native'; chain: string },
   ): Promise<TokenTvlApiCharts> {
     const amountConfigs = this.$.configMapping.getAmountsByProjectAndToken(
+      project.id,
       token,
-      project,
     )
 
     assert(amountConfigs.length > 0, 'Amount config should be defined')

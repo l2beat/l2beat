@@ -1,8 +1,7 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 
-import { Project, chains } from '@l2beat/config'
-import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import { chains } from '@l2beat/config'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
@@ -12,14 +11,14 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
-import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
+import { TvlService } from '../api/services/TvlService'
+import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
@@ -27,8 +26,6 @@ import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { createAmountId } from '../utils/createAmountId'
-import { createAssetId } from '../utils/createAssetId'
 import { createPriceId } from '../utils/createPriceId'
 import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
@@ -115,12 +112,6 @@ export function createTvl2Module(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
 
-  const controllerDependencies = getControllerDependencies(
-    config.tvl2,
-    dataService,
-    chainConverter,
-  )
-
   const aggregatedService = new AggregatedService({
     dataService,
     syncOptimizer,
@@ -138,20 +129,22 @@ export function createTvl2Module(
     chainConverter,
   })
 
-  const tvlController = new Tvl2Controller({
-    ...controllerDependencies,
+  const tvlService = new TvlService({
     syncOptimizer,
     tokenService,
+    dataService,
+    chainConverter,
+    configMapping,
   })
 
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const tvlRouter = createTvl2Router(
-    tvlController,
+    tvlService,
     aggregatedService,
     tokenService,
     breakdownService,
-    controllerDependencies.projects,
-    controllerDependencies.associatedTokens,
+    getApiProjects(config.tvl2, configMapping),
+    getAssociatedTokens(config.tvl2, configMapping),
     clock,
   )
 
@@ -190,30 +183,20 @@ export function createTvl2Module(
   }
 }
 
-function getControllerDependencies(
+function getApiProjects(
   config: Tvl2Config,
-  dataService: DataService,
-  chainConverter: ChainConverter,
-) {
-  const amountConfig = getAmountConfigMap(config)
-  const currAmountConfigs = new Map(
-    [...amountConfig.values()]
-      .flat()
-      // TODO: we should check it on runtime as well
-      .filter((x) => !x.untilTimestamp)
-      .map((x) => [x.configId, x]),
-  )
-  const priceConfigs = getPriceConfigIds(config)
-  const projects = config.projects.flatMap(({ projectId: id, type, slug }) => {
-    if (config.projectsExcludedFromApi.includes(id.toString())) {
+  configMapping: ConfigMapping,
+): ApiProject[] {
+  return config.projects.flatMap(({ projectId, type, slug }) => {
+    if (config.projectsExcludedFromApi.includes(projectId.toString())) {
       return []
     }
 
-    const amounts = amountConfig.get(id)
+    const amounts = configMapping.getAmountsByProject(projectId)
     if (!amounts) {
       return []
     }
-    assert(amounts, 'Config not found: ' + id.toString())
+    assert(amounts, 'Config not found: ' + projectId.toString())
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
       .reduce((a, b) => UnixTime.min(a, b))
@@ -228,87 +211,49 @@ function getControllerDependencies(
         sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
       }
     }
-    return { id, minTimestamp, type, slug, sources }
+    return { id: projectId, minTimestamp, type, slug, sources }
   })
+}
 
-  const associatedTokens = config.projects.flatMap(
-    ({ projectId: id, type }) => {
-      if (config.projectsExcludedFromApi.includes(id.toString())) {
-        return []
-      }
+function getAssociatedTokens(
+  config: Tvl2Config,
+  configMapping: ConfigMapping,
+): AssociatedToken[] {
+  return config.projects.flatMap(({ projectId, type }) => {
+    if (config.projectsExcludedFromApi.includes(projectId.toString())) {
+      return []
+    }
 
-      const amounts = amountConfig.get(id)
-      if (!amounts) {
-        return []
-      }
+    const amounts = configMapping.getAmountsByProject(projectId)
+    if (!amounts) {
+      return []
+    }
 
-      const uniqueTokens = new Map<string, string>()
+    const uniqueTokens = new Map<string, string>()
 
-      const associatedAmounts = amounts
-        .filter((x) => x.isAssociated === true)
-        .filter((amount) => {
-          const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
-          if (u) {
-            assert(amount.source === u, 'Type mismatch')
-            return false
-          }
-          uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
-          return true
-        })
-
-      return associatedAmounts.map((amount) => {
-        return {
-          address: amount.address,
-          chain: amount.chain,
-          type: amount.source,
-          includeInTotal: amount.includeInTotal,
-          project: id,
-          projectType: getType(type),
+    const associatedAmounts = amounts
+      .filter((x) => x.isAssociated === true)
+      .filter((amount) => {
+        const u = uniqueTokens.get(`${amount.address}-${amount.chain}`)
+        if (u) {
+          assert(amount.source === u, 'Type mismatch')
+          return false
         }
+        uniqueTokens.set(`${amount.address}-${amount.chain}`, amount.source)
+        return true
       })
-    },
-  )
 
-  const minTimestamp = {
-    layer2: getMinTimestamp(projects, 'layer2'),
-    bridge: getMinTimestamp(projects, 'bridge'),
-    layer3: getMinTimestamp(projects, 'layer3'),
-  }
-
-  return {
-    amountConfig,
-    currAmountConfigs,
-    priceConfigs,
-    projects,
-    associatedTokens,
-    minTimestamp,
-    dataService,
-    chainConverter,
-  }
-}
-
-function getAmountConfigMap(config: Tvl2Config) {
-  const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
-  const amountConfigEntries = groupedEntries.map(([k, v]) => {
-    const projectId = ProjectId(k)
-    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
-
-    return [projectId, amountWithIds] as const
-  })
-
-  return new Map(amountConfigEntries)
-}
-
-function getPriceConfigIds(config: Tvl2Config): PriceConfigIdMap {
-  const result = new Map<string, { assetId: AssetId; priceId: string }>()
-  for (const p of config.prices) {
-    result.set(createAssetId(p), {
-      priceId: createPriceId(p),
-      assetId: p.assetId,
+    return associatedAmounts.map((amount) => {
+      return {
+        address: amount.address,
+        chain: amount.chain,
+        type: amount.source,
+        includeInTotal: amount.includeInTotal,
+        project: projectId,
+        projectType: getType(type),
+      }
     })
-  }
-
-  return result
+  })
 }
 
 function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
@@ -320,14 +265,4 @@ function getType(type: 'layer2' | 'bridge' | 'layer3'): 'layers2s' | 'bridges' {
     case 'layer3':
       return 'layers2s'
   }
-}
-
-function getMinTimestamp(projects: ApiProject[], type: Project['type']) {
-  return projects
-    .filter((x) => x.type === type)
-    .map((x) => x.minTimestamp)
-    .reduce((acc, curr) => {
-      return UnixTime.min(acc, curr)
-    })
-    .toEndOf('day')
 }

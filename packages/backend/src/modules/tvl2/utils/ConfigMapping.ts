@@ -6,7 +6,6 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ApiProject } from '../api/utils/types'
 import { createAmountId } from './createAmountId'
 import { AssetId, createAssetId } from './createAssetId'
 import { createPriceId } from './createPriceId'
@@ -52,13 +51,13 @@ export class ConfigMapping {
   }
 
   getAmountsByProjectAndToken(
+    projectId: ProjectId,
     token: {
       address: EthereumAddress | 'native'
       chain: string
     },
-    project: ApiProject,
   ): (AmountConfigEntry & { configId: string })[] {
-    const projectAmounts = this.amountsByProject.get(project.id)
+    const projectAmounts = this.amountsByProject.get(projectId)
     assert(projectAmounts)
 
     const assetId = createAssetId(token)
@@ -71,6 +70,15 @@ export class ConfigMapping {
     )
 
     return amountConfigs
+  }
+
+  getAmountsByProject(
+    projectId: ProjectId,
+  ): (AmountConfigEntry & { configId: string })[] {
+    const projectAmounts = this.amountsByProject.get(projectId)
+    assert(projectAmounts)
+
+    return projectAmounts
   }
 
   getAmountConfig(configId: string) {
