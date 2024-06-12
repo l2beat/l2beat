@@ -18,10 +18,26 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
 
-const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
+const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
   'Challenge',
   'challengeWindow',
 )
+
+const upgradesLightLink = {
+  upgradableBy: ['LightLinkAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+const CSCowner = discovery.getContractValue<string>(
+  'CanonicalStateChain',
+  'owner',
+)
+const publisher = discovery.getContractValue<string>(
+  'CanonicalStateChain',
+  'publisher',
+)
+
+const daOracle = discovery.getContractValue<string>('ChainOracle', 'daOracle')
 
 export const lightlink: Layer2 = {
   id: ProjectId('lightlink'),
@@ -87,7 +103,7 @@ export const lightlink: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
-      secondLine: `${formatSeconds(CHALLENGE_PERIOD_SECONDS)} challenge period`,
+      secondLine: `${formatSeconds(CHALLENGE_WINDOW_SECONDS)} challenge period`,
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_CELESTIA(false),
@@ -116,8 +132,10 @@ export const lightlink: Layer2 = {
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
-      description:
-        'After some period of time, the published state root is assumed to be correct. For a certain time period, anyone can challenge a block header against some basic validity checks.',
+      description: `After the challenge window of ${formatSeconds(
+        CHALLENGE_WINDOW_SECONDS,
+      )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks.
+          Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots.`,
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -150,7 +168,42 @@ export const lightlink: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [],
+    addresses: [
+      discovery.getContractDetails('CanonicalStateChain', {
+        description:
+          'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
+        ...upgradesLightLink,
+      }),
+      discovery.getContractDetails('Challenge', {
+        description:
+          'The Challenge contract is used to challenge block headers on the LightLink chain. If a block header is successfully challenged, the publisher can be replaced.',
+        ...upgradesLightLink,
+      }),
+      discovery.getContractDetails('ChainOracle', {
+        description:
+          'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
+        ...upgradesLightLink,
+      }),
+      {
+        name: 'DaOracle',
+        address: EthereumAddress(daOracle),
+        description:
+          'The DABridge contract used to verify shares inclusion in the ChainOracle provideShares() function. If no DAOracle is set, data shares cannot be verified and stored in the ChainOracle contract.',
+      },
+    ],
     risks: [],
   },
+  permissions: [
+    {
+      name: 'Publisher',
+      accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
+      description:
+        'The publisher is responsible for pushing new state roots to the CSC contract on L1.',
+    },
+    {
+      name: 'LightLinkAdmin',
+      accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
+      description: '',
+    },
+  ],
 }
