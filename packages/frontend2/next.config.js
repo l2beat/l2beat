@@ -105,7 +105,7 @@ const nextConfig = {
       beforeFiles: [
         {
           source: '/api/projects/:project/tvl/assets/:asset',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination:
             'https://staging.l2beat.com/api/projects/:project/tvl/assets/:asset',
         },
@@ -117,7 +117,7 @@ const nextConfig = {
         {
           source:
             '/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination:
             'https://staging.l2beat.com/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type',
         },
@@ -129,7 +129,7 @@ const nextConfig = {
         },
         {
           source: '/api/tvl2/token',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination: 'https://staging.l2beat.com/api/tvl2/token',
         },
         {
@@ -138,7 +138,7 @@ const nextConfig = {
         },
         {
           source: '/api/tvl2/aggregate',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination: 'https://staging.l2beat.com/api/tvl2/aggregate',
         },
         {
@@ -147,7 +147,7 @@ const nextConfig = {
         },
         {
           source: '/api/tvl/aggregate',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination: 'https://staging.l2beat.com/api/tvl/aggregate',
         },
         {
@@ -156,7 +156,7 @@ const nextConfig = {
         },
         {
           source: '/api/activity/aggregate',
-          has: [{ type: 'host', value: '.*l2beat-staging.*' }],
+          has: [{ type: 'host', value: '.*staging.*' }],
           destination: 'https://staging.l2beat.com/api/activity/aggregate',
         },
         {
