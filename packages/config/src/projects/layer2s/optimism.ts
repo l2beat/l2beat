@@ -215,9 +215,7 @@ export const optimism: Layer2 = {
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
           sinceTimestampInclusive: new UnixTime(1660662182),
-          untilTimestampExclusive: new UnixTime(
-            disputeGameFactory.sinceTimestamp ?? 1715887043,
-          ),
+          untilTimestampExclusive: new UnixTime(1661100288),
         },
       },
       {
@@ -231,9 +229,7 @@ export const optimism: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestampInclusive: new UnixTime(
-            disputeGameFactory.sinceTimestamp ?? genesisTimestamp.toNumber(),
-          ),
+          sinceTimestampInclusive: new UnixTime(1661100288), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
         },
       },
     ],
