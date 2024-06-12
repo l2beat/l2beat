@@ -14,7 +14,7 @@ export function getDaRiskView(
     fraudDetection: layer.risks.fraudDetection,
     attestations: bridge.risks.attestations,
     exitWindow: bridge.risks.exitWindow,
-    accessability: bridge.risks.accessability,
+    accessibility: bridge.risks.accessibility,
   }
 }
 
