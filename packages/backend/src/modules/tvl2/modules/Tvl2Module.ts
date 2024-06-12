@@ -94,11 +94,17 @@ export function createTvl2Module(
     idConverter,
   )
 
+  const ethPrice = config.tvl2.prices.find(
+    (p) => p.chain === 'ethereum' && p.address === 'native',
+  )
+  assert(ethPrice, 'Eth priceId not found')
+
   const controllerService = new ControllerService({
     amountRepository: peripherals.getRepository(AmountRepository),
     priceRepository: peripherals.getRepository(PriceRepository),
     valueRepository: peripherals.getRepository(ValueRepository),
     syncOptimizer,
+    ethPriceId: createPriceId(ethPrice),
     logger,
   })
 

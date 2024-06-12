@@ -6,6 +6,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRecord, ValueRepository } from '../repositories/ValueRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { PriceId } from '../utils/createPriceId'
 import { ApiProject } from './utils/types'
 
 export interface ControllerServiceDependencies {
@@ -13,6 +14,7 @@ export interface ControllerServiceDependencies {
   readonly amountRepository: AmountRepository
   readonly priceRepository: PriceRepository
   readonly syncOptimizer: SyncOptimizer
+  readonly ethPriceId: PriceId
   logger: Logger
 }
 
@@ -121,17 +123,18 @@ export class ControllerService {
     }
   }
 
-  async getPrices(priceId: string, _lastHour: UnixTime) {
-    const records = await this.$.priceRepository.getByConfigId(priceId)
+  async getEthPrices() {
+    const records = await this.$.priceRepository.getByConfigId(
+      this.$.ethPriceId,
+    )
     const prices = new Map(
       records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
-    //TODO: interpolate here
     const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
 
     assert(
       timestamps.every((x) => prices.has(x.toNumber())),
-      `Missing price for id: ${priceId}`,
+      `Missing prices for ethereum`,
     )
     return prices
   }

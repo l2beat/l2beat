@@ -54,7 +54,7 @@ export class Tvl2Controller {
   constructor(private readonly $: Tvl2ControllerDependencies) {}
 
   async getTvl(lastHour: UnixTime): Promise<TvlApiResponse> {
-    const ethPrices = await this.getEthPrices(lastHour)
+    const ethPrices = await this.$.controllerService.getEthPrices()
 
     const {
       valuesByProjectByTimestamp,
@@ -258,7 +258,7 @@ export class Tvl2Controller {
       })),
     )
 
-    const ethPrices = await this.getEthPrices(lastHour)
+    const ethPrices = await this.$.controllerService.getEthPrices()
 
     for (const e of excluded) {
       if (e.includeInTotal) {
@@ -369,7 +369,7 @@ export class Tvl2Controller {
     projectSlugs: string[],
     excludeAssociated: boolean,
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.getEthPrices(lastHour)
+    const ethPrices = await this.$.controllerService.getEthPrices()
 
     const projects = this.$.projects.filter((p) =>
       projectSlugs.includes(p.slug),
@@ -726,12 +726,5 @@ export class Tvl2Controller {
       })
     }
     return breakdownMap
-  }
-
-  private async getEthPrices(lastHour: UnixTime) {
-    const ethAssetId = createAssetId({ address: 'native', chain: 'ethereum' })
-    const ethPriceId = this.$.priceConfigs.get(ethAssetId)?.priceId
-    assert(ethPriceId, 'Eth priceId not found')
-    return await this.$.controllerService.getPrices(ethPriceId, lastHour)
   }
 }
