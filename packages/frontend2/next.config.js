@@ -10,6 +10,7 @@ const nextConfig = {
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async redirects() {
     return [
+      // Basic page redirects
       {
         "source": "/",
         "destination": "/scaling/summary",
@@ -19,6 +20,44 @@ const nextConfig = {
         "source": "/scaling",
         "destination": "/scaling/summary",
         "permanent": false
+      },
+      {
+        "source": "/bridges/tvl",
+        "destination": "/bridges/summary",
+        "permanent": false
+      },
+      {
+        "source": "/bridges",
+        "destination": "/bridges/summary",
+        "permanent": false
+      },
+      {
+        "source": "/jobs",
+        "destination": "https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f",
+        "permanent": false
+      },
+      // Renamed projects
+      // TODO: Move once we migrate detail pages to Next.js
+      {
+        "source": "/scaling/projects/zksync",
+        "destination": "/scaling/projects/zksync-lite",
+        "permanent": true
+      },
+      {
+        "source": "/scaling/projects/zksync2",
+        "destination": "/scaling/projects/zksync-era",
+        "permanent": true
+      },
+      // Legacy pathnames
+      {
+        "source": "/project/:name",
+        "destination": "/scaling/projects/:name",
+        "permanent": true
+      },
+      {
+        "source": "/projects/:name",
+        "destination": "/scaling/projects/:name",
+        "permanent": true
       },
       {
         "source": "/scaling/detailedTvl",
@@ -55,41 +94,6 @@ const nextConfig = {
         "destination": "/scaling/projects/rhinofi",
         "permanent": true
       },
-      {
-        "source": "/scaling/projects/zksync",
-        "destination": "/scaling/projects/zksync-lite",
-        "permanent": true
-      },
-      {
-        "source": "/scaling/projects/zksync2",
-        "destination": "/scaling/projects/zksync-era",
-        "permanent": true
-      },
-      {
-        "source": "/project/:name",
-        "destination": "/scaling/projects/:name",
-        "permanent": true
-      },
-      {
-        "source": "/projects/:name",
-        "destination": "/scaling/projects/:name",
-        "permanent": true
-      },
-      {
-        "source": "/bridges/tvl",
-        "destination": "/bridges/summary",
-        "permanent": false
-      },
-      {
-        "source": "/bridges",
-        "destination": "/bridges/summary",
-        "permanent": false
-      },
-      {
-        "source": "/jobs",
-        "destination": "https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f",
-        "permanent": false
-      }
     ]
   },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
