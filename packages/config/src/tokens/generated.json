@@ -6710,6 +6710,21 @@
       "formula": "totalSupply"
     },
     {
+      "id": "blast:juice-juice",
+      "name": "Juice",
+      "coingeckoId": "juice-finance",
+      "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
+      "symbol": "JUICE",
+      "decimals": 18,
+      "deploymentTimestamp": 1711151963,
+      "coingeckoListingTimestamp": 1711584000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36503/large/juice-logo-purple-200x200_%281%29.png?1711619018",
+      "chainId": 81457,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "blast:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",

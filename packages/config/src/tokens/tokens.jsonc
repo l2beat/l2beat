@@ -2220,6 +2220,12 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "JUICE",
+      "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "mode": [
