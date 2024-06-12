@@ -12,7 +12,6 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
 import { createTvl2Router } from '../api/Tvl2Router'
-import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
@@ -137,7 +136,6 @@ export function createTvl2Module(
     configMapping,
   })
 
-  const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const tvlRouter = createTvl2Router(
     tvlService,
     aggregatedService,
@@ -178,7 +176,7 @@ export function createTvl2Module(
   }
 
   return {
-    routers: [statusRouter, tvlRouter],
+    routers: [tvlRouter],
     start,
   }
 }
