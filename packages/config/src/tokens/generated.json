@@ -2656,6 +2656,21 @@
       "formula": "locked"
     },
     {
+      "id": "ole-openleverage-token-v2",
+      "name": "OpenLeverage Token V2",
+      "coingeckoId": "openleverage",
+      "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",
+      "symbol": "OLE",
+      "decimals": 18,
+      "deploymentTimestamp": 1699254587,
+      "coingeckoListingTimestamp": 1657152000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26098/large/256x256_OLE_Token_Logo.png?1696525189",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "obi-orbofi",
       "name": "ORBOFI",
       "coingeckoId": "orbofi-ai",
