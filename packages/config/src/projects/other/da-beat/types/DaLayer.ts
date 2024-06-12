@@ -47,13 +47,6 @@ export type CommonDaLayer = {
      * A short description of the data availability layer.
      */
     description?: string
-
-    /**
-     * The logo of the data availability layer.
-     * Will be resolved automatically by the frontend.
-     * @override if the logo has different name
-     */
-    logo?: string
   }
 
   /**

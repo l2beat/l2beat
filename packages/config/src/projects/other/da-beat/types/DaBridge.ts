@@ -67,13 +67,6 @@ type CommonDaBridge = {
      * Description of the data availability bridge
      */
     description: string
-
-    /**
-     * The logo of the data availability bridge.
-     * Will be resolved automatically by the frontend.
-     * @override if the logo has different name
-     */
-    logo?: string
   }
 
   /**
