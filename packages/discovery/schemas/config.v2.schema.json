@@ -37,6 +37,38 @@
       "type": "array",
       "items": { "$ref": "#/$defs/address" }
     },
+    "types": {
+      "description": "A list of types used for type casting",
+      "type": "object",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "properties": {
+            "typeCaster": { "type": "string" },
+            "arg": {
+              "type": "object",
+              "patternProperties": {
+                "^.*$": {
+                  "oneOf": [
+                    { "type": "string" },
+                    { "type": "number" },
+                    { "type": "boolean" }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": { "type": ["string", "null"] },
+            "severity": { "$ref": "severity.schema.json" }
+          },
+          "dependencies": {
+            "arg": {
+              "required": ["typeCaster"]
+            }
+          }
+        }
+      }
+    },
     "maxDepth": {
       "description": "Maximum depth of discovery",
       "type": "integer",
