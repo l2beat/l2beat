@@ -20,7 +20,7 @@ import { ChainConverter } from '../../../tools/ChainConverter'
 import { asNumber } from '../utils/asNumber'
 import { calculateValue } from '../utils/calculateValue'
 import { createAssetId } from '../utils/createAssetId'
-import { ControllerService } from './ControllerService'
+import { ControllerService } from './services/ControllerService'
 import {
   convertSourceName,
   getChart,

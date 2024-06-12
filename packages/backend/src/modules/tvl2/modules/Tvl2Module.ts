@@ -12,13 +12,13 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import { ControllerService } from '../api/ControllerService'
 import {
   Tvl2Controller,
   Tvl2ControllerDependencies,
 } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
+import { ControllerService } from '../api/services/ControllerService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
