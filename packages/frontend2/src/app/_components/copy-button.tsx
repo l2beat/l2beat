@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard'
 import CopyIcon from '~/icons/copy.svg'
 import SatisfiedIcon from '~/icons/satisfied.svg'
+import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
 
 interface Props {
@@ -18,7 +19,7 @@ export function CopyButton(props: Props) {
 
   useEffect(() => {
     if (copied) {
-      const timeout = setTimeout(() => setCopied(false), 1000)
+      const timeout = setTimeout(() => setCopied(false), 1400)
       return () => clearTimeout(timeout)
     }
   }, [copied])
@@ -32,19 +33,32 @@ export function CopyButton(props: Props) {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild onClick={(event) => event.preventDefault()}>
-        <button
-          className="flex items-center justify-center"
-          onClick={() => copyToClipboard()}
-        >
-          {copied ? (
-            <SatisfiedIcon className="size-6 fill-green-700 dark:fill-green-450" />
-          ) : (
-            <CopyIcon className="size-6 fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550" />
-          )}
-        </button>
+      <TooltipTrigger
+        className={props.className}
+        onClick={(event) => {
+          event.preventDefault()
+          copyToClipboard()
+        }}
+      >
+        <div className="size-6 relative">
+          <CopyIcon
+            className={cn(
+              'absolute inset-0 size-6 fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550 transition-opacity duration-200',
+              copied ? 'opacity-0' : 'opacity-100',
+            )}
+          />
+          <SatisfiedIcon
+            className={cn(
+              'absolute inset-0 size-6 fill-green-700 dark:fill-green-450 transition-opacity duration-200',
+              copied ? 'opacity-100' : 'opacity-0',
+            )}
+          />
+        </div>
       </TooltipTrigger>
-      <TooltipContent onPointerDownOutside={(event) => event.preventDefault()}>
+      <TooltipContent
+        hideWhenDetached
+        onPointerDownOutside={(event) => event.preventDefault()}
+      >
         {copied ? 'Copied!' : 'Copy URL'}
       </TooltipContent>
     </Tooltip>

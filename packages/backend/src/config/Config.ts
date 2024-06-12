@@ -85,6 +85,7 @@ export interface Tvl2Config {
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly projectsExcludedFromApi: string[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TrackedTxsConfig {
@@ -99,7 +100,7 @@ export interface TrackedTxsConfig {
     readonly l2costs:
       | {
           readonly aggregatorEnabled: boolean
-          readonly coingeckoApiKey: string
+          readonly coingeckoApiKey: string | undefined
         }
       | false
   }
@@ -136,6 +137,7 @@ export interface ChainTvlConfig {
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
       | BlockscoutChainConfig
+      | undefined
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }

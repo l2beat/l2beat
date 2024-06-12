@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19916529,
   "configHash": "0xe27dc5e636140b87e6b0c4623dfc6041a1c19e57b81e140940037e119f711cf4",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -22,6 +22,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
@@ -391,6 +392,11 @@
     {
       "name": "Bridge",
       "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
@@ -415,6 +421,8 @@
     {
       "name": "ValidatorOwnerMultisig",
       "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -493,6 +501,8 @@
     {
       "name": "BatchPosterManagerMultisig",
       "address": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -632,6 +642,8 @@
     {
       "name": "SecurityCouncil",
       "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -677,6 +689,12 @@
     {
       "name": "RollupProxy",
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+      "template": "orbitstack/RollupProxy",
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
@@ -743,6 +761,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
     "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
     "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",

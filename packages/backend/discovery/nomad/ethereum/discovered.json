@@ -3,11 +3,12 @@
   "chain": "ethereum",
   "blockNumber": 19531994,
   "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
+      "ignoreInWatchMode": ["committedRoot"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
@@ -147,10 +148,10 @@
         "queueLength": 0,
         "root": "0xe18ac8f4c08b5cb8d38126206e555344f57eb4fcebf1033f6d722c2ed865d28f",
         "state": 1,
-        "suggestUpdate": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
+        "suggestUpdate": {
+          "_committedRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "_new": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
         "tree": 20122,
         "updater": "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
         "updaterManager": "0x9272C9d5fa902Ef3804EC81e0333Ae420D57f715",
@@ -161,6 +162,8 @@
     {
       "name": "Governor",
       "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -205,6 +208,8 @@
     {
       "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

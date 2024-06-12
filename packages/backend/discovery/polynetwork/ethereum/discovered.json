@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19940448,
   "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -148,6 +148,7 @@
     {
       "name": "EthCrossChainData",
       "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
+      "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "upgradeability": {
         "type": "immutable"
       },

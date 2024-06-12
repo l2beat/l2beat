@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927728,
   "configHash": "0x1556cca6a43d40327c72021678db58a02c5dcb18b6d8b1c8301d3657294568c5",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "AddressManager",
@@ -20,6 +20,8 @@
     {
       "name": "GuardianMultisig",
       "address": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -48,6 +50,8 @@
     {
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -94,14 +98,14 @@
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 684000,
         "sequencerInbox": "0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -114,6 +118,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x97BAf688E5d0465E149d1d5B497Ca99392a6760e",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
@@ -141,6 +146,12 @@
     {
       "name": "L2OutputOracle",
       "address": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x76983dfED43C7ae7ebB592A92Be2BE972cAE4348",
@@ -168,6 +179,7 @@
     {
       "name": "OptimismPortal",
       "address": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x436e9FC7894e26718637f086d42B4a06439C8ae0",
@@ -179,7 +191,11 @@
         "GUARDIAN": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
         "L2_ORACLE": "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19909015],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 19909015
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.6.0"

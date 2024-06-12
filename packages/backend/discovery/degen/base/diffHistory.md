@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xa1fd4e8b3f00f18a88f1ad752788f7d8eaa0781f
+
+# Diff at Tue, 11 Jun 2024 13:15:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b482f34b787e8546115b599d38d66643fc47a24 block: 15021326
+- current block number: 15661159
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 15021326 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        [3456000,48,86400000,3600]
++        {"delayBlocks":3456000,"futureBlocks":48,"delaySeconds":86400000,"futureSeconds":3600}
+    }
+```
+
 Generated with discovered.json: 0xc30d97b2c62e49cb891cf19047ba38cb3a0d7615
 
 # Diff at Mon, 27 May 2024 17:47:10 GMT:

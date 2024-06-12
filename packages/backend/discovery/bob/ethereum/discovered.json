@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016201,
   "configHash": "0xa703089081ef30a3fd1b4acef291868581ef007690cb07321cd53ee16bfb795b",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",
@@ -95,6 +95,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -127,7 +129,11 @@
         "GUARDIAN": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
         "L2_ORACLE": "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 20016172],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 20016172
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
         "version": "1.7.2"
@@ -155,14 +161,14 @@
         },
         "overhead": 0,
         "owner": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279133814289959243296",
         "sequencerInbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -175,6 +181,8 @@
     {
       "name": "UsdcBridgeOwnerMultisig",
       "address": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -203,6 +211,7 @@
     {
       "name": "RollupOwnerMultisig",
       "address": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

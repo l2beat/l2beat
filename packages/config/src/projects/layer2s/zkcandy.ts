@@ -7,7 +7,7 @@ export const zkcandy: Layer2 = upcomingL2({
     name: 'zkCandy',
     slug: 'zkcandy',
     description:
-      "zkCandy is an L2 Gaming Hyperchain built on zkSync's ZK stack for the next generation of GameFi - Supercharged by iCandy, the largest game developer in ANZ and SEA.",
+      "zkCandy is an L2 Gaming Hyperchain built on ZKsync's ZK stack for the next generation of GameFi - Supercharged by iCandy, the largest game developer in ANZ and SEA.",
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
     provider: 'ZK Stack',

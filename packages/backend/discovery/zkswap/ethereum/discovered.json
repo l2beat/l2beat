@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19432103,
   "configHash": "0x73afccc819928023fc410ec9984703b0c8e2a366353cf570e6f7369a3ce9dbd6",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "Governance",
@@ -116,6 +116,12 @@
     {
       "name": "ZkSync",
       "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "numberOfPendingWithdrawals",
+        "totalBlocksCommitted",
+        "totalBlocksVerified"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
@@ -165,6 +171,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
     "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037"
   ],

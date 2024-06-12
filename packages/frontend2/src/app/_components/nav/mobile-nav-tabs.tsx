@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
+import { OverflowWrapper } from '../overflow-wrapper'
 import { type NavGroup } from './types'
 
 /**
@@ -16,8 +17,8 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     currentGroup && (
-      <div className="overflow-x-scroll w-full border-b border-gray-200 dark:border-gray-850 text-center scrollbar-hide">
-        <div className="inline-flex flex-row gap-2 px-4 py-2 m-auto">
+      <OverflowWrapper>
+        <div className="flex flex-row gap-2 px-4 py-2">
           {currentGroup.links
             .filter((link) => link.enabled)
             .map((link) => (
@@ -34,7 +35,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
               </Link>
             ))}
         </div>
-      </div>
+      </OverflowWrapper>
     )
   )
 }

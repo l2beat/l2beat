@@ -119,3 +119,10 @@ export const ImplementationChanged: Story = {
     isImplementationUnderReview: true,
   },
 }
+
+export const ImplementationChangedAndUnderReview: Story = {
+  args: {
+    isUnderReview: true,
+    isImplementationUnderReview: true,
+  },
+}

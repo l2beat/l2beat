@@ -7,7 +7,7 @@ export const cronos: Layer2 = upcomingL2({
     name: 'Cronos zkEVM',
     slug: 'cronos',
     description:
-      "Cronos zkEVM is an Ethereum Layer-2 scaling solution that leverages zkSync's ZK Stack, extending the existing portfolio of Cronos apps.",
+      "Cronos zkEVM is an Ethereum Layer-2 scaling solution that leverages ZKsync's ZK Stack, extending the existing portfolio of Cronos apps.",
     purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'ZK Stack',

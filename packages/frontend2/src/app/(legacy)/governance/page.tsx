@@ -5,8 +5,9 @@ import React from 'react'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { CustomLink } from '~/app/_components/custom-link'
 import { FullPageHeader } from '~/app/_components/full-page-header'
-import { getCollection } from '~/content/getCollection'
+import { getCollection } from '~/content/get-collection'
 import OutLinkIcon from '~/icons/outlink.svg'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { GovernanceHeaderIllustration } from './_assets/governance-header'
 import { GovernanceEventsSection } from './_components/sections/governance-events-section'
 import { OfficeHoursSection } from './_components/sections/office-hours-section'
@@ -16,14 +17,14 @@ import { RecentPublicationsSection } from './_components/sections/recent-publica
 import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'
 import { getGovernancePublicationEntry } from './_utils/get-governance-publication-entry'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance - L2BEAT',
   description:
     'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
   openGraph: {
     url: '/governance',
   },
-}
+})
 
 export default function Page() {
   const publications = getCollection('publications')
@@ -57,7 +58,7 @@ export default function Page() {
 }
 
 function Header() {
-  const delegatedProjects = getCollection('delegatedProjects')
+  const delegatedProjects = getCollection('delegated-projects')
   const chunkedProjects = chunk(delegatedProjects, 3)
 
   return (

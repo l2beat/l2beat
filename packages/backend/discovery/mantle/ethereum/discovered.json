@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531981,
   "configHash": "0x7b4443a7e17b174dc610b0eb42695f821608a6139d42809fdf1aca12b41076c3",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -94,6 +94,15 @@
     {
       "name": "CanonicalTransactionChain",
       "address": "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -131,6 +140,8 @@
     {
       "name": "Owner2Multisig",
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -160,6 +171,12 @@
     {
       "name": "L2OutputOracle",
       "address": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD1230865641561653406906Fb08873F011c19080",
@@ -187,6 +204,7 @@
     {
       "name": "L1MantleToken",
       "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
@@ -230,14 +248,14 @@
         },
         "overhead": 188,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 10000,
         "sequencerInbox": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -274,6 +292,8 @@
     {
       "name": "OwnerMultisig",
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -309,6 +329,13 @@
     {
       "name": "EigenDataLayerChain",
       "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
+      "ignoreInWatchMode": [
+        "getL2ConfirmedBlockNumber",
+        "getL2StoredBlockNumber",
+        "l2ConfirmedBlockNumber",
+        "l2StoredBlockNumber",
+        "rollupBatchIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
@@ -336,6 +363,7 @@
     {
       "name": "DataLayrServiceManager",
       "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+      "ignoreInWatchMode": ["dataStoresForDuration"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
@@ -352,7 +380,17 @@
         "dataLayrBombVerifier": "0x0000000000000000000000000000000000000000",
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "dataStoresForDuration": [22833, 0, 0, 0, 0, 0, 0, 22834, 1711624463],
+        "dataStoresForDuration": {
+          "one_duration": 22833,
+          "two_duration": 0,
+          "three_duration": 0,
+          "four_duration": 0,
+          "five_duration": 0,
+          "six_duration": 0,
+          "seven_duration": 0,
+          "dataStoreId": 22834,
+          "latestTime": 1711624463
+        },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "feePerBytePerTime": 1,
@@ -374,6 +412,7 @@
     {
       "name": "ChainStorageContainerCTC",
       "address": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -389,6 +428,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
@@ -448,6 +488,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -471,6 +513,11 @@
     {
       "name": "StateCommitmentChain",
       "address": "0x89E9D387555AF0cDE22cb98833Bae40d640AD7fa",
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -565,6 +612,7 @@
     {
       "name": "OptimismPortal",
       "address": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7",
@@ -577,7 +625,11 @@
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "L2_ORACLE": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 591926, 19531880],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 19531880
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
@@ -655,6 +707,7 @@
     {
       "name": "ChainStorageContainerSCC",
       "address": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
+      "ignoreInWatchMode": ["getGlobalMetadata", "length"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -691,6 +744,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x000000000000000000000000000000000000dEaD",
     "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
     "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",

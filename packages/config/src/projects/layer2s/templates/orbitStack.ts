@@ -372,9 +372,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         [
           ...(templateVars.nonTemplateEscrows ?? []),
           {
-            chain: templateVars.hostChain.toString(),
-            includeInTotal: false,
             ...templateVars.discovery.getEscrowDetails({
+              chain: templateVars.hostChain.toString(),
+              includeInTotal: false,
               address: templateVars.bridge.address,
               tokens: templateVars.nativeToken
                 ? [templateVars.nativeToken]

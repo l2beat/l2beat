@@ -61,7 +61,7 @@ export function getActiveScalingSummaryColumnsConfig() {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
     {
@@ -86,7 +86,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Share of the sum of total value locked of all projects.',
       align: 'right',
       minimalWidth: true,
-      className: 'hidden 2xl:table-cell',
+      className: 'hidden min-[1440px]:table-cell',
       headClassName: '!pr-4',
       getValue: (project) => (
         <ExcludeAssociatedTokensWrapper>
@@ -237,7 +237,7 @@ export function getLayer3sScalingSummaryColumnsConfig(layer3sTvl: boolean) {
     {
       name: 'Purpose',
       tooltip: 'Functionality supported by this project.',
-      className: 'whitespace-normal',
+      className: 'whitespace-nowrap md:whitespace-normal',
       getValue: (project) => project.purposes.join(', '),
     },
 
