@@ -1,16 +1,20 @@
+import { assert } from '@l2beat/backend-tools'
 import { TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
 import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import {
   ValuesForSource,
   getChartsData,
+  subtractTokenCharts,
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
 import { DataService } from './DataService'
+import { TokenService } from './TokenService'
 
 interface Dependencies {
   dataService: DataService
   syncOptimizer: SyncOptimizer
+  tokenService: TokenService
 }
 
 export class AggregatedService {
@@ -61,7 +65,7 @@ export class AggregatedService {
       minTimestamp,
     )
 
-    const result = getChartsData({
+    let result = getChartsData({
       dailyStart,
       sixHourlyStart,
       hourlyStart,
@@ -71,14 +75,20 @@ export class AggregatedService {
     })
 
     if (associatedTokens.length > 0) {
-      throw new Error('associated removal not implemented')
-      //   const excluded = await Promise.all(
-      //     associatedTokens.map(async (token) => {
-      //       const data = await this.getTokenChart(x, x.project, lastHour)
+      await Promise.all(
+        associatedTokens.map(async (token) => {
+          const project = projects.find((p) => p.id === token.project)
+          assert(project, 'Project not found!')
 
-      //       result = subtractTokenCharts(result, data, token.type, ethPrices)
-      //     }),
-      //   )
+          const data = await this.$.tokenService.getTokenChart(
+            timestamp,
+            project,
+            token,
+          )
+
+          result = subtractTokenCharts(result, data, token.type, ethPrices)
+        }),
+      )
     }
 
     return result

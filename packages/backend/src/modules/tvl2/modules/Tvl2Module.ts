@@ -111,14 +111,15 @@ export function createTvl2Module(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
 
-  const aggregatedService = new AggregatedService({
-    dataService,
-    syncOptimizer,
-  })
-
   const tokenService = new TokenService({
     dataService,
     configMapping,
+  })
+
+  const aggregatedService = new AggregatedService({
+    dataService,
+    syncOptimizer,
+    tokenService,
   })
 
   const breakdownService = new BreakdownService({
