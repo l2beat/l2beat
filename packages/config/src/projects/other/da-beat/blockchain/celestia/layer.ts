@@ -36,8 +36,9 @@ export const celestia: DaLayer = {
     stack.id,
   ],
   storageDuration: 1000,
+  consensusFinality: 1000,
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithBlockReconstruction(false),
+    fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
   },
 }

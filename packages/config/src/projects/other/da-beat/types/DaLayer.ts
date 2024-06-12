@@ -32,6 +32,12 @@ export type BlockchainDaLayer = CommonDaLayer & {
    * @unit seconds
    */
   storageDuration: number
+
+  /**
+   * Consensus finality time.
+   * @unit seconds
+   */
+  consensusFinality: number
 }
 
 export type DacDaLayer = CommonDaLayer & {

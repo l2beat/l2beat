@@ -1,6 +1,6 @@
 import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ScalingProjectContractSingleAddress } from '../../../../common'
-import { DaAccessabilityRisk } from './DaAccessabilityRisk'
+import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 
@@ -115,7 +115,7 @@ export type DaBridgeRisks = {
   /**
    * Accessability - TBD
    */
-  accessability: DaAccessabilityRisk
+  accessibility: DaAccessibilityRisk
 }
 
 type Permissions = {
