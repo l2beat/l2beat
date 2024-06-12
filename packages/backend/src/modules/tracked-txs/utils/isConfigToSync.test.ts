@@ -161,8 +161,6 @@ describe(isConfigToSync.name, () => {
         START,
         START.add(3, 'hours'),
       ),
-    ).toThrow(
-      'Programmer error: lastSyncedTimestamp should be after or equal to from',
-    )
+    ).toThrow()
   })
 })

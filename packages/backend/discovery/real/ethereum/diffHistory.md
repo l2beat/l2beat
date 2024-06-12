@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x601ec9c1db789f23487fa142146264f15454df48
+
+# Diff at Wed, 12 Jun 2024 04:47:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b9a39f700e84af1cffa010ce0e20e64b23a4c64 block: 20032983
+- current block number: 20073454
+
+## Description
+
+Two previously-unverified contracts are now verified. 
+The only registered strategy backing reETH is currently depositing ETH into Lido and holding stETH. There is a SwapManager that serves instant withdrawals through Curve and Uniswap.
+
+All escrowing and strategy-related contracts have a new Multisig as governance, but the ownership transfer is still pending. (the EOA Warning is now removed).
+
+## Watched changes
+
+```diff
+    contract SwapManager (0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335) {
+    +++ description: None
+      values.owner:
+-        "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
++        "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4"
+    }
+```
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: None
+      values.owner:
+-        "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
++        "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4"
+      values.proposal:
+-        "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
++        "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EscrowMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/EscrowMultisig/GnosisSafe.sol   | 952 +++++++++++++++++++++
+ .../.flat/EscrowMultisig/GnosisSafeProxy.p.sol     |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032983 (main branch discovery), not current.
+
+```diff
+    contract StrategyManager (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8) {
+    +++ description: None
+      unverified:
+-        true
+      values:
++        {"assetsVault":"0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294","getAllStrategiesValue":"311079739008922993052","getAllStrategyPendingValue":0,"getStrategies":{"addrs":["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],"allocations":[1000000]},"getTotalInvestedValue":{"_value":"311079739008922993052","strategiesValue":["311079739008922993052"]},"realVault":"0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"}
+    }
+```
+
+```diff
+    contract  (0x679D4C1cC6855C57726BEA1784F578315d6431f6) {
+    +++ description: None
+      name:
+-        ""
++        "LidoStEthStrategy"
+      unverified:
+-        true
+      values:
++        {"getClaimableValue":0,"getInvestedValue":"311079739008922993052","getStETHWithdrawalStatus":{"requestIds":[],"statuses":[]},"getTotalValue":"311079739008922993052","governance":"0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3","manager":"0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8","MAX_STETH_WITHDRAWAL_AMOUNT":"1000000000000000000000","MIN_STETH_WITHDRAWAL_AMOUNT":100,"name":"Lido Investment Strategy","STETH":"0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84","stETHWithdrawalQueue":"0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","swapManager":"0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335","WETH9":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","WSTETH":"0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SwapManager (0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x862f9fa7833edb8299291eee9bf9ae8db2c2ef87
 
 # Diff at Thu, 06 Jun 2024 13:07:44 GMT:
