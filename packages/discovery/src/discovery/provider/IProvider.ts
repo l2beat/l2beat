@@ -1,5 +1,5 @@
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { Bytes, providers } from 'ethers'
+import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { RateLimitedProvider } from './RateLimitedProvider'
@@ -20,6 +20,12 @@ export interface ContractDeployment {
   timestamp: UnixTime
 }
 
+export interface RawProviders {
+  baseProvider: providers.JsonRpcProvider | RateLimitedProvider
+  eventProvider: providers.JsonRpcProvider | RateLimitedProvider
+  etherscanLikeClient: EtherscanLikeClient
+}
+
 export interface IProvider {
   readonly blockNumber: number
   readonly chain: string
@@ -30,11 +36,7 @@ export interface IProvider {
   /** Needs to return values that survive JSON serialization! */
   raw<T>(
     cacheKey: string,
-    fn: (providers: {
-      baseProvider: providers.JsonRpcProvider | RateLimitedProvider
-      eventProvider: providers.JsonRpcProvider | RateLimitedProvider
-      etherscanLikeClient: EtherscanLikeClient
-    }) => Promise<T>,
+    fn: (providers: RawProviders) => Promise<T>,
   ): Promise<T>
 
   call(address: EthereumAddress, data: Bytes): Promise<Bytes>

@@ -8,7 +8,7 @@ import {
 import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, ContractSource } from './IProvider'
+import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
 import { RateLimitedProvider } from './RateLimitedProvider'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
@@ -21,9 +21,9 @@ export class LowLevelProvider {
     private readonly etherscanLikeClient: EtherscanLikeClient,
   ) {}
 
-  getRawProviders() {
+  getRawProviders(): RawProviders {
     return {
-      provider: this.provider,
+      baseProvider: this.provider,
       eventProvider: this.eventProvider,
       etherscanLikeClient: this.etherscanLikeClient,
     }

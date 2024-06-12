@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { BigNumber, providers } from 'ethers'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, ContractSource } from './IProvider'
+import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { CacheEntry, ReorgAwareCache } from './ReorgAwareCache'
 import { MulticallClient } from './multicall/MulticallClient'
@@ -54,8 +54,18 @@ export class BatchingAndCachingProvider {
     private multicallClient: MulticallClient,
   ) {}
 
-  getRawProviders() {
-    return this.provider.getRawProviders()
+  async raw<T>(
+    cacheKey: string,
+    fn: (providers: RawProviders) => Promise<T>,
+  ): Promise<T> {
+    const entry = await this.cache.entry(cacheKey, [], undefined)
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return JSON.parse(cached)
+    }
+    const result = await fn(this.provider.getRawProviders())
+    entry.write(JSON.stringify(result))
+    return result
   }
 
   async call(
@@ -346,6 +356,7 @@ export class BatchingAndCachingProvider {
     const cached = entry.read()
     if (cached !== undefined) {
       // This recovers BigNumber instances from the cache
+      // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
       return JSON.parse(cached, (_, value: unknown) => {
         if (
           typeof value === 'object' &&
