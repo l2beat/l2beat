@@ -98,8 +98,11 @@ export const arbitrum: Layer2 = {
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
-      apps: [],
-      documentation: ['https://developer.arbitrum.io/'],
+      apps: ['https://bridge.arbitrum.io/'],
+      documentation: [
+        'https://developer.arbitrum.io/',
+        'https://docs.arbitrum.foundation/',
+      ],
       explorers: [
         'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
@@ -110,12 +113,12 @@ export const arbitrum: Layer2 = {
         'https://github.com/ArbitrumFoundation/governance',
         'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/nitro',
-        'https://github.com/OffchainLabs/arb-os',
       ],
       socialMedia: [
         'https://twitter.com/arbitrum',
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
+        'https://youtube.com/@Arbitrum',
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
