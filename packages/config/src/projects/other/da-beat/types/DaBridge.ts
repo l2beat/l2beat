@@ -113,7 +113,7 @@ export type DaBridgeRisks = {
   exitWindow: DaExitWindowRisk
 
   /**
-   * Accessability - TBD
+   * Accessibility - TBD
    */
   accessibility: DaAccessibilityRisk
 }
