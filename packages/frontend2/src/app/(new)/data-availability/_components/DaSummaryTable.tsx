@@ -1,15 +1,15 @@
 'use client'
 
 import {
-  type SortingState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
   getFacetedUniqueValues,
+  getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { SortingArrows } from '~/app/_components/table/sorting-arrows'
 import {
   Table,
@@ -20,9 +20,12 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/app/_components/table/table'
+import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
+import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { formatNumber } from '~/utils/format-number'
 
 type DataAvailabilityProvider = {
+  index: number
   daLayer: string
   daBridge: { name: string; network: string } | null
   risks: unknown
@@ -32,7 +35,7 @@ type DataAvailabilityProvider = {
   usedBy: string[]
 }
 
-const mockData: DataAvailabilityProvider[] = [
+const mockData: DataAvailabilityProvider[] = withIndex([
   {
     daLayer: 'Celestia',
     daBridge: { name: 'Bridge1', network: 'Base' },
@@ -40,32 +43,32 @@ const mockData: DataAvailabilityProvider[] = [
     layerType: 'Public blockchain',
     tvs: 1_234_000_000,
     economicSecurity: 1_971_000_000,
-    usedBy: ['Project1', 'Project2'],
+    usedBy: ['Base', 'OP Mainnet'],
   },
   {
-    daLayer: 'Celestia',
+    daLayer: 'Anvil',
     daBridge: { name: 'BlobstreamX', network: 'Arbitrum' },
     risks: {},
-    layerType: 'Public blockchain',
-    tvs: 1_000_000_000,
-    economicSecurity: 15_223_000_000,
-    usedBy: ['Project1', 'Project2'],
+    layerType: 'Private blockchain',
+    tvs: 1_000,
+    economicSecurity: 15_223,
+    usedBy: ['Myria', 'ApeX'],
   },
   {
-    daLayer: 'Celestia',
+    daLayer: 'DA Solution',
     daBridge: null,
     risks: {},
-    layerType: 'Public blockchain',
-    tvs: 1_000_000_000,
-    economicSecurity: 1_000_200_000_000,
-    usedBy: ['Project1', 'Project2'],
+    layerType: 'No clue',
+    tvs: 1_000_000,
+    economicSecurity: 1_000_200,
+    usedBy: ['No clue', 'Random'],
   },
-]
+])
 
 const columnHelper = createColumnHelper<DataAvailabilityProvider>()
 
 const columns = [
-  columnHelper.display({
+  columnHelper.accessor('index', {
     header: '#',
     cell: (ctx) => ctx.row.index + 1,
   }),
@@ -95,74 +98,85 @@ const columns = [
   }),
   columnHelper.accessor('usedBy', {
     header: 'Used by',
+    cell: (ctx) => ctx.getValue().join(', '),
   }),
 ]
 
 export function DaSummaryTable() {
-  const [sorting, setSorting] = useState<SortingState>([
-    {
-      id: 'daLayer',
-      desc: true,
-    },
-  ])
-
   const table = useReactTable({
     data: mockData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    onSortingChange: setSorting,
+    getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     enableSortingRemoval: false,
     sortDescFirst: true,
-    state: {
-      sorting,
+    initialState: {
+      sorting: [{ id: 'index', desc: false }],
     },
   })
 
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableHeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableHead
-                key={header.id}
-                colSpan={header.colSpan}
-                onClick={header.column.getToggleSortingHandler()}
-              >
-                {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                  <SortingArrows
-                    sortDirection={header.column.getIsSorted()}
-                    nextSortDirection={header.column.getNextSortingOrder()}
-                  >
-                    {flexRender(
+    <>
+      <TableToolbar>
+        <TableFacetedFilter
+          title="DA Layer"
+          column={table.getColumn('daLayer')}
+        />
+        <TableFacetedFilter
+          title="Layer type"
+          column={table.getColumn('layerType')}
+        />
+      </TableToolbar>
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableHeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  onClick={header.column.getToggleSortingHandler()}
+                >
+                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                    <SortingArrows
+                      sortDirection={header.column.getIsSorted()}
+                      nextSortDirection={header.column.getNextSortingOrder()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </SortingArrows>
+                  ) : (
+                    flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
-                    )}
-                  </SortingArrows>
-                ) : (
-                  flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )
-                )}
-              </TableHead>
-            ))}
-          </TableHeaderRow>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id} className="h-9 md:h-14">
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+                    )
+                  )}
+                </TableHead>
+              ))}
+            </TableHeaderRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id} className="h-9 md:h-14">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
+}
+
+function withIndex<T>(array: T[]) {
+  return array.map((item, index) => ({ ...item, index }))
 }
