@@ -22,10 +22,9 @@ import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('loopring')
-const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
-  'ExchangeV3',
-  'getConstants',
-)[2]
+const forcedWithdrawalDelay = discovery.getContractValue<{
+  [key: string]: number
+}>('ExchangeV3', 'getConstants').MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE
 const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
   'ExchangeV3',
   'getMaxAgeDepositUntilWithdrawable',
