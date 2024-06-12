@@ -21,7 +21,6 @@ export const lumia: Layer2 = upcomingL2({
         'https://x.com/BuildOnLumia',
         'https://t.me/lumia_community',
       ],
-
     },
   },
 })
