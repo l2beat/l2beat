@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { BlockTimestampRepository } from './BlockTimestampRepository'
 
 describeDatabase(BlockTimestampRepository.name, (database) => {
@@ -101,4 +102,11 @@ describeDatabase(BlockTimestampRepository.name, (database) => {
 
     expect(results).toEqual([])
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) => ({
+    chain: 'chain',
+    timestamp,
+    blockNumber: 0,
+  }))
 })

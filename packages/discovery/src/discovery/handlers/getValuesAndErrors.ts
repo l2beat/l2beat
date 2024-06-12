@@ -2,10 +2,19 @@ import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { utils } from 'ethers'
 
 import { assert } from '@l2beat/backend-tools'
-import { ParamType } from 'ethers/lib/utils'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import {
+  TupleType,
+  Type,
+  getReturnType,
+  parseReturnType,
+} from '../utils/parseReturnType'
 import { HandlerResult } from './Handler'
 
-export function getValuesAndErrors(results: HandlerResult[]): {
+export function getValuesAndErrors(
+  results: HandlerResult[],
+  fieldOverrides?: DiscoveryContract['fields'],
+): {
   values: ContractParameters['values']
   errors: ContractParameters['errors']
 } {
@@ -13,7 +22,13 @@ export function getValuesAndErrors(results: HandlerResult[]): {
   const errors: ContractParameters['errors'] = {}
   for (const result of results) {
     if (result.value !== undefined) {
-      values[result.field] = reencodeWithABI(result.value, result.fragment)
+      const returnType = (fieldOverrides ?? {})[result.field]?.returnType
+      if (returnType !== undefined && returnType !== null) {
+        const type = parseReturnType(returnType)
+        values[result.field] = reencodeWithReturnType(result.value, type)
+      } else {
+        values[result.field] = reencodeWithABI(result.value, result.fragment)
+      }
     }
     if (result.error !== undefined) {
       errors[result.field] = result.error
@@ -30,42 +45,51 @@ function reencodeWithABI(
     return value
   }
 
-  const outputs = fragment.outputs
-  if (outputs.length === 1 && outputs[0] !== undefined) {
-    return reencodeType(value, outputs[0])
+  const type = getReturnType(fragment)
+  return reencodeWithReturnType(value, type)
+}
+
+function reencodeWithReturnType(
+  value: ContractValue,
+  type: TupleType,
+): ContractValue {
+  if (type.elements.length === 1) {
+    const firstElement = type.elements[0]
+    assert(firstElement !== undefined)
+    return reencodeType(value, firstElement.type)
   } else {
     assert(Array.isArray(value))
-    const names = outputs.map((o) => o.name)
+    const names = type.elements.map((o) => o.name)
     const entries = names.map((name, i) => {
       const element = value[i]
-      const output = outputs[i]
+      const outputElement = type.elements[i]
       assert(element !== undefined)
-      assert(output !== undefined)
-      return [name, reencodeType(element, output)]
+      assert(outputElement !== undefined)
+      return [name, reencodeType(element, outputElement.type)]
     })
 
     return asObjectIfValidKeys(entries)
   }
 }
 
-function reencodeType(
-  value: ContractValue,
-  paramType: ParamType,
-): ContractValue {
-  assert(valueShapeMatchesType(value, paramType))
+function reencodeType(value: ContractValue, paramType: Type): ContractValue {
+  assert(
+    valueShapeMatchesType(value, paramType),
+    "The data shape of the value doesn't match the type",
+  )
 
-  if (paramType.arrayLength !== null) {
+  if (paramType.kind === 'array') {
     const array = value as ContractValue[]
     return array.map((v) => {
-      return reencodeType(v, paramType.arrayChildren)
+      return reencodeType(v, paramType.childType)
     })
   }
-  if (paramType.components !== null) {
+  if (paramType.kind === 'tuple') {
     const array = value as ContractValue[]
     const entries = array.map((v, i) => {
-      const component = paramType.components[i]
-      assert(component !== undefined)
-      return [component.name, reencodeType(v, component)]
+      const element = paramType.elements[i]
+      assert(element !== undefined)
+      return [element.name, reencodeType(v, element.type)]
     })
 
     return asObjectIfValidKeys(entries)
@@ -74,31 +98,27 @@ function reencodeType(
   return value
 }
 
-function valueShapeMatchesType(
-  value: ContractValue,
-  paramType: ParamType,
-): boolean {
+function valueShapeMatchesType(value: ContractValue, type: Type): boolean {
   const valueIsArray = Array.isArray(value)
-  if (paramType.arrayLength !== null) {
+  if (type.kind === 'array') {
     if (!valueIsArray) {
       return false
     }
 
-    const arrayLength =
-      paramType.arrayLength === -1 ? value.length : paramType.arrayLength
+    const arrayLength = type.length === 'dynamic' ? value.length : type.length
     return (
       value.length === arrayLength &&
-      value.every((v) => valueShapeMatchesType(v, paramType.arrayChildren))
+      value.every((v) => valueShapeMatchesType(v, type.childType))
     )
   }
-  if (paramType.components !== null) {
+  if (type.kind === 'tuple') {
     return (
       valueIsArray &&
-      value.length === paramType.components.length &&
+      value.length === type.elements.length &&
       value.every((v, i) => {
-        const component = paramType.components[i]
-        assert(component !== undefined)
-        return valueShapeMatchesType(v, component)
+        const element = type.elements[i]
+        assert(element !== undefined)
+        return valueShapeMatchesType(v, element.type)
       })
     )
   }
@@ -106,8 +126,10 @@ function valueShapeMatchesType(
   return !valueIsArray
 }
 
-function asObjectIfValidKeys(entries: ContractValue[][]): ContractValue {
-  if (entries.every((e) => e[0] !== null)) {
+function asObjectIfValidKeys(
+  entries: (ContractValue | undefined)[][],
+): ContractValue {
+  if (entries.every((e) => e[0] !== undefined)) {
     return Object.fromEntries(entries)
   } else {
     return entries.map((e) => e[1] as ContractValue)

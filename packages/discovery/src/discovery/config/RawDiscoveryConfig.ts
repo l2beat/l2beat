@@ -41,6 +41,7 @@ export const DiscoveryContractField = z.object({
   description: z.string().nullable().optional(),
   displayName: z.string().nullable().optional(),
   severity: z.optional(ContractFieldSeverity).nullable(),
+  returnType: z.string().nullable().optional(),
   target: z
     .object({
       description: z.string().nullable().optional(),

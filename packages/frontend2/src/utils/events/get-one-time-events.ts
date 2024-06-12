@@ -2,7 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import clamp from 'lodash/clamp'
 import range from 'lodash/range'
 
-import type { CollectionEntry } from '~/content/getCollection'
+import type { CollectionEntry } from '~/content/get-collection'
 import { getNextDateForDayOfWeek } from '../dates'
 
 export type OneTimeEvent = CollectionEntry<'events'> & {

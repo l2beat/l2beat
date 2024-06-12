@@ -20,8 +20,6 @@ export interface Config {
   readonly name: string
   readonly isReadonly: boolean
   readonly projects: Project[]
-  readonly logger: LoggerConfig
-  readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
@@ -85,6 +83,7 @@ export interface Tvl2Config {
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly projectsExcludedFromApi: string[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TrackedTxsConfig {
@@ -99,7 +98,7 @@ export interface TrackedTxsConfig {
     readonly l2costs:
       | {
           readonly aggregatorEnabled: boolean
-          readonly coingeckoApiKey: string
+          readonly coingeckoApiKey: string | undefined
         }
       | false
   }

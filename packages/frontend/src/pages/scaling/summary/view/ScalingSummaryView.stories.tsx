@@ -2058,10 +2058,10 @@ const meta = {
           },
         },
         warning: undefined,
-        hasImplementationChanged: false,
+        hasImplementationChanged: true,
         isVerified: true,
         isArchived: undefined,
-        showProjectUnderReview: false,
+        showProjectUnderReview: true,
         isUpcoming: undefined,
         redWarning: undefined,
         data: {

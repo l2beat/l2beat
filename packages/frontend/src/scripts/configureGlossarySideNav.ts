@@ -35,10 +35,6 @@ export function configureGlossarySideNav() {
     50,
   )
 
-  if (selectedNavItem) {
-    highlightItem(selectedNavItem)
-  }
-
   window.addEventListener('scroll', () => {
     highlightCurrentSection({
       navigationList: navList,

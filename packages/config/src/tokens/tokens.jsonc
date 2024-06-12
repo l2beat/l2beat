@@ -709,6 +709,10 @@
       "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
     },
     {
+      "symbol": "OLE",
+      "address": "0x1b6e9c73bee68102d9dd4a2627f97bff4183ab0a"
+    },
+    {
       "symbol": "OMG",
       "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"
     },
@@ -833,6 +837,10 @@
     {
       "symbol": "RAZOR",
       "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd"
+    },
+    {
+      "symbol": "RBX",
+      "address": "0x3ba925fdeae6b46d0bb4d424d829982cb2f7309e"
     },
     {
       "symbol": "rDPX",
@@ -2216,6 +2224,12 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "JUICE",
+      "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "mode": [
