@@ -8,8 +8,93 @@ const nextConfig = {
     domains: ['assets.coingecko.com'],
   },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async
+  async redirects() {
+    return [
+      {
+        "source": "/",
+        "destination": "/scaling/summary",
+        "permanent": false
+      },
+      {
+        "source": "/scaling",
+        "destination": "/scaling/summary",
+        "permanent": false
+      },
+      {
+        "source": "/scaling/detailedTvl",
+        "destination": "/scaling/tvl",
+        "permanent": true
+      },
+      {
+        "source": "/project/layer2.finance",
+        "destination": "/scaling/projects/layer2finance",
+        "permanent": true
+      },
+      {
+        "source": "/project/leverj",
+        "destination": "/scaling/projects/gluon",
+        "permanent": true
+      },
+      {
+        "source": "/projects/leverj",
+        "destination": "/scaling/projects/gluon",
+        "permanent": true
+      },
+      {
+        "source": "/projects/fuel",
+        "destination": "/scaling/projects/fuelv1",
+        "permanent": true
+      },
+      {
+        "source": "/projects/zkswapv2",
+        "destination": "/scaling/projects/zkspace",
+        "permanent": true
+      },
+      {
+        "source": "/projects/deversifi",
+        "destination": "/scaling/projects/rhinofi",
+        "permanent": true
+      },
+      {
+        "source": "/scaling/projects/zksync",
+        "destination": "/scaling/projects/zksync-lite",
+        "permanent": true
+      },
+      {
+        "source": "/scaling/projects/zksync2",
+        "destination": "/scaling/projects/zksync-era",
+        "permanent": true
+      },
+      {
+        "source": "/project/:name",
+        "destination": "/scaling/projects/:name",
+        "permanent": true
+      },
+      {
+        "source": "/projects/:name",
+        "destination": "/scaling/projects/:name",
+        "permanent": true
+      },
+      {
+        "source": "/bridges/tvl",
+        "destination": "/bridges/summary",
+        "permanent": false
+      },
+      {
+        "source": "/bridges",
+        "destination": "/bridges/summary",
+        "permanent": false
+      },
+      {
+        "source": "/jobs",
+        "destination": "https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f",
+        "permanent": false
+      }
+    ]
+  },
+  // biome-ignore lint/suspicious/useAwait: rewrites must be async
   async rewrites() {
-    return {
+    return ({
       beforeFiles: [],
       afterFiles: [],
       fallback: [
@@ -28,7 +113,7 @@ const nextConfig = {
           destination: `https://l2beat-production.vercel.app/:path*`,
         },
       ],
-    }
+    })
   },
   // Webpack config for svgr
   webpack(
