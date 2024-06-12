@@ -1,11 +1,16 @@
 'use client'
 
 import {
+  type SortingState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
+  getFacetedUniqueValues,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useState } from 'react'
+import { SortingArrows } from '~/app/_components/table/sorting-arrows'
 import {
   Table,
   TableBody,
@@ -14,7 +19,7 @@ import {
   TableHeader,
   TableHeaderRow,
   TableRow,
-} from '~/app/_components/table'
+} from '~/app/_components/table/table'
 import { formatNumber } from '~/utils/format-number'
 
 type DataAvailabilityProvider = {
@@ -94,10 +99,25 @@ const columns = [
 ]
 
 export function DASummaryTable() {
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: 'daLayer',
+      desc: true,
+    },
+  ])
+
   const table = useReactTable({
     data: mockData,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    enableSortingRemoval: false,
+    sortDescFirst: true,
+    state: {
+      sorting,
+    },
   })
 
   return (
@@ -106,13 +126,27 @@ export function DASummaryTable() {
         {table.getHeaderGroups().map((headerGroup) => (
           <TableHeaderRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
+              <TableHead
+                key={header.id}
+                colSpan={header.colSpan}
+                onClick={header.column.getToggleSortingHandler()}
+              >
+                {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                  <SortingArrows
+                    sortDirection={header.column.getIsSorted()}
+                    nextSortDirection={header.column.getNextSortingOrder()}
+                  >
+                    {flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
                     )}
+                  </SortingArrows>
+                ) : (
+                  flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )
+                )}
               </TableHead>
             ))}
           </TableHeaderRow>
