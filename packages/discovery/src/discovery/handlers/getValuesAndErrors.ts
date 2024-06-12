@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 
 import { assert } from '@l2beat/backend-tools'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { getCustomTypeCaster, isCustomTypeCaster } from '../type-casters'
 import {
   TupleType,
   Type,
@@ -10,7 +11,6 @@ import {
   parseReturnType,
 } from '../utils/parseReturnType'
 import { HandlerResult } from './Handler'
-import { TypeConverters } from '../type-casters'
 
 export function getValuesAndErrors(
   results: HandlerResult[],
@@ -96,13 +96,8 @@ function reencodeType(value: ContractValue, paramType: Type): ContractValue {
     return asObjectIfValidKeys(entries)
   }
 
-
-  const firstLetterIsUpperCase = (str: string) => str[0] === str[0]?.toUpperCase()
-  if(firstLetterIsUpperCase(paramType.typeName)) {
-      assert(paramType.typeName in TypeConverters, `Type ${paramType.typeName} is not supported`)
-
-      const typeConverter = TypeConverters[paramType.typeName as keyof typeof TypeConverters]
-      return typeConverter.cast({}, value)
+  if (isCustomTypeCaster(paramType.typeName)) {
+    return getCustomTypeCaster(paramType.typeName).cast({}, value)
   }
 
   return value
