@@ -20,7 +20,7 @@ import {
   convertSourceName,
   getChart,
   getChartData,
-  subtractTokenChart,
+  subtractTokenCharts,
   sumCharts,
   sumValuesPerSource,
 } from './utils/chartsUtils'
@@ -274,73 +274,27 @@ export class Tvl2Controller {
 
     for (const e of excluded) {
       if (e.includeInTotal) {
-        tvl.combined.hourly = subtractTokenChart(
-          tvl.combined.hourly,
-          e.data.hourly,
+        tvl.combined = subtractTokenCharts(
+          tvl.combined,
+          e.data,
           e.type,
           ethPrices,
         )
 
-        tvl.combined.sixHourly = subtractTokenChart(
-          tvl.combined.sixHourly,
-          e.data.sixHourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl.combined.daily = subtractTokenChart(
-          tvl.combined.daily,
-          e.data.daily,
-          e.type,
-          ethPrices,
-        )
-      }
-      if (e.includeInTotal) {
-        tvl[e.projectType].hourly = subtractTokenChart(
-          tvl[e.projectType].hourly,
-          e.data.hourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl[e.projectType].sixHourly = subtractTokenChart(
-          tvl[e.projectType].sixHourly,
-          e.data.sixHourly,
-          e.type,
-          ethPrices,
-        )
-
-        tvl[e.projectType].daily = subtractTokenChart(
-          tvl[e.projectType].daily,
-          e.data.daily,
+        tvl[e.projectType] = subtractTokenCharts(
+          tvl[e.projectType],
+          e.data,
           e.type,
           ethPrices,
         )
       }
 
       const project = tvl.projects[e.project.toString()]
-      assert(project, 'Project not found')
+      assert(project, `No TVL entry for project ${e.project.toString()}`)
 
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.hourly = subtractTokenChart(
-        project.charts.hourly,
-        e.data.hourly,
-        e.type,
-        ethPrices,
-      )
-
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.sixHourly = subtractTokenChart(
-        project.charts.sixHourly,
-        e.data.sixHourly,
-        e.type,
-        ethPrices,
-      )
-
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      tvl.projects[e.project.toString()]!.charts.daily = subtractTokenChart(
-        project.charts.daily,
-        e.data.daily,
+      project.charts = subtractTokenCharts(
+        project.charts,
+        e.data,
         e.type,
         ethPrices,
       )
@@ -348,26 +302,17 @@ export class Tvl2Controller {
       // Remove token from breakdown
       switch (e.type) {
         case 'canonical':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.CBV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.CBV.filter(
+          project.tokens.CBV = project.tokens.CBV.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'external':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.EBV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.EBV.filter(
+          project.tokens.EBV = project.tokens.EBV.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'native':
-          // biome-ignore lint/style/noNonNullAssertion: <explanation>
-          tvl.projects[e.project.toString()]!.tokens.NMV = tvl.projects[
-            e.project.toString()
-          ]!.tokens.NMV.filter(
+          project.tokens.NMV = project.tokens.NMV.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
