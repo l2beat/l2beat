@@ -21,7 +21,7 @@ export interface ContractMeta {
   descriptions: string[] | undefined
   roles: Set<StackRole> | undefined
   permissions: { [permission: string]: Set<EthereumAddress> } | undefined
-  category: Set<StackCategory> | undefined
+  categories: Set<StackCategory> | undefined
   types: Set<ValueType> | undefined
   severity: ContractFieldSeverity | undefined
 }
@@ -34,7 +34,7 @@ export function mergeContractMeta(
     descriptions: concatArrays(a?.descriptions, b?.descriptions),
     roles: mergeSets(a?.roles, b?.roles),
     permissions: mergePermissions(a?.permissions, b?.permissions),
-    category: mergeSets(a?.category, b?.category),
+    categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
   }
@@ -69,7 +69,7 @@ export function getSelfMeta(
     descriptions: [overrides.description],
     roles: undefined,
     permissions: undefined,
-    category: undefined,
+    categories: undefined,
     severity: undefined,
     types: undefined,
   }
@@ -112,7 +112,7 @@ export function targetConfigToMeta(
     descriptions: target.description ? [target.description] : undefined,
     roles: toSet(target.role),
     permissions: getTargetPermissions(self, toSet(target.permission)),
-    category: toSet(target.category),
+    categories: toSet(target.category),
     types: toSet(field.type),
     severity: Array.from(toSet(field.severity) ?? [])[0],
   }
