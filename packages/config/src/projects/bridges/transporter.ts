@@ -68,7 +68,7 @@ export const transporter: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `Transporter is a Token Bridge based on CCIP network. CCIP network is an AMB (Arbitrary Message Passing) allowing to pass arbitrary messages that are attested by ChainLink Oracles. 
-        On each chain it has a singleton Router contract. For each route (”lane”) there is a tripe of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain, 
+        On each chain it has a singleton Router contract. For each route (”lane”) there is a triple of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain, 
         while OffRamp and CommitStore are used to receive messages. The CommitStore is used to store message routes from the Source chain, while OffRamp is used to execute incoming messages. 
         Both OnRamps and OffRamps use TokenPools to escrow tokens, one TokenPool per token. TokenPools - depending on token - may Lock/Release or Mint/Burn tokens. They may also use some custom setup, like e.g. for USDC where TokenPool is a wrapper for Circle’s CCTP bridge.`,
       risks: [],
