@@ -12,18 +12,19 @@ datasource db {
 
 model BridgeEscrow {
   id                 String          @id @db.Char(21)
-  networkId          String          @db.Char(21)
+  networkId          String          @map("network_id") @db.Char(21)
   network            Network         @relation("network", fields: [networkId], references: [id])
   address            String
-  externalBridgeId   String?         @db.Char(21)
+  externalBridgeId   String?         @map("external_bridge_id") @db.Char(21)
   externalBridge     ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-  canonicalNetworkId String?         @db.Char(21)
+  canonicalNetworkId String?         @map("canonical_network_id") @db.Char(21)
   canonicalNetwork   Network?        @relation("canonicalNetwork", fields: [canonicalNetworkId], references: [id])
   tokens             Token[]
-  updatedAt          DateTime        @default(now()) @updatedAt
-  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @default(now()) @updatedAt @map("updated_at")
+  createdAt          DateTime        @default(now()) @map("created_at")
 
   @@unique([networkId, address])
+  @@map("bridge_escrow")
 }
 
 enum ExternalBridgeType {
@@ -40,23 +41,27 @@ model ExternalBridge {
   tokens  TokenBridge[]
   escrows BridgeEscrow[]
 
-  updatedAt DateTime @default(now()) @updatedAt
-  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("external_bridge")
 }
 
 model Deployment {
   id              String    @id @db.Char(21)
-  tokenId         String    @unique
+  tokenId         String    @unique @map("token_id")
   token           Token     @relation(fields: [tokenId], references: [id])
-  txHash          String?   @db.Char(66)
-  blockNumber     Int?
+  txHash          String?   @map("tx_hash") @db.Char(66)
+  blockNumber     Int?      @map("block_number")
   timestamp       DateTime? @db.Timestamp(6)
   from            String?
   to              String?
-  isDeployerEoa   Boolean?
-  sourceAvailable Boolean
-  updatedAt       DateTime  @default(now()) @updatedAt
-  createdAt       DateTime  @default(now())
+  isDeployerEoa   Boolean?  @map("is_deployer_eoa")
+  sourceAvailable Boolean   @map("source_available")
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  @@map("deployment")
 }
 
 enum ExplorerType {
@@ -65,78 +70,86 @@ enum ExplorerType {
 
 model NetworkRpc {
   id        String   @id @db.Char(21)
-  networkId String   @db.Char(21)
+  networkId String   @map("network_id") @db.Char(21)
   network   Network  @relation(fields: [networkId], references: [id])
   url       String
-  updatedAt DateTime @default(now()) @updatedAt
-  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("network_rpc")
 }
 
 model NetworkExplorer {
   id        String       @id @db.Char(21)
-  networkId String       @db.Char(21)
+  networkId String       @map("network_id") @db.Char(21)
   network   Network      @relation(fields: [networkId], references: [id])
   type      ExplorerType
   url       String
-  apiKey    String
-  updatedAt DateTime     @default(now()) @updatedAt
-  createdAt DateTime     @default(now())
+  apiKey    String       @map("api_key")
+  updatedAt DateTime     @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime     @default(now()) @map("created_at")
 
   @@unique(networkId)
   @@unique([networkId, type])
+  @@map("network_explorer")
 }
 
 model Network {
   id                         String           @id @db.Char(21)
-  chainId                    Int
+  chainId                    Int              @map("chain_id")
   name                       String           @db.VarChar(256)
-  coingeckoId                String?          @unique @db.VarChar(256)
-  axelarId                   String?          @db.VarChar(256)
-  axelarGatewayAddress       String?          @db.Char(42)
-  orbitId                    String?          @db.VarChar(256)
-  wormholeId                 String?          @db.VarChar(256)
-  layerZeroV1EndpointAddress String?          @db.Char(42)
+  coingeckoId                String?          @unique @map("coingecko_id") @db.VarChar(256)
+  axelarId                   String?          @map("axelar_id") @db.VarChar(256)
+  axelarGatewayAddress       String?          @map("axelar_gateway_address") @db.Char(42)
+  orbitId                    String?          @map("orbit_id") @db.VarChar(256)
+  wormholeId                 String?          @map("wormhole_id") @db.VarChar(256)
+  layerZeroV1EndpointAddress String?          @map("layer_zero_v1_endpoint_address") @db.Char(42)
   bridgeEscrows              BridgeEscrow[]   @relation("network")
   canonicalBridgeEscrows     BridgeEscrow[]   @relation("canonicalNetwork")
   rpcs                       NetworkRpc[]
   explorer                   NetworkExplorer?
   tokens                     Token[]
-  updatedAt                  DateTime         @default(now()) @updatedAt
-  createdAt                  DateTime         @default(now())
+  updatedAt                  DateTime         @default(now()) @updatedAt @map("updated_at")
+  createdAt                  DateTime         @default(now()) @map("created_at")
+
+  @@map("network")
 }
 
 model TokenBridge {
   id               String          @id @db.Char(21)
-  sourceTokenId    String          @db.Char(21)
+  sourceTokenId    String          @map("source_token_id") @db.Char(21)
   sourceToken      Token           @relation("bridgedTo", fields: [sourceTokenId], references: [id])
-  targetTokenId    String          @unique @db.Char(21)
+  targetTokenId    String          @unique @map("target_token_id") @db.Char(21)
   targetToken      Token           @relation("bridgedFrom", fields: [targetTokenId], references: [id])
-  externalBridgeId String?         @db.Char(21)
+  externalBridgeId String?         @map("external_bridge_id") @db.Char(21)
   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
-  updatedAt        DateTime        @default(now()) @updatedAt
-  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @default(now()) @updatedAt @map("updated_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  @@map("token_bridge")
 }
 
 model TokenMeta {
   id           String   @id @db.Char(21)
-  tokenId      String   @db.Char(21)
+  tokenId      String   @map("token_id") @db.Char(21)
   token        Token    @relation(fields: [tokenId], references: [id])
-  externalId   String?  @db.VarChar(256)
+  externalId   String?  @map("external_id") @db.VarChar(256)
   source       String   @db.VarChar(256)
   name         String?  @db.VarChar(256)
   symbol       String?  @db.VarChar(32)
   decimals     Int?
-  logoUrl      String?  @db.VarChar(256)
-  contractName String?  @db.VarChar(256)
-  updatedAt    DateTime @default(now()) @updatedAt
-  createdAt    DateTime @default(now())
+  logoUrl      String?  @map("logo_url") @db.VarChar(256)
+  contractName String?  @map("contract_name") @db.VarChar(256)
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt    DateTime @default(now()) @map("created_at")
 
   @@unique([tokenId, source])
+  @@map("token_meta")
 }
 
 model Token {
   id          String         @id @db.Char(21)
-  networkId   String         @db.Char(21)
+  networkId   String         @map("network_id") @db.Char(21)
   network     Network        @relation(fields: [networkId], references: [id])
   address     String
   deployment  Deployment?
@@ -144,17 +157,20 @@ model Token {
   bridgedTo   TokenBridge[]  @relation("bridgedTo")
   bridgedFrom TokenBridge?   @relation("bridgedFrom")
   escrows     BridgeEscrow[]
-  updatedAt   DateTime       @default(now()) @updatedAt
-  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @default(now()) @updatedAt @map("updated_at")
+  createdAt   DateTime       @default(now()) @map("created_at")
 
   @@unique([networkId, address])
+  @@map("token")
 }
 
 model Cache {
   key         String   @id
   value       String
-  chainId     Int
-  blockNumber Int?
-  updatedAt   DateTime @default(now()) @updatedAt
-  createdAt   DateTime @default(now())
+  chainId     Int      @map("chain_id")
+  blockNumber Int?     @map("block_number")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("cache")
 }
