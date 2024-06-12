@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
+import { callMethod } from '../utils/callMethod'
 
 export class SimpleMethodHandler implements Handler {
   readonly field: string
@@ -30,13 +30,7 @@ export class SimpleMethodHandler implements Handler {
       'Calling ',
       this.fragment.name + '()',
     ])
-    const value = await provider.callMethod(address, this.fragment, [])
-    if (value === undefined) {
-      return {
-        field: this.field,
-        error: 'Execution reverted',
-      }
-    }
-    return { field: this.field, value: toContractValue(value) }
+    const callResult = await callMethod(provider, address, this.fragment, [])
+    return { field: this.field, ...callResult }
   }
 }
