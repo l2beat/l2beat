@@ -1,4 +1,4 @@
-export * from './DaAccessabilityRisk'
+export * from './DaAccessibilityRisk'
 export * from './DaAttestationSecurityRisk'
 export * from './DaBridge'
 export * from './DaEconomicSecurityRisk'

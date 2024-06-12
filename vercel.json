@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/scaling/summary",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/projects/:project/tvl/assets/:asset",
