@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArbitrumActorsHandler } from './ArbitrumActorsHandler'
 
 describe(ArbitrumActorsHandler.name, () => {
@@ -16,7 +16,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_VALIDATORS_LOGS,
       getDebugTransactionTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
@@ -45,7 +45,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_BATCHPOSTERS_LOGS,
       getDebugTransactionTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(

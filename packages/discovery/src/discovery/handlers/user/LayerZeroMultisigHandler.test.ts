@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { LayerZeroMultisigHandler } from './LayerZeroMultisigHandler'
 
 // data from https://etherscan.io/tx/0x1b83d19d45aa517f56403a2fa5e4472668d612f0f65b524cc84cbf2071006b31
@@ -47,7 +47,7 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getConstructorArgs: async () => SAMPLE_CONSTRUCROR_ARGS,
       getLogs: async () => [],
     })
@@ -96,7 +96,7 @@ describe(LayerZeroMultisigHandler.name, () => {
       ]) as providers.Log
     }
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getConstructorArgs: async () => SAMPLE_CONSTRUCROR_ARGS,
       getLogs: async (_addr: EthereumAddress, topics: string[]) => {
         if (topics[0] === abi.getEventTopic('UpdateSigner')) {

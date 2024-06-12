@@ -25,7 +25,7 @@ export function getDiscoveryEngine(
 
   const proxyDetector = new ProxyDetector()
   const sourceCodeService = new SourceCodeService()
-  const handlerExecutor = new HandlerExecutor(logger)
+  const handlerExecutor = new HandlerExecutor()
   const templateService = new TemplateService()
   const addressAnalyzer = new AddressAnalyzer(
     proxyDetector,

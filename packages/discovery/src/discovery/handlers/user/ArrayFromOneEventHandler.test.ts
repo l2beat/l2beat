@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventHandler } from './ArrayFromOneEventHandler'
 
 describe(ArrayFromOneEventHandler.name, () => {
@@ -100,7 +100,7 @@ describe(ArrayFromOneEventHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
@@ -135,7 +135,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -173,7 +173,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -212,7 +212,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -249,7 +249,7 @@ describe(ArrayFromOneEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -300,7 +300,7 @@ describe(ArrayFromOneEventHandler.name, () => {
         ]) as providers.Log
       }
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerUpdated(Alice, 1),

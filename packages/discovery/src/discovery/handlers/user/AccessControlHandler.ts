@@ -4,7 +4,7 @@ import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { Handler, HandlerResult } from '../Handler'
 
 export type AccessControlHandlerDefinition = z.infer<
   typeof AccessControlHandlerDefinition
@@ -25,7 +25,7 @@ const abi = new utils.Interface([
 
 const DEFAULT_ADMIN_ROLE_BYTES = '0x' + '0'.repeat(64)
 
-export class AccessControlHandler implements ClassicHandler {
+export class AccessControlHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly knownNames = new Map<string, string>()
 

@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { AccessControlHandler } from './AccessControlHandler'
 
 describe(AccessControlHandler.name, () => {
@@ -41,7 +41,7 @@ describe(AccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -90,7 +90,7 @@ describe(AccessControlHandler.name, () => {
     const Charlie = EthereumAddress.random()
 
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -152,7 +152,7 @@ describe(AccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return []
       },

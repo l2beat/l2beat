@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
 
 describe(ArbitrumDACKeysetHandler.name, () => {
@@ -27,7 +27,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('fetches last event and decodes the values correctly', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
@@ -61,7 +61,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('returns zero for no events found', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])

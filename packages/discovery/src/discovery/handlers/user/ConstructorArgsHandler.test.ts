@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, ethers, providers } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import {
   ConstructorArgsHandler,
   decodeConstructorArgs,
@@ -30,13 +30,11 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
-            txHash,
-          ),
+          mockFn<IProvider['getContractDeploymentTx']>().resolvesTo(txHash),
         getTransaction:
-          mockFn<DiscoveryProvider['getTransaction']>().resolvesTo(transaction),
+          mockFn<IProvider['getTransaction']>().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -69,13 +67,11 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
-            txHash,
-          ),
+          mockFn<IProvider['getContractDeploymentTx']>().resolvesTo(txHash),
         getTransaction:
-          mockFn<DiscoveryProvider['getTransaction']>().resolvesTo(transaction),
+          mockFn<IProvider['getTransaction']>().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -128,13 +124,11 @@ describe(ConstructorArgsHandler.name, () => {
 
       const contractAddress = EthereumAddress.random()
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().rejectsWith(
-            'error',
-          ), // We could cover the error during decode but any exception within the block will skip the heruistic approach
+          mockFn<IProvider['getContractDeploymentTx']>().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
         getConstructorArgs: mockFn<
-          DiscoveryProvider['getConstructorArgs']
+          IProvider['getConstructorArgs']
         >().resolvesTo(sampleCtorEncodedArgs),
       })
 

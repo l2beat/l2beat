@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArrayFromTwoEventsHandler } from './ArrayFromTwoEventsHandler'
 
 describe(ArrayFromTwoEventsHandler.name, () => {
@@ -132,7 +132,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([
@@ -173,7 +173,7 @@ describe(ArrayFromTwoEventsHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerAdded(Alice),

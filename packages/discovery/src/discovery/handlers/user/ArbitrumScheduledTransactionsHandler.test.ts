@@ -3,7 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
 
 const RETRYABLE_TICKET_MAGIC = EthereumAddress(
@@ -35,11 +35,11 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
     handler.createProviderForChain = (chain: string) =>
       chain === 'nova'
         ? undefined
-        : mockObject<DiscoveryProvider>({
+        : mockObject<IProvider>({
             getMetadata: mockGetMetadata,
           })
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_LOGS,
       getMetadata: mockGetMetadata,
     })

@@ -2,7 +2,7 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { DynamicArrayHandler } from './DynamicArrayHandler'
 
 describe(DynamicArrayHandler.name, () => {
@@ -11,7 +11,7 @@ describe(DynamicArrayHandler.name, () => {
   describe('integration', () => {
     it('can return non-empty address array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         getStorage: mockFn()
           .executesOnce((passedAddress, slot) => {
             expect(passedAddress).toEqual(address)
@@ -67,7 +67,7 @@ describe(DynamicArrayHandler.name, () => {
 
     it('does nothing on empty address array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         getStorage: mockFn().executesOnce((passedAddress, slot) => {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(85n)
@@ -134,7 +134,7 @@ describe(DynamicArrayHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getStorage() {
         throw new Error('foo bar')
       },

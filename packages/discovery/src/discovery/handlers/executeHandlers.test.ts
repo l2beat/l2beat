@@ -4,7 +4,7 @@ import { expect, mockObject } from 'earl'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { MulticallClient } from '../provider/multicall/MulticallClient'
-import { ClassicHandler, HandlerResult } from './Handler'
+import { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler } from './user/ArrayHandler'
@@ -239,7 +239,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('handles handlers with errors', async () => {
-    class FunkyHandler implements ClassicHandler {
+    class FunkyHandler implements Handler {
       dependencies: string[] = []
       field = 'foo'
       logger = DiscoveryLogger.SILENT

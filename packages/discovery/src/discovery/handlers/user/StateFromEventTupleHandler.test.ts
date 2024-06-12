@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { StateFromEventTupleHandler } from './StateFromEventTupleHandler'
 
 const EVENT =
@@ -49,7 +49,7 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('TupleEvent')])
@@ -80,7 +80,7 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('many logs as array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             TupleEvent(1, {
@@ -133,7 +133,7 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('many logs as array with param expansion', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             TupleEvent(1, {

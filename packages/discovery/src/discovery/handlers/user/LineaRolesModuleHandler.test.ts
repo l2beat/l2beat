@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import type { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import type { IProvider } from '../../provider/IProvider'
 import {
   LineaRolesModuleHandler,
   type ScopeConfig,
@@ -272,7 +272,7 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -330,7 +330,7 @@ describe(LineaRolesModuleHandler.name, () => {
     const FunctionSigA = getFunctionSelector(FunctionA)
     const FunctionSigB = getFunctionSelector(FunctionB)
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -829,7 +829,7 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return []
       },

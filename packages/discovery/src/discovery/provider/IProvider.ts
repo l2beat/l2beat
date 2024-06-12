@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import { providers, utils } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { RateLimitedProvider } from './RateLimitedProvider'
@@ -42,7 +42,7 @@ export interface IProvider {
   call(address: EthereumAddress, data: Bytes): Promise<Bytes>
   callMethod<T>(
     address: EthereumAddress,
-    abi: string,
+    abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined>
 

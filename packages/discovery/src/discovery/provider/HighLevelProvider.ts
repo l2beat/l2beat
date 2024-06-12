@@ -44,11 +44,12 @@ export class HighLevelProvider implements IProvider {
 
   async callMethod<T>(
     address: EthereumAddress,
-    abi: string,
+    abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined> {
     const coder = new utils.Interface([abi])
-    const fragment = Object.values(coder.functions)[0]
+    const fragment =
+      typeof abi === 'string' ? Object.values(coder.functions)[0] : abi
     assert(fragment, `Unknown fragment for method: ${abi}`)
     const callData = Bytes.fromHex(coder.encodeFunctionData(fragment, args))
 

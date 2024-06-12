@@ -4,8 +4,8 @@ import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { Reference, getReferencedName, resolveReference } from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { NumberFromString } from '../types'
@@ -23,7 +23,7 @@ export const StorageHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class StorageHandler implements ClassicHandler {
+export class StorageHandler implements Handler {
   readonly dependencies: string[]
 
   constructor(
@@ -35,9 +35,8 @@ export class StorageHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading storage'])
@@ -46,7 +45,7 @@ export class StorageHandler implements ClassicHandler {
     let storage: Bytes
     try {
       const slot = computeSlot(resolved)
-      storage = await provider.getStorage(address, slot, blockNumber)
+      storage = await provider.getStorage(address, slot)
     } catch (e) {
       return { field: this.field, error: getErrorMessage(e) }
     }

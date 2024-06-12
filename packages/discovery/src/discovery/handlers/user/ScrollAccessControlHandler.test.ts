@@ -4,7 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
 
 describe(ScrollAccessControlHandler.name, () => {
@@ -75,7 +75,7 @@ describe(ScrollAccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics, fromBlock, toBlock) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
@@ -138,7 +138,7 @@ describe(ScrollAccessControlHandler.name, () => {
     const FunctionSigB = getFunctionSelector(FunctionB)
 
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -238,7 +238,7 @@ describe(ScrollAccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return []
       },

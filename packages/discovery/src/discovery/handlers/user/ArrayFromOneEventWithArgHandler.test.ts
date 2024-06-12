@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
 describe(ArrayFromOneEventWithArgHandler.name, () => {
@@ -133,7 +133,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('PermissionUpdate')])
@@ -170,7 +170,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             PermissionUpdate(Alice, '0x53228430', true),
@@ -211,7 +211,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             PermissionUpdate(Alice, '0x53228430', true),

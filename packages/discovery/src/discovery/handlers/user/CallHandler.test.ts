@@ -2,7 +2,7 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 
@@ -193,7 +193,7 @@ describe(CallHandler.name, () => {
       '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))'
 
     it('calls the method with the provided parameters', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           expect(data).toEqual(
@@ -221,7 +221,7 @@ describe(CallHandler.name, () => {
     })
 
     it('calls the method with the resolved parameters', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           expect(data).toEqual(
@@ -252,7 +252,7 @@ describe(CallHandler.name, () => {
     })
 
     it('handles errors', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           throw new Error('oops')
         },
@@ -273,7 +273,7 @@ describe(CallHandler.name, () => {
     })
 
     it('passes ignoreRelative', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           return Bytes.fromHex('3'.padStart(64, '0'))
         },
@@ -294,7 +294,7 @@ describe(CallHandler.name, () => {
     })
 
     it('should catch revert error', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           throw new Error(revertErrorMessage)
         },
@@ -315,7 +315,7 @@ describe(CallHandler.name, () => {
     })
 
     it('should not catch revert error when expectRevert is false', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           throw new Error(revertErrorMessage)
         },

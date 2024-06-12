@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { HandlerResult } from '../Handler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 
@@ -13,7 +13,7 @@ describe(StorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage(passedAddress, slot) {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(1n)
@@ -44,7 +44,7 @@ describe(StorageHandler.name, () => {
 
     it('can returns storage as number', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -75,7 +75,7 @@ describe(StorageHandler.name, () => {
       const address = EthereumAddress.random()
       const resultAddress = EthereumAddress.random()
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x000000000000000000000000' + resultAddress.slice(2).toLowerCase(),
@@ -203,7 +203,7 @@ describe(StorageHandler.name, () => {
         DiscoveryLogger.SILENT,
       )
       let slot: bigint | number | Bytes | undefined
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage(_passedAddress, receivedSlot) {
           slot = receivedSlot
           return Bytes.fromHex('0'.repeat(64))
@@ -342,7 +342,7 @@ describe(StorageHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getStorage() {
         throw new Error('foo bar')
       },

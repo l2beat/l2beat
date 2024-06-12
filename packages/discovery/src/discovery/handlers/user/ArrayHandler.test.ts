@@ -2,7 +2,7 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArrayHandler } from './ArrayHandler'
 
 describe(ArrayHandler.name, () => {
@@ -188,7 +188,7 @@ describe(ArrayHandler.name, () => {
     ]
 
     it('calls the method "length" times', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress: EthereumAddress, data: Bytes) {
           expect(passedAddress).toEqual(address)
 
@@ -219,7 +219,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('passes the ignoreRelative field', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -244,7 +244,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('resolves the "length" field', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -271,7 +271,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('handles errors when length is present', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -298,7 +298,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('calls the method until revert without length', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -326,7 +326,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('handles non-revert errors without length', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -353,7 +353,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('has a builtin limit of 100', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           return Bytes.fromHex('0'.repeat(64))
         },
@@ -374,7 +374,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('can have a different maxLength', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call() {
           return Bytes.fromHex('0'.repeat(64))
         },
@@ -395,7 +395,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('calls indices if present', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)
@@ -421,7 +421,7 @@ describe(ArrayHandler.name, () => {
     it('returns correct order of indices', async () => {
       const owners = new Array(10).fill(0).map(() => EthereumAddress.random())
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           // simulate random order of responses
@@ -457,7 +457,7 @@ describe(ArrayHandler.name, () => {
     })
 
     it('resolves the "indices" field', async () => {
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async call(passedAddress, data) {
           expect(passedAddress).toEqual(address)
           const index = data.get(35)

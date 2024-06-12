@@ -1,19 +1,13 @@
-import { assert } from '@l2beat/backend-tools'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { ContractValue } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import {
-  MulticallRequest,
-  MulticallResponse,
-} from '../../provider/multicall/types'
-import { HandlerResult, MulticallableHandler } from '../Handler'
-import { callMethod, decodeMethodResult } from '../utils/callMethod'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
-export class SimpleMethodHandler implements MulticallableHandler {
-  multicallable = true as const
+export class SimpleMethodHandler implements Handler {
   readonly field: string
   readonly dependencies = []
 
@@ -29,52 +23,20 @@ export class SimpleMethodHandler implements MulticallableHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling ',
       this.fragment.name + '()',
     ])
-    const callResult = await callMethod(
-      provider,
-      address,
-      this.fragment,
-      [],
-      blockNumber,
-    )
-    return { field: this.field, ...callResult }
-  }
-
-  encode(address: EthereumAddress): MulticallRequest[] {
-    this.logger.logExecution(this.field, [
-      'Encoding for multicall ',
-      this.fragment.name + '()',
-    ])
-    const iface = new utils.Interface([this.fragment])
-    const encoded = iface.encodeFunctionData(this.fragment.name)
-
-    return [{ address, data: Bytes.fromHex(encoded) }]
-  }
-
-  decode(result: MulticallResponse[]): HandlerResult {
-    const response = result[0]
-    assert(response, 'Multicall response not found')
-    if (!response.success) {
-      return { field: this.field, error: 'Multicall failed' }
+    const value = await provider.callMethod(address, this.fragment, [])
+    if (value === undefined) {
+      return {
+        field: this.field,
+        error: 'Execution reverted',
+      }
     }
-
-    this.logger.logExecution(this.field, [
-      'Decoding from multicall ',
-      this.fragment.name + '()',
-    ])
-    const abi = new utils.Interface([this.fragment])
-
-    return {
-      field: this.field,
-      value: decodeMethodResult(abi, this.fragment, response.data),
-      fragment: this.fragment,
-    }
+    return { field: this.field, value: value as ContractValue }
   }
 }

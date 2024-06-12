@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { StateFromEventHandler } from './StateFromEventHandler'
 
 describe(StateFromEventHandler.name, () => {
@@ -44,7 +44,7 @@ describe(StateFromEventHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(providedAddress, topics, fromBlock, toBlock) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
@@ -78,7 +78,7 @@ describe(StateFromEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -136,7 +136,7 @@ describe(StateFromEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -184,7 +184,7 @@ describe(StateFromEventHandler.name, () => {
     it('passes ignoreRelative', async () => {
       const Alice = EthereumAddress.random()
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [OwnerChanged(Alice, true)]
         },
@@ -218,7 +218,7 @@ describe(StateFromEventHandler.name, () => {
       const Alice = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(_address, topics) {
           expect(topics).toEqual([
             abi.getEventTopic('OwnerChanged'),

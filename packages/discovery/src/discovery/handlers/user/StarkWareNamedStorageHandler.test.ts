@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
 
 describe(StarkWareNamedStorageHandler.name, () => {
@@ -12,7 +12,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage(passedAddress, slot) {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(
@@ -45,7 +45,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     it('can returns storage as number', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -76,7 +76,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       const address = EthereumAddress.random()
       const resultAddress = EthereumAddress.random()
 
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
             '0x000000000000000000000000' + resultAddress.slice(2).toLowerCase(),
@@ -114,7 +114,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getStorage() {
         throw new Error('foo bar')
       },
@@ -138,7 +138,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getStorage() {
         return Bytes.fromHex(
           '0x0000000000000000000000000000000000000000000000000000000000000123',

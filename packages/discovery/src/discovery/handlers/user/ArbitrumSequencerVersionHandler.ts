@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumSequencerVersionDefinition = z.infer<
   typeof ArbitrumSequencerVersionDefinition
@@ -28,7 +28,7 @@ const abi = new utils.Interface([
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
 
-export class ArbitrumSequencerVersionHandler implements ClassicHandler {
+export class ArbitrumSequencerVersionHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -38,34 +38,26 @@ export class ArbitrumSequencerVersionHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
-    _previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Checking Arbitrum Sequencer Version',
     ])
 
-    const lastEvents = await provider.getLogs(
-      address,
-      [[abi.getEventTopic('SequencerBatchDelivered')]],
-      0,
-      blockNumber,
-      {
-        howManyEvents: 1,
-        filter: (log): boolean => {
-          const decoded = abi.parseLog(log)
-          assert(
-            decoded.name === 'SequencerBatchDelivered',
-            'Unexpected event name',
-          )
-          return decoded.args.dataLocation === 0
-        },
-        maxRange: 1000,
+    const recentEvents = await provider.raw(
+      `arbitrum_sequencer_batches_${address}_${provider.blockNumber}`,
+      ({ eventProvider }) => {
+        return eventProvider.getLogs({
+          address: address.toString(),
+          topics: [abi.getEventTopic('SequencerBatchDelivered')],
+          // We need .raw because we cannot query from 0. Too many events.
+          fromBlock: provider.blockNumber - 1000,
+          toBlock: provider.blockNumber,
+        })
       },
     )
-    const lastEvent = lastEvents[0]
+    const lastEvent = recentEvents.pop()
     assert(lastEvent !== undefined, 'No event found')
 
     const tx = await provider.getTransaction(Hash256(lastEvent.transactionHash))
