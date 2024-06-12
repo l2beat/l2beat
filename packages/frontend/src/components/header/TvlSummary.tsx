@@ -144,7 +144,7 @@ export function TvlSummary(props: TvlSummaryProps) {
             {tvlStats.map((s, i) => (
               <div
                 key={i}
-                className="flex w-full flex-wrap items-end justify-between"
+                className="flex w-full flex-nowrap items-center justify-between gap-1"
               >
                 <div className="flex items-center gap-1">
                   {s.icon}
@@ -153,7 +153,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                     <span className="hidden md:inline">{s.shortLabel}</span>
                   </span>
                 </div>
-                <span className="font-semibold text-base leading-none">
+                <span className="whitespace-nowrap font-semibold text-base leading-none">
                   {s.value}
                   {props.stats && props.stats.tvl > 0 && (
                     <span className="hidden font-normal text-gray-500 lg:inline">
