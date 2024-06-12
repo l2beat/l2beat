@@ -16,7 +16,7 @@ import { Tvl2Controller } from '../api/Tvl2Controller'
 import { createTvl2Router } from '../api/Tvl2Router'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
-import { ControllerService } from '../api/services/ControllerService'
+import { DatabaseReadingService } from '../api/services/DatabaseReadingService'
 import { TokenService } from '../api/services/TokenService'
 import { ApiProject, PriceConfigIdMap } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -101,7 +101,7 @@ export function createTvl2Module(
   )
   assert(ethPrice, 'Eth priceId not found')
 
-  const controllerService = new ControllerService({
+  const databaseReadingService = new DatabaseReadingService({
     amountRepository: peripherals.getRepository(AmountRepository),
     priceRepository: peripherals.getRepository(PriceRepository),
     valueRepository: peripherals.getRepository(ValueRepository),
@@ -112,19 +112,19 @@ export function createTvl2Module(
 
   const controllerDependencies = getControllerDependencies(
     config.tvl2,
-    controllerService,
+    databaseReadingService,
     new ChainConverter(
       chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     ),
   )
 
   const aggregatedService = new AggregatedService({
-    controllerService,
+    databaseReadingService,
     syncOptimizer,
   })
 
   const tokenService = new TokenService({
-    controllerService,
+    databaseReadingService,
     configMapping,
   })
 
@@ -181,7 +181,7 @@ export function createTvl2Module(
 
 function getControllerDependencies(
   config: Tvl2Config,
-  controllerService: ControllerService,
+  databaseReadingService: DatabaseReadingService,
   chainConverter: ChainConverter,
 ) {
   const amountConfig = getAmountConfigMap(config)
@@ -271,7 +271,7 @@ function getControllerDependencies(
     projects,
     associatedTokens,
     minTimestamp,
-    controllerService,
+    databaseReadingService,
     chainConverter,
   }
 }

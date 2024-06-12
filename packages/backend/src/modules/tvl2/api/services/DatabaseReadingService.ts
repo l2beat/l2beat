@@ -12,7 +12,7 @@ import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { PriceId } from '../../utils/createPriceId'
 import { ApiProject } from '../utils/types'
 
-export interface ControllerServiceDependencies {
+interface Dependencies {
   readonly valueRepository: ValueRepository
   readonly amountRepository: AmountRepository
   readonly priceRepository: PriceRepository
@@ -21,8 +21,8 @@ export interface ControllerServiceDependencies {
   logger: Logger
 }
 
-export class ControllerService {
-  constructor(private readonly $: ControllerServiceDependencies) {
+export class DatabaseReadingService {
+  constructor(private readonly $: Dependencies) {
     this.$.logger = $.logger.for(this)
   }
 

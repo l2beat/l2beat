@@ -7,15 +7,15 @@ import {
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { getTokenCharts } from '../utils/chartsUtils'
 import { ApiProject } from '../utils/types'
-import { ControllerService } from './ControllerService'
+import { DatabaseReadingService } from './DatabaseReadingService'
 
-interface TokenTvlServiceDependencies {
+interface Dependencies {
   configMapping: ConfigMapping
-  controllerService: ControllerService
+  databaseReadingService: DatabaseReadingService
 }
 
 export class TokenService {
-  constructor(private readonly $: TokenTvlServiceDependencies) {}
+  constructor(private readonly $: Dependencies) {}
 
   async getTokenChart(
     token: { address: EthereumAddress | 'native'; chain: string },
@@ -35,7 +35,7 @@ export class TokenService {
     const decimals = amountConfigs[0].decimals
 
     const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
-      await this.$.controllerService.getPricesAndAmountsForToken(
+      await this.$.databaseReadingService.getPricesAndAmountsForToken(
         amountConfigs.map((x) => x.configId),
         priceConfig.configId,
         project.minTimestamp,
