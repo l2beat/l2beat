@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { type Column } from '@tanstack/react-table'
 import { useState } from 'react'
-import { useIsMobile } from '~/hooks/use-is-mobile'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import ChevronIcon from '~/icons/chevron.svg'
 import CloseIcon from '~/icons/close.svg'
 import ExpandIcon from '~/icons/expand.svg'
@@ -25,7 +25,7 @@ export function TableFacetedFilter<TData, TValue>({
   title,
 }: TableFacetedFilterProps<TData, TValue>) {
   const [open, setOpen] = useState(false)
-  const isMobile = useIsMobile()
+  const breakpoint = useBreakpoint()
   assert(
     column !== undefined,
     'Column cannot be undefined, probably used a wrong ID',
@@ -56,7 +56,8 @@ export function TableFacetedFilter<TData, TValue>({
     )
   }
 
-  return isMobile ? (
+  const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
+  return showDrawer ? (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <button className="inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">

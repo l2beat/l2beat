@@ -122,7 +122,7 @@ export async function NavLayout({
           groups={groups}
           legacyNav={!!legacyNav}
         />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 min-w-0">{children}</div>
       </div>
     </MobileNavProvider>
   )

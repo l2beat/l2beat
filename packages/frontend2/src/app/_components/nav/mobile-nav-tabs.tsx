@@ -18,7 +18,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   return (
     currentGroup && (
       <OverflowWrapper>
-        <div className="flex flex-row gap-2 px-4 py-2">
+        <div className="flex flex-row gap-2 px-4 py-2 justify-center">
           {currentGroup.links
             .filter((link) => link.enabled)
             .map((link) => (
