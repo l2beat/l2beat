@@ -9,7 +9,7 @@ export function UnderReviewBar({ text }: { text: string }) {
         <span className="flex items-center">
           <UnderReviewIcon />
         </span>
-        <span className="ml-2 font-medium text-base">{text}</span>
+        <span className="ml-2 text-balance font-medium text-base">{text}</span>
       </span>
     </div>
   )
