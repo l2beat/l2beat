@@ -239,7 +239,7 @@ export class ActivityController {
       // This is needed because currently there is a window between the project being
       // synced_once and the data being available in the materialized view.
       // TODO(imxeno): Remove this check once we change materialized view logic.
-      if (postprocessCounts.length === 0) continue
+      if (postprocessedCounts.length === 0) continue
 
       result.set(projectId, postprocessedCounts)
     }
