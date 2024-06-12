@@ -37,7 +37,7 @@ export class HandlerExecutor {
       blockNumber,
       logger,
     )
-    const { values, errors } = getValuesAndErrors(results)
+    const { values, errors } = getValuesAndErrors(results, overrides?.fields)
     return { results, values, errors }
   }
 }
