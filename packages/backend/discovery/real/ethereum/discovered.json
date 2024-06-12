@@ -1,9 +1,9 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20030638,
-  "configHash": "0xe37a031b6fd526dc34762efc2c4f1b19829cd2113a763d6e4f7604773f77e9bf",
-  "version": 4,
+  "blockNumber": 20032983,
+  "configHash": "0x0324801ae8dd08cfc9e0370ff6486f94b02a0076436421635e3437efe5b2d6cf",
+  "version": 5,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -77,12 +77,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 2096,
+        "delayedMessageCount": 2105,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 1635,
-        "sequencerReportedSubMessageCount": 86312
+        "sequencerMessageCount": 1643,
+        "sequencerReportedSubMessageCount": 87025
       },
       "derivedName": "ERC20Bridge"
     },
@@ -131,6 +131,7 @@
     {
       "name": "SequencerInbox",
       "address": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
+      "template": "orbitstack/SequencerInbox",
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -140,7 +141,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1710580715,
       "values": {
-        "batchCount": 1635,
+        "batchCount": 1643,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
@@ -151,11 +152,16 @@
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2095
+        "totalDelayedMessagesRead": 2104
       },
       "derivedName": "SequencerInbox"
     },
@@ -172,15 +178,17 @@
     {
       "name": "Minter",
       "address": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
+      "ignoreInWatchMode": ["getTokenPrice"],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1710542279,
       "values": {
-        "getTokenPrice": "1001888553793467708",
+        "getTokenPrice": "1001984540868293996",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
-      }
+      },
+      "derivedName": "Minter"
     },
     {
       "name": "",
@@ -257,6 +265,8 @@
     {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -316,14 +326,15 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1001888553793467708",
-        "totalSupply": "332458891750497035123"
+        "tokenPrice": "1001984540868293996",
+        "totalSupply": "330088393088322369678"
       },
       "derivedName": "Real"
     },
     {
       "name": "RollupProxy",
       "address": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
+      "template": "orbitstack/RollupProxy",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -349,12 +360,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1153,
+        "firstUnresolvedNode": 1161,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 1152,
-        "latestNodeCreated": 1303,
+        "latestConfirmed": 1160,
+        "latestNodeCreated": 1310,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -447,7 +458,7 @@
       },
       "sinceTimestamp": 1715706239,
       "values": {
-        "getBalance": "22022348292174786716",
+        "getBalance": "19648863250290261993",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -469,7 +480,7 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1001888553793467708",
+        "currentSharePrice": "1001984540868293996",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -480,9 +491,9 @@
         "rebaseTime": 1717647023,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "22022348292174786716",
+        "withdrawableAmountInPast": "19634255995538662303",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "21995281862978597109",
+        "withdrawingSharesInPast": "19610203480638158743",
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"

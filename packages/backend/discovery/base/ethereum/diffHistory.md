@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x61b72355cab6f0ef3d15d150fddf01ba8bd4a1b7
+
+# Diff at Mon, 10 Jun 2024 09:30:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a695176fbb0fada448fda5610aee2cfe2ad4bb92 block: 19982126
+- current block number: 20060546
+
+## Description
+
+Change one MS signer and raise L2 gas limit.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        75000000
++        90000000
+    }
+```
+
+```diff
+    contract BaseMultisig (0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      values.getOwners.2:
+-        "0x1d0D1f61137E457d4CF13146bBFA9F07B33f8Ec5"
++        "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993"
+    }
+```
+
 Generated with discovered.json: 0xc786e1756e9e6064e46a72832b95c71d354efde0
 
 # Diff at Thu, 30 May 2024 10:40:38 GMT:

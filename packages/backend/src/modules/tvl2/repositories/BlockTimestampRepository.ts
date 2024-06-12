@@ -1,11 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import {
+  CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 
 export interface BlockTimestampRecord {
   chain: string
@@ -55,12 +61,33 @@ export class BlockTimestampRepository extends BaseRepository {
       .delete()
   }
 
+  // #region methods used only in TvlCleaner
+
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'block_timestamps', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'block_timestamps', dateRange)
+  }
+
+  // #endregion
+
   // #region methods used only in tests
 
   async getAll(): Promise<BlockTimestampRecord[]> {
     const knex = await this.knex()
     const rows = await knex('block_timestamps')
     return rows.map(toRecord)
+  }
+
+  async addMany(records: BlockTimestampRecord[], trx?: Knex.Transaction) {
+    const rows: BlockTimestampRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
+    await knex.batchInsert('block_timestamps', rows, 2_000)
+    return rows.length
   }
 
   async deleteAll() {

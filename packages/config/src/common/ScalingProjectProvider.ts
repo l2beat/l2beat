@@ -3,7 +3,7 @@ type ScalingProviderBase = 'OP Stack' | 'Arbitrum'
 export type Layer2Provider =
   | ScalingProviderBase
   | 'StarkEx'
-  | 'zkSync Lite'
+  | 'ZKsync Lite'
   | 'ZK Stack'
   | 'Loopring'
   | 'Polygon'

@@ -1,13 +1,14 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19982489,
-  "configHash": "0x93f6b97ea0abf1e92c7765100a0834bf452357efa8186554504c772bb730df12",
-  "version": 4,
+  "blockNumber": 20032759,
+  "configHash": "0xbf4b72151b34e9a5872927c2ed72d96ca7cd301807554c1beccd204094fefaec",
+  "version": 5,
   "contracts": [
     {
       "name": "OptimismPortal",
       "address": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
+      "template": "opstack/OptimismPortal",
       "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -22,7 +23,11 @@
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Oracle": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19982475],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 20032751
+        },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
@@ -34,6 +39,7 @@
     {
       "name": "L1StandardBridge",
       "address": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
+      "template": "opstack/L1StandardBridge",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -56,6 +62,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -79,6 +87,7 @@
     {
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -123,6 +132,8 @@
     {
       "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -147,6 +158,7 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
+      "template": "opstack/L1ERC721Bridge",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -167,6 +179,8 @@
     {
       "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -196,6 +210,7 @@
     {
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+      "template": "opstack/SuperchainConfig",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -244,6 +259,7 @@
     {
       "name": "L2OutputOracle",
       "address": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
+      "template": "opstack/L2OutputOracle",
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -265,10 +281,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 15184980,
-        "latestOutputIndex": 8660,
-        "nextBlockNumber": 15186780,
-        "nextOutputIndex": 8661,
+        "latestBlockNumber": 15489180,
+        "latestOutputIndex": 8829,
+        "nextBlockNumber": 15490980,
+        "nextOutputIndex": 8830,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -282,6 +298,7 @@
     {
       "name": "SystemConfig",
       "address": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
+      "template": "opstack/SystemConfig",
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -314,14 +331,14 @@
         "optimismPortal": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
         "overhead": 0,
         "owner": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279133909097067335200",
         "sequencerInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
@@ -336,6 +353,8 @@
     {
       "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -371,6 +390,7 @@
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
+      "template": "opstack/OptimismMintableERC20Factory",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -387,6 +407,7 @@
     {
       "name": "ZoraMultisig",
       "address": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -418,6 +439,8 @@
     {
       "name": "ChallengerMultisig",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -459,6 +482,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
+      "template": "opstack/L1CrossDomainMessenger",
       "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -470,7 +494,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621896",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621913",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

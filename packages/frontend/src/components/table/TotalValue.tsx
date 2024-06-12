@@ -34,7 +34,7 @@ export function TotalValue({ project }: TotalValueProps) {
         <TooltipTrigger className="relative flex items-center gap-1">
           {content}
           <RoundedWarningIcon
-            className="absolute -right-5 size-5 pl-1"
+            className="-right-5 absolute size-5 pl-1"
             sentiment={project.tvlWarning.sentiment}
           />
         </TooltipTrigger>

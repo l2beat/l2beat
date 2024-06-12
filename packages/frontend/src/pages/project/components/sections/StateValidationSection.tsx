@@ -25,19 +25,19 @@ export function StateValidationSection(props: StateValidationSectionProps) {
       isUnderReview={props.isUnderReview}
     >
       {props.image && (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.image}
             alt="A diagram of the state validation"
           />
-          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+          <figcaption className="text-gray-500 text-xs dark:text-gray-600">
             A diagram of the state validation
           </figcaption>
         </figure>
       )}
       <div className="flex flex-col gap-6">
-        <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+        <Markdown className="text-gray-850 leading-snug dark:text-gray-400 md:text-lg">
           {props.stateValidation.description}
         </Markdown>
         <HorizontalSeparator />
@@ -62,10 +62,10 @@ function Item(props: {
 
   return (
     <div>
-      <span className="text-lg font-bold uppercase md:text-xl">
+      <span className="font-bold text-lg uppercase md:text-xl">
         {props.stateValidationCategory.title}
       </span>
-      <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+      <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400 md:text-lg">
         {props.stateValidationCategory.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}

@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "biome check .",
-    "format:fix": "biome check --apply ."
+    "format:fix": "biome check --apply .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/backend": "*",

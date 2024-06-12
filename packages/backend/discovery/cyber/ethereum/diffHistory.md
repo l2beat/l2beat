@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x68ef817980116cb71aba0426bdbfbea8951e6b18
+
+# Diff at Thu, 06 Jun 2024 12:37:16 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5302ef2899ddfb7175df497ceaa47fba4e383655 block: 19888830
+- current block number: 20032828
+
+## Description
+
+Discovery output now includes names of templates used for contract analysis.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19888830 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      template:
++        "opstack/L2OutputOracle"
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x97e1f05644a07a906b0c40d7e6979a3d9279b28e
 
 # Diff at Fri, 17 May 2024 09:35:04 GMT:

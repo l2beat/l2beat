@@ -55,6 +55,7 @@ function configureOverflowWrapper(wrapper: HTMLElement) {
 
   if (wrapper.dataset.scrollOnLoad) {
     selectedItem?.scrollIntoView({
+      block: 'nearest',
       inline: 'center',
     })
   }

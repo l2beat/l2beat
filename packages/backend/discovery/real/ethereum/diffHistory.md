@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x862f9fa7833edb8299291eee9bf9ae8db2c2ef87
+
+# Diff at Thu, 06 Jun 2024 13:07:44 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@2df820b7859b4cc22d454496f119009c157cc438 block: 20030638
+- current block number: 20032983
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20030638 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) {
+    +++ description: State batches / commitments get posted here.
+      template:
++        "orbitstack/SequencerInbox"
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      template:
++        "orbitstack/RollupProxy"
+    }
+```
+
 Generated with discovered.json: 0x412c3152a7e9266e259ca114662031a4d33f2e21
 
 # Diff at Thu, 06 Jun 2024 05:15:31 GMT:

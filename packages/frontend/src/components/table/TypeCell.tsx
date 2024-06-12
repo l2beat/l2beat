@@ -49,9 +49,9 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
           Icon={OVMIcon}
         />
       )}
-      {provider === 'zkSync Lite' && (
+      {provider === 'ZKsync Lite' && (
         <TypeTooltip
-          text="This project is based on zkSync Lite's code base."
+          text="This project is based on ZKsync Lite's code base."
           Icon={ZkSyncLiteIcon}
         />
       )}
@@ -98,7 +98,7 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   return (
     <Tooltip className="inline">
       <TooltipTrigger className="relative ml-1 inline-block size-4">
-        <Icon className="absolute -top-0.5 left-0 size-4" />
+        <Icon className="-top-0.5 absolute left-0 size-4" />
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>
     </Tooltip>

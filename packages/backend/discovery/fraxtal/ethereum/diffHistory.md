@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x72d2dd57dbfc89e7e8034255c23f95eca8865abb
+
+# Diff at Thu, 06 Jun 2024 12:39:01 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5302ef2899ddfb7175df497ceaa47fba4e383655 block: 19982475
+- current block number: 20032836
+
+## Description
+
+Discovery output now includes names of templates used for contract analysis.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19982475 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.
+      template:
++        "opstack/SystemConfig"
+    }
+```
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xf0c97ee110e8ec5c671f43cd04bf06c74a0ebd67
 
 # Diff at Thu, 30 May 2024 11:50:41 GMT:

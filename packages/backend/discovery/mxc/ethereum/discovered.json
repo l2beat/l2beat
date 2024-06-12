@@ -1,0 +1,57 @@
+{
+  "name": "mxc",
+  "chain": "ethereum",
+  "blockNumber": 20032128,
+  "configHash": "0x3459f654cea5dcf018eac5553ee358c562d05a1e77feb12445ea837ef972b230",
+  "version": 5,
+  "contracts": [
+    {
+      "name": "MXCL1Bridge",
+      "address": "0x7C954170305b11572522313b6AD514070ce0339c",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0"],
+      "sinceTimestamp": 1689164375,
+      "values": {
+        "admin": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9",
+        "MXCToken": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
+      },
+      "derivedName": "MXCL1Bridge"
+    }
+  ],
+  "eoas": [
+    "0x0000000000000000000000000000000000000000",
+    "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
+  ],
+  "abis": {
+    "0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0": [
+      "error MXCL1Bridge__AmountZero()",
+      "error MXCL1Bridge__NotAdmin()",
+      "error MXCL1Bridge__TokenNotEnough()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Deposited(address indexed user, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event Upgraded(address indexed implementation)",
+      "event Withdrawn(address indexed user, uint256 amount)",
+      "function MXCToken() view returns (address)",
+      "function admin() view returns (address)",
+      "function deposit(uint256 _amount)",
+      "function initialize(address _admin, address _MXCToken)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function transferAdminship(address newAdmin)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdraw(address _recipient, uint256 _amount)"
+    ],
+    "0x7C954170305b11572522313b6AD514070ce0339c": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ]
+  }
+}

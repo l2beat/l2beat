@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976242,
   "configHash": "0xcffebba091e4ed4e857f8933a919d410f67cec3001021555f861d13088eac059",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "VotingToken",
@@ -177,6 +177,7 @@
     {
       "name": "EmergencyProposalExecutor",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -275,6 +276,7 @@
     {
       "name": "HubPool Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -375,15 +377,15 @@
         "paused": false,
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
-        "rootBundleProposal": [
-          "0x5e30134e2245b12ee5a1014d32f55cb9d08629f7ae9ba4ce172c91057216fc21",
-          "0x15aa8a795120b241a99e71ddb102c8005a618f86fcb455047346933463282841",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          127,
-          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          0,
-          1716993251
-        ],
+        "rootBundleProposal": {
+          "poolRebalanceRoot": "0x5e30134e2245b12ee5a1014d32f55cb9d08629f7ae9ba4ce172c91057216fc21",
+          "relayerRefundRoot": "0x15aa8a795120b241a99e71ddb102c8005a618f86fcb455047346933463282841",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "claimedBitMap": 127,
+          "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          "unclaimedPoolRebalanceLeafCount": 0,
+          "challengePeriodEndTimestamp": 1716993251
+        },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },

@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19726116,
   "configHash": "0x87319ffc81b8bb1bb0b08aef29643f604664bba90c854426c2bde7387833a65a",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
       "address": "0x0110B1B231aA3b96a94c900eb3056297526AB725",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -132,6 +134,8 @@
     {
       "name": "ZkFairOwner",
       "address": "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -233,6 +237,8 @@
     {
       "name": "ZkFairAdmin",
       "address": "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -258,6 +264,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2",
     "0x061D273bEf947BD0ef2B828526e710eEa0f297ae",
     "0x3226ECf79dc7007063599A334832d015B48aBDBc",

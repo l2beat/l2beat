@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "BridgeGovernance",
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -46,6 +48,8 @@
     {
       "name": "GnosisSafe",
       "address": "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -84,7 +88,11 @@
         "deployedAtBlock": 9298331,
         "destinationChainId": 100,
         "gasPrice": 10000000000,
-        "getBridgeInterfacesVersion": [6, 2, 0],
+        "getBridgeInterfacesVersion": {
+          "major": 6,
+          "minor": 2,
+          "patch": 0
+        },
         "getBridgeMode": "0x2544fbb9",
         "implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB",
         "isInitialized": true,
@@ -111,7 +119,11 @@
       },
       "sinceTimestamp": 1634280699,
       "values": {
-        "getModuleInterfacesVersion": [1, 0, 0],
+        "getModuleInterfacesVersion": {
+          "major": 1,
+          "minor": 0,
+          "patch": 0
+        },
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "tokenImage": "0x7c24d0061b484B267F286aa2DCe891220Db254b3"
       }
@@ -127,7 +139,11 @@
         "bridgeContract": "0x0000000000000000000000000000000000000000",
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0xcaa93cb1b6b7dc5661966ae0c34c78b2bb3aea8cc828a3690fdf9dec64932930",
-        "getTokenInterfacesVersion": [2, 5, 0],
+        "getTokenInterfacesVersion": {
+          "major": 2,
+          "minor": 5,
+          "patch": 0
+        },
         "mintingFinished": false,
         "name": "",
         "owner": "0xBF3d6f830CE263CAE987193982192Cd990442B53",
@@ -147,7 +163,11 @@
       "sinceTimestamp": 1634281216,
       "values": {
         "aaveReceiver": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
-        "getModuleInterfacesVersion": [1, 0, 0],
+        "getModuleInterfacesVersion": {
+          "major": 1,
+          "minor": 0,
+          "patch": 0
+        },
         "incentivesController": "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5",
         "lendingPool": "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9",
         "mediator": "0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -169,7 +189,11 @@
       "sinceTimestamp": 1596501090,
       "values": {
         "bridgeContract": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-        "getBridgeInterfacesVersion": [3, 3, 1],
+        "getBridgeInterfacesVersion": {
+          "major": 3,
+          "minor": 3,
+          "patch": 1
+        },
         "getBridgeMode": "0xb1516c26",
         "implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
@@ -195,7 +219,11 @@
       "values": {
         "deployedAtBlock": 9298321,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
-        "getBridgeValidatorsInterfacesVersion": [2, 3, 0],
+        "getBridgeValidatorsInterfacesVersion": {
+          "major": 2,
+          "minor": 3,
+          "patch": 0
+        },
         "implementation": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
         "isInitialized": true,
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
@@ -218,6 +246,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x0101016044726994aFd16f4A99f0d960090D35e7",
     "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
     "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",

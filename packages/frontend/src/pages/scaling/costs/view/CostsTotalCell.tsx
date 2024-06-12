@@ -144,7 +144,7 @@ function TotalValue({
       <div className="hidden flex-col items-end group-data-[type=TOTAL]/costs-controls-wrapper:flex">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
-          <span className="text-lg font-semibold">
+          <span className="font-semibold text-lg">
             <DetailedValueWithDisplayValue>
               {data}
             </DetailedValueWithDisplayValue>
@@ -162,7 +162,7 @@ function TotalValue({
           <>
             <div className="flex items-center gap-1">
               {warning && <Warning warning={warning} />}
-              <span className="text-lg font-semibold">
+              <span className="font-semibold text-lg">
                 <DetailedValueWithDisplayValue>
                   {data.perL2Tx}
                 </DetailedValueWithDisplayValue>

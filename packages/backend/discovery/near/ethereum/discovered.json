@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531990,
   "configHash": "0xd38ab6535bef2823166e2161419db849ad4c92dfc605738466766980f35f3aed",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "NearProver",
@@ -38,6 +38,8 @@
     {
       "name": "BridgeAdminMultisig",
       "address": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -65,13 +67,19 @@
     {
       "name": "NearBridge",
       "address": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
+      "ignoreInWatchMode": ["bridgeState", "lastValidAt"],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1664198555,
       "values": {
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
-        "bridgeState": [115627101, "1711614850017316941", 1711629647, 100],
+        "bridgeState": {
+          "currentHeight": 115627101,
+          "nextTimestamp": "1711614850017316941",
+          "nextValidAt": 1711629647,
+          "numBlockProducers": 100
+        },
         "initialized": true,
         "lastValidAt": 1711629647,
         "lockDuration": 14400,

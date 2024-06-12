@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
@@ -130,6 +131,11 @@ describeDatabase(AmountRepository.name, (database) => {
       expect(results).toEqualUnsorted([amount('b', new UnixTime(2), 0n)])
     })
   })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(amountRepository, (timestamp) =>
+    amount('a', timestamp, 0n),
+  )
 
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {

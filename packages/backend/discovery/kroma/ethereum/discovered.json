@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976276,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -98,7 +98,11 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 19976270],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 19976270
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -139,14 +143,14 @@
         },
         "overhead": 0,
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279133768681701512861",
         "sequencerInbox": "0xfF00000000000000000000000000000000000255",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -314,11 +318,11 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getHubInfo": [
-          "0x827962404D7104202C5aaa6b929115C8211d9596",
-          "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
-          "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db"
-        ],
+        "getHubInfo": {
+          "bridge": "0x827962404D7104202C5aaa6b929115C8211d9596",
+          "spETH": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
+          "l2spETH": "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db"
+        },
         "getHubStakeAssetLists": [
           "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
@@ -377,24 +381,30 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCoreInfo": [
-          "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
-          "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
-          2000000000000000
-        ],
+        "getCoreInfo": {
+          "spETH": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
+          "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
+          "defaultFeeAmount": 2000000000000000
+        },
         "getCoreSupportAssetLists": [
           "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
         ],
-        "getGlobalSnap": [
-          [
-            "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
-            "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
-            2000000000000000
-          ],
-          ["1121056277580669528788"],
-          ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
-          [["1121056277580669528788"]]
-        ],
+        "getGlobalSnap": {
+          "info": {
+            "spETH": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
+            "feeVault": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
+            "defaultFeeAmount": 2000000000000000
+          },
+          "spSnap": {
+            "evalValue": "1121056277580669528788"
+          },
+          "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
+          "snaps": [
+            {
+              "evalValue": "1121056277580669528788"
+            }
+          ]
+        },
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -451,15 +461,15 @@
         "clock": 19976276,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
-        "eip712Domain": [
-          "0x0f",
-          "UpgradeGovernor",
-          "1.0.0",
-          1,
-          "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "UpgradeGovernor",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
         "name": "UpgradeGovernor",
         "proposalThreshold": 1,
@@ -506,15 +516,15 @@
         "clock": 19976276,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
-        "eip712Domain": [
-          "0x0f",
-          "KromaSecurityCouncil",
-          "1",
-          1,
-          "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "KromaSecurityCouncil",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "getApproved": ["0x0000000000000000000000000000000000000000"],
         "locked": [true],
         "name": "KromaSecurityCouncil",
@@ -566,15 +576,15 @@
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x667c240834633d8c55a39c59f3d9110525460a7d76df38f7a3223757ca18767d",
-        "eip712Domain": [
-          "0x0f",
-          "Spectrum Staked ETH",
-          "1",
-          1,
-          "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Spectrum Staked ETH",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "name": "Spectrum Staked ETH",
         "owner": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
         "paused": false,

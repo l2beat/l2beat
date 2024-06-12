@@ -16,7 +16,7 @@ export function CheckIcon({
       fill="none"
       stroke="none"
       className={cn(
-        'peer-checked:stroke-black dark:peer-checked:stroke-white',
+        'dark:peer-checked:stroke-white peer-checked:stroke-black',
         className,
       )}
       {...rest}

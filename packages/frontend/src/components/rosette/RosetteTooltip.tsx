@@ -25,7 +25,7 @@ export function RosetteTooltipPopup({
     return (
       <div className="w-[300px]">
         <div className="mb-4">
-          <span className="text-base font-bold">Risk analysis</span> is{' '}
+          <span className="font-bold text-base">Risk analysis</span> is{' '}
           <UnderReviewBadge />
         </div>
 
@@ -41,7 +41,7 @@ export function RosetteTooltipPopup({
 
   return (
     <div className="flex w-[370px] flex-col">
-      <span className="text-base font-bold">
+      <span className="font-bold text-base">
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">

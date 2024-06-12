@@ -4,6 +4,7 @@ import { expect, mockObject } from 'earl'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { MulticallClient } from '../../provider/multicall/MulticallClient'
+import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
@@ -90,10 +91,10 @@ describe(SimpleMethodHandler.name, () => {
         },
       })
 
-      const handler = new SimpleMethodHandler(
-        'function balanceOf() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      )
+      const method = 'function balanceOf() view returns (uint256)'
+      const fragment = toFunctionFragment(method)
+
+      const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
       expect(handler.field).toEqual('balanceOf')
       const encoded = handler.encode(address)
       expect(encoded).toEqual([
@@ -106,6 +107,7 @@ describe(SimpleMethodHandler.name, () => {
       const result = handler.decode(response)
       expect(result).toEqual({
         field: 'balanceOf',
+        fragment,
         value: 0x123,
       })
     })
@@ -138,10 +140,11 @@ describe(SimpleMethodHandler.name, () => {
     it('can correctly decode a tuple', async () => {
       const response =
         '0x0000000000000000000000000000000000000000000000000000000001312d00000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000003b9aca0000000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000ffffffffffffffffffffffffffffffff'
-      const abi =
+      const method =
         'function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))'
+      const fragment = toFunctionFragment(method)
 
-      const handler = new SimpleMethodHandler(abi, DiscoveryLogger.SILENT)
+      const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
 
       const decoded = handler.decode([
         {
@@ -152,6 +155,7 @@ describe(SimpleMethodHandler.name, () => {
 
       expect(decoded).toEqual({
         field: 'resourceConfig',
+        fragment,
         value: [
           20000000,
           10,

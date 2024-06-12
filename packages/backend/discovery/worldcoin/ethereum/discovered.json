@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976298,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -111,7 +111,11 @@
         "getTreeDepth": 30,
         "identityOperator": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
         "latestRoot": "12290218578513226318496115698682033493786153258767482115805005589514196608124",
-        "NO_SUCH_ROOT": [0, 0, false],
+        "NO_SUCH_ROOT": {
+          "root": 0,
+          "supersededTimestamp": 0,
+          "isValid": false
+        },
         "owner": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },

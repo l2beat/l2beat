@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x50b0bef4a29ddfb47442114676462a3f78062e2a
+
+# Diff at Mon, 10 Jun 2024 06:13:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@023db9216bab49e9b3ffde0e43664e3e63c60fcf block: 19911056
+- current block number: 20059566
+
+## Description
+
+A router is added.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
++++ description: Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.
+      values.ROUTERS.29:
++        "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265"
+    }
+```
+
 Generated with discovered.json: 0xc22730c77acab6c4f78ebd589f671e0ed63e7898
 
 # Diff at Mon, 20 May 2024 12:12:41 GMT:

@@ -1,3 +1,615 @@
+Generated with discovered.json: 0x9ac2d489ada66219337ac35236a4c77104d708c5
+
+# Diff at Mon, 10 Jun 2024 13:45:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5076f0f120afd8d9006d198d9d9c9bf0f5327f31 block: 20040416
+- current block number: 20061811
+
+## Description
+
+Remove the deprecated constructorArgs from the config.
+Add trigger for all new chains that are created (even with a different STM).
+
+For v24 upgrade below, there is now also an [informative diff audit by OpenZeppelin](https://blog.openzeppelin.com/zksync-state-transition-diff-audit).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20040416 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated:
++        [{"chainId":324,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x71d84c3404a6ae258E6471d4934B96a2033F9438"}]
+    }
+```
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      name:
+-        "zkSync"
++        "ZKsync"
+      values.txFilterer:
++        []
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      values.constructorArgs:
+-        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+    }
+```
+
+Generated with discovered.json: 0x93ee29c36171713f01b80b6748356bdbc622eb7a
+
+# Diff at Fri, 07 Jun 2024 14:02:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@bb1e924130ed617ad936049f31500ae091525180 block: 20034095
+- current block number: 20040416
+
+## Description
+
+Upgrade v24 - VM version 1.5.0. (was initially scheduled for May 13)
+
+[CHANGELOG](https://github.com/zkSync-Community-Hub/zksync-developers/discussions/519)
+
+Main points:
+- New shared L1 escrow and Bridgehub for zkSync Era and all future ZK stack chains 
+- New StateTransitionManager (shared proof verification for ZK stack chains with the same EVM implementation, currently only one)
+
+### New architecture summary
+
+Each ZK stack chain including zkSync Era has its own diamond contract similar to the old model, with all chain-specific logic inside. ZK stack chains with the same EVM logic can share a State Transition Manager (STM), which is responsible for proof verification for each connected chain. The multiple future STMs in turn are connected through the single Bridgehub, which allows L1 to L2 and L2 to L2 message passing. Below it is the shared bridge for all registered ZK stack chains.
+
+### Changes to the zkSync Era diamond
+#### AdminFacet.sol
+
+- L1--> L2 Transaction filtering (can set tx filtering contract)
+- Governor role removed (onlyGovernor functions are now mostly onlySTM)
+- VerifierParams moved to STM
+- Support for custom native token ('basetoken')
+- Function `upgradeChainFromVersion()` added: Allows to upgrade the diamond with preformed calldata (can be used for synchronous upgrading of multiple chains in the future)
+
+#### ExecutorFacet.sol
+
+- Support for more Blobs in one transaction (6, up from 2)
+- ChainID can be added to committing, proving, executing, reverting of batches
+- `PubdataPricingMode.Validium` implemented (was not usable before)
+- New upgrade logic in `commitBatches()`: L2 upgrade will be logged on L1
+
+### MailBoxFacet.sol
+
+- New function `transferEthToSharedBridge()` can be used to move all ETH to a shared bridge by the `BaseTokenBridge` address
+- `requestL2Transaction()` is still available, but can also be accessed via Bridgehub
+
+## L1ERC20Bridge.sol (old)
+
+Will be deprecated and funds are already being moved off of this bridge to the new shared one. Can still be used though as it has the `IL1SharedBridge` Interface to forward transactions to the new shared bridge.
+
+## StateTransitionManager.sol (added)
+
+Implements admin, freezing and upgrade logic for the chains that are registered to it. (heavily interfaces with the diamond contracts) Also interfaces with the proof verification and the validator timelock of zkSync Era. Future diamond contracts for rollups that share their evm and proving logic can share an STM.
+
+## Bridgehub.sol (added)
+
+Singular central hub contract acting as a bridge gateway / proxy between the shared bridge and the individual mailboxes of the registered diamond contracts. 
+
+All L1 <-> L2 ccommunication is handled here.
+
+## L1SharedBridge.sol (added)
+
+Shared bridge contract that can store all ERC-20 tokens and ETH, WETH for all chains. Has a mapping of token balances for each chain and backwards compatibility for the old ZkSync Era bridge.
+
+Deposits and Withdrawals for all registered chains are handled here.
+
+Has legacy functions that interface with the old ZkSync Era bridge for backwards compatibility.
+
+## GenesisUpgrade.sol (added)
+
+Stores the initial chain creation parameters for chains that register with the STM. In this case these are the chain creation parameters for ZkSync Era and its associated STM, and all potential future chains that want to use the same STM ad Era.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        484290
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        484290
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xb88380066d84222045097f0fad44e876c361dc27f5367d46decb294ba1a7d29c"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20034095 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      values.zksyncEraDiamond:
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.zksyncEraSTM:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract ValidatorTimelock_NEW (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock_NEW"
++        "ValidatorTimelock"
+      values.constructorArgs:
++        {"_initialOwner":"0x0000000000000000000000000000000000000040","_executionDelay":1,"_eraChainId":"7067"}
+      values.revertedBlocks:
++        []
+      values.validatorsAdded:
++        ["0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      values.validatorsRemoved:
++        []
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: None
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock_deprecated"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      values.L1_WETH_TOKEN:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
+Generated with discovered.json: 0x3a4dd94fb8e0bcc87ffc7593dfc1c7aff5188b10
+
+# Diff at Thu, 06 Jun 2024 16:52:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ede45d4470f4a86adbf9140e79f58d3d03af8b66 block: 19624206
+- current block number: 20034095
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      upgradeability.facets.3:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      upgradeability.facets.2:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      upgradeability.facets.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      upgradeability.facets.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      implementations.3:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      implementations.2:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      implementations.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      implementations.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.facetAddresses.3:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.facetAddresses.2:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.facetAddresses.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.facetAddresses.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.facets.3.1.7:
++        "0x0f23da43"
+      values.facets.3.1.6:
++        "0x97c09d34"
+      values.facets.3.1.5:
++        "0xc37533bb"
+      values.facets.3.1.4:
++        "0x7f61885c"
+      values.facets.3.1.3:
+-        "0x97c09d34"
++        "0x6f497ac6"
+      values.facets.3.1.2:
+-        "0x7f61885c"
++        "0xc3d93e7c"
+      values.facets.3.1.1:
+-        "0xc3d93e7c"
++        "0x6edd4f12"
+      values.facets.3.0:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.facets.2.1.7:
++        "0xc924de35"
+      values.facets.2.1.6:
++        "0xeb672419"
+      values.facets.2.1.5:
+-        "0xeb672419"
++        "0xe4948f43"
+      values.facets.2.1.4:
+-        "0xe4948f43"
++        "0x263b7f8e"
+      values.facets.2.1.3:
+-        "0x263b7f8e"
++        "0x042901c7"
+      values.facets.2.1.2:
+-        "0x042901c7"
++        "0xb473318e"
+      values.facets.2.1.1:
+-        "0xb473318e"
++        "0x6c0960f9"
+      values.facets.2.1.0:
+-        "0x6c0960f9"
++        "0x12f43dab"
+      values.facets.2.0:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.facets.1.1.40:
++        "0x74f4d30d"
+      values.facets.1.1.39:
++        "0xb22dd78e"
+      values.facets.1.1.38:
++        "0x56142d7a"
+      values.facets.1.1.37:
++        "0x9cd939e4"
+      values.facets.1.1.36:
++        "0xfacd743b"
+      values.facets.1.1.35:
++        "0xe81e0ba1"
+      values.facets.1.1.34:
++        "0xc3bbd2d7"
+      values.facets.1.1.33:
++        "0xbd7c5412"
+      values.facets.1.1.32:
+-        "0x74f4d30d"
++        "0x29b98c67"
+      values.facets.1.1.31:
+-        "0xb22dd78e"
++        "0x18e3a941"
+      values.facets.1.1.30:
+-        "0x56142d7a"
++        "0x46657fe9"
+      values.facets.1.1.29:
+-        "0x9cd939e4"
++        "0xa1954fc5"
+      values.facets.1.1.28:
+-        "0xfacd743b"
++        "0xaf6a2dcd"
+      values.facets.1.1.27:
+-        "0xe81e0ba1"
++        "0x39607382"
+      values.facets.1.1.26:
+-        "0xc3bbd2d7"
++        "0xfe26699e"
+      values.facets.1.1.25:
+-        "0xbd7c5412"
++        "0xef3f0bae"
+      values.facets.1.1.24:
+-        "0x29b98c67"
++        "0xb8c2f66f"
+      values.facets.1.1.23:
+-        "0x18e3a941"
++        "0xdb1f0bf9"
+      values.facets.1.1.22:
+-        "0x46657fe9"
++        "0x5518c73b"
+      values.facets.1.1.21:
+-        "0xa1954fc5"
++        "0xf5c1182c"
+      values.facets.1.1.20:
+-        "0xaf6a2dcd"
++        "0x06d49e5b"
+      values.facets.1.1.19:
+-        "0x39607382"
++        "0x33ce93fe"
+      values.facets.1.1.18:
+-        "0xfe26699e"
++        "0x0ec6b0b7"
+      values.facets.1.1.17:
+-        "0xef3f0bae"
++        "0x631f4bac"
+      values.facets.1.1.16:
+-        "0xb8c2f66f"
++        "0xd0468156"
+      values.facets.1.1.15:
+-        "0xdb1f0bf9"
++        "0x7b30c8da"
+      values.facets.1.1.14:
+-        "0x33ce93fe"
++        "0x9d1b5a81"
+      values.facets.1.1.13:
+-        "0x0ec6b0b7"
++        "0xe5355c75"
+      values.facets.1.1.12:
+-        "0x631f4bac"
++        "0xfd791f3c"
+      values.facets.1.1.11:
+-        "0x8665b150"
++        "0xd86970d8"
+      values.facets.1.1.10:
+-        "0x7b30c8da"
++        "0x79823c9a"
+      values.facets.1.1.9:
+-        "0x9d1b5a81"
++        "0x3591c1a0"
+      values.facets.1.1.8:
+-        "0xe5355c75"
++        "0x086a56f8"
+      values.facets.1.1.7:
+-        "0xfd791f3c"
++        "0x98acd7a6"
+      values.facets.1.1.6:
+-        "0xd86970d8"
++        "0x6e9960c3"
+      values.facets.1.1.5:
+-        "0x4fc07d75"
++        "0x7a0ed627"
+      values.facets.1.1.4:
+-        "0x79823c9a"
++        "0xadfca15e"
+      values.facets.1.1.3:
+-        "0x7a0ed627"
++        "0x52ef6b2c"
+      values.facets.1.1.2:
+-        "0xadfca15e"
++        "0xcdffacc6"
+      values.facets.1.1.1:
+-        "0x52ef6b2c"
++        "0xea6c029c"
+      values.facets.1.1.0:
+-        "0xcdffacc6"
++        "0x1de72e34"
+      values.facets.1.0:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.facets.0.1.12:
++        "0xfc57565f"
+      values.facets.0.1.11:
++        "0x17338945"
+      values.facets.0.1.10:
+-        "0x17338945"
++        "0x4623c91d"
+      values.facets.0.1.9:
+-        "0x4623c91d"
++        "0x21f603d7"
+      values.facets.0.1.8:
+-        "0xbe6f11cf"
++        "0x235d9eb5"
+      values.facets.0.1.7:
+-        "0x1cc5d103"
++        "0xe76db865"
+      values.facets.0.1.6:
+-        "0xf235757f"
++        "0xbe6f11cf"
+      values.facets.0.1.5:
+-        "0x4dd18bf5"
++        "0x1cc5d103"
+      values.facets.0.1.4:
+-        "0x27ae4c16"
++        "0x4dd18bf5"
+      values.facets.0.1.3:
+-        "0xa9f6d941"
++        "0x27ae4c16"
+      values.facets.0.1.2:
+-        "0x64bf8d66"
++        "0xa9f6d941"
+      values.facets.0.1.1:
+-        "0xe58bb639"
++        "0x64bf8d66"
+      values.facets.0.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.getGovernor:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.getL2BootloaderBytecodeHash:
+-        "0x010007ede999d096c84553fb514d3d6ca76fbf39789dda76bfeda9f3ae06236e"
++        "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066"
++        "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32"
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        0
++        484290
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        0
++        484290
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0xb88380066d84222045097f0fad44e876c361dc27f5367d46decb294ba1a7d29c"
+      values.getPendingGovernor:
+-        "0x0000000000000000000000000000000000000000"
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        22
++        103079215105
+      values.getVerifier:
+-        "0xdd9C826196cf3510B040A8784D85aE36674c7Ed2"
++        "0x70F3FBf8a427155185Ec90BED8a3434203de9604"
++++ description: Verifier parameters used for proving batches
++++ severity: LOW
+      values.getVerifierParams.1:
+-        "0x400a4b532c6f072c00d1806ef299300d4c104f4ac55bd8698ade78894fcadc0a"
++        "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6"
++++ description: Verifier parameters used for proving batches
++++ severity: LOW
+      values.getVerifierParams.0:
+-        "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080"
++        "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8"
+      values.baseTokenGasPriceMultiplierDenominator:
++        1
+      values.baseTokenGasPriceMultiplierNominator:
++        1
+      values.getAdmin:
++        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.getBaseToken:
++        "0x0000000000000000000000000000000000000001"
+      values.getBaseTokenBridge:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.getBridgehub:
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.getPendingAdmin:
++        "0x0000000000000000000000000000000000000000"
+      values.getPubdataPricingMode:
++        0
+      values.getSemverProtocolVersion:
++        [0,24,1]
+      values.getStateTransitionManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
++        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
+      upgradeability.admin:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      implementations.0:
+-        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
++        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
+      values.SHARED_BRIDGE:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0xdd9C826196cf3510B040A8784D85aE36674c7Ed2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GenesisUpgrade (0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock_NEW (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x70F3FBf8a427155185Ec90BED8a3434203de9604)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zksync2/ethereum/.flat/BridgeHub/Bridgehub.sol | 1200 +++++++
+ .../BridgeHub/TransparentUpgradeableProxy.p.sol    |  728 ++++
+ .../zksync2/ethereum/.flat/GenesisUpgrade.sol      | 2657 +++++++++++++++
+ .../L1ERC20Bridge.sol                              |  438 +--
+ .../.flat/L1SharedBridge/L1SharedBridge.sol        | 2072 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  728 ++++
+ .../zksync2/ethereum/.flat/ProxyAdmin.sol          |  150 +
+ .../StateTransitionManager.sol                     | 3514 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  728 ++++
+ ...-0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E.sol |  540 +++
+ ...0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD.sol} |    0
+ .../{.flat@19624206 => .flat}/Verifier.sol         |   14 +-
+ .../zksync2/ethereum/.flat/WETH9.sol               |   62 +
+ .../zkSync/AdminFacet.1.sol                        |  214 +-
+ .../zkSync/ExecutorFacet.4.sol                     |  380 ++-
+ .../zkSync/GettersFacet.2.sol                      | 1542 +++++----
+ .../zkSync/MailboxFacet.3.sol                      |  563 ++--
+ 17 files changed, 14047 insertions(+), 1483 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19624206 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x77954eb572fe13db06fdf974b4da51725e6a2792
 
 # Diff at Wed, 10 Apr 2024 09:02:17 GMT:

@@ -13,10 +13,10 @@ export function OtherSites() {
         'bg-gradient-to-r from-purple-100/40 via-pink-100/40 to-red-200/40',
       )}
     >
-      <span className="text-center text-lg font-semibold md:text-left">
+      <span className="text-center font-semibold text-lg md:text-left">
         Want to learn more about the different approaches to upgradeability?
       </span>
-      <Link className="text-lg font-bold" type="plain" href="/multisig-report">
+      <Link className="font-bold text-lg" type="plain" href="/multisig-report">
         Check our report
       </Link>
     </div>

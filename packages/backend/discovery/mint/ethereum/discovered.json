@@ -1,9 +1,9 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "blockNumber": 19982484,
-  "configHash": "0x139e3f88bca1a3c69db36eb19c3900a926ac23b631cb708cbc334c5e1b04ae64",
-  "version": 4,
+  "blockNumber": 20032860,
+  "configHash": "0x01eaf3d259572d9d2473cd46a774b5753e167a8babcf1f2db67dfe72a996e649",
+  "version": 5,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -27,6 +27,7 @@
     {
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -57,6 +58,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
+      "template": "opstack/OptimismPortal",
       "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -69,7 +71,11 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 19982347],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20032800
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
         "version": "1.7.2"
@@ -79,6 +85,7 @@
     {
       "name": "L2OutputOracle",
       "address": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
+      "template": "opstack/L2OutputOracle",
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -97,10 +104,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 712800,
-        "latestOutputIndex": 32,
-        "nextBlockNumber": 734400,
-        "nextOutputIndex": 33,
+        "latestBlockNumber": 1015200,
+        "latestOutputIndex": 46,
+        "nextBlockNumber": 1036800,
+        "nextOutputIndex": 47,
         "PROPOSER": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715608931,
@@ -125,6 +132,7 @@
     {
       "name": "SystemConfig",
       "address": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
+      "template": "opstack/SystemConfig",
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -143,14 +151,14 @@
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": 684000,
         "sequencerInbox": "0x4e31448a098393727b786e25B54E59DcA1b77FE1",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -174,6 +182,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
+      "template": "opstack/L1CrossDomainMessenger",
       "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -185,7 +194,7 @@
       "sinceTimestamp": 1715609063,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628976",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629881",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
