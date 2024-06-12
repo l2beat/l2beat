@@ -9,15 +9,15 @@ import { publicgoodsnetwork } from '../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer } from '../../types/DaLayer'
+import { DaLayer, DaLayerKind } from '../../types/DaLayer'
 import { blobStream } from './bridges/blob-stream'
 import { noBridge } from './bridges/no-bridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const celestia = {
-  type: 'Public blockchain',
+export const celestia: DaLayer = {
+  kind: DaLayerKind.PublicBlockchain,
   display: {
     name: 'Celestia',
     slug: 'celestia',
@@ -37,7 +37,7 @@ export const celestia = {
   ],
   storageDuration: 1000,
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.ONCHAIN_QUANTIFIABLE,
-    fraudDetection: DaFraudDetectionRisk.DAS_WITH_BLOCK_RECONSTRUCTION(false),
+    economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
+    fraudDetection: DaFraudDetectionRisk.DasWithBlockReconstruction(false),
   },
-} satisfies DaLayer
+}

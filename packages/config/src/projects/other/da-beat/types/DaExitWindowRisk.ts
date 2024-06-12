@@ -2,15 +2,23 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import { DaRiskViewOptions } from './DaRiskView'
 
 export type DaExitWindowRisk =
-  | typeof IMMUTABLE
-  | ReturnType<typeof LOW_OR_NO_DELAY>
-  | ReturnType<typeof SECURITY_COUNCIL>
-  | ReturnType<typeof EOA>
+  | typeof NoBridge
+  | typeof Immutable
+  | ReturnType<typeof Eoa>
+  | ReturnType<typeof LowOrNoDelay>
+  | ReturnType<typeof SecurityCouncil>
 
-const IMMUTABLE = {
-  type: 'IMMUTABLE',
+const Immutable = {
+  type: 'Immutable',
   value: 'Immutable',
   sentiment: 'good',
+  description: 'TODO',
+} as const
+
+const NoBridge = {
+  type: 'NoBridge',
+  value: 'No bridge',
+  sentiment: 'bad',
   description: 'TODO',
 } as const
 
@@ -18,9 +26,9 @@ const ONE_DAY_SECONDS = 24 * 60 * 60
 const THIRTY_DAYS_SECONDS = 30 * ONE_DAY_SECONDS
 const SEVEN_DAYS_SECONDS = 7 * ONE_DAY_SECONDS
 
-function SECURITY_COUNCIL(delaySeconds: number) {
+function SecurityCouncil(delaySeconds: number) {
   const common = {
-    type: 'SECURITY_COUNCIL',
+    type: 'SecurityCouncil',
   } as const
 
   if (delaySeconds >= THIRTY_DAYS_SECONDS) {
@@ -49,9 +57,9 @@ function SECURITY_COUNCIL(delaySeconds: number) {
   } as const
 }
 
-function EOA(delaySeconds: number) {
+function Eoa(delaySeconds: number) {
   const common = {
-    type: 'EOA',
+    type: 'Eoa',
   } as const
 
   if (delaySeconds >= SEVEN_DAYS_SECONDS) {
@@ -71,14 +79,14 @@ function EOA(delaySeconds: number) {
   } as const
 }
 
-function LOW_OR_NO_DELAY(delaySeconds?: number) {
+function LowOrNoDelay(delaySeconds?: number) {
   const value =
     delaySeconds && delaySeconds < SEVEN_DAYS_SECONDS
       ? formatSeconds(delaySeconds)
       : 'No delay'
 
   return {
-    type: 'LOW_OR_NO_DELAY',
+    type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
     description: 'TODO',
@@ -86,8 +94,9 @@ function LOW_OR_NO_DELAY(delaySeconds?: number) {
 }
 
 export const DaExitWindowRisk = {
-  IMMUTABLE,
-  SECURITY_COUNCIL,
-  EOA,
-  LOW_OR_NO_DELAY,
+  Eoa,
+  NoBridge,
+  Immutable,
+  LowOrNoDelay,
+  SecurityCouncil,
 } satisfies DaRiskViewOptions

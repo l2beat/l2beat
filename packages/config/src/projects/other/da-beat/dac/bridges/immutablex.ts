@@ -1,12 +1,17 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { immutablex } from '../../../../layer2s/immutablex'
-import { DacBridge } from '../../types/DaBridge'
+import {
+  DaAccessabilityRisk,
+  DaAttestationSecurityRisk,
+  DaExitWindowRisk,
+} from '../../types'
+import { DaBridge, DaBridgeKind } from '../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const immutableXDac = {
-  type: 'DAC',
+  kind: DaBridgeKind.DAC,
   display: {
     name: 'ImmutableX DAC',
     slug: 'immutablex-dac',
@@ -16,4 +21,9 @@ export const immutableXDac = {
   requiredMembers: 5,
   totalMembers: 7,
   usedIn: [immutablex.id],
-} satisfies DacBridge
+  risks: {
+    attestations: DaAttestationSecurityRisk.NotVerified,
+    accessability: DaAccessabilityRisk.NotEnshrined,
+    exitWindow: DaExitWindowRisk.LowOrNoDelay(),
+  },
+} satisfies DaBridge

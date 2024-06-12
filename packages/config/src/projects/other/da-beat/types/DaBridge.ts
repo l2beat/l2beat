@@ -4,14 +4,38 @@ import { DaAccessabilityRisk } from './DaAccessabilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 
+export type DaBridgeKind = (typeof DaBridgeKind)[keyof typeof DaBridgeKind]
+
+const OnChainBridge = {
+  type: 'OnChainBridge',
+  display: 'On-chain bridge',
+} as const
+
+const DAC = {
+  type: 'DAC',
+  display: 'DAC',
+} as const
+
+const NoBridge = {
+  type: 'NoBridge',
+  display: 'No bridge',
+} as const
+
+export const DaBridgeKind = {
+  OnChainBridge,
+  DAC,
+  NoBridge,
+}
+
 export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
 
 export type NoDaBridge = CommonDaBridge & {
-  type: 'NoBridge'
+  kind: typeof NoBridge
 }
 
 export type OnChainDaBridge = CommonDaBridge & {
-  type: 'OnChain'
+  kind: typeof OnChainBridge
+
   /**
    * The chain ID of the data availability bridge
    */
@@ -26,15 +50,11 @@ export type OnChainDaBridge = CommonDaBridge & {
    * Data about the contracts used in the bridge - preferably from discovery
    */
   contracts: ScalingProjectContractSingleAddress
-
-  /**
-   * Risks related to given data availability bridge
-   */
-  risks: DaBridgeRisks
 }
 
 export type DacBridge = CommonDaBridge & {
-  type: 'DAC'
+  kind: typeof DAC
+
   /**
    * The chain the DAC attests data on.
    */
@@ -73,6 +93,11 @@ type CommonDaBridge = {
    * List of projects given bridge is being used in
    */
   usedIn: ProjectId[]
+
+  /**
+   * Risks related to given data availability bridge
+   */
+  risks: DaBridgeRisks
 }
 
 export type DaBridgeRisks = {

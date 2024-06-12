@@ -1,33 +1,33 @@
 import { DaRiskViewOptions } from './DaRiskView'
 
 export type DaEconomicSecurityRisk =
-  | typeof ONCHAIN_QUANTIFIABLE
-  | typeof OFFCHAIN_VERIFIABLE
-  | typeof UNKNOWN
+  | typeof Unknown
+  | typeof OffChainVerifiable
+  | typeof OnChainQuantifiable
 
-const ONCHAIN_QUANTIFIABLE = {
-  type: 'ONCHAIN_QUANTIFIABLE',
+const OnChainQuantifiable = {
+  type: 'OnChainQuantifiable',
   value: 'Staked assets',
   sentiment: 'good',
   description: 'TODO',
 } as const
 
-const OFFCHAIN_VERIFIABLE = {
-  type: 'OFFCHAIN_VERIFIABLE',
+const OffChainVerifiable = {
+  type: 'OffChainVerifiable',
   value: 'Public Committee',
   sentiment: 'warning',
   description: 'TODO',
 } as const
 
-const UNKNOWN = {
-  type: 'UNKNOWN',
+const Unknown = {
+  type: 'Unknown',
   value: 'None',
   sentiment: 'bad',
   description: 'TODO',
 } as const
 
 export const DaEconomicSecurityRisk = {
-  ONCHAIN_QUANTIFIABLE,
-  OFFCHAIN_VERIFIABLE,
-  UNKNOWN,
+  Unknown,
+  OffChainVerifiable,
+  OnChainQuantifiable,
 } satisfies DaRiskViewOptions

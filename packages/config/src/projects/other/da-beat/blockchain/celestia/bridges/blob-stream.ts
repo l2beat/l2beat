@@ -1,14 +1,14 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { DaAccessabilityRisk } from '../../../types/DaAccessabilityRisk'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
-import { DaBridge } from '../../../types/DaBridge'
+import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
 import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const blobStream = {
-  type: 'OnChain',
+  kind: DaBridgeKind.NoBridge,
   display: {
     name: 'Blob Stream',
     slug: 'blob-stream',
@@ -22,8 +22,8 @@ export const blobStream = {
   },
   permissions: [],
   risks: {
-    attestations: DaAttestationSecurityRisk.SIG_VERIFIED_ZK(true),
-    exitWindow: DaExitWindowRisk.SECURITY_COUNCIL(30 * 24 * 60 * 60),
-    accessability: DaAccessabilityRisk.NOT_ENSHRINED,
+    attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
+    exitWindow: DaExitWindowRisk.SecurityCouncil(30 * 24 * 60 * 60),
+    accessability: DaAccessabilityRisk.NotEnshrined,
   },
 } satisfies DaBridge

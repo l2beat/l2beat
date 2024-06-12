@@ -1,22 +1,22 @@
 import { DaRiskViewOptions } from './DaRiskView'
 
-export type DaAccessabilityRisk = typeof ENSHRINED | typeof NOT_ENSHRINED
+export type DaAccessabilityRisk = typeof Enshrined | typeof NotEnshrined
 
-const ENSHRINED = {
-  type: 'ENSHRIRNED',
+const Enshrined = {
+  type: 'Enshrined',
   value: 'Enshrined',
   sentiment: 'good',
   description: 'TODO',
 } as const
 
-const NOT_ENSHRINED = {
-  type: 'NOT_ENSHRINED',
+const NotEnshrined = {
+  type: 'NotEnshrined',
   value: 'External',
   sentiment: 'bad',
   description: 'TODO',
 } as const
 
 export const DaAccessabilityRisk = {
-  ENSHRINED,
-  NOT_ENSHRINED,
+  Enshrined,
+  NotEnshrined,
 } satisfies DaRiskViewOptions

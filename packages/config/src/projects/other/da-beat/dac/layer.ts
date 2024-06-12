@@ -1,11 +1,12 @@
-import { DaLayer } from '../types/DaLayer'
+import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
+import { DaLayer, DaLayerKind } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const dac = {
-  type: 'DAC',
+export const dac: DaLayer = {
+  kind: DaLayerKind.DAC,
   display: {
     name: 'Data Availability Committee (DAC)',
     slug: 'dac',
@@ -14,4 +15,8 @@ export const dac = {
   },
   bridges: [immutableXDac],
   usedIn: [...immutableXDac.usedIn],
-} satisfies DaLayer
+  risks: {
+    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+  },
+}

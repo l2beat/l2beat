@@ -3,12 +3,27 @@ import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 
-export type DaLayerType = 'Public blockchain' | 'DaC'
+export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
+
+const PublicBlockchain = {
+  type: 'PublicBlockchain',
+  display: 'Public blockchain',
+} as const
+
+const DAC = {
+  type: 'DAC',
+  display: 'DAC',
+} as const
+
+export const DaLayerKind = {
+  PublicBlockchain: PublicBlockchain,
+  DAC: DAC,
+}
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
-  type: 'Public blockchain'
+  kind: typeof PublicBlockchain
 
   bridges: (OnChainDaBridge | NoDaBridge)[]
 
@@ -17,16 +32,10 @@ export type BlockchainDaLayer = CommonDaLayer & {
    * @unit seconds
    */
   storageDuration: number
-
-  /**
-   * Risks associated with the data availability layer.
-   * @see DaLayerRisks
-   */
-  risks: DaLayerRisks
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  type: 'DAC'
+  kind: typeof DAC
 
   bridges: DacBridge[]
 }
@@ -53,6 +62,12 @@ export type CommonDaLayer = {
    * List of projects given da layer is being used in
    */
   usedIn: ProjectId[]
+
+  /**
+   * Risks associated with the data availability layer.
+   * @see DaLayerRisks
+   */
+  risks: DaLayerRisks
 }
 
 export type DaLayerRisks = {

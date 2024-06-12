@@ -7,13 +7,15 @@ import { mantapacific } from '../../../../../layer2s/mantapacific'
 import { orderly } from '../../../../../layer2s/orderly'
 import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../../layer3s/stack'
-import { DaBridge } from '../../../types/DaBridge'
+import { DaAccessabilityRisk, DaExitWindowRisk } from '../../../types'
+import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
+import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const noBridge = {
-  type: 'NoBridge',
+  kind: DaBridgeKind.NoBridge,
   display: {
     name: 'No Bridge',
     slug: 'no-bridge',
@@ -30,4 +32,9 @@ export const noBridge = {
     hypr.id,
     stack.id,
   ],
+  risks: {
+    accessability: DaAccessabilityRisk.NotEnshrined,
+    attestations: DaAttestationSecurityRisk.NoBridge,
+    exitWindow: DaExitWindowRisk.NoBridge,
+  },
 } satisfies DaBridge
