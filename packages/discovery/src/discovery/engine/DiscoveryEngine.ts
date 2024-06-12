@@ -25,6 +25,11 @@ export class DiscoveryEngine {
     private readonly logger: DiscoveryLogger,
   ) {}
 
+  // TODO: remove this, when no longer needed
+  getCurrentBlockNumber(): Promise<number> {
+    return this.addressAnalyzer.getCurrentBlockNumber()
+  }
+
   async discover(
     config: DiscoveryConfig,
     blockNumber: number,

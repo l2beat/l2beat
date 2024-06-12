@@ -10,6 +10,7 @@ import { LowLevelProvider } from './LowLevelProvider'
 import { DiscoveryCache } from './ProviderWithCache'
 import { ReorgAwareCache } from './ReorgAwareCache'
 import { MulticallClient } from './multicall/MulticallClient'
+import { getBlockNumberTwoProviders } from './DiscoveryProvider'
 
 export class AllProviders {
   private config: Map<
@@ -48,6 +49,15 @@ export class AllProviders {
         },
       })
     }
+  }
+
+  getLatestBlockNumber(chain: string): Promise<number> {
+    const config = this.config.get(chain)
+    assert(config !== undefined, `Unknown chain: ${chain}`)
+    return getBlockNumberTwoProviders(
+      config.providers.baseProvider,
+      config.providers.eventProvider,
+    )
   }
 
   get(chain: string, blockNumber: number): IProvider {

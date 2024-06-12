@@ -68,6 +68,11 @@ export class AddressAnalyzer {
     private readonly logger: DiscoveryLogger,
   ) {}
 
+  // TODO: remove this, when no longer needed
+  getCurrentBlockNumber(): Promise<number> {
+    return this.provider.getBlockNumber()
+  }
+
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
