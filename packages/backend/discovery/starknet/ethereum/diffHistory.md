@@ -8,7 +8,7 @@ Generated with discovered.json: 0xab0eaf0bb4b754932b586a9b27426f6aac4f9bf2
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New escrow added for EKUBO. 
 
 ## Config/verification related changes
 
