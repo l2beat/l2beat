@@ -53,6 +53,7 @@ const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
+const ESCROW_EKUBO_ADDRESS = '0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -102,6 +103,10 @@ const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_STRK_ADDRESS,
   'upgradeDelay',
 )
+const escrowEKUBODelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_EKUBO_ADDRESS,
+  'upgradeDelay',
+)
 
 const minDelay = Math.min(
   escrowETHDelaySeconds,
@@ -112,6 +117,7 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
+  escrowEKUBODelaySeconds,
   getSHARPVerifierUpgradeDelay(),
 )
 
@@ -374,6 +380,14 @@ export const starknet: Layer2 = {
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
+        upgradableBy: ['BridgeMultisig'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_EKUBO_ADDRESS),
+        tokens: ['EKUBO'],
+        description:
+          'StarkGate bridge for EKUBO.',
+        upgradeDelay: formatSeconds(escrowEKUBODelaySeconds),
         upgradableBy: ['BridgeMultisig'],
       }),
     ],
@@ -934,11 +948,25 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
     },
     {
+      name: 'StarkGate sfrxETH owner',
+      accounts: getProxyGovernance(discovery, ESCROW_EKUBO_ADDRESS),
+      description:
+        'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowEKUBODelaySeconds),
+    },
+    {
       name: 'StarkGate LUSD owner',
       accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
       description:
         'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
+    },
+    {
+      name: 'StarkGate EKUBO owner',
+      accounts: getProxyGovernance(discovery, ESCROW_EKUBO_ADDRESS),
+      description:
+        'Can upgrade implementation of the EKUBO escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowEKUBODelaySeconds),
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',

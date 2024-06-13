@@ -1247,6 +1247,21 @@
       "formula": "locked"
     },
     {
+      "id": "ekubo-ekubo-protocol",
+      "name": "Ekubo Protocol",
+      "coingeckoId": "ekubo-protocol",
+      "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+      "symbol": "EKUBO",
+      "decimals": 18,
+      "deploymentTimestamp": 1714344731,
+      "coingeckoListingTimestamp": 1715731200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37715/large/135474885.png?1715330450",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ena-ena",
       "name": "ENA",
       "coingeckoId": "ethena",

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xab0eaf0bb4b754932b586a9b27426f6aac4f9bf2
+
+# Diff at Thu, 13 Jun 2024 12:53:55 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@70fdcbbde971b36994074a4846420440f052c570 block: 19718686
+- current block number: 20083025
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718686 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EKUBOBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3dcb7d18697752a7b58f62f50842ff17e9897e65
 
 # Diff at Tue, 23 Apr 2024 14:28:50 GMT:
