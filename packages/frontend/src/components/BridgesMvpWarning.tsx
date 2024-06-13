@@ -1,5 +1,5 @@
-import React from 'react';
-import { common } from '../build/config/common';
+import React from 'react'
+import { common } from '../build/config/common'
 
 export function BridgesMvpWarning() {
   return (
@@ -15,5 +15,5 @@ export function BridgesMvpWarning() {
       </a>{' '}
       to suggest improvements!
     </p>
-  );
+  )
 }
