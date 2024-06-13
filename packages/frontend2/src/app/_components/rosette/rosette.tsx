@@ -104,6 +104,8 @@ export function SmallRosette({
   )
 }
 
+const TEXT_RADIUS = 88
+
 export interface RosetteProps {
   values: RosetteValue[]
   isUpcoming?: boolean
@@ -119,26 +121,56 @@ export function MediumRosette(props: RosetteProps) {
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
   return (
-    <div className="relative w-[201px] p-8">
+    <div className="relative w-[201px] h-[200px] p-8">
       <BigRosetteIcon
         values={props.values}
         className="h-[136px] w-[137px]"
         isUnderReview={isUnderReview}
       />
-      <span className="absolute bottom-[18px] left-[22px] text-wrap w-[10ch] rotate-[36deg] text-center font-medium text-[10px] uppercase leading-tight">
-        {first.name}
+      <span
+        style={{
+          top: 100 - Math.cos((-4 * Math.PI) / 5) * TEXT_RADIUS,
+          left: 100 + Math.sin((-4 * Math.PI) / 5) * TEXT_RADIUS,
+        }}
+        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[36deg]"
+      >
+        {first.name.split(' ').join('\n')}
       </span>
-      <span className="-left-2 absolute top-[59px] text-wrap w-[10ch] rotate-[-68deg] text-center font-medium text-[10px] uppercase leading-tight">
-        {second.name}
+      <span
+        style={{
+          top: 100 - Math.cos((-2 * Math.PI) / 5) * TEXT_RADIUS,
+          left: 100 + Math.sin((-2 * Math.PI) / 5) * TEXT_RADIUS,
+        }}
+        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[-68deg]"
+      >
+        {second.name.split(' ').join('\n')}
       </span>
-      <span className="-translate-x-1/2 absolute top-0.5 left-1/2 text-wrap w-[10ch] text-center font-medium text-[10px] uppercase leading-tight">
-        {third.name}
+      <span
+        style={{
+          top: 100 - TEXT_RADIUS,
+          left: '50%',
+        }}
+        className="-translate-x-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight"
+      >
+        {third.name.split(' ').join('\n')}
       </span>
-      <span className="absolute top-[58px] left-[160px] rotate-[68deg] text-wrap w-[10ch] text-center font-medium text-[10px] uppercase leading-tight">
-        {fourth.name}
+      <span
+        style={{
+          top: 100 - Math.cos((2 * Math.PI) / 5) * TEXT_RADIUS,
+          left: 100 + Math.sin((2 * Math.PI) / 5) * TEXT_RADIUS,
+        }}
+        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[68deg]"
+      >
+        {fourth.name.split(' ').join('\n')}
       </span>
-      <span className="absolute right-[19px] bottom-[20px] text-wrap w-[10ch] rotate-[-36deg] text-center font-medium text-[10px] uppercase leading-tight">
-        {fifth.name}
+      <span
+        style={{
+          top: 100 - Math.cos((4 * Math.PI) / 5) * TEXT_RADIUS,
+          left: 100 + Math.sin((4 * Math.PI) / 5) * TEXT_RADIUS,
+        }}
+        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[-36deg]"
+      >
+        {fifth.name.split(' ').join('\n')}
       </span>
     </div>
   )
