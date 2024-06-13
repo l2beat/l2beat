@@ -114,6 +114,7 @@ export class ProjectDiscovery {
     isUpcoming,
     chain,
     includeInTotal,
+    source,
   }: {
     address: EthereumAddress
     name?: string
@@ -125,6 +126,7 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     chain?: string
     includeInTotal?: boolean
+    source?: ScalingProjectEscrow['source']
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -152,6 +154,7 @@ export class ProjectDiscovery {
       chain,
       includeInTotal:
         includeInTotal ?? chain === 'ethereum' ? true : includeInTotal,
+      source,
     }
   }
 

@@ -6,6 +6,7 @@ import {
   Layer2LivenessConfig,
   Layer2TxConfig,
   Layer3,
+  ScalingProjectEscrow,
   ScalingProjectTransactionApi,
   chains,
   getCanonicalTokenBySymbol,
@@ -49,6 +50,7 @@ export interface ProjectEscrow {
   tokens: Token[]
   chain?: string
   includeInTotal?: boolean
+  source?: ScalingProjectEscrow['source']
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
@@ -68,6 +70,7 @@ export function layer2ToProject(layer2: Layer2): Project {
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
+      source: escrow.source,
     })),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
@@ -98,6 +101,7 @@ export function bridgeToProject(bridge: Bridge): Project {
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
+      source: escrow.source,
     })),
     associatedTokens: bridge.config.associatedTokens,
   }
@@ -159,6 +163,7 @@ export function layer3ToProject(layer3: Layer3): Project {
             : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
         chain,
         includeInTotal: escrow.includeInTotal,
+        source: escrow.source,
       }
     }),
     associatedTokens: layer3.config.associatedTokens,

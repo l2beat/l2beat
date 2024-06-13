@@ -20,6 +20,7 @@ interface OldProjectEscrow {
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
 }
 
 interface NewProjectEscrow {
@@ -43,4 +44,5 @@ interface NewProjectEscrow {
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
 }
