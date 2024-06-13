@@ -1,8 +1,8 @@
 generator kysely {
   provider     = "prisma-kysely"
   output       = "../src/kysely/generated"
-  fileName     = "types.ts"
   enumFileName = "enums.ts"
+  fileName     = "types.ts"
 }
 
 datasource db {
@@ -169,4 +169,328 @@ model Cache {
   blockNumber Int?
   updatedAt   DateTime @default(now()) @updatedAt
   createdAt   DateTime @default(now())
+}
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model aggregated_l2_costs {
+  timestamp        DateTime @db.Timestamp(6)
+  project_id       String   @db.VarChar(255)
+  total_gas        Int
+  total_gas_eth    Float    @db.Real
+  total_gas_usd    Float    @db.Real
+  blobs_gas        Int?
+  blobs_gas_eth    Float?   @db.Real
+  blobs_gas_usd    Float?   @db.Real
+  calldata_gas     Int
+  calldata_gas_eth Float    @db.Real
+  calldata_gas_usd Float    @db.Real
+  compute_gas      Int
+  compute_gas_eth  Float    @db.Real
+  compute_gas_usd  Float    @db.Real
+  overhead_gas_eth Float    @db.Real
+  overhead_gas_usd Float    @db.Real
+  overhead_gas     Int
+
+  @@index([project_id], map: "aggregated_l2_costs_project_id_index")
+  @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
+  @@ignore
+}
+
+model aggregated_reports {
+  unix_timestamp DateTime @db.Timestamp(6)
+  project_id     String   @db.VarChar(255)
+  usd_value      Decimal  @db.Decimal(80, 0)
+  eth_value      Decimal  @db.Decimal(80, 0)
+  report_type    String   @default("TVL") @db.VarChar(255)
+
+  @@id([unix_timestamp, project_id, report_type])
+  @@index([project_id], map: "aggregated_reports_project_id_index")
+}
+
+model aggregated_reports_status {
+  config_hash    String   @db.VarChar(255)
+  unix_timestamp DateTime @db.Timestamp(6)
+
+  @@id([config_hash, unix_timestamp])
+  @@index([config_hash], map: "aggregated_reports_status_config_hash_index")
+  @@index([unix_timestamp], map: "aggregated_reports_status_unix_timestamp_index")
+}
+
+model amounts {
+  timestamp        DateTime @db.Timestamp(6)
+  amount           Decimal  @db.Decimal(80, 0)
+  configuration_id String   @db.Char(12)
+
+  @@id([configuration_id, timestamp])
+}
+
+model balances {
+  holder_address String   @db.VarChar(255)
+  asset_id       String   @db.VarChar(255)
+  balance        Decimal  @db.Decimal(80, 0)
+  unix_timestamp DateTime @db.Timestamp(6)
+  chain_id       Int      @default(1)
+
+  @@id([chain_id, unix_timestamp, holder_address, asset_id])
+  @@index([unix_timestamp], map: "balances_unix_timestamp_index")
+}
+
+model balances_status {
+  config_hash    String   @db.VarChar(255)
+  unix_timestamp DateTime @db.Timestamp(6)
+  chain_id       Int      @default(1)
+
+  @@id([chain_id, unix_timestamp])
+  @@index([chain_id, config_hash], map: "balances_status_chain_id_config_hash_index")
+}
+
+model block_numbers {
+  unix_timestamp DateTime @db.Timestamp(6)
+  block_number   Int
+  chain_id       Int      @default(1)
+
+  @@id([chain_id, unix_timestamp])
+}
+
+model block_timestamps {
+  chain        String   @db.VarChar(255)
+  timestamp    DateTime @db.Timestamp(6)
+  block_number Int
+
+  @@id([chain, timestamp])
+}
+
+model circulating_supplies {
+  unix_timestamp     DateTime @db.Timestamp(6)
+  circulating_supply BigInt
+  asset_id           String   @db.VarChar(255)
+  chain_id           Int
+
+  @@id([chain_id, unix_timestamp, asset_id])
+}
+
+model coingecko_prices {
+  unix_timestamp DateTime @db.Timestamp(6)
+  price_usd      Float    @db.Real
+  asset_id       String   @db.VarChar(255)
+
+  @@id([unix_timestamp, asset_id])
+  @@index([asset_id], map: "coingecko_prices_asset_id_index")
+  @@index([unix_timestamp], map: "coingecko_prices_unix_timestamp_index")
+}
+
+model daily_discovery {
+  project_name        String   @db.VarChar(255)
+  chain_id            Int
+  unix_timestamp      DateTime @db.Timestamp(6)
+  block_number        Int
+  version             Int
+  config_hash         String   @db.VarChar(255)
+  discovery_json_blob Json
+
+  @@id([project_name, chain_id, unix_timestamp])
+}
+
+model discovery_cache {
+  key          String @id
+  value        String
+  block_number Int
+  chain        String @db.VarChar(255)
+}
+
+model finality {
+  project_id                String   @db.VarChar(255)
+  timestamp                 DateTime @db.Timestamp(6)
+  minimum_time_to_inclusion Int
+  maximum_time_to_inclusion Int
+  average_time_to_inclusion Int
+  average_state_update      Int?
+
+  @@id([project_id, timestamp])
+}
+
+model indexer_configurations {
+  id             String @id @db.Char(12)
+  indexer_id     String @db.VarChar(255)
+  current_height Int?
+  min_height     Int
+  max_height     Int?
+  properties     String
+
+  @@index([indexer_id], map: "indexer_configurations_indexer_id_index")
+}
+
+model indexer_state {
+  indexer_id    String    @id @db.VarChar(255)
+  safe_height   Int
+  min_timestamp DateTime? @db.Timestamp(6)
+  config_hash   String?
+}
+
+model knex_migrations {
+  id             Int       @id @default(autoincrement())
+  name           String?   @db.VarChar(255)
+  batch          Int?
+  migration_time DateTime? @db.Timestamptz(6)
+}
+
+model knex_migrations_lock {
+  index     Int  @id @default(autoincrement())
+  is_locked Int?
+}
+
+model l2_costs {
+  tracked_tx_id       String              @db.VarChar(8)
+  tx_hash             String              @unique(map: "l2_costs_tx_hash_unique") @db.VarChar(255)
+  timestamp           DateTime            @db.Timestamp(6)
+  gas_used            Int
+  gas_price           BigInt
+  calldata_gas_used   Int
+  calldata_length     Int
+  blob_gas_used       Int?
+  blob_gas_price      BigInt?
+  tracked_txs_configs tracked_txs_configs @relation(fields: [tracked_tx_id], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
+
+  @@index([tracked_tx_id], map: "l2_costs_tracked_tx_id_index")
+}
+
+model l2_costs_prices {
+  timestamp DateTime @id @db.Timestamp(6)
+  price_usd Float    @db.Real
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model liveness {
+  timestamp           DateTime            @db.Timestamp(6)
+  block_number        Int
+  tx_hash             String              @db.VarChar(255)
+  tracked_tx_id       String              @db.VarChar(8)
+  tracked_txs_configs tracked_txs_configs @relation(fields: [tracked_tx_id], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
+
+  @@index([tracked_tx_id], map: "liveness_tracked_tx_id_index")
+  @@ignore
+}
+
+model prices {
+  timestamp        DateTime @db.Timestamp(6)
+  price_usd        Float    @db.Real
+  configuration_id String   @db.Char(12)
+
+  @@id([configuration_id, timestamp])
+}
+
+model reports {
+  unix_timestamp DateTime @db.Timestamp(6)
+  project_id     String   @db.VarChar(255)
+  asset_id       String   @db.VarChar(255)
+  asset_amount   Decimal  @db.Decimal(80, 0)
+  usd_value      Decimal  @db.Decimal(80, 0)
+  eth_value      Decimal  @db.Decimal(80, 0)
+  report_type    String   @default("CBV") @db.VarChar(255)
+  chain_id       Int      @default(1)
+
+  @@id([chain_id, report_type, unix_timestamp, asset_id, project_id])
+  @@index([unix_timestamp], map: "reports_unix_timestamp_index")
+}
+
+model reports_status {
+  config_hash    String   @db.VarChar(255)
+  unix_timestamp DateTime @db.Timestamp(6)
+  chain_id       Int      @default(1)
+  report_type    String   @default("CBV") @db.VarChar(255)
+
+  @@id([chain_id, report_type, unix_timestamp, config_hash])
+  @@index([chain_id, report_type, config_hash], map: "reports_status_chain_id_asset_type_config_hash_index")
+}
+
+model sequence_processor {
+  id             String   @id @db.VarChar(255)
+  last_processed Int
+  updated_at     DateTime @db.Timestamp(6)
+  latest         Int
+  synced_once    Boolean  @default(false)
+}
+
+model total_supplies {
+  unix_timestamp DateTime @db.Timestamp(6)
+  total_supply   Decimal  @db.Decimal(80, 0)
+  asset_id       String   @db.VarChar(255)
+  chain_id       Int
+
+  @@id([chain_id, unix_timestamp, asset_id])
+}
+
+model total_supplies_status {
+  config_hash    String   @db.VarChar(255)
+  unix_timestamp DateTime @db.Timestamp(6)
+  chain_id       Int
+
+  @@id([chain_id, unix_timestamp])
+  @@index([chain_id, config_hash], map: "total_supplies_status_chain_id_config_hash_index")
+}
+
+model tracked_txs_configs {
+  id                        String     @id @db.VarChar(255)
+  project_id                String     @db.VarChar(255)
+  type                      String     @db.VarChar(255)
+  subtype                   String?    @db.VarChar(255)
+  debug_info                String     @db.VarChar(255)
+  since_timestamp_inclusive DateTime?  @db.Timestamp(6)
+  until_timestamp_exclusive DateTime?  @db.Timestamp(6)
+  last_synced_timestamp     DateTime?  @db.Timestamp(6)
+  l2_costs                  l2_costs[]
+  liveness                  liveness[] @ignore
+}
+
+model tvl_cleaner {
+  repository_name          String    @id @db.VarChar(255)
+  hourly_cleaned_until     DateTime? @db.Timestamp(6)
+  six_hourly_cleaned_until DateTime? @db.Timestamp(6)
+}
+
+model update_monitor {
+  project_name        String    @db.VarChar(255)
+  block_number        Int
+  unix_timestamp      DateTime? @db.Timestamp(6)
+  discovery_json_blob Json
+  config_hash         String    @default("") @db.VarChar(255)
+  version             Int       @default(0)
+  chain_id            Int       @default(1)
+
+  @@id([project_name, chain_id])
+}
+
+model update_notifier {
+  id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now()) @db.Timestamp(6)
+  updated_at     DateTime @default(now()) @db.Timestamp(6)
+  project_name   String   @db.VarChar(255)
+  block_number   Int
+  diff_json_blob Json
+  chain_id       Int      @default(1)
+
+  @@index([block_number], map: "update_notifier_block_number_index")
+  @@index([project_name], map: "update_notifier_project_name_index")
+}
+
+model values {
+  timestamp           DateTime @db.Timestamp(6)
+  project_id          String   @db.VarChar(255)
+  data_source         String   @db.VarChar(255)
+  external            BigInt?
+  external_for_total  BigInt?
+  canonical           BigInt?
+  canonical_for_total BigInt?
+  native              BigInt?
+  native_for_total    BigInt?
+
+  @@id([timestamp, project_id, data_source])
+}
+
+model verifier_status {
+  address      String   @db.VarChar(255)
+  chain_id     Int
+  last_used    DateTime @db.Timestamp(6)
+  last_updated DateTime @db.Timestamp(6)
+
+  @@id([address, chain_id])
 }
