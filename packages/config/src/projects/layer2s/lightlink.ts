@@ -14,6 +14,7 @@ import {
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
+import { utils } from 'ethers'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -21,6 +22,16 @@ const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
   'Challenge',
   'challengeWindow',
 )
+
+const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
+  'Challenge',
+  'challengePeriod',
+)
+
+const CHALLENGE_FEE = utils.formatEther(discovery.getContractValue<number>(
+  'Challenge',
+  'challengeFee',
+))
 
 const upgradesLightLink = {
   upgradableBy: ['LightLinkAdmin'],
@@ -40,7 +51,7 @@ const LightLinkMultisig = discovery.getContractValue<string>(
 const validators = discovery
   .getContractValue<any[]>('L1BridgeRegistry', 'getValidators')
 
-const totalVotingPower = validators.map((validator) => validator[1])
+const totalVotingPower = validators.map((validator) => validator.power)
   .reduce((a, b) => a + b, 0)
 
 const validatorThreshold = discovery.getContractValue<number>(
@@ -155,7 +166,9 @@ export const lightlink: Layer2 = {
       name: 'Fraud proofs are in development',
       description: `After the challenge window of ${formatSeconds(
         CHALLENGE_WINDOW_SECONDS,
-      )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks.
+      )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
+          The challenge period lasts ${formatSeconds(CHALLENGE_PERIOD_SECONDS)}, and only the permissioned defender can respond to the challenge by providing the L2 header and the previous L2 header. If the defender does not respond,
+          the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
           Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots.`,
       risks: [
         {
@@ -271,7 +284,7 @@ function getMinValidatorsForConsensus(validators: any[], consensusThreshold: num
   let minValidators = 0;
 
   // Iterate over validators
-  for (let validator of validators) {
+  for (const validator of validators) {
     totalPower += validator.power;
     minValidators++;
     // If total power is greater than or equal to consensus threshold, break the loop
