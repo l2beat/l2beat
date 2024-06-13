@@ -1,9 +1,9 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 20004017,
+  "blockNumber": 20082109,
   "configHash": "0x4b8d257de00edba7d5e55d61c9f581f3ee355f6546889ac91a2b53fa9b00048c",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "Treasurer",
@@ -100,18 +100,21 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x6D5521F46b2cba9443feFC09cBaC3B15AE0F73eB",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x1041D127b2d4BC700F0F563883bC689502606918",
-          "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-          "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x6D5521F46b2cba9443feFC09cBaC3B15AE0F73eB",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x1041D127b2d4BC700F0F563883bC689502606918",
+          "tokenMessaging": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "creditMessaging": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": 0,
         "poolBalance": "798270000000000000",
@@ -213,6 +216,8 @@
     {
       "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -233,7 +238,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 745,
+        "nonce": 748,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -271,7 +276,10 @@
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "maxAssetId": 22,
         "oApp": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -316,7 +324,10 @@
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "preCrime": "0x0000000000000000000000000000000000000000",
@@ -342,27 +353,30 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x3E368B6C95c6fEfB7A16dCc0D756389F3c658a06",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x1041D127b2d4BC700F0F563883bC689502606918",
-          "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-          "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x3E368B6C95c6fEfB7A16dCc0D756389F3c658a06",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x1041D127b2d4BC700F0F563883bC689502606918",
+          "tokenMessaging": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "creditMessaging": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 8258028477041913,
-        "poolBalance": "8056786503000000000000",
+        "plannerFee": "53385827029613888",
+        "poolBalance": "10751078813000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 59636,
-        "tvl": "8423142640000000000000"
+        "treasuryFee": 193717,
+        "tvl": "11944300949000000000000"
       }
     },
     {
@@ -395,27 +409,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0xe171AFcd1E0394b3312e68ca823D5BC87F3Db311",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x1041D127b2d4BC700F0F563883bC689502606918",
-          "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-          "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0xe171AFcd1E0394b3312e68ca823D5BC87F3Db311",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x1041D127b2d4BC700F0F563883bC689502606918",
+          "tokenMessaging": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "creditMessaging": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 1412936547020603,
-        "poolBalance": 19959406257424,
+        "plannerFee": "10338488016806242",
+        "poolBalance": 19023978732472,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 562294890,
-        "tvl": 17936390664099
+        "treasuryFee": 999764604,
+        "tvl": 21908327404584
       }
     },
     {
@@ -483,7 +500,11 @@
         "messageLibType": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
-        "version": [3, 0, 2]
+        "version": {
+          "major": 3,
+          "minor": 0,
+          "endpointVersion": 2
+        }
       },
       "derivedName": "SendUln302"
     },
@@ -507,27 +528,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x52B35406CB2FB5e0038EdEcFc129A152a1f74087",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x1041D127b2d4BC700F0F563883bC689502606918",
-          "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-          "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x52B35406CB2FB5e0038EdEcFc129A152a1f74087",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x1041D127b2d4BC700F0F563883bC689502606918",
+          "tokenMessaging": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "creditMessaging": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 583752091894778,
-        "poolBalance": 20373402072617,
+        "plannerFee": 4942759258192902,
+        "poolBalance": 27973629226605,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 515007988,
-        "tvl": 20887046541227
+        "treasuryFee": 2255771513,
+        "tvl": 29295911505712
       }
     },
     {
@@ -551,13 +575,19 @@
         ],
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-        "version": [3, 0, 2]
+        "version": {
+          "major": 3,
+          "minor": 0,
+          "endpointVersion": 2
+        }
       },
       "derivedName": "ReceiveUln302"
     },
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -577,7 +607,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 111,
+        "nonce": 113,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -600,18 +630,21 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x1041D127b2d4BC700F0F563883bC689502606918",
-          "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-          "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x1041D127b2d4BC700F0F563883bC689502606918",
+          "tokenMessaging": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
+          "creditMessaging": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xF14EEe033D8b00101aB147F87cB238a2d3E74940",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": 0,
         "poolBalance": 0,
