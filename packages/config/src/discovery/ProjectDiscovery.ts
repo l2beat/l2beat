@@ -109,22 +109,26 @@ export class ProjectDiscovery {
     description,
     sinceTimestamp,
     tokens,
+    excludedTokens,
     upgradableBy,
     upgradeDelay,
     isUpcoming,
-    chain,
     includeInTotal,
+    isHistorical,
+    untilTimestamp,
   }: {
     address: EthereumAddress
     name?: string
     description?: string
     sinceTimestamp?: UnixTime
     tokens: string[] | '*'
+    excludedTokens?: string[]
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
-    chain?: string
     includeInTotal?: boolean
+    isHistorical?: boolean
+    untilTimestamp?: UnixTime
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -147,11 +151,14 @@ export class ProjectDiscovery {
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
+      excludedTokens,
       contract,
       isUpcoming,
-      chain,
+      chain: this.chain,
       includeInTotal:
-        includeInTotal ?? chain === 'ethereum' ? true : includeInTotal,
+        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+      isHistorical,
+      untilTimestamp,
     }
   }
 

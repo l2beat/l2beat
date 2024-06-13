@@ -15,7 +15,7 @@ import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
-import { IdConverter } from '../utils/IdConverter'
+import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
@@ -33,7 +33,7 @@ export function createCirculatingSupplyModule(
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
   priceModule: PriceModule,
-  idConverter: IdConverter,
+  configMapping: ConfigMapping,
 ): CirculatingSupplyModule {
   const coingeckoClient = peripherals.getClient(CoingeckoClient, {
     apiKey: config.coingeckoApiKey,
@@ -70,7 +70,7 @@ export function createCirculatingSupplyModule(
 
   for (const [project, amountConfigs] of Object.entries(perProject)) {
     const priceConfigs = new Set(
-      amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
+      amountConfigs.map((c) => configMapping.getPriceConfigFromAmountConfig(c)),
     )
 
     const csIndexers = amountConfigs.map((c) => {

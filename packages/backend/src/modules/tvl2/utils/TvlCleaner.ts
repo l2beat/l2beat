@@ -5,6 +5,7 @@ import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRe
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
+
 export interface TvlRepositoryToClean {
   deleteHourlyUntil: (dateRange: {
     from: UnixTime | undefined

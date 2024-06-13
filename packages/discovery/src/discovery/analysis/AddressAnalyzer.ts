@@ -9,6 +9,7 @@ import { isEqual } from 'lodash'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -65,6 +66,7 @@ export class AddressAnalyzer {
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
@@ -147,6 +149,7 @@ export class AddressAnalyzer {
       address,
       sources.abi,
       overrides,
+      types,
       blockNumber,
       logger,
     )
@@ -180,6 +183,7 @@ export class AddressAnalyzer {
   async hasContractChanged(
     contract: ContractParameters,
     overrides: ContractOverrides,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
@@ -203,6 +207,7 @@ export class AddressAnalyzer {
       contract.address,
       abi,
       overrides,
+      types,
       blockNumber,
       this.logger,
     )

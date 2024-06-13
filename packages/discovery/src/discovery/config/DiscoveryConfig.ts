@@ -6,6 +6,7 @@ import { ConfigReader } from './ConfigReader'
 import { DiscoveryOverrides } from './DiscoveryOverrides'
 import type {
   DiscoveryContract,
+  DiscoveryCustomType,
   RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
@@ -62,6 +63,10 @@ export class DiscoveryConfig {
       : []
   }
 
+  get types(): Record<string, DiscoveryCustomType> | undefined {
+    return this.config.types
+  }
+
   get hash(): Hash256 {
     return hashJson(getDiscoveryConfigEntries(this.config))
   }
@@ -75,9 +80,5 @@ export class DiscoveryConfig {
 
   getContract(name: string): DiscoveryContract | undefined {
     return this.config.overrides?.[name ?? '']
-  }
-
-  private getName(address: EthereumAddress): string | undefined {
-    return this.config.names?.[address.toString()]
   }
 }

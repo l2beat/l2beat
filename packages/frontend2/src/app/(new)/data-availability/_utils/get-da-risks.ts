@@ -15,7 +15,7 @@ export function getDaRisks(
     fraudDetection: layer.risks.fraudDetection,
     attestations: bridge.risks.attestations,
     exitWindow: bridge.risks.exitWindow,
-    accessability: bridge.risks.accessability,
+    accessibility: bridge.risks.accessibility,
   }
 }
 
@@ -51,9 +51,9 @@ export function mapRisksToRosetteValues(
       sentiment: risks.exitWindow.sentiment,
     },
     {
-      name: 'Accessability',
-      value: risks.accessability.value,
-      sentiment: risks.accessability.sentiment,
+      name: 'Accessibility',
+      value: risks.accessibility.value,
+      sentiment: risks.accessibility.sentiment,
     },
   ]
 

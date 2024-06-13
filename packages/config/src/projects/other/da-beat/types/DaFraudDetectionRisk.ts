@@ -3,22 +3,22 @@ import { DaRiskViewOptions } from './DaRiskView'
 export type DaFraudDetectionRisk =
   | typeof NoFraudDetection
   | typeof ErasureCodingProof
-  | ReturnType<typeof DasWithBlockReconstruction>
-  | ReturnType<typeof DasWithNoBlockReconstruction>
+  | ReturnType<typeof DasWithBlobsReconstruction>
+  | ReturnType<typeof DasWithNoBlobsReconstruction>
 
-function DasWithBlockReconstruction(erasureCoding: boolean) {
+function DasWithBlobsReconstruction(erasureCoding: boolean) {
   return {
-    type: 'DasWithBlockReconstruction',
-    value: 'DAS with block reconstruction',
+    type: 'DasWithBlobsReconstruction',
+    value: 'DAS with blobs reconstruction',
     sentiment: erasureCoding ? 'good' : 'warning',
     description: 'TODO',
   } as const
 }
 
-function DasWithNoBlockReconstruction(erasureCoding: boolean) {
+function DasWithNoBlobsReconstruction(erasureCoding: boolean) {
   return {
-    type: 'DasWithNoBlockReconstruction',
-    value: 'DAS with no block reconstruction',
+    type: 'DasWithNoBlobsReconstruction',
+    value: 'DAS with no blobs reconstruction',
     sentiment: erasureCoding ? 'good' : 'warning',
     description: 'TODO',
   } as const
@@ -41,6 +41,6 @@ const NoFraudDetection = {
 export const DaFraudDetectionRisk = {
   NoFraudDetection,
   ErasureCodingProof,
-  DasWithBlockReconstruction,
-  DasWithNoBlockReconstruction,
+  DasWithBlobsReconstruction,
+  DasWithNoBlobsReconstruction,
 } satisfies DaRiskViewOptions
