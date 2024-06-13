@@ -44,20 +44,11 @@
         "^.+$": {
           "type": "object",
           "properties": {
-            "typeCaster": { "type": "string" },
-            "arg": {
-              "type": "object",
-              "patternProperties": {
-                "^.*$": {
-                  "oneOf": [
-                    { "type": "string" },
-                    { "type": "number" },
-                    { "type": "boolean" }
-                  ]
-                }
-              },
-              "additionalProperties": false
+            "typeCaster": {
+              "type": "string",
+              "pattern": "^[A-Z].*$"
             },
+            "arg": { "type": "object" },
             "description": { "type": ["string", "null"] },
             "severity": { "$ref": "severity.schema.json" }
           },
