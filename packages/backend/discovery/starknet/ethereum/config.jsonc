@@ -464,6 +464,13 @@
               "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
             }
           }
+        },
+        "maxTotalBalance": {
+          "handler": {
+            "type": "call",
+            "method": "getMaxTotalBalance",
+            "args": ["0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f"]
+          }
         }
       }
     }

@@ -947,10 +947,10 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
     },
     {
-      name: 'StarkGate sfrxETH owner',
+      name: 'StarkGate EKUBO owner',
       accounts: getProxyGovernance(discovery, ESCROW_EKUBO_ADDRESS),
       description:
-        'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+        'Can upgrade implementation of the EKUBO escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowEKUBODelaySeconds),
     },
     {
