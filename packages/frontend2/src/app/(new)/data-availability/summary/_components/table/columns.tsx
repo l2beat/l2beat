@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
 
 export type DataAvailabilityProvider = {
@@ -30,7 +31,36 @@ export const columns = [
         : 'No bridge',
   }),
   columnHelper.accessor('risks', {
-    cell: () => 'TBD',
+    header: 'Risks',
+    cell: () => (
+      <RosetteCell
+        values={[
+          {
+            name: 'Sequencer failure',
+            sentiment: 'good',
+          },
+          {
+            name: 'State validation',
+            sentiment: 'warning',
+          },
+          {
+            name: 'Data availability',
+            sentiment: 'bad',
+          },
+          {
+            name: 'Exit window',
+            sentiment: 'neutral',
+          },
+          {
+            name: 'Proposer failure',
+            sentiment: 'good',
+          },
+        ]}
+      />
+    ),
+    meta: {
+      hash: '#risk-analysis',
+    },
   }),
   columnHelper.accessor('layerType', {
     header: 'Layer type',
