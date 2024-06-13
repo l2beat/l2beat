@@ -3,7 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
-import { mapRisksToRosetteValues } from '../../../_utils/get-da-risks'
+import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
 import { DaBridgeCell } from './da-bridge-cell'
 
 interface OnChainBridge {
@@ -49,7 +49,7 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <RosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
+      <RosetteCell values={mapDaRisksToRosetteValues(ctx.getValue())} />
     ),
     enableSorting: false,
     meta: {
