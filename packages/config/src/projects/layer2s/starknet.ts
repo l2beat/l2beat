@@ -388,7 +388,7 @@ export const starknet: Layer2 = {
         description:
           'StarkGate bridge for EKUBO.',
         upgradeDelay: formatSeconds(escrowEKUBODelaySeconds),
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: ['StarkGate EKUBO owner'],
       }),
     ],
     transactionApi: {
