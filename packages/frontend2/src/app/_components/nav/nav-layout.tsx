@@ -1,4 +1,6 @@
+import compact from 'lodash/compact'
 import React, { type ReactNode } from 'react'
+import { env } from '~/env'
 import ActivityIcon from '~/icons/pages/activity.svg'
 import CostsIcon from '~/icons/pages/costs.svg'
 import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
@@ -23,7 +25,7 @@ export async function NavLayout({
   logoLink: string
   legacyNav?: boolean
 }) {
-  const groups: NavGroup[] = [
+  const groups: NavGroup[] = compact([
     {
       title: 'Scaling',
       links: [
@@ -94,7 +96,7 @@ export async function NavLayout({
         },
       ],
     },
-    {
+    env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
       title: 'Data Availability',
       links: [
         {
@@ -105,7 +107,7 @@ export async function NavLayout({
         },
       ],
     },
-  ]
+  ])
 
   return (
     <MobileNavProvider>
