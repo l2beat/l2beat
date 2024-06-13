@@ -31,6 +31,6 @@ export class SimpleMethodHandler implements Handler {
       this.fragment.name + '()',
     ])
     const callResult = await callMethod(provider, address, this.fragment, [])
-    return { field: this.field, ...callResult }
+    return { field: this.field, fragment: this.fragment, ...callResult }
   }
 }

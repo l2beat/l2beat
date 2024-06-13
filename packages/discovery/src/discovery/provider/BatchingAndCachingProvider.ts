@@ -365,6 +365,7 @@ export class BatchingAndCachingProvider {
         ) {
           return BigNumber.from(Reflect.get(value, 'hex'))
         }
+        return value
       })
     }
 
