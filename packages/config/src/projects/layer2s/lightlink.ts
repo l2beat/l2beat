@@ -38,12 +38,11 @@ const LightLinkMultisig = discovery.getContractValue<string>(
 )
 
 const validators = discovery
-  .getContractValue<string[]>('L1BridgeRegistry', 'validators')
-  .map((validator) => validator[0])
-const totalVotingPower = discovery
-  .getContractValue<string[]>('L1BridgeRegistry', 'validators')
-  .map((validator) => Number(validator[1]))
+  .getContractValue<any[]>('L1BridgeRegistry', 'getValidators')
+
+const totalVotingPower = validators.map((validator) => validator[1])
   .reduce((a, b) => a + b, 0)
+
 const validatorThreshold = discovery.getContractValue<number>(
   'L1BridgeRegistry',
   'consensusPowerThreshold',
@@ -52,6 +51,7 @@ const validatorThresholdPercentage = (
   (validatorThreshold / totalVotingPower) *
   100
 ).toFixed(2)
+const minValidatorsForConsensus = getMinValidatorsForConsensus(validators, validatorThreshold)
 
 const publisher = discovery.getContractValue<string>(
   'CanonicalStateChain',
@@ -141,7 +141,7 @@ export const lightlink: Layer2 = {
     proposerFailure: {
       value: 'Use permissioned escape hatch',
       description:
-        'Users are able to exit by submitting a syncWithdraw() transaction directly on L1. To be accepted, the transation requires signatures from a permissioned set of validators with enough voting power to reach the required threshold.',
+        'Users are able to exit by submitting a syncWithdraw() transaction directly on L1. To be accepted, the transaction requires signatures from a permissioned set of validators with enough voting power to reach the required threshold.',
       sentiment: 'bad',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
@@ -182,14 +182,20 @@ export const lightlink: Layer2 = {
     },
     exitMechanisms: [
       {
-        name: 'Regular exit',
+        name: 'Permissioned exit',
         description:
-          'Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available historical data. Users can exit the network once enough validators have signed off on the withdrawal.',
-        references: [],
+          `Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available data. Users can exit the network once enough validators have signed off on the withdrawal.
+           Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
+        references: [
+          {
+            text: 'LightLink - L1BridgeRegistry.sol',
+            href: 'https://etherscan.io/address/0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E',
+          },
+        ],
         risks: [
           {
             category: 'Funds can be frozen if',
-            text: 'the permissioned validators do not authorise L1 bridge withdrawals.',
+            text: 'the permissioned validator set does not authorise L1 bridge withdrawals.',
             isCritical: true,
           },
         ],
@@ -230,8 +236,8 @@ export const lightlink: Layer2 = {
     {
       name: 'Validators',
       description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-      accounts: validators.map((address) => ({
-        address: EthereumAddress(address),
+      accounts: validators.map((validator) => ({
+        address: EthereumAddress(validator.addr),
         type: 'EOA',
       })),
     },
@@ -247,7 +253,7 @@ export const lightlink: Layer2 = {
         { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
       ],
       description:
-        'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power.',
+        'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
     },
     {
       name: 'LightLinkAdmin',
@@ -256,4 +262,23 @@ export const lightlink: Layer2 = {
         'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the publisher and core system parameters.',
     },
   ],
+}
+
+function getMinValidatorsForConsensus(validators: any[], consensusThreshold: number) {
+  // Sort validators by power in descending order
+  validators.sort((a, b) => b.power - a.power);
+  let totalPower = 0;
+  let minValidators = 0;
+
+  // Iterate over validators
+  for (let validator of validators) {
+    totalPower += validator.power;
+    minValidators++;
+    // If total power is greater than or equal to consensus threshold, break the loop
+    if (totalPower >= consensusThreshold) {
+      break;
+    }
+  }
+
+  return minValidators;
 }

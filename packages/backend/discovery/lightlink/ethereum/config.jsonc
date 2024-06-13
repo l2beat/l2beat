@@ -50,23 +50,7 @@
             "args": [],
             "expectRevert": true
           }
-        },
-        "validators": {
-          "handler": {
-            "type": "call",
-            "method": "function getValidators() view returns (tuple(address addr, uint256 power)[])",
-            "args": []
-          }
         }
-        // "validators": {
-        //   "handler": {
-        //       "type": "arrayFromTwoEvents",
-        //       "addEvent": "ValidatorsModifed",
-        //       "addKey": "_accounts",
-        //       "removeEvent": "ValidatorsRemoved",
-        //       "removeKey": "_accounts"
-        //   }
-        // }
       }
     },
     "LightLinkMultisig": {
