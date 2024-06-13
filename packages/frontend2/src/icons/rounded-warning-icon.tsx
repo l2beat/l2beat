@@ -18,6 +18,9 @@ const iconVariants = cva(undefined, {
 export function RoundedWarningIcon({ className, sentiment, ...rest }: Props) {
   return (
     <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       aria-label="Warning icon"
       className={iconVariants({
         className,

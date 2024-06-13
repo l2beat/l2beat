@@ -35,7 +35,7 @@ export function RosetteTooltip({ values }: RosetteTooltipProps) {
   }
 
   return (
-    <div className="flex w-[370px] flex-col">
+    <div className="flex flex-col">
       <span className="font-bold text-base">
         <span className="mr-2">Risk analysis</span>
       </span>
@@ -53,7 +53,7 @@ export function RosetteTooltip({ values }: RosetteTooltipProps) {
   )
 }
 
-function RiskValueComponent({ name, sentiment, warning }: RosetteValue) {
+function RiskValueComponent({ name, value, sentiment, warning }: RosetteValue) {
   return (
     <div className="font-medium">
       <span className="mb-1 block text-[10px] uppercase">{name}</span>
@@ -61,7 +61,7 @@ function RiskValueComponent({ name, sentiment, warning }: RosetteValue) {
         <UnderReviewBadge />
       ) : (
         <div className="flex items-center gap-1 text-base">
-          <SentimentText sentiment={sentiment}>{name}</SentimentText>
+          <SentimentText sentiment={sentiment}>{value}</SentimentText>
           {warning && (
             <RoundedWarningIcon
               className={cn('size-5', sentimentToFillColor(warning.sentiment))}
