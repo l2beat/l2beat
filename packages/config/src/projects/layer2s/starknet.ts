@@ -968,6 +968,12 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         'Can upgrade implementation of the EKUBO escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowEKUBODelaySeconds),
     },
+    {
+      name: 'StarkGate Manager',
+      accounts: [discovery.getPermissionedAccount('EKUBOBridge', 'manager')],
+      description:
+        'The StarkGate Manager can add bridging support for a new token, deactivate deposits for a token, or block tokens from being deployed through the bridge.',
+    },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
       'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
