@@ -171,326 +171,314 @@ model Cache {
   createdAt   DateTime @default(now())
 }
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model aggregated_l2_costs {
-  timestamp        DateTime @db.Timestamp(6)
-  project_id       String   @db.VarChar(255)
-  total_gas        Int
-  total_gas_eth    Float    @db.Real
-  total_gas_usd    Float    @db.Real
-  blobs_gas        Int?
-  blobs_gas_eth    Float?   @db.Real
-  blobs_gas_usd    Float?   @db.Real
-  calldata_gas     Int
-  calldata_gas_eth Float    @db.Real
-  calldata_gas_usd Float    @db.Real
-  compute_gas      Int
-  compute_gas_eth  Float    @db.Real
-  compute_gas_usd  Float    @db.Real
-  overhead_gas_eth Float    @db.Real
-  overhead_gas_usd Float    @db.Real
-  overhead_gas     Int
+model AggregatedL2Costs {
+  timestamp      DateTime @map("timestamp") @db.Timestamp(6)
+  projectId      String   @map("project_id") @db.VarChar(255)
+  totalGas       Int      @map("total_gas")
+  totalGasEth    Float    @map("total_gas_eth") @db.Real
+  totalGasUsd    Float    @map("total_gas_usd") @db.Real
+  blobsGas       Int?     @map("blobs_gas")
+  blobsGasEth    Float?   @map("blobs_gas_eth") @db.Real
+  blobsGasUsd    Float?   @map("blobs_gas_usd") @db.Real
+  calldataGas    Int      @map("calldata_gas")
+  calldataGasEth Float    @map("calldata_gas_eth") @db.Real
+  calldataGasUsd Float    @map("calldata_gas_usd") @db.Real
+  computeGas     Int      @map("compute_gas")
+  computeGasEth  Float    @map("compute_gas_eth") @db.Real
+  computeGasUsd  Float    @map("compute_gas_usd") @db.Real
+  overheadGasEth Float    @map("overhead_gas_eth") @db.Real
+  overheadGasUsd Float    @map("overhead_gas_usd") @db.Real
+  overheadGas    Int      @map("overhead_gas")
 
-  @@index([project_id], map: "aggregated_l2_costs_project_id_index")
+  @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
   @@ignore
 }
 
-model aggregated_reports {
-  unix_timestamp DateTime @db.Timestamp(6)
-  project_id     String   @db.VarChar(255)
-  usd_value      Decimal  @db.Decimal(80, 0)
-  eth_value      Decimal  @db.Decimal(80, 0)
-  report_type    String   @default("TVL") @db.VarChar(255)
+model AggregatedReports {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  projectId     String   @map("project_id") @db.VarChar(255)
+  usdValue      Decimal  @map("usd_value") @db.Decimal(80, 0)
+  ethValue      Decimal  @map("eth_value") @db.Decimal(80, 0)
+  reportType    String   @default("TVL") @map("report_type") @db.VarChar(255)
 
-  @@id([unix_timestamp, project_id, report_type])
-  @@index([project_id], map: "aggregated_reports_project_id_index")
+  @@id([unixTimestamp, projectId, reportType])
+  @@index([projectId], map: "aggregated_reports_project_id_index")
 }
 
-model aggregated_reports_status {
-  config_hash    String   @db.VarChar(255)
-  unix_timestamp DateTime @db.Timestamp(6)
+model AggregatedReportsStatus {
+  configHash    String   @map("config_hash") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
 
-  @@id([config_hash, unix_timestamp])
-  @@index([config_hash], map: "aggregated_reports_status_config_hash_index")
-  @@index([unix_timestamp], map: "aggregated_reports_status_unix_timestamp_index")
+  @@id([configHash, unixTimestamp])
+  @@index([configHash], map: "aggregated_reports_status_config_hash_index")
+  @@index([unixTimestamp], map: "aggregated_reports_status_unix_timestamp_index")
 }
 
-model amounts {
-  timestamp        DateTime @db.Timestamp(6)
-  amount           Decimal  @db.Decimal(80, 0)
-  configuration_id String   @db.Char(12)
+model Amounts {
+  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
+  amount          Decimal  @map("amount") @db.Decimal(80, 0)
+  configurationId String   @map("configuration_id") @db.Char(12)
 
-  @@id([configuration_id, timestamp])
+  @@id([configurationId, timestamp])
 }
 
-model balances {
-  holder_address String   @db.VarChar(255)
-  asset_id       String   @db.VarChar(255)
-  balance        Decimal  @db.Decimal(80, 0)
-  unix_timestamp DateTime @db.Timestamp(6)
-  chain_id       Int      @default(1)
+model Balances {
+  holderAddress String   @map("holder_address") @db.VarChar(255)
+  assetId       String   @map("asset_id") @db.VarChar(255)
+  balance       Decimal  @map("balance") @db.Decimal(80, 0)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  chainId       Int      @default(1) @map("chain_id")
 
-  @@id([chain_id, unix_timestamp, holder_address, asset_id])
-  @@index([unix_timestamp], map: "balances_unix_timestamp_index")
+  @@id([chainId, unixTimestamp, holderAddress, assetId])
+  @@index([unixTimestamp], map: "balances_unix_timestamp_index")
 }
 
-model balances_status {
-  config_hash    String   @db.VarChar(255)
-  unix_timestamp DateTime @db.Timestamp(6)
-  chain_id       Int      @default(1)
+model BalancesStatus {
+  configHash    String   @map("config_hash") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  chainId       Int      @default(1) @map("chain_id")
 
-  @@id([chain_id, unix_timestamp])
-  @@index([chain_id, config_hash], map: "balances_status_chain_id_config_hash_index")
+  @@id([chainId, unixTimestamp])
+  @@index([chainId, configHash], map: "balances_status_chain_id_config_hash_index")
 }
 
-model block_numbers {
-  unix_timestamp DateTime @db.Timestamp(6)
-  block_number   Int
-  chain_id       Int      @default(1)
+model BlockNumbers {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  blockNumber   Int      @map("block_number")
+  chainId       Int      @default(1) @map("chain_id")
 
-  @@id([chain_id, unix_timestamp])
+  @@id([chainId, unixTimestamp])
 }
 
-model block_timestamps {
-  chain        String   @db.VarChar(255)
-  timestamp    DateTime @db.Timestamp(6)
-  block_number Int
+model BlockTimestamps {
+  chain       String   @map("chain") @db.VarChar(255)
+  timestamp   DateTime @map("timestamp") @db.Timestamp(6)
+  blockNumber Int      @map("block_number")
 
   @@id([chain, timestamp])
 }
 
-model circulating_supplies {
-  unix_timestamp     DateTime @db.Timestamp(6)
-  circulating_supply BigInt
-  asset_id           String   @db.VarChar(255)
-  chain_id           Int
+model CirculatingSupplies {
+  unixTimestamp     DateTime @map("unix_timestamp") @db.Timestamp(6)
+  circulatingSupply BigInt   @map("circulating_supply")
+  assetId           String   @map("asset_id") @db.VarChar(255)
+  chainId           Int      @map("chain_id")
 
-  @@id([chain_id, unix_timestamp, asset_id])
+  @@id([chainId, unixTimestamp, assetId])
 }
 
-model coingecko_prices {
-  unix_timestamp DateTime @db.Timestamp(6)
-  price_usd      Float    @db.Real
-  asset_id       String   @db.VarChar(255)
+model CoingeckoPrices {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  priceUsd      Float    @map("price_usd") @db.Real
+  assetId       String   @map("asset_id") @db.VarChar(255)
 
-  @@id([unix_timestamp, asset_id])
-  @@index([asset_id], map: "coingecko_prices_asset_id_index")
-  @@index([unix_timestamp], map: "coingecko_prices_unix_timestamp_index")
+  @@id([unixTimestamp, assetId])
+  @@index([assetId], map: "coingecko_prices_asset_id_index")
+  @@index([unixTimestamp], map: "coingecko_prices_unix_timestamp_index")
 }
 
-model daily_discovery {
-  project_name        String   @db.VarChar(255)
-  chain_id            Int
-  unix_timestamp      DateTime @db.Timestamp(6)
-  block_number        Int
-  version             Int
-  config_hash         String   @db.VarChar(255)
-  discovery_json_blob Json
+model DailyDiscovery {
+  projectName       String   @map("project_name") @db.VarChar(255)
+  chainId           Int      @map("chain_id")
+  unixTimestamp     DateTime @map("unix_timestamp") @db.Timestamp(6)
+  blockNumber       Int      @map("block_number")
+  version           Int      @map("version")
+  configHash        String   @map("config_hash") @db.VarChar(255)
+  discoveryJsonBlob Json     @map("discovery_json_blob")
 
-  @@id([project_name, chain_id, unix_timestamp])
+  @@id([projectName, chainId, unixTimestamp])
 }
 
-model discovery_cache {
-  key          String @id
-  value        String
-  block_number Int
-  chain        String @db.VarChar(255)
+model DiscoveryCache {
+  key         String @id @map("key")
+  value       String @map("value")
+  blockNumber Int    @map("block_number")
+  chain       String @map("chain") @db.VarChar(255)
 }
 
-model finality {
-  project_id                String   @db.VarChar(255)
-  timestamp                 DateTime @db.Timestamp(6)
-  minimum_time_to_inclusion Int
-  maximum_time_to_inclusion Int
-  average_time_to_inclusion Int
-  average_state_update      Int?
+model Finality {
+  projectId              String   @map("project_id") @db.VarChar(255)
+  timestamp              DateTime @map("timestamp") @db.Timestamp(6)
+  minimumTimeToInclusion Int      @map("minimum_time_to_inclusion")
+  maximumTimeToInclusion Int      @map("maximum_time_to_inclusion")
+  averageTimeToInclusion Int      @map("average_time_to_inclusion")
+  averageStateUpdate     Int?     @map("average_state_update")
 
-  @@id([project_id, timestamp])
+  @@id([projectId, timestamp])
 }
 
-model indexer_configurations {
-  id             String @id @db.Char(12)
-  indexer_id     String @db.VarChar(255)
-  current_height Int?
-  min_height     Int
-  max_height     Int?
-  properties     String
+model IndexerConfigurations {
+  id            String @id @map("id") @db.Char(12)
+  indexerId     String @map("indexer_id") @db.VarChar(255)
+  currentHeight Int?   @map("current_height")
+  minHeight     Int    @map("min_height")
+  maxHeight     Int?   @map("max_height")
+  properties    String @map("properties")
 
-  @@index([indexer_id], map: "indexer_configurations_indexer_id_index")
+  @@index([indexerId], map: "indexer_configurations_indexer_id_index")
 }
 
-model indexer_state {
-  indexer_id    String    @id @db.VarChar(255)
-  safe_height   Int
-  min_timestamp DateTime? @db.Timestamp(6)
-  config_hash   String?
+model IndexerState {
+  indexerId    String    @id @map("indexer_id") @db.VarChar(255)
+  safeHeight   Int       @map("safe_height")
+  minTimestamp DateTime? @map("min_timestamp") @db.Timestamp(6)
+  configHash   String?   @map("config_hash")
 }
 
-model knex_migrations {
-  id             Int       @id @default(autoincrement())
-  name           String?   @db.VarChar(255)
-  batch          Int?
-  migration_time DateTime? @db.Timestamptz(6)
+model L2Costs {
+  trackedTxId       String            @map("tracked_tx_id") @db.VarChar(8)
+  txHash            String            @unique(map: "l2_costs_tx_hash_unique") @map("tx_hash") @db.VarChar(255)
+  timestamp         DateTime          @map("timestamp") @db.Timestamp(6)
+  gasUsed           Int               @map("gas_used")
+  gasPrice          BigInt            @map("gas_price")
+  calldataGasUsed   Int               @map("calldata_gas_used")
+  calldataLength    Int               @map("calldata_length")
+  blobGasUsed       Int?              @map("blob_gas_used")
+  blobGasPrice      BigInt?           @map("blob_gas_price")
+  trackedTxsConfigs TrackedTxsConfigs @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
+
+  @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
 }
 
-model knex_migrations_lock {
-  index     Int  @id @default(autoincrement())
-  is_locked Int?
-}
-
-model l2_costs {
-  tracked_tx_id       String              @db.VarChar(8)
-  tx_hash             String              @unique(map: "l2_costs_tx_hash_unique") @db.VarChar(255)
-  timestamp           DateTime            @db.Timestamp(6)
-  gas_used            Int
-  gas_price           BigInt
-  calldata_gas_used   Int
-  calldata_length     Int
-  blob_gas_used       Int?
-  blob_gas_price      BigInt?
-  tracked_txs_configs tracked_txs_configs @relation(fields: [tracked_tx_id], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
-
-  @@index([tracked_tx_id], map: "l2_costs_tracked_tx_id_index")
-}
-
-model l2_costs_prices {
-  timestamp DateTime @id @db.Timestamp(6)
-  price_usd Float    @db.Real
+model L2CostsPrices {
+  timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
+  priceUsd  Float    @map("price_usd") @db.Real
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model liveness {
-  timestamp           DateTime            @db.Timestamp(6)
-  block_number        Int
-  tx_hash             String              @db.VarChar(255)
-  tracked_tx_id       String              @db.VarChar(8)
-  tracked_txs_configs tracked_txs_configs @relation(fields: [tracked_tx_id], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
+model Liveness {
+  timestamp         DateTime          @map("timestamp") @db.Timestamp(6)
+  blockNumber       Int               @map("block_number")
+  txHash            String            @map("tx_hash") @db.VarChar(255)
+  trackedTxId       String            @map("tracked_tx_id") @db.VarChar(8)
+  trackedTxsConfigs TrackedTxsConfigs @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
 
-  @@index([tracked_tx_id], map: "liveness_tracked_tx_id_index")
+  @@index([trackedTxId], map: "liveness_tracked_tx_id_index")
   @@ignore
 }
 
-model prices {
-  timestamp        DateTime @db.Timestamp(6)
-  price_usd        Float    @db.Real
-  configuration_id String   @db.Char(12)
+model Prices {
+  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
+  priceUsd        Float    @map("price_usd") @db.Real
+  configurationId String   @map("configuration_id") @db.Char(12)
 
-  @@id([configuration_id, timestamp])
+  @@id([configurationId, timestamp])
 }
 
-model reports {
-  unix_timestamp DateTime @db.Timestamp(6)
-  project_id     String   @db.VarChar(255)
-  asset_id       String   @db.VarChar(255)
-  asset_amount   Decimal  @db.Decimal(80, 0)
-  usd_value      Decimal  @db.Decimal(80, 0)
-  eth_value      Decimal  @db.Decimal(80, 0)
-  report_type    String   @default("CBV") @db.VarChar(255)
-  chain_id       Int      @default(1)
+model Reports {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  projectId     String   @map("project_id") @db.VarChar(255)
+  assetId       String   @map("asset_id") @db.VarChar(255)
+  assetAmount   Decimal  @map("asset_amount") @db.Decimal(80, 0)
+  usdValue      Decimal  @map("usd_value") @db.Decimal(80, 0)
+  ethValue      Decimal  @map("eth_value") @db.Decimal(80, 0)
+  reportType    String   @default("CBV") @map("report_type") @db.VarChar(255)
+  chainId       Int      @default(1) @map("chain_id")
 
-  @@id([chain_id, report_type, unix_timestamp, asset_id, project_id])
-  @@index([unix_timestamp], map: "reports_unix_timestamp_index")
+  @@id([chainId, reportType, unixTimestamp, assetId, projectId])
+  @@index([unixTimestamp], map: "reports_unix_timestamp_index")
 }
 
-model reports_status {
-  config_hash    String   @db.VarChar(255)
-  unix_timestamp DateTime @db.Timestamp(6)
-  chain_id       Int      @default(1)
-  report_type    String   @default("CBV") @db.VarChar(255)
+model ReportsStatus {
+  configHash    String   @map("config_hash") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  chainId       Int      @default(1) @map("chain_id")
+  reportType    String   @default("CBV") @map("report_type") @db.VarChar(255)
 
-  @@id([chain_id, report_type, unix_timestamp, config_hash])
-  @@index([chain_id, report_type, config_hash], map: "reports_status_chain_id_asset_type_config_hash_index")
+  @@id([chainId, reportType, unixTimestamp, configHash])
+  @@index([chainId, reportType, configHash], map: "reports_status_chain_id_asset_type_config_hash_index")
 }
 
-model sequence_processor {
-  id             String   @id @db.VarChar(255)
-  last_processed Int
-  updated_at     DateTime @db.Timestamp(6)
-  latest         Int
-  synced_once    Boolean  @default(false)
+model SequenceProcessor {
+  id            String   @id @map("id") @db.VarChar(255)
+  lastProcessed Int      @map("last_processed")
+  updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
+  latest        Int      @map("latest")
+  syncedOnce    Boolean  @default(false) @map("synced_once")
 }
 
-model total_supplies {
-  unix_timestamp DateTime @db.Timestamp(6)
-  total_supply   Decimal  @db.Decimal(80, 0)
-  asset_id       String   @db.VarChar(255)
-  chain_id       Int
+model TotalSupplies {
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  totalSupply   Decimal  @map("total_supply") @db.Decimal(80, 0)
+  assetId       String   @map("asset_id") @db.VarChar(255)
+  chainId       Int      @map("chain_id")
 
-  @@id([chain_id, unix_timestamp, asset_id])
+  @@id([chainId, unixTimestamp, assetId])
 }
 
-model total_supplies_status {
-  config_hash    String   @db.VarChar(255)
-  unix_timestamp DateTime @db.Timestamp(6)
-  chain_id       Int
+model TotalSuppliesStatus {
+  configHash    String   @map("config_hash") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  chainId       Int      @map("chain_id")
 
-  @@id([chain_id, unix_timestamp])
-  @@index([chain_id, config_hash], map: "total_supplies_status_chain_id_config_hash_index")
+  @@id([chainId, unixTimestamp])
+  @@index([chainId, configHash], map: "total_supplies_status_chain_id_config_hash_index")
 }
 
-model tracked_txs_configs {
-  id                        String     @id @db.VarChar(255)
-  project_id                String     @db.VarChar(255)
-  type                      String     @db.VarChar(255)
-  subtype                   String?    @db.VarChar(255)
-  debug_info                String     @db.VarChar(255)
-  since_timestamp_inclusive DateTime?  @db.Timestamp(6)
-  until_timestamp_exclusive DateTime?  @db.Timestamp(6)
-  last_synced_timestamp     DateTime?  @db.Timestamp(6)
-  l2_costs                  l2_costs[]
-  liveness                  liveness[] @ignore
+model TrackedTxsConfigs {
+  id                      String     @id @map("id") @db.VarChar(255)
+  projectId               String     @map("project_id") @db.VarChar(255)
+  type                    String     @map("type") @db.VarChar(255)
+  subtype                 String?    @map("subtype") @db.VarChar(255)
+  debugInfo               String     @map("debug_info") @db.VarChar(255)
+  sinceTimestampInclusive DateTime?  @map("since_timestamp_inclusive") @db.Timestamp(6)
+  untilTimestampExclusive DateTime?  @map("until_timestamp_exclusive") @db.Timestamp(6)
+  lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
+  l2Costs                 L2Costs[]
+  liveness                Liveness[] @ignore
 }
 
-model tvl_cleaner {
-  repository_name          String    @id @db.VarChar(255)
-  hourly_cleaned_until     DateTime? @db.Timestamp(6)
-  six_hourly_cleaned_until DateTime? @db.Timestamp(6)
+model TvlCleaner {
+  repositoryName        String    @id @map("repository_name") @db.VarChar(255)
+  hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
+  sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
 }
 
-model update_monitor {
-  project_name        String    @db.VarChar(255)
-  block_number        Int
-  unix_timestamp      DateTime? @db.Timestamp(6)
-  discovery_json_blob Json
-  config_hash         String    @default("") @db.VarChar(255)
-  version             Int       @default(0)
-  chain_id            Int       @default(1)
+model UpdateMonitor {
+  projectName       String    @map("project_name") @db.VarChar(255)
+  blockNumber       Int       @map("block_number")
+  unixTimestamp     DateTime? @map("unix_timestamp") @db.Timestamp(6)
+  discoveryJsonBlob Json      @map("discovery_json_blob")
+  configHash        String    @default("") @map("config_hash") @db.VarChar(255)
+  version           Int       @default(0) @map("version")
+  chainId           Int       @default(1) @map("chain_id")
 
-  @@id([project_name, chain_id])
+  @@id([projectName, chainId])
 }
 
-model update_notifier {
-  id             Int      @id @default(autoincrement())
-  created_at     DateTime @default(now()) @db.Timestamp(6)
-  updated_at     DateTime @default(now()) @db.Timestamp(6)
-  project_name   String   @db.VarChar(255)
-  block_number   Int
-  diff_json_blob Json
-  chain_id       Int      @default(1)
+model UpdateNotifier {
+  id           Int      @id @default(autoincrement()) @map("id")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+  projectName  String   @map("project_name") @db.VarChar(255)
+  blockNumber  Int      @map("block_number")
+  diffJsonBlob Json     @map("diff_json_blob")
+  chainId      Int      @default(1) @map("chain_id")
 
-  @@index([block_number], map: "update_notifier_block_number_index")
-  @@index([project_name], map: "update_notifier_project_name_index")
+  @@index([blockNumber], map: "update_notifier_block_number_index")
+  @@index([projectName], map: "update_notifier_project_name_index")
 }
 
-model values {
-  timestamp           DateTime @db.Timestamp(6)
-  project_id          String   @db.VarChar(255)
-  data_source         String   @db.VarChar(255)
-  external            BigInt?
-  external_for_total  BigInt?
-  canonical           BigInt?
-  canonical_for_total BigInt?
-  native              BigInt?
-  native_for_total    BigInt?
+model Values {
+  timestamp         DateTime @map("timestamp") @db.Timestamp(6)
+  projectId         String   @map("project_id") @db.VarChar(255)
+  dataSource        String   @map("data_source") @db.VarChar(255)
+  external          BigInt?  @map("external")
+  externalForTotal  BigInt?  @map("external_for_total")
+  canonical         BigInt?  @map("canonical")
+  canonicalForTotal BigInt?  @map("canonical_for_total")
+  native            BigInt?  @map("native")
+  nativeForTotal    BigInt?  @map("native_for_total")
 
-  @@id([timestamp, project_id, data_source])
+  @@id([timestamp, projectId, dataSource])
 }
 
-model verifier_status {
-  address      String   @db.VarChar(255)
-  chain_id     Int
-  last_used    DateTime @db.Timestamp(6)
-  last_updated DateTime @db.Timestamp(6)
+model VerifierStatus {
+  address     String   @map("address") @db.VarChar(255)
+  chainId     Int      @map("chain_id")
+  lastUsed    DateTime @map("last_used") @db.Timestamp(6)
+  lastUpdated DateTime @map("last_updated") @db.Timestamp(6)
 
-  @@id([address, chain_id])
+  @@id([address, chainId])
 }
