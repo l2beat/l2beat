@@ -53,7 +53,7 @@ export const columns = [
     ),
     enableSorting: false,
     meta: {
-      hash: '#risk-analysis',
+      hash: 'risk-analysis',
     },
   }),
   columnHelper.accessor('layerType', {
