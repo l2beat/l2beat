@@ -41,7 +41,7 @@
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "LUSDBridge",
     "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge",
     "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "STRKBridge",
-    "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "EKUBOBridge", // this is a multi-token bridge: Should be renamed as soon as we track more than one token in it
+    "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge", // this is a multi-token bridge: We currently only track EKUBO in the .ts
     "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
     "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry"
   },
@@ -481,7 +481,7 @@
         }
       }
     },
-    "EKUBOBridge": {
+    "MultiBridge": {
       "fields": {
         "manager": {
           "handler": {
@@ -505,7 +505,7 @@
             }
           }
         },
-        "maxTotalBalance": {
+        "maxTotalBalance_EKUBO": {
           "handler": {
             "type": "call",
             "method": "getMaxTotalBalance",

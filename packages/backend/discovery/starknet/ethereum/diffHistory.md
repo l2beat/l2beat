@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x00a7ea1b64814e0c1d8f6f3f35a91738cf19773c
+Generated with discovered.json: 0xf7441a8727825d8791f09a020f6a8e4595a25ac4
 
-# Diff at Thu, 13 Jun 2024 17:24:09 GMT:
+# Diff at Thu, 13 Jun 2024 17:36:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@537b14297d331d7c0c0ad653fc9c95653626c5ff block: 19718686
-- current block number: 20084367
+- current block number: 20084426
 
 ## Description
 
@@ -30,7 +30,7 @@ discovery. Values are for block 19718686 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract EKUBOBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
     +++ description: None
 ```
 

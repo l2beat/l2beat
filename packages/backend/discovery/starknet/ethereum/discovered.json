@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 20084367,
-  "configHash": "0x571d494f2ca784478064478181d2923fe0e69f3a1115172dc7021513d6b88424",
+  "blockNumber": 20084426,
+  "configHash": "0x4a6dee94c48f0cf4ea217c31df605cd6023014e20cb1ee8319789662abbce8fd",
   "version": 5,
   "contracts": [
     {
@@ -1020,7 +1020,7 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
-      "name": "EKUBOBridge",
+      "name": "MultiBridge",
       "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
       "upgradeability": {
         "type": "StarkWare proxy",
@@ -1082,7 +1082,7 @@
         "manager": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance_EKUBO": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_VERSION": "5.0.0",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
       },

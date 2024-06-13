@@ -226,7 +226,7 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
   'EKUBO',
-  discovery.getContractValue<number>('EKUBOBridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('MultiBridge', 'maxTotalBalance_EKUBO'),
   18,
 )
 
@@ -405,7 +405,7 @@ export const starknet: Layer2 = {
           ' ' +
           escrowEKUBOMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowMULTIBRIDGEDelaySeconds),
-        upgradableBy: ['StarkGate EKUBO owner'],
+        upgradableBy: ['StarkGate MultiBridge Admin'],
       }),
     ],
     transactionApi: {
