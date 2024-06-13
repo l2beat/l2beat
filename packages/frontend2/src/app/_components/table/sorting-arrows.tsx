@@ -16,7 +16,7 @@ export function SortingArrows({
   nextSortDirection,
 }: Props) {
   return (
-    <div className="group/sorting-arrows cursor-pointer select-none flex items-center gap-1.5">
+    <div className="group/sorting-arrows w-max cursor-pointer select-none flex items-center gap-1.5">
       <div className="flex flex-col items-end gap-0.5">
         <SortingArrowIcon
           width={10}
