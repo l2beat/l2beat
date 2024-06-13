@@ -40,4 +40,9 @@ export interface AmountConfigBase {
   decimals: number
   symbol: string
   isAssociated: boolean
+  bridge?: {
+    name: string
+    slug?: string
+    warning?: string
+  }
 }

@@ -187,6 +187,7 @@ function getAmountsConfig(
           decimals: token.decimals,
           symbol: token.symbol,
           isAssociated,
+          bridge: escrow.bridge,
         })
       }
     }

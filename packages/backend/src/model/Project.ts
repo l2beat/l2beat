@@ -51,6 +51,11 @@ export interface ProjectEscrow {
   chain?: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
+  bridge?: {
+    name: string
+    slug?: string
+    warning?: string
+  }
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
@@ -71,6 +76,7 @@ export function layer2ToProject(layer2: Layer2): Project {
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
       source: escrow.source,
+      bridge: escrow.bridge,
     })),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
@@ -102,6 +108,7 @@ export function bridgeToProject(bridge: Bridge): Project {
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
       source: escrow.source,
+      bridge: escrow.bridge,
     })),
     associatedTokens: bridge.config.associatedTokens,
   }
@@ -164,6 +171,7 @@ export function layer3ToProject(layer3: Layer3): Project {
         chain,
         includeInTotal: escrow.includeInTotal,
         source: escrow.source,
+        bridge: escrow.bridge,
       }
     }),
     associatedTokens: layer3.config.associatedTokens,

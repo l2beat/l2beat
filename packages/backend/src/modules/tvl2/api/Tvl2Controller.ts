@@ -19,6 +19,7 @@ import {
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
+import { safeGetTokenByAssetId } from '@l2beat/config'
 import { Tvl2Config } from '../../../config/Config'
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
@@ -518,7 +519,9 @@ export class Tvl2Controller {
           }
           break
         }
-        case 'external':
+        case 'external': {
+          const token = safeGetTokenByAssetId(priceConfig.assetId)
+
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: this.chainConverter.toChainId(config.chain),
@@ -527,8 +530,14 @@ export class Tvl2Controller {
             usdPrice: price.toString(),
             tokenAddress:
               config.address === 'native' ? undefined : config.address,
+            bridge: config.bridge ?? {
+              name: token?.bridgedUsing?.bridge ?? 'Unknown',
+              slug: token?.bridgedUsing?.slug,
+              warning: token?.bridgedUsing?.warning,
+            },
           })
           break
+        }
         case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,

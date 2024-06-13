@@ -115,6 +115,7 @@ export class ProjectDiscovery {
     chain,
     includeInTotal,
     source,
+    bridge,
   }: {
     address: EthereumAddress
     name?: string
@@ -127,6 +128,11 @@ export class ProjectDiscovery {
     chain?: string
     includeInTotal?: boolean
     source?: ScalingProjectEscrow['source']
+    bridge?: {
+      name: string
+      slug?: string
+      warning?: string
+    }
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -155,6 +161,7 @@ export class ProjectDiscovery {
       includeInTotal:
         includeInTotal ?? chain === 'ethereum' ? true : includeInTotal,
       source,
+      bridge,
     }
   }
 
