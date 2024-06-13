@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import {
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -14,7 +15,6 @@ import {
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
-import { utils } from 'ethers'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -28,10 +28,9 @@ const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
   'challengePeriod',
 )
 
-const CHALLENGE_FEE = utils.formatEther(discovery.getContractValue<number>(
-  'Challenge',
-  'challengeFee',
-))
+const CHALLENGE_FEE = utils.formatEther(
+  discovery.getContractValue<number>('Challenge', 'challengeFee'),
+)
 
 const upgradesLightLink = {
   upgradableBy: ['LightLinkAdmin'],
@@ -48,10 +47,12 @@ const LightLinkMultisig = discovery.getContractValue<string>(
   'multisig',
 )
 
-const validators = discovery
-  .getContractValue<{addr: string, power: number}[]>('L1BridgeRegistry', 'getValidators')
+const validators = discovery.getContractValue<
+  { addr: string; power: number }[]
+>('L1BridgeRegistry', 'getValidators')
 
-const totalVotingPower = validators.map((validator) => validator.power)
+const totalVotingPower = validators
+  .map((validator) => validator.power)
   .reduce((a, b) => a + b, 0)
 
 const validatorThreshold = discovery.getContractValue<number>(
@@ -62,7 +63,10 @@ const validatorThresholdPercentage = (
   (validatorThreshold / totalVotingPower) *
   100
 ).toFixed(2)
-const minValidatorsForConsensus = getMinValidatorsForConsensus(validators, validatorThreshold)
+const minValidatorsForConsensus = getMinValidatorsForConsensus(
+  validators,
+  validatorThreshold,
+)
 
 const publisher = discovery.getContractValue<string>(
   'CanonicalStateChain',
@@ -196,8 +200,7 @@ export const lightlink: Layer2 = {
     exitMechanisms: [
       {
         name: 'Permissioned exit',
-        description:
-          `Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available data. Users can exit the network once enough validators have signed off on the withdrawal.
+        description: `Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available data. Users can exit the network once enough validators have signed off on the withdrawal.
            Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
         references: [
           {
@@ -277,21 +280,24 @@ export const lightlink: Layer2 = {
   ],
 }
 
-function getMinValidatorsForConsensus(validators: any[], consensusThreshold: number) {
+function getMinValidatorsForConsensus(
+  validators: { addr: string; power: number }[],
+  consensusThreshold: number,
+) {
   // Sort validators by power in descending order
-  validators.sort((a, b) => b.power - a.power);
-  let totalPower = 0;
-  let minValidators = 0;
+  validators.sort((a, b) => b.power - a.power)
+  let totalPower = 0
+  let minValidators = 0
 
   // Iterate over validators
   for (const validator of validators) {
-    totalPower += validator.power;
-    minValidators++;
+    totalPower += validator.power
+    minValidators++
     // If total power is greater than or equal to consensus threshold, break the loop
     if (totalPower >= consensusThreshold) {
-      break;
+      break
     }
   }
 
-  return minValidators;
+  return minValidators
 }
