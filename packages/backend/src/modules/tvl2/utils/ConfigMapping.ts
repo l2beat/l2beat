@@ -21,10 +21,14 @@ export class ConfigMapping {
     (AmountConfigEntry & { configId: string })[]
   >
 
-  constructor(prices: PriceConfigEntry[], amounts: AmountConfigEntry[]) {
+  constructor(
+    prices: PriceConfigEntry[],
+    amounts: AmountConfigEntry[],
+    projects: ProjectId[],
+  ) {
     this.pricesByAssetId = getPricesMap(prices)
     this.amountsByConfigId = getAmountsMap(amounts)
-    this.amountsByProject = getAmountsByProjectMap(amounts)
+    this.amountsByProject = getAmountsByProjectMap(amounts, projects)
   }
 
   get prices(): (PriceConfigEntry & { configId: string })[] {
@@ -76,7 +80,7 @@ export class ConfigMapping {
     projectId: ProjectId,
   ): (AmountConfigEntry & { configId: string })[] {
     const projectAmounts = this.amountsByProject.get(projectId)
-    assert(projectAmounts)
+    assert(projectAmounts, `Config not found for ${projectId}`)
 
     return projectAmounts
   }
@@ -108,14 +112,21 @@ function getAmountsMap(amounts: AmountConfigEntry[]) {
   return result
 }
 
-function getAmountsByProjectMap(amounts: AmountConfigEntry[]) {
+function getAmountsByProjectMap(
+  amounts: AmountConfigEntry[],
+  projects: ProjectId[],
+) {
+  const result: Map<ProjectId, (AmountConfigEntry & { configId: string })[]> =
+    new Map(projects.map((p) => [p, []]))
+
   const groupedEntries = Object.entries(groupBy(amounts, 'project'))
-  const amountConfigEntries = groupedEntries.map(([k, v]) => {
+
+  groupedEntries.forEach(([k, v]) => {
     const projectId = ProjectId(k)
     const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
 
-    return [projectId, amountWithIds] as const
+    result.set(projectId, amountWithIds)
   })
 
-  return new Map(amountConfigEntries)
+  return result
 }

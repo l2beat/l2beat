@@ -58,6 +58,7 @@ export function createTvl2Module(
   const configMapping = new ConfigMapping(
     config.tvl2.prices,
     config.tvl2.amounts,
+    config.tvl2.projects.map((p) => p.projectId),
   )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
@@ -198,7 +199,7 @@ function getApiProjects(
     assert(amounts, 'Config not found: ' + projectId.toString())
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
-      .reduce((a, b) => UnixTime.min(a, b))
+      .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
 
     const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
     for (const amount of amounts) {
