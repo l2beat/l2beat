@@ -10,6 +10,7 @@ import { ConfigMapping } from '../../utils/ConfigMapping'
 import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
+
 import {
   ValuesForSource,
   convertSourceName,
@@ -69,6 +70,10 @@ export class TvlService {
     for (const project of projects) {
       const valuesByTimestamp =
         valuesByProjectByTimestamp[project.id.toString()]
+
+      if (!valuesByTimestamp) {
+        continue
+      }
 
       const valueSums = new Map<number, ValuesForSource>()
       for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
