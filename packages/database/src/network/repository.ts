@@ -1,58 +1,63 @@
 import { PostgresDatabase } from '../kysely'
-import { Network, fromEntity, toEntity } from './entity'
+import { Network, toRecord, toRow } from './entity'
 import { joinExplorer, joinRpc } from './join'
+import { selectNetwork } from './select'
 
 export class NetworkRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async findMany() {
-    const entities = await this.db.selectFrom('network').selectAll().execute()
-
-    return entities.map(fromEntity)
-  }
-
-  async findManyWithConfigs() {
-    const entities = await this.db
-      .selectFrom('network')
-      .innerJoin(...joinExplorer)
-      .innerJoin(...joinRpc)
-      .selectAll()
+    const rows = await this.db
+      .selectFrom('Network')
+      .select(selectNetwork)
       .execute()
 
-    return entities.map(fromEntity)
+    return rows.map(toRecord)
+  }
+
+  // Add mappers here
+  async findManyWithConfigs() {
+    const rows = await this.db
+      .selectFrom('Network')
+      .innerJoin(...joinExplorer)
+      .innerJoin(...joinRpc)
+      .select(selectNetwork)
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async findWithCoingecko() {
-    const entities = await this.db
-      .selectFrom('network')
-      .where('network.coingecko_id', 'is not', null)
-      .selectAll()
+    const rows = await this.db
+      .selectFrom('Network')
+      .where('Network.coingeckoId', 'is not', null)
+      .select(selectNetwork)
       .execute()
 
-    return entities.map(fromEntity)
+    return rows.map(toRecord)
   }
 
   upsertMany(networks: Network[]) {
-    const entity = networks.map(toEntity)
+    const row = networks.map(toRow)
 
     return this.db
-      .insertInto('network')
-      .values(entity)
+      .insertInto('Network')
+      .values(row)
       .onConflict((conflict) =>
-        conflict.column('coingecko_id').doUpdateSet({
-          coingecko_id: (excluded) => excluded.ref('excluded.coingecko_id'),
+        conflict.column('coingeckoId').doUpdateSet({
+          coingeckoId: (excluded) => excluded.ref('excluded.coingeckoId'),
         }),
       )
       .execute()
   }
 
-  updateWhereCoinGeckoId(coingeckoId: string, network: Network) {
-    const entity = toEntity(network)
+  updateWhereCoinGeckoId(coingeckoId: string, Network: Network) {
+    const row = toRow(Network)
 
     return this.db
-      .updateTable('network')
-      .set(entity)
-      .where('network.coingecko_id', '=', coingeckoId)
+      .updateTable('Network')
+      .set(row)
+      .where('Network.coingeckoId', '=', coingeckoId)
       .execute()
   }
 }

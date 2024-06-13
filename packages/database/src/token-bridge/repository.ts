@@ -1,22 +1,20 @@
 import { PostgresDatabase } from '../kysely'
-import { TokenBridge, toEntity } from './entity'
+import { TokenBridge, toRow } from './entity'
 
 export class TokenBridgeRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   upsertMany(tokenBridges: TokenBridge[]) {
-    const entities = tokenBridges.map(toEntity)
+    const rows = tokenBridges.map(toRow)
     return this.db
-      .insertInto('token_bridge')
-      .values(entities)
+      .insertInto('TokenBridge')
+      .values(rows)
       .onConflict((conflict) =>
         conflict.doUpdateSet({
-          source_token_id: (excluded) =>
-            excluded.ref('excluded.source_token_id'),
-          target_token_id: (excluded) =>
-            excluded.ref('excluded.target_token_id'),
-          external_bridge_id: (excluded) =>
-            excluded.ref('excluded.external_bridge_id'),
+          sourceTokenId: (excluded) => excluded.ref('excluded.sourceTokenId'),
+          targetTokenId: (excluded) => excluded.ref('excluded.targetTokenId'),
+          externalBridgeId: (excluded) =>
+            excluded.ref('excluded.externalBridgeId'),
         }),
       )
       .execute()

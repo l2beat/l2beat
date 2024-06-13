@@ -1,12 +1,12 @@
 import { PostgresDatabase } from '../kysely'
-import { NetworkRpc, toEntity } from './entity'
+import { NetworkRpc, toRow } from './entity'
 
 export class NetworkRpcRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   insertMany(rpcs: NetworkRpc[]) {
-    const entities = rpcs.map(toEntity)
+    const entities = rpcs.map(toRow)
 
-    return this.db.insertInto('network_rpc').values(entities).execute()
+    return this.db.insertInto('NetworkRpc').values(entities).execute()
   }
 }

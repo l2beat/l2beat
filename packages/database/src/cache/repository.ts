@@ -1,21 +1,22 @@
 import { PostgresDatabase } from '../kysely'
-import { Cache, fromEntity, toEntity } from './entity'
+import { Cache, toRecord, toRow } from './entity'
+import { selectCache } from './select'
 
 export class CacheRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   upsert(cache: Cache) {
-    const entity = toEntity(cache)
+    const row = toRow(cache)
 
     return this.db
-      .insertInto('cache')
-      .values(entity)
+      .insertInto('Cache')
+      .values(row)
       .onConflict((conflict) =>
         conflict.doUpdateSet({
           value: (excluded) => excluded.ref('excluded.value'),
-          chain_id: (excluded) => excluded.ref('excluded.chain_id'),
+          chainId: (excluded) => excluded.ref('excluded.chainId'),
           key: (excluded) => excluded.ref('excluded.key'),
-          block_number: (excluded) => excluded.ref('excluded.block_number'),
+          blockNumber: (excluded) => excluded.ref('excluded.blockNumber'),
         }),
       )
       .execute()
@@ -23,11 +24,11 @@ export class CacheRepository {
 
   async findByKey(key: Cache['key']) {
     const row = await this.db
-      .selectFrom('cache')
-      .selectAll()
-      .where('cache.key', '=', key)
+      .selectFrom('Cache')
+      .select(selectCache)
+      .where('Cache.key', '=', key)
       .executeTakeFirst()
 
-    return row ? fromEntity(row) : null
+    return row ? toRecord(row) : null
   }
 }

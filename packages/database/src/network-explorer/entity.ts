@@ -12,30 +12,14 @@ export interface NetworkExplorer {
   createdAt: Date
 }
 
-export function fromEntity(
-  entity: Selectable<NetworkExplorerEntity>,
+export function toRecord(
+  row: Selectable<NetworkExplorerEntity>,
 ): NetworkExplorer {
-  return {
-    id: entity.id,
-    networkId: entity.network_id,
-    type: entity.type,
-    url: entity.url,
-    apiKey: entity.api_key,
-    updatedAt: entity.updated_at,
-    createdAt: entity.created_at,
-  }
+  return row
 }
 
-export function toEntity(
-  networkExplorer: NetworkExplorer,
+export function toRow(
+  record: NetworkExplorer,
 ): Insertable<NetworkExplorerEntity> {
-  return {
-    id: networkExplorer.id,
-    network_id: networkExplorer.networkId,
-    type: networkExplorer.type,
-    url: networkExplorer.url,
-    api_key: networkExplorer.apiKey,
-    updated_at: networkExplorer.updatedAt,
-    created_at: networkExplorer.createdAt,
-  }
+  return record
 }

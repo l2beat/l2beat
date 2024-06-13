@@ -9,22 +9,10 @@ export interface Token {
   createdAt: Date
 }
 
-export function fromEntity(entity: Selectable<TokenEntity>): Token {
-  return {
-    id: entity.id,
-    networkId: entity.network_id,
-    address: entity.address,
-    updatedAt: entity.updated_at,
-    createdAt: entity.created_at,
-  }
+export function toRecord(row: Selectable<TokenEntity>): Token {
+  return row
 }
 
-export function toEntity(token: Token): Insertable<TokenEntity> {
-  return {
-    id: token.id,
-    network_id: token.networkId,
-    address: token.address,
-    updated_at: token.updatedAt,
-    created_at: token.createdAt,
-  }
+export function toRow(record: Token): Insertable<TokenEntity> {
+  return record
 }

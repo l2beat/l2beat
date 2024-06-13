@@ -1,17 +1,13 @@
-export const joinNetwork = [
-  'network',
-  'network.id',
-  'token.network_id',
-] as const
+export const joinNetwork = ['Network', 'Network.id', 'Token.networkId'] as const
 
 export const joinDeployment = [
-  'deployment',
-  'deployment.token_id',
-  'token.id',
+  'Deployment',
+  'Deployment.tokenId',
+  'Token.id',
 ] as const
 
 export const joinTokenMeta = [
-  'token_meta',
-  'token_meta.token_id',
-  'token.id',
+  'TokenMeta',
+  'TokenMeta.tokenId',
+  'Token.id',
 ] as const

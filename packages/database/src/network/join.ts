@@ -1,11 +1,11 @@
 export const joinExplorer = [
-  'network_explorer',
-  'network.id',
-  'network_explorer.network_id',
+  'NetworkExplorer',
+  'Network.id',
+  'NetworkExplorer.networkId',
 ] as const
 
 export const joinRpc = [
-  'network_rpc',
-  'network.id',
-  'network_rpc.network_id',
+  'NetworkRpc',
+  'Network.id',
+  'NetworkRpc.networkId',
 ] as const

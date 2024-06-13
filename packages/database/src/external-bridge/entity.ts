@@ -10,26 +10,14 @@ export interface ExternalBridge {
   createdAt: Date
 }
 
-export function fromEntity(
-  entity: Selectable<ExternalBridgeEntity>,
+export function toRecord(
+  row: Selectable<ExternalBridgeEntity>,
 ): ExternalBridge {
-  return {
-    id: entity.id,
-    name: entity.name,
-    type: entity.type,
-    updatedAt: entity.updated_at,
-    createdAt: entity.created_at,
-  }
+  return row
 }
 
-export function toEntity(
-  externalBridge: ExternalBridge,
+export function toRow(
+  record: ExternalBridge,
 ): Insertable<ExternalBridgeEntity> {
-  return {
-    id: externalBridge.id,
-    name: externalBridge.name,
-    type: externalBridge.type,
-    updated_at: externalBridge.updatedAt,
-    created_at: externalBridge.createdAt,
-  }
+  return record
 }
