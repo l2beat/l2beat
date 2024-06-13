@@ -8,19 +8,9 @@ export interface Stake {
 }
 
 export function fromEntity(entity: StakeEntity): Stake {
-  return {
-    chainId: entity.chain_id,
-    totalStake: entity.total_stake,
-    thresholdStake: entity.threshold_stake,
-    assetId: entity.asset_id,
-  }
+  return entity
 }
 
 export function toEntity(stake: Stake): StakeEntity {
-  return {
-    chain_id: stake.chainId,
-    total_stake: stake.totalStake,
-    threshold_stake: stake.thresholdStake,
-    asset_id: stake.assetId,
-  }
+  return stake
 }

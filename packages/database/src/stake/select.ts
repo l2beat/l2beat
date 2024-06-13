@@ -1,6 +1,8 @@
+import { Stake } from '../kysely/generated/types'
+
 export const selectStake = [
-  'asset_id',
-  'chain_id',
-  'total_stake',
-  'threshold_stake',
-] as const
+  'assetId',
+  'chainId',
+  'totalStake',
+  'thresholdStake',
+] as const satisfies (keyof Stake)[]

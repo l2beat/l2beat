@@ -6,15 +6,15 @@ export class StakeRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async findMany() {
-    const res = await this.db.selectFrom('stake').select(selectStake).execute()
+    const res = await this.db.selectFrom('Stake').select(selectStake).execute()
     return res.map(fromEntity)
   }
 
   async findOneByChainId(chainId: number) {
     const res = await this.db
-      .selectFrom('stake')
+      .selectFrom('Stake')
       .select(selectStake)
-      .where('chain_id', '=', chainId)
+      .where('chainId', '=', chainId)
       .limit(1)
       .executeTakeFirst()
     return res ? fromEntity(res) : null
@@ -22,11 +22,11 @@ export class StakeRepository {
 
   async upsert(stake: Stake) {
     const entity = toEntity(stake)
-    const { chain_id, ...rest } = entity
+    const { chainId, ...rest } = entity
     return this.db
-      .insertInto('stake')
+      .insertInto('Stake')
       .values(entity)
-      .onConflict((oc) => oc.columns(['chain_id']).doUpdateSet(rest))
+      .onConflict((oc) => oc.columns(['chainId']).doUpdateSet(rest))
       .execute()
   }
 }
