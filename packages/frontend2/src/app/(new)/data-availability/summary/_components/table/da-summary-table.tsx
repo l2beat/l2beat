@@ -6,7 +6,6 @@ import {
   getFacetedUniqueValues,
   getFilteredRowModel,
   getSortedRowModel,
-  useReactTable,
 } from '@tanstack/react-table'
 import { SortingArrows } from '~/app/_components/table/sorting-arrows'
 import {
@@ -20,6 +19,7 @@ import {
 } from '~/app/_components/table/table'
 import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
 import { TableToolbar } from '~/app/_components/table/table-toolbar'
+import { useTable } from '~/hooks/use-table'
 import { type DataAvailabilityProvider, columns } from './columns'
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
 }
 
 export function DaSummaryTable({ items }: Props) {
-  const table = useReactTable({
+  const table = useTable({
     data: items,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -35,11 +35,6 @@ export function DaSummaryTable({ items }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    enableSortingRemoval: false,
-    sortDescFirst: true,
-    initialState: {
-      sorting: [{ id: '#', desc: false }],
-    },
   })
 
   return (
