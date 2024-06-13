@@ -74,10 +74,12 @@ export function createTvl2Router(
           projectSlugs.includes(p.slug),
         )
 
-        const projectIds = projects.map((p) => p.id.toString())
+        const projectIds = filteredProjects.map((p) => p.id.toString())
 
         const filteredAssociatedTokens = associatedTokens.filter((e) =>
-          projectIds.includes(e.project),
+          ctx.query.excludeAssociatedTokens
+            ? projectIds.includes(e.project)
+            : false,
         )
 
         const tvl = await aggregatedService.getAggregatedTvl(
