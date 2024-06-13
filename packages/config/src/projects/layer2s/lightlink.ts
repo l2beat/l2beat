@@ -171,7 +171,9 @@ export const lightlink: Layer2 = {
       description: `After the challenge window of ${formatSeconds(
         CHALLENGE_WINDOW_SECONDS,
       )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
-          Once challenged, the permissioned defender can respond within ${formatSeconds(CHALLENGE_PERIOD_SECONDS)} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
+          Once challenged, the permissioned defender can respond within ${formatSeconds(
+            CHALLENGE_PERIOD_SECONDS,
+          )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
           the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
           Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots.`,
       risks: [
