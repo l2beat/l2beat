@@ -42,34 +42,34 @@ export class DataService {
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const filteredValues = Object.fromEntries(
-        Object.entries(valuesByTimestamp).map(([timestamp, values]) => {
-          if (!this.shouldTimestampBeCalculated(new UnixTime(+timestamp))) {
-            return []
-          }
+      const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
-          const configuredSources = getConfiguredSourcesForTimestamp(
-            values,
-            project,
-            new UnixTime(+timestamp),
+      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
+        if (!this.shouldTimestampBeCalculated(new UnixTime(+timestamp))) {
+          continue
+        }
+
+        const configuredSources = getConfiguredSourcesForTimestamp(
+          values,
+          project,
+          new UnixTime(+timestamp),
+        )
+
+        const onlyConfiguredValues = values.filter((v) =>
+          configuredSources.includes(v.dataSource),
+        )
+
+        if (onlyConfiguredValues.length !== values.length) {
+          this.$.logger.warn(
+            `Redundant values for ${projectId} at ${timestamp} sources: ${values
+              .filter((v) => !configuredSources.includes(v.dataSource))
+              .map((v) => v.dataSource)
+              .join(', ')}`,
           )
+        }
 
-          const onlyConfiguredValues = values.filter((v) =>
-            configuredSources.includes(v.dataSource),
-          )
-
-          if (onlyConfiguredValues.length !== values.length) {
-            this.$.logger.warn(
-              `Redundant values for ${projectId} at ${timestamp} sources: ${values
-                .filter((v) => !configuredSources.includes(v.dataSource))
-                .map((v) => v.dataSource)
-                .join(', ')}`,
-            )
-          }
-
-          return [timestamp, onlyConfiguredValues]
-        }),
-      )
+        valuesByTimestampForProject[timestamp] = onlyConfiguredValues
+      }
 
       // TODO: Interpolate here
       assert(
@@ -77,7 +77,7 @@ export class DataService {
         `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString}`,
       )
 
-      result[projectId] = filteredValues
+      result[projectId] = valuesByTimestampForProject
     }
 
     return result
