@@ -35,6 +35,10 @@ export class AggregatedService {
       const valuesByTimestamp =
         valuesByProjectByTimestamp[project.id.toString()]
 
+      if (!valuesByTimestamp) {
+        continue
+      }
+
       for (const [_timestamp, values] of Object.entries(valuesByTimestamp)) {
         const timestamp = new UnixTime(+_timestamp)
         const sum = sumValuesPerSource(values)
