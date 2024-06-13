@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "xterio",
+  "initialAddresses": ["0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"],
+  "names": {
+    "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C": "SystemConfig",
+    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6": "L1StandardBridge",
+    "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A": "OptimismPortal",
+    "0x5A0492D20D984eE904E46E6Ff24572bc755abb28": "L2OutputOracle",
+    "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C": "L1CrossDomainMessenger",
+    "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "ProxyAdminOwner", // 1/1 Multisig
+    "0xcbF423525a5471Fc5037a5397F99f6F09fe41379": "SuperchainConfig"
+  },
+  "overrides": {
+    "ProxyAdminOwner": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "extends": "opstack/L2OutputOracle"
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (address)",
+            "args": []
+          }
+        },
+        "opStackDA": {
+          "handler": {
+            "type": "opStackDA",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "sequencerInbox": {
+          "handler": {
+            "type": "opStackSequencerInbox",
+            "sequencerAddress": "{{ batcherHash }}"
+          }
+        },
+        "gasLimit": {
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW"
+        }
+      },
+      "ignoreInWatchMode": ["scalar"]
+    }
+  }
+}
