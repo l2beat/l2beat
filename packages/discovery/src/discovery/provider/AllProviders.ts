@@ -77,7 +77,6 @@ export class AllProviders {
       this.discoveryCache,
       lowLevelProvider,
       chain,
-      blockNumber,
     )
 
     const multicallClient =
