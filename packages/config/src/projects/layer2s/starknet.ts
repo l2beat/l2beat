@@ -103,7 +103,7 @@ const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_STRK_ADDRESS,
   'upgradeDelay',
 )
-const escrowMULTIBRIDGEDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowMultibridgeDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_MULTIBRIDGE_ADDRESS,
   'upgradeDelay',
 )
@@ -127,7 +127,9 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
-  escrowMULTIBRIDGEDelaySeconds,
+  escrowMultibridgeDelaySeconds,
+  starkgateManagerDelaySeconds,
+  starkgateRegistryDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
 )
 
@@ -404,7 +406,7 @@ export const starknet: Layer2 = {
           'StarkGate bridge for EKUBO (and potentially other tokens listed via StarkgateManager).' +
           ' ' +
           escrowEKUBOMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowMULTIBRIDGEDelaySeconds),
+        upgradeDelay: formatSeconds(escrowMultibridgeDelaySeconds),
         upgradableBy: ['StarkGate MultiBridge Admin'],
       }),
     ],
@@ -987,8 +989,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       name: 'StarkGate MultiBridge Admin',
       accounts: getProxyGovernance(discovery, ESCROW_MULTIBRIDGE_ADDRESS),
       description:
-        'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract.' +
-        delayDescriptionFromSeconds(escrowMULTIBRIDGEDelaySeconds),
+        'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract. Additionally, the StarkgateManager and StarkgateRegistry contracts can be upgraded by this address.',
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',

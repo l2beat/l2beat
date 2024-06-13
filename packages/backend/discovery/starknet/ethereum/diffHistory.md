@@ -8,7 +8,7 @@ Generated with discovered.json: 0xf7441a8727825d8791f09a020f6a8e4595a25ac4
 
 ## Description
 
-New escrow added for EKUBO. 
+New StarkGate escrow added. This one supports multiple tokens but we currently only track the EKUBO token. The new StarkgateManager and -Registry support permissionless listing of new tokens, as long as they are not blacklisted. A token admin EOA can pause deposits and blacklist tokens that are not yet supported.
 
 ## Config/verification related changes
 
