@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825363,
   "configHash": "0x19ddeca30a70f486e371b6ec9d33ee69634c48c8e3064a3a5de8bfe1bb713263",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
@@ -22,6 +22,13 @@
     {
       "name": "StarkExchange",
       "address": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",

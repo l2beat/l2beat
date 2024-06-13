@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016116,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -33,6 +33,7 @@
     {
       "name": "MultisigVault2",
       "address": "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -83,6 +84,7 @@
     {
       "name": "MultisigVault1",
       "address": "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

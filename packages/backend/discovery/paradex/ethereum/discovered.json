@@ -3,11 +3,12 @@
   "chain": "ethereum",
   "blockNumber": 19973942,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19283248,
   "configHash": "0x4eaf473ec4829f729e46281e9380868bd675148f18bc11243c7918b04b02c147",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "RoninBridgeAdminMultiSig",
@@ -36,6 +36,7 @@
     {
       "name": "MainchainGateway",
       "address": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+      "ignoreInWatchMode": ["depositCount"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x72E28A9009Ad12dE019BFF418CD210D4bbc3D403",
@@ -65,7 +66,10 @@
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
         "getHighTierVoteWeightThreshold": [90, 100],
-        "getThreshold": [70, 100],
+        "getThreshold": {
+          "num_": 70,
+          "denom_": 100
+        },
         "minimumVoteWeight": 1540,
         "nonce": 2,
         "paused": false,
@@ -140,7 +144,10 @@
           "0x3C583c0c97646a73843aE57b93f33e1995C8DC80"
         ],
         "getProposalExpiryDuration": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
-        "getThreshold": [70, 100],
+        "getThreshold": {
+          "num_": 70,
+          "denom_": 100
+        },
         "getTotalWeight": 2200,
         "minimumVoteWeight": 1540,
         "totalBridgeOperator": 22
@@ -150,6 +157,7 @@
     {
       "name": "WETH9",
       "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },

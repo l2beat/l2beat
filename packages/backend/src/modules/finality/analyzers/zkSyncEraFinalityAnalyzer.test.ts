@@ -47,15 +47,20 @@ const DATA1_TIMESTAMPS = [
 
 function getMockCallData(timestamps: number[]): string {
   const fnSignature =
-    'proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]))'
+    'proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))'
   const iface = new utils.Interface([`function ${fnSignature}`])
 
   const tuples = timestamps
     .slice(1)
     .map((timestamp) => createMockTuple(timestamp))
-
-  const sampleData = [createMockTuple(timestamps[0]), tuples, [[], []]]
-  return iface.encodeFunctionData('proveBatches', sampleData)
+  const mockChainId = 1
+  const sampleData = [
+    mockChainId,
+    createMockTuple(timestamps[0]),
+    tuples,
+    [[], []],
+  ]
+  return iface.encodeFunctionData('proveBatchesSharedBridge', sampleData)
 }
 
 function createMockTuple(timestamp: number) {

@@ -7,6 +7,11 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import {
+  CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 
 export interface ValueRow {
   project_id: string
@@ -72,12 +77,33 @@ export class ValueRepository extends BaseRepository {
       .merge()
   }
 
+  // #region methods used only in TvlCleaner
+
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'values', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'values', dateRange)
+  }
+
+  // #endregion
+
   // #region methods used only in tests
 
   async getAll(): Promise<ValueRecord[]> {
     const knex = await this.knex()
     const rows = await knex('values')
     return rows.map(toRecord)
+  }
+
+  async addMany(records: ValueRecord[], trx?: Knex.Transaction) {
+    const rows: ValueRow[] = records.map(toRow)
+    const knex = await this.knex(trx)
+    await knex.batchInsert('values', rows, BATCH_SIZE)
+    return rows.length
   }
 
   async deleteAll() {

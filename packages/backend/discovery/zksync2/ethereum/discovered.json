@@ -90,9 +90,9 @@
           "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
         ],
         "facets": [
-          [
-            "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-            [
+          {
+            "addr": "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+            "selectors": [
               "0x0e18b681",
               "0x64bf8d66",
               "0xa9f6d941",
@@ -107,10 +107,10 @@
               "0x17338945",
               "0xfc57565f"
             ]
-          ],
-          [
-            "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-            [
+          },
+          {
+            "addr": "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+            "selectors": [
               "0x1de72e34",
               "0xea6c029c",
               "0xcdffacc6",
@@ -153,10 +153,10 @@
               "0xb22dd78e",
               "0x74f4d30d"
             ]
-          ],
-          [
-            "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-            [
+          },
+          {
+            "addr": "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+            "selectors": [
               "0x12f43dab",
               "0x6c0960f9",
               "0xb473318e",
@@ -166,10 +166,10 @@
               "0xeb672419",
               "0xc924de35"
             ]
-          ],
-          [
-            "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
-            [
+          },
+          {
+            "addr": "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
+            "selectors": [
               "0x701f58c5",
               "0x6edd4f12",
               "0xc3d93e7c",
@@ -179,7 +179,7 @@
               "0x97c09d34",
               "0x0f23da43"
             ]
-          ]
+          }
         ],
         "getAdmin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "getBaseToken": "0x0000000000000000000000000000000000000001",
@@ -206,17 +206,17 @@
         "getTotalBlocksVerified": 484941,
         "getTotalPriorityTxs": 3251402,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-        "getVerifierParams": [
-          "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
-          "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
+        "getVerifierParams": {
+          "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
+          "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
+          "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": [
-          "0xd6f952eb2531fb1a787b415c936d5a407757f1b9c68d7c992db2da59b211f9e8",
-          1717940195,
-          0
-        ],
+        "priorityQueueFrontOperation": {
+          "canonicalTxHash": "0xd6f952eb2531fb1a787b415c936d5a407757f1b9c68d7c992db2da59b211f9e8",
+          "expirationTimestamp": 1717940195,
+          "layer2Tip": 0
+        },
         "txFilterer": [],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
       },

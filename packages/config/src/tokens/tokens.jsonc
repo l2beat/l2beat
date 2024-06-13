@@ -709,6 +709,10 @@
       "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
     },
     {
+      "symbol": "OLE",
+      "address": "0x1b6e9c73bee68102d9dd4a2627f97bff4183ab0a"
+    },
+    {
       "symbol": "OMG",
       "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"
     },
@@ -833,6 +837,10 @@
     {
       "symbol": "RAZOR",
       "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd"
+    },
+    {
+      "symbol": "RBX",
+      "address": "0x3ba925fdeae6b46d0bb4d424d829982cb2f7309e"
     },
     {
       "symbol": "rDPX",
@@ -1456,6 +1464,29 @@
       "formula": "totalSupply"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "XAI",
       "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
       "type": "NMV",
@@ -1633,6 +1664,29 @@
       "formula": "totalSupply"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "VELO",
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
       "type": "NMV",
@@ -1804,6 +1858,31 @@
       }
     }
   ],
+  "fraxtal": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    }
+  ],
   "lyra": [
     {
       "symbol": "USDC",
@@ -1895,6 +1974,29 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -2021,6 +2123,29 @@
       "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     },
     {
       "symbol": "weETH",
@@ -2161,6 +2286,16 @@
   ],
   "blast": [
     {
+      "symbol": "bWOOL",
+      "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "ETH",
       "type": "CBV",
       "formula": "totalSupply", // formula does not matter here
@@ -2200,6 +2335,29 @@
       "coingeckoId": "usdb"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "PAC",
       "address": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
       "type": "NMV",
@@ -2216,6 +2374,12 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "symbol": "JUICE",
+      "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "mode": [
@@ -2269,6 +2433,29 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "type": "EBV",
@@ -2290,6 +2477,29 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {

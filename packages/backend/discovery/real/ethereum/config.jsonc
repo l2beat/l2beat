@@ -22,9 +22,39 @@
     "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8": "StrategyManager",
     "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421": "Real",
     "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294": "AssetsVault",
-    "0x655756824385F8903AC8cFDa17B656cc26f7C7da": "Minter"
+    "0x655756824385F8903AC8cFDa17B656cc26f7C7da": "Minter",
+    "0x679D4C1cC6855C57726BEA1784F578315d6431f6": "LidoStEthStrategy",
+    "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": "SwapManager",
+    "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": "EscrowMultisig"
   },
   "overrides": {
+    "SwapManager": {
+      "ignoreRelatives": ["v3SwapRouter", "WETH9"]
+    },
+    "LidoStEthStrategy": {
+      "ignoreInWatchMode": [
+        "getInvestedValue",
+        "getTotalValue",
+        "getStETHWithdrawalStatus"
+      ],
+      "ignoreMethods": [
+        "checkPendingAssets",
+        "checkPendingStatus",
+        "getClaimableAndPendingValue",
+        "getPendingValue",
+        "getRequestIds",
+        "getRequestIdsLen",
+        "getStETHWithdrawalStatusForIds"
+      ],
+      "ignoreRelatives": ["STETH", "WETH9", "WSTETH", "stETHWithdrawalQueue"]
+    },
+    "StrategyManager": {
+      "ignoreInWatchMode": [
+        "getAllStrategiesValue",
+        "getAllStrategyPendingValue",
+        "getTotalInvestedValue"
+      ]
+    },
     "Minter": {
       "ignoreInWatchMode": ["getTokenPrice"]
     },

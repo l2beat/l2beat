@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -76,6 +76,8 @@
     {
       "name": "Bridge Multisig",
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

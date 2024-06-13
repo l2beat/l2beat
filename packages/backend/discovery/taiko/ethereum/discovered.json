@@ -37,19 +37,32 @@
         "erc1155_vault": "0x0000000000000000000000000000000000000000",
         "erc20_vault": "0x0000000000000000000000000000000000000000",
         "erc721_vault": "0x0000000000000000000000000000000000000000",
-        "getConfig": [
-          167000,
-          324000,
-          324512,
-          10,
-          240000000,
-          "250000000000000000000",
-          32,
-          true
-        ],
+        "getConfig": {
+          "chainId": 167000,
+          "blockMaxProposals": 324000,
+          "blockRingBufferSize": 324512,
+          "maxBlocksToVerifyPerProposal": 10,
+          "blockMaxGasLimit": 240000000,
+          "livenessBond": "250000000000000000000",
+          "blockSyncThreshold": 32,
+          "checkEOAForCalldataDA": true
+        },
         "getStateVariables": [
-          [19923613, 1716358991, 47805, 1718042807],
-          [51218, 47836, false, 0, 0, 0, 1716571955]
+          {
+            "genesisHeight": 19923613,
+            "genesisTimestamp": 1716358991,
+            "lastSyncedBlockId": 47805,
+            "lastSynecdAt": 1718042807
+          },
+          {
+            "numBlocks": 51218,
+            "lastVerifiedBlockId": 47836,
+            "provingPaused": false,
+            "__reservedB1": 0,
+            "__reservedB2": 0,
+            "__reservedB3": 0,
+            "lastUnpausedAt": 1716571955
+          }
         ],
         "impl": "0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
         "inNonReentrant": false,
@@ -67,13 +80,39 @@
         "sgx_watchdog": "0x0000000000000000000000000000000000000000",
         "signal_root": "0x0000000000000000000000000000000000000000",
         "signal_service": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-        "slotA": [19923613, 1716358991, 47805, 1718042807],
-        "slotB": [51218, 47836, false, 0, 0, 0, 1716571955],
-        "state": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          [19923613, 1716358991, 47805, 1718042807],
-          [51218, 47836, false, 0, 0, 0, 1716571955]
-        ],
+        "slotA": {
+          "genesisHeight": 19923613,
+          "genesisTimestamp": 1716358991,
+          "lastSyncedBlockId": 47805,
+          "lastSynecdAt": 1718042807
+        },
+        "slotB": {
+          "numBlocks": 51218,
+          "lastVerifiedBlockId": 47836,
+          "provingPaused": false,
+          "__reservedB1": 0,
+          "__reservedB2": 0,
+          "__reservedB3": 0,
+          "lastUnpausedAt": 1716571955
+        },
+        "state": {
+          "__reserve1": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "slotA": {
+            "genesisHeight": 19923613,
+            "genesisTimestamp": 1716358991,
+            "lastSyncedBlockId": 47805,
+            "lastSynecdAt": 1718042807
+          },
+          "slotB": {
+            "numBlocks": 51218,
+            "lastVerifiedBlockId": 47836,
+            "provingPaused": false,
+            "__reservedB1": 0,
+            "__reservedB2": 0,
+            "__reservedB3": 0,
+            "lastUnpausedAt": 1716571955
+          }
+        },
         "state_root": "0x0000000000000000000000000000000000000000",
         "taiko": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "taiko_token": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
@@ -103,15 +142,15 @@
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
-        "eip712Domain": [
-          "0x0f",
-          "Taiko Token",
-          "1",
-          1,
-          "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Taiko Token",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "impl": "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
@@ -296,14 +335,14 @@
         "pemCertLib": "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
-        "qeIdentity": [
-          "0x00000000",
-          "0xffffffff",
-          1,
-          "0x11000000000000000000000000000000",
-          "0xfbffffffffffffff0000000000000000",
-          "0x8c4f5775d796503e96137f77c68a829a0056ac8ded70140b081b094490c57bff"
-        ],
+        "qeIdentity": {
+          "miscselect": "0x00000000",
+          "miscselectMask": "0xffffffff",
+          "isvprodid": 1,
+          "attributes": "0x11000000000000000000000000000000",
+          "attributesMask": "0xfbffffffffffffff0000000000000000",
+          "mrsigner": "0x8c4f5775d796503e96137f77c68a829a0056ac8ded70140b081b094490c57bff"
+        },
         "sigVerifyLib": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
       },
       "derivedName": "AutomataDcapV3Attestation"

@@ -101,7 +101,11 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491310, 20060545],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20060545
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -203,14 +207,14 @@
         },
         "overhead": 0,
         "owner": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279134021569375896653",
         "sequencerInbox": "0xFf00000000000000000000000000000000008453",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",

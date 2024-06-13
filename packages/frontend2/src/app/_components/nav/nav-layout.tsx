@@ -1,10 +1,4 @@
 import React, { type ReactNode } from 'react'
-import {
-  showActivityPage,
-  showCostsPage,
-  showFinalityPage,
-  showLivenessPage,
-} from '~/flags'
 import ActivityIcon from '~/icons/pages/activity.svg'
 import CostsIcon from '~/icons/pages/costs.svg'
 import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
@@ -29,13 +23,6 @@ export async function NavLayout({
   logoLink: string
   legacyNav?: boolean
 }) {
-  const [liveness, finality, activity, costs] = await Promise.all([
-    showLivenessPage(),
-    showFinalityPage(),
-    showActivityPage(),
-    showCostsPage(),
-  ])
-
   const groups: NavGroup[] = [
     {
       title: 'Scaling',
@@ -68,25 +55,25 @@ export async function NavLayout({
           title: 'Liveness',
           icon: <LivenessIcon />,
           href: '/scaling/liveness',
-          enabled: liveness,
+          enabled: true,
         },
         {
           title: 'Finality',
           icon: <FinalityIcon />,
           href: '/scaling/finality',
-          enabled: finality,
+          enabled: true,
         },
         {
           title: 'Activity',
           icon: <ActivityIcon />,
           href: '/scaling/activity',
-          enabled: activity,
+          enabled: true,
         },
         {
           title: 'Costs',
           icon: <CostsIcon />,
           href: '/scaling/costs',
-          enabled: costs,
+          enabled: true,
         },
       ],
     },

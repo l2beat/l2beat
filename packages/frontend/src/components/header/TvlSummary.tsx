@@ -114,7 +114,7 @@ export function TvlSummary(props: TvlSummaryProps) {
             </Tooltip>
           ) : (
             <div className="flex items-center gap-1">
-              <p className="font-bold text-lg md:text-2xl md:leading-none">
+              <p className="text-nowrap font-bold text-lg md:text-2xl md:leading-none">
                 {formatUSD(props.stats.tvl)}
               </p>
               {props.stats.tvl > 0 && (
@@ -140,11 +140,11 @@ export function TvlSummary(props: TvlSummaryProps) {
 
       {props.stats ? (
         <>
-          <div className="flex h-1/2 flex-wrap gap-3 md:gap-0">
+          <div className="@container flex h-1/2 flex-wrap gap-3 md:gap-0">
             {tvlStats.map((s, i) => (
               <div
                 key={i}
-                className="flex w-full flex-wrap items-end justify-between"
+                className="flex w-full flex-nowrap items-center justify-between gap-1"
               >
                 <div className="flex items-center gap-1">
                   {s.icon}
@@ -153,10 +153,10 @@ export function TvlSummary(props: TvlSummaryProps) {
                     <span className="hidden md:inline">{s.shortLabel}</span>
                   </span>
                 </div>
-                <span className="font-semibold text-base leading-none">
+                <span className="whitespace-nowrap font-semibold text-base leading-none">
                   {s.value}
                   {props.stats && props.stats.tvl > 0 && (
-                    <span className="hidden font-normal text-gray-500 lg:inline">
+                    <span className="hidden font-normal text-gray-500 @[200px]:inline">
                       {` (${s.usage}%)`}
                     </span>
                   )}

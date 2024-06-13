@@ -1,4 +1,4 @@
-import type { CollectionEntry } from '~/content/getCollection'
+import type { CollectionEntry } from '~/content/get-collection'
 import { formatTimestamp } from '~/utils/dates'
 import {
   type OneTimeEvent,

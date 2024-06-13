@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532088,
   "configHash": "0xe1a60acb537887f5379f5ef47c07caff2cedb412828a9018fcba876f674fd447",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "ERC1155Predicate",
@@ -57,6 +57,7 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
+      "ignoreInWatchMode": ["counter"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -169,6 +170,11 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "getLastChildBlock",
+        "currentHeaderBlock"
+      ],
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
@@ -364,6 +370,7 @@
     {
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
