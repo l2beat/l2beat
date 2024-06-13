@@ -33,6 +33,7 @@ export default function Page() {
 
 function daLayerToEntry(daLayer: DaLayer): DataAvailabilityProvider {
   return {
+    slug: daLayer.display.slug,
     daLayer: daLayer.display.name,
     daBridge: daLayer.bridges.map((bridge) => {
       return {

@@ -89,7 +89,10 @@ export function DaSummaryTable({ items }: Props) {
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="h-9 md:h-14">
+                <TableCell
+                  key={cell.id}
+                  href={`/data-availability/projects/${row.original.slug}`}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

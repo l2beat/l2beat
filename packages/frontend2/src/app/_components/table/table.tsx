@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
 
@@ -89,16 +90,28 @@ TableHead.displayName = 'TableHead'
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement> & { href?: string }
+>(({ className, children, href, ...props }, ref) => (
   <td
     ref={ref}
     className={cn(
-      'h-9 md:h-14 align-middle first:pl-2 pr-3 last:pr-2 whitespace-pre',
+      'h-9 md:h-14 align-middle whitespace-pre',
+      !href && 'first:pl-2 pr-3 last:pr-2',
       className,
     )}
     {...props}
-  />
+  >
+    {href ? (
+      <Link
+        href={href}
+        className="flex size-full items-center first:pl-2 pr-3 last:pr-2"
+      >
+        {children}
+      </Link>
+    ) : (
+      children
+    )}
+  </td>
 ))
 TableCell.displayName = 'TableCell'
 

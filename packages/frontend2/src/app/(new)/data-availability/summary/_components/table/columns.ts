@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { formatNumber } from '~/utils/format-number'
 
 export type DataAvailabilityProvider = {
+  slug: string
   daLayer: string
   daBridge: { name: string; network: string } | null
   risks: unknown
