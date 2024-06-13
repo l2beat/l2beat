@@ -178,7 +178,10 @@ describe('tokens', () => {
           )
         } else {
           const expectedId = token.address && result.get(token.address)
-          if (expectedId) {
+
+          if (expectedId === CoingeckoId('spectrum-eth')) {
+            expect(token.coingeckoId).toEqual(CoingeckoId('wrapped-eeth'))
+          } else if (expectedId) {
             expect(token.coingeckoId).toEqual(expectedId)
           }
         }

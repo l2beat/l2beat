@@ -40,7 +40,7 @@
     },
     "GasPriceOracle": {
       "ignoreMethods": ["overhead", "scalar"],
-      "ignoreInWatchMode": ["l1BaseFee"]
+      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
     },
     "OPToken": {
       "ignoreMethods": ["getPastTotalSupply"]
@@ -58,7 +58,8 @@
         "hash",
         "number",
         "timestamp",
-        "sequenceNumber"
+        "sequenceNumber",
+        "blobBaseFee"
       ]
     },
     "L2ToL1MessagePasser": {

@@ -19,19 +19,12 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
-import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
+import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
 
-  constructor(config: Config) {
-    const loggerOptions = { ...config.logger, reportError }
-
-    let logger = new Logger(loggerOptions)
-    if (config.logThrottler) {
-      logger = logger.withThrottling(config.logThrottler)
-    }
-
+  constructor(config: Config, logger: Logger) {
     const database = new Database(config.database, logger, config.name)
     const clock = new Clock(
       config.clock.minBlockTimestamp,
@@ -93,7 +86,6 @@ export class Application {
           .for(this)
           .warn('Some feature flags are not used', { unusedFlags })
       }
-      logger.for(this).info('Log level', config.logger.logLevel)
 
       await apiServer.start()
       await database.start()

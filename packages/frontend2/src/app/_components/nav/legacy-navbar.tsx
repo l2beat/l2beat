@@ -1,11 +1,6 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import {
-  showGlossary,
-  showGovernancePage,
-  showHiringBadge,
-  showZkCatalog,
-} from '~/flags'
+import { env } from '~/env'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
@@ -21,12 +16,8 @@ export async function LegacyNavbar({
   logoLink,
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
-  const [zkCatalog, governance, hiringBadge, glossary] = await Promise.all([
-    showZkCatalog(),
-    showGovernancePage(),
-    showHiringBadge(),
-    showGlossary(),
-  ])
+  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+  const zkCatalog = env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG
 
   return (
     <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
@@ -60,15 +51,8 @@ export async function LegacyNavbar({
               <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
             )}
             <LegacyNavLink title="Donate" href="/donate" />
-            {governance ? (
-              <LegacyNavLink title="Governance" href="/governance" />
-            ) : (
-              <LegacyNavLink
-                title="Governance"
-                href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
-              />
-            )}
-            {glossary && <LegacyNavLink title="Glossary" href="/glossary" />}
+            <LegacyNavLink title="Governance" href="/governance" />
+            <LegacyNavLink title="Glossary" href="/glossary" />
             <LegacyNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
               {hiringBadge && <HiringBadge />}

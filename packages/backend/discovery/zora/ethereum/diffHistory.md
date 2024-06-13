@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x8c832aa2c960900463ea93e8167038c5a0b8d7bf
+
+# Diff at Wed, 12 Jun 2024 05:26:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@09246cd19afe46cf207c325923fef8f51d581735 block: 20032759
+- current block number: 20073649
+
+## Description
+
+Changes due to Superchain permissions upgrade: 
+- Security Council MS threshold raised
+- Liveness and DeputyGuardian modules added
+- Guardian (proxy)MS added
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.GUARDIAN:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      upgradeability.modules.0:
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      upgradeability.threshold:
+-        "4 of 13 (31%)"
++        "10 of 13 (77%)"
+      values.getThreshold:
+-        4
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zora/ethereum/.flat/DeputyGuardianModule.sol   | 139 +++
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol | 952 +++++++++++++++++++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |  34 +
+ .../zora/ethereum/.flat/LivenessGuard.sol          | 581 +++++++++++++
+ .../zora/ethereum/.flat/LivenessModule.sol         | 257 ++++++
+ 5 files changed, 1963 insertions(+)
+```
+
 Generated with discovered.json: 0x209e13e4a7a74a8fd077a54e66bb0c08c528e44b
 
 # Diff at Thu, 06 Jun 2024 12:23:14 GMT:
