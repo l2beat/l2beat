@@ -109,6 +109,7 @@ export class ProjectDiscovery {
     description,
     sinceTimestamp,
     tokens,
+    excludedTokens,
     upgradableBy,
     upgradeDelay,
     isUpcoming,
@@ -120,6 +121,7 @@ export class ProjectDiscovery {
     description?: string
     sinceTimestamp?: UnixTime
     tokens: string[] | '*'
+    excludedTokens?: string[]
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
@@ -147,6 +149,7 @@ export class ProjectDiscovery {
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
+      excludedTokens,
       contract,
       isUpcoming,
       chain,
