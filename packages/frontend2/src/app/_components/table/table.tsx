@@ -1,6 +1,8 @@
+import { type SortDirection } from '@tanstack/react-table'
 import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
+import { SortingArrows } from './sorting-arrows'
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -73,10 +75,15 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = 'TableRow'
 
+interface HeaderSorting {
+  direction: SortDirection | false
+  nextDirection: SortDirection | false
+}
+
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+  React.ThHTMLAttributes<HTMLTableCellElement> & { sorting?: HeaderSorting }
+>(({ className, children, sorting, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
@@ -84,7 +91,15 @@ const TableHead = React.forwardRef<
       className,
     )}
     {...props}
-  />
+  >
+    {children !== null ? (
+      sorting ? (
+        <SortingArrows {...sorting}>{children}</SortingArrows>
+      ) : (
+        children
+      )
+    ) : null}
+  </th>
 ))
 TableHead.displayName = 'TableHead'
 

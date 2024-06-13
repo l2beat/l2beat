@@ -7,7 +7,6 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
-import { SortingArrows } from '~/app/_components/table/sorting-arrows'
 import {
   Table,
   TableBody,
@@ -58,23 +57,21 @@ export function DaSummaryTable({ items }: Props) {
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
+                  sorting={
+                    header.column.getCanSort()
+                      ? {
+                          direction: header.column.getIsSorted(),
+                          nextDirection: header.column.getNextSortingOrder(),
+                        }
+                      : undefined
+                  }
                 >
-                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                    <SortingArrows
-                      sortDirection={header.column.getIsSorted()}
-                      nextSortDirection={header.column.getNextSortingOrder()}
-                    >
-                      {flexRender(
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
-                    </SortingArrows>
-                  ) : (
-                    flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )
-                  )}
                 </TableHead>
               ))}
             </TableHeaderRow>
