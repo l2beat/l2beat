@@ -385,8 +385,7 @@ export const starknet: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_EKUBO_ADDRESS),
         tokens: ['EKUBO'],
-        description:
-          'StarkGate bridge for EKUBO.',
+        description: 'StarkGate bridge for EKUBO.',
         upgradeDelay: formatSeconds(escrowEKUBODelaySeconds),
         upgradableBy: ['StarkGate EKUBO owner'],
       }),
