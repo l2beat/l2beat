@@ -214,6 +214,11 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
+const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'EKUBO',
+  discovery.getContractValue<number>('EKUBOBridge', 'maxTotalBalance'),
+  18,
+)
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -385,7 +390,7 @@ export const starknet: Layer2 = {
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_EKUBO_ADDRESS),
         tokens: ['EKUBO'],
-        description: 'StarkGate bridge for EKUBO.',
+        description: 'StarkGate bridge for EKUBO.' + ' ' + escrowEKUBOMaxTotalBalanceString,
         upgradeDelay: formatSeconds(escrowEKUBODelaySeconds),
         upgradableBy: ['StarkGate EKUBO owner'],
       }),
