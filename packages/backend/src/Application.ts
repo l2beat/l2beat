@@ -22,18 +22,12 @@ import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 import { createRepositories } from '@l2beat/database'
 import { createCurrentPricesModule } from './modules/current-prices/CurrentPricesModule'
+import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
 
-  constructor(config: Config) {
-    const loggerOptions = { ...config.logger, reportError }
-
-    let logger = new Logger(loggerOptions)
-    if (config.logThrottler) {
-      logger = logger.withThrottling(config.logThrottler)
-    }
-
+  constructor(config: Config, logger: Logger) {
     const database = new Database(config.database, logger, config.name)
 
     const kyselyDatabase = createRepositories(config.database.connection)
@@ -99,7 +93,6 @@ export class Application {
           .for(this)
           .warn('Some feature flags are not used', { unusedFlags })
       }
-      logger.for(this).info('Log level', config.logger.logLevel)
 
       await apiServer.start()
       await database.start()

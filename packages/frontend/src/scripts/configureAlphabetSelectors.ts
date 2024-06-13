@@ -43,10 +43,6 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
     })
   }, 50)
 
-  if (selectedAlphabetSelectorItem) {
-    highlightItem(selectedAlphabetSelectorItem)
-  }
-
   window.addEventListener('scroll', () => {
     highlightCurrentSection({
       navigationList: alphabetSelector,

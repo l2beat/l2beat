@@ -1,13 +1,4 @@
-import {
-  ElasticSearchTransport,
-  ElasticSearchTransportOptions,
-  Env,
-  LogFormatterEcs,
-  LogFormatterJson,
-  LogFormatterPretty,
-  LoggerOptions,
-  LoggerTransportOptions,
-} from '@l2beat/backend-tools'
+import { Env } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
@@ -45,47 +36,10 @@ export function makeConfig(
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
 
-  const loggerTransports: LoggerTransportOptions[] = [
-    {
-      transport: console,
-      formatter: isLocal ? new LogFormatterPretty() : new LogFormatterJson(),
-    },
-  ]
-
-  // Elastic Search logging
-  const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
-
-  if (esEnabled) {
-    console.log('Elastic Search logging enabled')
-    const options: ElasticSearchTransportOptions = {
-      node: env.string('ES_NODE'),
-      apiKey: env.string('ES_API_KEY'),
-      indexPrefix: env.string('ES_INDEX_PREFIX'),
-      flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
-    }
-
-    loggerTransports.push({
-      transport: new ElasticSearchTransport(options),
-      formatter: new LogFormatterEcs(),
-    })
-  }
-
   return {
     name,
     isReadonly,
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
-    logger: {
-      logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
-      utc: isLocal ? false : true,
-      transports: loggerTransports,
-    },
-    logThrottler: isLocal
-      ? false
-      : {
-          callsUntilThrottle: 4,
-          clearIntervalMs: 5000,
-          throttleTimeMs: 20000,
-        },
     clock: {
       minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,

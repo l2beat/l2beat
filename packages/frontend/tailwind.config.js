@@ -212,6 +212,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/container-queries'),
     plugin(function ({ addVariant, e }) {
       addVariant('sidenav-collapsed', ({ modifySelectors, separator }) => {
         modifySelectors(({ className }) => {
