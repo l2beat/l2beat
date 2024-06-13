@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <NavLayout logoLink="/data-availability">
+    <NavLayout logoLink="/data-availability/summary">
       <div className="min-h-screen">
         <ContentWrapper className="mt-16">{children}</ContentWrapper>
       </div>

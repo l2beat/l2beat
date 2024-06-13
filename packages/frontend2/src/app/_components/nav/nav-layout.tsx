@@ -102,7 +102,7 @@ export async function NavLayout({
         {
           title: 'Summary',
           icon: <SummaryIcon />,
-          href: '/data-availability',
+          href: '/data-availability/summary',
           enabled: true,
         },
       ],
