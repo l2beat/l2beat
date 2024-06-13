@@ -51,6 +51,7 @@ export const WithoutUnderline: Story = {
 export const Highlighted: Story = {
   args: {
     children: 'Example link',
+    'data-role': 'etherscan-link',
     'data-state': 'highlighted',
   },
 }

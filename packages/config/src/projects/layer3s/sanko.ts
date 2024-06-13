@@ -18,7 +18,11 @@ export const sanko: Layer3 = orbitStackL3({
       websites: ['https://sanko.xyz/'],
       apps: ['https://sanko.xyz/bridge'],
       documentation: ['https://sanko-1.gitbook.io/sanko-mainnet-docs/'],
-      explorers: ['https://sanko-mainnet.calderaexplorer.xyz/'],
+      explorers: [
+        'https://sanko-mainnet.calderaexplorer.xyz/',
+        'https://tools.sanko.xyz/',
+        'https://explorer.sanko.xyz/',
+      ],
       repositories: [],
       socialMedia: [
         'https://x.com/SankoGameCorp',
@@ -35,9 +39,9 @@ export const sanko: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
     {
-      chain: 'arbitrum',
-      includeInTotal: false,
       ...discovery.getEscrowDetails({
+        chain: 'arbitrum',
+        includeInTotal: false,
         address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
         tokens: '*',
         description:

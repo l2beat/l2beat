@@ -14,7 +14,7 @@ export const termstructure: Layer2 = underReviewL2({
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
     purposes: ['DeFi', 'Lending'],
     category: 'ZK Rollup',
-    provider: 'zkSync Lite',
+    provider: 'ZKsync Lite',
     links: {
       websites: ['https://ts.finance/'],
       apps: ['https://app.ts.finance/'],

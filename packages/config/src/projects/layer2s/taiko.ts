@@ -63,10 +63,9 @@ const NumGuardiansProver = discovery.getContractValue<string[]>(
   'numGuardians',
 )
 
-const TaikoChainConfig = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'getConfig',
-)
+const TaikoChainConfig = discovery.getContractValue<{
+  [key: string]: number | string
+}>('TaikoL1Contract', 'getConfig')
 
 const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
 const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
@@ -75,7 +74,7 @@ const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
 const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
 const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
 
-const LivenessBond = utils.formatEther(TaikoChainConfig[5])
+const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
@@ -392,6 +391,12 @@ export const taiko: Layer2 = {
     },
   ],
   milestones: [
+    {
+      name: 'TKO Token Airdrop',
+      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      date: '2024-06-05T00:00:00.00Z',
+      description: 'TKO token launches.',
+    },
     {
       name: 'Taiko Mainnet Launch',
       link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',

@@ -1,8 +1,8 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 20032983,
-  "configHash": "0x0324801ae8dd08cfc9e0370ff6486f94b02a0076436421635e3437efe5b2d6cf",
+  "blockNumber": 20073454,
+  "configHash": "0xf49084bcd2304924927b3acfc819cfa1255d4c3c2db098e2fe8b2fc64e6f1a58",
   "version": 5,
   "contracts": [
     {
@@ -77,12 +77,12 @@
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 2105,
+        "delayedMessageCount": 2252,
         "nativeToken": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 1643,
-        "sequencerReportedSubMessageCount": 87025
+        "sequencerMessageCount": 1776,
+        "sequencerReportedSubMessageCount": 94589
       },
       "derivedName": "ERC20Bridge"
     },
@@ -114,6 +114,24 @@
       }
     },
     {
+      "name": "SwapManager",
+      "address": "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1715706239,
+      "values": {
+        "MIN_TWAP_DURATION": 3600,
+        "NULL": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "twapDuration": 3600,
+        "v3SwapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+        "WETH9": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "derivedName": "SwapManager"
+    },
+    {
       "name": "ERC20RollupEventInbox",
       "address": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
       "upgradeability": {
@@ -141,7 +159,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1710580715,
       "values": {
-        "batchCount": 1643,
+        "batchCount": 1776,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "dacKeyset": {
@@ -152,23 +170,46 @@
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 2104
+        "totalDelayedMessagesRead": 2251
       },
       "derivedName": "SequencerInbox"
     },
     {
       "name": "StrategyManager",
       "address": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-      "unverified": true,
+      "ignoreInWatchMode": [
+        "getAllStrategiesValue",
+        "getAllStrategyPendingValue",
+        "getTotalInvestedValue"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1715706239,
-      "derivedName": ""
+      "values": {
+        "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
+        "getAllStrategiesValue": "303308582411556424177",
+        "getAllStrategyPendingValue": 0,
+        "getStrategies": {
+          "addrs": ["0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
+          "allocations": [1000000]
+        },
+        "getTotalInvestedValue": {
+          "_value": "303308582411556424177",
+          "strategiesValue": ["303308582411556424177"]
+        },
+        "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
+      },
+      "derivedName": "StrategyManager"
     },
     {
       "name": "Minter",
@@ -179,20 +220,44 @@
       },
       "sinceTimestamp": 1710542279,
       "values": {
-        "getTokenPrice": "1001984540868293996",
+        "getTokenPrice": "1002443374394671369",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
       "derivedName": "Minter"
     },
     {
-      "name": "",
+      "name": "LidoStEthStrategy",
       "address": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
-      "unverified": true,
+      "ignoreInWatchMode": [
+        "getInvestedValue",
+        "getTotalValue",
+        "getStETHWithdrawalStatus"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1715706239
+      "sinceTimestamp": 1715706239,
+      "values": {
+        "getClaimableValue": 0,
+        "getInvestedValue": "303308582411556424177",
+        "getStETHWithdrawalStatus": {
+          "requestIds": [],
+          "statuses": []
+        },
+        "getTotalValue": "303308582411556424177",
+        "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+        "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
+        "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
+        "MIN_STETH_WITHDRAWAL_AMOUNT": 100,
+        "name": "Lido Investment Strategy",
+        "STETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "stETHWithdrawalQueue": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+        "swapManager": "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335",
+        "WETH9": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      },
+      "derivedName": "LidoStEthStrategy"
     },
     {
       "name": "Outbox",
@@ -260,6 +325,8 @@
     {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -319,8 +386,8 @@
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1001984540868293996",
-        "totalSupply": "330088393088322369678"
+        "tokenPrice": "1002443374394671369",
+        "totalSupply": "302571292350014562786"
       },
       "derivedName": "Real"
     },
@@ -353,12 +420,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1161,
+        "firstUnresolvedNode": 1294,
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "lastStakeBlock": 19524244,
-        "latestConfirmed": 1160,
-        "latestNodeCreated": 1310,
+        "latestConfirmed": 1293,
+        "latestNodeCreated": 1444,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -382,6 +449,35 @@
         "zombieLatestStakedNode": []
       },
       "derivedName": "RollupProxy"
+    },
+    {
+      "name": "EscrowMultisig",
+      "address": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": [],
+        "threshold": "4 of 5 (80%)"
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1715303135,
+      "values": {
+        "domainSeparator": "0xffed3c27670fc30ea34917db1b8f67e220488741f28e4112029e2fff249b118d",
+        "getChainId": 1,
+        "getOwners": [
+          "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A",
+          "0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0",
+          "0x6bD40C6f7849160FE217D07a73E15f4ef8222283",
+          "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A",
+          "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"
+        ],
+        "getThreshold": 4,
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "UpgradeExecutor",
@@ -451,7 +547,7 @@
       },
       "sinceTimestamp": 1715706239,
       "values": {
-        "getBalance": "19648863250290261993",
+        "getBalance": 2004143858196668,
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -473,20 +569,20 @@
       "sinceTimestamp": 1715706239,
       "values": {
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1001984540868293996",
+        "currentSharePrice": "1002443374394671369",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
-        "owner": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+        "owner": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proposal": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+        "proposal": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1717647023,
+        "rebaseTime": 1718161211,
         "rebaseTimeInterval": 86400,
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "19634255995538662303",
+        "withdrawableAmountInPast": 2004143858196668,
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "19610203480638158743",
+        "withdrawingSharesInPast": 2000000000000000,
         "withdrawingSharesInRound": 0
       },
       "derivedName": "RealVault"
@@ -515,6 +611,7 @@
     "0x0000000000000000000000000000000000000000",
     "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
     "0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E",
+    "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A",
     "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
     "0x28bB9385A588EF4747264D19B9A9F1603591680c",
     "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c",
@@ -522,13 +619,18 @@
     "0x547D0F472309e4239b296D01e03bEDc101241a26",
     "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
     "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+    "0x6bD40C6f7849160FE217D07a73E15f4ef8222283",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
+    "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD",
     "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
     "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
     "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
     "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "0xF0b66c2d7Abb3CbbD26463a971BF62d6c4eaDE34",
+    "0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0",
     "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
+    "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A",
     "0xFc1A48d5875Adc0E5f9e2805083C9c5300704BD7"
   ],
   "abis": {
@@ -761,6 +863,52 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": [
+      "constructor(address _intialOwner, address _weth9, address _null, address _v3SwapRouter)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error FailedInnerCall()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SwapManager__ExceedPercentage(uint256 given, uint256 max)",
+      "error SwapManager__InvalidPoolToken()",
+      "error SwapManager__MIN_TWAP_DURATION(uint32 duration)",
+      "error SwapManager__NoLiquidity()",
+      "error SwapManager__NoPool(address tokenIn)",
+      "error SwapManager__SlippageExceeded(uint256 amountOut, uint256 minAmountOut)",
+      "error SwapManager__SlippageNotSet()",
+      "error SwapManager__ZeroAddress()",
+      "error T()",
+      "event CurvePoolUpdated(address token, address pool)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenSlippageUpdated(address token, uint24 slippage)",
+      "event TwapDurationUpdated(uint32 duration)",
+      "event UniswapV3PoolUpdated(address token, address pool)",
+      "function MIN_TWAP_DURATION() view returns (uint32)",
+      "function NULL() view returns (address)",
+      "function WETH9() view returns (address)",
+      "function acceptOwnership()",
+      "function curvePools(address) view returns (address)",
+      "function estimateCurveAmountOut(uint256 amountIn, address tokenIn) view returns (uint256 amountOut)",
+      "function estimateV3AmountOut(uint128 amountIn, address tokenIn, address tokenOut) view returns (uint256 amountOut)",
+      "function getMinimumAmount(address token, uint256 amount) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setTokenSlippage(address _token, uint24 _slippage)",
+      "function setTwapDuration(uint32 _duration)",
+      "function setWhitelistCurvePool(address _token, address _pool, uint24 _slippage)",
+      "function setWhitelistV3Pool(address _token, address _pool, uint24 _slippage)",
+      "function slippage(address) view returns (uint24)",
+      "function swapCurve(address tokenIn, uint256 amountIn, uint256 amountOutMinimum) returns (uint256 amountOut)",
+      "function swapUinv3(address tokenIn, uint256 amountIn, uint256 amountOutMinimum) returns (uint256 amountOut)",
+      "function transferOwnership(address newOwner)",
+      "function twapDuration() view returns (uint32)",
+      "function v3Pools(address) view returns (address)",
+      "function v3SwapRouter() view returns (address)"
+    ],
     "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -782,6 +930,38 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8": [
+      "constructor(address _realVault, address _assetsVault, address[] _strategies, uint256[] _ratios)",
+      "error StrategyManager__AlreadyExist(address strategy)",
+      "error StrategyManager__InsufficientBalance(address strategy, uint256 availableAmount, uint256 withdrawAmount)",
+      "error StrategyManager__InvalidLength()",
+      "error StrategyManager__InvalidManager()",
+      "error StrategyManager__InvalidPercentage()",
+      "error StrategyManager__MinAllocation(uint256 minAllocation)",
+      "error StrategyManager__NotVault()",
+      "error StrategyManager__StillActive(address strategy)",
+      "error StrategyManager__ZeroAddress()",
+      "error StrategyManager__ZeroStrategy()",
+      "event VaultUpdated(address indexed oldRealVault, address newRealVault)",
+      "function addStrategy(address _strategy)",
+      "function assetsVault() view returns (address)",
+      "function clearStrategy(address _strategy)",
+      "function destroyStrategy(address _strategy)",
+      "function forceWithdraw(uint256 _amount) returns (uint256 actualAmount)",
+      "function getAllStrategiesValue() view returns (uint256 _value)",
+      "function getAllStrategyPendingValue() view returns (uint256 _value)",
+      "function getStrategies() view returns (address[] addrs, uint256[] allocations)",
+      "function getStrategyInvestedValue(address _strategy) view returns (uint256 _value)",
+      "function getStrategyPendingValue(address _strategy) view returns (uint256 _value)",
+      "function getStrategyValue(address _strategy) view returns (uint256 _value)",
+      "function getTotalInvestedValue() view returns (uint256 _value, uint256[] strategiesValue)",
+      "function onlyRebaseStrategies()",
+      "function ratios(address) view returns (uint256)",
+      "function realVault() view returns (address)",
+      "function rebaseStrategies(uint256 _in, uint256 _out) payable",
+      "function setNewVault(address _vault)",
+      "function setStrategies(address[] _strategies, uint256[] _ratios)"
     ],
     "0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -911,6 +1091,47 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
+    ],
+    "0x679D4C1cC6855C57726BEA1784F578315d6431f6": [
+      "constructor(address _stETHAdress, address _stETHWithdrawal, address _wstETHAdress, address _weth9, address _swapManager, address _manager, string _name)",
+      "error Strategy__InsufficientBalance()",
+      "error Strategy__LidoDeposit()",
+      "error Strategy__NotGovernance()",
+      "error Strategy__NotManager()",
+      "error Strategy__ZeroAddress()",
+      "error Strategy__ZeroAddress()",
+      "error Strategy__ZeroAmount()",
+      "error Strategy__ZeroPoolLiquidity()",
+      "event TransferGovernance(address indexed oldOwner, address newOwner)",
+      "function MAX_STETH_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function MIN_STETH_WITHDRAWAL_AMOUNT() view returns (uint256)",
+      "function STETH() view returns (address)",
+      "function WETH9() view returns (address)",
+      "function WSTETH() view returns (address)",
+      "function checkPendingAssets() view returns (uint256[] ids, uint256 totalClaimable, uint256 totalPending)",
+      "function checkPendingAssets(uint256[] requestIds) view returns (uint256[] ids, uint256 totalClaimable, uint256 totalPending)",
+      "function checkPendingStatus() view returns (uint256 pending, uint256 executable)",
+      "function claimAllPendingAssets()",
+      "function claimAllPendingAssetsByIds(uint256[] claimableRequestIds, uint256[] hints)",
+      "function clear() returns (uint256 amount)",
+      "function deposit() payable",
+      "function getClaimableAndPendingValue() view returns (uint256 value)",
+      "function getClaimableValue() view returns (uint256 value)",
+      "function getInvestedValue() view returns (uint256 value)",
+      "function getPendingValue() view returns (uint256 value)",
+      "function getRequestIds() view returns (uint256[] requestIds)",
+      "function getRequestIdsLen() view returns (uint256 requestIdsLength)",
+      "function getStETHWithdrawalStatus() view returns (uint256[] requestIds, tuple(uint256 amountOfStETH, uint256 amountOfShares, address owner, uint256 timestamp, bool isFinalized, bool isClaimed)[] statuses)",
+      "function getStETHWithdrawalStatusForIds(uint256[] requestIds) view returns (tuple(uint256 amountOfStETH, uint256 amountOfShares, address owner, uint256 timestamp, bool isFinalized, bool isClaimed)[] statuses)",
+      "function getTotalValue() view returns (uint256 value)",
+      "function governance() view returns (address)",
+      "function instantWithdraw(uint256 _amount) returns (uint256 actualAmount)",
+      "function manager() view returns (address)",
+      "function name() view returns (string)",
+      "function setGovernance(address _governance)",
+      "function stETHWithdrawalQueue() view returns (address)",
+      "function swapManager() view returns (address)",
+      "function withdraw(uint256 _ethAmount) returns (uint256 actualAmount)"
     ],
     "0x6c21303F5986180B1394d2C89f3e883890E2867b": [
       "constructor()",
@@ -1147,6 +1368,9 @@
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
+    ],
+    "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": [
+      "constructor(address _singleton)"
     ],
     "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a": [
       "constructor(address _logic, address admin_, bytes _data) payable",

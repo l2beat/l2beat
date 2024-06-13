@@ -1,7 +1,7 @@
 import {
   type CollectionEntry,
   getCollectionEntry,
-} from '~/content/getCollection'
+} from '~/content/get-collection'
 import { formatPublicationDate } from '~/utils/dates'
 import {
   type GovernanceAuthorEntry,

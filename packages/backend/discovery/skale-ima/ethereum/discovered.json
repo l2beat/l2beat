@@ -3,11 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -75,6 +77,11 @@
     {
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
+      "ignoreInWatchMode": [
+        "minTransactionGas",
+        "multiplierDivider",
+        "multiplierNumerator"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
@@ -135,6 +142,14 @@
     {
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+      "ignoreInWatchMode": [
+        "gasLimit",
+        "headerMessageGasCost",
+        "messageGasCost",
+        "messageInProgress",
+        "MESSAGES_LENGTH",
+        "REVERT_REASON_LENGTH"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",

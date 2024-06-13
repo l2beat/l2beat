@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x364eb4495a1aacc8fd3c9624961817343aa51e97
+
+# Diff at Mon, 10 Jun 2024 18:24:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d3c8c03ba1310e94fe51ccffffb90b46e5ec9ea9 block: 20054153
+- current block number: 20063194
+
+## Description
+
+Moved consumeTokenQuota from beginning to very end of _transferTokens function. Quota manager contract is currently not set.
+
+## Watched changes
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
++        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
+      implementations.0:
+-        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
++        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
+      values.impl:
+-        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
++        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@20054153 => .flat}/SharedERC20Vault/ERC20Vault.sol | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x11db6f6b7eec90e64b2483ebac75da462cc2cc5a
 
 # Diff at Sun, 09 Jun 2024 12:06:08 GMT:

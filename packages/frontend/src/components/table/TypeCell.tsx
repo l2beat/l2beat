@@ -49,9 +49,9 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
           Icon={OVMIcon}
         />
       )}
-      {provider === 'zkSync Lite' && (
+      {provider === 'ZKsync Lite' && (
         <TypeTooltip
-          text="This project is based on zkSync Lite's code base."
+          text="This project is based on ZKsync Lite's code base."
           Icon={ZkSyncLiteIcon}
         />
       )}

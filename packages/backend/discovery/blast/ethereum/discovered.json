@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976249,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -40,7 +40,11 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19976235],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 19976235
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -107,6 +111,7 @@
     {
       "name": "BlastMultisig",
       "address": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -167,14 +172,14 @@
         "optimismPortal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
         "overhead": 0,
         "owner": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279134670319890990156",
         "sequencerInbox": "0xFf00000000000000000000000000000000081457",
         "startBlock": 19300387,
@@ -254,6 +259,7 @@
     {
       "name": "BridgeOwner",
       "address": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
+      "template": "GnosisSafe",
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

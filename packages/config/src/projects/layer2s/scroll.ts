@@ -64,13 +64,15 @@ export const scroll: Layer2 = {
       apps: [
         'https://scroll.io/bridge',
         'https://uniswap-showcase.sepolia.scroll.xyz/',
+        'https://scroll.io/sessions',
       ],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
-        'https://blockscout.scroll.io',
         'https://ondora.xyz/network/scroll',
         'https://scroll.l2scan.co/',
+        'https://okx.com/web3/explorer/scroll',
+        'https://scroll.nftscan.com/',
       ],
       repositories: [
         'https://github.com/scroll-tech/scroll',

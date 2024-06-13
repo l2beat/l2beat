@@ -2,7 +2,7 @@
 import { ConnectKitButton } from 'connectkit'
 import Link from 'next/link'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
-import { formatAddress } from '~/app/utils/format-address'
+import { formatAddress } from '~/utils/format-address'
 import { ChangeButton } from '../change-button'
 
 export function WalletInfo() {

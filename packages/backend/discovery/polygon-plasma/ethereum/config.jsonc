@@ -35,6 +35,9 @@
     "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
   },
   "overrides": {
+    "PolygonMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "InstaAaveV2": {
       "ignoreDiscovery": true
     },
@@ -146,9 +149,6 @@
     },
     "MaticWETH": {
       "ignoreInWatchMode": ["totalSupply"]
-    },
-    "PolygonMultisig": {
-      "ignoreMethods": ["nonce"]
     }
   }
 }

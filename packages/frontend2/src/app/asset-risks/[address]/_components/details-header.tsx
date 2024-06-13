@@ -1,6 +1,6 @@
 import { isAddress } from 'viem'
-import { formatAddress } from '~/app/utils/format-address'
-import { formatNumberWithCommas } from '~/app/utils/format-number'
+import { formatAddress } from '~/utils/format-address'
+import { formatNumberWithCommas } from '~/utils/format-number'
 import { Card } from '../../_components/card'
 import { Breakdown } from './breakdown'
 import { ChangeWalletButton } from './change-wallet-button'

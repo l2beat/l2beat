@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20024504,
   "configHash": "0xe1d673231ca5f2c962b937026d1b9abaea422017a4cda186035dabda2ec70a48",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -127,6 +127,7 @@
     {
       "name": "RollupProxy",
       "address": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
+      "template": "orbitstack/RollupProxy",
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -233,7 +234,12 @@
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
         "keySetUpdates": 1,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
@@ -302,6 +308,8 @@
     {
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

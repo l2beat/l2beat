@@ -3,19 +3,20 @@ import { type Metadata } from 'next'
 import { toDataURL } from 'qrcode'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { OutLink } from '~/app/_components/out-link'
-import { showGitcoinOption } from '~/flags'
+import { env } from '~/env'
 import OutLinkIcon from '~/icons/outlink.svg'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { fundingSources } from './funding-sources'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = getDefaultMetadata({
   title: 'Donate - L2BEAT',
   openGraph: {
     url: '/donate',
   },
-}
+})
 
 export default async function Page() {
-  const gitcoinOption = await showGitcoinOption()
+  const gitcoinOption = env.NEXT_PUBLIC_GITCOIN_ROUND_LIVE
 
   const donateAddress = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
   const qrCodeUrl = await toDataURL(donateAddress, {
@@ -40,7 +41,7 @@ export default async function Page() {
       linkURL: `https://optimistic.etherscan.io/address/${donateAddress}`,
     },
     {
-      name: 'zkSync Lite',
+      name: 'ZKsync Lite',
       linkURL: `https://zkscan.io/explorer/accounts/${donateAddress}`,
     },
     gitcoinOption && {

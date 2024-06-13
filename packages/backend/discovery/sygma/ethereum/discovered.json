@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532229,
   "configHash": "0xab514b0310c481b6a325f6922fdd16a9bddd9aa666b3392e430d15f61def83c7",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "FeeHandlerRouter",
@@ -71,6 +71,8 @@
     {
       "name": "Community Multisig",
       "address": "0xc4d8b2F5501C765dE0C5E12550118F397B197D05",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -112,6 +114,8 @@
     {
       "name": "Admin Multisig",
       "address": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

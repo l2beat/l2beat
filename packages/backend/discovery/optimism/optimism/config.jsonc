@@ -21,6 +21,7 @@
   ],
   "names": {
     "0x4200000000000000000000000000000000000010": "L2StandardBridge",
+    "0x4200000000000000000000000000000000000011": "SequencerFeeVault",
     "0x420000000000000000000000000000000000000F": "GasPriceOracle",
     "0x4200000000000000000000000000000000000042": "OPToken",
     "0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
@@ -34,9 +35,12 @@
     "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge"
   },
   "overrides": {
+    "SequencerFeeVault": {
+      "ignoreMethods": ["totalProcessed"]
+    },
     "GasPriceOracle": {
       "ignoreMethods": ["overhead", "scalar"],
-      "ignoreInWatchMode": ["l1BaseFee"]
+      "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
     },
     "OPToken": {
       "ignoreMethods": ["getPastTotalSupply"]
@@ -54,7 +58,8 @@
         "hash",
         "number",
         "timestamp",
-        "sequenceNumber"
+        "sequenceNumber",
+        "blobBaseFee"
       ]
     },
     "L2ToL1MessagePasser": {

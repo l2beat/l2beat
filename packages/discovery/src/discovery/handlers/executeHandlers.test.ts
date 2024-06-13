@@ -9,6 +9,7 @@ import { executeHandlers } from './executeHandlers'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'
+import { toFunctionFragment } from './utils/toFunctionFragment'
 
 describe(executeHandlers.name, () => {
   const BLOCK_NUMBER = 1234
@@ -262,6 +263,7 @@ describe(executeHandlers.name, () => {
   it('handles multicallable handlers', async () => {
     const ADDRESS = EthereumAddress.random()
     const method = 'function foo() external view returns (uint256)'
+    const fragment = toFunctionFragment(method)
     const selector = 'c2985578'
     const provider = providerWithStorage({
       1: 123,
@@ -304,7 +306,7 @@ describe(executeHandlers.name, () => {
     )
 
     expect(values).toEqual([
-      { field: 'foo', value: 0x12345678 },
+      { field: 'foo', fragment, value: 0x12345678 },
       { field: 'a', value: 123, ignoreRelative: undefined },
     ])
   })
@@ -312,6 +314,7 @@ describe(executeHandlers.name, () => {
   it('handles multicallable handlers with dependencies', async () => {
     const ADDRESS = EthereumAddress.random()
     const method = 'function foo() external view returns (uint256)'
+    const fragment = toFunctionFragment(method)
     const selector = 'c2985578'
     const provider = mockObject<DiscoveryProvider>({
       async call() {
@@ -361,7 +364,7 @@ describe(executeHandlers.name, () => {
     )
 
     expect(values).toEqual([
-      { field: 'foo', value: 3 },
+      { field: 'foo', fragment, value: 3 },
       {
         field: 'bar',
         value: [0x12345678, 0x12345678, 0x12345678],

@@ -12,11 +12,9 @@ export const storybookBuildContext: PageBuildContext = {
       gitcoinOption: true,
       hiringBadge: true,
       buildAllProjectPages: true,
-      governancePage: true,
       costsPage: true,
       zkCatalog: true,
       tvl2: true,
-      glossary: true,
       layer3sTvl: true,
     },
     links: {

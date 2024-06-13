@@ -26,6 +26,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { form } from './form'
 import { frame } from './frame'
@@ -50,6 +51,7 @@ import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
+import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
@@ -95,6 +97,7 @@ import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
@@ -146,6 +149,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  ethernity,
   everclear,
   form,
   frame,
@@ -169,6 +173,7 @@ export const layer2s: Layer2[] = [
   linea,
   lisk,
   loopring,
+  lumia,
   lyra,
   mantapacific,
   mantle,
@@ -214,6 +219,7 @@ export const layer2s: Layer2[] = [
   sxt,
   taiko,
   tanx,
+  telos,
   ten,
   termstructure,
   tradable,
