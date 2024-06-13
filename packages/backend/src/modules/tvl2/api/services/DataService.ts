@@ -26,38 +26,56 @@ export class DataService {
     this.$.logger = $.logger.for(this)
   }
 
-  async getValuesForProjects(projects: ApiProject[], lastHour: UnixTime) {
+  async getValuesForProjects(
+    projects: ApiProject[],
+    targetTimestamp: UnixTime,
+  ) {
     const values = await this.$.valueRepository.getForProjects(
       projects.map((p) => p.id),
     )
+    const valuesByProject = groupBy(values, 'projectId')
 
-    const valuesToSync = filterTimestamps(
-      values,
-      this.$.syncOptimizer.sixHourlyCutOff,
-      this.$.syncOptimizer.hourlyCutOff,
-    )
+    const result: Dictionary<Dictionary<ValueRecord[]>> = {}
 
-    const valuesByProject = groupBy(valuesToSync, 'projectId')
-
-    const valuesByProjectByTimestamp: Dictionary<Dictionary<ValueRecord[]>> = {}
-
-    for (const [projectId, valueByProject] of Object.entries(valuesByProject)) {
-      const vv = groupBy(valueByProject, 'timestamp')
+    for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const filteredValues = filterSources(vv, project)
+      const filteredValues = Object.fromEntries(
+        Object.entries(valuesByTimestamp).map(([timestamp, values]) => {
+          if (!this.shouldTimestampBeCalculated(new UnixTime(+timestamp))) {
+            return []
+          }
+
+          const configuredSources = getConfiguredSourcesForTimestamp(
+            values,
+            project,
+            new UnixTime(+timestamp),
+          )
+
+          const onlyConfiguredValues = values.filter((v) =>
+            configuredSources.includes(v.dataSource),
+          )
+
+          if (onlyConfiguredValues.length !== values.length) {
+            this.$.logger.warn(`Redundant values for ${projectId}`)
+          }
+
+          return [timestamp, onlyConfiguredValues]
+        }),
+      )
 
       // TODO: Interpolate here
       assert(
-        vv[lastHour.toString()],
-        `Missing value for last hour for ${projectId}, timestamp: ${lastHour.toString}`,
+        valuesByTimestamp[targetTimestamp.toString()],
+        `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString}`,
       )
 
-      valuesByProjectByTimestamp[projectId] = filteredValues
+      result[projectId] = filteredValues
     }
 
-    return valuesByProjectByTimestamp
+    return result
   }
 
   async getPricesAndAmountsForToken(
@@ -153,51 +171,23 @@ export class DataService {
       timestamp,
     )
   }
-}
 
-export function filterSources(
-  vv: Dictionary<ValueRecord[]>,
-  project: ApiProject,
-) {
-  return Object.fromEntries(
-    Object.entries(vv).map(([timestamp, values]) => {
-      const configuredSources = getConfiguredSources(
-        values,
-        project,
-        new UnixTime(+timestamp),
-      )
-
-      // TODO; add log here that we have too much data in the db
-
-      return [
-        timestamp,
-        values.filter((v) => configuredSources.includes(v.dataSource)),
-      ]
-    }),
-  )
-}
-
-export function filterTimestamps(
-  values: ValueRecord[],
-  sixHourlyCutOff: UnixTime,
-  hourlyCutOff: UnixTime,
-) {
-  return values.filter((value) => {
-    if (value.timestamp.isFull('day')) {
+  shouldTimestampBeCalculated(timestamp: UnixTime) {
+    if (timestamp.isFull('day')) {
       return true
     }
 
-    if (value.timestamp.isFull('six hours')) {
-      return value.timestamp.gte(sixHourlyCutOff)
+    if (timestamp.isFull('six hours')) {
+      return timestamp.gte(this.$.syncOptimizer.sixHourlyCutOff)
     }
 
-    if (value.timestamp.isFull('hour')) {
-      return value.timestamp.gte(hourlyCutOff)
+    if (timestamp.isFull('hour')) {
+      return timestamp.gte(this.$.syncOptimizer.hourlyCutOff)
     }
-  })
+  }
 }
 
-function getConfiguredSources(
+function getConfiguredSourcesForTimestamp(
   values: ValueRecord[],
   project: ApiProject,
   timestamp: UnixTime,
