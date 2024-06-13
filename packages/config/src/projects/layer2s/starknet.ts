@@ -53,7 +53,7 @@ const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
-const ESCROW_EKUBO_ADDRESS = '0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
+const ESCROW_MULTIBRIDGE_ADDRESS = '0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -103,8 +103,18 @@ const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_STRK_ADDRESS,
   'upgradeDelay',
 )
-const escrowEKUBODelaySeconds = discovery.getContractUpgradeabilityParam(
-  ESCROW_EKUBO_ADDRESS,
+const escrowMULTIBRIDGEDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_MULTIBRIDGE_ADDRESS,
+  'upgradeDelay',
+)
+
+const starkgateManagerDelaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkgateManager',
+  'upgradeDelay',
+)
+
+const starkgateRegistryDelaySeconds = discovery.getContractUpgradeabilityParam(
+  'StarkgateRegistry',
   'upgradeDelay',
 )
 
@@ -117,7 +127,7 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
-  escrowEKUBODelaySeconds,
+  escrowMULTIBRIDGEDelaySeconds,
   getSHARPVerifierUpgradeDelay(),
 )
 
@@ -388,13 +398,13 @@ export const starknet: Layer2 = {
         upgradableBy: ['BridgeMultisig'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_EKUBO_ADDRESS),
+        address: EthereumAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO'],
         description:
-          'StarkGate bridge for EKUBO.' +
+          'StarkGate bridge for EKUBO (and potentially other tokens listed via StarkgateManager).' +
           ' ' +
           escrowEKUBOMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowEKUBODelaySeconds),
+        upgradeDelay: formatSeconds(escrowMULTIBRIDGEDelaySeconds),
         upgradableBy: ['StarkGate EKUBO owner'],
       }),
     ],
@@ -802,6 +812,18 @@ export const starknet: Layer2 = {
         'L1DaiGateway',
         'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
       ),
+      discovery.getContractDetails('StarkgateManager', {
+        description:
+          'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
+        upgradableBy: ['StarkGate MultiBridge Admin'],
+        upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
+      }),
+      discovery.getContractDetails('StarkgateRegistry', {
+        description:
+          'A central registry contract to map token addresses to their StarkGate bridge contract.',
+        upgradableBy: ['StarkGate MultiBridge Admin'],
+        upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
@@ -962,17 +984,11 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
         delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
     },
     {
-      name: 'StarkGate EKUBO owner',
-      accounts: getProxyGovernance(discovery, ESCROW_EKUBO_ADDRESS),
+      name: 'StarkGate MultiBridge Admin',
+      accounts: getProxyGovernance(discovery, ESCROW_MULTIBRIDGE_ADDRESS),
       description:
-        'Can upgrade implementation of the EKUBO escrow, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromSeconds(escrowEKUBODelaySeconds),
-    },
-    {
-      name: 'StarkGate Manager',
-      accounts: [discovery.getPermissionedAccount('EKUBOBridge', 'manager')],
-      description:
-        'The StarkGate Manager can add bridging support for a new token, deactivate deposits for a token, or block tokens from being deployed through the bridge.',
+        'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract.' +
+        delayDescriptionFromSeconds(escrowMULTIBRIDGEDelaySeconds),
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
