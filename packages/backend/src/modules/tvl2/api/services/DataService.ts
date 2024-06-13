@@ -59,7 +59,12 @@ export class DataService {
           )
 
           if (onlyConfiguredValues.length !== values.length) {
-            this.$.logger.warn(`Redundant values for ${projectId}`)
+            this.$.logger.warn(
+              `Redundant values for ${projectId} at ${timestamp} sources: ${values
+                .filter((v) => !configuredSources.includes(v.dataSource))
+                .map((v) => v.dataSource)
+                .join(', ')}`,
+            )
           }
 
           return [timestamp, onlyConfiguredValues]
