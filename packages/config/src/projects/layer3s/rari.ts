@@ -34,26 +34,20 @@ export const rari: Layer3 = orbitStackL3({
     }),
   ],
   nonTemplateEscrows: [
-    {
-      ...discovery.getEscrowDetails({
-        chain: 'arbitrum',
-        includeInTotal: false,
-        address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      }),
-    },
-    {
-      ...discovery.getEscrowDetails({
-        chain: 'arbitrum',
-        includeInTotal: false,
-        address: EthereumAddress('0x8bE956aB42274056ef4471BEb211b33e258b7324'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
-      }),
-    },
+    discovery.getEscrowDetails({
+      includeInTotal: false,
+      address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
+    discovery.getEscrowDetails({
+      includeInTotal: false,
+      address: EthereumAddress('0x8bE956aB42274056ef4471BEb211b33e258b7324'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
+    }),
   ],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

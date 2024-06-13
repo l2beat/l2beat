@@ -2,7 +2,11 @@ import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { utils } from 'ethers'
 
 import { assert } from '@l2beat/backend-tools'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import {
+  DiscoveryContract,
+  DiscoveryCustomType,
+} from '../config/RawDiscoveryConfig'
+import { getCustomTypeCaster, isCustomTypeCaster } from '../type-casters'
 import {
   TupleType,
   Type,
@@ -14,6 +18,7 @@ import { HandlerResult } from './Handler'
 export function getValuesAndErrors(
   results: HandlerResult[],
   fieldOverrides?: DiscoveryContract['fields'],
+  types?: Record<string, DiscoveryCustomType>,
 ): {
   values: ContractParameters['values']
   errors: ContractParameters['errors']
@@ -25,9 +30,17 @@ export function getValuesAndErrors(
       const returnType = (fieldOverrides ?? {})[result.field]?.returnType
       if (returnType !== undefined && returnType !== null) {
         const type = parseReturnType(returnType)
-        values[result.field] = reencodeWithReturnType(result.value, type)
+        values[result.field] = reencodeWithReturnType(
+          result.value,
+          type,
+          types ?? {},
+        )
       } else {
-        values[result.field] = reencodeWithABI(result.value, result.fragment)
+        values[result.field] = reencodeWithABI(
+          result.value,
+          result.fragment,
+          types ?? {},
+        )
       }
     }
     if (result.error !== undefined) {
@@ -40,23 +53,25 @@ export function getValuesAndErrors(
 function reencodeWithABI(
   value: ContractValue,
   fragment: utils.FunctionFragment | undefined,
+  types: Record<string, DiscoveryCustomType>,
 ): ContractValue {
   if (fragment === undefined || fragment.outputs === undefined) {
     return value
   }
 
   const type = getReturnType(fragment)
-  return reencodeWithReturnType(value, type)
+  return reencodeWithReturnType(value, type, types)
 }
 
 function reencodeWithReturnType(
   value: ContractValue,
   type: TupleType,
+  types: Record<string, DiscoveryCustomType>,
 ): ContractValue {
   if (type.elements.length === 1) {
     const firstElement = type.elements[0]
     assert(firstElement !== undefined)
-    return reencodeType(value, firstElement.type)
+    return reencodeType(value, firstElement.type, types)
   } else {
     assert(Array.isArray(value))
     const names = type.elements.map((o) => o.name)
@@ -65,14 +80,18 @@ function reencodeWithReturnType(
       const outputElement = type.elements[i]
       assert(element !== undefined)
       assert(outputElement !== undefined)
-      return [name, reencodeType(element, outputElement.type)]
+      return [name, reencodeType(element, outputElement.type, types)]
     })
 
     return asObjectIfValidKeys(entries)
   }
 }
 
-function reencodeType(value: ContractValue, paramType: Type): ContractValue {
+function reencodeType(
+  value: ContractValue,
+  paramType: Type,
+  types: Record<string, DiscoveryCustomType>,
+): ContractValue {
   assert(
     valueShapeMatchesType(value, paramType),
     "The data shape of the value doesn't match the type",
@@ -81,7 +100,7 @@ function reencodeType(value: ContractValue, paramType: Type): ContractValue {
   if (paramType.kind === 'array') {
     const array = value as ContractValue[]
     return array.map((v) => {
-      return reencodeType(v, paramType.childType)
+      return reencodeType(v, paramType.childType, types)
     })
   }
   if (paramType.kind === 'tuple') {
@@ -89,10 +108,23 @@ function reencodeType(value: ContractValue, paramType: Type): ContractValue {
     const entries = array.map((v, i) => {
       const element = paramType.elements[i]
       assert(element !== undefined)
-      return [element.name, reencodeType(v, element.type)]
+      return [element.name, reencodeType(v, element.type, types)]
     })
 
     return asObjectIfValidKeys(entries)
+  }
+
+  if (isCustomTypeCaster(paramType.typeName)) {
+    let typeCasterName = paramType.typeName
+    let typeCasterArg = {}
+
+    const typeDefinition = types[paramType.typeName]
+    if (typeDefinition?.typeCaster !== undefined) {
+      typeCasterName = typeDefinition.typeCaster
+      typeCasterArg = typeDefinition.arg ?? {}
+    }
+
+    return getCustomTypeCaster(typeCasterName).cast(typeCasterArg, value)
   }
 
   return value

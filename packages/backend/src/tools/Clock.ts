@@ -112,12 +112,4 @@ export class Clock {
     const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
     return () => clearInterval(interval)
   }
-
-  _TVL_ONLY_getHourlyDeletionBoundary(): UnixTime {
-    return this.getLastHour().add(-REMOVE_HOURLY_AFTER_DAYS, 'days')
-  }
-
-  _TVL_ONLY_getSixHourlyDeletionBoundary(): UnixTime {
-    return this.getLastHour().add(-REMOVE_SIX_HOURLY_AFTER_DAYS, 'days')
-  }
 }
