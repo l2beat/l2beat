@@ -84,7 +84,7 @@ async function getFullGovernance(
   values.add(deployer.toString())
 
   for (const { event } of events) {
-    values.add(getString(event.args['acceptedGovernor']))
+    values.add(getString(event['acceptedGovernor']))
   }
   return Array.from(values)
 }
