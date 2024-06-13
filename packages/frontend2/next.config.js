@@ -32,6 +32,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/data-availability',
+        destination: '/data-availability/summary',
+        permanent: false,
+      },
+      {
         source: '/jobs',
         destination:
           'https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f',
