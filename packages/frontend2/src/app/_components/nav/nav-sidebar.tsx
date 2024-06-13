@@ -47,7 +47,7 @@ export async function NavSidebar({
           <NavLinkGroup key={group.title} title={group.title}>
             {group.links.map(
               (link) =>
-                link.enabled && (
+                !link.disabled && (
                   <NavLink
                     key={link.href}
                     title={link.title}
