@@ -11,7 +11,7 @@
     "0x3ca373F5ecB92ac762f9876f6e773082A4589995": "LightLinkBridge",
     "0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9": "LightLinkERC20Bridge",
     "0x624631881655a310adcF0d1336658Cc977609b72": "L1BridgeRegistry",
-    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "Multisig",
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "LightLinkMultisig",
     "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": "CanonicalStateChain",
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": "Challenge",
     "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": "ChainOracle"
@@ -50,10 +50,26 @@
             "args": [],
             "expectRevert": true
           }
+        },
+        "validators": {
+          "handler": {
+            "type": "call",
+            "method": "function getValidators() view returns (tuple(address addr, uint256 power)[])",
+            "args": []
+          }
         }
+        // "validators": {
+        //   "handler": {
+        //       "type": "arrayFromTwoEvents",
+        //       "addEvent": "ValidatorsModifed",
+        //       "addKey": "_accounts",
+        //       "removeEvent": "ValidatorsRemoved",
+        //       "removeKey": "_accounts"
+        //   }
+        // }
       }
     },
-    "Multisig": {
+    "LightLinkMultisig": {
       "ignoreMethods": [
         "getTransaction", // too many values
         "transactions" // too many values

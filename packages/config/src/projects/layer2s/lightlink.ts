@@ -5,7 +5,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import {
-  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -32,6 +31,28 @@ const CSCowner = discovery.getContractValue<string>(
   'CanonicalStateChain',
   'owner',
 )
+
+const LightLinkMultisig = discovery.getContractValue<string>(
+  'L1BridgeRegistry',
+  'multisig',
+)
+
+const validators = discovery
+  .getContractValue<string[]>('L1BridgeRegistry', 'validators')
+  .map((validator) => validator[0])
+const totalVotingPower = discovery
+  .getContractValue<string[]>('L1BridgeRegistry', 'validators')
+  .map((validator) => Number(validator[1]))
+  .reduce((a, b) => a + b, 0)
+const validatorThreshold = discovery.getContractValue<number>(
+  'L1BridgeRegistry',
+  'consensusPowerThreshold',
+)
+const validatorThresholdPercentage = (
+  (validatorThreshold / totalVotingPower) *
+  100
+).toFixed(2)
+
 const publisher = discovery.getContractValue<string>(
   'CanonicalStateChain',
   'publisher',
@@ -71,16 +92,16 @@ export const lightlink: Layer2 = {
   config: {
     associatedTokens: ['LL'],
     escrows: [
-      {
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
         sinceTimestamp: new UnixTime(1692181067),
         tokens: ['ETH'],
-      },
-      {
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
         sinceTimestamp: new UnixTime(1692185219),
         tokens: '*',
-      },
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -118,10 +139,10 @@ export const lightlink: Layer2 = {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     },
     proposerFailure: {
+      value: 'Use permissioned escape hatch',
       description:
-        'Only the whitelisted publisher is allowed to push new state roots to the CSC contract on L1. The LightLink DAO can replace the publisher if a block is successfully challenged.',
+        'Users are able to exit by submitting a syncWithdraw() transaction directly on L1. To be accepted, the transation requires signatures from a permissioned set of validators with enough voting power to reach the required threshold.',
       sentiment: 'bad',
-      value: 'Cannot withdraw',
     },
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -161,9 +182,17 @@ export const lightlink: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        name: 'Regular exit',
+        description:
+          'Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available historical data. Users can exit the network once enough validators have signed off on the withdrawal.',
         references: [],
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'the permissioned validators do not authorise L1 bridge withdrawals.',
+            isCritical: true,
+          },
+        ],
       },
     ],
   },
@@ -179,6 +208,10 @@ export const lightlink: Layer2 = {
           'The Challenge contract is used to challenge block headers on the LightLink chain. If a block header is successfully challenged, the publisher can be replaced.',
         ...upgradesLightLink,
       }),
+      discovery.getContractDetails('L1BridgeRegistry', {
+        description:
+          'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
+      }),
       discovery.getContractDetails('ChainOracle', {
         description:
           'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
@@ -188,22 +221,39 @@ export const lightlink: Layer2 = {
         name: 'DaOracle',
         address: EthereumAddress(daOracle),
         description:
-          'The DABridge contract used to verify shares inclusion in the ChainOracle provideShares() function. If no DAOracle is set, data shares cannot be verified and stored in the ChainOracle contract.',
+          'The DABridge contract used to verify shares inclusion in the ChainOracle provideShares() function. If not set, data shares cannot be verified and stored in the ChainOracle contract.',
       },
     ],
     risks: [],
   },
   permissions: [
     {
+      name: 'Validators',
+      description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+      accounts: validators.map((address) => ({
+        address: EthereumAddress(address),
+        type: 'EOA',
+      })),
+    },
+    {
       name: 'Publisher',
       accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
       description:
-        'The publisher is responsible for pushing new state roots to the CSC contract on L1.',
+        'The publisher is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
+    },
+    {
+      name: 'LightLinkMultisig',
+      accounts: [
+        { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
+      ],
+      description:
+        'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power.',
     },
     {
       name: 'LightLinkAdmin',
       accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
-      description: '',
+      description:
+        'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the publisher and core system parameters.',
     },
   ],
 }

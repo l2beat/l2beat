@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9a75ecd93689ea16fa10b84be27fe4ef94aba25d
+Generated with discovered.json: 0xfffcba1b324e89e06ec5418eaa43562243d7f249
 
-# Diff at Tue, 11 Jun 2024 15:59:59 GMT:
+# Diff at Thu, 13 Jun 2024 10:41:46 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@d9af418fd1e3a202fc32c7e04b57a386f988dfc8 block: 20061082
-- current block number: 20069637
+- comparing to: main@9b539b55e8e7d4d20892b6f527f5c9e27bd65f80 block: 20061082
+- current block number: 20082369
 
 ## Description
 
@@ -26,6 +26,15 @@ discovery. Values are for block 20061082 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Multisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      name:
+-        "Multisig"
++        "LightLinkMultisig"
+    }
+```
+
+```diff
     contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
     +++ description: None
       values.getValidators.4:
@@ -43,6 +52,8 @@ discovery. Values are for block 20061082 (main branch discovery), not current.
       values.getValidators.0:
 -        ["0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",40]
 +        {"addr":"0x12eCE4AA73ee8ea958bE327daE41Dd785c997118","power":40}
+      values.validators:
++        [["0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",40],["0x6f933814903561F79137099587737DFB24c6E86D",20],["0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",20],["0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",40],["0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",40]]
     }
 ```
 
