@@ -49,7 +49,7 @@ const LightLinkMultisig = discovery.getContractValue<string>(
 )
 
 const validators = discovery
-  .getContractValue<any[]>('L1BridgeRegistry', 'getValidators')
+  .getContractValue<{addr: string, power: number}[]>('L1BridgeRegistry', 'getValidators')
 
 const totalVotingPower = validators.map((validator) => validator.power)
   .reduce((a, b) => a + b, 0)
