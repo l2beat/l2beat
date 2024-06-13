@@ -19,10 +19,9 @@ import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
-import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
+import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 import { createRepositories } from '@l2beat/database'
 import { createCurrentPricesModule } from './modules/current-prices/CurrentPricesModule'
-import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
