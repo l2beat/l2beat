@@ -92,12 +92,12 @@ export function makeConfig(
     },
     database: isLocal
       ? {
-          connection: env.string('LOCAL_DB_URL').includes('localhost')
-            ? env.string('LOCAL_DB_URL')
-            : {
-                connectionString: env.string('LOCAL_DB_URL'),
-                ssl: { rejectUnauthorized: false },
-              },
+          connection: {
+            connectionString: env.string('LOCAL_DB_URL'),
+            ssl: !env.string('LOCAL_DB_URL').includes('localhost')
+              ? { rejectUnauthorized: false }
+              : undefined,
+          },
           freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {

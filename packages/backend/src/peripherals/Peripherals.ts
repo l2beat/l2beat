@@ -3,10 +3,11 @@ import { HttpClient } from '@l2beat/shared'
 import { isEqual } from 'lodash'
 
 import { BaseRepository } from './database/BaseRepository'
-import { Database } from './database/Database'
+import { Database as LegacyDatabase } from './database/Database'
+import { Database } from '@l2beat/database'
 
 interface RepositoryClass<T extends BaseRepository> {
-  new (database: Database, logger: Logger): T
+  new (database: LegacyDatabase, logger: Logger): T
 }
 
 export interface ClientClass<T, O> {
@@ -29,9 +30,10 @@ export class Peripherals {
   > = new Map()
 
   constructor(
+    private readonly legacyDatabase: LegacyDatabase,
     public readonly database: Database,
-    public readonly httpClient: HttpClient,
-    public readonly logger: Logger,
+    private readonly httpClient: HttpClient,
+    private readonly logger: Logger,
   ) {}
 
   /**
@@ -41,7 +43,7 @@ export class Peripherals {
   getRepository<T extends BaseRepository>(clazz: RepositoryClass<T>): T {
     let repository = this.repositories.get(clazz)
     if (!repository) {
-      repository = new clazz(this.database, this.logger)
+      repository = new clazz(this.legacyDatabase, this.logger)
       this.repositories.set(clazz, repository)
     }
     return repository as T

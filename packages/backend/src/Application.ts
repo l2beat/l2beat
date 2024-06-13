@@ -20,6 +20,8 @@ import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
+import { createRepositories } from '@l2beat/database'
+import { createCurrentPricesModule } from './modules/current-prices/CurrentPricesModule'
 
 export class Application {
   start: () => Promise<void>
@@ -33,13 +35,16 @@ export class Application {
     }
 
     const database = new Database(config.database, logger, config.name)
+
+    const kyselyDatabase = createRepositories(config.database.connection)
+
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(database, http, logger)
+    const peripherals = new Peripherals(database, kyselyDatabase, http, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
@@ -66,6 +71,7 @@ export class Application {
       createTvl2Module(config, logger, peripherals, clock),
       createVerifiersModule(config, logger, peripherals),
       createFeaturesModule(config),
+      createCurrentPricesModule(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

@@ -59,7 +59,12 @@ export interface ApiConfig {
 }
 
 export interface DatabaseConfig {
-  readonly connection: Knex.Config['connection']
+  readonly connection: {
+    connectionString: string
+    ssl?: {
+      rejectUnauthorized?: boolean
+    }
+  }
   readonly freshStart: boolean
   readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
