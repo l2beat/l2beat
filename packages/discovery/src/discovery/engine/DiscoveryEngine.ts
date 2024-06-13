@@ -100,6 +100,7 @@ export class DiscoveryEngine {
           const analysis = await this.addressAnalyzer.analyze(
             address,
             config.overrides.get(address),
+            config.types,
             blockNumber,
             bufferedLogger,
             templates,
@@ -159,6 +160,7 @@ export class DiscoveryEngine {
         return await this.addressAnalyzer.hasContractChanged(
           contract,
           overrides,
+          config.types,
           blockNumber,
           prevOutput.abis,
         )

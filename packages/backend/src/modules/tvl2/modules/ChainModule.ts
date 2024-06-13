@@ -27,7 +27,7 @@ import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { BlockTimestampService } from '../services/BlockTimestampService'
 import { ValueService } from '../services/ValueService'
-import { IdConverter } from '../utils/IdConverter'
+import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
@@ -44,7 +44,7 @@ export function createChainModules(
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
   priceModule: PriceModule,
-  idConverter: IdConverter,
+  configMapping: ConfigMapping,
 ): ChainModule[] {
   return config.chains
     .map((chain) =>
@@ -58,7 +58,7 @@ export function createChainModules(
         syncOptimizer,
         indexerService,
         priceModule,
-        idConverter,
+        configMapping,
       ),
     )
     .filter(notUndefined)
@@ -75,7 +75,7 @@ function createChainModule(
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
   priceModule: PriceModule,
-  idConverter: IdConverter,
+  configMapping: ConfigMapping,
 ): ChainModule | undefined {
   const chain = chainConfig.chain
 
@@ -179,7 +179,7 @@ function createChainModule(
   const parents = [priceModule.descendant, chainAmountIndexer]
   for (const [project, amountConfigs] of Object.entries(perProject)) {
     const priceConfigs = new Set(
-      amountConfigs.map((c) => idConverter.getPriceConfigFromAmountConfig(c)),
+      amountConfigs.map((c) => configMapping.getPriceConfigFromAmountConfig(c)),
     )
 
     const valueService = new ValueService({

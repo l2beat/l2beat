@@ -713,29 +713,23 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: [
-        {
-          ...templateVars.discovery.getEscrowDetails({
-            chain: templateVars.hostChain,
-            includeInTotal: false,
-            address: portal.address,
-            tokens: optimismPortalTokens,
-            description: `Main entry point for users depositing ${optimismPortalTokens.join(
-              ', ',
-            )}.`,
-            ...upgradeability,
-          }),
-        },
-        {
-          ...templateVars.discovery.getEscrowDetails({
-            chain: templateVars.hostChain,
-            includeInTotal: false,
-            address: l1StandardBridgeEscrow,
-            tokens: templateVars.l1StandardBridgeTokens ?? '*',
-            description:
-              'Main entry point for users depositing ERC20 token that do not require custom gateway.',
-            ...upgradeability,
-          }),
-        },
+        templateVars.discovery.getEscrowDetails({
+          includeInTotal: false,
+          address: portal.address,
+          tokens: optimismPortalTokens,
+          description: `Main entry point for users depositing ${optimismPortalTokens.join(
+            ', ',
+          )}.`,
+          ...upgradeability,
+        }),
+        templateVars.discovery.getEscrowDetails({
+          includeInTotal: false,
+          address: l1StandardBridgeEscrow,
+          tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          description:
+            'Main entry point for users depositing ERC20 token that do not require custom gateway.',
+          ...upgradeability,
+        }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
       transactionApi:

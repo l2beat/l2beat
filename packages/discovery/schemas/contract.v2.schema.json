@@ -33,10 +33,7 @@
           "properties": {
             "description": { "type": ["string", "null"] },
             "returnType": { "type": ["string", "null"] },
-            "severity": {
-              "type": ["string", "null"],
-              "enum": ["LOW", "MEDIUM", "HIGH", null]
-            },
+            "severity": { "$ref": "severity.schema.json" },
             "type": {
               "anyOf": [
                 { "$ref": "#/$defs/valueType" },

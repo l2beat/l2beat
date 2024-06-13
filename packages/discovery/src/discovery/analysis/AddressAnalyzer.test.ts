@@ -33,6 +33,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
@@ -116,6 +117,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(
         address,
+        undefined,
         undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
@@ -219,6 +221,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
@@ -319,6 +322,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
@@ -404,6 +408,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -412,6 +417,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -422,6 +428,7 @@ describe(AddressAnalyzer.name, () => {
           await addressAnalyzer.hasContractChanged(
             contractParameters,
             overrides,
+            undefined,
             BLOCK_NUMBER,
             abis,
           ),
@@ -478,6 +485,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -486,6 +494,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -521,6 +530,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -530,6 +540,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -572,6 +583,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -581,6 +593,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
