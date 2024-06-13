@@ -38,16 +38,13 @@ export const sanko: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
-    {
-      ...discovery.getEscrowDetails({
-        chain: 'arbitrum',
-        includeInTotal: false,
-        address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      }),
-    },
+    discovery.getEscrowDetails({
+      includeInTotal: false,
+      address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

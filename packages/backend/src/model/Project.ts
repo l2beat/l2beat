@@ -71,7 +71,10 @@ export function layer2ToProject(layer2: Layer2): Project {
       tokens:
         escrow.tokens === '*'
           ? tokenList.filter(
-              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+              (t) =>
+                t.type === 'CBV' &&
+                t.chainId === ChainId.ETHEREUM &&
+                !escrow.excludedTokens?.includes(t.symbol),
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
@@ -103,7 +106,10 @@ export function bridgeToProject(bridge: Bridge): Project {
       tokens:
         escrow.tokens === '*'
           ? tokenList.filter(
-              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+              (t) =>
+                t.type === 'CBV' &&
+                t.chainId === ChainId.ETHEREUM &&
+                !escrow.excludedTokens?.includes(t.symbol),
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
@@ -166,7 +172,9 @@ export function layer3ToProject(layer3: Layer3): Project {
         sinceTimestamp: escrow.sinceTimestamp,
         tokens:
           escrow.tokens === '*'
-            ? tokensOnChain
+            ? tokensOnChain.filter(
+                (t) => !escrow.excludedTokens?.includes(t.symbol),
+              )
             : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
         chain,
         includeInTotal: escrow.includeInTotal,

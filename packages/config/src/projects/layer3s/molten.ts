@@ -38,16 +38,13 @@ export const molten: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
-    {
-      ...discovery.getEscrowDetails({
-        chain: 'arbitrum',
-        includeInTotal: false,
-        address: EthereumAddress('0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      }),
-    },
+    discovery.getEscrowDetails({
+      includeInTotal: false,
+      address: EthereumAddress('0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

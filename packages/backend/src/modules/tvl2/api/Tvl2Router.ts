@@ -7,11 +7,24 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
-import { Tvl2Controller } from './Tvl2Controller'
+import { AggregatedService } from './services/AggregatedService'
+import { BreakdownService } from './services/BreakdownService'
+import { TokenService } from './services/TokenService'
+import { TvlService } from './services/TvlService'
+import { ApiProject, AssociatedToken } from './utils/types'
 
-export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
+export function createTvl2Router(
+  tvlService: TvlService,
+  aggregatedService: AggregatedService,
+  tokenService: TokenService,
+  breakdownService: BreakdownService,
+  projects: ApiProject[],
+  associatedTokens: AssociatedToken[],
+  clock: Clock,
+) {
   const router = new Router()
 
   router.get(
@@ -26,13 +39,16 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
         // If this endpoint is too slow and aggregation layer is to be implemented,
         // remember to add "isAssociated" to createValueId.ts
         if (ctx.query.excludeAssociatedTokens) {
-          const excluded = await controller.getExcludedTvl(
+          const excluded = await tvlService.getExcludedTvl(
             clock.getLastHour().add(-1, 'hours'),
+            projects,
+            associatedTokens,
           )
           ctx.body = excluded
         } else {
-          const tvl = await controller.getTvl(
+          const tvl = await tvlService.getTvl(
             clock.getLastHour().add(-1, 'hours'),
+            projects,
           )
           ctx.body = tvl
         }
@@ -54,10 +70,22 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
           .split(',')
           .map((slug) => slug.trim())
 
-        const tvl = await controller.getAggregatedTvl(
+        const filteredProjects = projects.filter((p) =>
+          projectSlugs.includes(p.slug),
+        )
+
+        const projectIds = filteredProjects.map((p) => p.id.toString())
+
+        const filteredAssociatedTokens = associatedTokens.filter((e) =>
+          ctx.query.excludeAssociatedTokens
+            ? projectIds.includes(e.project)
+            : false,
+        )
+
+        const tvl = await aggregatedService.getAggregatedTvl(
           clock.getLastHour().add(-1, 'hours'),
-          projectSlugs,
-          ctx.query.excludeAssociatedTokens,
+          filteredProjects,
+          filteredAssociatedTokens,
         )
         ctx.body = tvl
       },
@@ -77,10 +105,13 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
       async (ctx) => {
         const { chain, project, address } = ctx.query
 
-        ctx.body = await controller.getTokenChart(
-          { chain, address },
-          project,
+        const apiProject = projects.find((p) => p.id === project)
+        assert(apiProject, 'Project not found!')
+
+        ctx.body = await tokenService.getTokenChart(
           clock.getLastHour().add(-1, 'hours'),
+          apiProject,
+          { chain, address },
         )
       },
     ),
@@ -89,7 +120,7 @@ export function createTvl2Router(controller: Tvl2Controller, clock: Clock) {
   router.get(
     ['/api/project-assets-breakdown', '/api/tvl2/breakdown'],
     async (ctx) => {
-      const breakdown = await controller.getTvlBreakdown(
+      const breakdown = await breakdownService.getTvlBreakdown(
         // TODO: This is a temporary solution. We should use the last hour
         // instead of the hour before the last hour.
         // This should be fixed by interpolating the data for the last hour when not every project has data for it.
