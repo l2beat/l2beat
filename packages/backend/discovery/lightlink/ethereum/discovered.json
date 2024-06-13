@@ -1,8 +1,8 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 20082369,
-  "configHash": "0x63cba88d5d0ecd223b991f87e66f1f39d976a31bd7781b153cb1f95f3305b2dd",
+  "blockNumber": 20083371,
+  "configHash": "0xbf701e1642d76c19a3b50880fa7f274a190513747c1083c2e9b9d6bcdd1699d7",
   "version": 5,
   "contracts": [
     {
@@ -136,14 +136,7 @@
         ],
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "proxiableUUID": "EXPECT_REVERT",
-        "systemVerifier": "0x0000000000000000000000000000000000000000",
-        "validators": [
-          ["0x12eCE4AA73ee8ea958bE327daE41Dd785c997118", 40],
-          ["0x6f933814903561F79137099587737DFB24c6E86D", 20],
-          ["0xB44C32Dd1ec374224eED43FD827EBE64db16b0df", 20],
-          ["0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9", 40],
-          ["0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938", 40]
-        ]
+        "systemVerifier": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "L1BridgeRegistry"
     },
@@ -178,118 +171,118 @@
       "implementations": ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"],
       "sinceTimestamp": 1717522271,
       "values": {
-        "chainHead": 38,
+        "chainHead": 39,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 20081156,
-          "l2Height": 86407741,
-          "prevHash": "0x59cb3c8edfde2e7e87e68689e7885d1b6a28f9549bc9832f7fdc270dbe915760",
-          "stateRoot": "0xde4faa94e7f159a167893cce3608cb055ff401270b19a2f2f9671116351e7126",
+          "epoch": 20082759,
+          "l2Height": 86447493,
+          "prevHash": "0xb67241b5e3d4d2649a9dd04cdd30e9362312a0bbc8bc50b7a1af76f03780de30",
+          "stateRoot": "0xebe14810b5da7d59664ce962d8e075140c4c2b134ed49293b7a62ed4b18b1098",
           "celestiaPointers": [
             {
-              "height": 1660901,
+              "height": 1662550,
               "shareStart": 256,
               "shareLen": 3664
             },
             {
-              "height": 1660904,
-              "shareStart": 192,
-              "shareLen": 3665
-            },
-            {
-              "height": 1660909,
-              "shareStart": 128,
-              "shareLen": 3660
-            },
-            {
-              "height": 1660912,
-              "shareStart": 192,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660915,
+              "height": 1662553,
               "shareStart": 256,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660918,
-              "shareStart": 128,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660921,
-              "shareStart": 192,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660924,
-              "shareStart": 128,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660928,
-              "shareStart": 128,
-              "shareLen": 3663
-            },
-            {
-              "height": 1660931,
-              "shareStart": 128,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660934,
-              "shareStart": 128,
-              "shareLen": 3662
-            },
-            {
-              "height": 1660937,
-              "shareStart": 192,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660940,
-              "shareStart": 128,
-              "shareLen": 3662
-            },
-            {
-              "height": 1660943,
-              "shareStart": 320,
               "shareLen": 3661
             },
             {
-              "height": 1660946,
-              "shareStart": 256,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660950,
-              "shareStart": 320,
+              "height": 1662556,
+              "shareStart": 64,
               "shareLen": 3665
             },
             {
-              "height": 1660953,
-              "shareStart": 320,
-              "shareLen": 3665
-            },
-            {
-              "height": 1660956,
-              "shareStart": 128,
-              "shareLen": 3655
-            },
-            {
-              "height": 1660959,
-              "shareStart": 128,
-              "shareLen": 3556
-            },
-            {
-              "height": 1660963,
-              "shareStart": 320,
-              "shareLen": 3664
-            },
-            {
-              "height": 1660967,
+              "height": 1662560,
               "shareStart": 256,
+              "shareLen": 3657
+            },
+            {
+              "height": 1662563,
+              "shareStart": 128,
               "shareLen": 3660
+            },
+            {
+              "height": 1662566,
+              "shareStart": 192,
+              "shareLen": 3662
+            },
+            {
+              "height": 1662569,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662572,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662575,
+              "shareStart": 192,
+              "shareLen": 3663
+            },
+            {
+              "height": 1662578,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662581,
+              "shareStart": 256,
+              "shareLen": 3659
+            },
+            {
+              "height": 1662584,
+              "shareStart": 128,
+              "shareLen": 3652
+            },
+            {
+              "height": 1662587,
+              "shareStart": 192,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662590,
+              "shareStart": 320,
+              "shareLen": 3657
+            },
+            {
+              "height": 1662593,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662597,
+              "shareStart": 256,
+              "shareLen": 3663
+            },
+            {
+              "height": 1662600,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662603,
+              "shareStart": 256,
+              "shareLen": 3297
+            },
+            {
+              "height": 1662607,
+              "shareStart": 384,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662610,
+              "shareStart": 192,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662613,
+              "shareStart": 320,
+              "shareLen": 3664
             }
           ]
         },
