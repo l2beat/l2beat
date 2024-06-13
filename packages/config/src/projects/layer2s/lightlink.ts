@@ -211,7 +211,7 @@ export const lightlink: Layer2 = {
       }),
       discovery.getContractDetails('Challenge', {
         description:
-          'The Challenge contract is used to challenge block headers on the LightLink chain. If a block header is successfully challenged, the publisher can be replaced.',
+          'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
         ...upgradesLightLink,
       }),
       discovery.getContractDetails('L1BridgeRegistry', {
@@ -242,10 +242,10 @@ export const lightlink: Layer2 = {
       })),
     },
     {
-      name: 'Publisher',
+      name: 'Proposer',
       accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
       description:
-        'The publisher is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
+        'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
     },
     {
       name: 'LightLinkMultisig',
@@ -259,7 +259,7 @@ export const lightlink: Layer2 = {
       name: 'LightLinkAdmin',
       accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
       description:
-        'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the publisher and core system parameters.',
+        'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
     },
   ],
 }
