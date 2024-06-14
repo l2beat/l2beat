@@ -39,7 +39,7 @@ export interface ConfigFeatures {
   buildAllProjectPages: boolean
   costsPage: boolean
   zkCatalog: boolean
-  tvl2: boolean
+  tvl: boolean
   layer3sTvl: boolean
 }
 
