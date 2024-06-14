@@ -9,7 +9,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
+import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -37,7 +37,7 @@ interface ChainModule {
 }
 
 export function createChainModules(
-  config: Tvl2Config,
+  config: TvlConfig,
   peripherals: Peripherals,
   logger: Logger,
   hourlyIndexer: HourlyIndexer,
@@ -66,7 +66,7 @@ export function createChainModules(
 }
 
 function createChainModule(
-  config: Tvl2Config,
+  config: TvlConfig,
   chainConfig: ChainTvlConfig,
   amounts: AmountConfigEntry[],
   peripherals: Peripherals,

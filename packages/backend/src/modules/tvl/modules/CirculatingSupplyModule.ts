@@ -3,7 +3,7 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CirculatingSupplyEntry, ProjectId } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
-import { Tvl2Config } from '../../../config/Config'
+import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
@@ -26,7 +26,7 @@ export interface CirculatingSupplyModule {
 }
 
 export function createCirculatingSupplyModule(
-  config: Tvl2Config,
+  config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
   hourlyIndexer: HourlyIndexer,

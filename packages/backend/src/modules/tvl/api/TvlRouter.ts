@@ -16,7 +16,7 @@ import { TokenService } from './services/TokenService'
 import { TvlService } from './services/TvlService'
 import { ApiProject, AssociatedToken } from './utils/types'
 
-export function createTvl2Router(
+export function createTvlRouter(
   tvlService: TvlService,
   aggregatedService: AggregatedService,
   tokenService: TokenService,

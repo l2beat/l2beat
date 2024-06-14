@@ -5,7 +5,7 @@ import waitForExpect from 'wait-for-expect'
 
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { SyncOptimizer } from './SyncOptimizer'
 import { TvlCleaner } from './TvlCleaner'
 
 describe(TvlCleaner.name, () => {
