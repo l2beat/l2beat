@@ -65,9 +65,9 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
       }
       case iface.getSighash(blobFnName): {
         const decoded = iface.decodeFunctionData(blobFnName, data) as [
-          [[string, bigint, bigint]],
+          [[[string, bigint, bigint]]],
         ]
-        return [decoded[0][0][1], decoded[0][0][2]]
+        return [decoded[0][0][0][1], decoded[0][0][0][2]]
       }
       default:
         throw new Error(
