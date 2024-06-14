@@ -780,6 +780,7 @@ export const starknet: Layer2 = {
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
+              trustedSetup: 'None',
               link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
             },
             {
@@ -787,6 +788,7 @@ export const starknet: Layer2 = {
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
+              trustedSetup: 'None',
               link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo',
             },
             {
@@ -794,6 +796,7 @@ export const starknet: Layer2 = {
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
+              trustedSetup: 'None',
               link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os',
             },
           ],

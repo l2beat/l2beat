@@ -682,6 +682,7 @@ export const zksyncera: Layer2 = {
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
+              trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
             },
             {
@@ -689,6 +690,7 @@ export const zksyncera: Layer2 = {
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
+              trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_circuits',
             },
           ],
