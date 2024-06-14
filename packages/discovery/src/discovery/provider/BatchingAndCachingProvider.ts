@@ -351,7 +351,9 @@ export class BatchingAndCachingProvider {
 
     const uniqueNested = new Set(items.flatMap((x) => x.items))
     for (const nested of uniqueNested) {
-      nested.logRequest.resolve(nested.logs)
+      nested.logRequest.resolve(
+        nested.logs.sort(orderLogs),
+      )
     }
   }
 
