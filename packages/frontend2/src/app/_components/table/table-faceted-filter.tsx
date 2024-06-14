@@ -57,32 +57,36 @@ export function TableFacetedFilter<TData, TValue>({
   }
 
   const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
-  return showDrawer ? (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <button className="inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
-          {title}
-          <ExpandIcon
-            width={12}
-            height={12}
-            className="my-auto fill-black dark:fill-white"
+  if (showDrawer) {
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerTrigger asChild>
+          <button className="inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
+            {title}
+            <ExpandIcon
+              width={12}
+              height={12}
+              className="my-auto fill-black dark:fill-white"
+            />
+          </button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>{title}</DrawerTitle>
+          </DrawerHeader>
+          <Options
+            options={options}
+            onClick={(option) => {
+              column.setFilterValue(option)
+              setOpen(false)
+            }}
           />
-        </button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-        </DrawerHeader>
-        <Options
-          options={options}
-          onClick={(option) => {
-            column.setFilterValue(option)
-            setOpen(false)
-          }}
-        />
-      </DrawerContent>
-    </Drawer>
-  ) : (
+        </DrawerContent>
+      </Drawer>
+    )
+  }
+
+  return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button className="group inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
