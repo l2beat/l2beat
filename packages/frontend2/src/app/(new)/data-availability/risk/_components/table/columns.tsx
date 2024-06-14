@@ -22,7 +22,7 @@ export const columns = [
     header: 'DA Layer',
   }),
   columnHelper.accessor('daBridge', {
-    header: 'Da Bridge',
+    header: 'DA Bridge',
     cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.economicSecurity', {

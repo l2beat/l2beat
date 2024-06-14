@@ -76,17 +76,14 @@ export function DaRiskTable({ items }: Props) {
         <TableBody>
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                const hash = cell.column.columnDef.meta?.hash
-                const href = hash
-                  ? `/data-availability/projects/${row.original.slug}#${hash}`
-                  : `/data-availability/projects/${row.original.slug}`
-                return (
-                  <TableCell key={cell.id} href={href}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                )
-              })}
+              {row.getVisibleCells().map((cell) => (
+                <TableCell
+                  key={cell.id}
+                  href={`/data-availability/projects/${row.original.slug}`}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
