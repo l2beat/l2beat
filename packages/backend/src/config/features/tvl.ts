@@ -106,7 +106,7 @@ function getAmountsConfig(
 
       const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-      switch (token.formula) {
+      switch (token.supply) {
         case 'totalSupply':
           assert(token.address, 'Token address is required for total supply')
 

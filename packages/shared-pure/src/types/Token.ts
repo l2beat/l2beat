@@ -18,7 +18,7 @@ export interface Token {
   iconUrl?: string
   chainId: ChainId
   type: 'CBV' | 'EBV' | 'NMV'
-  formula: 'totalSupply' | 'circulatingSupply' | 'zero'
+  supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   bridgedUsing?: {
     bridge: string
     slug?: string

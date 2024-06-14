@@ -61,7 +61,7 @@ async function main() {
       const tokenLogger: ScriptLogger = chainLogger.addMetadata(token.symbol)
 
       const type = getType(tokenLogger, chain, token)
-      const formula = getFormula(tokenLogger, chain, token)
+      const supply = getFormula(tokenLogger, chain, token)
       const category = token.category ?? 'other'
 
       const existingToken = findTokenInOutput(output, chainId, token)
@@ -71,7 +71,7 @@ async function main() {
           coingeckoId: token.coingeckoId ?? existingToken.coingeckoId,
           category,
           type,
-          formula,
+          supply,
         }
         for (const [key, value] of Object.entries(overrides)) {
           const existing = existingToken[key as keyof typeof existingToken]
@@ -150,7 +150,7 @@ async function main() {
         iconUrl: info.iconUrl,
         chainId,
         type,
-        formula,
+        supply,
         bridgedUsing: token.bridgedUsing,
       })
 
@@ -197,7 +197,7 @@ function getFormula(
   chain: string,
   entry: SourceEntry,
 ) {
-  const formula = chain === 'ethereum' ? 'zero' : entry.formula
+  const formula = chain === 'ethereum' ? 'zero' : entry.supply
   tokenLogger.assert(formula !== undefined, `Missing formula`)
   return formula
 }
