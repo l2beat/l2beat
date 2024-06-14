@@ -1,6 +1,6 @@
 import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
-import { SentimentText } from '~/app/_components/sentiment-text'
+import { RiskCell } from '~/app/_components/table/risk-cell'
 import { type DaSummaryEntryBridge } from '../../../_utils/get-da-bridge'
 import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
 
@@ -27,47 +27,22 @@ export const columns = [
   }),
   columnHelper.accessor('risks.economicSecurity', {
     header: 'Economic security',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return (
-        <SentimentText sentiment={value.sentiment}>{value.value}</SentimentText>
-      )
-    },
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.fraudDetection', {
     header: 'Fraud detection',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return (
-        <SentimentText sentiment={value.sentiment}>{value.value}</SentimentText>
-      )
-    },
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.attestations', {
     header: 'Attestation security',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return (
-        <SentimentText sentiment={value.sentiment}>{value.value}</SentimentText>
-      )
-    },
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.exitWindow', {
     header: 'Exit window',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return (
-        <SentimentText sentiment={value.sentiment}>{value.value}</SentimentText>
-      )
-    },
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.accessibility', {
     header: 'Accessibility',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return (
-        <SentimentText sentiment={value.sentiment}>{value.value}</SentimentText>
-      )
-    },
+    cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
   }),
 ]
