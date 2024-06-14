@@ -32,7 +32,7 @@ export const acrossV3: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
-      apps: ['https://across.to/'],
+      apps: ['https://app.across.to/bridge'],
       repositories: ['https://github.com/across-protocol/contracts-v2'],
       socialMedia: [
         'https://twitter.com/AcrossProtocol',
@@ -119,8 +119,9 @@ export const acrossV3: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description:
-        'This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are then reimbursed on a chain of their choosing from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers). Specifically, when a user deposits funds for a swap into a dedicated pool on origin chain, a Relayer first pays the user on the requested destination chain and then shows proof of that deposit to Optimistic Oracle on Ethereum to be reimbursed. Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via native chain bridges.',
+      description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are then reimbursed on a chain of their choosing from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers). 
+        Specifically, when a user deposits funds for a swap into a dedicated pool on the origin chain, a Relayer first pays the user on the requested destination chain and then shows proof of that deposit to Optimistic Oracle on Ethereum (by proposing a merkle root). 
+        If the root remains unchallenged for ${finalizationDelay}, it is optimistically finalized and the Relayer is reimbursed. Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges.`,
       references: [
         {
           text: 'Across V3 Architecture',
@@ -159,7 +160,7 @@ export const acrossV3: Bridge = {
       references: [
         {
           text: 'Across V3 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/how-across-works/security-model',
+          href: 'https://docs.across.to/reference/security-model-and-verification',
         },
       ],
     },

@@ -26,6 +26,10 @@
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
     },
     {
+      "symbol": "EKUBO",
+      "address": "0x04c46e830bb56ce22735d5d8fc9cb90309317d0f"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -1009,6 +1013,10 @@
       "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29"
     },
     {
+      "symbol": "TAIKO",
+      "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+    },
+    {
       "symbol": "tBTC",
       "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88"
     },
@@ -1965,6 +1973,38 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
+      "category": "ether",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mUSD",
+      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "STONE",

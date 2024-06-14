@@ -24,7 +24,7 @@ export interface Config {
   readonly database: DatabaseConfig
   readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly tvl2: Tvl2Config | false
+  readonly tvl: TvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -78,7 +78,7 @@ export interface ClockConfig {
   readonly safeTimeOffsetSeconds: number
 }
 
-export interface Tvl2Config {
+export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]

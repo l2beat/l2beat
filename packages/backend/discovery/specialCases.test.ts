@@ -9,6 +9,7 @@ describe('specialCases', () => {
   const chains = [
     { name: 'base', discovery: 'base' },
     { name: 'arbitrum', discovery: 'arbitrum' },
+    { name: 'ethereum', discovery: 'ethereum' },
   ]
 
   // Fetch configuration and discovery data for all chains

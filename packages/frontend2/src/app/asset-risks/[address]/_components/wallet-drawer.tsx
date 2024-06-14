@@ -1,7 +1,7 @@
 'use client'
 
-import { Drawer, DrawerClose, DrawerContent } from '~/app/_components/drawer'
 import { AddressForm } from '../../_components/address-form'
+import { Drawer, DrawerClose, DrawerContent } from '../../_components/drawer'
 
 export function WalletDrawer({ children }: { children: React.ReactNode }) {
   return (

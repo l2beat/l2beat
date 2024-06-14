@@ -99,16 +99,13 @@ export const xai: Layer3 = orbitStackL3({
     },
   },
   nonTemplateEscrows: [
-    {
-      ...discovery.getEscrowDetails({
-        chain: 'arbitrum',
-        includeInTotal: false,
-        address: EthereumAddress('0xb591cE747CF19cF30e11d656EB94134F523A9e77'),
-        tokens: '*',
-        description:
-          'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-      }),
-    },
+    discovery.getEscrowDetails({
+      includeInTotal: false,
+      address: EthereumAddress('0xb591cE747CF19cF30e11d656EB94134F523A9e77'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
   ],
   nonTemplatePermissions: [
     {

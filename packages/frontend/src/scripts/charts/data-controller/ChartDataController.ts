@@ -133,7 +133,7 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
         if (chartType.excludeAssociatedTokens) {
           urlSearchParams.set('excludeAssociatedTokens', 'true')
         }
-        return `/api/tvl2/aggregate?${urlSearchParams}`
+        return `/api/tvl/aggregate?${urlSearchParams}`
       }
 
       return chartType.excludeAssociatedTokens
@@ -179,7 +179,7 @@ export function getTokenTvlUrl(info: TokenInfo) {
     chain: info.chain,
     address: info.address,
   })
-  return `/api/tvl2/token?${query}`
+  return `/api/tvl/token?${query}`
 }
 
 function assertUnreachable(_: never): never {
