@@ -1,10 +1,10 @@
 import { HttpClient } from '@l2beat/shared'
-import {
-  assert,
-  formatLargeNumberShared,
-  RateLimiter,
-} from '@l2beat/shared-pure'
+import { assert, RateLimiter } from '@l2beat/shared-pure'
 import { Hex } from 'viem'
+import { chain } from 'stream-chain'
+import { parser } from 'stream-json'
+import { pick } from 'stream-json/filters/Pick'
+import { streamValues } from 'stream-json/streamers/StreamValues'
 
 interface QuickNodeClientOpts {
   callsPerMinute?: number
@@ -42,6 +42,8 @@ export class QuickNodeClient {
     stateId: 'head' | 'gensis' | 'finalized' | 'justified' | 'slot' | Hex
     status?: string[]
   }) {
+    let start = performance.now()
+    // TODO: Add compression
     const response = await this.httpClient.fetch(
       `${
         this.url
@@ -56,30 +58,36 @@ export class QuickNodeClient {
       `QuickNode getValidators request failed with status: ${response.status}`,
     )
 
+    console.log(`Request took ${performance.now() - start} ms`)
+    start = performance.now()
+
+    const pipeline = chain([
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      response.body as any,
+      parser(),
+      pick({ filter: /^data\.\d+\.balance/ }),
+      streamValues(),
+    ])
+
     // This returns like 500 MB, so can't just zod.parse it ;)
     // We have to extract stake manually
 
-    let buffer = ''
-    let effectiveBalance = 0
-    let processedLength = 0
+    let effectiveBalance = 0n
+    let i = 0
 
-    for await (const chunk of response.body) {
-      processedLength += chunk.length
-      console.log(formatLargeNumberShared(processedLength))
-      buffer += chunk
-      let cutoffIndex = 0
-      const regex = /"effective_balance": "(\d+)"/g
-      let match: RegExpExecArray | null
-      while ((match = regex.exec(buffer))) {
-        cutoffIndex = match.index + match[0].length
-        effectiveBalance += parseInt(match[1])
+    for await (const { value } of pipeline) {
+      i++
+      effectiveBalance += BigInt(value)
+      if (i % 1000 === 0) {
+        console.log(`Processed ${i} validators`)
       }
-      buffer = buffer.slice(cutoffIndex)
     }
+
+    console.log(`Parsing took ${performance.now() - start} ms`)
 
     return {
       totalStake: effectiveBalance,
-      thresholdStake: Math.ceil(effectiveBalance * (2 / 3)),
+      thresholdStake: (effectiveBalance * 200n) / 300n,
     }
   }
 }

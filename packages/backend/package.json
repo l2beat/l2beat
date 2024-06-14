@@ -66,6 +66,7 @@
     "readline-sync": "^1.4.10",
     "rimraf": "^5.0.0",
     "source-map-support": "^0.5.21",
+    "stream-json": "^1.8.0",
     "twitter-api-v2": "^1.14.0",
     "viem": "^2.8.14",
     "zod": "^3.22.2"
@@ -82,6 +83,7 @@
     "@types/pg": "8.6.5",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+    "@types/stream-json": "^1.7.7",
     "@types/supertest": "^2.0.12",
     "comment-json": "^4.2.3",
     "supertest": "^6.2.3",
