@@ -23,15 +23,15 @@ import {
   layer3ToProject,
 } from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { Tvl2Config } from '../Config'
+import { TvlConfig } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
-export function getTvl2Config(
+export function getTvlConfig(
   flags: FeatureFlags,
   env: Env,
   minTimestampOverride?: UnixTime,
-): Tvl2Config {
+): TvlConfig {
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
@@ -43,12 +43,12 @@ export function getTvl2Config(
   const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
 
   const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
-    getChainTvlConfig(flags.isEnabled('tvl2', chain), env, chain, {
+    getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
       minTimestamp: minTimestampOverride,
     }),
   )
 
-  const tvl2Config: Tvl2Config = {
+  return {
     amounts: getAmountsConfig(
       projects,
       tokenList,
@@ -58,10 +58,7 @@ export function getTvl2Config(
     ),
     prices: getPricesConfig(tokenList, minTimestampOverride),
     chains: chainConfigs,
-    coingeckoApiKey: env.optionalString([
-      'COINGECKO_API_KEY_FOR_TVL2',
-      'COINGECKO_API_KEY',
-    ]),
+    coingeckoApiKey: env.optionalString(['COINGECKO_API_KEY']),
     chainConverter,
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
@@ -72,8 +69,6 @@ export function getTvl2Config(
       env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
   }
-
-  return tvl2Config
 }
 
 function getAmountsConfig(
