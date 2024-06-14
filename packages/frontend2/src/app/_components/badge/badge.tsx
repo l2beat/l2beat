@@ -1,7 +1,6 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import React, { type ReactNode } from 'react'
-
-import { cn } from '../../utils/cn'
+import { cn } from '~/utils/cn'
 
 export interface BadgeProps extends VariantProps<typeof badgeVariants> {
   className?: string
