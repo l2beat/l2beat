@@ -1,8 +1,13 @@
-import { EthereumAddress, ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Bridge } from './types'
-import { utils } from 'ethers'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -153,7 +158,7 @@ export const lightlink: Bridge = {
         {
           text: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
           href: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
-        }
+        },
       ],
       risks: [
         {
@@ -181,7 +186,7 @@ export const lightlink: Bridge = {
         {
           text: 'Token Implementation - requireMultisig()',
           href: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
-        }
+        },
       ],
       risks: [
         {
@@ -190,7 +195,7 @@ export const lightlink: Bridge = {
           isCritical: true,
         },
       ],
-    }
+    },
   },
   contracts: {
     addresses: [
