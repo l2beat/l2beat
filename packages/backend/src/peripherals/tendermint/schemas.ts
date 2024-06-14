@@ -31,6 +31,8 @@ export const TendermintValidatorsResponseBodySchema = z.object({
         votingPower: v.voting_power,
         proposerPriority: v.proposer_priority,
       })),
+      count: x.count,
+      total: x.total,
     })),
 })
 
