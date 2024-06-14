@@ -19,22 +19,22 @@ export interface AggregateDetailedTvlChart {
     x: number
     y: number
     parts: {
-      ebv: number
-      cbv: number
-      nmv: number
+      external: number
+      canonical: number
+      native: number
     }
     date: string
     usd: number
     eth: number
     usdParts: {
-      ebv: number
-      cbv: number
-      nmv: number
+      external: number
+      canonical: number
+      native: number
     }
     ethParts: {
-      ebv: number
-      cbv: number
-      nmv: number
+      external: number
+      canonical: number
+      native: number
     }
     milestone?: Milestone
   }[]
@@ -83,14 +83,14 @@ export interface ActivityChart {
 const AggregateDetailedTvlChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
-    z.literal('valueUsd'),
-    z.literal('cbvUsd'),
-    z.literal('ebvUsd'),
-    z.literal('nmvUsd'),
-    z.literal('valueEth'),
-    z.literal('cbvEth'),
-    z.literal('ebvEth'),
-    z.literal('nmvEth'),
+    z.literal('totalUsd'),
+    z.literal('canonicalUsd'),
+    z.literal('externalUsd'),
+    z.literal('nativeUsd'),
+    z.literal('totalEth'),
+    z.literal('canonicalEth'),
+    z.literal('externalEth'),
+    z.literal('nativeEth'),
   ]),
   data: z.array(
     z.tuple([

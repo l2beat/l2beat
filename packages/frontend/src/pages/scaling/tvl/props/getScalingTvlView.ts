@@ -80,23 +80,23 @@ function getScalingTvlViewEntry(
         displayValue: formatUSD(parts.tvl),
         change: partsWeeklyChange.tvl,
       },
-      cbv: {
+      canonical: {
         value: parts.canonical,
         displayValue: formatUSD(parts.canonical),
         change: partsWeeklyChange.canonical,
-        tokens: tokens.filter((t) => t.info.type === 'CBV'),
+        tokens: tokens.filter((t) => t.info.type === 'canonical'),
       },
-      ebv: {
+      external: {
         value: parts.external,
         displayValue: formatUSD(parts.external),
         change: partsWeeklyChange.external,
-        tokens: tokens.filter((t) => t.info.type === 'EBV'),
+        tokens: tokens.filter((t) => t.info.type === 'external'),
       },
-      nmv: {
+      native: {
         value: parts.native,
         displayValue: formatUSD(parts.native),
         change: partsWeeklyChange.native,
-        tokens: tokens.filter((t) => t.info.type === 'NMV'),
+        tokens: tokens.filter((t) => t.info.type === 'native'),
       },
       excludedAssociatedTokens: {
         tvl: {
@@ -104,23 +104,29 @@ function getScalingTvlViewEntry(
           displayValue: formatUSD(excludedAssociatedTokensParts.tvl),
           change: excludedAssociatedTokensPartsWeeklyChange.tvl,
         },
-        cbv: {
+        canonical: {
           value: excludedAssociatedTokensParts.canonical,
           displayValue: formatUSD(excludedAssociatedTokensParts.canonical),
           change: excludedAssociatedTokensPartsWeeklyChange.canonical,
-          tokens: tokensWithoutAssociated.filter((t) => t.info.type === 'CBV'),
+          tokens: tokensWithoutAssociated.filter(
+            (t) => t.info.type === 'canonical',
+          ),
         },
-        ebv: {
+        external: {
           value: excludedAssociatedTokensParts.external,
           displayValue: formatUSD(excludedAssociatedTokensParts.external),
           change: excludedAssociatedTokensPartsWeeklyChange.external,
-          tokens: tokensWithoutAssociated.filter((t) => t.info.type === 'EBV'),
+          tokens: tokensWithoutAssociated.filter(
+            (t) => t.info.type === 'external',
+          ),
         },
-        nmv: {
+        native: {
           value: excludedAssociatedTokensParts.native,
           displayValue: formatUSD(excludedAssociatedTokensParts.native),
           change: excludedAssociatedTokensPartsWeeklyChange.native,
-          tokens: tokensWithoutAssociated.filter((t) => t.info.type === 'NMV'),
+          tokens: tokensWithoutAssociated.filter(
+            (t) => t.info.type === 'native',
+          ),
         },
       },
     },

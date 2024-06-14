@@ -44,9 +44,9 @@ export interface ScalingTvlViewEntry {
 
 export interface DetailedTvlData {
   tvl: Omit<TvlDataValue, 'tokens'>
-  cbv: TvlDataValue
-  ebv: TvlDataValue
-  nmv: TvlDataValue
+  canonical: TvlDataValue
+  external: TvlDataValue
+  native: TvlDataValue
   excludedAssociatedTokens: Omit<DetailedTvlData, 'excludedAssociatedTokens'>
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never

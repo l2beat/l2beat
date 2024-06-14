@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TokenInfo } from '../../scripts/charts/types'
+import { TokenInfo } from '../../scripts/charts/sources'
 import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Link } from '../Link'
@@ -89,28 +89,28 @@ export function getParts(tokens: TokenControl[]) {
       title: 'Natively Minted Tokens',
       titleColor: 'text-[#FF6DCD]',
       tokens: tokens
-        .filter((t) => t.info.type.toString() === 'NMV')
+        .filter((t) => t.info.source.toString() === 'native')
         .slice(0, 15),
     },
     {
       title: 'Externally Bridged Tokens',
       titleColor: 'text-yellow-200',
       tokens: tokens
-        .filter((t) => t.info.type.toString() === 'EBV')
+        .filter((t) => t.info.source.toString() === 'external')
         .slice(0, 15),
     },
     {
       title: 'Canonically Bridged Tokens (Top 15)',
       titleColor: 'text-[#D98EFF]',
       tokens: tokens
-        .filter((t) => t.info.type.toString() === 'CBV')
+        .filter((t) => t.info.source.toString() === 'canonical')
         .slice(0, 15),
     },
     {
       title: 'Bridged Tokens (Top 15)',
       titleColor: 'text-[#D98EFF]',
       tokens: tokens
-        .filter((t) => t.info.type.toString() === 'regular')
+        .filter((t) => t.info.source.toString() === 'regular')
         .slice(0, 15),
     },
   ]

@@ -54,14 +54,14 @@ export function renderTvlHover(data: TvlData, useAltCurrency: boolean) {
 
 export interface DetailedTvlData {
   date: string
-  usd: number
-  cbv: number
-  ebv: number
-  nmv: number
-  eth: number
-  cbvEth: number
-  ebvEth: number
-  nmvEth: number
+  totalUsd: number
+  canonicalUsd: number
+  externalUsd: number
+  nativeUsd: number
+  totalEth: number
+  canonicalEth: number
+  externalEth: number
+  nativeEth: number
 }
 
 export function renderDetailedTvlHover(
@@ -70,10 +70,12 @@ export function renderDetailedTvlHover(
 ) {
   const currency = useAltCurrency ? 'eth' : 'usd'
 
-  const total = useAltCurrency ? data.eth : data.usd
-  const selectedCbv = useAltCurrency ? data.cbvEth : data.cbv
-  const selectedEbv = useAltCurrency ? data.ebvEth : data.ebv
-  const selectedNmv = useAltCurrency ? data.nmvEth : data.nmv
+  const total = useAltCurrency ? data.totalEth : data.totalUsd
+  const selectedCanonical = useAltCurrency
+    ? data.canonicalEth
+    : data.canonicalUsd
+  const selectedExternal = useAltCurrency ? data.externalEth : data.externalUsd
+  const selectedNative = useAltCurrency ? data.nativeEth : data.nativeUsd
 
   return renderHover([
     renderDateRow(data.date),
@@ -86,21 +88,21 @@ export function renderDetailedTvlHover(
     renderHorizontalSeparator(),
     renderDetailedRow({
       title: 'Canonical',
-      value: formatCurrency(selectedCbv, currency, {
+      value: formatCurrency(selectedCanonical, currency, {
         showLessThanMinimum: false,
       }),
       icon: 'roundedPurpleSquare',
     }),
     renderDetailedRow({
       title: 'External',
-      value: formatCurrency(selectedEbv, currency, {
+      value: formatCurrency(selectedExternal, currency, {
         showLessThanMinimum: false,
       }),
       icon: 'roundedYellowSquare',
     }),
     renderDetailedRow({
       title: 'Native',
-      value: formatCurrency(selectedNmv, currency, {
+      value: formatCurrency(selectedNative, currency, {
         showLessThanMinimum: false,
       }),
       icon: 'roundedPinkSquare',
@@ -220,12 +222,12 @@ export interface TokenTvlData {
 export function renderTokenTvlHover(
   data: TokenTvlData,
   tokenSymbol: string,
-  tokenType: TokenInfo['type'],
+  tokenType: TokenInfo['source'],
 ) {
-  const styles: Record<TokenInfo['type'], PointStyle | undefined> = {
-    CBV: 'roundedPurpleSquare',
-    EBV: 'roundedYellowSquare',
-    NMV: 'roundedPinkSquare',
+  const styles: Record<TokenInfo['source'], PointStyle | undefined> = {
+    canonical: 'roundedPurpleSquare',
+    external: 'roundedYellowSquare',
+    native: 'roundedPinkSquare',
     regular: undefined,
   }
   const style = styles[tokenType]

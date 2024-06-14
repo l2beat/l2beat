@@ -47,19 +47,23 @@ export function getScalingTvlColumnsConfig() {
         <ExcludeAssociatedTokensWrapper>
           <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
-              value={project.data.cbv.displayValue}
-              percentChange={project.data.cbv.change}
-              tokens={project.data.cbv.tokens.filter(
-                (t) => t.info.type === 'CBV',
+              value={project.data.canonical.displayValue}
+              percentChange={project.data.canonical.change}
+              tokens={project.data.canonical.tokens.filter(
+                (t) => t.info.type === 'canonical',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
           <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
-              value={project.data.excludedAssociatedTokens.cbv.displayValue}
-              percentChange={project.data.excludedAssociatedTokens.cbv.change}
-              tokens={project.data.excludedAssociatedTokens.cbv.tokens.filter(
-                (t) => t.info.type === 'CBV',
+              value={
+                project.data.excludedAssociatedTokens.canonical.displayValue
+              }
+              percentChange={
+                project.data.excludedAssociatedTokens.canonical.change
+              }
+              tokens={project.data.excludedAssociatedTokens.canonical.tokens.filter(
+                (t) => t.info.type === 'canonical',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>
@@ -68,10 +72,12 @@ export function getScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (project) => ({
           'included-associated-tokens':
-            project.data.cbv.value !== 0 ? project.data.cbv.value : undefined,
+            project.data.canonical.value !== 0
+              ? project.data.canonical.value
+              : undefined,
           'excluded-associated-tokens':
-            project.data.excludedAssociatedTokens.cbv.value !== 0
-              ? project.data.excludedAssociatedTokens.cbv.value
+            project.data.excludedAssociatedTokens.canonical.value !== 0
+              ? project.data.excludedAssociatedTokens.canonical.value
               : undefined,
         }),
         defaultOrderKey: 'included-associated-tokens',
@@ -89,19 +95,23 @@ export function getScalingTvlColumnsConfig() {
         <ExcludeAssociatedTokensWrapper>
           <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
-              value={project.data.ebv.displayValue}
-              percentChange={project.data.ebv.change}
-              tokens={project.data.ebv.tokens.filter(
-                (t) => t.info.type === 'EBV',
+              value={project.data.external.displayValue}
+              percentChange={project.data.external.change}
+              tokens={project.data.external.tokens.filter(
+                (t) => t.info.type === 'external',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
           <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
-              value={project.data.excludedAssociatedTokens.ebv.displayValue}
-              percentChange={project.data.excludedAssociatedTokens.ebv.change}
-              tokens={project.data.excludedAssociatedTokens.ebv.tokens.filter(
-                (t) => t.info.type === 'EBV',
+              value={
+                project.data.excludedAssociatedTokens.external.displayValue
+              }
+              percentChange={
+                project.data.excludedAssociatedTokens.external.change
+              }
+              tokens={project.data.excludedAssociatedTokens.external.tokens.filter(
+                (t) => t.info.type === 'external',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>
@@ -110,10 +120,12 @@ export function getScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (project) => ({
           'included-associated-tokens':
-            project.data.ebv.value !== 0 ? project.data.ebv.value : undefined,
+            project.data.external.value !== 0
+              ? project.data.external.value
+              : undefined,
           'excluded-associated-tokens':
-            project.data.excludedAssociatedTokens.ebv.value !== 0
-              ? project.data.excludedAssociatedTokens.ebv.value
+            project.data.excludedAssociatedTokens.external.value !== 0
+              ? project.data.excludedAssociatedTokens.external.value
               : undefined,
         }),
         defaultOrderKey: 'included-associated-tokens',
@@ -131,19 +143,21 @@ export function getScalingTvlColumnsConfig() {
         <ExcludeAssociatedTokensWrapper>
           <ExcludeAssociatedTokensWrapper.Included>
             <ValueWithPercentageCell
-              value={project.data.nmv.displayValue}
-              percentChange={project.data.nmv.change}
-              tokens={project.data.nmv.tokens.filter(
-                (t) => t.info.type === 'NMV',
+              value={project.data.native.displayValue}
+              percentChange={project.data.native.change}
+              tokens={project.data.native.tokens.filter(
+                (t) => t.info.type === 'native',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
           <ExcludeAssociatedTokensWrapper.Excluded>
             <ValueWithPercentageCell
-              value={project.data.excludedAssociatedTokens.nmv.displayValue}
-              percentChange={project.data.excludedAssociatedTokens.nmv.change}
-              tokens={project.data.excludedAssociatedTokens.nmv.tokens.filter(
-                (t) => t.info.type === 'NMV',
+              value={project.data.excludedAssociatedTokens.native.displayValue}
+              percentChange={
+                project.data.excludedAssociatedTokens.native.change
+              }
+              tokens={project.data.excludedAssociatedTokens.native.tokens.filter(
+                (t) => t.info.type === 'native',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>
@@ -152,10 +166,12 @@ export function getScalingTvlColumnsConfig() {
       sorting: {
         getOrderValue: (project) => ({
           'included-associated-tokens':
-            project.data.nmv.value !== 0 ? project.data.nmv.value : undefined,
+            project.data.native.value !== 0
+              ? project.data.native.value
+              : undefined,
           'excluded-associated-tokens':
-            project.data.excludedAssociatedTokens.nmv.value !== 0
-              ? project.data.excludedAssociatedTokens.nmv.value
+            project.data.excludedAssociatedTokens.native.value !== 0
+              ? project.data.excludedAssociatedTokens.native.value
               : undefined,
         }),
         defaultOrderKey: 'included-associated-tokens',

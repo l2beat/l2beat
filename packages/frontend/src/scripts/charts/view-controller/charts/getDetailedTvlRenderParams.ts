@@ -25,21 +25,39 @@ export function getDetailedTvlRenderParams(
     const useEth = state.unit === 'ETH'
 
     const points = dataInRange.map(
-      ([timestamp, usd, cbv, ebv, nmv, eth, cbvEth, ebvEth, nmvEth]) => {
+      ([
+        timestamp,
+        totalUsd,
+        canonicalUsd,
+        externalUsd,
+        nativeUsd,
+        totalEth,
+        canonicalEth,
+        externalEth,
+        nativeEth,
+      ]) => {
         return {
           series: useEth
-            ? [cbvEth + ebvEth + nmvEth, ebvEth + nmvEth, nmvEth]
-            : [cbv + ebv + nmv, ebv + nmv, nmv],
+            ? [
+                canonicalEth + externalEth + nativeEth,
+                externalEth + nativeEth,
+                nativeEth,
+              ]
+            : [
+                canonicalUsd + externalUsd + nativeUsd,
+                externalUsd + nativeUsd,
+                nativeUsd,
+              ],
           data: {
             date: formatTimestamp(timestamp, { mode: 'datetime' }),
-            usd,
-            cbv,
-            ebv,
-            nmv,
-            eth,
-            cbvEth,
-            ebvEth,
-            nmvEth,
+            totalUsd,
+            canonicalUsd,
+            externalUsd,
+            nativeUsd,
+            totalEth,
+            canonicalEth,
+            externalEth,
+            nativeEth,
           },
           milestone: state.milestones[timestamp],
         }

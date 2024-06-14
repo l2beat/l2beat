@@ -53,7 +53,7 @@ export function getTokenTvlRenderParams(
   }
 }
 
-function tokenTypeToStyle(tokenType: TokenInfo['type']): SeriesStyle {
+function tokenTypeToStyle(tokenType: TokenInfo['source']): SeriesStyle {
   switch (tokenType) {
     case 'regular': {
       return {
@@ -62,19 +62,19 @@ function tokenTypeToStyle(tokenType: TokenInfo['type']): SeriesStyle {
         point: 'circle',
       }
     }
-    case 'CBV':
+    case 'canonical':
       return {
         line: 'purple',
         fill: 'purple',
         point: 'circle',
       }
-    case 'EBV':
+    case 'external':
       return {
         line: 'yellow',
         fill: 'yellow',
         point: 'circle',
       }
-    case 'NMV':
+    case 'native':
       return {
         line: 'pink',
         fill: 'pink',
