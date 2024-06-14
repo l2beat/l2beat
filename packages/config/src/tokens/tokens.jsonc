@@ -1975,6 +1975,38 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
+      "category": "ether",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mUSD",
+      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
       "type": "EBV",
