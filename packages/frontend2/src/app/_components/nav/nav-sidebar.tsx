@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
+import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
-import { HiringBadge } from './hiring-badge'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavDivider } from './nav-divider'
 import { NavLink } from './nav-link'
@@ -47,7 +47,7 @@ export async function NavSidebar({
           <NavLinkGroup key={group.title} title={group.title}>
             {group.links.map(
               (link) =>
-                link.enabled && (
+                !link.disabled && (
                   <NavLink
                     key={link.href}
                     title={link.title}

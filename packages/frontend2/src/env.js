@@ -29,6 +29,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('true'),
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: featureFlag.default('false'),
     NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG: featureFlag.default('false'),
+    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: featureFlag.default('false'),
   },
 
   /**
@@ -46,6 +47,7 @@ export const env = createEnv({
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     NEXT_PUBLIC_FEATURE_FLAG_ASSET_RISKS: process.env.FEATURE_FLAG_ASSET_RISKS,
     NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG: process.env.FEATURE_FLAG_ZK_CATALOG,
+    NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT: process.env.FEATURE_FLAG_DA_BEAT,
   },
 
   /**
