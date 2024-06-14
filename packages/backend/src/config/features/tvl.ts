@@ -140,8 +140,8 @@ function getAmountsConfig(
             isAssociated,
           })
           break
-        case 'locked':
-          throw new Error('Locked tokens are derived from projects list')
+        case 'zero':
+          break // we do not count supply for zero formula
       }
     }
   }

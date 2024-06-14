@@ -197,7 +197,7 @@ function getFormula(
   chain: string,
   entry: SourceEntry,
 ) {
-  const formula = chain === 'ethereum' ? 'locked' : entry.formula
+  const formula = chain === 'ethereum' ? 'zero' : entry.formula
   tokenLogger.assert(formula !== undefined, `Missing formula`)
   return formula
 }
