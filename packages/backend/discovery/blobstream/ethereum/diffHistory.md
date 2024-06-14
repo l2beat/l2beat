@@ -7,7 +7,7 @@ Generated with discovered.json: 0x4d6e5a6e26155bf11bdef18e59d07e62346687d0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial mainnet BlobstreamX discovery.
 
 ## Initial discovery
 
