@@ -14,7 +14,7 @@ export const muster: Layer3 = underReviewL3({
     purposes: ['Gaming'],
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.cometh.io/'],
+      websites: ['https://cometh.io/'],
       apps: [
         'https://bridge.arbitrum.io/?destinationChain=muster&sourceChain=arbitrum-one',
       ],
