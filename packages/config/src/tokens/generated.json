@@ -3766,6 +3766,21 @@
       "formula": "locked"
     },
     {
+      "id": "taiko-taiko-token",
+      "name": "Taiko Token",
+      "coingeckoId": "taiko",
+      "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+      "symbol": "TAIKO",
+      "decimals": 18,
+      "deploymentTimestamp": 1714033799,
+      "coingeckoListingTimestamp": 1717545600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38058/large/icon.png?1717626867",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "tbtc-tbtc-v2",
       "name": "tBTC v2",
       "coingeckoId": "tbtc",
