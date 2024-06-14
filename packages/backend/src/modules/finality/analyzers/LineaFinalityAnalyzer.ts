@@ -9,26 +9,13 @@ import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
-type Decoded = [[string, string, string, number, number]]
-
 const calldataFnName = 'submitData'
 const calldataFn =
   'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))'
 
-const blobFnName = 'submitBlobData'
-const blobFn = `function submitBlobData(
-  tuple(
-    bytes32 parentStateRootHash, 
-    bytes32 dataParentHash, 
-    bytes32 finalStateRootHash, 
-    uint256 firstBlockInData, 
-    uint256 finalBlockInData, 
-    bytes32 snarkHash
-  ) _submissionData, 
-  uint256 _dataEvaluationClaim, 
-  bytes _kzgCommitment, 
-  bytes _kzgProof)`
-
+const blobFnName = 'submitBlobs'
+const blobFn =
+  'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)'
 const iface = new utils.Interface([calldataFn, blobFn])
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
@@ -54,8 +41,8 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
 
     const decodedInput = this.decodeInput(tx.data)
 
-    const firstBlockInData = Number(decodedInput[0][3])
-    const lastBlockInData = Number(decodedInput[0][4])
+    const firstBlockInData = Number(decodedInput[0])
+    const lastBlockInData = Number(decodedInput[1])
 
     const timestamps = await Promise.all([
       (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
@@ -65,16 +52,23 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
     return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
 
-  private decodeInput(data: string): Decoded {
+  private decodeInput(data: string): [bigint, bigint] {
     // 0x + first 4 bytes
     const txSig = data.slice(0, 10)
 
     switch (txSig) {
-      case iface.getSighash(calldataFnName):
-        return iface.decodeFunctionData(calldataFnName, data) as Decoded
-      case iface.getSighash(blobFnName):
-        return iface.decodeFunctionData(blobFnName, data) as Decoded
-
+      case iface.getSighash(calldataFnName): {
+        const decoded = iface.decodeFunctionData(calldataFnName, data) as [
+          [string, string, string, bigint, bigint],
+        ]
+        return [decoded[0][3], decoded[0][4]]
+      }
+      case iface.getSighash(blobFnName): {
+        const decoded = iface.decodeFunctionData(blobFnName, data) as [
+          [[string, bigint, bigint]],
+        ]
+        return [decoded[0][0][1], decoded[0][0][2]]
+      }
       default:
         throw new Error(
           `Programmer error: can't recognize function signature: ${txSig}`,
