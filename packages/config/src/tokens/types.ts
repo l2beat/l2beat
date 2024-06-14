@@ -24,7 +24,7 @@ export const GeneratedToken = z.object({
   category: z.enum(['ether', 'stablecoin', 'other']),
   iconUrl: z.optional(z.string()),
   chainId: numberAs(ChainId),
-  type: z.enum(['CBV', 'EBV', 'NMV']),
+  source: z.enum(['CBV', 'EBV', 'NMV']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
   bridgedUsing: z.optional(
     z.object({
@@ -41,7 +41,7 @@ export const SourceEntry = z.object({
   address: stringAs(EthereumAddress).optional(),
   coingeckoId: stringAs(CoingeckoId).optional(),
   category: z.enum(['ether', 'stablecoin', 'other']).optional(),
-  type: z.enum(['CBV', 'EBV', 'NMV']).optional(),
+  source: z.enum(['CBV', 'EBV', 'NMV']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   bridgedUsing: z
     .object({
