@@ -26,6 +26,10 @@
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
     },
     {
+      "symbol": "EKUBO",
+      "address": "0x04c46e830bb56ce22735d5d8fc9cb90309317d0f"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
