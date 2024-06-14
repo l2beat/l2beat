@@ -43,6 +43,7 @@ import { synapse } from './synapse'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
+import { lightlink } from './lightlink'
 
 export * from './types'
 
@@ -65,6 +66,7 @@ export const bridges: Bridge[] = [
   hyphen,
   immutablezkevm,
   lzOmnichain,
+  lightlink,
   multichain,
   near,
   fraxferry,
