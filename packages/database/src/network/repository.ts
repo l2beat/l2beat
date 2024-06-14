@@ -1,10 +1,8 @@
 import { PostgresDatabase } from '../kysely'
 import { toRecord as toNetworkExplorerRecord } from '../network-explorer/entity'
 import { selectNetworkExplorer } from '../network-explorer/select'
-import { toRecord as toNetworkRpcRecord } from '../network-rpc/entity'
 import { selectNetworkRpc } from '../network-rpc/select'
 import { Network, toRecord, toRow } from './entity'
-import { joinExplorer, joinRpc } from './join'
 import { selectNetwork } from './select'
 
 export class NetworkRepository {
@@ -20,17 +18,33 @@ export class NetworkRepository {
   }
 
   async findManyWithConfigs() {
-    const rows = await this.db
+    const allNetworks = await this.db
       .selectFrom('Network')
-      .innerJoin(...joinExplorer)
-      .innerJoin(...joinRpc)
-      .select([...selectNetwork, ...selectNetworkExplorer, ...selectNetworkRpc])
+      .select([...selectNetwork])
       .execute()
 
-    return rows.map((row) => ({
-      ...toRecord(row),
-      explorer: toNetworkExplorerRecord(row),
-      rpc: toNetworkRpcRecord(row),
+    const networkIds = allNetworks.map((network) => network.id)
+
+    // TODO: Phase out or unify repositories as per-domain
+    const [explorers, rpcs] = await Promise.all([
+      this.db
+        .selectFrom('NetworkExplorer')
+        .select(selectNetworkExplorer)
+        .where('NetworkExplorer.networkId', 'in', networkIds)
+        .execute(),
+      this.db
+        .selectFrom('NetworkRpc')
+        .select(selectNetworkRpc)
+        .where('NetworkRpc.networkId', 'in', networkIds)
+        .execute(),
+    ])
+
+    return allNetworks.map((network) => ({
+      ...toRecord(network),
+      explorers: explorers
+        .filter((explorer) => explorer.networkId === network.id)
+        .map(toNetworkExplorerRecord),
+      rpc: rpcs.find((rpc) => rpc.networkId === network.id),
     }))
   }
 
@@ -39,6 +53,7 @@ export class NetworkRepository {
       .selectFrom('Network')
       .where('Network.coingeckoId', 'is not', null)
       .select(selectNetwork)
+      .$narrowType<{ coingeckoId: string }>()
       .execute()
 
     return rows.map(toRecord)
