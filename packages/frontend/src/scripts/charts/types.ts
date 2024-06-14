@@ -1,5 +1,4 @@
 import { Milestone } from '@l2beat/config'
-import { AssetType } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export interface AggregateTvlChart {
@@ -43,7 +42,7 @@ export interface AggregateDetailedTvlChart {
 
 export interface TokenDetailedTvlChart {
   type: 'TokenDetailedTvlChart'
-  assetType: AssetType
+  source: string
   points: {
     x: number
     y: number
@@ -208,11 +207,11 @@ export const Milestones = z.array(
 )
 export type TokenInfo = z.infer<typeof TokenInfo>
 export const TokenInfo = z.object({
-  type: z.union([
+  source: z.union([
     z.literal('regular'),
-    z.literal('CBV'),
-    z.literal('EBV'),
-    z.literal('NMV'),
+    z.literal('canonical'),
+    z.literal('external'),
+    z.literal('native'),
   ]),
   projectId: z.string(),
   chain: z.string(),

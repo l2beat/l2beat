@@ -22,14 +22,14 @@ export type TvlApiChartPoint = z.infer<typeof TvlApiChartPoint>
 const TvlApiChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
-    z.literal('valueUsd'),
-    z.literal('cbvUsd'),
-    z.literal('ebvUsd'),
-    z.literal('nmvUsd'),
-    z.literal('valueEth'),
-    z.literal('cbvEth'),
-    z.literal('ebvEth'),
-    z.literal('nmvEth'),
+    z.literal('totalUsd'),
+    z.literal('canonicalUsd'),
+    z.literal('externalUsd'),
+    z.literal('nativeUsd'),
+    z.literal('totalEth'),
+    z.literal('canonicalEth'),
+    z.literal('externalEth'),
+    z.literal('nativeEth'),
   ]),
   data: z.array(TvlApiChartPoint),
 })
@@ -48,7 +48,7 @@ export const TvlApiToken = z.object({
   // TODO(L2B-5614): Make both required
   address: z.string().optional(),
   chain: z.string().optional(),
-  assetType: z.string(),
+  source: z.string(),
   usdValue: z.number(),
 })
 
@@ -56,9 +56,9 @@ export type TvlApiToken = z.infer<typeof TvlApiToken>
 
 export const TvlApiProject = z.object({
   tokens: z.object({
-    CBV: z.array(TvlApiToken),
-    EBV: z.array(TvlApiToken),
-    NMV: z.array(TvlApiToken),
+    canonical: z.array(TvlApiToken),
+    external: z.array(TvlApiToken),
+    native: z.array(TvlApiToken),
   }),
   charts: TvlApiCharts,
 })

@@ -1,7 +1,6 @@
 import { layer2s as allLayer2s, bridges } from '@l2beat/config'
 import {
   AssetId,
-  AssetType,
   ChainId,
   TvlApiChart,
   TvlApiCharts,
@@ -51,30 +50,30 @@ function getMockTvlApiResponse(): TvlApiResponse {
     result.projects[project.id.toString()] = {
       charts: getMockTvlApiCharts(),
       tokens: {
-        CBV: [
+        canonical: [
           {
             assetId: AssetId.ETH,
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
-            assetType: AssetType('CBV'),
+            source: 'canonical',
             usdValue: 100,
           },
         ],
-        EBV: [
+        external: [
           {
             assetId: AssetId.ETH,
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
-            assetType: AssetType('EBV'),
+            source: 'external',
             usdValue: 100,
           },
         ],
-        NMV: [
+         native: [
           {
             assetId: AssetId.ETH,
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
-            assetType: AssetType('NMV'),
+            source: 'native',
             usdValue: 100,
           },
         ],
@@ -85,17 +84,17 @@ function getMockTvlApiResponse(): TvlApiResponse {
     result.projects[project.id.toString()] = {
       charts: getMockTvlApiCharts(),
       tokens: {
-        CBV: [
+        canonical: [
           {
             assetId: AssetId.ETH,
             chain: 'ethereum',
             chainId: ChainId.ETHEREUM,
-            assetType: AssetType('CBV'),
+            source: 'canonical',
             usdValue: 100,
           },
         ],
-        EBV: [],
-        NMV: [],
+        external: [],
+        native: [],
       },
     }
   }
@@ -104,14 +103,14 @@ function getMockTvlApiResponse(): TvlApiResponse {
 
 const LABELS: TvlApiChart['types'] = [
   'timestamp',
-  'valueUsd',
-  'cbvUsd',
-  'ebvUsd',
-  'nmvUsd',
-  'valueEth',
-  'cbvEth',
-  'ebvEth',
-  'nmvEth',
+  'totalUsd',
+  'canonicalUsd',
+  'externalUsd',
+  'nativeUsd',
+  'totalEth',
+  'canonicalEth',
+  'externalEth',
+  'nativeEth',
 ]
 
 const MOCK_VALUES = [60, 30, 20, 10, 5, 3, 2, 1] as const
