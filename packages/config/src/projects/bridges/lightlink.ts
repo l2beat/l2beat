@@ -1,36 +1,9 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
-import { utils } from 'ethers'
-import {
-  FORCE_TRANSACTIONS,
-  OPERATOR,
-  TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
-  makeBridgeCompatible,
-} from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
-
-const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
-  'Challenge',
-  'challengeWindow',
-)
-
-const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
-  'Challenge',
-  'challengePeriod',
-)
-
-const CHALLENGE_FEE = utils.formatEther(
-  discovery.getContractValue<number>('Challenge', 'challengeFee'),
-)
 
 const upgradesLightLink = {
   upgradableBy: ['LightLinkAdmin'],
@@ -77,6 +50,20 @@ const daOracle = discovery.getContractValue<string>('ChainOracle', 'daOracle')
 
 /* Initally added as L2, commented out sections are from the original file. Keep em to not do the work again. */
 
+// const CHALLENGE_WINDOW_SECONDS = discovery.getContractValue<number>(
+//   'Challenge',
+//   'challengeWindow',
+// )
+
+// const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
+//   'Challenge',
+//   'challengePeriod',
+// )
+
+// const CHALLENGE_FEE = utils.formatEther(
+//   discovery.getContractValue<number>('Challenge', 'challengeFee'),
+// )
+
 export const lightlink: Bridge = {
   type: 'bridge',
   id: ProjectId('lightlink'),
@@ -118,7 +105,7 @@ export const lightlink: Bridge = {
         sinceTimestamp: new UnixTime(1692185219),
         tokens: '*',
       }),
-    ]
+    ],
   },
   // chainConfig: {
   //   name: 'lightlink',
@@ -131,29 +118,29 @@ export const lightlink: Bridge = {
   //   minTimestampForTvl: new UnixTime(1692181067),
   // },
   riskView: {
-  // makeBridgeCompatible({
-  //   stateValidation: {
-  //     ...RISK_VIEW.STATE_NONE,
-  //     secondLine: `${formatSeconds(CHALLENGE_WINDOW_SECONDS)} challenge period`,
-  //   },
-  //   dataAvailability: {
-  //     ...RISK_VIEW.DATA_CELESTIA(false),
-  //   },
-  //   exitWindow: {
-  //     description:
-  //       'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
-  //     sentiment: 'bad',
-  //     value: 'None',
-  //   },
-  //   sequencerFailure: {
-  //     ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-  //   },
-  //   proposerFailure: {
-  //     value: 'Use permissioned escape hatch',
-  //     description:
-  //       'Users are able to exit by submitting a syncWithdraw() transaction directly on L1. To be accepted, the transaction requires signatures from a permissioned set of validators with enough voting power to reach the required threshold.',
-  //     sentiment: 'bad',
-  //   },
+    // makeBridgeCompatible({
+    //   stateValidation: {
+    //     ...RISK_VIEW.STATE_NONE,
+    //     secondLine: `${formatSeconds(CHALLENGE_WINDOW_SECONDS)} challenge period`,
+    //   },
+    //   dataAvailability: {
+    //     ...RISK_VIEW.DATA_CELESTIA(false),
+    //   },
+    //   exitWindow: {
+    //     description:
+    //       'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable.',
+    //     sentiment: 'bad',
+    //     value: 'None',
+    //   },
+    //   sequencerFailure: {
+    //     ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    //   },
+    //   proposerFailure: {
+    //     value: 'Use permissioned escape hatch',
+    //     description:
+    //       'Users are able to exit by submitting a syncWithdraw() transaction directly on L1. To be accepted, the transaction requires signatures from a permissioned set of validators with enough voting power to reach the required threshold.',
+    //     sentiment: 'bad',
+    //   },
     validatedBy: {
       value: 'Third Party',
       description: `${validatorThresholdPercentage}% of Validators Voting Power`,
@@ -177,11 +164,10 @@ export const lightlink: Bridge = {
     },
     validation: {
       name: 'Validators',
-      description:
-        `For deposits, messages are verified by the Validators on the LightLink network, which monitor emitted DepositToken events on L1 and authorise syncDeposit transactions on LightLink.
+      description: `For deposits, messages are verified by the Validators on the LightLink network, which monitor emitted DepositToken events on L1 and authorise syncDeposit transactions on LightLink.
          For withdrawals, the validators multisig on the L1 validates the withdrawal transactions and sign off on them.`,
       references: [],
-      risks: []
+      risks: [],
     },
     destinationToken: {
       name: 'Destination tokens are upgradable',
@@ -190,59 +176,59 @@ export const lightlink: Bridge = {
       references: [],
       risks: [],
     },
-  //   stateCorrectness: {
-  //     name: 'Fraud proofs are in development',
-  //     description: `After the challenge window of ${formatSeconds(
-  //       CHALLENGE_WINDOW_SECONDS,
-  //     )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
-  //         Once challenged, the permissioned defender can respond within ${formatSeconds(
-  //           CHALLENGE_PERIOD_SECONDS,
-  //         )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
-  //         the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
-  //         Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots.`,
-  //     risks: [
-  //       {
-  //         category: 'Funds can be stolen if',
-  //         text: 'an invalid state root is submitted to the system.',
-  //         isCritical: true,
-  //       },
-  //     ],
-  //     references: [
-  //       {
-  //         text: 'LightLink - ChallengeHeader.sol',
-  //         href: 'https://etherscan.io/address/0x2785d4af59bf299c1f2dbc5132e72b2ee015b3ac#code',
-  //       },
-  //     ],
-  //   },
-  //   dataAvailability: {
-  //     ...TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
-  //   },
-  //   operator: {
-  //     ...OPERATOR.CENTRALIZED_OPERATOR,
-  //   },
-  //   forceTransactions: {
-  //     ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-  //   },
-  //   exitMechanisms: [
-  //     {
-  //       name: 'Permissioned exit',
-  //       description: `Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available data. Users can exit the network once enough validators have signed off on the withdrawal.
-  //          Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
-  //       references: [
-  //         {
-  //           text: 'LightLink - L1BridgeRegistry.sol',
-  //           href: 'https://etherscan.io/address/0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E',
-  //         },
-  //       ],
-  //       risks: [
-  //         {
-  //           category: 'Funds can be frozen if',
-  //           text: 'the permissioned validator set does not authorise L1 bridge withdrawals.',
-  //           isCritical: true,
-  //         },
-  //       ],
-  //     },
-  //   ],
+    //   stateCorrectness: {
+    //     name: 'Fraud proofs are in development',
+    //     description: `After the challenge window of ${formatSeconds(
+    //       CHALLENGE_WINDOW_SECONDS,
+    //     )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
+    //         Once challenged, the permissioned defender can respond within ${formatSeconds(
+    //           CHALLENGE_PERIOD_SECONDS,
+    //         )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
+    //         the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
+    //         Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots.`,
+    //     risks: [
+    //       {
+    //         category: 'Funds can be stolen if',
+    //         text: 'an invalid state root is submitted to the system.',
+    //         isCritical: true,
+    //       },
+    //     ],
+    //     references: [
+    //       {
+    //         text: 'LightLink - ChallengeHeader.sol',
+    //         href: 'https://etherscan.io/address/0x2785d4af59bf299c1f2dbc5132e72b2ee015b3ac#code',
+    //       },
+    //     ],
+    //   },
+    //   dataAvailability: {
+    //     ...TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+    //   },
+    //   operator: {
+    //     ...OPERATOR.CENTRALIZED_OPERATOR,
+    //   },
+    //   forceTransactions: {
+    //     ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+    //   },
+    //   exitMechanisms: [
+    //     {
+    //       name: 'Permissioned exit',
+    //       description: `Users can withdraw their funds from LightLink by submitting their withdrawal transactions directly to the L1 smart contract. Validator nodes need to validate the withdrawal based on the state of the available data. Users can exit the network once enough validators have signed off on the withdrawal.
+    //          Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
+    //       references: [
+    //         {
+    //           text: 'LightLink - L1BridgeRegistry.sol',
+    //           href: 'https://etherscan.io/address/0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E',
+    //         },
+    //       ],
+    //       risks: [
+    //         {
+    //           category: 'Funds can be frozen if',
+    //           text: 'the permissioned validator set does not authorise L1 bridge withdrawals.',
+    //           isCritical: true,
+    //         },
+    //       ],
+    //     },
+    //   ],
   },
   contracts: {
     addresses: [
