@@ -1,10 +1,10 @@
+import { type SetRequired } from 'type-fest'
 import { PostgresDatabase } from '../kysely'
 import { toRecord as toNetworkExplorerRecord } from '../network-explorer/entity'
 import { selectNetworkExplorer } from '../network-explorer/select'
 import { selectNetworkRpc } from '../network-rpc/select'
 import { Network, toRecord, toRow } from './entity'
 import { selectNetwork } from './select'
-
 export class NetworkRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
@@ -25,7 +25,6 @@ export class NetworkRepository {
 
     const networkIds = allNetworks.map((network) => network.id)
 
-    // TODO: Phase out or unify repositories as per-domain
     const [explorers, rpcs] = await Promise.all([
       this.db
         .selectFrom('NetworkExplorer')
@@ -56,7 +55,7 @@ export class NetworkRepository {
       .$narrowType<{ coingeckoId: string }>()
       .execute()
 
-    return rows.map(toRecord)
+    return rows.map(toRecord) as SetRequired<Network, 'coingeckoId'>[]
   }
 
   upsertMany(networks: Network[]) {
