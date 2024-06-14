@@ -19,7 +19,7 @@ export function generateSlugList<T extends ScalingEntry | BridgesEntry>(
   items: T[],
   check?: (item: T) => boolean,
 ): string[] {
-  let result = [...items]
+  let result = items
 
   if (check) {
     result = result.filter(check)
