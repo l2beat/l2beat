@@ -3,28 +3,14 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
+import { type DaSummaryEntryBridge } from '../../../_utils/get-da-bridge'
 import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
 import { DaBridgeCell } from './da-bridge-cell'
 
-interface OnChainBridge {
-  type: 'OnChain'
-  name: string
-  network: string
-}
-
-interface DACBridge {
-  type: 'DAC'
-  name: string
-  requiredMembers: number
-  totalMembers: number
-}
-
-type DaBridge = OnChainBridge | DACBridge
-
-export type DataAvailabilityProvider = {
+export type DaSummaryEntry = {
   slug: string
   daLayer: string
-  daBridge: DaBridge | null
+  daBridge: DaSummaryEntryBridge | null
   risks: DaBridgeRisks & DaLayerRisks
   layerType: string
   tvs: number
@@ -32,7 +18,7 @@ export type DataAvailabilityProvider = {
   usedBy: string[]
 }
 
-const columnHelper = createColumnHelper<DataAvailabilityProvider>()
+const columnHelper = createColumnHelper<DaSummaryEntry>()
 
 export const columns = [
   columnHelper.accessor((_, index) => index + 1, {

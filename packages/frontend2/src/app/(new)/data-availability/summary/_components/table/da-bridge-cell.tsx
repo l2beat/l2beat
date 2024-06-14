@@ -1,8 +1,8 @@
 import React from 'react'
-import { type DataAvailabilityProvider } from './columns'
+import { type DaSummaryEntry } from './columns'
 
 interface Props {
-  daBridge: DataAvailabilityProvider['daBridge']
+  daBridge: DaSummaryEntry['daBridge']
 }
 export function DaBridgeCell({ daBridge }: Props) {
   if (!daBridge) return 'No bridge'

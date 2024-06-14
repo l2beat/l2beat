@@ -19,13 +19,13 @@ import {
 import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
 import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry, columns } from './columns'
+import { type DaRiskEntry, columns } from './columns'
 
 interface Props {
-  items: DaSummaryEntry[]
+  items: DaRiskEntry[]
 }
 
-export function DaSummaryTable({ items }: Props) {
+export function DaRiskTable({ items }: Props) {
   const table = useTable({
     data: items,
     columns,
@@ -42,10 +42,6 @@ export function DaSummaryTable({ items }: Props) {
         <TableFacetedFilter
           title="DA Layer"
           column={table.getColumn('daLayer')}
-        />
-        <TableFacetedFilter
-          title="Layer type"
-          column={table.getColumn('layerType')}
         />
       </TableToolbar>
       <Table>

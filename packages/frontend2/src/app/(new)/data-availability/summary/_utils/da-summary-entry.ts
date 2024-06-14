@@ -1,10 +1,10 @@
 import { type DaLayer, layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { type DataAvailabilityProvider } from '../summary/_components/table/columns'
-import { toDaBridge } from './get-da-bridge'
-import { getDaRisks } from './get-da-risks'
+import { toDaBridge } from '../../_utils/get-da-bridge'
+import { getDaRisks } from '../../_utils/get-da-risks'
+import { type DaSummaryEntry } from '../_components/table/columns'
 
-export function getDaLayerEntry(daLayer: DaLayer): DataAvailabilityProvider[] {
+export function toDaSummaryEntry(daLayer: DaLayer): DaSummaryEntry[] {
   return daLayer.bridges.map((bridge) => ({
     slug: daLayer.display.slug,
     daLayer: daLayer.display.name,
