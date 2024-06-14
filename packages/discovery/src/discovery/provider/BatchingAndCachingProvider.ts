@@ -298,12 +298,18 @@ export class BatchingAndCachingProvider {
     let logs: providers.Log[] = []
     try {
       // TODO: how do we do batching?
-      logs = await this.provider.getLogs(
-        first.address,
-        topics,
-        0,
-        first.toBlock,
+      const logLogs = await Promise.all(
+        topics.map(
+          async (topic) =>
+            await this.provider.getLogs(
+              first.address,
+              [topic],
+              0,
+              first.toBlock,
+            ),
+        ),
       )
+      logs = logLogs.flat()
     } catch (e) {
       for (const item of items) {
         for (const nested of item.items) {
@@ -322,12 +328,16 @@ export class BatchingAndCachingProvider {
       const topicLogs = byTopic.get(topic) ?? []
       topicLogs.push(log)
       byTopic.set(topic, topicLogs)
+    }
+
+    for (const topic of byTopic.keys()) {
+      const topicLogs = byTopic.get(topic) ?? []
 
       // We bypass the entries mechanism to avoid repeated writes
       this.cache.write(
         'getLogs',
-        [log.address, 0, log.blockNumber, topic],
-        log.blockNumber,
+        [first.address, 0, first.toBlock, topic],
+        first.toBlock,
         JSON.stringify(topicLogs),
       )
     }
