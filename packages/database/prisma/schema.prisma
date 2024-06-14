@@ -11,14 +11,13 @@ datasource db {
 }
 
 model CurrentPrice {
-  assetId   String   @id @db.VarChar(255)
-  priceUsd  Float    @db.Real
-  updatedAt DateTime @db.Timestamp
+  coingeckoId   String   @id @db.VarChar(255)
+  priceUsd      Float    @db.Real
+  updatedAt     DateTime @db.Timestamp
 }
 
 model Stake {
   chainId        Int    @id
   totalStake     Float  @db.Real
   thresholdStake Float  @db.Real
-  assetId        String
 }

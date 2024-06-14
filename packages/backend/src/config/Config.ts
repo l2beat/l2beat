@@ -7,7 +7,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
@@ -36,6 +35,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
+  readonly daBeat: DABeatConfig | false
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
@@ -183,3 +183,7 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
+
+export interface DABeatConfig {
+  readonly coingeckoApiKey: string | undefined
+}

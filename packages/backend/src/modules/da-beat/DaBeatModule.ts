@@ -4,30 +4,33 @@ import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { CurrentPricesRefresher } from './CurrentPricesRefresher'
+import { DaBeatPricesRefresher } from './DaBeatPricesRefresher'
+import { CoingeckoClient } from '@l2beat/shared'
 
-export function createCurrentPricesModule(
+export function createDaBeatModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.activity) {
-    logger.info('Activity module disabled')
+  if (!config.daBeat) {
+    logger.info('DABeat module disabled')
     return
   }
 
-  const currentPricesRefresher = new CurrentPricesRefresher(
+  const pricesRefresher = new DaBeatPricesRefresher(
     peripherals.database,
+    peripherals.getClient(CoingeckoClient, {
+      apiKey: config.daBeat.coingeckoApiKey,
+    }),
     clock,
     logger,
   )
 
-  const start = async () => {
+  const start = () => {
     logger = logger.for('ActivityModule')
     logger.info('Starting')
-    await Promise.all(processors.map((p) => p.start()))
-    viewRefresher.start()
+    pricesRefresher.start()
     logger.info('Started')
   }
 

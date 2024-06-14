@@ -1,7 +1,7 @@
 import { CurrentPrice } from '../kysely/generated/types'
 
 export const selectCurrentPrice = [
-  'assetId',
+  'coingeckoId',
   'priceUsd',
   'updatedAt',
 ] as const satisfies (keyof CurrentPrice)[]

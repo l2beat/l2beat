@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc",

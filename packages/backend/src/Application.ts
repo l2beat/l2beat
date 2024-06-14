@@ -21,7 +21,7 @@ import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 import { createRepositories } from '@l2beat/database'
-import { createCurrentPricesModule } from './modules/current-prices/CurrentPricesModule'
+import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 
 export class Application {
   start: () => Promise<void>
@@ -64,7 +64,7 @@ export class Application {
       createTvl2Module(config, logger, peripherals, clock),
       createVerifiersModule(config, logger, peripherals),
       createFeaturesModule(config),
-      createCurrentPricesModule(config, logger, peripherals, clock),
+      createDaBeatModule(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

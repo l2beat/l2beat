@@ -187,6 +187,13 @@ export function makeConfig(
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
+    daBeat: flags.isEnabled('da-beat') && {
+      coingeckoApiKey: env.optionalString([
+        'COINGECKO_API_KEY_FOR_DA_BEAT',
+        'COINGECKO_API_KEY',
+      ]),
+    },
+
     // Must be last
     flags: flags.getResolved(),
   }

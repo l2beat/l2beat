@@ -4,7 +4,6 @@ export interface Stake {
   chainId: number
   totalStake: number
   thresholdStake: number
-  assetId: string
 }
 
 export function fromEntity(entity: StakeEntity): Stake {
