@@ -1540,7 +1540,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     }
   ],
@@ -1548,7 +1548,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -1851,7 +1851,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -1965,7 +1965,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -2054,7 +2054,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -2085,7 +2085,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -2338,7 +2338,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -2558,7 +2558,7 @@
     {
       "symbol": "ETH",
       "source": "canonical",
-      "supply": "totalSupply", // formula does not matter here
+      "supply": "zero",
       "category": "ether"
     },
     {
