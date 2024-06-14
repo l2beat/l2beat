@@ -191,7 +191,7 @@ function getSource(
   chain: string,
   entry: SourceEntry,
 ) {
-  const type = chain === 'ethereum' ? 'CBV' : entry.source
+  const type = chain === 'ethereum' ? 'canonical' : entry.source
   tokenLogger.assert(type !== undefined, `Missing type`)
   return type
 }

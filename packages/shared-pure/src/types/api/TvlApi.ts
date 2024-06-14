@@ -1,7 +1,6 @@
 import z from 'zod'
 
 import { AssetId } from '../AssetId'
-import { AssetType } from '../AssetType'
 import { ChainId } from '../ChainId'
 import { EthereumAddress } from '../EthereumAddress'
 import { UnixTime } from '../UnixTime'
@@ -49,7 +48,7 @@ export const TvlApiToken = z.object({
   // TODO(L2B-5614): Make both required
   address: z.string().optional(),
   chain: z.string().optional(),
-  assetType: branded(z.string(), AssetType),
+  assetType: z.string(),
   usdValue: z.number(),
 })
 

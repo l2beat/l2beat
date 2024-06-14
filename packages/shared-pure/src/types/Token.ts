@@ -17,7 +17,7 @@ export interface Token {
   category: 'ether' | 'stablecoin' | 'other'
   iconUrl?: string
   chainId: ChainId
-  source: 'CBV' | 'EBV' | 'NMV'
+  source: 'canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   bridgedUsing?: {
     bridge: string

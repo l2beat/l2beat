@@ -117,7 +117,7 @@ function getAmountsConfig(
             sinceTimestamp,
             untilTimestamp: token.untilTimestamp,
             project: projectId,
-            source: toSource(token.source),
+            source: token.source,
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -133,7 +133,7 @@ function getAmountsConfig(
             untilTimestamp: token.untilTimestamp,
             coingeckoId: token.coingeckoId,
             project: projectId,
-            source: toSource(token.source),
+            source: token.source,
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -264,17 +264,4 @@ function getChainToProjectMapping(
   }
 
   return chainToProject
-}
-
-function toSource(
-  type: 'CBV' | 'EBV' | 'NMV',
-): 'native' | 'canonical' | 'external' {
-  switch (type) {
-    case 'CBV':
-      return 'canonical'
-    case 'EBV':
-      return 'external'
-    case 'NMV':
-      return 'native'
-  }
 }
