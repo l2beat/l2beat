@@ -16,6 +16,7 @@ import { harmony } from './harmony'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
+import { lightlink } from './lightlink'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
@@ -65,6 +66,7 @@ export const bridges: Bridge[] = [
   hyphen,
   immutablezkevm,
   lzOmnichain,
+  lightlink,
   multichain,
   near,
   fraxferry,
