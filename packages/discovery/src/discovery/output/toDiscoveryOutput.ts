@@ -40,6 +40,7 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
           template: x.extendedTemplate?.template,
+          ...(x.combinedMeta ?? {}),
           ignoreInWatchMode: x.ignoreInWatchMode,
           upgradeability: x.upgradeability,
           implementations:
@@ -85,11 +86,18 @@ function getContracts(results: Analysis[]): {
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
+  return JSON.parse(JSON.stringify(obj, convertSetToSortedArray)) as T
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
+}
+
+function convertSetToSortedArray(_key: string, value: unknown) {
+  if (value instanceof Set) {
+    return Array.from(value).sort()
+  }
+  return value
 }
