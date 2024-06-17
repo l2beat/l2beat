@@ -1,10 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
+import { createRepositories } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createActivityModule } from './modules/activity/ActivityModule'
+import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -20,8 +22,6 @@ import { Peripherals } from './peripherals/Peripherals'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
-import { createRepositories } from '@l2beat/database'
-import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 
 export class Application {
   start: () => Promise<void>

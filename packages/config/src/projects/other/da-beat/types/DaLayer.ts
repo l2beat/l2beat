@@ -1,8 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
-import { DaEconomicSecurity } from './DaEconomicSecurity'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',

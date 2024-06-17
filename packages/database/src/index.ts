@@ -1,7 +1,7 @@
 import { PoolConfig } from 'pg'
+import { CurrentPriceRepository } from './current-price'
 import { PostgresDatabase } from './kysely'
 import { StakeRepository } from './stake/repository'
-import { CurrentPriceRepository } from './current-price'
 
 export function createRepositories(config?: PoolConfig) {
   const db = new PostgresDatabase(config)

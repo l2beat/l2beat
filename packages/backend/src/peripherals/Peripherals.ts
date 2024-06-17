@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import { isEqual } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import { BaseRepository } from './database/BaseRepository'
 import { Database as LegacyDatabase } from './database/Database'
-import { Database } from '@l2beat/database'
 
 interface RepositoryClass<T extends BaseRepository> {
   new (database: LegacyDatabase, logger: Logger): T

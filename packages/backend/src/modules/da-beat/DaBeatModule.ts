@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { CoingeckoClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { DaBeatPricesRefresher } from './DaBeatPricesRefresher'
-import { CoingeckoClient } from '@l2beat/shared'
 import { DaBeatStakeRefresher } from './DaBeatStakeRefresher'
 
 export function createDaBeatModule(

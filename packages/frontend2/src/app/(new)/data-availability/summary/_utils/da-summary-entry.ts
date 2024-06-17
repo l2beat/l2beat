@@ -1,4 +1,4 @@
-import { type DaLayer, layer2s, DaLayerKindDisplay } from '@l2beat/config'
+import { type DaLayer, DaLayerKindDisplay, layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { toDaBridge } from '../../_utils/get-da-bridge'
 import { getDaRisks } from '../../_utils/get-da-risks'

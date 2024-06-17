@@ -1,21 +1,21 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   BlockchainDaLayer,
   DaEconomicSecurityType,
   DaLayer,
   daLayers,
 } from '@l2beat/config'
-import { compact } from 'lodash'
-import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
-import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
-import { QuickNodeClient } from '../../peripherals/quicknode/QuickNodeClient'
-import { Clock } from '../../tools/Clock'
-import { Logger } from '@l2beat/backend-tools'
-import { DABeatConfig } from '../../config/Config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
+import { compact } from 'lodash'
+import { DABeatConfig } from '../../config/Config'
+import { Peripherals } from '../../peripherals/Peripherals'
+import { QuickNodeClient } from '../../peripherals/quicknode/QuickNodeClient'
+import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
+import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
+import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
+import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>

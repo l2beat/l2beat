@@ -1,11 +1,11 @@
-import { Logger, assert } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 
-import { Clock } from '../../tools/Clock'
-import { TaskQueue } from '../../tools/queue/TaskQueue'
+import { daEconomicSecurityMeta } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { CoingeckoClient } from '@l2beat/shared'
 import { z } from 'zod'
-import { daEconomicSecurityMeta } from '@l2beat/config'
+import { Clock } from '../../tools/Clock'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export class DaBeatPricesRefresher {
   private readonly refreshQueue: TaskQueue<void>
