@@ -1,4 +1,4 @@
-import { type DaLayer, layer2s } from '@l2beat/config'
+import { type DaLayer, DaLayerKindDisplay, layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { toDaBridge } from '../../_utils/get-da-bridge'
 import { getDaRisks } from '../../_utils/get-da-risks'
@@ -12,7 +12,7 @@ export function toDaSummaryEntry(daLayer: DaLayer): DaSummaryEntry[] {
     risks: getDaRisks(daLayer, bridge),
     tvs: Math.random() * 1_000_000_000,
     economicSecurity: Math.random() * 1_000_000_000,
-    layerType: daLayer.kind.display,
+    layerType: DaLayerKindDisplay[daLayer.kind],
     // TODO: maybe we can specify names in the config instead of projectIds
     usedBy: bridge.usedIn
       .map(
