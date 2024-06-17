@@ -2558,7 +2558,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero"
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       },
       "coingeckoId": "real-us-t-bill"
     },
@@ -2567,6 +2568,10 @@
       "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
       "type": "NMV",
       "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      },
       "coingeckoId": "pearl"
     },
     {
@@ -2575,25 +2580,20 @@
       "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero"
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       },
       "coingeckoId": "arcana-2"
-    },
-    {
-      "symbol": "WREETH",
-      "address": "0x90c6e93849e06ec7478ba24522329d14a5954df4",
-      "type": "NMV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero"
-      },
-      "coingeckoId": "wrapped-real-ether"
     },
     {
       "symbol": "MORE",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
       "type": "NMV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ]
 }

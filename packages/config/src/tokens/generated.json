@@ -6799,7 +6799,8 @@
       "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero"
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {
@@ -6815,7 +6816,11 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
       "chainId": 111188,
       "type": "NMV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "id": "real:pearl-pearl",
@@ -6830,7 +6835,11 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
       "chainId": 111188,
       "type": "NMV",
-      "formula": "totalSupply"
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "id": "real:ustb-us-t-bill",
@@ -6847,25 +6856,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Layer Zero"
-      }
-    },
-    {
-      "id": "real:wreeth-wrapped-real-ether",
-      "name": "Wrapped Real Ether",
-      "coingeckoId": "wrapped-real-ether",
-      "address": "0x90c6E93849E06EC7478ba24522329d14A5954Df4",
-      "symbol": "WREETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1715364225,
-      "coingeckoListingTimestamp": 1717545600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38176/large/wreeth.png?1716781182",
-      "chainId": 111188,
-      "type": "NMV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero"
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {
