@@ -9,6 +9,9 @@ import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
+import { SummaryActiveTable } from './_components/table/active/summary-active-table'
+import { layer2s } from '@l2beat/config'
+import { toScalingSummaryEntry } from './_utils/scaling-summary-entry'
 
 export default function Page() {
   return (
@@ -39,7 +42,9 @@ export default function Page() {
           </TabsList>
         </OverflowWrapper>
 
-        <TabsContent value="active">Active Layer2s</TabsContent>
+        <TabsContent value="active">
+          <SummaryActiveTable items={layer2s.map(toScalingSummaryEntry)} />
+        </TabsContent>
         <TabsContent value="layer3s">Active Layer3s</TabsContent>
         <TabsContent value="upcoming">Upcoming Layer2s</TabsContent>
         <TabsContent value="archived">Archived Layer2s</TabsContent>

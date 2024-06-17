@@ -1,8 +1,26 @@
-import { type DaLayer, layer2s } from '@l2beat/config'
+import {
+  type DaBridgeRisks,
+  type DaLayer,
+  type DaLayerRisks,
+  layer2s,
+} from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { toDaBridge } from '../../_utils/get-da-bridge'
+import {
+  type DaSummaryEntryBridge,
+  toDaBridge,
+} from '../../_utils/get-da-bridge'
 import { getDaRisks } from '../../_utils/get-da-risks'
-import { type DaSummaryEntry } from '../_components/table/columns'
+
+export type DaSummaryEntry = {
+  slug: string
+  daLayer: string
+  daBridge: DaSummaryEntryBridge | null
+  risks: DaBridgeRisks & DaLayerRisks
+  layerType: string
+  tvs: number
+  economicSecurity: number
+  usedBy: string[]
+}
 
 export function toDaSummaryEntry(daLayer: DaLayer): DaSummaryEntry[] {
   return daLayer.bridges.map((bridge) => ({

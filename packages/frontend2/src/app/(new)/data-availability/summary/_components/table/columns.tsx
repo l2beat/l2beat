@@ -1,22 +1,10 @@
-import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
-import { type DaSummaryEntryBridge } from '../../../_utils/get-da-bridge'
 import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
 import { DaBridgeCell } from './da-bridge-cell'
-
-export type DaSummaryEntry = {
-  slug: string
-  daLayer: string
-  daBridge: DaSummaryEntryBridge | null
-  risks: DaBridgeRisks & DaLayerRisks
-  layerType: string
-  tvs: number
-  economicSecurity: number
-  usedBy: string[]
-}
+import { type DaSummaryEntry } from '../../_utils/da-summary-entry'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 

@@ -12,8 +12,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '../drawer'
-import { Popover, PopoverContent, PopoverTrigger } from '../popover'
+} from '../../drawer'
+import { Popover, PopoverContent, PopoverTrigger } from '../../popover'
 
 interface TableFacetedFilterProps<TData, TValue> {
   column: Column<TData, TValue> | undefined

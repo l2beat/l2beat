@@ -7,6 +7,8 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
+import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
+import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import {
   Table,
   TableBody,
@@ -16,10 +18,9 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/app/_components/table/table'
-import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
-import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry, columns } from './columns'
+import { type DaSummaryEntry } from '../../_utils/da-summary-entry'
+import { columns } from './columns'
 
 interface Props {
   items: DaSummaryEntry[]
@@ -38,7 +39,7 @@ export function DaSummaryTable({ items }: Props) {
 
   return (
     <>
-      <TableToolbar>
+      <FilterWrapper>
         <TableFacetedFilter
           title="DA Layer"
           column={table.getColumn('daLayer')}
@@ -47,7 +48,7 @@ export function DaSummaryTable({ items }: Props) {
           title="Layer type"
           column={table.getColumn('layerType')}
         />
-      </TableToolbar>
+      </FilterWrapper>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
