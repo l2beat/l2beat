@@ -7,7 +7,9 @@ Generated with discovered.json: 0x172b8819e2c3b46d178c3131550d436fb9b48db0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery:
+Lambda Chain is an OP stack L2, publishing blobs to Ethereum. The TVL (USD ~3M) is almost exclusively in the associated token LAMB.
+Lambda is developing decentralized modular storage services. EOA-upgradable.
 
 ## Initial discovery
 
