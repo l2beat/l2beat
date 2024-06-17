@@ -26,6 +26,7 @@ export function getCostsRenderParams(
     const points = dataInRange.map((dataPoint) => {
       const [timestamp] = dataPoint
       return {
+        dashed: false,
         series: getSeries(dataPoint, state.unit),
         data: getData(dataPoint, state.unit),
         milestone: state.milestones[timestamp],
@@ -87,24 +88,24 @@ function getSeries(dataPoint: CostsChart['data'][number], unit: ChartUnit) {
   switch (unit) {
     case 'USD':
       return [
-        overheadUsd + computeUsd + blobsUsd + calldataUsd,
-        overheadUsd + computeUsd + blobsUsd,
-        overheadUsd + computeUsd,
-        overheadUsd,
+        { value: overheadUsd + computeUsd + blobsUsd + calldataUsd },
+        { value: overheadUsd + computeUsd + blobsUsd },
+        { value: overheadUsd + computeUsd },
+        { value: overheadUsd },
       ]
     case 'ETH':
       return [
-        overheadEth + computeEth + blobsEth + calldataEth,
-        overheadEth + computeEth + blobsEth,
-        overheadEth + computeEth,
-        overheadEth,
+        { value: overheadEth + computeEth + blobsEth + calldataEth },
+        { value: overheadEth + computeEth + blobsEth },
+        { value: overheadEth + computeEth },
+        { value: overheadEth },
       ]
     case 'GAS':
       return [
-        overheadGas + computeGas + blobsGas + calldataGas,
-        overheadGas + computeGas + blobsGas,
-        overheadGas + computeGas,
-        overheadGas,
+        { value: overheadGas + computeGas + blobsGas + calldataGas },
+        { value: overheadGas + computeGas + blobsGas },
+        { value: overheadGas + computeGas },
+        { value: overheadGas },
       ]
   }
 }

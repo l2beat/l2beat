@@ -25,7 +25,8 @@ export function getTokenTvlRenderParams(
 
     const points = dataInRange.map(([timestamp, token, usd]) => {
       return {
-        series: [token],
+        dashed: false,
+        series: [{ value: token }],
         data: {
           date: formatTimestamp(timestamp, { mode: 'datetime' }),
           token,

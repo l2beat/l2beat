@@ -1,6 +1,6 @@
 import { Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import mean from 'lodash/mean'
-
 import { formatRange } from '../../../utils'
 import { makeQuery } from '../../query'
 import { isMobile } from '../../utils/isMobile'
@@ -13,11 +13,12 @@ import {
   SeriesStyleLine,
 } from '../styles'
 import { renderMilestoneHover } from '../view-controller/hovers'
+import { getSeriesGroups } from './getSeriesGroups'
 import { getYAxis } from './getYAxis'
 import { renderMilestone } from './milestones'
 
-interface Point<T> {
-  series: number[]
+export interface Point<T> {
+  series: { value: number; dashed?: boolean }[]
   data: T
   milestone?: Milestone
 }
@@ -52,7 +53,6 @@ export class ChartRenderer {
   private readonly range: HTMLElement
   private renderParams?: RenderParams<unknown>
   private getY: (value: number) => number = (x) => x
-  private lastPointIndex?: number
 
   constructor(chart: HTMLElement) {
     const { $, $$ } = makeQuery(chart)
@@ -97,42 +97,98 @@ export class ChartRenderer {
   }
 
   private renderData<T>(params: RenderParams<T>) {
+    const renderPaths = this.getRenderPaths(params)
+    console.log('renderPaths', renderPaths)
+    for (const { style, paths } of renderPaths) {
+      if (style.fill) {
+        for (const path of paths) {
+          this.ctx.fillStyle = this.getFillStyle(style.fill, params.theme)
+          const fillPath = new Path2D(path.path)
+          fillPath.lineTo(path.lastX, this.canvas.height)
+          fillPath.lineTo(path.startX ?? 0, this.canvas.height)
+          fillPath.closePath()
+          this.ctx.fill(fillPath)
+        }
+      }
+
+      if (style.line) {
+        for (const path of paths) {
+          this.ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
+          this.ctx.strokeStyle = this.getStrokeStyle(style.line, params.theme)
+          if (path.dashed) {
+            const segments = this.getLineDashSegments(params.range)
+            this.ctx.setLineDash(segments)
+          } else {
+            this.ctx.setLineDash([])
+          }
+
+          if (params) this.ctx.stroke(path.path)
+        }
+      }
+    }
+  }
+
+  private getRenderPaths<T>(params: RenderParams<T>) {
     const usableHeight =
       this.canvas.height - FIRST_LABEL_HEIGHT_PX * window.devicePixelRatio
 
-    const paths = params.seriesStyle.map((series, si) => {
-      const linePath = new Path2D()
-      for (const [pi, point] of params.points.entries()) {
-        const x = (pi / (params.points.length - 1)) * this.canvas.width
-        const y =
-          this.canvas.height - this.getY(point.series[si]) * usableHeight
-        if (pi === 0) {
-          linePath.moveTo(x, y)
-        } else {
-          linePath.lineTo(x, y)
-        }
+    return params.seriesStyle.flatMap((series, si) => {
+      let startX: number | undefined
+      let lastX: number | undefined
+      let lastY: number | undefined
+
+      const seriesGroup = getSeriesGroups(params.points, si)
+
+      return {
+        style: series,
+        paths: seriesGroup.map((group, gi) => {
+          const prevGroup = gi > 0 ? seriesGroup.at(gi - 1) : undefined
+          const path = new Path2D()
+
+          for (const [groupPointIndex, point] of group.entries()) {
+            const pointIndex = (prevGroup?.length ?? 0) + groupPointIndex
+            const x =
+              (pointIndex / (params.points.length - 1)) * this.canvas.width
+            const y = this.canvas.height - this.getY(point.value) * usableHeight
+
+            if (pointIndex === 0) {
+              path.moveTo(x, y)
+            } else if (
+              groupPointIndex === 0 &&
+              lastX !== undefined &&
+              lastY !== undefined
+            ) {
+              startX = lastX
+              path.moveTo(lastX, lastY)
+              path.lineTo(x, y)
+            } else {
+              path.lineTo(x, y)
+            }
+            lastX = x
+            lastY = y
+          }
+          assert(lastX !== undefined, 'lastX is undefined')
+          return {
+            path,
+            dashed: group.at(0)?.dashed ?? false,
+            startX,
+            lastX,
+          }
+        }),
       }
-      return { style: series, path: linePath }
     })
+  }
 
-    for (const { style, path } of paths) {
-      if (style.fill) {
-        this.ctx.fillStyle = this.getFillStyle(style.fill, params.theme)
-        const fillPath = new Path2D(path)
-        fillPath.lineTo(this.canvas.width, this.canvas.height)
-        fillPath.lineTo(0, this.canvas.height)
-        fillPath.closePath()
-        this.ctx.fill(fillPath)
-      }
+  private getLineDashSegments(range: [number, number]) {
+    const [start, end] = range
+    const time = end - start
+    const isMoreThanYear = time > 365 * 24 * 60 * 60
+    // TODO: Come up with nice dash segments
+    if (isMoreThanYear) {
+      return [3, 2]
     }
 
-    for (const { style, path } of paths) {
-      if (style.line) {
-        this.ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
-        this.ctx.strokeStyle = this.getStrokeStyle(style.line, params.theme)
-        this.ctx.stroke(path)
-      }
-    }
+    return [10, 5]
   }
 
   private initializeListeners() {
@@ -201,7 +257,7 @@ export class ChartRenderer {
     useLogScale: boolean,
     formatYAxisLabel: (value: number) => string,
   ) {
-    const values = points.flatMap((point) => point.series)
+    const values = points.flatMap((point) => point.series.map((s) => s.value))
     const { labels, getY } = getYAxis(
       values,
       useLogScale,
@@ -244,7 +300,6 @@ export class ChartRenderer {
     const pointsLength = this.renderParams.points.length
     let pointIndex = Math.round(mouseX * (pointsLength - 1))
 
-    this.lastPointIndex = pointIndex
     let point = this.renderParams.points[pointIndex]
 
     const { width: canvasWidth, height: canvasHeight } =
@@ -271,7 +326,7 @@ export class ChartRenderer {
 
     const yValues: number[] = []
 
-    for (const [i, value] of point.series.entries()) {
+    for (const [i, data] of point.series.entries()) {
       const pointElement = this.hoverPointWrapper.querySelector<HTMLElement>(
         `[data-series="${i}"]`,
       )
@@ -284,7 +339,7 @@ export class ChartRenderer {
               ? POINT_CLASS_NAMES[pointStyle].className
               : ''
         }`
-        const y = this.getY(value)
+        const y = this.getY(data.value)
         const bottom = Math.max(0, y * (canvasHeight - FIRST_LABEL_HEIGHT_PX))
         yValues.push(bottom)
         pointElement.style.left = `${left - 4}px`
@@ -327,7 +382,6 @@ export class ChartRenderer {
   }
 
   private onMouseExited() {
-    this.lastPointIndex = undefined
     this.hover.classList.add('hidden')
   }
 
