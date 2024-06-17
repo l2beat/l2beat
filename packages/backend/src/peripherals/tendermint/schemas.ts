@@ -5,7 +5,7 @@ export const TendermintValidatorsResponseBodySchema = z.object({
   id: z.number().int(),
   result: z
     .object({
-      block_height: z.number().int(),
+      block_height: z.string().transform((x) => parseInt(x)),
       validators: z.array(
         z.object({
           address: z.string(),

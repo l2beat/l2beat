@@ -185,5 +185,9 @@ export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
 
 export interface DABeatConfig {
-  readonly coingeckoApiKey: string | undefined
+  readonly coingeckoApiKey: string
+  readonly quicknodeApiUrl: string
+  readonly quicknodeCallsPerMinute: number
+  readonly celestiaApiUrl: string
+  readonly celestiaCallsPerMinute: number
 }

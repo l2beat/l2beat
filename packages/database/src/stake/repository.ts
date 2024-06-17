@@ -10,11 +10,11 @@ export class StakeRepository {
     return res.map(fromEntity)
   }
 
-  async findOneByChainId(chainId: number) {
+  async findOneById(id: string) {
     const res = await this.db
       .selectFrom('Stake')
       .select(selectStake)
-      .where('chainId', '=', chainId)
+      .where('id', '=', id)
       .limit(1)
       .executeTakeFirst()
     return res ? fromEntity(res) : null
@@ -22,11 +22,11 @@ export class StakeRepository {
 
   async upsert(stake: Stake) {
     const entity = toEntity(stake)
-    const { chainId, ...rest } = entity
+    const { id, ...rest } = entity
     return this.db
       .insertInto('Stake')
       .values(entity)
-      .onConflict((oc) => oc.columns(['chainId']).doUpdateSet(rest))
+      .onConflict((oc) => oc.columns(['id']).doUpdateSet(rest))
       .execute()
   }
 }

@@ -6,6 +6,7 @@ import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { DaBeatPricesRefresher } from './DaBeatPricesRefresher'
 import { CoingeckoClient } from '@l2beat/shared'
+import { DaBeatStakeRefresher } from './DaBeatStakeRefresher'
 
 export function createDaBeatModule(
   config: Config,
@@ -13,7 +14,8 @@ export function createDaBeatModule(
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.daBeat) {
+  const daBeatConfig = config.daBeat
+  if (!daBeatConfig) {
     logger.info('DABeat module disabled')
     return
   }
@@ -27,10 +29,18 @@ export function createDaBeatModule(
     logger,
   )
 
+  const stakeRefresher = new DaBeatStakeRefresher(
+    peripherals,
+    daBeatConfig,
+    clock,
+    logger,
+  )
+
   const start = () => {
-    logger = logger.for('ActivityModule')
+    logger = logger.for('DaBeatModule')
     logger.info('Starting')
     pricesRefresher.start()
+    stakeRefresher.start()
     logger.info('Started')
   }
 

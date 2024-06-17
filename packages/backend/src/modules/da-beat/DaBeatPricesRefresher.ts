@@ -30,6 +30,7 @@ export class DaBeatPricesRefresher {
   start() {
     this.logger.info('Started')
     this.clock.onNewHour(() => this.refreshQueue.addIfEmpty())
+    this.refreshQueue.addIfEmpty()
   }
 
   private async refresh() {
@@ -45,7 +46,7 @@ export class DaBeatPricesRefresher {
         }),
       )
       .parse(
-        await this.coingeckoClient.query('/api/v3/coins/id/tickers', {
+        await this.coingeckoClient.query('/coins/markets', {
           vs_currency: 'usd',
           ids: coingeckoIds.join(','),
         }),

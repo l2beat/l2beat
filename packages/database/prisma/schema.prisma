@@ -17,7 +17,7 @@ model CurrentPrice {
 }
 
 model Stake {
-  chainId        Int    @id
-  totalStake     Float  @db.Real
-  thresholdStake Float  @db.Real
+  id             String @id @db.VarChar(255)
+  totalStake     BigInt
+  thresholdStake BigInt
 }

@@ -6,7 +6,7 @@ export class CelestiaStakeAnalyzer extends AbstractStakeAnalyzer {
     super()
   }
 
-  async analyze() {
+  override async analyze() {
     const perPage = 100
     let pageCount = 1
     let totalStake = 0n

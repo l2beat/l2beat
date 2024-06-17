@@ -188,10 +188,32 @@ export function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
     daBeat: flags.isEnabled('da-beat') && {
-      coingeckoApiKey: env.optionalString([
+      coingeckoApiKey: env.string([
         'COINGECKO_API_KEY_FOR_DA_BEAT',
         'COINGECKO_API_KEY',
       ]),
+      quicknodeApiUrl: env.string([
+        'QUICKNODE_API_URL_FOR_DA_BEAT',
+        'QUICKNODE_API_URL',
+      ]),
+      quicknodeCallsPerMinute: env.integer(
+        [
+          'QUICKNODE_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
+          'QUICKNODE_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      celestiaApiUrl: env.string([
+        'CELESTIA_API_URL_FOR_DA_BEAT',
+        'CELESTIA_API_URL',
+      ]),
+      celestiaCallsPerMinute: env.integer(
+        [
+          'CELESTIA_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
+          'CELESTIA_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
     },
 
     // Must be last

@@ -11,7 +11,7 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.createTable('Stake', function (table) {
-    table.integer('chainId').notNullable()
+    table.string('id').notNullable()
     table.float('totalStake').notNullable()
     table.float('thresholdStake').notNullable()
     table.primary(['chainId'], {
