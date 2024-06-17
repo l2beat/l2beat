@@ -5,11 +5,23 @@ import {
   isOnChainBridge,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { type DataAvailabilityProvider } from '../summary/_components/table/columns'
 
-export function toDaBridge(
-  bridge: DaBridge,
-): DataAvailabilityProvider['daBridge'] {
+interface OnChainBridge {
+  type: 'OnChain'
+  name: string
+  network: string
+}
+
+interface DACBridge {
+  type: 'DAC'
+  name: string
+  requiredMembers: number
+  totalMembers: number
+}
+
+export type DaSummaryEntryBridge = OnChainBridge | DACBridge
+
+export function toDaBridge(bridge: DaBridge): DaSummaryEntryBridge | null {
   if (isDacBridge(bridge)) {
     return {
       type: 'DAC',

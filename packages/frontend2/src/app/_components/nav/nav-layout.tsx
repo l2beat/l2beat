@@ -94,6 +94,11 @@ export async function NavLayout({
           icon: <SummaryIcon />,
           href: '/data-availability/summary',
         },
+        {
+          title: 'Risk Analysis',
+          icon: <RiskIcon />,
+          href: '/data-availability/risk',
+        },
       ],
     },
   ])

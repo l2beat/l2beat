@@ -65,14 +65,14 @@ export function createStatusRouter(
         }),
       }),
       (ctx) => {
-        if (!config.tvl2) {
-          ctx.body = 'TVL2 is disabled'
+        if (!config.tvl) {
+          ctx.body = 'TVL is disabled'
           return
         }
 
         const projectsFilter = ctx.query.projects?.split(',')
 
-        const escrows = config.tvl2.amounts
+        const escrows = config.tvl.amounts
           .filter((a): a is EscrowEntry => a.type === 'escrow')
           .filter(
             (a) =>

@@ -3,7 +3,7 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
-import { Tvl2Config } from '../../../config/Config'
+import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -21,7 +21,7 @@ export interface PriceModule {
 }
 
 export function createPriceModule(
-  config: Tvl2Config,
+  config: TvlConfig,
   logger: Logger,
   peripherals: Peripherals,
   hourlyIndexer: HourlyIndexer,

@@ -19,10 +19,10 @@ import {
 import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
 import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
-import { type DataAvailabilityProvider, columns } from './columns'
+import { type DaSummaryEntry, columns } from './columns'
 
 interface Props {
-  items: DataAvailabilityProvider[]
+  items: DaSummaryEntry[]
 }
 
 export function DaSummaryTable({ items }: Props) {

@@ -2,7 +2,7 @@ import { assert, Logger } from '@l2beat/backend-tools'
 
 import { chains } from '@l2beat/config'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import { Config, Tvl2Config } from '../../../config/Config'
+import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'
@@ -11,7 +11,7 @@ import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfig
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
-import { createTvl2Router } from '../api/Tvl2Router'
+import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
@@ -31,14 +31,14 @@ import { createChainModules } from './ChainModule'
 import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
 
-export function createTvl2Module(
+export function createTvlModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.tvl2) {
-    logger.info('Tvl2Module disabled')
+  if (!config.tvl) {
+    logger.info('TvlModule disabled')
     return
   }
 
@@ -56,15 +56,15 @@ export function createTvl2Module(
   const syncOptimizer = new SyncOptimizer(clock)
 
   const configMapping = new ConfigMapping(
-    config.tvl2.prices,
-    config.tvl2.amounts,
-    config.tvl2.projects.map((p) => p.projectId),
+    config.tvl.prices,
+    config.tvl.amounts,
+    config.tvl.projects.map((p) => p.projectId),
   )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceModule = createPriceModule(
-    config.tvl2,
+    config.tvl,
     logger,
     peripherals,
     hourlyIndexer,
@@ -73,7 +73,7 @@ export function createTvl2Module(
   )
 
   const chainModules = createChainModules(
-    config.tvl2,
+    config.tvl,
     peripherals,
     logger,
     hourlyIndexer,
@@ -84,7 +84,7 @@ export function createTvl2Module(
   )
 
   const circulatingSuppliesModule = createCirculatingSupplyModule(
-    config.tvl2,
+    config.tvl,
     logger,
     peripherals,
     hourlyIndexer,
@@ -94,7 +94,7 @@ export function createTvl2Module(
     configMapping,
   )
 
-  const ethPrice = config.tvl2.prices.find(
+  const ethPrice = config.tvl.prices.find(
     (p) => p.chain === 'ethereum' && p.address === 'native',
   )
   assert(ethPrice, 'Eth priceId not found')
@@ -138,13 +138,13 @@ export function createTvl2Module(
     configMapping,
   })
 
-  const tvlRouter = createTvl2Router(
+  const tvlRouter = createTvlRouter(
     tvlService,
     aggregatedService,
     tokenService,
     breakdownService,
-    getApiProjects(config.tvl2, configMapping),
-    getAssociatedTokens(config.tvl2, configMapping),
+    getApiProjects(config.tvl, configMapping),
+    getAssociatedTokens(config.tvl, configMapping),
     clock,
   )
 
@@ -166,7 +166,7 @@ export function createTvl2Module(
 
     await priceModule.start()
 
-    if (config.tvl2 && config.tvl2.tvlCleanerEnabled) {
+    if (config.tvl && config.tvl.tvlCleanerEnabled) {
       tvlCleaner.start()
     }
 
@@ -184,7 +184,7 @@ export function createTvl2Module(
 }
 
 function getApiProjects(
-  config: Tvl2Config,
+  config: TvlConfig,
   configMapping: ConfigMapping,
 ): ApiProject[] {
   return config.projects.flatMap(({ projectId, type, slug }) => {
@@ -216,7 +216,7 @@ function getApiProjects(
 }
 
 function getAssociatedTokens(
-  config: Tvl2Config,
+  config: TvlConfig,
   configMapping: ConfigMapping,
 ): AssociatedToken[] {
   return config.projects.flatMap(({ projectId, type }) => {

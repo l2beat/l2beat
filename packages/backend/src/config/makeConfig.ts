@@ -11,7 +11,7 @@ import {
   getProjectsWithActivity,
 } from './features/activity'
 import { getFinalityConfigurations } from './features/finality'
-import { getTvl2Config } from './features/tvl2'
+import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -28,7 +28,7 @@ export function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
+  const tvlConfig = getTvlConfig(flags, env, minTimestampOverride)
 
   const isReadonly = env.boolean(
     'READONLY',
@@ -94,7 +94,7 @@ export function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl2: flags.isEnabled('tvl2') && tvl2Config,
+    tvl: flags.isEnabled('tvl') && tvlConfig,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
         clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),

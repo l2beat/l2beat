@@ -14,7 +14,7 @@ export const storybookBuildContext: PageBuildContext = {
       buildAllProjectPages: true,
       costsPage: true,
       zkCatalog: true,
-      tvl2: true,
+      tvl: true,
       layer3sTvl: true,
     },
     links: {

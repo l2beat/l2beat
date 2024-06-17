@@ -4,7 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { SyncOptimizer } from './SyncOptimizer'
 
 export interface TvlRepositoryToClean {
   deleteHourlyUntil: (dateRange: {
