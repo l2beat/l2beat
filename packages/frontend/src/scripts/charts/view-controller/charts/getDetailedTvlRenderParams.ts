@@ -27,7 +27,6 @@ export function getDetailedTvlRenderParams(
     const points = dataInRange.map(
       ([timestamp, usd, cbv, ebv, nmv, eth, cbvEth, ebvEth, nmvEth]) => {
         return {
-          dashed: false,
           series: useEth
             ? [
                 { value: cbvEth + ebvEth + nmvEth },

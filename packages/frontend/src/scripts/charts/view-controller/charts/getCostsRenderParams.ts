@@ -26,7 +26,6 @@ export function getCostsRenderParams(
     const points = dataInRange.map((dataPoint) => {
       const [timestamp] = dataPoint
       return {
-        dashed: false,
         series: getSeries(dataPoint, state.unit),
         data: getData(dataPoint, state.unit),
         milestone: state.milestones[timestamp],
