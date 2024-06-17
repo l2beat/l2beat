@@ -48,9 +48,11 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           <Section title="Description">
             <Markdown>{props.details.description}</Markdown>
           </Section>
-          <Section title="List of required tools">
-            <RequiredTools items={props.details.requiredTools} />
-          </Section>
+          {props.details.requiredTools.length > 0 && (
+            <Section title="List of required tools">
+              <RequiredTools items={props.details.requiredTools} />
+            </Section>
+          )}
         </div>
       </PageContent>
     </DashboardLayout>
