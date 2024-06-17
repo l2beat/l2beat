@@ -4,5 +4,5 @@ export interface ZkCatalogViewEntry extends ZkCatalogProofVerification {
   name: string
   slug: string
   shortDescription: string | undefined
-  hasTrustedSetup: boolean
+  hasTrustedSetup: string
 }
