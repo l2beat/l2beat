@@ -2086,6 +2086,21 @@
       "formula": "locked"
     },
     {
+      "id": "lamb-lambda",
+      "name": "Lambda",
+      "coingeckoId": "lambda",
+      "address": "0x8971f9fd7196e5cEE2C1032B50F656855af7Dd26",
+      "symbol": "LAMB",
+      "decimals": 18,
+      "deploymentTimestamp": 1537280725,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4703/large/lambda_200.png?1696505268",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ldo-lido-dao-token",
       "name": "Lido DAO Token",
       "coingeckoId": "lido-dao",
