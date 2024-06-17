@@ -28,8 +28,16 @@ export function getDetailedTvlRenderParams(
       ([timestamp, usd, cbv, ebv, nmv, eth, cbvEth, ebvEth, nmvEth]) => {
         return {
           series: useEth
-            ? [cbvEth + ebvEth + nmvEth, ebvEth + nmvEth, nmvEth]
-            : [cbv + ebv + nmv, ebv + nmv, nmv],
+            ? [
+                { value: cbvEth + ebvEth + nmvEth },
+                { value: ebvEth + nmvEth },
+                { value: nmvEth },
+              ]
+            : [
+                { value: cbv + ebv + nmv },
+                { value: ebv + nmv },
+                { value: nmv },
+              ],
           data: {
             date: formatTimestamp(timestamp, { mode: 'datetime' }),
             usd,

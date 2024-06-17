@@ -1,6 +1,7 @@
 export * from './DaAccessibilityRisk'
 export * from './DaAttestationSecurityRisk'
 export * from './DaBridge'
+export * from './DaEconomicSecurity'
 export * from './DaEconomicSecurityRisk'
 export * from './DaExitWindowRisk'
 export * from './DaFraudDetectionRisk'
