@@ -19,6 +19,7 @@
     "prisma": "^5.15.0"
   },
   "devDependencies": {
-    "prisma-kysely": "^1.8.0"
+    "prisma-kysely": "^1.8.0",
+    "type-fest": "^4.20.0"
   }
 }

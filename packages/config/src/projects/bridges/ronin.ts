@@ -12,11 +12,12 @@ const operatorsCount = discovery.getPermissionedAccounts(
   'getBridgeOperators',
 ).length
 
-const thresholdArray = discovery.getContractValue<number[]>(
-  'MainchainGateway',
-  'getThreshold',
-)
-const thresholdPerc = thresholdArray[0]
+const thresholdArray = discovery.getContractValue<{
+  num_: number
+  denom_: number
+}>('MainchainGateway', 'getThreshold')
+
+const thresholdPerc = thresholdArray.num_
 
 const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 

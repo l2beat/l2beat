@@ -30,7 +30,7 @@ The logger can be configured using the following options, all of them optional:
 - `cwd` - current working directory, used to shorten error stack traces. Defaults to `process.cwd()`.
 - `getTime` - callback that returns the current time. Defaults to `() => new Date()`.
 - `reportError` - callback called when a message is logged at the `ERROR` or `CRITICAL` level. See more in the [Error reporting](#error-reporting) section.
-- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputed. Defaults to `console` and `pretty` formatter
+- `transports` - a set of pairs ([transport](#transports) + [formatter](#formatters)) which define where and in what form logs are being outputted. Defaults to `console` and `pretty` formatter
 
 ### Services
 
