@@ -38,6 +38,7 @@ import { skaleIMA } from './skaleIMA'
 import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
+import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
@@ -87,6 +88,7 @@ export const bridges: Bridge[] = [
   socket,
   sollet,
   stargate,
+  stargatev2,
   sygma,
   synapse,
   portal,
