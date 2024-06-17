@@ -14,7 +14,7 @@ export async function up(knex: Knex) {
     table.string('id').notNullable()
     table.float('totalStake').notNullable()
     table.float('thresholdStake').notNullable()
-    table.primary(['chainId'], {
+    table.primary(['id'], {
       constraintName: 'Stake_pkey',
     })
   })
