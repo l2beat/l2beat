@@ -1,30 +1,19 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
-import { Chart, FooterProps, NavbarProps } from '../../../../components'
-import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
+import { Chart } from '../../../../components'
 import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ScalingCostsView, ScalingCostsViewProps } from './ScalingCostsView'
 
 export interface ScalingCostsPageProps {
   costsView: ScalingCostsViewProps
-  navbar: NavbarProps
-  footer: FooterProps
+
   milestones: Milestone[] | undefined
 }
 
 export function ScalingCostsPage(props: ScalingCostsPageProps) {
   return (
-    <DashboardLayout
-      navbar={props.navbar}
-      footer={props.footer}
-      tabs={
-        <ScalingNavigationTabs
-          features={props.navbar.features}
-          selected="costs"
-        />
-      }
-    >
+    <DashboardLayout>
       <Chart
         settingsId="scaling-costs"
         initialType={{ type: 'scaling-costs' }}

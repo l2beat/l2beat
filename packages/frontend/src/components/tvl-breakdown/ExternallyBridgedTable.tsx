@@ -14,16 +14,18 @@ export function ExternallyBridgedTable(props: ExternallyBridgedTableProps) {
     return acc + Number(token.usdValue)
   }, 0)
 
+  if (props.tokens.length === 0) {
+    return null
+  }
+
   return (
     <div className="flex flex-col px-4 md:px-0">
-      <h2 className="mb-3 ml-1 mt-12 text-xl font-bold md:mb-4 md:ml-2 md:text-2xl">
+      <h2 className="mt-12 mb-3 ml-1 font-bold text-xl md:mb-4 md:ml-2 md:text-2xl">
         Externally Bridged Value
       </h2>
       <TVLBreakdownTableView
         columns={getExternallyBridgedColumns()}
         items={props.tokens}
-        type="EBV"
-        empty={props.tokens.length === 0}
       />
       <TableSum amount={sum} />
     </div>

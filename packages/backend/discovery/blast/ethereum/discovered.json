@@ -1,9 +1,9 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19966417,
+  "blockNumber": 19976249,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -26,6 +26,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391",
@@ -39,7 +40,11 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19966413],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 19976235
+        },
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -106,6 +111,8 @@
     {
       "name": "BlastMultisig",
       "address": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -133,6 +140,7 @@
     {
       "name": "SystemConfig",
       "address": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xA150f19B681a06E1a0B7E03934299a9bf9238cb7",
@@ -164,14 +172,14 @@
         "optimismPortal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
         "overhead": 0,
         "owner": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
         "scalar": "452312848583266388373324160190187140051835877600158453279134670319890990156",
         "sequencerInbox": "0xFf00000000000000000000000000000000081457",
         "startBlock": 19300387,
@@ -185,6 +193,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
@@ -195,7 +204,7 @@
       "sinceTimestamp": 1708812983,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292699965",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292700016",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -213,10 +222,16 @@
     {
       "name": "LaunchBridge",
       "address": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
+      "ignoreInWatchMode": [
+        "totalETHBalance",
+        "totalETHShares",
+        "totalUSDBalanceNoUpdate",
+        "totalUSDShares"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0bD88b59D580549285f0A207Db5F06bf24a8e561",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C"
       },
       "implementations": ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"],
       "sinceTimestamp": 1700359187,
@@ -232,9 +247,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "2619858951851113001578",
-        "totalETHShares": "2573620345383722543716",
-        "totalUSDBalanceNoUpdate": "475187036569976423562595",
+        "totalETHBalance": "2606098697303301763916",
+        "totalETHShares": "2559656238249419947188",
+        "totalUSDBalanceNoUpdate": "475324753991111498154497",
         "totalUSDShares": "457025974401937656185422",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
@@ -244,6 +259,8 @@
     {
       "name": "BridgeOwner",
       "address": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -307,6 +324,12 @@
     {
       "name": "L2OutputOracle",
       "address": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF",
@@ -322,10 +345,10 @@
         "finalizationPeriodSeconds": 1036800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4032000,
-        "latestOutputIndex": 2239,
-        "nextBlockNumber": 4033800,
-        "nextOutputIndex": 2240,
+        "latestBlockNumber": 4091400,
+        "latestOutputIndex": 2272,
+        "nextBlockNumber": 4093200,
+        "nextOutputIndex": 2273,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -339,6 +362,7 @@
     {
       "name": "ETHYieldManager",
       "address": "0x98078db053902644191f93988341E31289E1C8FE",
+      "ignoreInWatchMode": ["getLockedBalance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xf2F6148327B3020610FCa26E094D9A5cc4689525",
@@ -350,7 +374,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "37387566291884649032363",
+        "getLockedBalance": "31723242641889634423806",
         "insurance": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 10,
@@ -367,6 +391,7 @@
     {
       "name": "USDYieldManager",
       "address": "0xa230285d5683C74935aD14c446e137c8c8828438",
+      "ignoreInWatchMode": ["getLockedBalance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE1cB7358311eCc408e1EFC47ceDc6740A8F68013",
@@ -378,7 +403,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "191148263827153256070000",
+        "getLockedBalance": "204505548327153256070000",
         "insurance": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 0,
@@ -454,6 +479,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x000000000000000000000000000000000000dEaD",
     "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
     "0x164768144C688BF2bDa28E4072B2b30Ab705d568",

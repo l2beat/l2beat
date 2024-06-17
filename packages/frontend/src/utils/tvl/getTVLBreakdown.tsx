@@ -51,7 +51,6 @@ function getPartialTVLBreakdown(
 
   const empty = total === 0
   return {
-    empty,
     associated: empty ? 0 : associated / total,
     ether: empty ? 0 : ether / total,
     stable: empty ? 0 : stable / total,
@@ -63,7 +62,9 @@ function getTVLBreakdownLabel(
   breakdown: ReturnType<typeof getPartialTVLBreakdown>,
   associatedTokens: string[],
 ) {
-  if (breakdown.empty) {
+  const sum =
+    breakdown.associated + breakdown.ether + breakdown.stable + breakdown.other
+  if (sum === 0) {
     return <span>No tokens</span>
   }
 
@@ -95,7 +96,7 @@ function Row({ children, value }: { children: ReactNode; value: number }) {
   }
 
   return (
-    <div className="flex justify-between items-center gap-x-6">
+    <div className="flex items-center justify-between gap-x-6">
       <span className="flex items-center gap-1">{children}</span>
       <span className="font-semibold">{(value * 100).toFixed(2)}%</span>
     </div>

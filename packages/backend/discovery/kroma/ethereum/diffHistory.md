@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x418d954910200516bb9194b4ad45a5d8342701e1
+
+# Diff at Wed, 29 May 2024 15:01:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19910333
+- current block number: 19976276
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19910333 (main branch discovery), not current.
+
+```diff
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+    }
+```
+
+```diff
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+    }
+```
+
+```diff
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f"
+    }
+```
+
 Generated with discovered.json: 0xe882afee6647d123919721780a186d5f658d81b5
 
 # Diff at Fri, 17 May 2024 14:01:28 GMT:

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18939732,
   "configHash": "0x59b272da0d65b6f780237f55503b40da0033b0c88e28c75b7a041282560cb8e3",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "TimeLock1",
@@ -25,6 +25,7 @@
     {
       "name": "Multisig2",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -66,6 +67,7 @@
     {
       "name": "Multisig1",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -123,6 +125,14 @@
     {
       "name": "ExchangeV3",
       "address": "0x9C07A72177c5A05410cA338823e790876E79D73B",
+      "ignoreInWatchMode": [
+        "getBlockHeight",
+        "getMerkleRoot",
+        "getMerkleAssetRoot",
+        "getProtocolFeeValues",
+        "getNumAvailableForcedSlots",
+        "state"
+      ],
       "upgradeability": {
         "type": "ZeppelinOS proxy",
         "implementation": "0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b",
@@ -134,20 +144,20 @@
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
         "getBlockHeight": 697,
-        "getConstants": [
-          "21888242871839275222246405745257275088548364400416034343698204186575808495617",
-          1000000,
-          1296000,
-          604800,
-          4294967296,
-          4294967296,
-          604800,
-          2592000,
-          83,
-          1296000,
-          "250000000000000000",
-          18
-        ],
+        "getConstants": {
+          "SNARK_SCALAR_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+          "MAX_OPEN_FORCED_REQUESTS": 1000000,
+          "MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE": 1296000,
+          "TIMESTAMP_HALF_WINDOW_SIZE_IN_SECONDS": 604800,
+          "MAX_NUM_ACCOUNTS": 4294967296,
+          "MAX_NUM_TOKENS": 4294967296,
+          "MIN_AGE_PROTOCOL_FEES_UNTIL_UPDATED": 604800,
+          "MIN_TIME_IN_SHUTDOWN": 2592000,
+          "TX_DATA_AVAILABILITY_SIZE": 83,
+          "MAX_AGE_DEPOSIT_UNTIL_WITHDRAWABLE_UPPERBOUND": 1296000,
+          "MAX_FORCED_WITHDRAWAL_FEE": "250000000000000000",
+          "DEFAULT_PROTOCOL_FEE_BIPS": 18
+        },
         "getDepositContract": "0x54D7aE423Edb07282645e740C046B9373970a168",
         "getDomainSeparator": "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
         "getExchangeStake": 0,
@@ -156,7 +166,13 @@
         "getMerkleAssetRoot": "0x10fcd74fd0ac02a40ad9aea01b9a0a38644cf09d5ea86bb6906b5e08bd2f1a80",
         "getMerkleRoot": "0x24e77aee7c868187d5d351f6187a42652afc0d79d77a25f84678c90994b84f26",
         "getNumAvailableForcedSlots": 1000000,
-        "getProtocolFeeValues": [0, 18, 18, 0, 18],
+        "getProtocolFeeValues": {
+          "syncedAt": 0,
+          "protocolFeeBips": 18,
+          "previousProtocolFeeBips": 18,
+          "executeTimeOfNextProtocolFeeBips": 0,
+          "nextProtocolFeeBips": 18
+        },
         "implementation": "0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -165,21 +181,36 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxyOwner": "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d",
         "shutdownTriggered": [],
-        "state": [
-          1296000,
-          "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
-          "0x9385aCd9d78dFE854c543294770d0C94c2B07EDC",
-          "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6",
-          "0x0000000000000000000000000000000000000000",
-          "0x54D7aE423Edb07282645e740C046B9373970a168",
-          [5000, 4999, 18919470, 1, 4480000000000000],
-          "0x24e77aee7c868187d5d351f6187a42652afc0d79d77a25f84678c90994b84f26",
-          "0x10fcd74fd0ac02a40ad9aea01b9a0a38644cf09d5ea86bb6906b5e08bd2f1a80",
-          697,
-          0,
-          [0, 18, 18, 0, 18],
-          [0, 0]
-        ],
+        "state": {
+          "maxAgeDepositUntilWithdrawable": 1296000,
+          "DOMAIN_SEPARATOR": "0x9ebdbab57c486aeff6341b8bb14d59c88c9591e4f510481f065ce0cb288d4f0f",
+          "loopring": "0x9385aCd9d78dFE854c543294770d0C94c2B07EDC",
+          "blockVerifier": "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6",
+          "agentRegistry": "0x0000000000000000000000000000000000000000",
+          "depositContract": "0x54D7aE423Edb07282645e740C046B9373970a168",
+          "depositState": {
+            "freeDepositMax": 5000,
+            "freeDepositRemained": 4999,
+            "lastDepositBlockNum": 18919470,
+            "freeSlotPerBlock": 1,
+            "depositFee": 4480000000000000
+          },
+          "merkleRoot": "0x24e77aee7c868187d5d351f6187a42652afc0d79d77a25f84678c90994b84f26",
+          "merkleAssetRoot": "0x10fcd74fd0ac02a40ad9aea01b9a0a38644cf09d5ea86bb6906b5e08bd2f1a80",
+          "numBlocks": 697,
+          "numPendingForcedTransactions": 0,
+          "protocolFeeData": {
+            "syncedAt": 0,
+            "protocolFeeBips": 18,
+            "previousProtocolFeeBips": 18,
+            "executeTimeOfNextProtocolFeeBips": 0,
+            "nextProtocolFeeBips": 18
+          },
+          "modeTime": {
+            "shutdownModeStartTime": 0,
+            "withdrawalModeStartTime": 0
+          }
+        },
         "version": "0.1.0"
       },
       "derivedName": "ExchangeV3"
@@ -215,6 +246,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
     "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a",
     "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",

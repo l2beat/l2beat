@@ -2,17 +2,13 @@ import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
-  content: ['./src/app/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   darkMode: 'class',
   future: {
     hoverOnlyWhenSupported: true,
   },
   theme: {
     keyframes: {
-      'fade-in': {
-        '0%': { opacity: '0' },
-        '100%': { opacity: '1' },
-      },
       pulse: {
         '0%': {
           transform: 'scale(1,1)',
@@ -35,7 +31,6 @@ const config: Config = {
       },
     },
     animation: {
-      'quick-fade-in': 'fade-in 0.1s ease-out',
       pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
@@ -194,9 +189,17 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      transitionDuration: {
+        '250': '250ms',
+      },
       fontFamily: {
-        sans: ['Roboto', 'Arial', 'sans-serif'],
-        'roboto-serif': ['Roboto Serif', 'Roboto', 'Arial'],
+        sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
+        'roboto-serif': [
+          'var(--font-roboto-serif)',
+          'Roboto Serif',
+          'Roboto',
+          'Arial',
+        ],
         lora: ['Lora', 'serif'],
       },
       spacing: {
@@ -212,9 +215,10 @@ const config: Config = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant, e }) {
+    plugin(function ({ addVariant }) {
       addVariant('sidenav-collapsed', '.sidenav-collapsed &')
     }),
+    require('tailwindcss-animate'),
   ],
 }
 

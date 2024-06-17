@@ -36,6 +36,7 @@ export interface PageMetadata {
 
 export interface PagesData {
   tvlApiResponse: TvlApiResponse
+  excludedTokensTvlApiResponse: TvlApiResponse
   activityApiResponse: ActivityApiResponse | undefined
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts

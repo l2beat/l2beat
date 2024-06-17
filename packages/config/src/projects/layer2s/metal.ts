@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
@@ -9,6 +9,11 @@ const superchainUpgradeability = {
   upgradableBy: ['SuperchainProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const livenessInterval = discovery.getContractValue<number>(
+  'LivenessModule',
+  'livenessInterval',
+)
 
 export const metal: Layer2 = opStackL2({
   discovery,
@@ -65,12 +70,18 @@ export const metal: Layer2 = opStackL2({
       'Owner of the SuperchainProxyAdmin.',
     ),
     ...discovery.getMultisigPermission(
+      'GuardianMultisig',
+      'Address allowed to pause withdrawals in case of an emergency. It is controlled by the Security Council multisig, but a deputy module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+    ),
+    ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
-      'Member of the SuperchainProxyAdminOwner.',
+      'Member of the ProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      'Member of the SuperchainProxyAdminOwner.',
+      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
+        livenessInterval,
+      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
         {
           text: 'Security Council members - Optimism Collective forum',
@@ -80,7 +91,7 @@ export const metal: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_2',
-      'This address is designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
+      'Deputy to the GuardianMultisig.',
     ),
   ],
   nonTemplateContracts: [

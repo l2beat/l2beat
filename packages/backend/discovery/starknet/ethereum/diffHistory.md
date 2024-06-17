@@ -1,4 +1,40 @@
-Generated with discovered.json: 0xf84c852145d4579d135a21d6810563a95ad8791d
+Generated with discovered.json: 0xf7441a8727825d8791f09a020f6a8e4595a25ac4
+
+# Diff at Thu, 13 Jun 2024 17:36:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@537b14297d331d7c0c0ad653fc9c95653626c5ff block: 19718686
+- current block number: 20084426
+
+## Description
+
+New StarkGate escrow added. This one supports multiple tokens but we currently only track the EKUBO token. The new StarkgateManager and -Registry support permissionless listing of new tokens, as long as they are not blacklisted. A token admin EOA can pause deposits and blacklist tokens that are not yet supported.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19718686 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3dcb7d18697752a7b58f62f50842ff17e9897e65
 
 # Diff at Tue, 23 Apr 2024 14:28:50 GMT:
 

@@ -33,13 +33,14 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
       expect(result).toEqual({
-        analysis: { type: 'EOA', address },
-        relatives: [],
+        type: 'EOA',
+        address,
       })
     })
 
@@ -117,29 +118,33 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
       expect(result).toEqual({
-        analysis: {
-          type: 'Contract',
-          address,
-          name: 'Test',
-          derivedName: undefined,
-          isVerified: true,
-          deploymentTimestamp: new UnixTime(1234),
-          deploymentBlockNumber: 9876,
-          upgradeability: { type: 'EIP1967 proxy', implementation, admin },
-          implementations: [implementation],
-          values: { owner: owner.toString() },
-          errors: {},
-          abis: sources.abis,
-          sourceBundles: sources.sources,
-          matchingTemplates: {},
-          extendedTemplate: undefined,
+        type: 'Contract',
+        address,
+        name: 'Test',
+        derivedName: undefined,
+        isVerified: true,
+        deploymentTimestamp: new UnixTime(1234),
+        deploymentBlockNumber: 9876,
+        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        implementations: [implementation],
+        values: { owner: owner.toString() },
+        errors: {},
+        abis: sources.abis,
+        sourceBundles: sources.sources,
+        extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
+        ignoreInWatchMode: undefined,
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
         },
-        relatives: [owner, admin],
       })
     })
 
@@ -216,29 +221,33 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
       expect(result).toEqual({
-        analysis: {
-          type: 'Contract',
-          name: 'Test',
-          derivedName: undefined,
-          address,
-          isVerified: false,
-          deploymentTimestamp: new UnixTime(1234),
-          deploymentBlockNumber: 9876,
-          upgradeability: { type: 'EIP1967 proxy', implementation, admin },
-          implementations: [implementation],
-          values: { owner: owner.toString() },
-          errors: {},
-          abis: sources.abis,
-          sourceBundles: sources.sources,
-          matchingTemplates: {},
-          extendedTemplate: undefined,
+        type: 'Contract',
+        name: 'Test',
+        derivedName: undefined,
+        address,
+        isVerified: false,
+        deploymentTimestamp: new UnixTime(1234),
+        deploymentBlockNumber: 9876,
+        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        implementations: [implementation],
+        values: { owner: owner.toString() },
+        errors: {},
+        abis: sources.abis,
+        sourceBundles: sources.sources,
+        extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
+        ignoreInWatchMode: undefined,
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
         },
-        relatives: [owner, admin],
       })
     })
 
@@ -313,29 +322,33 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
       expect(result).toEqual({
-        analysis: {
-          type: 'Contract',
-          address,
-          name: 'Test',
-          derivedName: undefined,
-          deploymentBlockNumber: undefined,
-          deploymentTimestamp: undefined,
-          isVerified: true,
-          upgradeability: { type: 'EIP1967 proxy', implementation, admin },
-          implementations: [implementation],
-          values: { owner: owner.toString() },
-          errors: {},
-          abis: sources.abis,
-          sourceBundles: sources.sources,
-          matchingTemplates: {},
-          extendedTemplate: undefined,
+        type: 'Contract',
+        address,
+        name: 'Test',
+        derivedName: undefined,
+        deploymentBlockNumber: undefined,
+        deploymentTimestamp: undefined,
+        isVerified: true,
+        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        implementations: [implementation],
+        values: { owner: owner.toString() },
+        errors: {},
+        abis: sources.abis,
+        sourceBundles: sources.sources,
+        extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
+        ignoreInWatchMode: undefined,
+        relatives: {
+          [owner.toString()]: new Set(),
+          [admin.toString()]: new Set(),
         },
-        relatives: [owner, admin],
       })
     })
   })
@@ -395,6 +408,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -403,6 +417,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -413,6 +428,7 @@ describe(AddressAnalyzer.name, () => {
           await addressAnalyzer.hasContractChanged(
             contractParameters,
             overrides,
+            undefined,
             BLOCK_NUMBER,
             abis,
           ),
@@ -469,6 +485,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -477,6 +494,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -512,6 +530,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -521,6 +540,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -563,6 +583,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -572,6 +593,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )

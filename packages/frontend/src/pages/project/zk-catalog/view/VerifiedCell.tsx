@@ -21,7 +21,7 @@ export function VerifiedCell({ verified, askForVerificationLink }: Props) {
       return (
         <Tooltip>
           <TooltipTrigger className="w-max">
-            <span className="text-green-700 text-sm md:text-base dark:text-green-450 flex items-center">
+            <span className="flex items-center text-green-700 text-sm dark:text-green-450 md:text-base">
               <VerifiedIcon className="mr-1.5 dark:fill-green-450" />
               <span>Successful</span>
             </span>
@@ -36,7 +36,7 @@ export function VerifiedCell({ verified, askForVerificationLink }: Props) {
       return (
         <span className="flex items-center text-sm md:text-base">
           <Tooltip>
-            <TooltipTrigger className="w-max flex items-center text-sm md:text-base">
+            <TooltipTrigger className="flex w-max items-center text-sm md:text-base">
               <CircleQuestionMark className="mr-1.5" />
               Not verified
             </TooltipTrigger>
@@ -53,7 +53,7 @@ export function VerifiedCell({ verified, askForVerificationLink }: Props) {
       return (
         <Tooltip>
           <TooltipTrigger className="w-max">
-            <span className="text-red-700 dark:text-red-300 flex items-center text-sm md:text-base">
+            <span className="flex items-center text-red-700 text-sm dark:text-red-300 md:text-base">
               <UnverifiedIcon className="mr-1.5" />
               Unsuccessful
             </span>

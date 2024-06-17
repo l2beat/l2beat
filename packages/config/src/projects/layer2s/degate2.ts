@@ -23,10 +23,9 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate2')
 
-const forcedWithdrawalDelay = discovery.getContractValue<number[]>(
-  'ExchangeV3',
-  'getConstants',
-)[2]
+const forcedWithdrawalDelay = discovery.getContractValue<{
+  [key: string]: number
+}>('ExchangeV3', 'getConstants').MAX_AGE_FORCED_REQUEST_UNTIL_WITHDRAW_MODE
 
 const maxAgeDepositUntilWithdrawable = discovery.getContractValue<number>(
   'ExchangeV3',
@@ -38,10 +37,10 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
   'forcedWithdrawalFee',
 )
 
-const maxForcedWithdrawalFee = discovery.getContractValue<(number | string)[]>(
-  'ExchangeV3',
-  'getConstants',
-)[10]
+const maxForcedWithdrawalFee = discovery.getContractValue<{
+  [key: string]: number
+}>('ExchangeV3', 'getConstants').MAX_FORCED_WITHDRAWAL_FEE
+
 const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`

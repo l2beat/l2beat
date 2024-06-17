@@ -1,0 +1,623 @@
+{
+  "name": "lightlink",
+  "chain": "ethereum",
+  "blockNumber": 20083371,
+  "configHash": "0xbf701e1642d76c19a3b50880fa7f274a190513747c1083c2e9b9d6bcdd1699d7",
+  "version": 5,
+  "contracts": [
+    {
+      "name": "Challenge",
+      "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC",
+        "admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      },
+      "implementations": ["0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC"],
+      "sinceTimestamp": 1717522343,
+      "values": {
+        "chain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+        "chainOracle": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+        "challengeFee": "1500000000000000000",
+        "challengePeriod": 172800,
+        "challengeReward": "200000000000000000",
+        "challengeWindow": 259200,
+        "daNamespace": {
+          "version": "0x00",
+          "id": "0x00000000000000000000000000000000000000000000000000000000"
+        },
+        "daOracle": "0x0000000000000000000000000000000000000000",
+        "defender": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+        "isDAChallengeEnabled": false,
+        "isHeaderChallengeEnabled": true,
+        "isL2HeaderChallengeEnabled": false,
+        "maxBundleSize": 42000,
+        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "proxiableUUID": "EXPECT_REVERT",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "Challenge"
+    },
+    {
+      "name": "ChainOracle",
+      "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x79B3E839333a74137e78b0DaF84FC12512a8c704",
+        "admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      },
+      "implementations": ["0x79B3E839333a74137e78b0DaF84FC12512a8c704"],
+      "sinceTimestamp": 1717522307,
+      "values": {
+        "canonicalStateChain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+        "daOracle": "0x0000000000000000000000000000000000000000",
+        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "proxiableUUID": "EXPECT_REVERT",
+        "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "ChainOracle"
+    },
+    {
+      "name": "LightLinkMultisig",
+      "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1692154319,
+      "values": {
+        "getMemberByIndex": [
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+        ],
+        "getMembers": [
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+        ],
+        "getTransactionCount": 20,
+        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+      },
+      "derivedName": "Multisig"
+    },
+    {
+      "name": "LightLinkBridge",
+      "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x468b89D930ca7974196D7195033600B658011756",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0x468b89D930ca7974196D7195033600B658011756"],
+      "sinceTimestamp": 1692155207,
+      "values": {
+        "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
+        "isPaused": false,
+        "l2Predicate": "0x7F17A74942c5b22b340688f099c99A79426447e1",
+        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9",
+        "proxiableUUID": "EXPECT_REVERT"
+      },
+      "derivedName": "L1NativeTokenPredicate"
+    },
+    {
+      "name": "L1BridgeRegistry",
+      "address": "0x624631881655a310adcF0d1336658Cc977609b72",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"],
+      "sinceTimestamp": 1692154667,
+      "values": {
+        "consensusPowerThreshold": 80,
+        "getMultisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "getSystemVerifier": "0x0000000000000000000000000000000000000000",
+        "getValidators": [
+          {
+            "addr": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+            "power": 40
+          },
+          {
+            "addr": "0x6f933814903561F79137099587737DFB24c6E86D",
+            "power": 20
+          },
+          {
+            "addr": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+            "power": 20
+          },
+          {
+            "addr": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+            "power": 40
+          },
+          {
+            "addr": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+            "power": 40
+          }
+        ],
+        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "proxiableUUID": "EXPECT_REVERT",
+        "systemVerifier": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1BridgeRegistry"
+    },
+    {
+      "name": "LightLinkERC20Bridge",
+      "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"],
+      "sinceTimestamp": 1692155531,
+      "values": {
+        "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
+        "isPaused": false,
+        "l2Predicate": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9",
+        "proxiableUUID": "EXPECT_REVERT"
+      },
+      "derivedName": "L1ERC20Predicate"
+    },
+    {
+      "name": "CanonicalStateChain",
+      "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+      "ignoreInWatchMode": ["chainHead", "getHead"],
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5",
+        "admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+      },
+      "implementations": ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"],
+      "sinceTimestamp": 1717522271,
+      "values": {
+        "chainHead": 39,
+        "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+        "getHead": {
+          "epoch": 20082759,
+          "l2Height": 86447493,
+          "prevHash": "0xb67241b5e3d4d2649a9dd04cdd30e9362312a0bbc8bc50b7a1af76f03780de30",
+          "stateRoot": "0xebe14810b5da7d59664ce962d8e075140c4c2b134ed49293b7a62ed4b18b1098",
+          "celestiaPointers": [
+            {
+              "height": 1662550,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662553,
+              "shareStart": 256,
+              "shareLen": 3661
+            },
+            {
+              "height": 1662556,
+              "shareStart": 64,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662560,
+              "shareStart": 256,
+              "shareLen": 3657
+            },
+            {
+              "height": 1662563,
+              "shareStart": 128,
+              "shareLen": 3660
+            },
+            {
+              "height": 1662566,
+              "shareStart": 192,
+              "shareLen": 3662
+            },
+            {
+              "height": 1662569,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662572,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662575,
+              "shareStart": 192,
+              "shareLen": 3663
+            },
+            {
+              "height": 1662578,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662581,
+              "shareStart": 256,
+              "shareLen": 3659
+            },
+            {
+              "height": 1662584,
+              "shareStart": 128,
+              "shareLen": 3652
+            },
+            {
+              "height": 1662587,
+              "shareStart": 192,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662590,
+              "shareStart": 320,
+              "shareLen": 3657
+            },
+            {
+              "height": 1662593,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662597,
+              "shareStart": 256,
+              "shareLen": 3663
+            },
+            {
+              "height": 1662600,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662603,
+              "shareStart": 256,
+              "shareLen": 3297
+            },
+            {
+              "height": 1662607,
+              "shareStart": 384,
+              "shareLen": 3664
+            },
+            {
+              "height": 1662610,
+              "shareStart": 192,
+              "shareLen": 3665
+            },
+            {
+              "height": 1662613,
+              "shareStart": 320,
+              "shareLen": 3664
+            }
+          ]
+        },
+        "maxPointers": 21,
+        "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+        "proxiableUUID": "EXPECT_REVERT",
+        "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "CanonicalStateChain"
+    },
+    {
+      "name": "RLPReader",
+      "address": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1717522283
+    }
+  ],
+  "eoas": [
+    "0x0000000000000000000000000000000000000000",
+    "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+    "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+    "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
+    "0x6f933814903561F79137099587737DFB24c6E86D",
+    "0x7F17A74942c5b22b340688f099c99A79426447e1",
+    "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+    "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+    "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+    "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+    "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590"
+  ],
+  "abis": {
+    "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [
+      "constructor(address _logic, bytes _data)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x2785D4Af59bf299C1f2DBC5132E72B2eE015B3aC": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event ChallengeDAUpdate(bytes32 indexed _blockHash, uint256 indexed _pointerIndex, uint32 _shareIndex, uint256 _blockIndex, uint256 _expiry, uint8 indexed _status)",
+      "event Initialized(uint64 version)",
+      "event InvalidHeader(uint256 indexed _blockIndex, bytes32 indexed _hash, uint8 indexed _reason)",
+      "event L2HeaderChallengeUpdate(bytes32 indexed challengeHash, uint256 indexed l2Number, bytes32 rblock, uint256 expiry, uint8 indexed status)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function chain() view returns (address)",
+      "function chainOracle() view returns (address)",
+      "function challengeDataRootInclusion(uint256 _blockIndex, uint8 _pointerIndex, uint32 _shareIndex) payable returns (uint256)",
+      "function challengeFee() view returns (uint256)",
+      "function challengeL2Header(uint256 _rblockNum, uint256 _l2Num) payable returns (bytes32)",
+      "function challengePeriod() view returns (uint256)",
+      "function challengeReward() view returns (uint256)",
+      "function challengeWindow() view returns (uint256)",
+      "function claimDAChallengeReward(bytes32 _challengeKey)",
+      "function claimL2HeaderChallengeReward(bytes32 _challengeKey)",
+      "function daChallenges(bytes32) view returns (bytes32 blockHash, uint256 blockIndex, uint8 pointerIndex, uint32 shareIndex, address challenger, uint256 expiry, uint8 status, bool claimed)",
+      "function daNamespace() view returns (bytes1 version, bytes28 id)",
+      "function daOracle() view returns (address)",
+      "function dataRootInclusionChallengeKey(bytes32 _blockHash, uint8 _pointerIndex, uint32 _shareIndex) pure returns (bytes32)",
+      "function defendDataRootInclusion(bytes32 _challengeKey, tuple(bytes[] data, tuple(uint256 beginKey, uint256 endKey, tuple(tuple(bytes1 version, bytes28 id) min, tuple(bytes1 version, bytes28 id) max, bytes32 digest)[] sideNodes)[] shareProofs, tuple(bytes1 version, bytes28 id) namespace, tuple(tuple(bytes1 version, bytes28 id) min, tuple(bytes1 version, bytes28 id) max, bytes32 digest)[] rowRoots, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves)[] rowProofs, tuple(uint256 tupleRootNonce, tuple(uint256 height, bytes32 dataRoot) tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) proof) attestationProof) _proof)",
+      "function defendL2Header(bytes32 _challengeHash, bytes32 _headerHash, bytes32 _headerPrevHash)",
+      "function defender() view returns (address)",
+      "function initialize(address _chain, address _daOracle, address _chainOracle)",
+      "function invalidateHeader(uint256 _blockIndex)",
+      "function isDAChallengeEnabled() view returns (bool)",
+      "function isHeaderChallengeEnabled() view returns (bool)",
+      "function isL2HeaderChallengeEnabled() view returns (bool)",
+      "function l2HeaderChallengeHash(bytes32 _rblockHash, uint256 _l2Num) pure returns (bytes32)",
+      "function l2HeaderChallenges(bytes32) view returns (uint256 blockNum, tuple(bytes32 rblock, uint256 number) header, tuple(bytes32 rblock, uint256 number) prevHeader, uint256 challengeEnd, address challenger, uint8 status, bool claimed)",
+      "function maxBundleSize() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setChallengeFee(uint256 _challengeFee)",
+      "function setChallengePeriod(uint256 _challengePeriod)",
+      "function setChallengeReward(uint256 _challengeReward)",
+      "function setChallengeWindow(uint256 _challengeWindow)",
+      "function setDANamespace(tuple(bytes1 version, bytes28 id) _namespace)",
+      "function setDAOracle(address _daOracle)",
+      "function setDefender(address _defender)",
+      "function setMaxBundleSize(uint256 _maxBundleSize)",
+      "function settleDataRootInclusion(bytes32 _challengeKey)",
+      "function settleL2HeaderChallenge(bytes32 _challengeHash)",
+      "function toggleDAChallenge(bool _status)",
+      "function toggleHeaderChallenge(bool _status)",
+      "function toggleL2HeaderChallenge(bool _status)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": [
+      "constructor(address _logic, bytes _data)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": [
+      "constructor()",
+      "event ConfirmTransaction(uint256 indexed txIndex, address indexed owner)",
+      "event ExecuteTransaction(uint256 indexed txIndex, address indexed owner)",
+      "event RevokeConfirmation(uint256 indexed txIndex, address indexed owner)",
+      "event SubmitTransaction(uint256 indexed txIndex, address indexed account, uint256 value, bytes data)",
+      "function addMember(address _account)",
+      "function confirmTransaction(uint256 _txIndex)",
+      "function executeTransaction(uint256 _txIndex)",
+      "function getMemberByIndex(uint256 _index) view returns (address)",
+      "function getMembers() view returns (address[])",
+      "function getSelector(string _func) pure returns (bytes4)",
+      "function getTransaction(uint256 _idx) view returns (tuple(bool executed, address target, bytes data, uint256 value, uint256 numConfirmations), bytes4 funcSelector)",
+      "function getTransactionCount() view returns (uint256)",
+      "function isConfirmed(uint256, address) view returns (bool)",
+      "function isOwner(address _account) view returns (bool)",
+      "function modifyMultisig(address _multisig)",
+      "function multisig() view returns (address)",
+      "function removeMember(address _account)",
+      "function revokeConfirmation(uint256 _txIndex)",
+      "function submitTransaction(address _target, uint256 _value, bytes _data)",
+      "function transactions(uint256) view returns (bool executed, address target, bytes data, uint256 value, uint256 numConfirmations)"
+    ],
+    "0x3ca373F5ecB92ac762f9876f6e773082A4589995": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x468b89D930ca7974196D7195033600B658011756": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DepositToken(bytes message)",
+      "event Initialized(uint8 version)",
+      "event TokenMapped(bytes message)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawToken(bytes32 messageHash)",
+      "function bridgeRegistry() view returns (address)",
+      "function counter(address) view returns (uint256)",
+      "function deposit(address _l1Token) payable",
+      "function depositTo(address _l1Token, address _to) payable",
+      "function initialize(address _registry, address _l2Predicate)",
+      "function isConfirmed(address, uint256, address) view returns (bool)",
+      "function isPaused() view returns (bool)",
+      "function l1ToL2Gateway(address) view returns (address)",
+      "function l2Predicate() view returns (address)",
+      "function l2TokenBytecodeHash() view returns (bytes32)",
+      "function mapToken(address _l1Token)",
+      "function modifyL2Predicate(address _l2Predicate)",
+      "function modifyL2TokenBytecodeHash(bytes32 _l2TokenBytecodeHash)",
+      "function orderExecuted(address, uint256) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recovery(address _to)",
+      "function syncWithdraw(address[] _currentValidators, bytes[] _signatures, bytes _data)",
+      "function toggleIsPaused(bool _status)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x624631881655a310adcF0d1336658Cc977609b72": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": [
+      "constructor(address _logic, bytes _data)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x79B3E839333a74137e78b0DaF84FC12512a8c704": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ShareKey(bytes32 _rblock, bytes[] _shareData) pure returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function canonicalStateChain() view returns (address)",
+      "function daOracle() view returns (address)",
+      "function decodeDepositTx(bytes _data) view returns (tuple(uint256 chainId, uint64 nonce, uint256 gasPrice, uint64 gas, address to, uint256 value, bytes data, uint256 r, uint256 s, uint256 v))",
+      "function decodeLegacyTx(bytes _data) view returns (tuple(uint64 nonce, uint256 gasPrice, uint64 gas, address to, uint256 value, bytes data, uint256 r, uint256 s, uint256 v))",
+      "function decodeRLPHeader(bytes _data) view returns (tuple(bytes32 parentHash, bytes32 uncleHash, address beneficiary, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, bytes logsBloom, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, bytes extraData, bytes32 mixHash, uint256 nonce))",
+      "function extractData(bytes[] raw, tuple(uint256 start, uint256 end)[] ranges) pure returns (bytes)",
+      "function getHeader(bytes32 _headerHash) view returns (tuple(bytes32 parentHash, bytes32 uncleHash, address beneficiary, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, bytes logsBloom, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, bytes extraData, bytes32 mixHash, uint256 nonce))",
+      "function getTransaction(bytes32 _txHash) view returns (tuple(uint256 chainId, uint64 nonce, uint256 gasPrice, uint64 gas, address to, uint256 value, bytes data, uint256 r, uint256 s, uint256 v))",
+      "function hashHeader(tuple(bytes32 parentHash, bytes32 uncleHash, address beneficiary, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, bytes logsBloom, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, bytes extraData, bytes32 mixHash, uint256 nonce) _header) pure returns (bytes32)",
+      "function headerToRblock(bytes32) view returns (bytes32)",
+      "function headers(bytes32) view returns (bytes32 parentHash, bytes32 uncleHash, address beneficiary, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, bytes logsBloom, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, bytes extraData, bytes32 mixHash, uint256 nonce)",
+      "function initialize(address _canonicalStateChain, address _daOracle, address _rlpReader)",
+      "function owner() view returns (address)",
+      "function provideHeader(bytes32 _shareKey, tuple(uint256 start, uint256 end)[] _range) returns (bytes32)",
+      "function provideLegacyTx(bytes32 _shareKey, tuple(uint256 start, uint256 end)[] _range) returns (bytes32)",
+      "function provideShares(bytes32 _rblock, uint8 _pointer, tuple(bytes[] data, tuple(uint256 beginKey, uint256 endKey, tuple(tuple(bytes1 version, bytes28 id) min, tuple(bytes1 version, bytes28 id) max, bytes32 digest)[] sideNodes)[] shareProofs, tuple(bytes1 version, bytes28 id) namespace, tuple(tuple(bytes1 version, bytes28 id) min, tuple(bytes1 version, bytes28 id) max, bytes32 digest)[] rowRoots, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves)[] rowProofs, tuple(uint256 tupleRootNonce, tuple(uint256 height, bytes32 dataRoot) tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) proof) attestationProof) _proof) returns (bytes32)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function rlpReader() view returns (address)",
+      "function setDAOracle(address _daOracle)",
+      "function setRLPReader(address _rlpReader)",
+      "function shares(bytes32, uint256) view returns (bytes)",
+      "function transactions(bytes32) view returns (uint256 chainId, uint64 nonce, uint256 gasPrice, uint64 gas, address to, uint256 value, bytes data, uint256 r, uint256 s, uint256 v)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DepositToken(bytes message)",
+      "event Initialized(uint8 version)",
+      "event TokenMapped(bytes message)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawToken(bytes32 messageHash)",
+      "function bridgeRegistry() view returns (address)",
+      "function counter(address) view returns (uint256)",
+      "function deposit(address _l1Token, uint256 _amount)",
+      "function depositTo(address _l1Token, address _to, uint256 _amount)",
+      "function initialize(address _registry, address _l2Predicate)",
+      "function isConfirmed(address, uint256, address) view returns (bool)",
+      "function isPaused() view returns (bool)",
+      "function l1ToL2Gateway(address) view returns (address)",
+      "function l2Predicate() view returns (address)",
+      "function l2TokenBytecodeHash() view returns (bytes32)",
+      "function mapToken(address _l1Token)",
+      "function modifyL2Predicate(address _l2Predicate)",
+      "function modifyL2TokenBytecodeHash(bytes32 _l2TokenBytecodeHash)",
+      "function orderExecuted(address, uint256) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recovery(address[] _tokens, address _to)",
+      "function syncWithdraw(address[] _currentValidators, bytes[] _signatures, bytes _data)",
+      "function toggleIsPaused(bool _status)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ConsensusPowerThresholdModified(uint256 _amount)",
+      "event Initialized(uint8 version)",
+      "event MutisigModified(address _multisig)",
+      "event SystemVerifierModified(address _systemVerifier)",
+      "event Upgraded(address indexed implementation)",
+      "event ValidatorsModifed(address[] _accounts, uint256[] _powers)",
+      "event ValidatorsRemoved(address[] _accounts)",
+      "function consensusPowerThreshold() view returns (uint256)",
+      "function getMultisig() view returns (address)",
+      "function getPower(address _validator) view returns (uint256)",
+      "function getSystemVerifier() view returns (address)",
+      "function getValidators() view returns (tuple(address addr, uint256 power)[])",
+      "function initialize(address _multisig)",
+      "function modifyConsensusPowerThreshold(uint256 _amount)",
+      "function modifyMultisig(address _multisig)",
+      "function modifySystemVerifier(address _systemVerifier)",
+      "function modifyValidators(address[] _validators, uint256[] _powers)",
+      "function multisig() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeValidators(address[] _accounts)",
+      "function systemVerifier() view returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function validValidator(address _validator) view returns (bool)"
+    ],
+    "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BlockAdded(uint256 indexed blockNumber)",
+      "event ChallengeChanged(address indexed challenge)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PublisherChanged(address indexed publisher)",
+      "event RolledBack(uint256 indexed blockNumber)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function calculateHeaderHash(tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers) _header) pure returns (bytes32)",
+      "function chain(uint256) view returns (bytes32)",
+      "function chainHead() view returns (uint256)",
+      "function challenge() view returns (address)",
+      "function getHead() view returns (tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers))",
+      "function getHeaderByHash(bytes32 _hash) view returns (tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers))",
+      "function getHeaderByNum(uint256 _index) view returns (tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers))",
+      "function headerMetadata(bytes32) view returns (uint64 timestamp, address publisher)",
+      "function initialize(address _publisher, tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers) _header)",
+      "function maxPointers() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function publisher() view returns (address)",
+      "function pushBlock(tuple(uint64 epoch, uint64 l2Height, bytes32 prevHash, bytes32 stateRoot, tuple(uint64 height, uint24 shareStart, uint16 shareLen)[] celestiaPointers) _header)",
+      "function renounceOwnership()",
+      "function rollback(uint256 _blockNumber, bytes32 _blockHash)",
+      "function setChallengeContract(address _challenge)",
+      "function setMaxPointers(uint8 _maxPointers)",
+      "function setPublisher(address _publisher)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2": [
+      "function toBlockHeader(bytes rlpHeader) pure returns (bytes32 parentHash, bytes32 sha3Uncles, address coinbase, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, uint256 nonce)",
+      "function toDepositTx(bytes rlpTx) pure returns (uint256 chainId, uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)",
+      "function toLegacyTx(bytes rlpTx) pure returns (uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)"
+    ]
+  }
+}

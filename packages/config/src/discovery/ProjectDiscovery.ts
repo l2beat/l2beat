@@ -18,6 +18,7 @@ import {
 import { utils } from 'ethers'
 import { isArray, isString } from 'lodash'
 
+import { join } from 'path'
 import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -61,7 +62,7 @@ export class ProjectDiscovery {
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    configReader = new ConfigReader('../backend/'),
+    configReader = new ConfigReader(join(process.cwd(), '../backend')),
   ) {
     const config = configReader.readConfig(projectName, chain)
     this.discoveries = [
@@ -108,20 +109,26 @@ export class ProjectDiscovery {
     description,
     sinceTimestamp,
     tokens,
+    excludedTokens,
     upgradableBy,
     upgradeDelay,
     isUpcoming,
-    isLayer3,
+    includeInTotal,
+    isHistorical,
+    untilTimestamp,
   }: {
     address: EthereumAddress
     name?: string
     description?: string
     sinceTimestamp?: UnixTime
     tokens: string[] | '*'
+    excludedTokens?: string[]
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
-    isLayer3?: boolean
+    includeInTotal?: boolean
+    isHistorical?: boolean
+    untilTimestamp?: UnixTime
   }): ScalingProjectEscrow {
     const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
@@ -144,9 +151,14 @@ export class ProjectDiscovery {
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
+      excludedTokens,
       contract,
       isUpcoming,
-      isLayer3,
+      chain: this.chain,
+      includeInTotal:
+        includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+      isHistorical,
+      untilTimestamp,
     }
   }
 
@@ -327,13 +339,8 @@ export class ProjectDiscovery {
           },
         ],
         chain: this.chain,
-      },
-      {
-        name: `${identifier} participants`,
-        description: `Those are the participants of the ${identifier}.`,
-        accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
-        chain: this.chain,
+        participants: this.getPermissionedAccounts(identifier, 'getOwners'),
       },
     ]
   }

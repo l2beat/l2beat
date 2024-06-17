@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19926649,
   "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -25,6 +25,7 @@
     {
       "name": "LockingInfo",
       "address": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+      "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8db636418F10d514c4c68235ee3d640dDBCC7a8a",
@@ -50,6 +51,12 @@
     {
       "name": "ChainStorageContainer",
       "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
+      "ignoreInWatchMode": [
+        "getGlobalMetadata",
+        "length",
+        "getGlobalMetadataByChainId",
+        "lengthByChainId"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -99,6 +106,8 @@
     {
       "name": "Metis Multisig",
       "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -130,6 +139,15 @@
     {
       "name": "CanonicalTransactionChain",
       "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+      "ignoreInWatchMode": [
+        "getLastBlockNumber",
+        "getLastTimestamp",
+        "getNextQueueIndex",
+        "getNumPendingQueueElements",
+        "getQueueLength",
+        "getTotalBatches",
+        "getTotalElements"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -177,6 +195,8 @@
     {
       "name": "RewardEscrowerMultisig",
       "address": "0x62478E4eeb4070fE399866aB05e821AB97200947",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -302,6 +322,14 @@
     {
       "name": "StateCommitmentChain",
       "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+      "ignoreInWatchMode": [
+        "getLastSequencerTimestamp",
+        "getTotalBatches",
+        "getTotalElements",
+        "getLastSequencerTimestampByChainId",
+        "getTotalBatchesByChainId",
+        "getTotalElementsByChainId"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
@@ -345,6 +373,13 @@
     {
       "name": "LockingPool",
       "address": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+      "ignoreInWatchMode": [
+        "currentBatch",
+        "totalSequencers",
+        "sequencers",
+        "BLOCK_REWARD",
+        "rewardPerBlock"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd87Da73F82abe83915d61342199A4690cfdf4718",
@@ -446,6 +481,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
     "0x02058Bb1d98D88087008F2ac1273584591380e3F",
     "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",

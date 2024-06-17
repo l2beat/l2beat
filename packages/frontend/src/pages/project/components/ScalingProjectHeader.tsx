@@ -114,7 +114,7 @@ export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
           {
             title: 'Stage',
             value: (
-              <span className="relative -top-0.5 flex items-center">
+              <span className="-top-0.5 relative flex items-center">
                 <a href="#stage">
                   <StageBadge stage={props.stage.stage} big />
                 </a>

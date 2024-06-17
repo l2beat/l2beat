@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { getUnderReviewText } from '../../pages/project/common/getUnderReviewText'
 import { SyncStatus } from '../../pages/types'
 import { NotSyncedBadge } from '../badge/NotSyncedBadge'
 import { Layer3sIcon, ShieldIcon, UnderReviewIcon } from '../icons'
@@ -26,8 +27,8 @@ export interface ProjectCellProps {
 
 export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
   return (
-    <div className="pl-3">
-      <span className="text-base font-bold group-hover:underline md:text-lg">
+    <div className="pl-2 2xl:pl-3">
+      <span className="font-bold text-base md:text-lg group-hover:underline">
         {project.shortName ?? project.name}
       </span>
       {showIsL3 && project.type === 'layer3' && (
@@ -59,13 +60,18 @@ export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
           </Tooltip>
         </span>
       )}
-      {project.showProjectUnderReview && (
+      {(project.showProjectUnderReview || project.hasImplementationChanged) && (
         <span className="pl-1.5">
           <Tooltip className="inline-block">
             <TooltipTrigger>
               <UnderReviewIcon className="relative top-px size-4" />
             </TooltipTrigger>
-            <TooltipContent>This project is under review.</TooltipContent>
+            <TooltipContent>
+              {getUnderReviewText(
+                project.showProjectUnderReview,
+                project.hasImplementationChanged,
+              )}
+            </TooltipContent>
           </Tooltip>
         </span>
       )}
@@ -76,19 +82,6 @@ export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
               <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
             </TooltipTrigger>
             <TooltipContent>{project.warning}</TooltipContent>
-          </Tooltip>
-        </span>
-      )}
-      {project.hasImplementationChanged && (
-        <span className="pl-1.5">
-          <Tooltip className="inline-block">
-            <TooltipTrigger>
-              <UnderReviewIcon className="relative top-px size-4" />
-            </TooltipTrigger>
-            <TooltipContent>
-              There are unhandled implementation changes. The project is under
-              review and part of the information might be outdated.
-            </TooltipContent>
           </Tooltip>
         </span>
       )}

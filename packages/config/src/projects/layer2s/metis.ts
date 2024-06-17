@@ -43,7 +43,7 @@ export const metis: Layer2 = {
     category: 'Optimium',
     links: {
       websites: ['https://metis.io'],
-      apps: [],
+      apps: ['https://bridge.metis.io'],
       documentation: ['https://docs.metis.io'],
       explorers: [
         'https://andromeda-explorer.metis.io',
@@ -56,12 +56,34 @@ export const metis: Layer2 = {
         'https://discord.com/invite/metis',
         'https://youtube.com/@Metis_L2',
         'https://t.me/MetisL2',
+        'https://instagram.com/metisl2/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
   },
   stage: {
     stage: 'NotApplicable',
+  },
+  chainConfig: {
+    name: 'metis',
+    chainId: 1088,
+    explorerUrl: 'https://explorer.metis.io',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 2338552,
+        version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
+      },
+    ],
+    coingeckoPlatform: 'metis',
   },
   config: {
     associatedTokens: ['Metis'],

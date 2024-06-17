@@ -1,10 +1,6 @@
+import compact from 'lodash/compact'
 import React, { type ReactNode } from 'react'
-import {
-  showActivityPage,
-  showCostsPage,
-  showFinalityPage,
-  showLivenessPage,
-} from '~/flags'
+import { env } from '~/env'
 import ActivityIcon from '~/icons/pages/activity.svg'
 import CostsIcon from '~/icons/pages/costs.svg'
 import DataAvailabilityIcon from '~/icons/pages/data-availability.svg'
@@ -29,14 +25,7 @@ export async function NavLayout({
   logoLink: string
   legacyNav?: boolean
 }) {
-  const [liveness, finality, activity, costs] = await Promise.all([
-    showLivenessPage(),
-    showFinalityPage(),
-    showActivityPage(),
-    showCostsPage(),
-  ])
-
-  const groups: NavGroup[] = [
+  const groups: NavGroup[] = compact([
     {
       title: 'Scaling',
       links: [
@@ -44,49 +33,41 @@ export async function NavLayout({
           title: 'Summary',
           icon: <SummaryIcon />,
           href: '/scaling/summary',
-          enabled: true,
         },
         {
           title: 'Value Locked',
           icon: <TvlIcon />,
           href: '/scaling/tvl',
-          enabled: true,
         },
         {
           title: 'Risk Analysis',
           icon: <RiskIcon />,
           href: '/scaling/risk',
-          enabled: true,
         },
         {
           title: 'Data Availability',
           icon: <DataAvailabilityIcon />,
           href: '/scaling/data-availability',
-          enabled: true,
         },
         {
           title: 'Liveness',
           icon: <LivenessIcon />,
           href: '/scaling/liveness',
-          enabled: liveness,
         },
         {
           title: 'Finality',
           icon: <FinalityIcon />,
           href: '/scaling/finality',
-          enabled: finality,
         },
         {
           title: 'Activity',
           icon: <ActivityIcon />,
           href: '/scaling/activity',
-          enabled: activity,
         },
         {
           title: 'Costs',
           icon: <CostsIcon />,
           href: '/scaling/costs',
-          enabled: costs,
         },
       ],
     },
@@ -97,17 +78,30 @@ export async function NavLayout({
           title: 'Summary',
           icon: <SummaryIcon />,
           href: '/bridges/summary',
-          enabled: true,
         },
         {
           title: 'Risk Analysis',
           icon: <RiskIcon />,
           href: '/bridges/risk',
-          enabled: true,
         },
       ],
     },
-  ]
+    env.NEXT_PUBLIC_FEATURE_FLAG_DA_BEAT && {
+      title: 'Data Availability',
+      links: [
+        {
+          title: 'Summary',
+          icon: <SummaryIcon />,
+          href: '/data-availability/summary',
+        },
+        {
+          title: 'Risk Analysis',
+          icon: <RiskIcon />,
+          href: '/data-availability/risk',
+        },
+      ],
+    },
+  ])
 
   return (
     <MobileNavProvider>
@@ -124,7 +118,7 @@ export async function NavLayout({
           groups={groups}
           legacyNav={!!legacyNav}
         />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 min-w-0">{children}</div>
       </div>
     </MobileNavProvider>
   )

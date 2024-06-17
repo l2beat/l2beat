@@ -110,9 +110,6 @@
         }
       }
     },
-    "ExecutorMultisig": {
-      "ignoreMethods": ["nonce"]
-    },
     "BridgerOwnerMultisig": {
       "ignoreInWatchMode": ["nonce"]
     }

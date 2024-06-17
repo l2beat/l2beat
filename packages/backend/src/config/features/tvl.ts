@@ -1,93 +1,280 @@
-import { Env } from '@l2beat/backend-tools'
-import { ChainConfig, chains, layer2s, layer3s } from '@l2beat/config'
-import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
+import { assert, Env } from '@l2beat/backend-tools'
+import {
+  Layer2,
+  bridges,
+  chains,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
+import {
+  AmountConfigEntry,
+  ChainId,
+  PriceConfigEntry,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { toMulticallConfigEntry } from '../../peripherals/multicall/MulticallConfig'
-import { ChainTvlConfig } from '../Config'
+import {
+  Project,
+  bridgeToProject,
+  layer2ToProject,
+  layer3ToProject,
+} from '../../model/Project'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { TvlConfig } from '../Config'
+import { FeatureFlags } from '../FeatureFlags'
+import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
-export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
-  const results = new Set<string>()
-  for (const { chainId } of tokenList) {
-    const chain = chains.find((x) => x.chainId === +chainId)
-    if (chain) {
-      results.add(chain.name)
-    }
+export function getTvlConfig(
+  flags: FeatureFlags,
+  env: Env,
+  minTimestampOverride?: UnixTime,
+): TvlConfig {
+  const projects = layer2s
+    .map(layer2ToProject)
+    .concat(bridges.map(bridgeToProject))
+    .concat(layer3s.map(layer3ToProject))
+
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+
+  const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
+    getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
+      minTimestamp: minTimestampOverride,
+    }),
+  )
+
+  return {
+    amounts: getAmountsConfig(
+      projects,
+      tokenList,
+      chainConverter,
+      chainToProject,
+      minTimestampOverride,
+    ),
+    prices: getPricesConfig(tokenList, minTimestampOverride),
+    chains: chainConfigs,
+    coingeckoApiKey: env.optionalString(['COINGECKO_API_KEY']),
+    chainConverter,
+    maxTimestampsToAggregateAtOnce: env.integer(
+      'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
+      100,
+    ),
+    projects,
+    projectsExcludedFromApi:
+      env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
+    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
   }
-  return Array.from(results)
 }
 
-const DEFAULT_RPC_CALLS_PER_MINUTE = 60
+function getAmountsConfig(
+  projects: Project[],
+  tokenList: Token[],
+  chainConverter: ChainConverter,
+  chainToProject: Map<string, ProjectId>,
+  minTimestampOverride?: UnixTime,
+): AmountConfigEntry[] {
+  const entries: AmountConfigEntry[] = []
 
-export function getChainTvlConfig(
-  isEnabled: boolean,
-  env: Env,
-  chain: string,
-  options?: {
-    minTimestamp?: UnixTime
-  },
-): ChainTvlConfig {
-  const chainConfig = chains.find((c) => c.name === chain)
-  if (!chainConfig) {
-    throw new Error('Unknown chain: ' + chain)
+  for (const token of tokenList) {
+    if (token.chainId !== ChainId.ETHEREUM) {
+      if (token.symbol === 'ETH') {
+        continue
+      }
+      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, 'Project is required for token')
+
+      const project = projects.find((x) => x.projectId === projectId)
+      assert(project, 'Project not found')
+
+      const chain = chains.find((x) => x.chainId === +token.chainId)
+      assert(chain, `Chain not found for token ${token.id}`)
+
+      assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+      const chainMinTimestamp = UnixTime.max(
+        chain.minTimestampForTvl,
+        minTimestampOverride ?? new UnixTime(0),
+      )
+      const sinceTimestamp = UnixTime.max(
+        chainMinTimestamp,
+        token.sinceTimestamp,
+      )
+
+      const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+
+      switch (token.formula) {
+        case 'totalSupply':
+          assert(token.address, 'Token address is required for total supply')
+
+          entries.push({
+            type: 'totalSupply',
+            address: token.address,
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
+            project: projectId,
+            source: toSource(token.type),
+            includeInTotal: true,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+          })
+          break
+        case 'circulatingSupply':
+          entries.push({
+            type: 'circulatingSupply',
+            address: token.address ?? 'native',
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
+            coingeckoId: token.coingeckoId,
+            project: projectId,
+            source: toSource(token.type),
+            includeInTotal: true,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+          })
+          break
+        case 'locked':
+          throw new Error('Locked tokens are derived from projects list')
+      }
+    }
   }
 
-  const projectId =
-    chain === 'ethereum'
-      ? ProjectId.ETHEREUM
-      : layer2s.find((layer2) => layer2.chainConfig?.name === chain)?.id ??
-        layer3s.find((layer3) => layer3.chainConfig?.name === chain)?.id
-  if (!projectId) {
-    throw new Error('Missing project for chain: ' + chain)
+  for (const project of projects) {
+    for (const escrow of project.escrows) {
+      for (const token of escrow.tokens) {
+        const chain = chains.find((x) => x.chainId === +token.chainId)
+        assert(chain, `Chain not found for token ${token.id}`)
+
+        assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+        const chainMinTimestamp = UnixTime.max(
+          chain.minTimestampForTvl,
+          minTimestampOverride ?? new UnixTime(0),
+        )
+        const tokenSinceTimestamp = UnixTime.max(
+          chainMinTimestamp,
+          token.sinceTimestamp,
+        )
+        const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+
+        entries.push({
+          type: 'escrow',
+          address: token.address ?? 'native',
+          chain: chainConverter.toName(token.chainId),
+          sinceTimestamp: UnixTime.max(
+            tokenSinceTimestamp,
+            escrow.sinceTimestamp,
+          ),
+          untilTimestamp: getUntilTimestamp(
+            token.untilTimestamp,
+            escrow.untilTimestamp,
+          ),
+          escrowAddress: escrow.address,
+          project: project.projectId,
+          source: 'canonical',
+          includeInTotal: escrow.includeInTotal ?? true,
+          decimals: token.decimals,
+          symbol: token.symbol,
+          isAssociated,
+        })
+      }
+    }
   }
 
-  if (!chainConfig.minTimestampForTvl) {
-    throw new Error('Missing minTimestampForTvl for chain: ' + chain)
+  return entries
+}
+
+function getUntilTimestamp(
+  tokenUntil: UnixTime | undefined,
+  escrowUntil: UnixTime | undefined,
+): UnixTime | undefined {
+  if (tokenUntil === undefined && escrowUntil === undefined) {
+    return undefined
   }
 
-  if (!chainConfig.explorerApi) {
-    throw new Error('Missing explorerApi for chain: ' + chain)
+  if (tokenUntil === undefined) {
+    return escrowUntil
   }
 
-  if (!isEnabled) {
-    return { chain }
+  if (escrowUntil === undefined) {
+    return tokenUntil
   }
 
-  const ENV_NAME = chain.toUpperCase()
-  return {
-    chain,
-    config: {
-      projectId,
-      chainId: ChainId(chainConfig.chainId),
-      providerUrl: env.string([
-        `${ENV_NAME}_RPC_URL_FOR_TVL`,
-        `${ENV_NAME}_RPC_URL`,
-      ]),
-      providerCallsPerMinute: env.integer(
-        [
-          `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_TVL`,
-          `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-        ],
-        DEFAULT_RPC_CALLS_PER_MINUTE,
-      ),
-      blockNumberProviderConfig:
-        chainConfig.explorerApi.type === 'etherscan'
-          ? {
-              type: chainConfig.explorerApi.type,
-              etherscanApiKey: env.string([
-                `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_TVL`,
-                `${ENV_NAME}_ETHERSCAN_API_KEY`,
-              ]),
-              etherscanApiUrl: chainConfig.explorerApi.url,
-            }
-          : {
-              type: chainConfig.explorerApi.type,
-              blockscoutApiUrl: chainConfig.explorerApi.url,
-            },
-      minBlockTimestamp:
-        options?.minTimestamp ?? chainConfig.minTimestampForTvl,
-      multicallConfig: (chainConfig.multicallContracts ?? []).map(
-        toMulticallConfigEntry,
-      ),
-    },
+  return UnixTime.max(tokenUntil, escrowUntil)
+}
+
+function getPricesConfig(
+  tokenList: Token[],
+  minTimestampOverride?: UnixTime,
+): PriceConfigEntry[] {
+  const prices = new Map<string, PriceConfigEntry>()
+
+  for (const token of tokenList) {
+    const chain = chains.find((x) => x.chainId === +token.chainId)
+    assert(chain, `Chain not found for token ${token.id}`)
+
+    const key = `${chain.name}-${(token.address ?? 'native').toString()}`
+
+    assert(prices.get(key) === undefined, 'Every price should be unique')
+
+    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+    const chainMinTimestamp = UnixTime.max(
+      chain.minTimestampForTvl,
+      minTimestampOverride ?? new UnixTime(0),
+    )
+    const sinceTimestamp = UnixTime.max(chainMinTimestamp, token.sinceTimestamp)
+
+    prices.set(key, {
+      type: 'coingecko',
+      assetId: token.id,
+      address: token.address ?? 'native',
+      chain: chain.name,
+      sinceTimestamp,
+      coingeckoId: token.coingeckoId,
+    })
+  }
+
+  return Array.from(prices.values())
+}
+
+function getChainToProjectMapping(
+  layer2s: Layer2[],
+  chainConverter: ChainConverter,
+) {
+  const chainToProject = new Map<string, ProjectId>()
+
+  for (const project of layer2s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
+  for (const project of layer3s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
+  return chainToProject
+}
+
+function toSource(
+  type: 'CBV' | 'EBV' | 'NMV',
+): 'native' | 'canonical' | 'external' {
+  switch (type) {
+    case 'CBV':
+      return 'canonical'
+    case 'EBV':
+      return 'external'
+    case 'NMV':
+      return 'native'
   }
 }

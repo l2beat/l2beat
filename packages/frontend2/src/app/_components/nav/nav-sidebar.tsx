@@ -1,15 +1,10 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import {
-  showGlossary,
-  showGovernancePage,
-  showHiringBadge,
-  showZkCatalog,
-} from '~/flags'
+import { env } from '~/env'
+import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
-import { HiringBadge } from './hiring-badge'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavDivider } from './nav-divider'
 import { NavLink } from './nav-link'
@@ -28,12 +23,8 @@ export async function NavSidebar({
   logoLink: string
   legacyNav: boolean
 }) {
-  const [zkCatalog, governance, hiringBadge, glossary] = await Promise.all([
-    showZkCatalog(),
-    showGovernancePage(),
-    showHiringBadge(),
-    showGlossary(),
-  ])
+  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+  const zkCatalog = env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
       <div className="flex flex-row justify-between items-center">
@@ -56,7 +47,7 @@ export async function NavSidebar({
           <NavLinkGroup key={group.title} title={group.title}>
             {group.links.map(
               (link) =>
-                link.enabled && (
+                !link.disabled && (
                   <NavLink
                     key={link.href}
                     title={link.title}
@@ -71,16 +62,13 @@ export async function NavSidebar({
         <NavSmallLinkGroup>
           <NavSmallLink title="Forum" href={externalLinks.forum} />
           {zkCatalog && <NavSmallLink title="ZK Catalog" href="/zk-catalog" />}
-          <NavSmallLink title="Donate" href={'/donate'} />
-          {governance ? (
-            <NavSmallLink title="Governance" href={'/governance'} />
-          ) : (
-            <NavSmallLink
-              title="Governance"
-              href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3"
-            />
-          )}
-          {glossary && <NavSmallLink title="Glossary" href="/glossary" />}
+          <NavSmallLink title="Donate" href="/donate" />
+          <NavSmallLink
+            title="Governance"
+            href="/governance"
+            activeBehavior={{ type: 'prefix', prefix: '/governance' }}
+          />
+          <NavSmallLink title="Glossary" href="/glossary" />
           <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
             Jobs
             {hiringBadge && <HiringBadge />}

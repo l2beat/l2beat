@@ -9,7 +9,8 @@
     "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
-    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6"
+    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
   ],
   "names": {
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
@@ -35,9 +36,20 @@
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
     "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": "L1StandardBridge",
-    "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig"
+    "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig",
+    "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
+    "0xe5965Ab5962eDc7477C8520243A95517CD252fA9": "DisputeGameFactory",
+    "0x4146DF64D83acB0DcB0c1a4884a16f090165e122": "FaultDisputeGame",
+    "0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34": "PreimageOracle",
+    "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0": "PermissionedDisputeGame",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
+    "0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14": "DelayedWETH"
   },
   "overrides": {
+    "DelayedWETH": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     "AddressManager": {
       "fields": {
         "BondManager": {
@@ -312,6 +324,54 @@
     },
     "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
+    },
+    "FeesCollector": {
+      "ignoreInWatchMode": ["getNextSequenceId"]
+    },
+    "DisputeGameFactory": {
+      "ignoreInWatchMode": ["gameCount"],
+      "ignoreMethods": ["gameAtIndex"],
+      "fields": {
+        "gameImpls": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        },
+        "initBonds": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        }
+      }
+    },
+    "FaultDisputeGame": {
+      "ignoreMethods": [
+        "getNumToResolve",
+        "resolutionCheckpoints",
+        "resolvedSubgames"
+      ]
+    },
+    "PreimageOracle": {
+      "ignoreMethods": ["zeroHashes"]
+    },
+    "PermissionedDisputeGame": {
+      "ignoreMethods": [
+        "getNumToResolve",
+        "resolutionCheckpoints",
+        "resolvedSubgames"
+      ]
+    },
+    "LivenessModule": {
+      "fields": {
+        "getRequiredThreshold": {
+          "handler": {
+            "type": "array",
+            "length": 20
+          }
+        }
+      }
     }
   }
 }

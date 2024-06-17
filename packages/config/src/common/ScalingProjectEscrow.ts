@@ -10,14 +10,14 @@ interface OldProjectEscrow {
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
   tokens: string[] | '*'
+  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
+  excludedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */
   newVersion?: false
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
   chain?: string
   /** Inclusive */
   untilTimestamp?: UnixTime
@@ -33,14 +33,14 @@ interface NewProjectEscrow {
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
   tokens: string[] | '*'
+  /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
+  excludedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */
   newVersion?: true
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  /** If project is Layer 3 */
-  isLayer3?: boolean
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
   chain?: string

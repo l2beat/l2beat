@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../../../components/Accordion'
-import { Link } from '../../../components/Link'
 import { ChevronDownIcon, InfoIcon } from '../../../components/icons'
 import {
   Tooltip,
@@ -13,10 +12,10 @@ import {
   TooltipTrigger,
 } from '../../../components/tooltip/Tooltip'
 import { cn } from '../../../utils/cn'
-import { EM_DASH } from '../../../utils/constants'
 import { getExplorerUrlByChainId } from '../../../utils/getExplorerUrl'
 import { EtherscanLink } from '../../project/components/sections/ContractsSection/EtherscanLink'
 import { LastUsedCell } from '../../project/zk-catalog/view/LastUsedCell'
+import { SubVerifiersTable } from '../../project/zk-catalog/view/SubVerifiersTable'
 import { VerifiedCell } from '../../project/zk-catalog/view/VerifiedCell'
 import { VerifiedCountWithDetails } from '../../project/zk-catalog/view/VerifiedCountWithDetails'
 import { ZkCatalogViewEntry } from '../types'
@@ -33,25 +32,25 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
       {props.items.map((item) => (
         <AccordionItem key={item.slug}>
           <AccordionTrigger
-            className="py-4 relative z-10 px-6 bg-gray-100 dark:bg-zinc-900 dark:border-gray-800 rounded-xl border border-gray-300 flex-col md:flex-row"
+            className="relative z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900"
             childrenClassName="grid md:grid-cols-5"
             indicator={
               <>
-                <button className="w-full border border-black h-10 rounded-lg dark:border-white md:hidden flex items-center justify-center gap-1.5">
-                  <span className="text-base font-bold">Verifiers info</span>
+                <button className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
+                  <span className="font-bold text-base">Verifiers info</span>
                   <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
                 </button>
-                <ChevronDownIcon className="hidden md:block transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+                <ChevronDownIcon className="hidden transition-transform duration-300 ease-out md:block group-data-[open]/accordion-item:rotate-180" />
               </>
             }
           >
-            <div className="flex gap-2 items-center mb-3 md:hidden">
+            <div className="mb-3 flex items-center gap-2 md:hidden">
               <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
-              <span className="text-lg font-bold">{item.name}</span>
+              <span className="font-bold text-lg">{item.name}</span>
             </div>
             <DetailsItem
               title="Name"
-              className="flex-col justify-start items-start hidden md:flex"
+              className="hidden flex-col items-start justify-start md:flex"
             >
               <div className="flex items-center gap-2">
                 <img src={`/icons/${item.slug}.png`} className="size-[18px]" />
@@ -60,21 +59,21 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             </DetailsItem>
             <DetailsItem
               title="Number of verifiers"
-              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+              className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
             >
               <VerifiedCountWithDetails verifiers={item.verifiers} />
             </DetailsItem>
             <DetailsItem
               title="Aggregation"
               tooltip="Shows if recursive proof aggregation is used."
-              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+              className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
             >
               {item.aggregation ? 'Yes' : 'No'}
             </DetailsItem>
             <DetailsItem
               title="Trusted setup"
               tooltip="Shows if a trusted setup is used anywhere in the proving stack."
-              className="flex-row justify-between items-baseline md:flex-col md:justify-start md:items-start"
+              className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
             >
               {item.hasTrustedSetup ? 'Yes' : 'No'}
             </DetailsItem>
@@ -83,7 +82,14 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
               className="self-center justify-self-center"
             />
           </AccordionTrigger>
-          <AccordionContent className="border relative pt-3 md:pb-6 rounded-b-xl md:px-6 -top-3 border-t-0 border-gray-300 dark:border-gray-800 md:space-y-2">
+          <AccordionContent className="-top-3 relative rounded-b-xl border border-gray-300 border-t-0 pt-3 md:space-y-2 dark:border-gray-800 md:px-6 md:pb-6">
+            {item.shortDescription ? (
+              <div className="my-7 px-5">
+                <DetailsItem title="Description">
+                  {item.shortDescription}
+                </DetailsItem>
+              </div>
+            ) : null}
             {item.verifiers.map((verifier) => (
               <VerifierCard
                 key={`${item.name}-${verifier.name}`}
@@ -110,8 +116,8 @@ function DetailsItem({
   tooltip?: string
 }) {
   return (
-    <div className={cn('flex gap-0.5 flex-col', className)}>
-      <div className="flex items-center gap-1.5 text-gray-500 text-2xs uppercase font-semibold">
+    <div className={cn('flex flex-col gap-0.5', className)}>
+      <div className="flex items-center gap-1.5 font-semibold text-2xs text-gray-500 uppercase">
         {title}
         {tooltip ? (
           <Tooltip>
@@ -122,7 +128,7 @@ function DetailsItem({
           </Tooltip>
         ) : null}
       </div>
-      <div className="text-lg font-bold">{children}</div>
+      <div className="font-bold text-lg">{children}</div>
     </div>
   )
 }
@@ -135,8 +141,8 @@ function VerifierCard({
   askForVerificationLink: string
 }) {
   return (
-    <div className="md:rounded-lg md:first:mt-7 first:border-none md:first:border-solid md:border border-gray-300 dark:border-gray-800 py-4 px-5 border-t">
-      <div className="grid lg:grid-cols-4 space-y-2 lg:space-y-0">
+    <div className="border-gray-300 border-t px-5 py-4 md:first:mt-7 md:rounded-lg md:border dark:border-gray-800">
+      <div className="grid space-y-2 lg:grid-cols-4 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
           <EtherscanLink
@@ -154,35 +160,10 @@ function VerifierCard({
           <LastUsedCell days={verifier.lastUsedDaysAgo} />
         </DetailsItem>
       </div>
-      <div className="overflow-x-auto mt-7 whitespace-pre pb-1.5 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)] lg:w-full">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="*:pr-4 text-left text-gray-500 dark:text-gray-50 text-2xs font-semibold uppercase align-bottom pb-1.5">
-              <th>Name</th>
-              <th>Proof system</th>
-              <th>Arithmetization</th>
-              <th>PCS</th>
-              <th>Trusted setup</th>
-              <th>Circuit source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {verifier.subVerifiers.map((sV) => (
-              <tr
-                key={`${verifier.name}-${sV.name}`}
-                className="*:pr-4 border-t h-8 border-gray-300 dark:border-gray-800 text-xs font-medium"
-              >
-                <td>{sV.name}</td>
-                <td>{sV.proofSystem}</td>
-                <td>{sV.mainArithmetization}</td>
-                <td>{sV.mainPCS}</td>
-                <td>{sV.trustedSetup ?? EM_DASH}</td>
-                <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <SubVerifiersTable
+        verifier={verifier}
+        className="mt-7 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)]"
+      />
     </div>
   )
 }
@@ -198,7 +179,7 @@ function DetailsLink({
     <a
       href={`/zk-catalog/${slug}`}
       className={cn(
-        'flex items-center font-bold justify-center w-full text-base rounded-lg px-6 bg-black text-white dark:bg-white dark:text-black mt-7 md:mt-0 md:w-max h-10 md:h-8',
+        'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 font-bold text-base text-white md:mt-0 md:h-8 md:w-max dark:bg-white dark:text-black',
         className,
       )}
     >

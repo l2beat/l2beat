@@ -1,120 +1,124 @@
 import { Logger } from '@l2beat/backend-tools'
-import { AssetId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
 
-  const START = UnixTime.now()
-  const DATA = [
-    {
-      priceUsd: 3000,
-      timestamp: START.add(-1, 'hours'),
-      assetId: AssetId.ETH,
-    },
-    {
-      priceUsd: 3100,
-      timestamp: START.add(-2, 'hours'),
-      assetId: AssetId.ETH,
-    },
-    {
-      priceUsd: 3400,
-      timestamp: START.add(-5, 'hours'),
-      assetId: AssetId.ETH,
-    },
-    {
-      priceUsd: 20,
-      timestamp: START.add(-1, 'hours'),
-      assetId: AssetId('uni-uniswap'),
-    },
-    {
-      priceUsd: 22,
-      timestamp: START.add(-2, 'hours'),
-      assetId: AssetId('uni-uniswap'),
-    },
-    {
-      priceUsd: 1,
-      timestamp: START,
-      assetId: AssetId.DAI,
-    },
-  ]
-
   afterEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(PriceRepository.prototype.addMany.name, () => {
-    it('only new rows', async () => {
-      await repository.addMany(DATA)
+  describe(PriceRepository.prototype.getByConfigId.name, () => {
+    it('gets by id', async () => {
+      const record = saved('a', UnixTime.ZERO, 1)
+      await repository.addMany([record, saved('b', UnixTime.ZERO, 2)])
+      const result = await repository.getByConfigId(record.configId)
+      expect(result).toEqual([record])
+    })
+  })
 
-      const newRows = [
-        {
-          priceUsd: 3300,
-          timestamp: UnixTime.fromDate(new Date()).add(-3, 'hours'),
-          assetId: AssetId.ETH,
-        },
-        {
-          priceUsd: 3500,
-          timestamp: UnixTime.fromDate(new Date()).add(-4, 'hours'),
-          assetId: AssetId.ETH,
-        },
-      ]
-      await repository.addMany(newRows)
+  describe(PriceRepository.prototype.getByConfigIdsInRange.name, () => {
+    it('gets by ids in inclusive range', async () => {
+      await repository.addMany([
+        saved('a', new UnixTime(50), 100),
+        saved('a', new UnixTime(100), 100),
+        saved('b', new UnixTime(100), 100),
+        saved('c', new UnixTime(100), 100),
+        saved('a', new UnixTime(200), 100),
+        saved('b', new UnixTime(200), 100),
+        saved('c', new UnixTime(200), 100),
+        saved('a', new UnixTime(300), 100),
+        saved('b', new UnixTime(300), 100),
+        saved('c', new UnixTime(300), 100),
+        saved('a', new UnixTime(400), 100),
+      ])
+
+      const result = await repository.getByConfigIdsInRange(
+        ['a'.repeat(12), 'b'.repeat(12)],
+        new UnixTime(100),
+        new UnixTime(300),
+      )
+
+      expect(result).toEqual([
+        saved('a', new UnixTime(100), 100),
+        saved('b', new UnixTime(100), 100),
+        saved('a', new UnixTime(200), 100),
+        saved('b', new UnixTime(200), 100),
+        saved('a', new UnixTime(300), 100),
+        saved('b', new UnixTime(300), 100),
+      ])
+    })
+  })
+
+  describe(PriceRepository.prototype.addMany.name, () => {
+    it('adds new rows', async () => {
+      await repository.addMany([
+        saved('a', UnixTime.ZERO, 1),
+        saved('b', UnixTime.ZERO, 2),
+      ])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, ...newRows])
+      expect(results).toEqualUnsorted([
+        saved('a', UnixTime.ZERO, 1),
+        saved('b', UnixTime.ZERO, 2),
+      ])
     })
 
     it('empty array', async () => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
 
-    it('big query', async () => {
+    it('performs batch insert when more than 10k records', async () => {
       const records: PriceRecord[] = []
-      const now = UnixTime.now()
       for (let i = 5; i < 15_000; i++) {
-        records.push({
-          priceUsd: Math.random() * 1000,
-          timestamp: now.add(-i, 'hours'),
-          assetId: AssetId('fake-coin'),
-        })
+        records.push(saved('a', new UnixTime(i), i))
       }
       await expect(repository.addMany(records)).not.toBeRejected()
     })
   })
 
-  it(PriceRepository.prototype.getAll.name, async () => {
-    await repository.addMany(DATA)
+  describe(PriceRepository.prototype.deleteByConfigInTimeRange.name, () => {
+    it('deletes records after the given timestamp', async () => {
+      await repository.addMany([
+        saved('a', new UnixTime(1), 1),
+        saved('a', new UnixTime(2), 2),
+        saved('a', new UnixTime(3), 3),
+      ])
 
-    const results = await repository.getAll()
+      await repository.deleteByConfigInTimeRange(
+        'a'.repeat(12),
+        new UnixTime(2),
+        new UnixTime(3),
+      )
 
-    expect(results).toEqualUnsorted(DATA)
-  })
+      const results = await repository.getAll()
+      expect(results).toEqual([saved('a', new UnixTime(1), 1)])
+    })
 
-  it(PriceRepository.prototype.getByTimestamp.name, async () => {
-    await repository.addMany(DATA)
+    it('deletes only for specified ids', async () => {
+      await repository.addMany([
+        saved('a', new UnixTime(1), 1),
+        saved('b', new UnixTime(1), 1),
+      ])
 
-    const timestamp = START.add(-1, 'hours')
+      await repository.deleteByConfigInTimeRange(
+        'a'.repeat(12),
+        new UnixTime(0),
+        new UnixTime(1),
+      )
 
-    const results = await repository.getByTimestamp(timestamp)
-
-    expect(results).toEqualUnsorted([DATA[0], DATA[3]])
-  })
-
-  it(PriceRepository.prototype.getByToken.name, async () => {
-    await repository.addMany(DATA)
-
-    const token = AssetId('uni-uniswap')
-    const results = await repository.getByToken(token)
-
-    expect(results).toEqualUnsorted(DATA.filter((d) => d.assetId === token))
+      const results = await repository.getAll()
+      expect(results).toEqual([saved('b', new UnixTime(1), 1)])
+    })
   })
 
   it(PriceRepository.prototype.deleteAll.name, async () => {
-    await repository.addMany(DATA)
+    await repository.addMany([saved('a', UnixTime.ZERO, 1)])
 
     await repository.deleteAll()
 
@@ -123,112 +127,16 @@ describeDatabase(PriceRepository.name, (database) => {
     expect(results).toEqual([])
   })
 
-  describe(PriceRepository.prototype.findDataBoundaries.name, () => {
-    it('boundary of single and multi row data', async () => {
-      await repository.addMany(DATA)
-
-      const result = await repository.findDataBoundaries()
-
-      expect(result).toEqual(
-        new Map([
-          [
-            AssetId.ETH,
-            {
-              earliest: START.add(-5, 'hours'),
-              latest: START.add(-1, 'hours'),
-            },
-          ],
-          [
-            AssetId('uni-uniswap'),
-            {
-              earliest: START.add(-2, 'hours'),
-              latest: START.add(-1, 'hours'),
-            },
-          ],
-          [
-            AssetId.DAI,
-            {
-              earliest: START,
-              latest: START,
-            },
-          ],
-        ]),
-      )
-    })
-
-    it('works with empty database', async () => {
-      await repository.deleteAll()
-
-      const result = await repository.findDataBoundaries()
-
-      expect(result).toEqual(new Map())
-    })
-  })
-
-  describe(PriceRepository.prototype.findLatestByTokenBetween.name, () => {
-    it('gets most recent record of each token', async () => {
-      await repository.addMany([
-        {
-          priceUsd: 3000,
-          timestamp: START.add(-1, 'days'),
-          assetId: AssetId.ETH,
-        },
-        {
-          priceUsd: 1,
-          timestamp: START,
-          assetId: AssetId.DAI,
-        },
-      ])
-
-      const result = await repository.findLatestByTokenBetween(
-        START.add(-1, 'days'),
-        START.add(-1, 'hours'),
-      )
-
-      expect(result).toEqual(new Map([[AssetId.ETH, START.add(-1, 'days')]]))
-    })
-
-    it('works with empty database', async () => {
-      const result = await repository.findLatestByTokenBetween(
-        START.add(-1, 'days'),
-        START.add(-1, 'hours'),
-      )
-
-      expect(result).toEqual(new Map())
-    })
-  })
-
-  describe(PriceRepository.prototype.findByTimestampRange.name, () => {
-    it('returns all prices within range', async () => {
-      await repository.addMany(DATA)
-
-      const results = await repository.findByTimestampRange(
-        AssetId.ETH,
-        START.add(-2, 'hours'),
-        START,
-      )
-      const expected = new Map([
-        [DATA[0].timestamp.toNumber(), DATA[0].priceUsd],
-        [DATA[1].timestamp.toNumber(), DATA[1].priceUsd],
-      ])
-
-      expect(results).toEqual(expected)
-    })
-
-    it('returns all prices within inclusive range', async () => {
-      await repository.addMany(DATA)
-
-      const results = await repository.findByTimestampRange(
-        AssetId.ETH,
-        START.add(-5, 'hours'),
-        START.add(-2, 'hours'),
-      )
-      const expected = new Map([
-        [DATA[1].timestamp.toNumber(), DATA[1].priceUsd],
-        [DATA[2].timestamp.toNumber(), DATA[2].priceUsd],
-      ])
-
-      expect(results).toEqual(expected)
-    })
-  })
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) =>
+    saved('a', timestamp, 1),
+  )
 })
+
+function saved(id: string, timestamp: UnixTime, priceUsd: number): PriceRecord {
+  return {
+    configId: id.repeat(12),
+    timestamp,
+    priceUsd,
+  }
+}

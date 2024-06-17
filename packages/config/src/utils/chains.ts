@@ -21,7 +21,7 @@ export function getChainNames(config: Config): string[] {
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-function getProjectDevIds(project: Project): string[] {
+export function getProjectDevIds(project: Project): string[] {
   const escrowContracts = project.config.escrows.flatMap((escrow) => {
     if (!escrow.newVersion) {
       return []

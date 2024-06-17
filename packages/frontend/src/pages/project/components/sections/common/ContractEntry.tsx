@@ -8,6 +8,7 @@ import React from 'react'
 import { Callout, CalloutProps } from '../../../../../components/Callout'
 import { Link } from '../../../../../components/Link'
 import { Markdown } from '../../../../../components/Markdown'
+import { Badge } from '../../../../../components/badge/Badge'
 import { ShieldIcon } from '../../../../../components/icons'
 import { BulletIcon } from '../../../../../components/icons/symbols/BulletIcon'
 import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
@@ -56,6 +57,7 @@ export interface ContractEntryProps {
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
+  sourceBadge?: 'L1' | 'L2' | 'L3'
 }
 
 export function ContractEntry({
@@ -63,6 +65,7 @@ export function ContractEntry({
   verificationStatus,
   manuallyVerifiedContracts,
   className,
+  sourceBadge: sourceLayer,
 }: ContractEntryProps) {
   const verificationStatusForChain =
     verificationStatus.contracts[contract.chain] ?? {}
@@ -124,6 +127,11 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
+            {sourceLayer && (
+              <Badge type="blue" rounded="full" className="leading-none">
+                {sourceLayer}
+              </Badge>
+            )}
             {contract.addresses.map((address, i) => (
               <EtherscanLink
                 address={address}
@@ -152,7 +160,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+            <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}
@@ -201,7 +209,7 @@ export function ContractEntry({
                 Show upgrade details
               </button>
               {/* TODO: remove leading once line heights are fixed for all text on the page */}
-              <Markdown className="mt-2 hidden text-sm leading-snug text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 hidden text-gray-850 text-sm leading-snug dark:text-gray-400">
                 {contract.upgradeConsiderations}
               </Markdown>
             </>
@@ -236,7 +244,7 @@ function UsedInProjectEntry({
                   key={i}
                   src={project.iconPath}
                   alt="Project icon"
-                  className="h-5 w-5 mx-1 inline"
+                  className="mx-1 inline h-5 w-5"
                 />
               </a>
             </TooltipTrigger>

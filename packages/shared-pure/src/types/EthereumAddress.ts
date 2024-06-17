@@ -45,3 +45,7 @@ EthereumAddress.random = function random() {
 EthereumAddress.unsafe = function unsafe(address: string) {
   return address as unknown as EthereumAddress
 }
+
+EthereumAddress.from = function from(value: string) {
+  return EthereumAddress(utils.hexZeroPad(value, 20))
+}

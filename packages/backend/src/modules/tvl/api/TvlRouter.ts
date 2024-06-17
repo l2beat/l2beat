@@ -1,35 +1,60 @@
 import Router from '@koa/router'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { Context } from 'koa'
+import {
+  EthereumAddress,
+  ProjectId,
+  stringAs,
+  stringAsBoolean,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { assert } from '@l2beat/backend-tools'
 import { withTypedContext } from '../../../api/types'
-import { ApiConfig } from '../../../config/Config'
-import {
-  AggregatedTvlResult,
-  TokenTvlResult,
-  TvlController,
-  TvlResult,
-} from './TvlController'
+import { Clock } from '../../../tools/Clock'
+import { AggregatedService } from './services/AggregatedService'
+import { BreakdownService } from './services/BreakdownService'
+import { TokenService } from './services/TokenService'
+import { TvlService } from './services/TvlService'
+import { ApiProject, AssociatedToken } from './utils/types'
 
 export function createTvlRouter(
-  tvlController: TvlController,
-  config: ApiConfig,
+  tvlService: TvlService,
+  aggregatedService: AggregatedService,
+  tokenService: TokenService,
+  breakdownService: BreakdownService,
+  projects: ApiProject[],
+  associatedTokens: AssociatedToken[],
+  clock: Clock,
 ) {
   const router = new Router()
 
-  router.get('/api/tvl', async (ctx) => {
-    const tvlResult = config.cache.tvl
-      ? await tvlController.getCachedTvlApiResponse()
-      : await tvlController.getTvlApiResponse()
-
-    if (tvlResult.type === 'error') {
-      handleTvlError(ctx, tvlResult)
-      return
-    }
-
-    ctx.body = tvlResult.data
-  })
+  router.get(
+    '/api/tvl',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          excludeAssociatedTokens: stringAsBoolean(false),
+        }),
+      }),
+      async (ctx) => {
+        // If this endpoint is too slow and aggregation layer is to be implemented,
+        // remember to add "isAssociated" to createValueId.ts
+        if (ctx.query.excludeAssociatedTokens) {
+          const excluded = await tvlService.getExcludedTvl(
+            clock.getLastHour().add(-1, 'hours'),
+            projects,
+            associatedTokens,
+          )
+          ctx.body = excluded
+        } else {
+          const tvl = await tvlService.getTvl(
+            clock.getLastHour().add(-1, 'hours'),
+            projects,
+          )
+          ctx.body = tvl
+        }
+      },
+    ),
+  )
 
   router.get(
     '/api/tvl/aggregate',
@@ -37,99 +62,73 @@ export function createTvlRouter(
       z.object({
         query: z.object({
           projectSlugs: z.string(),
+          excludeAssociatedTokens: stringAsBoolean(false),
         }),
       }),
       async (ctx) => {
-        console.time('[Aggregate endpoint]: runtime')
         const projectSlugs = ctx.query.projectSlugs
+          .split(',')
+          .map((slug) => slug.trim())
 
-        const tvlProjectsResponse =
-          await tvlController.getAggregatedTvlApiResponse(
-            projectSlugs.split(',').map((slug) => slug.trim()),
-          )
+        const filteredProjects = projects.filter((p) =>
+          projectSlugs.includes(p.slug),
+        )
 
-        if (tvlProjectsResponse.type === 'error') {
-          handleTvlError(ctx, tvlProjectsResponse)
-          return
-        }
+        const projectIds = filteredProjects.map((p) => p.id.toString())
 
-        ctx.body = tvlProjectsResponse.data
+        const filteredAssociatedTokens = associatedTokens.filter((e) =>
+          ctx.query.excludeAssociatedTokens
+            ? projectIds.includes(e.project)
+            : false,
+        )
 
-        console.timeEnd('[Aggregate endpoint]: runtime')
+        const tvl = await aggregatedService.getAggregatedTvl(
+          clock.getLastHour().add(-1, 'hours'),
+          filteredProjects,
+          filteredAssociatedTokens,
+        )
+        ctx.body = tvl
       },
     ),
   )
 
-  // There is currently no use case for this endpoint as we disabled token selector on fronted
-  // Someone is calling this endpoint every 30s and it's causing a lot of load on the server
-  // I am disabling it until the tvl2 rewrite is finished
+  router.get(
+    '/api/tvl/token',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          project: stringAs(ProjectId),
+          chain: z.string(),
+          address: z.union([stringAs(EthereumAddress), z.literal('native')]),
+        }),
+      }),
+      async (ctx) => {
+        const { chain, project, address } = ctx.query
 
-  // router.get(
-  //   '/api/projects/:projectId/tvl/chains/:chainId/assets/:assetId/types/:assetType',
+        const apiProject = projects.find((p) => p.id === project)
+        assert(apiProject, 'Project not found!')
 
-  //   withTypedContext(
-  //     z.object({
-  //       params: z.object({
-  //         chainId: z.string(),
-  //         projectId: branded(z.string(), ProjectId),
-  //         assetId: branded(z.string(), AssetId),
-  //         assetType: branded(z.string(), AssetType),
-  //       }),
-  //     }),
-  //     async (ctx) => {
-  //       const { assetId, chainId, assetType, projectId } = ctx.params
+        ctx.body = await tokenService.getTokenChart(
+          clock.getLastHour().add(-1, 'hours'),
+          apiProject,
+          { chain, address },
+        )
+      },
+    ),
+  )
 
-  //       const assetData = await tvlController.getAssetTvlApiResponse(
-  //         projectId,
-  //         ChainId(+chainId),
-  //         assetId,
-  //         assetType,
-  //       )
+  router.get('/api/tvl/breakdown', async (ctx) => {
+    const breakdown = await breakdownService.getTvlBreakdown(
+      // TODO: This is a temporary solution. We should use the last hour
+      // instead of the hour before the last hour.
+      // This should be fixed by interpolating the data for the last hour when not every project has data for it.
+      clock
+        .getLastHour()
+        .add(-1, 'hours'),
+    )
 
-  //       if (assetData.type === 'error') {
-  //         handleTvlError(ctx, assetData)
-  //         return
-  //       }
-
-  //       ctx.body = assetData.data
-  //     },
-  //   ),
-  // )
-
-  router.get('/api/project-assets-breakdown', async (ctx) => {
-    const projectAssetsBreakdown =
-      await tvlController.getProjectTokenBreakdownApiResponse()
-
-    if (projectAssetsBreakdown.type === 'error') {
-      handleTvlError(ctx, projectAssetsBreakdown)
-      return
-    }
-
-    ctx.body = projectAssetsBreakdown.data
+    ctx.body = breakdown
   })
 
   return router
-}
-
-function handleTvlError(
-  ctx: Context,
-  result: Extract<
-    TvlResult | TokenTvlResult | AggregatedTvlResult,
-    { type: 'error' }
-  >,
-) {
-  switch (result.error) {
-    case 'DATA_NOT_FULLY_SYNCED':
-    case 'NO_DATA':
-      ctx.status = 404
-      break
-    case 'EMPTY_SLUG':
-    case 'INVALID_PROJECT_OR_ASSET':
-      ctx.status = 400
-      break
-    default:
-      assertUnreachable(result)
-  }
-
-  ctx.body = result.error
 }

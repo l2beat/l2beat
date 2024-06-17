@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x45f73f51155821fa6bf58861d0360141da0e91da
+
+# Diff at Wed, 29 May 2024 14:51:45 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d0877009edde2713b2b4f20a593b40156f5de045 block: 19929993
+- current block number: 19976230
+
+## Description
+
+Config related: Owner is upgrade admin.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19929993 (main branch discovery), not current.
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+    }
+```
+
 Generated with discovered.json: 0x5bb6fb6f0a3145d9c836665d91d5d854ec30ae16
 
 # Diff at Wed, 22 May 2024 15:45:03 GMT:

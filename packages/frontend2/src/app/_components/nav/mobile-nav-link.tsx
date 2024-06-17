@@ -21,8 +21,9 @@ export function MobileNavLink({
   const active = useActiveLink({ href, activeBehavior })
 
   return (
-    <Link href={href}>
-      <li
+    <li>
+      <Link
+        href={href}
         className={cn(
           'flex flex-col justify-center h-full relative px-2 font-medium text-base md:px-4 md:text-lg',
           active && 'text-pink-900 dark:text-pink-200',
@@ -32,7 +33,7 @@ export function MobileNavLink({
         {active && (
           <div className="absolute bottom-0 w-full h-[3px] left-0 bg-pink-900" />
         )}
-      </li>
-    </Link>
+      </Link>
+    </li>
   )
 }

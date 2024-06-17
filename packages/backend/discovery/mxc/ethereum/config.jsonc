@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "mxc",
+  "initialAddresses": [
+    "0x7C954170305b11572522313b6AD514070ce0339c" // L1 Escrow
+  ],
+  "names": {
+    "0x7C954170305b11572522313b6AD514070ce0339c": "MXCL1Bridge"
+  },
+  "overrides": {
+    "MXCL1Bridge": {
+      "ignoreRelatives": ["MXCToken"],
+      "ignoreMethods": ["proxiableUUID"]
+    }
+  }
+}

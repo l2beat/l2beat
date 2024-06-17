@@ -5,18 +5,19 @@ import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOn
 import { configureCopyButtons } from './configureCopyButtons'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
+import { configureExcludeAssociatedTokensCheckbox } from './configureExcludeAssociatedTokensCheckbox'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureGlossarySideNav } from './configureGlossarySideNav'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureNavWrapper } from './configureNavWrapper'
 import { configureOverflowWrappers } from './configureOverflowWrappers'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureScrollToTopButton } from './configureScrollToTopButton'
-import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
@@ -38,7 +39,6 @@ configureThemeToggle()
 configureFloatingBanner()
 configureTables()
 configureProjectFilters()
-configureSidebarMenu()
 configureTooltips()
 configureAccordions()
 configureRosetteOverlay()
@@ -58,3 +58,5 @@ configureAlphabetSelectors()
 configureScrollToTopButton()
 configureGlossarySideNav()
 configureCopyButtons()
+configureNavWrapper()
+configureExcludeAssociatedTokensCheckbox()

@@ -2,7 +2,6 @@ import { Layer2 } from '@l2beat/config'
 import compact from 'lodash/compact'
 
 import { Config } from '../../../../build/config'
-import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { PagesData, Wrapped } from '../../../Page'
 import { getCharts } from '../../common/getCharts'
@@ -35,7 +34,6 @@ export function getProps(
   )
   return {
     props: {
-      navbar: getNavbarProps(config, 'scaling'),
       projectHeader: getProjectHeader(
         project,
         config,
@@ -51,7 +49,6 @@ export function getProps(
         implementationChange,
         charts,
       ),
-      footer: getFooterProps(config),
     },
     wrapper: {
       preloadApis: compact([

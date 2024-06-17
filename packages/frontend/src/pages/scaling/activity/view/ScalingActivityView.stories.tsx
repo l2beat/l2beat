@@ -19,7 +19,7 @@ export const Primary: Story = {
   args: {
     items: [
       {
-        name: 'zkSync Era',
+        name: 'ZKsync Era',
         shortName: undefined,
         slug: 'zksync-era',
         category: 'ZK Rollup',
@@ -282,7 +282,7 @@ export const Primary: Story = {
         slug: 'zkspace',
         type: 'layer2',
         category: 'ZK Rollup',
-        provider: 'zkSync Lite',
+        provider: 'ZKsync Lite',
         warning: undefined,
         redWarning: undefined,
         purposes: ['NFT', 'AMM', 'Payments'],

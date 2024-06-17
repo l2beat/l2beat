@@ -26,6 +26,10 @@
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
     },
     {
+      "symbol": "EKUBO",
+      "address": "0x04c46e830bb56ce22735d5d8fc9cb90309317d0f"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -118,6 +122,10 @@
     {
       "symbol": "BAT",
       "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+    },
+    {
+      "symbol": "BAG",
+      "address": "0x808688c820ab080a6ff1019f03e5ec227d9b522b"
     },
     {
       "symbol": "BEL",
@@ -390,6 +398,7 @@
     },
     {
       "symbol": "FRAX",
+      "category": "stablecoin",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
     {
@@ -521,7 +530,8 @@
     },
     {
       "symbol": "iUSD",
-      "address": "0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d"
+      "address": "0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d",
+      "category": "stablecoin"
     },
     {
       "symbol": "KCS",
@@ -555,6 +565,10 @@
     {
       "symbol": "LINK",
       "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+    },
+    {
+      "symbol": "LL",
+      "address": "0x0921799CB1d702148131024d18fCdE022129Dc73"
     },
     {
       "symbol": "LOOKS",
@@ -699,6 +713,10 @@
       "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
     },
     {
+      "symbol": "OLE",
+      "address": "0x1b6e9c73bee68102d9dd4a2627f97bff4183ab0a"
+    },
+    {
       "symbol": "OMG",
       "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"
     },
@@ -825,6 +843,10 @@
       "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd"
     },
     {
+      "symbol": "RBX",
+      "address": "0x3ba925fdeae6b46d0bb4d424d829982cb2f7309e"
+    },
+    {
       "symbol": "rDPX",
       "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11"
     },
@@ -887,7 +909,8 @@
     },
     {
       "symbol": "sDAI",
-      "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+      "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+      "category": "stablecoin"
     },
     {
       "symbol": "sfrxETH",
@@ -937,7 +960,7 @@
     },
     {
       "symbol": "spETH",
-      "address": "0x05F3e2b5f90EF4543D3E147AD4DDAa0C7A8C3Fcc",
+      "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
       "coingeckoId": "wrapped-eeth" // 1:1 backed by it, spETH currently not on CG
     },
     {
@@ -988,6 +1011,10 @@
     {
       "symbol": "SYN",
       "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29"
+    },
+    {
+      "symbol": "TAIKO",
+      "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
     },
     {
       "symbol": "tBTC",
@@ -1196,7 +1223,8 @@
     {
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
-      "type": "EBV",
+      "category": "stablecoin",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1206,7 +1234,7 @@
     {
       "symbol": "FXS",
       "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1216,7 +1244,7 @@
     {
       "symbol": "FPI",
       "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1226,7 +1254,7 @@
     {
       "symbol": "FPIS",
       "address": "0x3405E88af759992937b84E58F2Fe691EF0EeA320",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1236,7 +1264,7 @@
     {
       "symbol": "frxETH",
       "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1246,7 +1274,7 @@
     {
       "symbol": "sfrxETH",
       "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1256,7 +1284,7 @@
     {
       "symbol": "sFRAX",
       "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1341,7 +1369,7 @@
     {
       "symbol": "JOE",
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1361,10 +1389,27 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "MOLTEN",
+      "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "MOZ",
       "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MXC",
+      "address": "0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "mxc"
     },
     {
       "symbol": "RDNT",
@@ -1406,7 +1451,7 @@
     {
       "symbol": "STG",
       "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -1425,6 +1470,29 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     },
     {
       "symbol": "XAI",
@@ -1454,6 +1522,16 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "weETH",
+      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "WINR",
       "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
       "type": "NMV",
@@ -1476,7 +1554,8 @@
     {
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
-      "type": "EBV",
+      "category": "stablecoin",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1486,7 +1565,7 @@
     {
       "symbol": "FXS",
       "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1497,7 +1576,7 @@
     {
       "symbol": "FPI",
       "address": "0xC5d43A94e26fCa47A9b21CF547ae4AA0268670E1",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1508,7 +1587,7 @@
     {
       "symbol": "FPIS",
       "address": "0x8368Dca5CE2a4Db530c0F6e535d90B6826428Dee",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1519,7 +1598,7 @@
     {
       "symbol": "frxETH",
       "address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1529,7 +1608,7 @@
     {
       "symbol": "sfrxETH",
       "address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1539,7 +1618,7 @@
     {
       "symbol": "sFRAX",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -1578,7 +1657,7 @@
     {
       "symbol": "STG",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
-      "type": "NMV",
+      "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -1591,6 +1670,29 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     },
     {
       "symbol": "VELO",
@@ -1619,6 +1721,7 @@
     {
       "symbol": "alUSD",
       "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
+      "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -1750,6 +1853,42 @@
       "type": "CBV",
       "formula": "totalSupply", // formula does not matter here
       "category": "ether"
+    },
+    {
+      "symbol": "weETH",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "type": "EBV",
+      "coingeckoId": "wrapped-eeth",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    }
+  ],
+  "fraxtal": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     }
   ],
   "lyra": [
@@ -1812,6 +1951,7 @@
     {
       "symbol": "USDT",
       "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -1835,6 +1975,38 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
+      "category": "ether",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mUSD",
+      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
       "type": "EBV",
@@ -1842,6 +2014,29 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -1866,6 +2061,7 @@
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -1961,6 +2157,46 @@
       "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "NILE",
+      "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "weETH",
+      "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
+      "type": "EBV",
+      "coingeckoId": "wrapped-eeth",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     }
   ],
   "zkfair": [
@@ -2030,6 +2266,7 @@
     {
       "symbol": "sDAI",
       "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2066,6 +2303,7 @@
     {
       "symbol": "USDC",
       "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2087,6 +2325,16 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "bWOOL",
+      "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
     {
       "symbol": "ETH",
       "type": "CBV",
@@ -2118,6 +2366,7 @@
     {
       "symbol": "USDB",
       "address": "0x4300000000000000000000000000000000000003",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
@@ -2126,11 +2375,51 @@
       "coingeckoId": "usdb"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "PAC",
       "address": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
       "type": "NMV",
       "formula": "circulatingSupply",
       "coingeckoId": "pacmoon"
+    },
+    {
+      "symbol": "weETH",
+      "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
+      "type": "EBV",
+      "coingeckoId": "wrapped-eeth",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "JUICE",
+      "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "mode": [
@@ -2184,6 +2473,29 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "type": "EBV",
@@ -2205,6 +2517,29 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -2236,7 +2571,8 @@
     {
       "symbol": "FRAX",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
-      "type": "EBV",
+      "category": "stablecoin",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2247,7 +2583,7 @@
     {
       "symbol": "FXS",
       "address": "0x19BC97D3C223fC8a0fF0541D260f4f438d5FaF99",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2258,7 +2594,7 @@
     {
       "symbol": "FPI",
       "address": "0xD405617DB7473b0A3158356Be7bC9EbEc6D88b85",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2269,7 +2605,7 @@
     {
       "symbol": "FPIS",
       "address": "0x36711BA13B461f1998EC9f9B36A410799560f206",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2280,7 +2616,7 @@
     {
       "symbol": "frxETH",
       "address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2297,7 +2633,7 @@
     {
       "symbol": "sfrxETH",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2329,88 +2665,22 @@
     {
       "symbol": "FRAX",
       "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
-      "type": "EBV",
+      "category": "stablecoin",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
       },
       "coingeckoId": "frax"
-    }
-  ],
-  "fraxtal": [
-    {
-      "symbol": "FRAX",
-      "address": "0xfc00000000000000000000000000000000000001",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "frax"
-    },
-    {
-      "symbol": "FXS",
-      "address": "0xfc00000000000000000000000000000000000002",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "frax-share"
-    },
-    {
-      "symbol": "FPI",
-      "address": "0xfc00000000000000000000000000000000000003",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "frax-price-index"
-    },
-    {
-      "symbol": "FPIS",
-      "address": "0xfc00000000000000000000000000000000000004",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "frax-price-index-share"
-    },
-    {
-      "symbol": "sfrxETH",
-      "address": "0xfc00000000000000000000000000000000000005",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "staked-frax-ether"
-    },
-    {
-      "symbol": "sFRAX",
-      "address": "0xfc00000000000000000000000000000000000008",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Frax Ferry",
-        "slug": "fraxferry"
-      },
-      "coingeckoId": "staked-frax"
     }
   ],
   "polygonzkevm": [
     {
       "symbol": "FRAX",
       "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
-      "type": "EBV",
+      "category": "stablecoin",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2421,7 +2691,7 @@
     {
       "symbol": "FXS",
       "address": "0x6b856a14CeA1d7dCfaF80fA6936c0b75972cCacE",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2432,7 +2702,7 @@
     {
       "symbol": "FPI",
       "address": "0x7E5845b1bFc9e6620893e48346bdB8541995a8D9",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2443,7 +2713,7 @@
     {
       "symbol": "FPIS",
       "address": "0xdE7df9036801676aF0cB73661d93a098c0085fba",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2454,7 +2724,7 @@
     {
       "symbol": "frxETH",
       "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2465,7 +2735,7 @@
     {
       "symbol": "sfrxETH",
       "address": "0x7c2aF1Fb79D0b1c67d4eb802d44C673D0A1D2C04",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2476,7 +2746,7 @@
     {
       "symbol": "sFRAX",
       "address": "0x2C37fb628b35dfdFD515d41B0cAAe11B542773C3",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
@@ -2489,6 +2759,7 @@
     {
       "symbol": "USDC",
       "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
+      "category": "stablecoin",
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {

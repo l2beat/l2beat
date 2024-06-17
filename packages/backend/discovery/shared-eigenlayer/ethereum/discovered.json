@@ -3,11 +3,12 @@
   "chain": "ethereum",
   "blockNumber": 19925898,
   "configHash": "0xc23e741729cca75ecb7c0995d99dee62c5adaaa0f0fd1168cc77b702dbe85ae4",
-  "version": 4,
+  "version": 5,
   "contracts": [
     {
       "name": "DepositContract",
       "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -32,6 +33,7 @@
     {
       "name": "swETH-Strategy",
       "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -58,6 +60,7 @@
     {
       "name": "AVSDirectory",
       "address": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+      "ignoreInWatchMode": ["avs"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
@@ -93,6 +96,7 @@
     {
       "name": "ankrETH-Strategy",
       "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -119,6 +123,7 @@
     {
       "name": "rETH-Strategy",
       "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -211,6 +216,7 @@
     {
       "name": "METH-Strategy",
       "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -249,6 +255,8 @@
     {
       "name": "EigenlayerProxiedMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -312,6 +320,7 @@
     {
       "name": "cbETH-Strategy",
       "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -338,6 +347,7 @@
     {
       "name": "osETH-Strategy",
       "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -376,6 +386,7 @@
     {
       "name": "wBETH-Strategy",
       "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -433,15 +444,15 @@
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x5dd88b27402a52ec3e227839f0f448d699f04c912202aa0d2b25bb86127a6e96",
         "EIGEN": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-        "eip712Domain": [
-          "0x0f",
-          "bEIGEN",
-          "1",
-          1,
-          "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "bEIGEN",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "name": "Backing Eigen",
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "bEIGEN",
@@ -503,6 +514,7 @@
     {
       "name": "sfrxETH-Strategy",
       "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -529,6 +541,7 @@
     {
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "ignoreInWatchMode": ["numPods"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762",
@@ -555,6 +568,7 @@
     {
       "name": "stETH-Strategy",
       "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -581,6 +595,7 @@
     {
       "name": "ETHx-Strategy",
       "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -607,6 +622,7 @@
     {
       "name": "OETH-Strategy",
       "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -649,6 +665,7 @@
     {
       "name": "bEIGEN-Strategy",
       "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
@@ -670,6 +687,7 @@
     {
       "name": "RiverV1-Strategy",
       "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
+      "ignoreInWatchMode": ["totalShares"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
@@ -707,6 +725,8 @@
     {
       "name": "EigenlayerTokenMultisig",
       "address": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -736,6 +756,8 @@
     {
       "name": "EigenlayerOperationsMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -847,15 +869,15 @@
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xb02444d2dadc9e25bc38100c9cf14cc5e25f7e6f14581d071671d81340d3c978",
-        "eip712Domain": [
-          "0x0f",
-          "EIGEN",
-          "1",
-          1,
-          "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          []
-        ],
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIGEN",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "name": "Eigen",
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2",
         "symbol": "EIGEN",
@@ -867,6 +889,8 @@
     {
       "name": "EigenlayerCommunityMultisig",
       "address": "0xFEA47018D632A77bA579846c840d5706705Dc598",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -901,6 +925,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4",
     "0x17919FAC7024d5b770322E5Cb81607D247654116",
     "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",

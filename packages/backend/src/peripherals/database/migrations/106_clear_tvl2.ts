@@ -21,6 +21,9 @@ export async function down(knex: Knex) {
   await clearTvl2(knex)
 }
 
+// This function and whole migration is called "tvl2" because
+// during rewrite of tvl we had two packages "tvl" and "tvl2"
+// after rewrite we have only "tvl" package
 async function clearTvl2(knex: Knex) {
   await knex('prices').delete()
 

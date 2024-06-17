@@ -23,7 +23,7 @@ export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
         <div
           key={`breakdown-group-${i}`}
           className={cn(
-            'h-full first:rounded-l last:mr-0 last:rounded-r',
+            'h-full last:mr-0 last:rounded-r first:rounded-l',
             g.className,
           )}
           style={{

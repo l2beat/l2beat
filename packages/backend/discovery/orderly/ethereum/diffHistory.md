@@ -1,4 +1,50 @@
-Generated with discovered.json: 0xb6ffb46f2934ae27cf74afbbd30bf499b1c6920a
+Generated with discovered.json: 0x0baeb81c8f4fba12ebba3baaefc947d6c7739d0f
+
+# Diff at Mon, 17 Jun 2024 08:23:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f39ec7f15738d4847f0cbde4818140d42e26440f block: 20082412
+- current block number: 20110288
+
+## Description
+
+Gas limit raised. Now ~10% higher than base L2.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        60000000
++        100000000
+    }
+```
+
+Generated with discovered.json: 0xfbd9c919a36d8ba7131d60ce803c892cd260a714
+
+# Diff at Thu, 13 Jun 2024 10:50:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cd33b23d6b32d4d38eea92d309fd854193b90203 block: 19927716
+- current block number: 20082412
+
+## Description
+
+Gas limit raised.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        40000000
++        60000000
+    }
+```
+
+Generated with discovered.json: 0x8ea4f813fa7d4b58eb69ad964fafb89cd12576b2
 
 # Diff at Wed, 22 May 2024 20:10:39 GMT:
 

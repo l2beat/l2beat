@@ -23,7 +23,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
                 <NumberCell className="inline font-bold">
                   {props.value}
                 </NumberCell>
-                <NumberCell signed className="ml-1 !text-base font-medium ">
+                <NumberCell signed className="!text-base ml-1 font-medium">
                   {props.percentChange}
                 </NumberCell>
               </TooltipTrigger>
@@ -36,7 +36,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
               <NumberCell className="inline font-bold">
                 {props.value}
               </NumberCell>
-              <NumberCell signed className="ml-1 !text-base font-medium ">
+              <NumberCell signed className="!text-base ml-1 font-medium">
                 {props.percentChange}
               </NumberCell>
             </div>
@@ -44,7 +44,7 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
         </>
       ) : (
         <div className="flex w-full justify-center">
-          <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
+          <span className="font-bold text-base md:text-lg">{EM_DASH}</span>
         </div>
       )}
     </>
@@ -75,11 +75,11 @@ function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
       {top15.map((t, i) => (
         <div className="flex items-center gap-1.5" key={i}>
           <img src={t.iconUrl} className="size-4 rounded-full" />
-          <span className="text-xs font-bold">{t.info.symbol}</span>
+          <span className="font-bold text-xs">{t.info.symbol}</span>
         </div>
       ))}
       {tokens.length > 15 && (
-        <span className="text-xs text-gray-550">and more</span>
+        <span className="text-gray-550 text-xs">and more</span>
       )}
     </div>
   )

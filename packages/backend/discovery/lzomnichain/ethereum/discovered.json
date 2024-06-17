@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19574671,
   "configHash": "0x0f20b322fd449bd0d14d392fafed042abcd5a2bfb554d648c3e1be195bc2d8fa",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "FPValidator",
@@ -69,6 +69,14 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -1283,6 +1291,7 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -1381,6 +1390,8 @@
     {
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -1435,6 +1446,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
     "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
     "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",

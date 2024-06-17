@@ -82,6 +82,7 @@ export function LivenessDurationCell(props: {
             icon={RoundedWarningIcon}
             text={props.warning}
             color="yellow"
+            ignoreMarkdown
           />
         )}
       </TooltipContent>

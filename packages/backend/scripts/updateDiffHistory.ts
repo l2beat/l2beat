@@ -64,13 +64,11 @@ async function updateDiffHistoryFile() {
   const diff = diffDiscovery(
     prevDiscovery?.contracts ?? [],
     curDiscovery.contracts,
-    config,
   )
 
   let configRelatedDiff = diffDiscovery(
     discoveryFromMainBranch?.contracts ?? [],
     prevDiscovery?.contracts ?? [],
-    config,
   )
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
@@ -164,7 +162,6 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
-    skipHints: true,
   })
 
   const prevDiscoveryFile = readFileSync(

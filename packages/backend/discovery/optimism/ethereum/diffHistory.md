@@ -1,3 +1,276 @@
+Generated with discovered.json: 0x4c3e6d4287d6b95b14403fe87d31dddfa7fcf6f0
+
+# Diff at Tue, 11 Jun 2024 15:10:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b9a39f700e84af1cffa010ce0e20e64b23a4c64 block: 20067517
+- current block number: 20069391
+
+## Description
+
+Config related, ignore spam.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20067517 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.resourceConfig:
+-        [20000000,10,8,1000000000,1000000,"340282366920938463463374607431768211455"]
++        {"maxResourceLimit":20000000,"elasticityMultiplier":10,"baseFeeMaxChangeDenominator":8,"minimumBaseFee":1000000000,"systemTxMaxGas":1000000,"maximumBaseFee":"340282366920938463463374607431768211455"}
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122) {
+    +++ description: None
+      values.gameData:
+-        [0,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"gameType_":0,"rootClaim_":"0x0000000000000000000000000000000000000000000000000000000000000000","extraData_":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.startingOutputRoot:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000",0]
++        {"root":"0x0000000000000000000000000000000000000000000000000000000000000000","l2BlockNumber":0}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0) {
+    +++ description: None
+      values.gameData:
+-        [1,"0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
++        {"gameType_":1,"rootClaim_":"0x0000000000000000000000000000000000000000000000000000000000000000","extraData_":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.startingOutputRoot:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000",0]
++        {"root":"0x0000000000000000000000000000000000000000000000000000000000000000","l2BlockNumber":0}
+    }
+```
+
+Generated with discovered.json: 0x5794d6cdac900458e007cfc157f752ad75a4602b
+
+# Diff at Tue, 11 Jun 2024 08:53:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a747b8f93a46c87e2494c6adb06df4640d08444 block: 20025146
+- current block number: 20067517
+
+## Description
+
+Introduction of permissionless fraud proofs and permissions update to be Stage 1.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
++        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
+      implementations.0:
+-        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
++        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.version:
+-        "1.12.0"
++        "2.2.0"
+      values.DISPUTE_GAME_FACTORY_SLOT:
++        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.disputeGameFactory:
++        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
+      values.maximumGasLimit:
++        200000000
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
++        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      implementations.0:
+-        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
++        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.GUARDIAN:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      values.L2_ORACLE:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.l2Oracle:
+-        "0xdfe97868233d1aa22e815a266982f2cf17685a27"
+      values.SYSTEM_CONFIG:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      values.version:
+-        "2.5.0"
++        "3.10.0"
+      values.disputeGameFactory:
++        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9"
+      values.disputeGameFinalityDelaySeconds:
++        302400
+      values.proofMaturityDelaySeconds:
++        604800
+      values.respectedGameType:
++        0
+      values.respectedGameTypeUpdatedAt:
++        1718037779
+      derivedName:
+-        "OptimismPortal"
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      upgradeability.modules.0:
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      upgradeability.threshold:
+-        "4 of 13 (31%)"
++        "10 of 13 (77%)"
+      values.getThreshold:
+-        4
++        10
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xdfe97868233d1aa22e815a266982f2cf17685a27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x0f8EdFbDdD3c0256A80AD8C0F2560B1807873C9c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0xD326E10B8186e90F4E2adc5c13a2d0C137ee8b34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xE497B094d6DbB3D5E4CaAc9a14696D7572588d14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  414 +++
+ .../ethereum/.flat/AnchorStateRegistry/Proxy.p.sol |  199 +
+ .../ethereum/.flat/DelayedWETH/DelayedWETH.sol     |  649 ++++
+ .../ethereum/.flat/DelayedWETH/Proxy.p.sol         |  199 +
+ .../ethereum/.flat/DeputyGuardianModule.sol        |  139 +
+ .../DisputeGameFactory/DisputeGameFactory.sol      | 1549 ++++++++
+ .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  199 +
+ .../optimism/ethereum/.flat/FaultDisputeGame.sol   | 3700 +++++++++++++++++++
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol |  952 +++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |   34 +
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  678 ----
+ .../L2OutputOracle/Proxy.p.sol => /dev/null        |  210 --
+ .../optimism/ethereum/.flat/LivenessGuard.sol      |  581 +++
+ .../optimism/ethereum/.flat/LivenessModule.sol     |  257 ++
+ .../optimism/ethereum/.flat/MIPS.sol               | 1103 ++++++
+ .../OptimismPortal/OptimismPortal2.sol}            |  512 ++-
+ .../ethereum/.flat/PermissionedDisputeGame.sol     | 3815 ++++++++++++++++++++
+ .../optimism/ethereum/.flat/PreimageOracle.sol     | 1309 +++++++
+ .../SystemConfig/SystemConfig.sol                  |   48 +-
+ 19 files changed, 15451 insertions(+), 1096 deletions(-)
+```
+
+Generated with discovered.json: 0x2e96b99a18a238b80113eef0b15038b22f19a9eb
+
+# Diff at Wed, 05 Jun 2024 10:52:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@2d4052223220f6bca7a10a92f78dc445f890f114 block: 19875796
+- current block number: 20025146
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19875796 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f397bd826fe7f9bf02d8d05820501cea74e396d
 
 # Diff at Wed, 15 May 2024 13:52:02 GMT:

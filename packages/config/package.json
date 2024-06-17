@@ -20,7 +20,8 @@
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
     "tokens:verify": "sh scripts/tokens/verify.sh",
-    "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts"
+    "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
+    "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools"
   },
   "dependencies": {
     "@l2beat/backend-tools": "*",

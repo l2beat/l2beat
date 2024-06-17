@@ -43,7 +43,7 @@ const SUPPORTED_STACKS: {
   { stack: 'StarkEx', slug: 'starkex' },
   { stack: 'Starknet', slug: 'starknet' },
   { stack: 'ZK Stack', slug: 'zks' },
-  { stack: 'zkSync Lite', slug: 'zksync' },
+  { stack: 'ZKsync Lite', slug: 'zksync' },
 ]
 
 export function parseCliParameters(): Command {

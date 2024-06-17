@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x4a9b32cf15d1322020e11d829d9dab02ea8dcb85
+Generated with discovered.json: 0x0484c3510453cd2988bf235a8c8eb9b4605d1458
 
 # Diff at Wed, 22 May 2024 20:11:52 GMT:
 
@@ -121,7 +121,7 @@ Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 
 OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory are redeployed and Reader4844 is added to be compatible with EIP-4844.
 
-- OneStepProverHostIo: Compatibility with EIP-4844, most updates are KZG-related in funtion `executeReadPreImage()`; new function `modExp256()`
+- OneStepProverHostIo: Compatibility with EIP-4844, most updates are KZG-related in function `executeReadPreImage()`; new function `modExp256()`
 - Reader4844.sol: New unverified contract with the functions `getBlobBaseFee()`, `getDataHashes()` for reading blob data (hashes) (info from its interface)
 
 ### SequencerInbox

@@ -5,7 +5,6 @@ import {
   ChainId,
   PriceConfigEntry,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
@@ -21,16 +20,12 @@ export interface Config {
   readonly name: string
   readonly isReadonly: boolean
   readonly projects: Project[]
-  readonly tokens: Token[]
-  readonly logger: LoggerConfig
-  readonly logThrottler: LogThrottlerConfig | false
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
   readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly tvl: TvlConfig
-  readonly tvl2: Tvl2Config | false
+  readonly tvl: TvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -40,7 +35,6 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
-  readonly tvlCleanerEnabled: boolean
   readonly verifiers: boolean
 }
 
@@ -80,14 +74,6 @@ export interface ClockConfig {
 }
 
 export interface TvlConfig {
-  readonly enabled: boolean
-  readonly errorOnUnsyncedTvl: boolean
-  readonly coingeckoApiKey: string | undefined
-  readonly ethereum: ChainTvlConfig
-  readonly modules: ChainTvlConfig[]
-}
-
-export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
@@ -97,6 +83,7 @@ export interface Tvl2Config {
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly projectsExcludedFromApi: string[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export interface TrackedTxsConfig {
@@ -111,7 +98,7 @@ export interface TrackedTxsConfig {
     readonly l2costs:
       | {
           readonly aggregatorEnabled: boolean
-          readonly coingeckoApiKey: string
+          readonly coingeckoApiKey: string | undefined
         }
       | false
   }
@@ -148,6 +135,7 @@ export interface ChainTvlConfig {
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
       | BlockscoutChainConfig
+      | undefined
     readonly multicallConfig: MulticallConfigEntry[]
   }
 }

@@ -26,6 +26,9 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { ethernity } from './ethernity'
+import { everclear } from './everclear'
+import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -44,10 +47,10 @@ import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { lens } from './lens'
-import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
+import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
@@ -56,7 +59,9 @@ import { metis } from './metis'
 import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
+import { move } from './move'
 import { myria } from './myria'
+import { myshell } from './myshell'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -72,6 +77,7 @@ import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
+import { real } from './real'
 import { reddioex } from './reddioex'
 import { reddiozkvm } from './reddiozkvm'
 import { redstone } from './redstone'
@@ -90,6 +96,7 @@ import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
@@ -141,6 +148,9 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  ethernity,
+  everclear,
+  form,
   frame,
   fraxtal,
   fuel,
@@ -158,10 +168,10 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   lens,
-  lightlink,
   linea,
   lisk,
   loopring,
+  lumia,
   lyra,
   mantapacific,
   mantle,
@@ -170,7 +180,9 @@ export const layer2s: Layer2[] = [
   mint,
   mode,
   morph,
+  move,
   myria,
+  myshell,
   nil,
   nova,
   oev,
@@ -189,6 +201,7 @@ export const layer2s: Layer2[] = [
   reddioex,
   reddiozkvm,
   redstone,
+  real,
   reya,
   rhinofi,
   rise,
@@ -204,6 +217,7 @@ export const layer2s: Layer2[] = [
   sxt,
   taiko,
   tanx,
+  telos,
   ten,
   termstructure,
   tradable,

@@ -1,4 +1,229 @@
-Generated with discovered.json: 0xd77142c7a56b150521c7282090bffb41682f25e7
+Generated with discovered.json: 0x8c832aa2c960900463ea93e8167038c5a0b8d7bf
+
+# Diff at Wed, 12 Jun 2024 05:26:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@09246cd19afe46cf207c325923fef8f51d581735 block: 20032759
+- current block number: 20073649
+
+## Description
+
+Changes due to Superchain permissions upgrade: 
+- Security Council MS threshold raised
+- Liveness and DeputyGuardian modules added
+- Guardian (proxy)MS added
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.GUARDIAN:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      values.guardian:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      upgradeability.modules.0:
++        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      upgradeability.threshold:
+-        "4 of 13 (31%)"
++        "10 of 13 (77%)"
+      values.getThreshold:
+-        4
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zora/ethereum/.flat/DeputyGuardianModule.sol   | 139 +++
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol | 952 +++++++++++++++++++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |  34 +
+ .../zora/ethereum/.flat/LivenessGuard.sol          | 581 +++++++++++++
+ .../zora/ethereum/.flat/LivenessModule.sol         | 257 ++++++
+ 5 files changed, 1963 insertions(+)
+```
+
+Generated with discovered.json: 0x209e13e4a7a74a8fd077a54e66bb0c08c528e44b
+
+# Diff at Thu, 06 Jun 2024 12:23:14 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@5302ef2899ddfb7175df497ceaa47fba4e383655 block: 19982489
+- current block number: 20032759
+
+## Description
+
+Discovery output now includes names of templates used for contract analysis.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19982489 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
+    +++ description: None
+      template:
++        "opstack/OptimismPortal"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3e2Ea9B92B7E48A52296fD261dc26fd995284631) {
+    +++ description: None
+      template:
++        "opstack/L1StandardBridge"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3) {
+    +++ description: None
+      template:
++        "opstack/L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      template:
++        "opstack/SuperchainConfig"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x9E6204F750cD866b299594e2aC9eA824E2e5f95c) {
+    +++ description: None
+      template:
++        "opstack/L2OutputOracle"
+    }
+```
+
+```diff
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
+    +++ description: None
+      template:
++        "opstack/SystemConfig"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf) {
+    +++ description: None
+      template:
++        "opstack/OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      template:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xdC40a14d9abd6F410226f1E6de71aE03441ca506) {
+    +++ description: None
+      template:
++        "opstack/L1CrossDomainMessenger"
+    }
+```
+
+Generated with discovered.json: 0x971b070707f5c7c01728fdc8f02fb4e6903fec67
 
 # Diff at Wed, 22 May 2024 20:13:47 GMT:
 

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xe25898b95921db6de85a8f44ffa55553d513a445
+
+# Diff at Tue, 04 Jun 2024 04:55:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@706706295a49487100a144276621ec14caf86806 block: 19873897
+- current block number: 20016207
+
+## Description
+
+A timelock transaction is queued by the SwellMultisig to support the Lyra-associated token weETHC for staking in the swell prelaunch escrow.
+
+## Watched changes
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
++++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
++++ severity: MEDIUM
+      values.nonce:
+-        109
++        110
+    }
+```
+
 Generated with discovered.json: 0x55b7dacb1f6b507abd00e02b14fa8d1fcf0d6aa8
 
 # Diff at Wed, 15 May 2024 07:31:04 GMT:

@@ -36,6 +36,9 @@
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
   "overrides": {
+    "Connext Fee Multisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "ConnextBridge": {
       "fields": {
         "SEQUENCERS": {
@@ -57,6 +60,7 @@
           }
         },
         "ROUTERS": {
+          "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination.",
           "handler": {
             "type": "arrayFromTwoEvents",
             "addEvent": "event RouterAdded(address indexed router, address caller)",
@@ -70,11 +74,8 @@
           "severity": "LOW"
         }
       },
-      "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
-    },
-    "Connext Fee Multisig": {
-      "ignoreMethods": ["nonce"]
     },
     "MainnetSpokeConnector": {
       "ignoreMethods": ["snapshotRoots"],

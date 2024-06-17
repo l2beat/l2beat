@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19475340,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
-  "version": 3,
+  "version": 5,
   "contracts": [
     {
       "name": "",
@@ -20,6 +20,7 @@
     {
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
+      "ignoreInWatchMode": ["depositCount", "transactionCount"],
       "upgradeability": {
         "type": "call implementation proxy",
         "implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
@@ -153,6 +154,7 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000000000",
     "0x1c0Cd56F1c3E2cF13B9B44dBE5529104bade543E",
     "0x34EBf4f74a881eB63F666E63ce1Ff2F287CA5a8b",
     "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba",

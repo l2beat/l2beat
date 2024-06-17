@@ -1,9 +1,9 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 19888830,
-  "configHash": "0x28c81e171f3ba4b900bdc48d52f5c8020f7497b87049c53d47dafc194fa13284",
-  "version": 4,
+  "blockNumber": 20032828,
+  "configHash": "0x58948ec9c78e306432f92054013a1d25b458c2f09d79881ec191a9031916f302",
+  "version": 5,
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -82,6 +82,7 @@
     {
       "name": "OptimismPortal",
       "address": "0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99",
+      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xACfD93B4887cef4F05cF3440d150D2cE97339142",
@@ -95,7 +96,11 @@
         "L2_ORACLE": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Oracle": "0xa669A743b065828682eE16109273F5CFeF5e676d",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 500000, 19888749],
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 21000,
+          "prevBlockNum": 20032435
+        },
         "paused": false,
         "superchainConfig": "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
         "SYSTEM_CONFIG": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
@@ -107,6 +112,7 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9",
+      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x19b5804B88F10262A55ac731f28A3BbC4209853a",
@@ -117,7 +123,7 @@
       "sinceTimestamp": 1713430427,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619968",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619998",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -174,6 +180,7 @@
     {
       "name": "SystemConfig",
       "address": "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
+      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x726C6ac8A53061e56AfB2c890545348ba6f0DF0E",
@@ -205,15 +212,15 @@
         "optimismPortal": "0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99",
         "overhead": 180,
         "owner": "0xc76C563185d01284AdbC9cF5bb909162dD2F15e7",
-        "resourceConfig": [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          "340282366920938463463374607431768211455"
-        ],
-        "scalar": 20000,
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
+        "scalar": 40000,
         "sequencerInbox": "0xfF00000000000000000000000000000000001d88",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19681300,
@@ -240,6 +247,13 @@
     {
       "name": "L2OutputOracle",
       "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
+      "template": "opstack/L2OutputOracle",
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x93E1c0D8ef27930130fb809CE18ca681A8C32F85",
@@ -255,10 +269,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1233000,
-        "latestOutputIndex": 684,
-        "nextBlockNumber": 1234800,
-        "nextOutputIndex": 685,
+        "latestBlockNumber": 2100600,
+        "latestOutputIndex": 1166,
+        "nextBlockNumber": 2102400,
+        "nextOutputIndex": 1167,
         "proposer": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "PROPOSER": "0xF2987f0A626c8D29dFB2E0A21144ca3026d6F1E1",
         "startingBlockNumber": 0,
@@ -272,6 +286,8 @@
     {
       "name": "ProxyAdminOwner",
       "address": "0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398",
+      "template": "GnosisSafe",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",

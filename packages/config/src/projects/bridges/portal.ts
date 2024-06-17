@@ -14,15 +14,19 @@ export const portal: Bridge = {
     name: 'Portal (Wormhole)',
     slug: 'portal',
     links: {
-      websites: ['https://wormhole.com/', 'https://linktr.ee/wormholecrypto'],
-      documentation: ['https://docs.wormhole.com/'],
-      explorers: ['https://wormhole.com/explorer/'],
+      websites: ['https://wormhole.com/'],
+      documentation: [
+        'https://portalbridge.com/docs/',
+        'https://docs.wormhole.com/wormhole',
+      ],
+      explorers: ['https://wormholescan.io/'],
       apps: ['https://portalbridge.com'],
       repositories: ['https://github.com/wormhole-foundation/wormhole'],
       socialMedia: [
         'https://discord.gg/wormholecrypto',
         'https://t.me/wormholecrypto',
         'https://twitter.com/wormholecrypto',
+        'https://youtube.com/@wormholecrypto',
       ],
     },
     description:
@@ -92,14 +96,24 @@ export const portal: Bridge = {
       name: 'Principle of operation',
       description:
         'This is a Token Bridge that locks tokens in the escrow contracts on Ethereum and mints tokens on the destination network. What differentiates this solution is the cross-chain message passing via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes and then verified. After verification, this message is submitted to the destination chain for processing.',
-      references: [],
+      references: [
+        {
+          text: 'Docs: Wormhole architecture',
+          href: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
+        },
+      ],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
         'Validation process takes place in external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
-      references: [],
+      references: [
+        {
+          text: 'WormholeCore contract: function verifyVM()',
+          href: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
+        },
+      ],
       risks: [
         {
           category: 'Users can be censored if',
@@ -122,7 +136,12 @@ export const portal: Bridge = {
       name: 'Destination tokens',
       description:
         'Type of the token received on the destination chain depends on the token, if it is native to this chain user will receive canonical token. If the bridged token is not native to the destination chain then user will end up with wrapped version, the contract is called BridgeToken and is upgradable.',
-      references: [],
+      references: [
+        {
+          text: 'BridgeToken contract implementation',
+          href: 'https://etherscan.io/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6#code',
+        },
+      ],
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -134,20 +153,27 @@ export const portal: Bridge = {
   },
 
   contracts: {
-    isIncomplete: true,
     addresses: [
       discovery.getContractDetails(
-        'Wormhole',
+        'WormholeCore',
         'Governance contract storing current Guardian set and provides a facility to verify a cross-chain message by verifying Guardians signatures. \
         Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
       ),
       discovery.getContractDetails(
         'TokenBridge',
-        'Main bridge contract and an escrow for ETH and ERC20 tokens using Wormhole AMB to bridge tokens to different chains. Can be upgraded by Guardians.',
+        'Main bridge contract on Ethereum and an escrow for ETH and ERC20 tokens that were bridged to other chains. Can be upgraded by Guardians.',
       ),
       discovery.getContractDetails(
         'TokenImplementation',
-        'A wormhole IOU token.',
+        'This is the template for BridgedToken implementations minted by Portal on Ethereum.',
+      ),
+      discovery.getContractDetails(
+        'NFTBridge',
+        'NFT bridge contract and an escrow for NFTs that were bridged to other chains. Can be upgraded by Guardians.',
+      ),
+      discovery.getContractDetails(
+        'NFTImplementation',
+        'This is the template for bridged NFTs minted by Portal on Ethereum.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
@@ -157,8 +183,12 @@ export const portal: Bridge = {
     {
       name: 'Guardian Network',
       description:
-        'Off-chain actors signing messages (VAA) containing transfer information or governance actions such as upgrade, which are decoded on chain with signatures check.',
-      accounts: discovery.getPermissionedAccounts('Wormhole', 'guardianSet', 0),
+        'Off-chain actors signing messages (VAA) containing transfer information or governance actions such as upgrades, which are decoded on chain with signature checks.',
+      accounts: discovery.getPermissionedAccounts(
+        'WormholeCore',
+        'guardianSet',
+        0,
+      ),
     },
   ],
   milestones: [

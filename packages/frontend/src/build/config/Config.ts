@@ -37,12 +37,10 @@ export interface ConfigFeatures {
   gitcoinOption: boolean
   hiringBadge: boolean
   buildAllProjectPages: boolean
-  governancePage: boolean
   costsPage: boolean
   zkCatalog: boolean
-  tvl2: boolean
+  tvl: boolean
   layer3sTvl: boolean
-  glossary: boolean
 }
 
 export interface ConfigBackend {

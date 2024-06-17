@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x8f9ce594b2465cace083d6d2b19b27dcc05313bf
+Generated with discovered.json: 0xc53e5bd7c8686e99d3bb3ccd609aaa48ad69e9bc
 
 # Diff at Wed, 22 May 2024 14:05:14 GMT:
 
@@ -53,7 +53,7 @@ Generated with discovered.json: 0x6189cb1db1c4577bb39dda1ac4b6ae7b87d6dcbe
 
 ## Description
 
-This update registers the `bEIGEN-Strategy` in the `StrategyManager` and connects it to the the bEIGEN and EIGEN tokens.
+This update registers the `bEIGEN-Strategy` in the `StrategyManager` and connects it to the bEIGEN and EIGEN tokens.
 [EIGEN-Paper](https://github.com/Layr-Labs/whitepaper/blob/master/EIGEN_Token_Whitepaper.pdf)
 
 ### EIGEN and bEIGEN tokens

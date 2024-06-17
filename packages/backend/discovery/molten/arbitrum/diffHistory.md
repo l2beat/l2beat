@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x072b8b9c07171a111281e41b75a8fedecf099538
+
+# Diff at Tue, 11 Jun 2024 13:36:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b9a39f700e84af1cffa010ce0e20e64b23a4c64 block: 216517911
+- current block number: 220744194
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 216517911 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      values.maxTimeVariation:
+-        [17280,48,86400,3600]
++        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+    }
+```
+
+Generated with discovered.json: 0x24600adb45f0c6eae937f6012d3edc349679be18
+
+# Diff at Thu, 30 May 2024 07:15:16 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8ee20b59ba673583fee7d27bf530e9908ec4d483 block: 214575697
+- current block number: 216517911
+
+## Description
+
+EOA removed from executor, Caldera Multisig is now the only upgrade executor.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 214575697 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.nonce:
+-        1
+    }
+```
+
 Generated with discovered.json: 0xaeff0ff09760399fcb811931e82568d3e968fb35
 
 # Diff at Fri, 24 May 2024 14:47:05 GMT:

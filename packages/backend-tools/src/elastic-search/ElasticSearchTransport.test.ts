@@ -63,11 +63,9 @@ function createClientMock(indextExist = true) {
   return mockObject<ElasticSearchClient>({
     indexExist: mockFn(async (_: string): Promise<boolean> => indextExist),
     indexCreate: mockFn(async (_: string): Promise<void> => {}),
-    bulk: mockFn().resolvesTo(
-      mockObject({
-        isSuccess: true,
-      }),
-    ),
+    bulk: mockFn().resolvesTo({
+      isSuccess: true,
+    }),
   })
 }
 

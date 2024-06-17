@@ -9,6 +9,7 @@ import { isEqual } from 'lodash'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -17,7 +18,8 @@ import {
   SourceCodeService,
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
-import { getRelatives } from './getRelatives'
+import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -35,14 +37,25 @@ export interface AnalyzedContract {
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
-  matchingTemplates: Record<string, number>
-  extendedTemplate?: string
+  extendedTemplate?: ExtendedTemplate
+  ignoreInWatchMode?: string[]
+  relatives: AddressesWithTemplates
+  selfMeta?: ContractMeta
+  targetsMeta?: Record<string, ContractMeta>
+  combinedMeta?: ContractMeta
+}
+
+export interface ExtendedTemplate {
+  template: string
+  reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
 }
 
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
 }
+
+export type AddressesWithTemplates = Record<string, Set<string>>
 
 export class AddressAnalyzer {
   constructor(
@@ -57,16 +70,41 @@ export class AddressAnalyzer {
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
-  ): Promise<{ analysis: Analysis; relatives: EthereumAddress[] }> {
+    suggestedTemplates?: Set<string>,
+  ): Promise<Analysis> {
     const code = await this.provider.getCode(address, blockNumber)
     if (code.length === 0) {
       logger.logEoa()
-      return { analysis: { type: 'EOA', address }, relatives: [] }
+      return { type: 'EOA', address }
     }
 
     const deployment = await this.provider.getDeploymentInfo(address)
+
+    const templateErrors: Record<string, string> = {}
+    let extendedTemplate: ExtendedTemplate | undefined = undefined
+
+    if (overrides?.extends !== undefined) {
+      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+    } else if (suggestedTemplates !== undefined) {
+      const template = Array.from(suggestedTemplates)[0]
+      if (template !== undefined) {
+        // extend template even on error to make sure pruning works
+        overrides = this.templateService.applyTemplateOnContractOverrides(
+          overrides ?? { address },
+          template,
+        )
+        extendedTemplate = { template, reason: 'byReferrer' }
+      }
+      if (suggestedTemplates.size > 1) {
+        templateErrors['@template'] =
+          `Multiple templates suggested (${Array.from(suggestedTemplates).join(
+            ', ',
+          )})`
+      }
+    }
 
     const proxy = await this.proxyDetector.detectProxy(
       address,
@@ -81,50 +119,82 @@ export class AddressAnalyzer {
     )
     logger.logName(sources.name)
 
-    // Match templates only if there are no explicitly set
-    const matchingTemplates =
-      overrides?.extends === undefined
-        ? this.templateService.findMatchingTemplates(sources)
-        : {}
+    // Match templates by shape only if there are no explicitly set
+    if (
+      overrides?.extends === undefined &&
+      (suggestedTemplates === undefined || suggestedTemplates.size === 0)
+    ) {
+      const matchingTemplatesByShape =
+        this.templateService.findMatchingTemplates(sources)
+      const matchingTemplates = Object.keys(matchingTemplatesByShape)
+      const template = matchingTemplates[0]
+      if (template !== undefined) {
+        // extend template even on error to make sure pruning works
+        overrides = this.templateService.applyTemplateOnContractOverrides(
+          overrides ?? { address },
+          template,
+        )
+        extendedTemplate = { template, reason: 'byShapeMatch' }
+      }
+      if (matchingTemplates.length > 1) {
+        templateErrors['@template'] =
+          `Multiple shapes matched (${matchingTemplates.join(', ')})`
+      }
+    }
+
+    const templateLog =
+      extendedTemplate !== undefined
+        ? `"${extendedTemplate?.template}" (${extendedTemplate?.reason})`
+        : 'none'
+
+    logger.log(`  Template: ${templateLog}`)
 
     const { results, values, errors } = await this.handlerExecutor.execute(
       address,
       sources.abi,
       overrides,
+      types,
       blockNumber,
       logger,
     )
+    const relatives = getRelativesWithSuggestedTemplates(
+      results,
+      overrides?.ignoreRelatives,
+      proxy?.relatives,
+      proxy?.implementations,
+      overrides?.fields,
+    )
+    const targetsMeta =
+      overrides?.fields !== undefined
+        ? getTargetsMeta(address, results, overrides.fields)
+        : undefined
 
     return {
-      analysis: {
-        type: 'Contract',
-        name: overrides?.name ?? sources.name,
-        derivedName: overrides?.name !== undefined ? sources.name : undefined,
-        isVerified: sources.isVerified,
-        address,
-        deploymentTimestamp: deployment?.timestamp,
-        deploymentBlockNumber: deployment?.blockNumber,
-        upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
-        implementations: proxy?.implementations ?? [],
-        values: values ?? {},
-        errors: errors ?? {},
-        abis: sources.abis,
-        sourceBundles: sources.sources,
-        matchingTemplates,
-        extendedTemplate: overrides?.extends,
-      },
-      relatives: getRelatives(
-        results,
-        overrides?.ignoreRelatives,
-        proxy?.relatives,
-        proxy?.implementations,
-      ),
+      type: 'Contract',
+      name: overrides?.name ?? sources.name,
+      derivedName: overrides?.name !== undefined ? sources.name : undefined,
+      isVerified: sources.isVerified,
+      address,
+      deploymentTimestamp: deployment?.timestamp,
+      deploymentBlockNumber: deployment?.blockNumber,
+      upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+      implementations: proxy?.implementations ?? [],
+      values: values ?? {},
+      errors: { ...templateErrors, ...(errors ?? {}) },
+      abis: sources.abis,
+      sourceBundles: sources.sources,
+      extendedTemplate,
+      ignoreInWatchMode: overrides?.ignoreInWatchMode,
+      relatives,
+      selfMeta: getSelfMeta(overrides),
+      targetsMeta,
     }
   }
 
   async hasContractChanged(
     contract: ContractParameters,
     overrides: ContractOverrides,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
@@ -141,13 +211,14 @@ export class AddressAnalyzer {
       abis,
       contract.address,
       contract.implementations,
-      overrides.ignoreInWatchMode,
+      contract.ignoreInWatchMode,
     )
 
     const { values: newValues, errors } = await this.handlerExecutor.execute(
       contract.address,
       abi,
       overrides,
+      types,
       blockNumber,
       this.logger,
     )
@@ -159,7 +230,7 @@ export class AddressAnalyzer {
 
     const prevRelevantValues = getRelevantValues(
       contract.values ?? {},
-      overrides.ignoreInWatchMode ?? [],
+      contract.ignoreInWatchMode ?? [],
     )
 
     if (!isEqual(newValues, prevRelevantValues)) {

@@ -74,11 +74,14 @@ export const paradex: Layer2 = {
 
     links: {
       websites: ['https://paradex.trade/'],
-      apps: ['https://app.paradex.trade'],
+      apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
       explorers: [],
       repositories: ['https://github.com/tradeparadex'],
-      socialMedia: ['https://twitter.com/tradeparadex'],
+      socialMedia: [
+        'https://twitter.com/tradeparadex',
+        'https://discord.com/invite/paradex',
+      ],
     },
     liveness: {
       explanation:

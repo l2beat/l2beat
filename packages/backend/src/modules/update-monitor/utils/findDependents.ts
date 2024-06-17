@@ -1,13 +1,13 @@
 import { ConfigReader } from '@l2beat/discovery'
 
-export async function findDependents(
+export function findDependents(
   name: string,
   chain: string,
   configReader: ConfigReader,
 ) {
-  if (!name.startsWith('l2beat')) return []
+  if (!name.startsWith('shared-')) return []
 
-  const configs = await configReader.readAllConfigsForChain(chain)
+  const configs = configReader.readAllConfigsForChain(chain)
   const dependents: string[] = []
   for (const config of configs) {
     if (config.sharedModules.includes(name)) {

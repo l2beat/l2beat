@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xdc9dbd8e55151ee138f020aee088f41db410d2e1
+
+# Diff at Tue, 11 Jun 2024 13:11:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b482f34b787e8546115b599d38d66643fc47a24 block: 216537364
+- current block number: 220737963
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 216537364 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x24B68936C13A414cd91437aE7AA730321B9ff159) {
+    +++ description: State batches / commitments get posted here.
++++ description: Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed.
+      values.maxTimeVariation:
+-        [17280,48,86400,3600]
++        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+    }
+```
+
+Generated with discovered.json: 0xb8105dfaa96d42cb3168bb8035f98564cbe6a158
+
+# Diff at Thu, 30 May 2024 08:36:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8465affce30f3ceba1fcd6e8fe7a47fd51c7c62f block: 215641876
+- current block number: 216537364
+
+## Description
+
+The Admin EOA is removed, Caldera MS is the only upgrade executor.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x82d980E3f30E7c6EbD523AEdff2c0FaD3751b276) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+    }
+```
+
 Generated with discovered.json: 0x4d6ff733355fea27e32d71c819ef65601a504b1b
 
 # Diff at Mon, 27 May 2024 17:59:42 GMT:

@@ -85,18 +85,24 @@
           }
         },
         "rollupsData": {
-          "description": "Maps rollup contracts and their verifier. Any change either should be picked up also by the specific rollup config, unless it's a new rollup.",
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]",
           "severity": "MEDIUM",
           "handler": {
             "type": "array",
             "method": "rollupIDToRollupData",
             "startIndex": 1,
-            "pickFields": ["rollupContract", "verifier"],
+            "pickFields": [
+              "rollupContract",
+              "chainID",
+              "verifier",
+              "rollupTypeID"
+            ],
             "length": "{{ rollupCount }}",
             "ignoreRelative": true
           }
         },
         "rollupTypes": {
+          "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock",
           "handler": {
             "type": "array",
             "method": "rollupTypeMap",
@@ -133,9 +139,6 @@
         }
       }
     },
-    "SecurityCouncil": {
-      "ignoreMethods": ["nonce"]
-    },
     "GlobalExitRootV2": {
       "ignoreMethods": [
         "getLastGlobalExitRoot",
@@ -154,9 +157,6 @@
       ],
       "ignoreInWatchMode": ["getRoot"],
       "fields": {}
-    },
-    "RollupManagerAdminMultisig": {
-      "ignoreMethods": ["nonce"]
     },
     "AstarValidiumDAC": {
       "ignoreDiscovery": true // already fetched in Astar

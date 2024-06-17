@@ -1,0 +1,161 @@
+{
+  "name": "mxc",
+  "chain": "arbitrum",
+  "blockNumber": 218960264,
+  "configHash": "0xb6770d92de735e844697c0544c0deb9d7384fe272641b1b974a1ce3de7168fc9",
+  "version": 4,
+  "contracts": [
+    {
+      "name": "MxcL1Contract?",
+      "address": "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xEe4Cd2139B65b5C38A438B63BdcfeCBF28D88e25",
+        "admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      },
+      "implementations": ["0xEe4Cd2139B65b5C38A438B63BdcfeCBF28D88e25"],
+      "sinceTimestamp": 1689165595,
+      "derivedName": ""
+    },
+    {
+      "name": "AddressManager?",
+      "address": "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x07FB797c4B7a471CBFB350AC2044031e13B69897",
+        "admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      },
+      "implementations": ["0x07FB797c4B7a471CBFB350AC2044031e13B69897"],
+      "sinceTimestamp": 1689143056,
+      "derivedName": ""
+    },
+    {
+      "name": "Bridge?",
+      "address": "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd1e769572A2D2Fdc3B61622A38cD1A359881e8cC",
+        "admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      },
+      "implementations": ["0xd1e769572A2D2Fdc3B61622A38cD1A359881e8cC"],
+      "sinceTimestamp": 1689143141,
+      "derivedName": ""
+    },
+    {
+      "name": "SignalService",
+      "address": "0xB612eb073ebc8638b8E445D7F15f02400e1d99d8",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x26b946C69F411AE27692BbCD05A398BDDB07F7AA",
+        "admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      },
+      "implementations": ["0x26b946C69F411AE27692BbCD05A398BDDB07F7AA"],
+      "sinceTimestamp": 1689143186,
+      "values": {
+        "addressManager": "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74",
+        "owner": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
+      },
+      "derivedName": "ProxiedSignalService"
+    },
+    {
+      "name": "TokenVault?",
+      "address": "0xC31a6C0C1087BBB6E6660F27014aD1321591c641",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x83B6c66865C7DdfB9e81Aca8d14a9b31b02EF78C",
+        "admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      },
+      "implementations": ["0x83B6c66865C7DdfB9e81Aca8d14a9b31b02EF78C"],
+      "sinceTimestamp": 1689143164,
+      "derivedName": ""
+    }
+  ],
+  "eoas": [
+    "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
+    "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
+  ],
+  "abis": {
+    "0x26b946C69F411AE27692BbCD05A398BDDB07F7AA": [
+      "error B_NULL_APP_ADDR()",
+      "error B_WRONG_CHAIN_ID()",
+      "error B_ZERO_SIGNAL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_ADDR()",
+      "error RESOLVER_ZERO_ADDR(uint256 chainId, bytes32 name)",
+      "event AddressManagerChanged(address addressManager)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function getSignalSlot(address app, bytes32 signal) pure returns (bytes32 signalSlot)",
+      "function init(address _addressManager)",
+      "function isSignalReceived(uint256 srcChainId, address app, bytes32 signal, bytes proof) view returns (bool)",
+      "function isSignalSent(address app, bytes32 signal) view returns (bool)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resolve(uint256 chainId, bytes32 name, bool allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 name, bool allowZeroAddress) view returns (address)",
+      "function sendSignal(bytes32 signal) returns (bytes32 storageSlot)",
+      "function setAddressManager(address newAddressManager)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xB612eb073ebc8638b8E445D7F15f02400e1d99d8": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xC31a6C0C1087BBB6E6660F27014aD1321591c641": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ]
+  }
+}

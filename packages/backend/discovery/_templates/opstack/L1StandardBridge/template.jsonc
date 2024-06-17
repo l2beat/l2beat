@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1StandardBridge",
+  "description": "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.",
+  "fields": {
+    "superchainConfig": {
+      "target": {
+        "template": "opstack/SuperchainConfig",
+        "category": "Upgrades&Governance"
+      }
+    },
+    "messenger": {
+      "target": {
+        "template": "opstack/L1CrossDomainMessenger",
+        "category": "Core"
+      }
+    }
+  }
+}

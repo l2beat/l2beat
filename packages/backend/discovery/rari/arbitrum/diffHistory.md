@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x636c1dde4bc019114641111b61de2962c72c6ae8
+
+# Diff at Tue, 11 Jun 2024 12:32:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4b482f34b787e8546115b599d38d66643fc47a24 block: 216538110
+- current block number: 220728802
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 216538110 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: None
+      values.maxTimeVariation:
+-        [5760,48,86400,3600]
++        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+    }
+```
+
+Generated with discovered.json: 0xf4333c87d49f3dd17aadb8228ce984c5c5117ffd
+
+# Diff at Thu, 30 May 2024 08:40:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8465affce30f3ceba1fcd6e8fe7a47fd51c7c62f block: 213233578
+- current block number: 216538110
+
+## Description
+
+The Admin EOA is removed, Caldera MS is the only upgrade executor.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+    }
+```
+
 Generated with discovered.json: 0xf6c4a97980541fc70a3ad7b3ee2b52fa9338e04f
 
 # Diff at Mon, 20 May 2024 15:20:30 GMT:
