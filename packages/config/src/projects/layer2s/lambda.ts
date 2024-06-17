@@ -17,7 +17,7 @@ export const lambda: Layer2 = opStackL2({
     name: 'Lambda Chain',
     slug: 'lambda',
     description:
-      'Lambda Chain is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
+      'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
     purposes: ['Universal', 'Storage'],
     links: {
       websites: ['https://lambda.im/'],
