@@ -47,6 +47,7 @@ export const real: Layer2 = orbitStackL2({
       },
     ],
     minTimestampForTvl: new UnixTime(1710580715),
+    coingeckoPlatform: 're-al'
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),

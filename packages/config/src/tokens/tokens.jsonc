@@ -2590,24 +2590,6 @@
       "coingeckoId": "wrapped-real-ether"
     },
     {
-      "symbol": "RWA",
-      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
-      "type": "NMV",
-      "formula": "totalSupply"
-    },
-    {
-      "symbol": "UKRE",
-      "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
-      "type": "NMV",
-      "formula": "totalSupply"
-    },
-    {
-      "symbol": "CVR",
-      "address": "0xB08F026f8a096E6d92eb5BcbE102c273A7a2d51C",
-      "type": "NMV",
-      "formula": "totalSupply"
-    },
-    {
       "symbol": "MORE",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
       "type": "NMV",

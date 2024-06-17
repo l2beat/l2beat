@@ -6785,6 +6785,90 @@
       }
     },
     {
+      "id": "real:arcusd-arcusd",
+      "name": "arcUSD",
+      "coingeckoId": "arcana-2",
+      "address": "0xAEC9e50e3397f9ddC635C6c429C8C7eca418a143",
+      "symbol": "arcUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1715634151,
+      "coingeckoListingTimestamp": 1717632000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      }
+    },
+    {
+      "id": "real:more-more",
+      "name": "MORE",
+      "coingeckoId": "stack-2",
+      "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
+      "symbol": "MORE",
+      "decimals": 18,
+      "deploymentTimestamp": 1715905323,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "id": "real:pearl-pearl",
+      "name": "Pearl",
+      "coingeckoId": "pearl",
+      "address": "0xCE1581d7b4bA40176f0e219b2CaC30088Ad50C7A",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "deploymentTimestamp": 1715394373,
+      "coingeckoListingTimestamp": 1687478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "id": "real:ustb-us-t-bill",
+      "name": "US T-Bill",
+      "coingeckoId": "real-us-t-bill",
+      "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
+      "symbol": "USTB",
+      "decimals": 18,
+      "deploymentTimestamp": 1713200024,
+      "coingeckoListingTimestamp": 1717459200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
+      "chainId": 111188,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      }
+    },
+    {
+      "id": "real:wreeth-wrapped-real-ether",
+      "name": "Wrapped Real Ether",
+      "coingeckoId": "wrapped-real-ether",
+      "address": "0x90c6E93849E06EC7478ba24522329d14A5954Df4",
+      "symbol": "WREETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715364225,
+      "coingeckoListingTimestamp": 1717545600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38176/large/wreeth.png?1716781182",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero"
+      }
+    },
+    {
       "id": "scroll:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
