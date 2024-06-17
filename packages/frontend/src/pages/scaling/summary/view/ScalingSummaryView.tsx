@@ -58,7 +58,7 @@ export function ScalingSummaryView({
         items={[
           {
             id: 'active',
-            name: 'Active projects',
+            name: 'Layer 2 projects',
             shortName: 'Active',
             content: (
               <>

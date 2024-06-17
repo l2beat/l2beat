@@ -2605,8 +2605,8 @@ type Story = StoryObj<typeof ScalingSummaryView>
 export const Active: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const activeTab = canvas.getByText('Active projects')
-    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    const activeTab = canvas.getByText('Layer 2 projects')
+    await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })
     setTimeout(() => activeTab.blur(), 1000)
   },
 }
@@ -2614,7 +2614,7 @@ export const Active: Story = {
 export const ActiveWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })
     await userEvent.click(canvas.getByText('Rollups only'))
   },
 }

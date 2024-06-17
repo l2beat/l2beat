@@ -33,7 +33,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
         items={[
           {
             id: 'active',
-            name: 'Active projects',
+            name: 'Layer 2 projects',
             shortName: 'Active',
             content: (
               <TableView
