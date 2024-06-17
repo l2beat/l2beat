@@ -98,7 +98,7 @@ export class ChartRenderer {
 
   private renderData<T>(params: RenderParams<T>) {
     const renderPaths = this.getRenderPaths(params)
-    console.log('renderPaths', renderPaths)
+
     for (const { style, paths } of renderPaths) {
       if (style.fill) {
         for (const path of paths) {
@@ -110,7 +110,9 @@ export class ChartRenderer {
           this.ctx.fill(fillPath)
         }
       }
+    }
 
+    for (const { style, paths } of renderPaths) {
       if (style.line) {
         for (const path of paths) {
           this.ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
