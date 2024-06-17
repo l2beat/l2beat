@@ -16,15 +16,13 @@ export const lambda: Layer2 = opStackL2({
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
       'Lambda Chain is an Optimistic Rollup that has been developed on the Ethereum network, utilizing OP Stack technology.',
-    purposes: ['Universal', 'NFT'],
+    purposes: ['Universal', 'Storage'],
     links: {
       websites: ['https://lambda.im/'],
       apps: ['https://portal.lambda.im/bridge/'],
-      documentation: ['https://docs.lambda.im/', 'https://stack.optimism.io/'],
+      documentation: ['https://docs.lambda.im/', 'https://docs.optimism.io/'],
       explorers: ['https://scan.lambda.im/'],
       repositories: ['https://github.com/LambdaIM'],
       socialMedia: [
@@ -39,7 +37,7 @@ export const lambda: Layer2 = opStackL2({
   rpcUrl: 'https://nrpc.lambda.im',
   finality: {
     type: 'OPStack-blob',
-    minTimestamp: new UnixTime(1710375515),
+    minTimestamp: new UnixTime(1713363515),
     genesisTimestamp: new UnixTime(1713345623),
     l2BlockTimeSeconds: 2,
     lag: 0,
@@ -56,7 +54,7 @@ export const lambda: Layer2 = opStackL2({
     },
   ],
   chainConfig: {
-    name: 'Lambda Chain',
+    name: 'lambda',
     chainId: 56026,
     explorerUrl: 'https://scan.lambda.im',
     explorerApi: {
@@ -64,15 +62,15 @@ export const lambda: Layer2 = opStackL2({
       type: 'blockscout',
     },
     blockscoutV2ApiUrl: 'https://scan.lambda.im/api/v2',
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-17T17:20:23Z')),
+    minTimestampForTvl: new UnixTime(1713345623),
     multicallContracts: [
-      {
-        address: EthereumAddress('0xCeA9c77D5c8FF7aa13D94E8ED6b763eD51A55487'),
-        batchSize: 150,
-        sinceBlock: 1423879,
-        version: '3',
-      },
+      // fails the tests since the address is not the usual one
+      // {
+      //   address: EthereumAddress('0xCeA9c77D5c8FF7aa13D94E8ED6b763eD51A55487'),
+      //   batchSize: 150,
+      //   sinceBlock: 1423879,
+      //   version: '3',
+      // },
     ],
   },
-  usesBlobs: true,
 })

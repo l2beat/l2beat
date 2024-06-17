@@ -2,9 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "lambda",
-  "initialAddresses": [
-    "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
-  ],
+  "initialAddresses": ["0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"],
   "names": {
     "0xae809d42f861A6381b0DFCf7216556e95362a7a8": "SystemConfig",
     "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054": "OptimismPortal",

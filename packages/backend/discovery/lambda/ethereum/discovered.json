@@ -1,9 +1,9 @@
 {
   "name": "lambda",
   "chain": "ethereum",
-  "blockNumber": 20111266,
+  "blockNumber": 20111587,
   "configHash": "0x770aaffe5e9556bdf46f44dd737bff5966142ba045f29d2f86665aae9e730695",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -63,6 +63,9 @@
       "name": "L2OutputOracle",
       "address": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
       "template": "opstack/L2OutputOracle",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -129,6 +132,9 @@
       "name": "OptimismPortal",
       "address": "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
       "template": "opstack/OptimismPortal",
+      "descriptions": [
+        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+      ],
       "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -160,6 +166,9 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
       "template": "opstack/L1CrossDomainMessenger",
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
       "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
@@ -213,6 +222,9 @@
       "name": "SystemConfig",
       "address": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
       "template": "opstack/SystemConfig",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
