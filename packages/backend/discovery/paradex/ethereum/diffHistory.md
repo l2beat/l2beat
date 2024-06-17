@@ -8,7 +8,7 @@ Generated with discovered.json: 0x8c4f8592e3c524868dab24fc7a26f102e312e8f1
 
 ## Description
 
-`0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c` is given the roles GOVERNANCE_ADMIN (can give governance roles) and SECURITY_ADMIN (can activate withdrawal limit) on the paradex USDC bridge.
+The proxyGovernance is given the roles GOVERNANCE_ADMIN (can give governance roles) and SECURITY_ADMIN (can activate withdrawal limit) on the paradex USDC bridge. This is in line with the config before the implementation upgrade and already reflected on the project page.
 
 ## Watched changes
 
