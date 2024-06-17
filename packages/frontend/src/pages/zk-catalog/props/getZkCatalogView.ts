@@ -1,6 +1,6 @@
 import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { getProofVerification } from '../../../utils/zk-catalog/getProofVerification'
-import { trustedSetup } from '../../../utils/zk-catalog/trustedSetup'
+import { getTrustedSetup } from '../../../utils/zk-catalog/getTrustedSetup'
 import { Project } from '../../../utils/zk-catalog/types'
 import { ZkCatalogViewProps } from '../view/ZkCatalogView'
 
@@ -20,7 +20,7 @@ export function getZkCatalogView(
       return {
         name: project.display.name,
         slug: project.display.slug,
-        trustedSetup: trustedSetup(proofVerification.verifiers),
+        trustedSetup: getTrustedSetup(proofVerification.verifiers),
         ...proofVerification,
       }
     }),
