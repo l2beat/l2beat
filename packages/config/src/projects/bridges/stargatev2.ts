@@ -71,7 +71,7 @@ export const stargatev2: Bridge = {
     validatedBy: {
       value: 'Third Party',
       description:
-        'The LayerZero message protocol is used: If all preconfigured verifiers agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
+        'The LayerZero message protocol is used. If all preconfigured verifiers agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
       sentiment: 'bad',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
