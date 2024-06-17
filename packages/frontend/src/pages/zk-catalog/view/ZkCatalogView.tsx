@@ -75,7 +75,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
               tooltip="Shows if a trusted setup is used anywhere in the proving stack."
               className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
             >
-              {item.hasTrustedSetup}
+              {item.trustedSetup}
             </DetailsItem>
             <DetailsLink
               slug={item.slug}

@@ -1,6 +1,6 @@
 import { ZkCatalogOnchainVerifier } from './types'
 
-export function hasTrustedSetup(verifiers: ZkCatalogOnchainVerifier[]) {
+export function trustedSetup(verifiers: ZkCatalogOnchainVerifier[]) {
   const allUndefined = verifiers.every((verifier) =>
     verifier.subVerifiers.every((subVerifier) => !subVerifier.trustedSetup),
   )
