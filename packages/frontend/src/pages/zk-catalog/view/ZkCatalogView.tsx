@@ -37,7 +37,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
             indicator={
               <>
                 <button className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
-                  <span className="font-bold text-base">Verifiers info</span>
+                  <span className="font-bold text-base">Verifiers</span>
                   <ChevronDownIcon className="transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
                 </button>
                 <ChevronDownIcon className="hidden transition-transform duration-300 ease-out md:block group-data-[open]/accordion-item:rotate-180" />
@@ -183,7 +183,7 @@ function DetailsLink({
         className,
       )}
     >
-      Details page
+      Details
     </a>
   )
 }
