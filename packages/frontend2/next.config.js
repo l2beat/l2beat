@@ -32,6 +32,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/data-availability',
+        destination: '/data-availability/summary',
+        permanent: false,
+      },
+      {
         source: '/jobs',
         destination:
           'https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f',
@@ -128,22 +133,22 @@ const nextConfig = {
             'https://api.l2beat.com/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type',
         },
         {
-          source: '/api/tvl2/token',
+          source: '/api/tvl/token',
           has: [{ type: 'host', value: '.*staging.*' }],
-          destination: 'https://staging.l2beat.com/api/tvl2/token',
+          destination: 'https://staging.l2beat.com/api/tvl/token',
         },
         {
-          source: '/api/tvl2/token',
-          destination: 'https://api.l2beat.com/api/tvl2/token',
+          source: '/api/tvl/token',
+          destination: 'https://api.l2beat.com/api/tvl/token',
         },
         {
-          source: '/api/tvl2/aggregate',
+          source: '/api/tvl/aggregate',
           has: [{ type: 'host', value: '.*staging.*' }],
-          destination: 'https://staging.l2beat.com/api/tvl2/aggregate',
+          destination: 'https://staging.l2beat.com/api/tvl/aggregate',
         },
         {
-          source: '/api/tvl2/aggregate',
-          destination: 'https://api.l2beat.com/api/tvl2/aggregate',
+          source: '/api/tvl/aggregate',
+          destination: 'https://api.l2beat.com/api/tvl/aggregate',
         },
         {
           source: '/api/tvl/aggregate',

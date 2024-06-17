@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 20059566,
-  "configHash": "0xf9227719176a881656b1ceffcdbcc0b5a01b56bb19eaf10dd7a44ddfc7ccf760",
+  "blockNumber": 20082446,
+  "configHash": "0x29931306a2f49fce65dad2e589a736709e1930f6b4159c1fa824ed857b8f9194",
   "version": 5,
   "contracts": [
     {
@@ -27,7 +27,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 954444,
+        "getLastCompletedSnapshotId": 954597,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -37,7 +37,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0xf875af77bb1c0fbefb72e236d1ea3b5ed78ef97296930fcff155e585cf84bc98",
+        "outboundRoot": "0x0507a461474fdd2cc20030abf1b1309a0d55e9b7d763e6dae2e2fb376be6c434",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -65,7 +65,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "119729686542896579824192530",
+        "totalSupply": "119758391175615490488415018",
         "totalSupplyAt": []
       }
     },
@@ -197,7 +197,7 @@
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
         "getThreshold": 8,
-        "nonce": 65,
+        "nonce": 66,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -213,7 +213,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1718000003,
+        "getCurrentTime": 1718276219,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -268,7 +268,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1717997147,
+        "lastSavedAggregateRootTimestamp": 1718274347,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -280,7 +280,7 @@
           "last": 169
         },
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x181dafb614d5dd37a4b3cb7dfe04f968ba71c531cf9089ce640514ea7d3df44d",
+        "proposedAggregateRootHash": "0x1a0581a5ddf52bd7511827508f4868e885589a9468fb966b38fcd06c7e68e3de",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -424,6 +424,7 @@
     {
       "name": "Connext Fee Multisig",
       "address": "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A",
+      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -443,7 +444,7 @@
           "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"
         ],
         "getThreshold": 1,
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -501,7 +502,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 634,
+        "nonce": 635,
         "VERSION": "1.3.0"
       }
     },
@@ -535,7 +536,7 @@
     {
       "name": "ConnextBridge",
       "address": "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6",
-      "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
+      "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
       "upgradeability": {
         "type": "EIP2535 diamond proxy",
         "facets": [
@@ -786,7 +787,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 51528,
+        "nonce": 52072,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -840,7 +841,8 @@
           "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef",
           "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1",
           "0xd839958F37f89F80c9520c2f3F4abE29168EeF1B",
-          "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265"
+          "0x79EfFa11d95931A7e1717f9Eb655eE43e35Ef265",
+          "0x1660846ee9A3023034924FB02F85F632AEd66810"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc"
@@ -1015,6 +1017,7 @@
     "0x048a5EcC705C280b2248aefF88fd581AbbEB8587",
     "0x0e62f9fa1F9b3E49759Dc94494F5bC37a83d1FAD",
     "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0",
+    "0x1660846ee9A3023034924FB02F85F632AEd66810",
     "0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD",
     "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
     "0x22831e4f21cE65b33EF45df0e212b5bEbF130E5a",

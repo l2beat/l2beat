@@ -23,7 +23,7 @@ export const ScalingNavigationTabs: Story = {
       gitcoinOption: false,
       hiringBadge: false,
       buildAllProjectPages: false,
-      tvl2: false,
+      tvl: false,
       layer3sTvl: false,
     },
   },
