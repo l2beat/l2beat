@@ -21,7 +21,7 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
     getProps: (entry) => getScalingRowProps(entry, 'risks'),
   }
 
-  const activeProjects = items.filter(
+  const layer2sProjects = items.filter(
     (item) => !item.isArchived && !item.isUpcoming,
   )
   const archivedProjects = items.filter((item) => item.isArchived)
@@ -32,17 +32,17 @@ export function ScalingRiskView({ items }: ScalingRiskViewProps) {
       <Tabs
         items={[
           {
-            id: 'active',
+            id: 'layer2s',
             name: 'Layer 2 projects',
-            shortName: 'Active',
+            shortName: 'Layer 2s',
             content: (
               <TableView
-                items={activeProjects}
+                items={layer2sProjects}
                 columnsConfig={columns}
                 rows={rows}
               />
             ),
-            itemsCount: activeProjects.length,
+            itemsCount: layer2sProjects.length,
             icon: <ActiveIcon />,
           },
           {

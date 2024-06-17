@@ -2602,16 +2602,16 @@ export default meta
 
 type Story = StoryObj<typeof ScalingSummaryView>
 
-export const Active: Story = {
+export const Layer2s: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const activeTab = canvas.getByText('Layer 2 projects')
+    const layer2sTab = canvas.getByText('Layer 2 projects')
     await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })
-    setTimeout(() => activeTab.blur(), 1000)
+    setTimeout(() => layer2sTab.blur(), 1000)
   },
 }
 
-export const ActiveWithRollupsOnly: Story = {
+export const Layer2sWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })

@@ -11,8 +11,8 @@ import { ExcludeAssociatedTokensCheckbox } from '../../../../components/table/fi
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { RowConfig } from '../../../../components/table/types'
 import {
-  getActiveScalingSummaryColumnsConfig,
   getArchivedScalingSummaryColumnsConfig,
+  getLayer2sScalingSummaryColumnsConfig,
   getLayer3sScalingSummaryColumnsConfig,
   getUpcomingScalingSummaryColumnsConfig,
 } from '../props/getScalingSummaryColumnsConfig'
@@ -37,7 +37,7 @@ export function ScalingSummaryView({
     getProps: (entry) => getScalingRowProps(entry, 'summary'),
   }
 
-  const activeProjects = layer2s.filter(
+  const layer2sProjects = layer2s.filter(
     (item) => !item.isArchived && !item.isUpcoming,
   )
   const upcomingProjects = [...layer2s, ...layer3s].filter(
@@ -57,20 +57,20 @@ export function ScalingSummaryView({
       <Tabs
         items={[
           {
-            id: 'active',
+            id: 'layer2s',
             name: 'Layer 2 projects',
-            shortName: 'Active',
+            shortName: 'Layer 2s',
             content: (
               <>
                 <TableView
-                  items={activeProjects}
+                  items={layer2sProjects}
                   rows={rows}
-                  columnsConfig={getActiveScalingSummaryColumnsConfig()}
+                  columnsConfig={getLayer2sScalingSummaryColumnsConfig()}
                 />
                 <ScalingLegend />
               </>
             ),
-            itemsCount: activeProjects.length,
+            itemsCount: layer2sProjects.length,
             icon: <ActiveIcon />,
           },
           {
