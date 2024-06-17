@@ -57,6 +57,7 @@ export function processAnalysis(
               ? undefined
               : sortByKeys(x.errors),
           derivedName: x.derivedName,
+          usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         }),
       ),
     eoas: results

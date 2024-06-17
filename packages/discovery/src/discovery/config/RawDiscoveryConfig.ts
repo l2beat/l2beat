@@ -66,6 +66,19 @@ export const DiscoveryContractField = z.object({
     .optional(),
 })
 
+export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
+export const DiscoveryCustomType = z
+  .object({
+    typeCaster: z.optional(z.string()),
+    arg: z.optional(z.record(z.string(), z.union([z.string(), z.number()]))),
+    description: z.optional(z.string()).nullable(),
+    severity: z.optional(ContractFieldSeverity).nullable(),
+  })
+  .refine((d) => !(d.arg !== undefined && d.typeCaster === undefined), {
+    message: 'typeCaster must be defined if arg is defined',
+    path: ['typeCaster'],
+  })
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
@@ -80,20 +93,8 @@ export const DiscoveryContract = z.object({
   description: z.optional(z.string()),
   // TODO: in fields?
   methods: z.optional(z.record(z.string(), z.string())),
+  usedTypes: z.optional(z.array(DiscoveryCustomType)),
 })
-
-export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
-export const DiscoveryCustomType = z
-  .object({
-    typeCaster: z.optional(z.string()),
-    arg: z.optional(z.record(z.string(), z.union([z.string(), z.number()]))),
-    description: z.optional(z.string()).nullable(),
-    severity: z.optional(ContractFieldSeverity).nullable(),
-  })
-  .refine((d) => !(d.arg !== undefined && d.typeCaster === undefined), {
-    message: 'typeCaster must be defined if arg is defined',
-    path: ['typeCaster'],
-  })
 
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = z.object({

@@ -29,6 +29,7 @@ export class HandlerExecutor {
     results: HandlerResult[]
     values: Record<string, ContractValue> | undefined
     errors: Record<string, string> | undefined
+    usedTypes: DiscoveryCustomType[]
   }> {
     const handlers = getHandlers(abi, overrides, logger)
     const results = await executeHandlers(
@@ -39,11 +40,11 @@ export class HandlerExecutor {
       blockNumber,
       logger,
     )
-    const { values, errors } = getValuesAndErrors(
+    const { values, errors, usedTypes } = getValuesAndErrors(
       results,
       overrides?.fields,
       types,
     )
-    return { results, values, errors }
+    return { results, values, errors, usedTypes }
   }
 }
