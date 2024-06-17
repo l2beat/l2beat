@@ -44,7 +44,7 @@ import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
-import { lambda } from "./lambda"
+import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { lens } from './lens'
