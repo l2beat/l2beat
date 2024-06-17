@@ -14,10 +14,10 @@ export interface DiscoveryOutput {
 }
 
 export interface DiscoveryCustomType {
-  typeCaster?: string
-  arg?: Record<string, string | number>
-  description?: string
-  severity?: string
+  typeCaster?: string | null
+  arg?: Record<string, string | number> | null
+  description?: string | null
+  severity?: string | null
 }
 
 export interface ContractParameters {
