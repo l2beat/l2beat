@@ -16,6 +16,8 @@ export const lambda: Layer2 = opStackL2({
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
     purposes: ['Universal', 'Storage'],
@@ -74,4 +76,17 @@ export const lambda: Layer2 = opStackL2({
       // },
     ],
   },
+  nonTemplateNativePermissions: [
+    {
+      name: 'Lambda Admin EOA',
+      accounts: [
+        {
+          address: discovery.getAddressFromValue('SystemConfig', 'owner'),
+          type: 'EOA',
+        },
+      ],
+      description:
+        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+    },
+  ],
 })
