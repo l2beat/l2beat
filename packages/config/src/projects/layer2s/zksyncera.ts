@@ -137,6 +137,7 @@ export const zksyncera: Layer2 = {
     },
   },
   config: {
+    associatedTokens: ['ZK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),

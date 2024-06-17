@@ -2659,6 +2659,12 @@
       "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "ZK",
+      "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "bobanetwork": [
