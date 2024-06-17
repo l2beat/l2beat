@@ -7,7 +7,7 @@ const backendFeaturesToConfigFeatures: Partial<
   liveness: 'tracked-txs.liveness',
   zkCatalog: 'verifiers',
   implementationChange: 'implementationChangeReporter',
-  tvlBreakdown: 'tvl2',
+  tvlBreakdown: 'tvl',
 }
 
 export function getCommonFeatures(

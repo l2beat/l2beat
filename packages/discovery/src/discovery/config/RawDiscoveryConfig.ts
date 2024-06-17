@@ -4,6 +4,7 @@ import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
 
+export type ValueType = z.infer<typeof ValueType>
 export const ValueType = z.enum([
   'CODE_CHANGE',
   'L2',
@@ -12,6 +13,7 @@ export const ValueType = z.enum([
   'PERMISSION',
 ])
 
+export type StackRole = z.infer<typeof StackRole>
 export const StackRole = z.enum([
   'Sequencer',
   'Proposer',
@@ -20,8 +22,10 @@ export const StackRole = z.enum([
   'Validator',
 ])
 
+export type Permission = z.infer<typeof Permission>
 export const Permission = z.enum(['admin', 'owner'])
 
+export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([
   'Core',
   'Gateways&Escrows',

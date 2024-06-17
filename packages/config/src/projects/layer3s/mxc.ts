@@ -46,6 +46,7 @@ export const mxc: Layer3 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    associatedTokens: ['MXC'],
     escrows: [
       discovery_ethereum.getEscrowDetails({
         address: EthereumAddress('0x7C954170305b11572522313b6AD514070ce0339c'),
