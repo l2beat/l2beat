@@ -45,6 +45,7 @@ export const real: Layer2 = orbitStackL2({
       },
     ],
     minTimestampForTvl: new UnixTime(1710580715),
+    coingeckoPlatform: 're-al',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
@@ -114,6 +115,19 @@ export const real: Layer2 = orbitStackL2({
       date: '2024-05-15T00:00:00Z',
       description:
         'Re.al launches its mainnet with some initial dapps deployed.',
+    },
+    {
+      name: 'Arcana Launch',
+      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/t3MsS-cCeJJD4ljXgQef3U01t564VL2h_au6iM6rBk4',
+      date: '2024-05-15T00:00:00Z',
+      description:
+        'Arcana launches their platform for rebasing, delta-neutral yields on re.al.',
+    },
+    {
+      name: 'RWA Token Launch',
+      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/eUmaidSfGSsjKKzepfyus6YSMog_FRdAQ6q5bsRoF7Y',
+      date: '2024-05-15T00:00:00Z',
+      description: 'Re.al launches the RWA token and its governance protocol.',
     },
   ],
 })

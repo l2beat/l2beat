@@ -138,6 +138,8 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
         relatives: {
           [owner.toString()]: new Set(),
@@ -239,6 +241,8 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
         relatives: {
           [owner.toString()]: new Set(),
@@ -338,6 +342,8 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
         relatives: {
           [owner.toString()]: new Set(),
