@@ -107,6 +107,7 @@ describe(AddressAnalyzer.name, () => {
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
             errors: {},
+            usedTypes: [],
           }),
         }),
         mockObject<TemplateService>({
@@ -141,6 +142,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -209,6 +211,7 @@ describe(AddressAnalyzer.name, () => {
           execute: async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
+            usedTypes: [],
             errors: {},
           }),
         }),
@@ -244,6 +247,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -310,6 +314,7 @@ describe(AddressAnalyzer.name, () => {
           execute: async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
+            usedTypes: [],
             errors: {},
           }),
         }),
@@ -345,6 +350,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),

@@ -13,6 +13,13 @@ export interface DiscoveryOutput {
   version: number
 }
 
+export interface DiscoveryCustomType {
+  typeCaster?: string
+  arg?: Record<string, string | number>
+  description?: string
+  severity?: string
+}
+
 export interface ContractParameters {
   name: string
   derivedName?: string
@@ -25,6 +32,7 @@ export interface ContractParameters {
   values?: Record<string, ContractValue>
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
+  usedTypes?: DiscoveryCustomType[]
 }
 
 export type ContractValue =
