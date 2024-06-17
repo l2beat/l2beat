@@ -195,6 +195,8 @@ export const ActivityResponse = z.object({
     ]),
     data: z.array(z.tuple([z.number(), z.number(), z.number()])),
   }),
+  estimatedImpact: z.number().gte(0).lte(1).optional(),
+  estimatedSince: z.number().optional(),
 })
 
 export type Milestones = z.infer<typeof Milestones>
