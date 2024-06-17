@@ -42,8 +42,15 @@ export function diffDiscovery(
     ).map((i) => `values.${i}`)
 
     const ignored = [
+      // temporarily ignoring meta fields to not trigger diffs
       'ignoreInWatchMode',
       'template',
+      'descriptions',
+      'roles',
+      'permissions',
+      'categories',
+      'types',
+      'severity',
       ...ignoreValuesInWatchMode,
     ]
     const diff = diffContracts(previousContract, currentContract, ignored)

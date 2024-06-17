@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x8c4f8592e3c524868dab24fc7a26f102e312e8f1
+
+# Diff at Mon, 17 Jun 2024 08:11:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f39ec7f15738d4847f0cbde4818140d42e26440f block: 19973942
+- current block number: 20110229
+
+## Description
+
+The proxyGovernance is given the roles GOVERNANCE_ADMIN (can give governance roles) and SECURITY_ADMIN (can activate withdrawal limit) on the paradex USDC bridge. This is in line with the config before the implementation upgrade and already reflected on the project page.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.SECURITY_ADMIN.members.1:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
 Generated with discovered.json: 0xc5260cb25ec9651795eb7d1168c49550b1812f5e
 
 # Diff at Wed, 29 May 2024 07:11:17 GMT:

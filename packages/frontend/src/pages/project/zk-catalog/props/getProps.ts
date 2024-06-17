@@ -4,7 +4,7 @@ import { VerifiersApiResponse } from '@l2beat/shared-pure'
 import { Config } from '../../../../build/config'
 import { getCollectionEntry } from '../../../../content/getCollection'
 import { getProofVerification } from '../../../../utils/zk-catalog/getProofVerification'
-import { hasTrustedSetup } from '../../../../utils/zk-catalog/hasTrustedSetup'
+import { getTrustedSetup } from '../../../../utils/zk-catalog/getTrustedSetup'
 import { Wrapped } from '../../../Page'
 import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../../../zk-catalog/props/getZkCatalogView'
 import {
@@ -52,7 +52,7 @@ function getZkCatalogProjectDetails(
       project.type === 'zk-catalog'
         ? undefined
         : `/scaling/projects/${project.display.slug}`,
-    hasTrustedSetup: hasTrustedSetup(proofVerification.verifiers),
+    trustedSetup: getTrustedSetup(proofVerification.verifiers),
     description: descriptionEntry.content,
     ...proofVerification,
   }
