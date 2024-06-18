@@ -41,9 +41,9 @@ const getCachedEconomicSecurity = cache(
         return { id, status: 'StakeNotSynced' as const }
       }
 
-      const currentPrice = daEconomicSecurityMeta[type]
-        ? currentPrices[daEconomicSecurityMeta[type].coingeckoId]
-        : undefined
+      const meta = daEconomicSecurityMeta[type]
+
+      const currentPrice = meta ? currentPrices[meta.coingeckoId] : undefined
 
       if (!currentPrice) {
         return { id, status: 'CurrentPriceNotSynced' as const }
@@ -53,9 +53,9 @@ const getCachedEconomicSecurity = cache(
         id,
         status: 'Synced' as const,
         // We're intentionally trading precision for ease of use in Client Components
-        economicSecurity: Number(
-          (thresholdStake * BigInt(currentPrice * 100)) / 100n,
-        ),
+        economicSecurity:
+          Number((thresholdStake * BigInt(currentPrice * 100)) / 100n) /
+          10 ** meta.decimals,
       }
     })
 
