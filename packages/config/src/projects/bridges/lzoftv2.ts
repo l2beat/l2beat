@@ -313,7 +313,7 @@ export const lzoftv2: Bridge = {
       ),
       discovery.getContractDetails(
         'SendUln302',
-        'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig. This contract accumulates fees configured by the OApp owners.',
+        'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). It also accumulates fees configured by the OApp owners via the Treasury contract. New libraries can be added by the LayerZero Multisig.',
       ),
       discovery.getContractDetails(
         'ReceiveUln302',
@@ -338,6 +338,10 @@ export const lzoftv2: Bridge = {
     ],
     risks: [],
     references: [
+      {
+        text: 'LayerZero Docs: OFT Adapter',
+        href: 'https://docs.layerzero.network/v2/developers/evm/oft/adapter',
+      },
       {
         text: 'LayerZero Docs: Deployed contracts and supported chains',
         href: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts',
