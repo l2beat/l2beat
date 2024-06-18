@@ -73,7 +73,7 @@
   "layer2finance": true,
   "layer2financezk": false,
   "lens": true,
-  "lightlink": false,
+  "lightlink": true,
   "linea": true,
   "lisk": true,
   "loopring": true,

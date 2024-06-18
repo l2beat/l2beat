@@ -43,6 +43,7 @@ export interface AnalyzedContract {
   selfMeta?: ContractMeta
   targetsMeta?: Record<string, ContractMeta>
   combinedMeta?: ContractMeta
+  usedTypes?: DiscoveryCustomType[]
 }
 
 export interface ExtendedTemplate {
@@ -149,14 +150,15 @@ export class AddressAnalyzer {
 
     logger.log(`  Template: ${templateLog}`)
 
-    const { results, values, errors } = await this.handlerExecutor.execute(
-      address,
-      sources.abi,
-      overrides,
-      types,
-      blockNumber,
-      logger,
-    )
+    const { results, values, errors, usedTypes } =
+      await this.handlerExecutor.execute(
+        address,
+        sources.abi,
+        overrides,
+        types,
+        blockNumber,
+        logger,
+      )
     const relatives = getRelativesWithSuggestedTemplates(
       results,
       overrides?.ignoreRelatives,
@@ -188,6 +190,7 @@ export class AddressAnalyzer {
       relatives,
       selfMeta: getSelfMeta(overrides),
       targetsMeta,
+      usedTypes,
     }
   }
 
