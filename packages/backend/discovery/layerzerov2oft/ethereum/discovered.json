@@ -1,8 +1,8 @@
 {
-  "name": "lzoftv2",
+  "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 20119597,
-  "configHash": "0x44373b3337b09baf916a43edfac1c1d4fb820fe6695d1fc51edc0bee4d197c6d",
+  "blockNumber": 20119772,
+  "configHash": "0x1ef0930524a5ea624fcf99ea13f4e4fe32fe6ef64278df1775fe5ce3e967b632",
   "version": 6,
   "contracts": [
     {
@@ -529,7 +529,7 @@
       "implementations": ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"],
       "sinceTimestamp": 1708740203,
       "values": {
-        "feeBalance": "2917625000000000000",
+        "feeBalance": "2918325000000000000",
         "getLzMessageLibLength": 1,
         "layerZeroEndpointV1": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "layerZeroEndpointV2": "0x1a44076050125825900e736c501f859c50fE728c",

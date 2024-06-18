@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const discovery = new ProjectDiscovery('lzoftv2')
+const discovery = new ProjectDiscovery('layerzerov2oft')
 const enaExecutor = EthereumAddress(
   (
     discovery.getContractValue('SendUln302', 'defaultExecutor_ENA') as [
@@ -15,12 +15,12 @@ const enaExecutor = EthereumAddress(
   )[1],
 )
 
-export const lzoftv2: Bridge = {
+export const layerzerov2oft: Bridge = {
   type: 'bridge',
-  id: ProjectId('lzoftv2'),
+  id: ProjectId('layerzerov2oft'),
   display: {
-    name: 'OFT (LayerZero v2)',
-    slug: 'lzoftv2',
+    name: 'LayerZero v2 OFTs',
+    slug: 'layerzerov2oft',
     warning:
       'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers.',
     category: 'Token Bridge',

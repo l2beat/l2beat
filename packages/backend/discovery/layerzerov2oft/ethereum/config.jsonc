@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
-  "name": "lzoftv2",
+  "name": "layerzerov2oft",
   "initialAddresses": [
     "0x1a44076050125825900e736c501f859c50fE728c",
     "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
