@@ -1,0 +1,92 @@
+import { PostgresDatabase, Transaction } from '../kysely'
+import { Finality, toRecord, toRow } from './entitiy'
+import { selectFinality } from './select'
+
+export class FinalityRepository {
+  constructor(private readonly db: PostgresDatabase) {}
+
+  async getAll() {
+    const rows = await this.db
+      .selectFrom('finality')
+      .select(selectFinality)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async findLatestByProjectId(projectId: string) {
+    const row = await this.db
+      .selectFrom('finality')
+      .select(selectFinality)
+      .where('project_id', '=', projectId)
+      .orderBy('timestamp', 'desc')
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : null
+  }
+
+  async findProjectFinalityOnTimestamp(projectId: string, timestamp: Date) {
+    const row = await this.db
+      .selectFrom('finality')
+      .select(selectFinality)
+      .where((eb) =>
+        eb.and([
+          eb('timestamp', '=', timestamp),
+          eb('project_id', '=', projectId),
+        ]),
+      )
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : null
+  }
+
+  async getLatestGroupedByProjectId(projectIds: string[]) {
+    const maxTimestampSubquery = this.db
+      .selectFrom('finality')
+      .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .groupBy('project_id')
+      .as('max_f')
+
+    const rows = await this.db
+      .selectFrom('finality as f')
+      .innerJoin(maxTimestampSubquery, (join) =>
+        join
+          .onRef('f.project_id', '=', 'max_f.project_id')
+          .onRef('f.timestamp', '=', 'max_f.max_timestamp'),
+      )
+      .select(selectFinality)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async addMany(records: Finality[], trx?: Transaction) {
+    const scope = trx ?? this.db
+    const rows = records.map(toRow)
+    await scope.insertInto('finality').values(rows).execute()
+
+    return rows.length
+  }
+
+  async add(record: Finality, trx?: Transaction) {
+    const scope = trx ?? this.db
+    const row = toRow(record)
+
+    const [inserted] = await scope
+      .insertInto('finality')
+      .values(row)
+      .returning('project_id')
+      .execute()
+
+    return inserted?.project_id
+  }
+
+  deleteAll() {
+    return this.db.deleteFrom('finality').execute()
+  }
+}

@@ -1,14 +1,17 @@
+import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
 import { DailyDiscovery as DailyDiscoveryRow } from '../kysely/generated/types'
+import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 
 export interface DailyDiscovery {
   projectName: string
-  chainId: number
-  unixTimestamp: Date
+  chainId: ChainId
   blockNumber: number
+  timestamp: UnixTime
+  discovery: DiscoveryOutput
+  configHash: Hash256
   version: number
-  configHash: string
-  discoveryJsonBlob: any
 }
 
 export function toRecord(
@@ -16,12 +19,18 @@ export function toRecord(
 ): DailyDiscovery {
   return {
     projectName: entity.project_name,
-    chainId: entity.chain_id,
-    unixTimestamp: entity.unix_timestamp,
+    chainId: ChainId(entity.chain_id),
+    timestamp: UnixTime.fromDate(entity.unix_timestamp),
     blockNumber: entity.block_number,
     version: entity.version,
-    configHash: entity.config_hash,
-    discoveryJsonBlob: entity.discovery_json_blob,
+    configHash: Hash256(entity.config_hash),
+    // NOTE(radomski): This has to be here, otherwise the risk of exposing our
+    // API keys goes way up. Putting this in the database gives us the highest
+    // chance of being secure. We still want to show that there was an error
+    // so sanitize it to expose minimal information.
+    discovery: sanitizeDiscoveryOutput(
+      entity.discovery_json_blob as DiscoveryOutput,
+    ),
   }
 }
 
@@ -30,11 +39,11 @@ export function toRow(
 ): Insertable<DailyDiscoveryRow> {
   return {
     project_name: dailyDiscovery.projectName,
-    chain_id: dailyDiscovery.chainId,
-    unix_timestamp: dailyDiscovery.unixTimestamp,
+    chain_id: +dailyDiscovery.chainId,
+    unix_timestamp: dailyDiscovery.timestamp.toDate(),
     block_number: dailyDiscovery.blockNumber,
     version: dailyDiscovery.version,
-    config_hash: dailyDiscovery.configHash,
-    discovery_json_blob: dailyDiscovery.discoveryJsonBlob,
+    config_hash: dailyDiscovery.configHash.toString(),
+    discovery_json_blob: dailyDiscovery.discovery,
   }
 }
