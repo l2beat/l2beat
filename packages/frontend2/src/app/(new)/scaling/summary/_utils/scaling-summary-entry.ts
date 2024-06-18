@@ -1,8 +1,8 @@
 import {
-  type StageConfig,
   type Layer2,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
+  type StageConfig,
   type WarningWithSentiment,
 } from '@l2beat/config'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/TokenBreakdown'

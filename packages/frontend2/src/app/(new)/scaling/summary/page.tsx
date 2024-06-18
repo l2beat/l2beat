@@ -1,3 +1,4 @@
+import { layer2s } from '@l2beat/config'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import {
   Tabs,
@@ -10,7 +11,6 @@ import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
 import { SummaryActiveTable } from './_components/table/active/summary-active-table'
-import { layer2s } from '@l2beat/config'
 import { toScalingSummaryEntry } from './_utils/scaling-summary-entry'
 
 export default function Page() {

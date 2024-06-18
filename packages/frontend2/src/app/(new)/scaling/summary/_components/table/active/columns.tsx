@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { formatNumber } from '~/utils/format-number'
 import { EM_DASH } from '~/app/_components/nav/consts'
+import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { formatNumber } from '~/utils/format-number'
+import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
 
 const columnHelper = createColumnHelper<ScalingSummaryActiveEntry>()
 

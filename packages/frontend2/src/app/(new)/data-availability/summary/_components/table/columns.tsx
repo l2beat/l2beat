@@ -3,8 +3,8 @@ import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
-import { DaBridgeCell } from './da-bridge-cell'
 import { type DaSummaryEntry } from '../../_utils/da-summary-entry'
+import { DaBridgeCell } from './da-bridge-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 

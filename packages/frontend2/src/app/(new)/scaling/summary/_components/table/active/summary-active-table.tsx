@@ -1,6 +1,10 @@
 'use client'
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import React from 'react'
-import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
 import {
   Table,
   TableBody,
@@ -10,12 +14,8 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/app/_components/table/table'
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
+import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
 import { columns } from './columns'
 
 interface Props {

@@ -1,8 +1,6 @@
 import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
 import React from 'react'
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
-import { cn } from '~/utils/cn'
 import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
 import { LoopringIcon } from '~/icons/providers/LoopringIcon'
 import { OVMIcon } from '~/icons/providers/OVMIcon'
@@ -12,6 +10,8 @@ import { StarkWareIcon } from '~/icons/providers/StarkWareIcon'
 import { StarknetIcon } from '~/icons/providers/StarknetIcon'
 import { ZKStackIcon } from '~/icons/providers/ZKStackIcon'
 import { ZkSyncLiteIcon } from '~/icons/providers/ZkSyncLiteIcon'
+import { cn } from '~/utils/cn'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
 
 export interface TypeCellProps {
   children: string
