@@ -1,10 +1,10 @@
-import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
+import { AmountRow } from '../../modules/tvl/repositories/AmountRepository'
 
 export {}
 
-import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
-import { PriceRow } from '../../modules/tvl2/repositories/PriceRepository'
-import { ValueRow } from '../../modules/tvl2/repositories/ValueRepository'
+import { BlockTimestampRow } from '../../modules/tvl/repositories/BlockTimestampRepository'
+import { PriceRow } from '../../modules/tvl/repositories/PriceRepository'
+import { ValueRow } from '../../modules/tvl/repositories/ValueRepository'
 import { IndexerConfigurationRow } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerStateRow } from '../../tools/uif/IndexerStateRepository'
 

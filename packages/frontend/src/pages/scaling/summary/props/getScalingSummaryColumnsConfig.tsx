@@ -19,7 +19,7 @@ import {
   ScalingSummaryViewEntry,
 } from '../types'
 
-export function getActiveScalingSummaryColumnsConfig() {
+export function getLayer2sScalingSummaryColumnsConfig() {
   const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
     ...getProjectWithIndexColumns(),
     {

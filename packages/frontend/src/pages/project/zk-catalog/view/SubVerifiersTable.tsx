@@ -72,7 +72,7 @@ export function SubVerifiersTable({ verifier, className }: Props) {
               </div>
             </th>
             <th className="py-1.5 pr-3 font-semibold text-2xs text-gray-500 uppercase dark:text-gray-50">
-              Circuit source
+              Source code
             </th>
           </tr>
         </thead>
@@ -86,7 +86,7 @@ export function SubVerifiersTable({ verifier, className }: Props) {
               <td>{sV.proofSystem}</td>
               <td>{sV.mainArithmetization}</td>
               <td>{sV.mainPCS}</td>
-              <td>{sV.trustedSetup ?? EM_DASH}</td>
+              <td>{sV.trustedSetup ?? '?'}</td>
               <td>{sV.link ? <Link href={sV.link}>Link</Link> : EM_DASH}</td>
             </tr>
           ))}

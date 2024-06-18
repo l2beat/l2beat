@@ -99,23 +99,28 @@ function mockCallData(firstBlock: number, endBlock: number): string {
 
 function mockBlobCalldata(firstBlock: number, endBlock: number): string {
   const fn =
-    'function submitBlobData(tuple(bytes32 parentStateRootHash, bytes32 dataParentHash, bytes32 finalStateRootHash, uint256 firstBlockInData, uint256 finalBlockInData, bytes32 snarkHash) _submissionData, uint256 _dataEvaluationClaim, bytes _kzgCommitment, bytes _kzgProof)'
+    'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)'
   const iface = new utils.Interface([fn])
 
   const randomNumber = Math.floor(Math.random() * 100_000_000)
 
   const sampleData = [
     [
-      utils.formatBytes32String(''),
-      utils.formatBytes32String(''),
-      utils.formatBytes32String(''),
-      firstBlock,
-      endBlock,
-      utils.formatBytes32String(''),
+      [
+        [
+          utils.formatBytes32String(''),
+          firstBlock,
+          endBlock,
+          utils.formatBytes32String(''),
+        ],
+        randomNumber,
+        utils.randomBytes(40),
+        utils.randomBytes(40),
+      ],
     ],
-    randomNumber,
-    utils.randomBytes(40),
-    utils.randomBytes(40),
+    utils.formatBytes32String(''),
+    utils.formatBytes32String(''),
   ]
-  return iface.encodeFunctionData('submitBlobData', sampleData)
+
+  return iface.encodeFunctionData('submitBlobs', sampleData)
 }

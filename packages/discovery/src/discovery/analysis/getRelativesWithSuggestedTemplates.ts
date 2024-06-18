@@ -1,9 +1,9 @@
-import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
 import { AddressesWithTemplates } from './AddressAnalyzer'
+import { getAddresses } from './metaUtils'
 
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
@@ -35,19 +35,4 @@ export function getRelativesWithSuggestedTemplates(
   }
 
   return result
-}
-
-function getAddresses(value: ContractValue | undefined): EthereumAddress[] {
-  if (Array.isArray(value)) {
-    return value.flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'string') {
-    try {
-      return [EthereumAddress(value)]
-    } catch {
-      return []
-    }
-  }
-  return []
 }

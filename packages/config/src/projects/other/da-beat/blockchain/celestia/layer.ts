@@ -42,4 +42,7 @@ export const celestia: DaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
   },
+  economicSecurity: {
+    type: 'Ethereum',
+  },
 }

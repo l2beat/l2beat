@@ -7,6 +7,7 @@ describe(getValuesAndErrors.name, () => {
     expect(getValuesAndErrors([])).toEqual({
       values: {},
       errors: {},
+      usedTypes: [],
     })
   })
 
@@ -29,6 +30,7 @@ describe(getValuesAndErrors.name, () => {
         d: 'Error 1',
         e: 'Error 2',
       },
+      usedTypes: [],
     })
   })
 
@@ -44,6 +46,7 @@ describe(getValuesAndErrors.name, () => {
         d: 'Error 1',
         e: 'Error 2',
       },
+      usedTypes: [],
     })
   })
 
@@ -61,6 +64,7 @@ describe(getValuesAndErrors.name, () => {
         c: 3,
       },
       errors: {},
+      usedTypes: [],
     })
   })
 })

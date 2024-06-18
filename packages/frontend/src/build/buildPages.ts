@@ -61,9 +61,9 @@ async function main() {
       l2CostsApiResponse,
       verifiersApiResponse,
     ] = await Promise.all([
-      fetchTvlApi(config.backend, http, { tvl2: config.features.tvl2 }),
+      fetchTvlApi(config.backend, http, { tvl: config.features.tvl }),
       fetchTvlApi(config.backend, http, {
-        tvl2: config.features.tvl2,
+        tvl: config.features.tvl,
         excludeAssociatedTokens: true,
       }),
       config.features.activity

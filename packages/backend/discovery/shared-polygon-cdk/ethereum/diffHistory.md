@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7b11309919d0f5629c9f1491dec704b70fe98d63
+
+# Diff at Mon, 17 Jun 2024 08:28:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f39ec7f15738d4847f0cbde4818140d42e26440f block: 19967357
+- current block number: 20110313
+
+## Description
+
+`createNewRollup()` is called by the RollupManagerAdminMultisig, adding a new rollup with a new chainID and the same rollupTypeID 4 as currently all other registered zkEVM rollups in the manager except PolygonZkEVM (3). This one is related to [Witnesschain](https://www.witnesschain.com/). (not launched / not producing blocks yet)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        5
++        6
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.5:
++        ["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
 Generated with discovered.json: 0xb2a7c134dab045edcf9290ea3379e7233ab83f46
 
 # Diff at Tue, 28 May 2024 09:05:30 GMT:
