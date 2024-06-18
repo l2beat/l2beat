@@ -50,7 +50,7 @@ export function getScalingTvlColumnsConfig() {
               value={project.data.canonical.displayValue}
               percentChange={project.data.canonical.change}
               tokens={project.data.canonical.tokens.filter(
-                (t) => t.info.type === 'canonical',
+                (t) => t.info.source === 'canonical',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
@@ -63,7 +63,7 @@ export function getScalingTvlColumnsConfig() {
                 project.data.excludedAssociatedTokens.canonical.change
               }
               tokens={project.data.excludedAssociatedTokens.canonical.tokens.filter(
-                (t) => t.info.type === 'canonical',
+                (t) => t.info.source === 'canonical',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>
@@ -98,7 +98,7 @@ export function getScalingTvlColumnsConfig() {
               value={project.data.external.displayValue}
               percentChange={project.data.external.change}
               tokens={project.data.external.tokens.filter(
-                (t) => t.info.type === 'external',
+                (t) => t.info.source === 'external',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
@@ -111,7 +111,7 @@ export function getScalingTvlColumnsConfig() {
                 project.data.excludedAssociatedTokens.external.change
               }
               tokens={project.data.excludedAssociatedTokens.external.tokens.filter(
-                (t) => t.info.type === 'external',
+                (t) => t.info.source === 'external',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>
@@ -146,7 +146,7 @@ export function getScalingTvlColumnsConfig() {
               value={project.data.native.displayValue}
               percentChange={project.data.native.change}
               tokens={project.data.native.tokens.filter(
-                (t) => t.info.type === 'native',
+                (t) => t.info.source === 'native',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Included>
@@ -157,7 +157,7 @@ export function getScalingTvlColumnsConfig() {
                 project.data.excludedAssociatedTokens.native.change
               }
               tokens={project.data.excludedAssociatedTokens.native.tokens.filter(
-                (t) => t.info.type === 'native',
+                (t) => t.info.source === 'native',
               )}
             />
           </ExcludeAssociatedTokensWrapper.Excluded>

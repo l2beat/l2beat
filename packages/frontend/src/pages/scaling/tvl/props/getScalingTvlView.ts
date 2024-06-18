@@ -84,19 +84,19 @@ function getScalingTvlViewEntry(
         value: parts.canonical,
         displayValue: formatUSD(parts.canonical),
         change: partsWeeklyChange.canonical,
-        tokens: tokens.filter((t) => t.info.type === 'canonical'),
+        tokens: tokens.filter((t) => t.info.source === 'canonical'),
       },
       external: {
         value: parts.external,
         displayValue: formatUSD(parts.external),
         change: partsWeeklyChange.external,
-        tokens: tokens.filter((t) => t.info.type === 'external'),
+        tokens: tokens.filter((t) => t.info.source === 'external'),
       },
       native: {
         value: parts.native,
         displayValue: formatUSD(parts.native),
         change: partsWeeklyChange.native,
-        tokens: tokens.filter((t) => t.info.type === 'native'),
+        tokens: tokens.filter((t) => t.info.source === 'native'),
       },
       excludedAssociatedTokens: {
         tvl: {
@@ -109,7 +109,7 @@ function getScalingTvlViewEntry(
           displayValue: formatUSD(excludedAssociatedTokensParts.canonical),
           change: excludedAssociatedTokensPartsWeeklyChange.canonical,
           tokens: tokensWithoutAssociated.filter(
-            (t) => t.info.type === 'canonical',
+            (t) => t.info.source === 'canonical',
           ),
         },
         external: {
@@ -117,7 +117,7 @@ function getScalingTvlViewEntry(
           displayValue: formatUSD(excludedAssociatedTokensParts.external),
           change: excludedAssociatedTokensPartsWeeklyChange.external,
           tokens: tokensWithoutAssociated.filter(
-            (t) => t.info.type === 'external',
+            (t) => t.info.source === 'external',
           ),
         },
         native: {
@@ -125,7 +125,7 @@ function getScalingTvlViewEntry(
           displayValue: formatUSD(excludedAssociatedTokensParts.native),
           change: excludedAssociatedTokensPartsWeeklyChange.native,
           tokens: tokensWithoutAssociated.filter(
-            (t) => t.info.type === 'native',
+            (t) => t.info.source === 'native',
           ),
         },
       },

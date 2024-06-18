@@ -68,7 +68,7 @@ function getMockTvlApiResponse(): TvlApiResponse {
             usdValue: 100,
           },
         ],
-         native: [
+        native: [
           {
             assetId: AssetId.ETH,
             chain: 'ethereum',

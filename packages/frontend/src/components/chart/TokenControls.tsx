@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TokenInfo } from '../../scripts/charts/sources'
+import { TokenInfo } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Link } from '../Link'

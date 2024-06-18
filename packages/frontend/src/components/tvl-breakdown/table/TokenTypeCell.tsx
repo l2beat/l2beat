@@ -9,9 +9,9 @@ interface TokenTypeCellProps {
 export function TokenTypeCell(props: TokenTypeCellProps) {
   const token = safeGetTokenByAssetId(props.assetId)
   const tokenType =
-    token?.formula === 'totalSupply'
+    token?.supply === 'totalSupply'
       ? 'Multi-chain'
-      : token?.formula === 'circulatingSupply'
+      : token?.supply === 'circulatingSupply'
         ? 'Single-chain'
         : ''
 

@@ -39,14 +39,14 @@ export function getDetailedTvlRenderParams(
         return {
           series: useEth
             ? [
-                canonicalEth + externalEth + nativeEth,
-                externalEth + nativeEth,
-                nativeEth,
+                { value: canonicalEth + externalEth + nativeEth },
+                { value: externalEth + nativeEth },
+                { value: nativeEth },
               ]
             : [
-                canonicalUsd + externalUsd + nativeUsd,
-                externalUsd + nativeUsd,
-                nativeUsd,
+                { value: canonicalUsd + externalUsd + nativeUsd },
+                { value: externalUsd + nativeUsd },
+                { value: nativeUsd },
               ],
           data: {
             date: formatTimestamp(timestamp, { mode: 'datetime' }),

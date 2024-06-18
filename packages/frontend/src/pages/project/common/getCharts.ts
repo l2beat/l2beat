@@ -140,7 +140,7 @@ function getTokenInfo({
 }): TokenInfo {
   if (!isLayer2orLayer3) {
     return {
-      type: 'regular',
+      source: 'regular',
       projectId: projectId.toString(),
       symbol,
       chain,
@@ -148,7 +148,7 @@ function getTokenInfo({
     }
   }
   return {
-    source: source,
+    source: source as 'canonical' | 'external' | 'native',
     projectId: projectId.toString(),
     symbol,
     chain,
