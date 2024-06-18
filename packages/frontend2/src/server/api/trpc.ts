@@ -1,19 +1,10 @@
-import { createRepositories } from '@l2beat/database'
 import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-import { env } from '~/env'
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
     ...opts,
-    db: createRepositories({
-      connectionString: env.DATABASE_URL,
-      ssl:
-        env.NODE_ENV === 'production'
-          ? { rejectUnauthorized: false }
-          : undefined,
-    }),
   }
 }
 

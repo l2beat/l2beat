@@ -1,9 +1,9 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { api } from '~/trpc/server'
 import { DaRiskTable } from './_components/table/da-risk-table'
+import { getDaRiskEntries } from '~/server/features/data-availability/get-da-risk-entries'
 
 export default async function Page() {
-  const items = await api.dataAvailability.risk()
+  const items = await getDaRiskEntries()
 
   return (
     <div>
