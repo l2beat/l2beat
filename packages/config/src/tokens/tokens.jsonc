@@ -2815,8 +2815,8 @@
     {
       "symbol": "USTB",
       "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2826,8 +2826,8 @@
     {
       "symbol": "PEARL",
       "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2837,8 +2837,8 @@
     {
       "symbol": "arcUSD",
       "address": "0xaec9e50e3397f9ddc635c6c429c8c7eca418a143",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2848,8 +2848,8 @@
     {
       "symbol": "MORE",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"

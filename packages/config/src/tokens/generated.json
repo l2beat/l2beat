@@ -2097,8 +2097,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/4703/large/lambda_200.png?1696505268",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "ldo-lido-dao-token",
@@ -5265,8 +5265,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38043/large/ZKTokenBlack.png?1718614502",
       "chainId": 324,
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "id": "zksync2:zorro-zorro",
@@ -7243,8 +7243,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
       "chainId": 111188,
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -7262,8 +7262,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
       "chainId": 111188,
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -7281,8 +7281,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
       "chainId": 111188,
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -7300,8 +7300,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
       "chainId": 111188,
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
