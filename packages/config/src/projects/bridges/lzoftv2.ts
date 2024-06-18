@@ -137,42 +137,64 @@ export const lzoftv2: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `Omnichain Fungible Tokens (OFTs) are tokenized Token Bridges. Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, the OFT implementation details vary widely. 
-        
-        The common interface of OFTs handles crosschain messaging through the LayerZero arbitrary message bridge (AMB). Each OFT is a LayerZero OApp and can be configured to use custom security stacks when interacting with the AMB.
-        Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed. 
-        Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
-        
-        OFTs can be either natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
-        Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
-        To receive back the original locked token, a user would have to return to the main chain and unlock it from the adapter escrow.`,
-      risks: [],
-      references: [],
+      The common interface of OFTs handles crosschain messaging through the LayerZero arbitrary message bridge (AMB). Each OFT is a LayerZero OApp and can be configured to use custom security stacks when interacting with the AMB.
+      Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed. 
+      These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
+      Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
+      
+      OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
+      Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
+      To receive the original locked token back, a user would have to return to the main chain and unlock it from the adapter escrow.`,
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'the OApp owner upgrades the OFT(Adapter) contract maliciously.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          text: 'LayerZero V2 docs: Overview',
+          href: 'https://docs.layerzero.network/v2/home/v2-overview',
+        },
+        {
+          text: 'LayerZero V2 docs: OFT Quickstart',
+          href: 'https://docs.layerzero.network/v2/developers/evm/oft/quickstart',
+        },
+      ],
     },
     validation: {
-      name: 'Custom Verifiers',
+      name: 'Configurable Verifiers',
       description:
         'Each crosschain transaction is emitted on the origin chain and must be picked up and verified by preconfigured verifiers (LayerZero calls these DVNs). If they agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
       references: [
         {
-          text: 'LayerZero security model analysis',
+          text: 'Etherscan: Function setConfig() in SendUln302.sol',
+          href: 'https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F1#L30',
+        },
+        {
+          text: 'L2Beat Blog: Circumventing Layer Zero',
           href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'oracles or relayers fail to facilitate the transfer.',
+          text: 'the executor or all required verifiers fail to facilitate the transfer.',
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'the Executor and the Verifiers collude to submit fraudulent block hash and relay fraudulent transfer.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'oracles and relayers collude to submit fraudulent block hash and relay fraudulent transfer.',
+          text: 'the OApp owner changes the security stack maliciously.',
           isCritical: true,
         },
         {
           category: 'Funds can be stolen if',
-          text: 'omnichain token owner changes Oracle/Relayer pair for their own.',
-          isCritical: true,
+          text: 'there is no custom security stack configured and the LayerZero Multisig changes the default security stack maliciously.',
         },
       ],
     },
@@ -218,6 +240,16 @@ export const lzoftv2: Bridge = {
       ),
     ],
     risks: [],
+    references: [
+      {
+        text: 'LayerZero Docs: Deployed contracts and supported chains',
+        href: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts',
+      },
+      {
+        text: 'LayerZero Docs: DVN addresses',
+        href: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses',
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(
