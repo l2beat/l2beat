@@ -7,56 +7,57 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 
-export function getDaEconomicSecurity() {
+export async function getDaEconomicSecurity() {
   noStore()
-  return cache(
-    async () => {
-      // TODO: It's probably better to not fetch all data at once
-
-      const stakes = Object.fromEntries(
-        (await db.stake.findMany()).map((s) => [s.id, s.thresholdStake]),
-      )
-
-      const currentPrices = Object.fromEntries(
-        (await db.currentPrice.findMany()).map((p) => [
-          p.coingeckoId,
-          p.priceUsd,
-        ]),
-      )
-
-      const arr = daLayers.map((daLayer) => {
-        if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
-          return undefined
-        }
-
-        const id = daLayer.id
-        const type = daLayer.economicSecurity.type
-
-        const thresholdStake = stakes[type]
-
-        if (!thresholdStake) {
-          return { id, status: 'StakeNotSynced' as const }
-        }
-
-        const currentPrice = daEconomicSecurityMeta[type]
-          ? currentPrices[daEconomicSecurityMeta[type].coingeckoId]
-          : undefined
-
-        if (!currentPrice) {
-          return { id, status: 'CurrentPriceNotSynced' as const }
-        }
-
-        return {
-          id,
-          status: 'Synced' as const,
-          economicSecurity:
-            (thresholdStake * BigInt(currentPrice * 100)) / 100n,
-        }
-      })
-
-      return keyBy(compact(arr), 'id')
-    },
-    ['daEconomicSecurity'],
-    { revalidate: 60 * 60 },
-  )
+  return await getCachedEconomicSecurity()
 }
+
+const getCachedEconomicSecurity = cache(
+  async () => {
+    // TODO: It's probably better to not fetch all data at once
+
+    const stakes = Object.fromEntries(
+      (await db.stake.findMany()).map((s) => [s.id, s.thresholdStake]),
+    )
+
+    const currentPrices = Object.fromEntries(
+      (await db.currentPrice.findMany()).map((p) => [
+        p.coingeckoId,
+        p.priceUsd,
+      ]),
+    )
+
+    const arr = daLayers.map((daLayer) => {
+      if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+        return undefined
+      }
+
+      const id = daLayer.id
+      const type = daLayer.economicSecurity.type
+
+      const thresholdStake = stakes[type]
+
+      if (!thresholdStake) {
+        return { id, status: 'StakeNotSynced' as const }
+      }
+
+      const currentPrice = daEconomicSecurityMeta[type]
+        ? currentPrices[daEconomicSecurityMeta[type].coingeckoId]
+        : undefined
+
+      if (!currentPrice) {
+        return { id, status: 'CurrentPriceNotSynced' as const }
+      }
+
+      return {
+        id,
+        status: 'Synced' as const,
+        economicSecurity: (thresholdStake * BigInt(currentPrice * 100)) / 100n,
+      }
+    })
+
+    return keyBy(compact(arr), 'id')
+  },
+  ['daEconomicSecurity'],
+  { revalidate: 60 * 60 },
+)
