@@ -17,6 +17,7 @@ export type ScalingProjectPurpose =
   | 'Privacy'
   | 'Universal'
   | 'Social'
+  | 'Storage'
   | 'RWA'
   | 'IoT'
   | 'Restaking'

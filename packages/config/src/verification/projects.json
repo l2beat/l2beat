@@ -70,6 +70,7 @@
   "kinto": true,
   "kroma": true,
   "l3x": true,
+  "lambda": true,
   "layer2finance": true,
   "layer2financezk": false,
   "lens": true,
