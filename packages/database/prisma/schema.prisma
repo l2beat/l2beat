@@ -192,6 +192,7 @@ model AggregatedL2Costs {
 
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
+  @@map("aggregated_l2_costs")
   @@ignore
 }
 
@@ -204,6 +205,7 @@ model AggregatedReports {
 
   @@id([unixTimestamp, projectId, reportType])
   @@index([projectId], map: "aggregated_reports_project_id_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model AggregatedReportsStatus {
@@ -213,14 +215,16 @@ model AggregatedReportsStatus {
   @@id([configHash, unixTimestamp])
   @@index([configHash], map: "aggregated_reports_status_config_hash_index")
   @@index([unixTimestamp], map: "aggregated_reports_status_unix_timestamp_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
-model Amounts {
+model Amount {
   timestamp       DateTime @map("timestamp") @db.Timestamp(6)
   amount          Decimal  @map("amount") @db.Decimal(80, 0)
   configurationId String   @map("configuration_id") @db.Char(12)
 
   @@id([configurationId, timestamp])
+  @@map("amounts")
 }
 
 model Balances {
@@ -232,6 +236,7 @@ model Balances {
 
   @@id([chainId, unixTimestamp, holderAddress, assetId])
   @@index([unixTimestamp], map: "balances_unix_timestamp_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model BalancesStatus {
@@ -241,6 +246,7 @@ model BalancesStatus {
 
   @@id([chainId, unixTimestamp])
   @@index([chainId, configHash], map: "balances_status_chain_id_config_hash_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model BlockNumbers {
@@ -249,14 +255,16 @@ model BlockNumbers {
   chainId       Int      @default(1) @map("chain_id")
 
   @@id([chainId, unixTimestamp])
+  @@ignore // TVL1 TO BE REMOVED
 }
 
-model BlockTimestamps {
+model BlockTimestamp {
   chain       String   @map("chain") @db.VarChar(255)
   timestamp   DateTime @map("timestamp") @db.Timestamp(6)
   blockNumber Int      @map("block_number")
 
   @@id([chain, timestamp])
+  @@map("block_timestamps")
 }
 
 model CirculatingSupplies {
@@ -266,6 +274,7 @@ model CirculatingSupplies {
   chainId           Int      @map("chain_id")
 
   @@id([chainId, unixTimestamp, assetId])
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model CoingeckoPrices {
@@ -276,6 +285,7 @@ model CoingeckoPrices {
   @@id([unixTimestamp, assetId])
   @@index([assetId], map: "coingecko_prices_asset_id_index")
   @@index([unixTimestamp], map: "coingecko_prices_unix_timestamp_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model DailyDiscovery {
@@ -288,6 +298,7 @@ model DailyDiscovery {
   discoveryJsonBlob Json     @map("discovery_json_blob")
 
   @@id([projectName, chainId, unixTimestamp])
+  @@map("daily_discovery")
 }
 
 model DiscoveryCache {
@@ -295,6 +306,8 @@ model DiscoveryCache {
   value       String @map("value")
   blockNumber Int    @map("block_number")
   chain       String @map("chain") @db.VarChar(255)
+
+  @@map("discovery_cache")
 }
 
 model Finality {
@@ -306,9 +319,10 @@ model Finality {
   averageStateUpdate     Int?     @map("average_state_update")
 
   @@id([projectId, timestamp])
+  @@map("finality")
 }
 
-model IndexerConfigurations {
+model IndexerConfiguration {
   id            String @id @map("id") @db.Char(12)
   indexerId     String @map("indexer_id") @db.VarChar(255)
   currentHeight Int?   @map("current_height")
@@ -317,6 +331,7 @@ model IndexerConfigurations {
   properties    String @map("properties")
 
   @@index([indexerId], map: "indexer_configurations_indexer_id_index")
+  @@map("indexer_configurations")
 }
 
 model IndexerState {
@@ -324,9 +339,11 @@ model IndexerState {
   safeHeight   Int       @map("safe_height")
   minTimestamp DateTime? @map("min_timestamp") @db.Timestamp(6)
   configHash   String?   @map("config_hash")
+
+  @@map("indexer_state")
 }
 
-model L2Costs {
+model L2Cost {
   trackedTxId       String            @map("tracked_tx_id") @db.VarChar(8)
   txHash            String            @unique(map: "l2_costs_tx_hash_unique") @map("tx_hash") @db.VarChar(255)
   timestamp         DateTime          @map("timestamp") @db.Timestamp(6)
@@ -336,14 +353,17 @@ model L2Costs {
   calldataLength    Int               @map("calldata_length")
   blobGasUsed       Int?              @map("blob_gas_used")
   blobGasPrice      BigInt?           @map("blob_gas_price")
-  trackedTxsConfigs TrackedTxsConfigs @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
+  trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
 
   @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
+  @@map("l2_costs")
 }
 
-model L2CostsPrices {
+model L2CostsPrice {
   timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
   priceUsd  Float    @map("price_usd") @db.Real
+
+  @@map("l2_costs_prices")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -352,7 +372,7 @@ model Liveness {
   blockNumber       Int               @map("block_number")
   txHash            String            @map("tx_hash") @db.VarChar(255)
   trackedTxId       String            @map("tracked_tx_id") @db.VarChar(8)
-  trackedTxsConfigs TrackedTxsConfigs @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
+  trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
 
   @@index([trackedTxId], map: "liveness_tracked_tx_id_index")
   @@ignore
@@ -364,6 +384,7 @@ model Prices {
   configurationId String   @map("configuration_id") @db.Char(12)
 
   @@id([configurationId, timestamp])
+  @@map("prices")
 }
 
 model Reports {
@@ -378,6 +399,7 @@ model Reports {
 
   @@id([chainId, reportType, unixTimestamp, assetId, projectId])
   @@index([unixTimestamp], map: "reports_unix_timestamp_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model ReportsStatus {
@@ -388,6 +410,7 @@ model ReportsStatus {
 
   @@id([chainId, reportType, unixTimestamp, configHash])
   @@index([chainId, reportType, configHash], map: "reports_status_chain_id_asset_type_config_hash_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model SequenceProcessor {
@@ -396,6 +419,8 @@ model SequenceProcessor {
   updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
   latest        Int      @map("latest")
   syncedOnce    Boolean  @default(false) @map("synced_once")
+
+  @@map("sequence_processor")
 }
 
 model TotalSupplies {
@@ -405,6 +430,7 @@ model TotalSupplies {
   chainId       Int      @map("chain_id")
 
   @@id([chainId, unixTimestamp, assetId])
+  @@ignore // TVL1 TO BE REMOVED
 }
 
 model TotalSuppliesStatus {
@@ -414,9 +440,10 @@ model TotalSuppliesStatus {
 
   @@id([chainId, unixTimestamp])
   @@index([chainId, configHash], map: "total_supplies_status_chain_id_config_hash_index")
+  @@ignore // TVL1 TO BE REMOVED
 }
 
-model TrackedTxsConfigs {
+model TrackedTxsConfig {
   id                      String     @id @map("id") @db.VarChar(255)
   projectId               String     @map("project_id") @db.VarChar(255)
   type                    String     @map("type") @db.VarChar(255)
@@ -425,14 +452,18 @@ model TrackedTxsConfigs {
   sinceTimestampInclusive DateTime?  @map("since_timestamp_inclusive") @db.Timestamp(6)
   untilTimestampExclusive DateTime?  @map("until_timestamp_exclusive") @db.Timestamp(6)
   lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
-  l2Costs                 L2Costs[]
+  l2Costs                 L2Cost[]
   liveness                Liveness[] @ignore
+
+  @@map("tracked_txs_configs")
 }
 
 model TvlCleaner {
   repositoryName        String    @id @map("repository_name") @db.VarChar(255)
   hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
   sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
+
+  @@map("tvl_cleaner")
 }
 
 model UpdateMonitor {
@@ -445,6 +476,7 @@ model UpdateMonitor {
   chainId           Int       @default(1) @map("chain_id")
 
   @@id([projectName, chainId])
+  @@map("update_monitor")
 }
 
 model UpdateNotifier {
@@ -458,9 +490,10 @@ model UpdateNotifier {
 
   @@index([blockNumber], map: "update_notifier_block_number_index")
   @@index([projectName], map: "update_notifier_project_name_index")
+  @@map("update_notifier")
 }
 
-model Values {
+model Value {
   timestamp         DateTime @map("timestamp") @db.Timestamp(6)
   projectId         String   @map("project_id") @db.VarChar(255)
   dataSource        String   @map("data_source") @db.VarChar(255)
@@ -472,6 +505,7 @@ model Values {
   nativeForTotal    BigInt?  @map("native_for_total")
 
   @@id([timestamp, projectId, dataSource])
+  @@map("values")
 }
 
 model VerifierStatus {
@@ -481,4 +515,5 @@ model VerifierStatus {
   lastUpdated DateTime @map("last_updated") @db.Timestamp(6)
 
   @@id([address, chainId])
+  @@map("verifier_status")
 }

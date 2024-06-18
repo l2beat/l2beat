@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/shared-pure": "*",
     "kysely": "^0.27.3",
     "prisma": "^5.15.0"
   },
