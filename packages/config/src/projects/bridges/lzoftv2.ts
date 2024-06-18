@@ -206,6 +206,103 @@ export const lzoftv2: Bridge = {
         tokens: ['ENA'],
         description: 'OFT adapter escrow for ENA on Ethereum.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xCB07992DE144bDeE56fDb66Fff2454B43243b052'),
+        tokens: ['CYBER'],
+        description: 'OFT adapter escrow 1 for CYBER on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x3d2fe83ea885C2E43A422C82C738847669708210'),
+        tokens: ['CYBER'],
+        description: 'OFT adapter escrow 2 for CYBER on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E'),
+        tokens: ['TRESTLE'],
+        description: 'OFT adapter escrow for TRESTLE on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2'),
+        tokens: ['wTIA'],
+        description: 'OFT adapter escrow for Trestle Wrapped TIA on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x6182995916d79DeDb60db1570776F9994fCdCA0a'),
+        tokens: ['PARAM'],
+        description: 'OFT adapter escrow for PARAM on Ethereum.',
+      }),
+      // not launched yet
+      // discovery.getEscrowDetails({
+      //   address: EthereumAddress('0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf'),
+      //   tokens: ['KIA'],
+      //   description: 'OFT adapter escrow for Kinetix Finance Token on Ethereum.',
+      // }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711'),
+        tokens: ['WOO'],
+        description: 'OFT adapter escrow for WOO on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6'),
+        tokens: ['MYT'],
+        description: 'OFT adapter escrow for MYSO Token on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D'),
+        tokens: ['weETH'],
+        description:
+          'OFT adapter escrow for ether.fi wrapped eETH on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E'),
+        tokens: ['sFRAX'],
+        description: 'OFT adapter escrow for sFRX on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A'),
+        tokens: ['sfrxETH'],
+        description: 'OFT adapter escrow for sfrxETH on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x23432452B720C80553458496D4D9d7C5003280d0'),
+        tokens: ['FXS'],
+        description: 'OFT adapter escrow for FraxShares on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x801642B6efB861fE624dAD704b7A747779d9B433'),
+        tokens: ['PEAS'],
+        description: 'OFT adapter escrow for Peapods Finance on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34'),
+        tokens: ['USDe'],
+        description: 'OFT adapter escrow for USDe on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2'),
+        tokens: ['sUSDe'],
+        description: 'OFT adapter escrow for staked USDe on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x1762c17f671FA27cE6C59256f5F28242de9274d0'),
+        tokens: ['TBANK'],
+        description: 'OFT adapter escrow for TaoBank token on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208'),
+        tokens: ['pxETH'],
+        description: 'OFT adapter escrow for Dinero Staked ETH on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D'),
+        tokens: ['MAVIA'],
+        description: 'OFT adapter escrow for MAVIA on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3'),
+        tokens: ['rsETH'],
+        description: 'OFT adapter escrow for Kelp DAO rsETH on Ethereum.',
+      }),
     ],
   },
   contracts: {
