@@ -2,8 +2,6 @@ import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getDaSummaryEntries } from '~/server/features/data-availability/get-da-summary-entries'
 import { DaSummaryTable } from './_components/table/da-summary-table'
 
-export const dynamic = "force-dynamic"
-
 export default async function Page() {
   const items = await getDaSummaryEntries()
 
