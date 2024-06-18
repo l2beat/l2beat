@@ -46,23 +46,14 @@ export class MulticallClient {
     requests: MulticallRequest[],
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
-    try {
-      if (this.config.sinceBlock > blockNumber) {
-        return this.executeIndividual(requests, blockNumber)
-      } else {
-        const batches = toBatches(requests, this.config.batchSize)
-        const batchedResults = await Promise.all(
-          batches.map((batch) => this.executeBatch(batch, blockNumber)),
-        )
-        return batchedResults.flat()
-      }
-    } catch (e) {
-      const ethersError = parseEthersError(e)
-
-      if (ethersError) {
-        throw ethersError
-      }
-      throw e
+    if (this.config.sinceBlock > blockNumber) {
+      return this.executeIndividual(requests, blockNumber)
+    } else {
+      const batches = toBatches(requests, this.config.batchSize)
+      const batchedResults = await Promise.all(
+        batches.map((batch) => this.executeBatch(batch, blockNumber)),
+      )
+      return batchedResults.flat()
     }
   }
 

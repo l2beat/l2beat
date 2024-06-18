@@ -1,9 +1,10 @@
 import { ContractValue } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
+import { isRevert } from '../../utils/isRevert'
 import { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -35,10 +36,44 @@ export class LimitedArrayHandler implements Handler {
     ])
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
-        provider.callMethod(address, this.fragment, [index]).then(
-          (value) => ({ type: 'success' as const, value }),
-          (error) => ({ type: 'error' as const, error }),
-        ),
+        provider
+          .raw(
+            `limitedArrayHandler.${address}.${this.fragment.name}.${provider.blockNumber}.${index}`,
+            async ({ baseProvider }) => {
+              const coder = new utils.Interface([
+                this.fragment.format(utils.FormatTypes.full),
+              ])
+              const callData = Bytes.fromHex(
+                coder.encodeFunctionData(this.fragment, [index]),
+              )
+
+              let decodedResult: utils.Result
+              try {
+                const result = Bytes.fromHex(
+                  await baseProvider.call(
+                    { to: address.toString(), data: callData.toString() },
+                    provider.blockNumber,
+                  ),
+                )
+                decodedResult = coder.decodeFunctionResult(
+                  this.fragment,
+                  result.toString(),
+                )
+              } catch (e) {
+                if (isRevert(e)) {
+                  return undefined
+                }
+                throw e
+              }
+              const extracted =
+                decodedResult.length === 1 ? decodedResult[0] : decodedResult
+              return extracted
+            },
+          )
+          .then(
+            (value) => ({ type: 'success' as const, value }),
+            (error) => ({ type: 'error' as const, error }),
+          ),
       ),
     )
     const values: ContractValue[] = []
