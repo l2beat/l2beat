@@ -662,7 +662,7 @@ export const zksyncera: Layer2 = {
       ],
       verifiers: [
         {
-          name: 'zkSyncEraVerifier',
+          name: 'ZKsyncEraVerifier',
           description:
             'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
           verified: 'no',
