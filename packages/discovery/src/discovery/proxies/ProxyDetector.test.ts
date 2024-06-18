@@ -75,6 +75,7 @@ describe(ProxyDetector.name, () => {
       'Polygon Extension proxy': async () => undefined,
       'Optics Beacon proxy': async () => undefined,
       'Axelar proxy': async () => undefined,
+      'LightLink proxy': async () => undefined,
       immutable: async () => undefined,
     } as Record<ManualProxyType, Detector>)
     const result = await detector.detectProxy(

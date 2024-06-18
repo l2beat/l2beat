@@ -2,8 +2,8 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 20083371,
-  "configHash": "0xbf701e1642d76c19a3b50880fa7f274a190513747c1083c2e9b9d6bcdd1699d7",
-  "version": 5,
+  "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
+  "version": 6,
   "contracts": [
     {
       "name": "Challenge",
@@ -83,9 +83,9 @@
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0x468b89D930ca7974196D7195033600B658011756",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0x468b89D930ca7974196D7195033600B658011756"],
       "sinceTimestamp": 1692155207,
@@ -102,9 +102,9 @@
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"],
       "sinceTimestamp": 1692154667,
@@ -144,9 +144,9 @@
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"],
       "sinceTimestamp": 1692155531,

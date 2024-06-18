@@ -142,6 +142,7 @@ function makeTechnologyContract(
     if (item.upgradeability?.type) {
       switch (item.upgradeability.type) {
         case 'EIP1967 proxy':
+        case 'LightLink proxy':
         case 'Custom':
         case 'ZeppelinOS proxy':
         case 'Eternal Storage proxy':

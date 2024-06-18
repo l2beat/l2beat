@@ -18,6 +18,7 @@
   },
   "overrides": {
     "LightLinkBridge": {
+      "proxyType": "LightLink proxy",
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -30,6 +31,7 @@
       }
     },
     "LightLinkERC20Bridge": {
+      "proxyType": "LightLink proxy",
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -42,6 +44,7 @@
       }
     },
     "L1BridgeRegistry": {
+      "proxyType": "LightLink proxy",
       "fields": {
         "proxiableUUID": {
           "handler": {
