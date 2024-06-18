@@ -39,7 +39,10 @@ export async function getDaEconomicSecurity() {
     return {
       id,
       status: 'Synced' as const,
-      economicSecurity: (thresholdStake * BigInt(currentPrice * 100)) / 100n,
+      // We're trading precision for ease of use in Client Components
+      economicSecurity: Number(
+        (thresholdStake * BigInt(currentPrice * 100)) / 100n,
+      ),
     }
   })
 
