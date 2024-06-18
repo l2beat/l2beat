@@ -18,6 +18,7 @@ import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
 import { lightlink } from './lightlink'
 import { lzOmnichain } from './lzOmnichain'
+import { lzoftv2 } from './lzoftv2'
 import { multichain } from './multichain'
 import { near } from './near'
 import { nomad } from './nomad'
@@ -68,6 +69,7 @@ export const bridges: Bridge[] = [
   hyphen,
   immutablezkevm,
   lzOmnichain,
+  lzoftv2,
   lightlink,
   multichain,
   near,

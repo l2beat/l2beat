@@ -1,11 +1,19 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, NUGGETS } from '../../common'
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzoftv2')
+const enaExecutor = EthereumAddress(
+  (
+    discovery.getContractValue('SendUln302', 'defaultExecutor_ENA') as [
+      number,
+      string,
+    ]
+  )[1],
+)
 
 export const lzoftv2: Bridge = {
   type: 'bridge',
@@ -14,7 +22,7 @@ export const lzoftv2: Bridge = {
     name: 'OFT (LayerZero v2)',
     slug: 'lzoftv2',
     warning:
-      'The security parameters of each individual Omnichain Fungible Token must be individually assessed, and can be changed by the developers.',
+      'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers.',
     category: 'Token Bridge',
     links: {
       websites: ['https://layerzero.network/'],
@@ -167,7 +175,6 @@ export const lzoftv2: Bridge = {
           isCritical: true,
         },
       ],
-      isIncomplete: true,
     },
   },
   config: {
@@ -182,20 +189,46 @@ export const lzoftv2: Bridge = {
   contracts: {
     addresses: [
       discovery.getContractDetails(
-        'TSS Oracle',
-        'Contract used to submit source chain block hashes. One of the default Oracles.',
+        'EndpointV2',
+        'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
+      ),
+      discovery.getContractDetails(
+        'SendUln302',
+        'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig. This contract accumulates fees configured by the OApp owners.',
+      ),
+      discovery.getContractDetails(
+        'ReceiveUln302',
+        'The default receive library for the LayerZero EndpointV2. This contract defines a framework and configuration options for receiving messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig.',
+      ),
+      discovery.getContractDetails(
+        'LayerZeroDVN',
+        'The LayerZero Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+      ),
+      discovery.getContractDetails(
+        'GoogleCloudDVN',
+        'The GoogleCloud Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+      ),
+      discovery.getContractDetails(
+        'PolyhedraDVN',
+        'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+      ),
+      discovery.getContractDetails(
+        'Treasury',
+        'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [],
   },
   permissions: [
+    ...discovery.getMultisigPermission(
+      'LayerZero Multisig',
+      'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
+    ),
     {
-      accounts: RELAYERS.map((address) =>
-        discovery.formatPermissionedAccount(address),
-      ),
-      name: 'Default Relayer',
+      accounts: [discovery.formatPermissionedAccount(enaExecutor)],
+      name: 'Default LayerZero Executor',
       description:
-        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+        'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
     },
   ],
   knowledgeNuggets: [

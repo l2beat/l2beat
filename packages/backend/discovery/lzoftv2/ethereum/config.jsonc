@@ -1,0 +1,98 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "lzoftv2",
+  "initialAddresses": [
+    "0x1a44076050125825900e736c501f859c50fE728c",
+    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+    "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+    // escrows, OApps, OFTs from here
+    "0x58538e6A46E07434d7E7375Bc268D3cb839C0133" // ENAOFTAdapter
+  ],
+  "names": {
+    "0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
+    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": "SendUln302",
+    "0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302",
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
+    "0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "LayerZeroDVN",
+    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "GoogleCloudDVN",
+    "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN"
+  },
+  "overrides": {
+    "PolyhedraDVN": {
+      "ignoreRelatives": [
+        "layerZeroEndpointV1",
+        "mptValidator",
+        "owner",
+        "zkMptValidator"
+      ]
+    },
+    "SendUln302": {
+      "fields": {
+        "defaultExecutor_ENA": {
+          "description": "The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getExecutorConfig",
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110] // OApp (ENAOFTAdapter), remoteEID (Arbitrum)
+          }
+        },
+        "ulnConfig_ENA": {
+          "description": "The verification config of the ENAOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
+          "handler": {
+            "method": "getUlnConfig",
+            "type": "call",
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110] // OApp (ENAOFTAdapter), remoteEID (Arbitrum)
+          }
+        },
+        "ulnConfig_sfrxETH": {
+          "description": "The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
+          "handler": {
+            "method": "getUlnConfig",
+            "type": "call",
+            "args": ["0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A", 30110] // OApp (sfrxETH), remoteEID (Arbitrum)
+          }
+        },
+        "ulnConfig_CYBER": {
+          "description": "The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
+          "handler": {
+            "method": "getUlnConfig",
+            "type": "call",
+            "args": ["0xCB07992DE144bDeE56fDb66Fff2454B43243b052", 30102] // OApp (CYBER), remoteEID (BSC)
+          }
+        }
+      }
+    },
+    "EndpointV2": {
+      "fields": {
+        "getRegisteredLibraries": {
+          "description": "All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.",
+          "severity": "HIGH"
+        },
+        "defaultSendLib_ENA": {
+          "description": "The default send lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getSendLibrary",
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110] // OApp (ENAOFTAdapter), remoteEID (Arbitrum)
+          }
+        },
+        "defaultReceiveLib_rsETH": {
+          "description": "The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getReceiveLibrary",
+            "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", 30110] // OApp (RSETH_OFTAdapter), remoteEID (Arbitrum)
+          }
+        }
+      }
+    },
+    "0x58538e6A46E07434d7E7375Bc268D3cb839C0133": {
+      "ignoreMethods": ["token"],
+      "ignoreRelatives": ["owner"]
+    }
+  }
+}
