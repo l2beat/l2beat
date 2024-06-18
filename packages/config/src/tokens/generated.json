@@ -5239,6 +5239,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "zksync2:zk-zksync",
+      "name": "ZKsync",
+      "coingeckoId": "zksync",
+      "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "symbol": "ZK",
+      "decimals": 18,
+      "deploymentTimestamp": 1716317326,
+      "coingeckoListingTimestamp": 1718668800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38043/large/ZKTokenBlack.png?1718614502",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "zksync2:zorro-zorro",
       "name": "Zorro",
       "coingeckoId": "zorro",
