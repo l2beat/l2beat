@@ -4,9 +4,9 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { DaBridgeCell } from './da-bridge-cell'
-import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 

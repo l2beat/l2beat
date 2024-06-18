@@ -1,6 +1,6 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { DaSummaryTable } from './_components/table/da-summary-table'
 import { getDaSummaryEntries } from '~/server/features/data-availability/get-da-summary-entries'
+import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
   const items = await getDaSummaryEntries()

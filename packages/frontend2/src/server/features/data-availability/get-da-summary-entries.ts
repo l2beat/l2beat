@@ -1,8 +1,8 @@
 import { DaLayerKindDisplay, daLayers, layer2s } from '@l2beat/config'
-import { toDaBridge } from './utils/get-da-bridge'
-import { getDaRisks } from './utils/get-da-risks'
 import { notUndefined } from '@l2beat/shared-pure'
+import { toDaBridge } from './utils/get-da-bridge'
 import { getDaEconomicSecurity } from './utils/get-da-economic-security'
+import { getDaRisks } from './utils/get-da-risks'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaEconomicSecurity()
