@@ -34,6 +34,22 @@ export class LimitedArrayHandler implements Handler {
       ') ',
       this.fragment.name + '(i)',
     ])
+
+    const [firstPart, returnTypePart] = this.fragment
+      .format(utils.FormatTypes.full)
+      .split(' returns ')
+    let newAbi: string
+    if (this.fragment.outputs?.length === 1) {
+      newAbi = `${firstPart} returns (${returnTypePart
+        ?.slice(1)
+        .slice(0, -1)}[])`
+    } else {
+      newAbi = `${firstPart} returns (tuple(${returnTypePart
+        ?.slice(1)
+        .slice(0, -1)})[])`
+    }
+    const arrayFragment = toFunctionFragment(newAbi)
+
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
         provider
@@ -95,12 +111,13 @@ export class LimitedArrayHandler implements Handler {
           field: this.field,
           value: values,
           error: 'Too many values. Update configuration to explore fully',
+          fragment: arrayFragment,
         }
       } else {
-        return { field: this.field, value: values }
+        return { field: this.field, value: values, fragment: arrayFragment }
       }
     }
 
-    return { field: this.field, error }
+    return { field: this.field, error, fragment: arrayFragment }
   }
 }

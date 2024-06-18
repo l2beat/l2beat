@@ -451,14 +451,14 @@ function orderLogs(a: providers.Log, b: providers.Log) {
 }
 
 function parseCacheEntry(entry: any): any {
-    return JSON.parse(entry, (_, value: unknown) => {
-        if (
-            typeof value === 'object' &&
-            value !== null &&
-        Reflect.get(value, 'type') === 'BigNumber'
-        ) {
-            return BigNumber.from(Reflect.get(value, 'hex'))
-        }
-        return value
-    })
+  return JSON.parse(entry, (_, value: unknown) => {
+    if (
+      typeof value === 'object' &&
+      value !== null &&
+      Reflect.get(value, 'type') === 'BigNumber'
+    ) {
+      return BigNumber.from(Reflect.get(value, 'hex'))
+    }
+    return value
+  })
 }
