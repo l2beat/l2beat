@@ -64,7 +64,9 @@ export class BatchingAndCachingProvider {
       return JSON.parse(cached)
     }
     const result = await fn(this.provider.getRawProviders())
-    entry.write(JSON.stringify(result))
+    if (result !== undefined) {
+      entry.write(JSON.stringify(result))
+    }
     return result
   }
 
@@ -351,9 +353,7 @@ export class BatchingAndCachingProvider {
 
     const uniqueNested = new Set(items.flatMap((x) => x.items))
     for (const nested of uniqueNested) {
-      nested.logRequest.resolve(
-        nested.logs.sort(orderLogs),
-      )
+      nested.logRequest.resolve(nested.logs.sort(orderLogs))
     }
   }
 
