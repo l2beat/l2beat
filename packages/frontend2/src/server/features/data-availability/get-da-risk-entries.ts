@@ -12,3 +12,5 @@ export async function getDaRiskEntries() {
     })),
   )
 }
+
+export type DaRiskEntry = Awaited<ReturnType<typeof getDaRiskEntries>>[number]

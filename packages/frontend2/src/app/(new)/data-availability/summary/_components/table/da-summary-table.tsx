@@ -19,11 +19,11 @@ import {
 import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
 import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
-import { type RouterOutputs } from '~/trpc/react'
 import { columns } from './columns'
+import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 
 interface Props {
-  items: RouterOutputs['dataAvailability']['summary']
+  items: DaSummaryEntry[]
 }
 
 export function DaSummaryTable({ items }: Props) {

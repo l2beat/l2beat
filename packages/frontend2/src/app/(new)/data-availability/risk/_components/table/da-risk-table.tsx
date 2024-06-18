@@ -19,11 +19,11 @@ import {
 import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
 import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
-import { type RouterOutputs } from '~/trpc/react'
 import { columns } from './columns'
+import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
 
 interface Props {
-  items: RouterOutputs['dataAvailability']['risk']
+  items: DaRiskEntry[]
 }
 
 export function DaRiskTable({ items }: Props) {

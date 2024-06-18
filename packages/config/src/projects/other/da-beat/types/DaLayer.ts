@@ -54,6 +54,9 @@ export type DacDaLayer = CommonDaLayer & {
 }
 
 export type CommonDaLayer = {
+  /**
+   * Unique identifier of the data availability layer
+   */
   id: string
 
   display: {

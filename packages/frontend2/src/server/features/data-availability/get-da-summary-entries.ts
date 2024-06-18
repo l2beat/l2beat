@@ -27,3 +27,7 @@ export async function getDaSummaryEntries() {
     })),
   )
 }
+
+export type DaSummaryEntry = Awaited<
+  ReturnType<typeof getDaSummaryEntries>
+>[number]

@@ -1,15 +1,7 @@
-import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import { RiskCell } from '~/app/_components/table/risk-cell'
-import { type DaSummaryEntryBridge } from '~/server/api/routers/data-availability/utils/get-da-bridge'
 import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
-
-export type DaRiskEntry = {
-  slug: string
-  daLayer: string
-  daBridge: DaSummaryEntryBridge | null
-  risks: DaBridgeRisks & DaLayerRisks
-}
+import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
