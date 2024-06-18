@@ -286,7 +286,7 @@ model L2Cost {
   @@map("l2_costs")
 }
 
-model L2CostsPrice {
+model L2CostPrice {
   timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
   priceUsd  Float    @map("price_usd") @db.Real
 

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@l2beat/shared-pure": "*",
+    "@l2beat/shared": "*",
     "kysely": "^0.27.3",
     "prisma": "^5.15.0"
   },
