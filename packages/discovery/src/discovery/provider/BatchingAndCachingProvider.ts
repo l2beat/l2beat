@@ -61,7 +61,7 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry(cacheKey, [], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      return JSON.parse(cached)
+      return parseCacheEntry(cached)
     }
     const result = await fn(this.provider.getRawProviders())
     if (result !== undefined) {
@@ -190,7 +190,7 @@ export class BatchingAndCachingProvider {
       )
       const cached = entry.read()
       if (cached !== undefined) {
-        return JSON.parse(cached)
+        return parseCacheEntry(cached)
       }
       const logs = await this.provider.getLogs(
         address,
@@ -249,7 +249,7 @@ export class BatchingAndCachingProvider {
           missingTopics.push(checked.logRequest.topic0[i]!)
           return []
         }
-        return JSON.parse(cached) as providers.Log[]
+        return parseCacheEntry(cached) as providers.Log[]
       })
 
       if (missingTopics.length === 0) {
@@ -369,16 +369,7 @@ export class BatchingAndCachingProvider {
     if (cached !== undefined) {
       // This recovers BigNumber instances from the cache
       // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
-      return JSON.parse(cached, (_, value: unknown) => {
-        if (
-          typeof value === 'object' &&
-          value !== null &&
-          Reflect.get(value, 'type') === 'BigNumber'
-        ) {
-          return BigNumber.from(Reflect.get(value, 'hex'))
-        }
-        return value
-      })
+      return parseCacheEntry(cached)
     }
 
     const transaction = await this.provider.getTransaction(transactionHash)
@@ -399,7 +390,7 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      return DebugTransactionCallResponse.parse(JSON.parse(cached))
+      return DebugTransactionCallResponse.parse(parseCacheEntry(cached))
     }
     const trace = await this.provider.getDebugTrace(transactionHash)
     entry.write(JSON.stringify(trace))
@@ -428,7 +419,7 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry('getSource', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      return JSON.parse(cached)
+      return parseCacheEntry(cached)
     }
     const source = await this.provider.getSource(address)
     entry.write(JSON.stringify(source))
@@ -441,7 +432,7 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry('getDeployment', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      const parsed = JSON.parse(cached)
+      const parsed = parseCacheEntry(cached)
       parsed.timestamp = new UnixTime(parsed.timestamp)
       return parsed
     }
@@ -457,4 +448,17 @@ function orderLogs(a: providers.Log, b: providers.Log) {
     return blocks
   }
   return a.logIndex - b.logIndex
+}
+
+function parseCacheEntry(entry: any): any {
+    return JSON.parse(entry, (_, value: unknown) => {
+        if (
+            typeof value === 'object' &&
+            value !== null &&
+        Reflect.get(value, 'type') === 'BigNumber'
+        ) {
+            return BigNumber.from(Reflect.get(value, 'hex'))
+        }
+        return value
+    })
 }
