@@ -1,11 +1,11 @@
 import { daLayers } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
 import { compact, keyBy } from 'lodash'
-import { db } from '~/server/database'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { db } from '~/server/database'
 
 export async function getDaEconomicSecurity() {
   noStore()
