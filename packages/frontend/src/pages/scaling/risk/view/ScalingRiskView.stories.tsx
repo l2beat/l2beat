@@ -634,14 +634,14 @@ type Story = StoryObj<typeof ScalingRiskView>
 export const Active: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
   },
 }
 
 export const ActiveWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByText('Layer 2 projects'), { delay: 25 })
+    await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
     await userEvent.click(canvas.getByText('Rollups only'))
   },
 }
