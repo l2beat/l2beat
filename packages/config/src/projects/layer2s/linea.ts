@@ -166,6 +166,25 @@ export const linea: Layer2 = {
           // first tx with blobs
           // https://etherscan.io/tx/0x4d03b7e1950256de257ff95b52fac047faeb11600c5975abe7e0ccbc7be7ecfb
           sinceTimestampInclusive: new UnixTime(1711449407),
+          untilTimestampExclusive: new UnixTime(1717588271),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x42fbe842',
+          functionSignature:
+            'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)',
+          // first tx with blobs
+          // https://etherscan.io/tx/0x88bca59bc9581b15b39379e5c68a6d0e4847eae04185c838f1c48c9b67abf87a
+          sinceTimestampInclusive: new UnixTime(1717588271),
         },
       },
       {
@@ -223,7 +242,7 @@ export const linea: Layer2 = {
     finality: {
       type: 'Linea',
       lag: 0,
-      minTimestamp: new UnixTime(1707831168),
+      minTimestamp: new UnixTime(1717588271),
       stateUpdate: 'disabled',
     },
   },

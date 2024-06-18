@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 19973942,
+  "blockNumber": 20110229,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
   "version": 5,
   "contracts": [
@@ -54,7 +54,10 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x0000000000000000000000000000000000000020"]
+            "members": [
+              "0x0000000000000000000000000000000000000020",
+              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+            ]
           },
           "APP_GOVERNOR": {
             "adminRole": "APP_ROLE_ADMIN",
@@ -78,7 +81,10 @@
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x0000000000000000000000000000000000000020"]
+            "members": [
+              "0x0000000000000000000000000000000000000020",
+              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+            ]
           },
           "SECURITY_AGENT": {
             "adminRole": "SECURITY_ADMIN",
@@ -134,16 +140,16 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1052,
+        "l1ToL2MessageNonce": 1315,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
         "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
-        "stateBlockHash": "1288577259829761600856998918601454813687625810783901986064054512540425731782",
-        "stateBlockNumber": 60376,
-        "stateRoot": "614076424864742110765964266502775752616746334021834161048194462169648379404",
+        "stateBlockHash": "3372722561140208503383707884949867470565814679749854080304371264014443864033",
+        "stateBlockNumber": 65914,
+        "stateRoot": "1231722082748889765094455020598024030309426519864872877242410087048957831784",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },

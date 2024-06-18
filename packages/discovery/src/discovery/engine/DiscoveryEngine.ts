@@ -6,7 +6,9 @@ import {
   AddressAnalyzer,
   AddressesWithTemplates,
   Analysis,
+  AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
+import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -16,7 +18,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 5
+export const DISCOVERY_LOGIC_VERSION = 6
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -127,6 +129,17 @@ export class DiscoveryEngine {
 
       depth++
     }
+
+    const analyzedContracts = Object.values(resolved).filter(
+      (a): a is AnalyzedContract => a.type === 'Contract',
+    )
+    const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
+    analyzedContracts.forEach((a) => {
+      a.combinedMeta = mergeContractMeta(
+        a.selfMeta,
+        inverted[a.address.toString()],
+      )
+    })
 
     this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))

@@ -1,19 +1,18 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
-import { underReviewL2 } from './templates/underReview'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-export const hychain: Layer2 = underReviewL2({
-  id: 'hychain',
+const discovery = new ProjectDiscovery('hychain', 'ethereum')
+
+export const hychain: Layer2 = orbitStackL2({
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'HYCHAIN',
     slug: 'hychain',
     description:
-      'HYCHAIN is a gaming-focused AnyTrust Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
+      'HYCHAIN is a gaming-focused Orbit stack Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
     purposes: ['Gaming', 'NFT'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://hychain.com'],
       apps: ['https://bridge.hychain.com'],
@@ -21,27 +20,38 @@ export const hychain: Layer2 = underReviewL2({
       explorers: ['https://explorer.hychain.com'],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
-        'https://twitter.com/HYCHAIN_GAMES',
+        'https://x.com/HYCHAIN_GAMES',
         'https://discord.gg/hytopiagg',
         'https://hychain.substack.com/',
       ],
     },
     activityDataSource: 'Blockchain RPC',
   },
+  discovery,
+  nativeToken: 'TOPIA',
   associatedTokens: ['TOPIA'],
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://rpc.hychain.com/http',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  escrows: [
-    // bridge is only for TOPIA token
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  rpcUrl: 'https://rpc.hychain.com/http',
+  nonTemplatePermissions: [
     {
-      address: EthereumAddress('0x73C6af7029E714DFf1F1554F88b79B335011Da68'),
-      sinceTimestamp: new UnixTime(1701972000),
-      tokens: '*',
+      name: 'Hychain Admin EOA',
+      accounts: [
+        {
+          address: discovery.getAccessControlField(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ).members[0],
+          type: 'EOA',
+        },
+      ],
+      description:
+        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
     },
+    ...discovery.getMultisigPermission(
+      'HychainMultisig',
+      'Can execute upgrades via the UpgradeExecutor.',
+    ),
   ],
 })

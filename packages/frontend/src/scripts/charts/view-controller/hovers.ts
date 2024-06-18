@@ -7,11 +7,14 @@ import { isMobile } from '../../utils/isMobile'
 import { POINT_CLASS_NAMES, PointShapeDefinition, PointStyle } from '../styles'
 import { TokenInfo } from '../types'
 
+const horizontalSeparator = `<hr class="w-full border-gray-200 dark:border-gray-650 md:border-t-1 my-1"/>`
+
 export function renderMilestoneHover(milestone: Milestone) {
   return renderHover([
     renderDateRow(formatDate(milestone.date.slice(0, 10))),
     renderNameRow(milestone.name),
-    milestone.description && renderDescriptionRow(milestone.description),
+    milestone.description &&
+      renderDescriptionRow({ description: milestone.description }),
     isMobile() && renderMilestoneLink(milestone.link),
   ])
 }
@@ -85,7 +88,7 @@ export function renderDetailedTvlHover(
         showLessThanMinimum: false,
       }),
     }),
-    renderHorizontalSeparator(),
+    horizontalSeparator,
     renderDetailedRow({
       title: 'Canonical',
       value: formatCurrency(selectedCanonical, currency, {
@@ -126,7 +129,7 @@ export function renderCostsHover(data: CostsData) {
       title: 'Total',
       value: data.total,
     }),
-    renderHorizontalSeparator(),
+    horizontalSeparator,
     renderDetailedRow({
       title: 'Calldata',
       value: data.calldata,
@@ -162,6 +165,7 @@ export interface ActivityData {
   date: string
   tps: number
   ethTps: number
+  isOutOfSync: boolean
 }
 
 export function renderActivityHover(
@@ -185,8 +189,18 @@ export function renderActivityHover(
       renderDetailedRow({
         title: 'Average TPS',
       }),
-      renderHorizontalSeparator(),
+      horizontalSeparator,
       projectTpsRow,
+      ...(data.isOutOfSync
+        ? [
+            horizontalSeparator,
+            renderDescriptionRow({
+              description:
+                'Data is estimated, because some of the projects are not synced',
+              className: 'dark:text-gray-50 text-gray-700 text-xs leading-4',
+            }),
+          ]
+        : []),
     ])
   }
 
@@ -196,9 +210,19 @@ export function renderActivityHover(
       renderDetailedRow({
         title: 'Average TPS',
       }),
-      renderHorizontalSeparator(),
+      horizontalSeparator,
       projectTpsRow,
       ethTpsRow,
+      ...(data.isOutOfSync
+        ? [
+            horizontalSeparator,
+            renderDescriptionRow({
+              description:
+                'Data is estimated, because some of the projects are not synced',
+              className: 'dark:text-gray-50 text-gray-700 text-xs leading-4',
+            }),
+          ]
+        : []),
     ])
   } else {
     return renderHover([
@@ -206,9 +230,19 @@ export function renderActivityHover(
       renderDetailedRow({
         title: 'Average TPS',
       }),
-      renderHorizontalSeparator(),
+      horizontalSeparator,
       ethTpsRow,
       projectTpsRow,
+      ...(data.isOutOfSync
+        ? [
+            horizontalSeparator,
+            renderDescriptionRow({
+              description:
+                'Data is estimated, because some of the projects are not synced',
+              className: 'dark:text-gray-50 text-gray-700 text-xs leading-4',
+            }),
+          ]
+        : []),
     ])
   }
 }
@@ -254,10 +288,6 @@ function renderHover(rows: (string | undefined | false)[]) {
 
 function renderDateRow(date: string) {
   return `<div class="mb-1 whitespace-nowrap">${date}</div>`
-}
-
-function renderHorizontalSeparator() {
-  return `<hr class="w-full border-gray-200 dark:border-gray-650 md:border-t-1 my-1"/>`
 }
 
 interface DetailedRowProps {
@@ -323,6 +353,9 @@ function renderNameRow(name: string) {
   <span class='ml-4 text-left'>${name}</span></div>`
 }
 
-function renderDescriptionRow(description: string) {
-  return `<div class="max-w-[216px] mb-1 text-left">${description}</div>`
+function renderDescriptionRow({
+  description,
+  className,
+}: { description: string; className?: string }) {
+  return `<div class="max-w-[216px] mb-1 text-left ${className}">${description}</div>`
 }

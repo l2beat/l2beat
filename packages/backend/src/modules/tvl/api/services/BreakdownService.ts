@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
+import { safeGetTokenByAssetId } from '@l2beat/config'
 import {
   AssetId,
   CanonicalAssetBreakdownData,
@@ -101,7 +102,9 @@ export class BreakdownService {
           }
           break
         }
-        case 'external':
+        case 'external': {
+          const token = safeGetTokenByAssetId(priceConfig.assetId)
+
           breakdown.external.push({
             assetId: priceConfig.assetId,
             chainId: this.$.chainConverter.toChainId(config.chain),
@@ -110,8 +113,14 @@ export class BreakdownService {
             usdPrice: price.toString(),
             tokenAddress:
               config.address === 'native' ? undefined : config.address,
+            bridge: config.bridge ?? {
+              name: token?.bridgedUsing?.bridge ?? 'Unknown',
+              slug: token?.bridgedUsing?.slug,
+              warning: token?.bridgedUsing?.warning,
+            },
           })
           break
+        }
         case 'native':
           breakdown.native.push({
             assetId: priceConfig.assetId,

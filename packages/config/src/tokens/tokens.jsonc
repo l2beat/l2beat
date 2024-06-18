@@ -555,6 +555,10 @@
       "address": "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44"
     },
     {
+      "symbol": "LAMB",
+      "address": "0x8971f9fd7196e5cEE2C1032B50F656855af7Dd26"
+    },
+    {
       "symbol": "LDO",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
     },
@@ -2659,6 +2663,12 @@
       "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ZK",
+      "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "bobanetwork": [
@@ -2799,6 +2809,51 @@
         "bridge": "Free Bridge"
       },
       "coingeckoId": "merlin-s-seal-btc"
+    }
+  ],
+  "real": [
+    {
+      "symbol": "USTB",
+      "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      },
+      "coingeckoId": "real-us-t-bill"
+    },
+    {
+      "symbol": "PEARL",
+      "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      },
+      "coingeckoId": "pearl"
+    },
+    {
+      "symbol": "arcUSD",
+      "address": "0xaec9e50e3397f9ddc635c6c429c8c7eca418a143",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      },
+      "coingeckoId": "arcana-2"
+    },
+    {
+      "symbol": "MORE",
+      "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ]
 }

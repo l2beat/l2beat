@@ -64,6 +64,27 @@ export const metis: Layer2 = {
   stage: {
     stage: 'NotApplicable',
   },
+  chainConfig: {
+    name: 'metis',
+    chainId: 1088,
+    explorerUrl: 'https://explorer.metis.io',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 2338552,
+        version: '3',
+        // TODO: fix this
+        isNativeBalanceSupported: false,
+      },
+    ],
+    coingeckoPlatform: 'metis',
+  },
   config: {
     associatedTokens: ['Metis'],
     escrows: [

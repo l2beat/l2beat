@@ -22,6 +22,14 @@ interface OldProjectEscrow {
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
+  /** Bridge used for this escrow */
+  bridge?: {
+    name: string
+    /** Slug is used for the URL of the bridge on L2BEAT */
+    slug?: string
+    warning?: string
+  }
 }
 
 interface NewProjectEscrow {
@@ -47,4 +55,12 @@ interface NewProjectEscrow {
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
+  source?: 'canonical' | 'external' | 'native'
+  /** Bridge used for this escrow */
+  bridge?: {
+    name: string
+    /** Slug is used for the URL of the bridge on L2BEAT */
+    slug?: string
+    warning?: string
+  }
 }

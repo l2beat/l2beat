@@ -26,7 +26,7 @@ export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string
   icon: string
   description: string
-  hasTrustedSetup: boolean
+  trustedSetup: string
   linkToMainProjectDetails: string | undefined
 }
 
@@ -48,9 +48,11 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           <Section title="Description">
             <Markdown>{props.details.description}</Markdown>
           </Section>
-          <Section title="List of required tools">
-            <RequiredTools items={props.details.requiredTools} />
-          </Section>
+          {props.details.requiredTools.length > 0 && (
+            <Section title="List of required tools">
+              <RequiredTools items={props.details.requiredTools} />
+            </Section>
+          )}
         </div>
       </PageContent>
     </DashboardLayout>
@@ -100,7 +102,7 @@ function Header(props: ZkCatalogProjectPageProps) {
           title="Trusted setup"
           tooltip="Shows if a trusted setup is used anywhere in the proving stack."
         >
-          {props.details.hasTrustedSetup ? 'Yes' : 'No'}
+          {props.details.trustedSetup}
         </HeaderItem>
       </div>
     </header>

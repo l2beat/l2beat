@@ -31,8 +31,12 @@ export class ApiServer {
       logger.info('Bugsnag koa integration enabled')
     }
 
-    this.app.use(createApiMetrics())
     this.app.use(createApiLogger(this.logger))
+    this.app.on('error', (err: Error, ctx: Koa.Context) => {
+      this.logger.error('Request failed', err, ctx.toJSON())
+    })
+
+    this.app.use(createApiMetrics())
     this.app.use(conditional())
     this.app.use(etag())
 
