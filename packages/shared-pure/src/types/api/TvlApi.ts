@@ -97,6 +97,13 @@ export type CanonicalAssetBreakdownData = z.infer<
 
 export const ExternalAssetBreakdownData = BaseAssetBreakdownData.extend({
   tokenAddress: z.optional(branded(z.string(), EthereumAddress)),
+  bridge: z.optional(
+    z.object({
+      name: z.string(),
+      slug: z.optional(z.string()),
+      warning: z.optional(z.string()),
+    }),
+  ),
 })
 
 export type ExternalAssetBreakdownData = z.infer<
