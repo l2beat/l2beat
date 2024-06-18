@@ -1,4 +1,4 @@
-import { exampleRouter } from '~/server/api/routers/example'
+import { dataAvailabilityRouter } from '~/server/api/routers/data-availability/router'
 import { createCallerFactory, router } from '~/server/api/trpc'
 
 /**
@@ -7,7 +7,7 @@ import { createCallerFactory, router } from '~/server/api/trpc'
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = router({
-  example: exampleRouter,
+  dataAvailability: dataAvailabilityRouter,
 })
 
 // export type definition of API

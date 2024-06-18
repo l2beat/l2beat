@@ -1,24 +1,51 @@
-import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { formatNumber } from '~/utils/format-number'
-import { type DaSummaryEntryBridge } from '../../../_utils/get-da-bridge'
-import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
 import { DaBridgeCell } from './da-bridge-cell'
+import { type RouterOutputs } from '~/trpc/react'
+import { type DaBridgeRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaBridge'
+import { type DaLayerRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaLayer'
+import { type RosetteValue } from '~/app/_components/rosette/types'
 
-export type DaSummaryEntry = {
-  slug: string
-  daLayer: string
-  daBridge: DaSummaryEntryBridge | null
-  risks: DaBridgeRisks & DaLayerRisks
-  layerType: string
-  tvs: number
-  economicSecurity: number
-  usedBy: string[]
-}
+export type DaSummaryEntry =
+  RouterOutputs['dataAvailability']['summary'][number]
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
+
+export function mapRisksToRosetteValues(
+  risks: DaBridgeRisks & DaLayerRisks,
+): RosetteValue[] {
+  const values: RosetteValue[] = [
+    {
+      name: 'Economic security',
+      value: risks.economicSecurity.value,
+      sentiment: risks.economicSecurity.sentiment,
+    },
+    {
+      name: 'Fraud detection',
+      value: risks.fraudDetection.value,
+      sentiment: risks.fraudDetection.sentiment,
+    },
+    {
+      name: 'Attestations',
+      value: risks.attestations.value,
+      sentiment: risks.attestations.sentiment,
+    },
+    {
+      name: 'Exit window',
+      value: risks.exitWindow.value,
+      sentiment: risks.exitWindow.sentiment,
+    },
+    {
+      name: 'Accessibility',
+      value: risks.accessibility.value,
+      sentiment: risks.accessibility.sentiment,
+    },
+  ]
+
+  return values
+}
 
 export const columns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -35,7 +62,7 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <RosetteCell values={mapDaRisksToRosetteValues(ctx.getValue())} />
+      <RosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
     ),
     enableSorting: false,
     meta: {
@@ -51,7 +78,14 @@ export const columns = [
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
-    cell: (ctx) => `$${formatNumber(ctx.getValue(), 2)}`,
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value) return EM_DASH
+      if (value.status === 'StakeNotSynced') return 'Stake not synced'
+      if (value.status === 'CurrentPriceNotSynced')
+        return 'Current price not synced'
+      return `$${formatNumber(Number(value.economicSecurity), 2)}`
+    },
   }),
   columnHelper.accessor('usedBy', {
     header: 'Used by',
