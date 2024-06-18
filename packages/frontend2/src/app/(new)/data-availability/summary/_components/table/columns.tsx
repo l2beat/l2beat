@@ -1,12 +1,12 @@
+import { type DaBridgeRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaBridge'
+import { type DaLayerRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaLayer'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
+import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type RouterOutputs } from '~/trpc/react'
 import { formatNumber } from '~/utils/format-number'
 import { DaBridgeCell } from './da-bridge-cell'
-import { type RouterOutputs } from '~/trpc/react'
-import { type DaBridgeRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaBridge'
-import { type DaLayerRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaLayer'
-import { type RosetteValue } from '~/app/_components/rosette/types'
 
 export type DaSummaryEntry =
   RouterOutputs['dataAvailability']['summary'][number]

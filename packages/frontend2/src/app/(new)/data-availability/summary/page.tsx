@@ -1,6 +1,6 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { DaSummaryTable } from './_components/table/da-summary-table'
 import { api } from '~/trpc/server'
+import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {
   const items = await api.dataAvailability.summary()

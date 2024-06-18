@@ -1,7 +1,7 @@
+import { createRepositories } from '@l2beat/database'
 import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-import { createRepositories } from '@l2beat/database'
 import { env } from '~/env'
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
