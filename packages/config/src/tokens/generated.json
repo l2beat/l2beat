@@ -4781,6 +4781,21 @@
       }
     },
     {
+      "id": "optimism:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "bridged-usdt",
+      "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1706918400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -5398,6 +5413,36 @@
       }
     },
     {
+      "id": "metis:weth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "address": "0x420000000000000000000000000000000000000A",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1637270379,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 1088,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "metis:m.usdt-usdt-token",
+      "name": "USDT Token",
+      "coingeckoId": "tether",
+      "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+      "symbol": "m.USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1637429315,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1088,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "polygonzkevm:frax-frax",
       "name": "Frax",
       "coingeckoId": "frax",
@@ -5588,15 +5633,31 @@
       }
     },
     {
-      "id": "mantle:eth-ether",
+      "id": "mantle:weth-ether",
       "name": "Ether",
-      "coingeckoId": "ethereum",
-      "symbol": "ETH",
+      "coingeckoId": "wrapped-ether-mantle-bridge",
+      "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+      "symbol": "WETH",
       "decimals": 18,
       "deploymentTimestamp": 1688314886,
-      "coingeckoListingTimestamp": 1688314886,
+      "coingeckoListingTimestamp": 1689724800,
       "category": "ether",
-      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850",
+      "chainId": 5000,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "mantle:meth-meth",
+      "name": "mETH",
+      "coingeckoId": "mantle-staked-ether",
+      "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1700538657,
+      "coingeckoListingTimestamp": 1701993600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "chainId": 5000,
       "source": "canonical",
       "supply": "zero"
@@ -5619,6 +5680,36 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "mantle:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "mantle-bridged-usdt-mantle",
+      "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1688721876,
+      "coingeckoListingTimestamp": 1707264000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114",
+      "chainId": 5000,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "mantle:usdc-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "mantle-bridged-usdc-mantle",
+      "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1689586668,
+      "coingeckoListingTimestamp": 1708041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083",
+      "chainId": 5000,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "mantle:usde-usde",
@@ -6695,6 +6786,21 @@
       }
     },
     {
+      "id": "arbitrum:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1630432123,
+      "coingeckoListingTimestamp": 1706918400,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:umami-umami",
       "name": "Umami",
       "coingeckoId": "umami-finance",
@@ -7306,6 +7412,20 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "scroll:eth-ether",
+      "name": "Ether",
+      "coingeckoId": "ethereum",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1696917614,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "chainId": 534352,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "scroll:rseth-kelpdao-restaked-eth",
