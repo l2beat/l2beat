@@ -17,6 +17,7 @@ import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
+import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
@@ -102,9 +103,14 @@ export function createTvlModule(
   const dataService = new DataService({
     amountRepository: peripherals.getRepository(AmountRepository),
     priceRepository: peripherals.getRepository(PriceRepository),
-    valueRepository: peripherals.getRepository(ValueRepository),
     syncOptimizer,
     ethPriceId: createPriceId(ethPrice),
+    logger,
+  })
+
+  const valuesDataService = new ValuesDataService({
+    valueRepository: peripherals.getRepository(ValueRepository),
+    syncOptimizer,
     logger,
   })
 
@@ -119,23 +125,25 @@ export function createTvlModule(
 
   const aggregatedService = new AggregatedService({
     dataService,
+    valuesDataService,
     syncOptimizer,
     tokenService,
   })
 
   const breakdownService = new BreakdownService({
     dataService,
-    configMapping,
     syncOptimizer,
+    configMapping,
     chainConverter,
   })
 
   const tvlService = new TvlService({
-    syncOptimizer,
-    tokenService,
     dataService,
-    chainConverter,
+    valuesDataService,
+    tokenService,
+    syncOptimizer,
     configMapping,
+    chainConverter,
   })
 
   const tvlRouter = createTvlRouter(

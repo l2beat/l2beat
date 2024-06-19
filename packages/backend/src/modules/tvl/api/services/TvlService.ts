@@ -23,9 +23,11 @@ import {
 import { ApiProject, AssociatedToken } from '../utils/types'
 import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
   dataService: DataService
+  valuesDataService: ValuesDataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
   configMapping: ConfigMapping
@@ -42,7 +44,7 @@ export class TvlService {
     const ethPrices = await this.$.dataService.getEthPrices()
 
     const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(projects, lastHour)
+      await this.$.valuesDataService.getValuesForProjects(projects, lastHour)
 
     const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)

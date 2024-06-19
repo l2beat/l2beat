@@ -10,9 +10,11 @@ import {
 import { ApiProject, AssociatedToken } from '../utils/types'
 import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
   dataService: DataService
+  valuesDataService: ValuesDataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
 }
@@ -28,7 +30,7 @@ export class AggregatedService {
     const ethPrices = await this.$.dataService.getEthPrices()
 
     const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(projects, timestamp)
+      await this.$.valuesDataService.getValuesForProjects(projects, timestamp)
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
