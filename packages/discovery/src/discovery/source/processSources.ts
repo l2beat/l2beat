@@ -18,7 +18,7 @@ export function processSources(
 
   if (isVerified) {
     try {
-      const decodedSource = decodeEtherscanSource(name, source)
+      const decodedSource = decodeEtherscanSource(name, source, solidityVersion)
       files = Object.fromEntries(decodedSource.sources)
       remappings = decodedSource.remappings
     } catch (e) {

@@ -14,6 +14,7 @@ export function gatherAddressesFromUpgradeability(
     case 'EIP1967 proxy':
     case 'Polygon proxy':
     case 'ZeppelinOS proxy':
+    case 'LightLink proxy':
     case 'resolved delegate proxy':
     case 'call implementation proxy':
     case 'EIP897 proxy':

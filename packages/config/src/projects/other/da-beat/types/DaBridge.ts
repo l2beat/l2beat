@@ -72,6 +72,11 @@ export type DacBridge = CommonDaBridge & {
 }
 
 type CommonDaBridge = {
+  /**
+   * Unique identifier of the data availability bridge
+   */
+  id: string
+
   display: {
     /**
      * The name of the data availability bridge

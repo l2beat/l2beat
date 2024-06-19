@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x763df12328343ed262de53065aa24f96e86dcd6b
+
+# Diff at Tue, 18 Jun 2024 09:58:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e3611555e0b885dd86d383737fd13f2f80d29e5d block: 20083371
+- current block number: 20117905
+
+## Description
+
+Introduce the LightLink proxy type.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20083371 (main branch discovery), not current.
+
+```diff
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995) {
+    +++ description: None
+      upgradeability.type:
+-        "EIP1967 proxy"
++        "LightLink proxy"
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: None
+      upgradeability.type:
+-        "EIP1967 proxy"
++        "LightLink proxy"
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
+```diff
+    contract LightLinkERC20Bridge (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: None
+      upgradeability.type:
+-        "EIP1967 proxy"
++        "LightLink proxy"
+      upgradeability.admin:
+-        "0x0000000000000000000000000000000000000000"
++        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
+    }
+```
+
 Generated with discovered.json: 0x5b0656336e187bb0466ffcb9ed0d53058db03a56
 
 # Diff at Thu, 13 Jun 2024 14:03:11 GMT:

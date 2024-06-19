@@ -12,10 +12,16 @@ export interface DecodedSource {
 export function decodeEtherscanSource(
   name: string,
   source: string,
+  solidityVersion: string,
 ): DecodedSource {
   if (!source.startsWith('{')) {
+    let extension = 'sol'
+    if (solidityVersion.startsWith('vyper')) {
+      extension = 'vy'
+    }
+
     return {
-      sources: [[`${name}.sol`, source]],
+      sources: [[`${name}.${extension}`, source]],
       remappings: [],
     }
   }

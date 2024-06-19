@@ -1,9 +1,9 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 20083371,
-  "configHash": "0xbf701e1642d76c19a3b50880fa7f274a190513747c1083c2e9b9d6bcdd1699d7",
-  "version": 5,
+  "blockNumber": 20117905,
+  "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
+  "version": 6,
   "contracts": [
     {
       "name": "Challenge",
@@ -83,9 +83,9 @@
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0x468b89D930ca7974196D7195033600B658011756",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0x468b89D930ca7974196D7195033600B658011756"],
       "sinceTimestamp": 1692155207,
@@ -102,9 +102,9 @@
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"],
       "sinceTimestamp": 1692154667,
@@ -144,9 +144,9 @@
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"],
       "sinceTimestamp": 1692155531,
@@ -171,117 +171,117 @@
       "implementations": ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"],
       "sinceTimestamp": 1717522271,
       "values": {
-        "chainHead": 39,
+        "chainHead": 60,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 20082759,
-          "l2Height": 86447493,
-          "prevHash": "0xb67241b5e3d4d2649a9dd04cdd30e9362312a0bbc8bc50b7a1af76f03780de30",
-          "stateRoot": "0xebe14810b5da7d59664ce962d8e075140c4c2b134ed49293b7a62ed4b18b1098",
+          "epoch": 20117310,
+          "l2Height": 87257874,
+          "prevHash": "0x6a188d90f003535fa320cfd3a371f92dc67f2290f27b6dae242637f495eba38f",
+          "stateRoot": "0xd96a50fc0e0f7b411cc36ab1ea5301beeb45d66343cc84de7e178ed8f179ab44",
           "celestiaPointers": [
             {
-              "height": 1662550,
-              "shareStart": 256,
+              "height": 1697709,
+              "shareStart": 128,
               "shareLen": 3664
             },
             {
-              "height": 1662553,
+              "height": 1697712,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1697717,
+              "shareStart": 192,
+              "shareLen": 3663
+            },
+            {
+              "height": 1697720,
               "shareStart": 256,
               "shareLen": 3661
             },
             {
-              "height": 1662556,
-              "shareStart": 64,
-              "shareLen": 3665
+              "height": 1697723,
+              "shareStart": 128,
+              "shareLen": 3663
             },
             {
-              "height": 1662560,
+              "height": 1697726,
+              "shareStart": 256,
+              "shareLen": 3663
+            },
+            {
+              "height": 1697729,
               "shareStart": 256,
               "shareLen": 3657
             },
             {
-              "height": 1662563,
-              "shareStart": 128,
-              "shareLen": 3660
+              "height": 1697732,
+              "shareStart": 256,
+              "shareLen": 3653
             },
             {
-              "height": 1662566,
+              "height": 1697737,
+              "shareStart": 128,
+              "shareLen": 3653
+            },
+            {
+              "height": 1697740,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697743,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1697746,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697750,
+              "shareStart": 192,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697754,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697757,
+              "shareStart": 384,
+              "shareLen": 3655
+            },
+            {
+              "height": 1697761,
               "shareStart": 192,
               "shareLen": 3662
             },
             {
-              "height": 1662569,
+              "height": 1697764,
               "shareStart": 128,
-              "shareLen": 3665
+              "shareLen": 3662
             },
             {
-              "height": 1662572,
-              "shareStart": 256,
-              "shareLen": 3664
-            },
-            {
-              "height": 1662575,
-              "shareStart": 192,
-              "shareLen": 3663
-            },
-            {
-              "height": 1662578,
-              "shareStart": 128,
-              "shareLen": 3665
-            },
-            {
-              "height": 1662581,
-              "shareStart": 256,
-              "shareLen": 3659
-            },
-            {
-              "height": 1662584,
-              "shareStart": 128,
-              "shareLen": 3652
-            },
-            {
-              "height": 1662587,
+              "height": 1697767,
               "shareStart": 192,
               "shareLen": 3664
             },
             {
-              "height": 1662590,
-              "shareStart": 320,
-              "shareLen": 3657
-            },
-            {
-              "height": 1662593,
-              "shareStart": 128,
-              "shareLen": 3664
-            },
-            {
-              "height": 1662597,
+              "height": 1697770,
               "shareStart": 256,
-              "shareLen": 3663
+              "shareLen": 3653
             },
             {
-              "height": 1662600,
-              "shareStart": 128,
-              "shareLen": 3664
-            },
-            {
-              "height": 1662603,
-              "shareStart": 256,
-              "shareLen": 3297
-            },
-            {
-              "height": 1662607,
-              "shareStart": 384,
-              "shareLen": 3664
-            },
-            {
-              "height": 1662610,
+              "height": 1697773,
               "shareStart": 192,
               "shareLen": 3665
             },
             {
-              "height": 1662613,
-              "shareStart": 320,
+              "height": 1697776,
+              "shareStart": 128,
               "shareLen": 3664
             }
           ]
