@@ -14,6 +14,9 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new AggregatedL2CostsRepository(knex, Logger.SILENT)
   const newRepo = kysely.aggregatedL2Cost
 
+  suite(oldRepo)
+  suite(newRepo)
+
   function suite(
     repository: AggregatedL2CostsRepository | Database['aggregatedL2Cost'],
   ) {
@@ -81,9 +84,6 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
       },
     )
   }
-
-  suite(oldRepo)
-  suite(newRepo)
 })
 
 function record(

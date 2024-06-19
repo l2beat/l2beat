@@ -2,7 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
 import { describeDatabase } from '../../../test/database'
 import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { AmountRepository } from './AmountRepository'
@@ -11,7 +10,10 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
   const oldRepo = new AmountRepository(knex, Logger.SILENT)
   const newRepo = kysely.amount
 
-  function suite(amountRepository: AmountRepository | Database['amount']) {
+  suite(oldRepo)
+  suite(newRepo)
+
+  function suite(amountRepository: typeof oldRepo | typeof newRepo) {
     describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
       it('gets by ids in inclusive range', async () => {
         await amountRepository.addMany([
@@ -149,9 +151,6 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
       await amountRepository.deleteAll()
     })
   }
-
-  suite(oldRepo)
-  suite(newRepo)
 })
 
 function amount(configId: string, timestamp: UnixTime, amount: bigint) {

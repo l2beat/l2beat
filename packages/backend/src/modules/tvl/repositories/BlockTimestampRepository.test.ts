@@ -1,8 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { Database } from '@l2beat/database'
 import { describeDatabase } from '../../../test/database'
 import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { BlockTimestampRepository } from './BlockTimestampRepository'
@@ -14,9 +12,7 @@ describeDatabase(BlockTimestampRepository.name, (knex, kysely) => {
   suite(oldRepo)
   suite(newRepo)
 
-  function suite(
-    repository: BlockTimestampRepository | Database['blockTimestamp'],
-  ) {
+  function suite(repository: typeof oldRepo | typeof newRepo) {
     afterEach(async () => {
       await repository.deleteAll()
     })
