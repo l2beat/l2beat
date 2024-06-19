@@ -8,7 +8,7 @@ export class DailyDiscoveryRepository {
 
   async findLatest(name: string, chainId: ChainId) {
     const row = await this.db
-      .selectFrom('daily_discovery')
+      .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where((eb) =>
         eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
@@ -21,7 +21,7 @@ export class DailyDiscoveryRepository {
 
   async getTimestamps(projectName: string, chainId: ChainId) {
     const rows = await this.db
-      .selectFrom('daily_discovery')
+      .selectFrom('public.daily_discovery')
       .select('unix_timestamp')
       .where((eb) =>
         eb.and([
@@ -38,7 +38,7 @@ export class DailyDiscoveryRepository {
     const row = toRow(record)
 
     await this.db
-      .insertInto('daily_discovery')
+      .insertInto('public.daily_discovery')
       .values(row)
       .onConflict((cb) =>
         cb
@@ -54,7 +54,7 @@ export class DailyDiscoveryRepository {
 
   async getAvailableProjects() {
     const rows = await this.db
-      .selectFrom('daily_discovery')
+      .selectFrom('public.daily_discovery')
       .select(['project_name', 'chain_id'])
       .groupBy(['project_name', 'chain_id'])
       .execute()
@@ -71,7 +71,7 @@ export class DailyDiscoveryRepository {
     configHash: Hash256,
   ) {
     return this.db
-      .deleteFrom('daily_discovery')
+      .deleteFrom('public.daily_discovery')
       .where((eb) =>
         eb.and([
           eb('project_name', '=', projectName),
@@ -84,7 +84,7 @@ export class DailyDiscoveryRepository {
 
   async getProject(projectName: string, chainId: ChainId) {
     const rows = await this.db
-      .selectFrom('daily_discovery')
+      .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where((eb) =>
         eb.and([
@@ -99,7 +99,7 @@ export class DailyDiscoveryRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('daily_discovery')
+      .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .execute()
 
@@ -107,6 +107,6 @@ export class DailyDiscoveryRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('daily_discovery').execute()
+    return this.db.deleteFrom('public.daily_discovery').execute()
   }
 }

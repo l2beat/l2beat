@@ -10,7 +10,7 @@ export class NetworkRepository {
 
   async findMany() {
     const rows = await this.db
-      .selectFrom('Network')
+      .selectFrom('public.Network')
       .select(selectNetwork)
       .execute()
 
@@ -19,7 +19,7 @@ export class NetworkRepository {
 
   async findManyWithConfigs() {
     const allNetworks = await this.db
-      .selectFrom('Network')
+      .selectFrom('public.Network')
       .select([...selectNetwork])
       .execute()
 
@@ -27,14 +27,14 @@ export class NetworkRepository {
 
     const [explorers, rpcs] = await Promise.all([
       this.db
-        .selectFrom('NetworkExplorer')
+        .selectFrom('public.NetworkExplorer')
         .select(selectNetworkExplorer)
-        .where('NetworkExplorer.networkId', 'in', networkIds)
+        .where('public.NetworkExplorer.networkId', 'in', networkIds)
         .execute(),
       this.db
-        .selectFrom('NetworkRpc')
+        .selectFrom('public.NetworkRpc')
         .select(selectNetworkRpc)
-        .where('NetworkRpc.networkId', 'in', networkIds)
+        .where('public.NetworkRpc.networkId', 'in', networkIds)
         .execute(),
     ])
 
@@ -49,8 +49,8 @@ export class NetworkRepository {
 
   async findWithCoingecko() {
     const rows = await this.db
-      .selectFrom('Network')
-      .where('Network.coingeckoId', 'is not', null)
+      .selectFrom('public.Network')
+      .where('public.Network.coingeckoId', 'is not', null)
       .select(selectNetwork)
       .$narrowType<{ coingeckoId: string }>()
       .execute()
@@ -62,7 +62,7 @@ export class NetworkRepository {
     const row = networks.map(toRow)
 
     return this.db
-      .insertInto('Network')
+      .insertInto('public.Network')
       .values(row)
       .onConflict((conflict) =>
         conflict.column('coingeckoId').doUpdateSet({
@@ -76,9 +76,9 @@ export class NetworkRepository {
     const row = toRow(Network)
 
     return this.db
-      .updateTable('Network')
+      .updateTable('public.Network')
       .set(row)
-      .where('Network.coingeckoId', '=', coingeckoId)
+      .where('public.Network.coingeckoId', '=', coingeckoId)
       .execute()
   }
 }

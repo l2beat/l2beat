@@ -10,7 +10,7 @@ export class TvlCleanerRepository {
 
     const row = toRow(record)
     await scope
-      .insertInto('tvl_cleaner')
+      .insertInto('public.tvl_cleaner')
       .values(row)
       .onConflict((cb) =>
         cb.column('repository_name').doUpdateSet({
@@ -25,7 +25,7 @@ export class TvlCleanerRepository {
 
   async find(repositoryName: string) {
     const row = await this.db
-      .selectFrom('tvl_cleaner')
+      .selectFrom('public.tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
       .executeTakeFirst()
@@ -34,6 +34,6 @@ export class TvlCleanerRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('tvl_cleaner').execute()
+    return this.db.deleteFrom('public.tvl_cleaner').execute()
   }
 }

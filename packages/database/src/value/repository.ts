@@ -15,7 +15,7 @@ export class ValueRepository {
 
   async getForProjects(projectIds: ProjectId[]): Promise<Value[]> {
     const rows = await this.db
-      .selectFrom('values')
+      .selectFrom('public.values')
       .select(selectValue)
       .where(
         'project_id',
@@ -41,7 +41,7 @@ export class ValueRepository {
     const rows = records.map(toRow)
 
     await trx
-      .insertInto('values')
+      .insertInto('public.values')
       .values(rows)
       .onConflict((cb) =>
         cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
@@ -59,11 +59,11 @@ export class ValueRepository {
   // #region methods used only in TvlCleaner
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'values', dateRange)
+    return deleteHourlyUntil(this.db, 'public.values', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'values', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.values', dateRange)
   }
 
   // #endregion
@@ -72,7 +72,7 @@ export class ValueRepository {
 
   async getAll(): Promise<Value[]> {
     const rows = await this.db
-      .selectFrom('values')
+      .selectFrom('public.values')
       .select(selectValue)
       .execute()
 
@@ -84,7 +84,7 @@ export class ValueRepository {
     const scope = trx ?? this.db
 
     await scope
-      .insertInto('values')
+      .insertInto('public.values')
       .values(rows)
       .onConflict((cb) =>
         cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
@@ -102,7 +102,7 @@ export class ValueRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('values').execute()
+    return this.db.deleteFrom('public.values').execute()
   }
 
   // #endregion

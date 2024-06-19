@@ -17,7 +17,7 @@ export class PriceRepository {
     toInclusive: UnixTime,
   ) {
     const rows = await this.db
-      .selectFrom('prices')
+      .selectFrom('public.prices')
       .select(selectPrice)
       .where((eb) =>
         eb.and([
@@ -34,7 +34,7 @@ export class PriceRepository {
 
   async getByConfigId(configId: string) {
     const rows = await this.db
-      .selectFrom('prices')
+      .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', '=', configId)
       .orderBy('timestamp')
@@ -45,7 +45,7 @@ export class PriceRepository {
 
   async getByConfigIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
     const rows = await this.db
-      .selectFrom('prices')
+      .selectFrom('public.prices')
       .select(selectPrice)
       .where((eb) =>
         eb.and([
@@ -61,7 +61,7 @@ export class PriceRepository {
   async addMany(records: Price[]) {
     const rows = records.map(toRow)
 
-    await this.db.insertInto('prices').values(rows).execute()
+    await this.db.insertInto('public.prices').values(rows).execute()
 
     return rows.length
   }
@@ -72,7 +72,7 @@ export class PriceRepository {
     toInclusive: UnixTime,
   ) {
     return this.db
-      .deleteFrom('prices')
+      .deleteFrom('public.prices')
       .where((eb) =>
         eb.and([
           eb('configuration_id', '=', configId),
@@ -84,19 +84,19 @@ export class PriceRepository {
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'prices', dateRange)
+    return deleteHourlyUntil(this.db, 'public.prices', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'prices', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
   }
   async getAll() {
-    const rows = await this.db.selectFrom('prices').selectAll().execute()
+    const rows = await this.db.selectFrom('public.prices').selectAll().execute()
 
     return rows.map(toRecord)
   }
 
   deleteAll() {
-    return this.db.deleteFrom('prices').execute()
+    return this.db.deleteFrom('public.prices').execute()
   }
 }

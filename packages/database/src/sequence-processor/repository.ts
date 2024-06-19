@@ -10,7 +10,7 @@ export class SequenceProcessorRepository {
     const row = toRow(record)
     const { id, ...rest } = row
     await scope
-      .insertInto('sequence_processor')
+      .insertInto('public.sequence_processor')
       .values(row)
       .onConflict((cb) => cb.column('id').doUpdateSet(rest))
       .execute()
@@ -19,7 +19,7 @@ export class SequenceProcessorRepository {
 
   async findById(id: string) {
     const row = await this.db
-      .selectFrom('sequence_processor')
+      .selectFrom('public.sequence_processor')
       .select(selectSequenceProcessor)
       .where('id', '=', id)
       .executeTakeFirst()
@@ -28,6 +28,6 @@ export class SequenceProcessorRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('sequence_processor').execute()
+    return this.db.deleteFrom('public.sequence_processor').execute()
   }
 }

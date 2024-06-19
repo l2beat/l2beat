@@ -13,7 +13,7 @@ export class VerifierStatusRepository {
     const scope = trx ?? this.db
     const row = toRow(record)
     await scope
-      .insertInto('verifier_status')
+      .insertInto('public.verifier_status')
       .values(row)
       .onConflict((cb) =>
         cb.columns(['address', 'chain_id']).doUpdateSet({
@@ -31,7 +31,7 @@ export class VerifierStatusRepository {
     chainId: ChainId,
   ): Promise<VerifierStatus | undefined> {
     const row = await this.db
-      .selectFrom('verifier_status')
+      .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .where((eb) =>
         eb.and([eb('address', '=', address), eb('chain_id', '=', +chainId)]),
@@ -43,7 +43,7 @@ export class VerifierStatusRepository {
 
   async getAll(): Promise<VerifierStatus[]> {
     const rows = await this.db
-      .selectFrom('verifier_status')
+      .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .execute()
 
@@ -51,6 +51,6 @@ export class VerifierStatusRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('verifier_status').execute()
+    return this.db.deleteFrom('public.verifier_status').execute()
   }
 }

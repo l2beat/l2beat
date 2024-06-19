@@ -14,14 +14,14 @@ export class BlockTimestampRepository {
   async add(record: BlockTimestamp) {
     const row = toRow(record)
 
-    await this.db.insertInto('block_timestamps').values(row).execute()
+    await this.db.insertInto('public.block_timestamps').values(row).execute()
 
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
 
   async findByChainAndTimestamp(chain: string, timestamp: UnixTime) {
     const row = await this.db
-      .selectFrom('block_timestamps')
+      .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .where((eb) =>
         eb.and([
@@ -36,7 +36,7 @@ export class BlockTimestampRepository {
 
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
     await this.db
-      .deleteFrom('block_timestamps')
+      .deleteFrom('public.block_timestamps')
       .where((eb) =>
         eb.and([
           eb('chain', '=', chain),
@@ -48,17 +48,17 @@ export class BlockTimestampRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'block_timestamps', dateRange)
+    return deleteHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'block_timestamps', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
   // #endregion
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('block_timestamps')
+      .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .execute()
 
@@ -70,12 +70,12 @@ export class BlockTimestampRepository {
 
     const scope = trx ?? this.db
 
-    await scope.insertInto('block_timestamps').values(rows).execute()
+    await scope.insertInto('public.block_timestamps').values(rows).execute()
 
     return rows.length
   }
 
   deleteAll() {
-    return this.db.deleteFrom('block_timestamps').execute()
+    return this.db.deleteFrom('public.block_timestamps').execute()
   }
 }

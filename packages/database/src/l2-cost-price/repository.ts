@@ -7,7 +7,7 @@ export class L2CostPriceRepository {
   constructor(private readonly db: PostgresDatabase) {}
   async getAll() {
     const rows = await this.db
-      .selectFrom('l2_costs_prices')
+      .selectFrom('public.l2_costs_prices')
       .selectAll()
       .execute()
 
@@ -16,7 +16,7 @@ export class L2CostPriceRepository {
 
   async getByTimestampRange(from: UnixTime, to: UnixTime) {
     const rows = await this.db
-      .selectFrom('l2_costs_prices')
+      .selectFrom('public.l2_costs_prices')
       .select(selectL2CostPrice)
       .where((eb) =>
         eb.and([
@@ -32,19 +32,19 @@ export class L2CostPriceRepository {
   async addMany(records: L2CostPrice[]) {
     const rows = records.map(toRow)
 
-    await this.db.insertInto('l2_costs_prices').values(rows).execute()
+    await this.db.insertInto('public.l2_costs_prices').values(rows).execute()
 
     return rows.length
   }
 
   deleteAfter(from: UnixTime) {
     return this.db
-      .deleteFrom('l2_costs_prices')
+      .deleteFrom('public.l2_costs_prices')
       .where('timestamp', '>', from.toDate())
       .execute()
   }
 
   deleteAll() {
-    return this.db.deleteFrom('l2_costs_prices').execute()
+    return this.db.deleteFrom('public.l2_costs_prices').execute()
   }
 }

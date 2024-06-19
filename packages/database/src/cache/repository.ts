@@ -9,7 +9,7 @@ export class CacheRepository {
     const row = toRow(cache)
 
     return this.db
-      .insertInto('Cache')
+      .insertInto('public.Cache')
       .values(row)
       .onConflict((conflict) =>
         conflict.doUpdateSet({
@@ -24,9 +24,9 @@ export class CacheRepository {
 
   async findByKey(key: Cache['key']) {
     const row = await this.db
-      .selectFrom('Cache')
+      .selectFrom('public.Cache')
       .select(selectCache)
-      .where('Cache.key', '=', key)
+      .where('public.Cache.key', '=', key)
       .executeTakeFirst()
 
     return row ? toRecord(row) : null

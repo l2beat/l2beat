@@ -17,15 +17,18 @@ import {
 export class LivenessRepository {
   constructor(private readonly db: PostgresDatabase) {}
   async getAll() {
-    const rows = await this.db.selectFrom('liveness').selectAll().execute()
+    const rows = await this.db
+      .selectFrom('public.liveness')
+      .selectAll()
+      .execute()
 
     return rows.map(toRecord)
   }
 
   async getWithSubtypeDistinctTimestamp(projectId: ProjectId) {
     const rows = await this.db
-      .selectFrom('liveness as l')
-      .innerJoin('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .selectFrom('public.liveness as l')
+      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .select(['l.timestamp', 'c.subtype', 'c.project_id'])
       .where((eb) =>
         eb.and([
@@ -58,9 +61,9 @@ export class LivenessRepository {
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
 
     const rows = await this.db
-      .selectFrom('liveness as l')
+      .selectFrom('public.liveness as l')
       .select(['l.timestamp', 'l.block_number', 'l.tx_hash', 'l.tracked_tx_id'])
-      .innerJoin('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .where((eb) =>
         eb.and([
           eb('c.project_id', '=', projectId.toString()),
@@ -80,8 +83,8 @@ export class LivenessRepository {
     since: UnixTime,
   ) {
     const rows = await this.db
-      .selectFrom('liveness as l')
-      .innerJoin('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .selectFrom('public.liveness as l')
+      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .select(['l.timestamp', 'c.subtype', 'l.tx_hash', 'c.project_id'])
       .where((eb) =>
         eb.and([
@@ -104,8 +107,8 @@ export class LivenessRepository {
     since: UnixTime,
   ) {
     const rows = await this.db
-      .selectFrom('liveness as l')
-      .innerJoin('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .selectFrom('public.liveness as l')
+      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .select(['l.timestamp', 'c.subtype', 'c.project_id'])
       .where((eb) =>
         eb.and([
@@ -125,7 +128,7 @@ export class LivenessRepository {
   async addMany(records: Liveness[]) {
     const rows = records.map(toRow)
 
-    await this.db.insertInto('liveness').values(rows).execute()
+    await this.db.insertInto('public.liveness').values(rows).execute()
 
     return rows.length
   }
@@ -138,7 +141,7 @@ export class LivenessRepository {
     const scope = trx ?? this.db
 
     return scope
-      .deleteFrom('liveness')
+      .deleteFrom('public.liveness')
       .where((eb) =>
         eb.and([
           eb('tracked_tx_id', '=', id.toString()),
@@ -149,6 +152,6 @@ export class LivenessRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('liveness').execute()
+    return this.db.deleteFrom('public.liveness').execute()
   }
 }

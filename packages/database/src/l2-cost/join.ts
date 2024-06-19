@@ -1,5 +1,5 @@
 export const joinTrackedTxs = [
-  'tracked_txs_configs',
-  'l2_costs.tracked_tx_id',
-  'tracked_txs_configs.id',
+  'public.tracked_txs_configs',
+  'public.l2_costs.tracked_tx_id',
+  'public.tracked_txs_configs.id',
 ] as const

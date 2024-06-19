@@ -13,7 +13,7 @@ export class IndexerConfigurationRepository {
     await this.db.transaction().execute(async (trx) => {
       for (let i = 0; i < rows.length; i += BATCH_SIZE) {
         await trx
-          .insertInto('indexer_configurations')
+          .insertInto('public.indexer_configurations')
           .values(rows.slice(i, i + BATCH_SIZE))
           .onConflict((cb) =>
             cb.column('id').doUpdateSet({
@@ -32,7 +32,7 @@ export class IndexerConfigurationRepository {
 
   async getSavedConfigurations(indexerId: string) {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', '=', indexerId)
       .execute()
@@ -49,7 +49,7 @@ export class IndexerConfigurationRepository {
     const scope = trx ?? this.db
 
     return scope
-      .updateTable('indexer_configurations')
+      .updateTable('public.indexer_configurations')
       .where((eb) =>
         eb.and([
           eb('indexer_id', '=', indexerId),
@@ -65,7 +65,7 @@ export class IndexerConfigurationRepository {
     configurationIds: string[],
   ) {
     return this.db
-      .deleteFrom('indexer_configurations')
+      .deleteFrom('public.indexer_configurations')
       .where((eb) =>
         eb.and([
           eb('indexer_id', '=', indexerId),
@@ -77,7 +77,7 @@ export class IndexerConfigurationRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('indexer_configurations')
+      .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .execute()
 
@@ -85,6 +85,6 @@ export class IndexerConfigurationRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('indexer_configurations').execute()
+    return this.db.deleteFrom('public.indexer_configurations').execute()
   }
 }

@@ -8,7 +8,7 @@ export class DiscoveryCacheRepository {
   async addOrUpdate(record: DiscoveryCache): Promise<string> {
     const row = toRow(record)
     await this.db
-      .insertInto('discovery_cache')
+      .insertInto('public.discovery_cache')
       .values(row)
       .onConflict((cb) => cb.doUpdateSet(row))
       .execute()
@@ -18,7 +18,7 @@ export class DiscoveryCacheRepository {
 
   async findByKey(key: DiscoveryCache['key']) {
     const row = await this.db
-      .selectFrom('discovery_cache')
+      .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .where('key', '=', key)
       .executeTakeFirst()
@@ -28,7 +28,7 @@ export class DiscoveryCacheRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('discovery_cache')
+      .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .execute()
 
@@ -37,7 +37,7 @@ export class DiscoveryCacheRepository {
 
   async deleteAfter(blockNumber: number, chain: string) {
     return this.db
-      .deleteFrom('discovery_cache')
+      .deleteFrom('public.discovery_cache')
       .where((eb) =>
         eb.and([eb('block_number', '>', blockNumber), eb('chain', '=', chain)]),
       )
@@ -45,6 +45,6 @@ export class DiscoveryCacheRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('discovery_cache').execute()
+    return this.db.deleteFrom('public.discovery_cache').execute()
   }
 }

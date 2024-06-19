@@ -8,7 +8,7 @@ export class UpdateNotifierRepository {
 
   async findLatestId(): Promise<number | undefined> {
     const row = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('public.update_notifier')
       .select(['id'])
       .orderBy('id', 'desc')
       .executeTakeFirst()
@@ -24,7 +24,7 @@ export class UpdateNotifierRepository {
     const row = toRow(record)
 
     const [insertedResult] = await scope
-      .insertInto('update_notifier')
+      .insertInto('public.update_notifier')
       .values(row)
       .returning('id')
       .execute()
@@ -34,7 +34,7 @@ export class UpdateNotifierRepository {
 
   async getAll(): Promise<UpdateNotifier[]> {
     const rows = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .execute()
 
@@ -47,7 +47,7 @@ export class UpdateNotifierRepository {
     chainId: ChainId,
   ): Promise<UpdateNotifier[]> {
     const rows = await this.db
-      .selectFrom('update_notifier')
+      .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .where((eb) =>
         eb.and([
@@ -62,6 +62,6 @@ export class UpdateNotifierRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('update_notifier').execute()
+    return this.db.deleteFrom('public.update_notifier').execute()
   }
 }

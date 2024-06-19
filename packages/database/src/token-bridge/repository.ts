@@ -7,7 +7,7 @@ export class TokenBridgeRepository {
   upsertMany(tokenBridges: TokenBridge[]) {
     const rows = tokenBridges.map(toRow)
     return this.db
-      .insertInto('TokenBridge')
+      .insertInto('public.TokenBridge')
       .values(rows)
       .onConflict((conflict) =>
         conflict.doUpdateSet({

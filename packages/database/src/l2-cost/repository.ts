@@ -8,14 +8,17 @@ import { selectL2Cost } from './select'
 export class L2CostRepository {
   constructor(private readonly db: PostgresDatabase) {}
   async getAll() {
-    const rows = await this.db.selectFrom('l2_costs').selectAll().execute()
+    const rows = await this.db
+      .selectFrom('public.l2_costs')
+      .selectAll()
+      .execute()
     return rows.map(toRecord)
   }
 
   async addMany(records: L2Cost[], trx?: Transaction): Promise<number> {
     const scope = trx ?? this.db
     const rows = records.map(toRow)
-    await scope.insertInto('l2_costs').values(rows).execute()
+    await scope.insertInto('public.l2_costs').values(rows).execute()
     return rows.length
   }
 
@@ -23,11 +26,11 @@ export class L2CostRepository {
     const [from, to] = timeRange
 
     const rows = await this.db
-      .selectFrom('l2_costs')
+      .selectFrom('public.l2_costs')
       .innerJoin(...joinTrackedTxs)
       .select([
-        ...selectL2Cost.map((column) => `l2_costs.${column}` as const),
-        'tracked_txs_configs.project_id',
+        ...selectL2Cost.map((column) => `public.l2_costs.${column}` as const),
+        'public.tracked_txs_configs.project_id',
       ])
       .where((eb) =>
         eb.and([
@@ -49,7 +52,7 @@ export class L2CostRepository {
   ) {
     const scope = trx ?? this.db
     return scope
-      .deleteFrom('l2_costs')
+      .deleteFrom('public.l2_costs')
       .where((eb) =>
         eb.and([
           eb('tracked_tx_id', '=', id),
@@ -60,6 +63,6 @@ export class L2CostRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('l2_costs').execute()
+    return this.db.deleteFrom('public.l2_costs').execute()
   }
 }

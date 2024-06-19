@@ -8,7 +8,7 @@ export class FinalityRepository {
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('finality')
+      .selectFrom('public.finality')
       .select(selectFinality)
       .execute()
 
@@ -17,7 +17,7 @@ export class FinalityRepository {
 
   async findLatestByProjectId(projectId: string) {
     const row = await this.db
-      .selectFrom('finality')
+      .selectFrom('public.finality')
       .select(selectFinality)
       .where('project_id', '=', projectId)
       .orderBy('timestamp', 'desc')
@@ -28,7 +28,7 @@ export class FinalityRepository {
 
   async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
     const row = await this.db
-      .selectFrom('finality')
+      .selectFrom('public.finality')
       .select(selectFinality)
       .where((eb) =>
         eb.and([
@@ -43,7 +43,7 @@ export class FinalityRepository {
 
   async getLatestGroupedByProjectId(projectIds: string[]) {
     const maxTimestampSubquery = this.db
-      .selectFrom('finality')
+      .selectFrom('public.finality')
       .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
       .where(
         'project_id',
@@ -54,7 +54,7 @@ export class FinalityRepository {
       .as('max_f')
 
     const rows = await this.db
-      .selectFrom('finality as f')
+      .selectFrom('public.finality as f')
       .innerJoin(maxTimestampSubquery, (join) =>
         join
           .onRef('f.project_id', '=', 'max_f.project_id')
@@ -69,7 +69,7 @@ export class FinalityRepository {
   async addMany(records: Finality[], trx?: Transaction) {
     const scope = trx ?? this.db
     const rows = records.map(toRow)
-    await scope.insertInto('finality').values(rows).execute()
+    await scope.insertInto('public.finality').values(rows).execute()
 
     return rows.length
   }
@@ -79,7 +79,7 @@ export class FinalityRepository {
     const row = toRow(record)
 
     const [inserted] = await scope
-      .insertInto('finality')
+      .insertInto('public.finality')
       .values(row)
       .returning('project_id')
       .execute()
@@ -88,6 +88,6 @@ export class FinalityRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('finality').execute()
+    return this.db.deleteFrom('public.finality').execute()
   }
 }

@@ -6,13 +6,16 @@ export class StakeRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async findMany() {
-    const res = await this.db.selectFrom('Stake').select(selectStake).execute()
+    const res = await this.db
+      .selectFrom('public.Stake')
+      .select(selectStake)
+      .execute()
     return res.map(fromEntity)
   }
 
   async findOneById(id: string) {
     const res = await this.db
-      .selectFrom('Stake')
+      .selectFrom('public.Stake')
       .select(selectStake)
       .where('id', '=', id)
       .limit(1)
@@ -24,7 +27,7 @@ export class StakeRepository {
     const entity = toEntity(stake)
     const { id, ...rest } = entity
     return this.db
-      .insertInto('Stake')
+      .insertInto('public.Stake')
       .values(entity)
       .onConflict((oc) => oc.columns(['id']).doUpdateSet(rest))
       .execute()

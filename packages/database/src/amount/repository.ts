@@ -17,7 +17,7 @@ export class AmountRepository {
     timestamp: UnixTime,
   ): Promise<Amount[]> {
     const rows = await this.db
-      .selectFrom('amounts')
+      .selectFrom('public.amounts')
       .select(selectAmount)
       .where((eb) =>
         eb.and([
@@ -37,7 +37,7 @@ export class AmountRepository {
     toInclusive: UnixTime,
   ): Promise<Amount[]> {
     const rows = await this.db
-      .selectFrom('amounts')
+      .selectFrom('public.amounts')
       .select(selectAmount)
       .where((eb) =>
         eb.and([
@@ -54,7 +54,7 @@ export class AmountRepository {
 
   async getDailyByConfigId(configIds: string[]) {
     const rows = await this.db
-      .selectFrom('amounts')
+      .selectFrom('public.amounts')
       .select(selectAmount)
       .where((eb) =>
         eb.and([
@@ -76,7 +76,7 @@ export class AmountRepository {
 
     const rows = records.map(toRow)
 
-    await scope.insertInto('amounts').values(rows).execute()
+    await scope.insertInto('public.amounts').values(rows).execute()
   }
 
   async deleteByConfigInTimeRange(
@@ -85,7 +85,7 @@ export class AmountRepository {
     toInclusive: UnixTime,
   ) {
     return this.db
-      .deleteFrom('amounts')
+      .deleteFrom('public.amounts')
       .where((eb) =>
         eb.and([
           eb('configuration_id', '=', configId),
@@ -98,7 +98,7 @@ export class AmountRepository {
 
   async deleteByConfigAfter(configId: string, fromExclusive: UnixTime) {
     return this.db
-      .deleteFrom('amounts')
+      .deleteFrom('public.amounts')
       .where((eb) =>
         eb.and([
           eb('configuration_id', '=', configId),
@@ -110,16 +110,16 @@ export class AmountRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'amounts', dateRange)
+    return deleteHourlyUntil(this.db, 'public.amounts', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'amounts', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.amounts', dateRange)
   }
 
   async getAll() {
     const rows = await this.db
-      .selectFrom('amounts')
+      .selectFrom('public.amounts')
       .select(selectAmount)
       .execute()
 
@@ -127,6 +127,6 @@ export class AmountRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('amounts').execute()
+    return this.db.deleteFrom('public.amounts').execute()
   }
 }

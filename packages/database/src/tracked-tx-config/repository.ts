@@ -19,7 +19,7 @@ export class TrackedTxsConfigsRepository {
     const scope = trx ?? this.db
 
     const rows = await scope
-      .selectFrom('tracked_txs_configs')
+      .selectFrom('public.tracked_txs_configs')
       .select(selectTrackedTxConfig)
       .execute()
 
@@ -35,7 +35,7 @@ export class TrackedTxsConfigsRepository {
     const rows = records.map(toRow)
 
     const insertedRows = await scope
-      .insertInto('tracked_txs_configs')
+      .insertInto('public.tracked_txs_configs')
       .values(rows)
       .returning('id')
       .execute()
@@ -50,7 +50,7 @@ export class TrackedTxsConfigsRepository {
     type: TrackedTxsConfigType,
   ) {
     const rows = await this.db
-      .selectFrom('tracked_txs_configs')
+      .selectFrom('public.tracked_txs_configs')
       .select(selectTrackedTxConfig)
       .where((eb) =>
         eb.and([eb('project_id', '=', projectId), eb('type', '=', type)]),
@@ -65,7 +65,7 @@ export class TrackedTxsConfigsRepository {
     subtype: TrackedTxsConfigSubtype,
   ) {
     const row = await this.db
-      .selectFrom('tracked_txs_configs')
+      .selectFrom('public.tracked_txs_configs')
       .select([
         this.db.fn.max('last_synced_timestamp').as('last_synced_timestamp'),
       ])
@@ -81,15 +81,15 @@ export class TrackedTxsConfigsRepository {
 
   async findUnusedConfigurationsIds() {
     const rows = await this.db
-      .selectFrom('tracked_txs_configs as c')
+      .selectFrom('public.tracked_txs_configs as c')
       .select('c.id')
-      .leftJoin('liveness', 'c.id', 'liveness.tracked_tx_id')
-      .leftJoin('l2_costs as l2', 'c.id', 'l2.tracked_tx_id')
+      .leftJoin('public.liveness', 'c.id', 'public.liveness.tracked_tx_id')
+      .leftJoin('public.l2_costs as l2', 'c.id', 'l2.tracked_tx_id')
       .groupBy('c.id')
       .having((eb) =>
         eb.and([
-          eb(this.db.fn.count('liveness.tracked_tx_id'), '=', 0),
-          eb(this.db.fn.count('l2_costs.tracked_tx_id'), '=', 0),
+          eb(this.db.fn.count('public.liveness.tracked_tx_id'), '=', 0),
+          eb(this.db.fn.count('public.l2_costs.tracked_tx_id'), '=', 0),
         ]),
       )
       .execute()
@@ -105,7 +105,7 @@ export class TrackedTxsConfigsRepository {
     const scope = trx ?? this.db
 
     return scope
-      .updateTable('tracked_txs_configs')
+      .updateTable('public.tracked_txs_configs')
       .set('last_synced_timestamp', lastSyncedTimestamp.toDate())
       .where('id', '=', trackedTxId)
 
@@ -120,7 +120,7 @@ export class TrackedTxsConfigsRepository {
     const scope = trx ?? this.db
 
     return scope
-      .updateTable('tracked_txs_configs')
+      .updateTable('public.tracked_txs_configs')
       .set('last_synced_timestamp', lastSyncedTimestamp.toDate())
       .where('id', 'in', trackedTxIds)
 
@@ -135,7 +135,7 @@ export class TrackedTxsConfigsRepository {
     const scope = trx ?? this.db
 
     return scope
-      .updateTable('tracked_txs_configs')
+      .updateTable('public.tracked_txs_configs')
       .set(
         'until_timestamp_exclusive',
         untilTimestamp ? untilTimestamp.toDate() : null,
@@ -145,7 +145,7 @@ export class TrackedTxsConfigsRepository {
       .execute()
   }
   deleteAll() {
-    return this.db.deleteFrom('tracked_txs_configs').execute()
+    return this.db.deleteFrom('public.tracked_txs_configs').execute()
   }
 
   deleteMany(
@@ -159,7 +159,7 @@ export class TrackedTxsConfigsRepository {
     const scope = trx ?? this.db
 
     return scope
-      .deleteFrom('tracked_txs_configs')
+      .deleteFrom('public.tracked_txs_configs')
       .where('id', 'in', trackedTxIds)
       .execute()
   }

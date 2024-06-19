@@ -11,7 +11,7 @@ export class UpdateMonitorRepository {
     chainId: ChainId,
   ): Promise<UpdateMonitor | undefined> {
     const row = await this.db
-      .selectFrom('update_monitor')
+      .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .where((eb) =>
         eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
@@ -27,7 +27,7 @@ export class UpdateMonitorRepository {
     const row = toRow(record)
 
     await scope
-      .insertInto('update_monitor')
+      .insertInto('public.update_monitor')
       .values(row)
       .onConflict((cb) =>
         cb.columns(['project_name', 'chain_id']).doUpdateSet({
@@ -45,7 +45,7 @@ export class UpdateMonitorRepository {
 
   async getAll(): Promise<UpdateMonitor[]> {
     const rows = await this.db
-      .selectFrom('update_monitor')
+      .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .execute()
 
@@ -53,6 +53,6 @@ export class UpdateMonitorRepository {
   }
 
   deleteAll() {
-    return this.db.deleteFrom('update_monitor').execute()
+    return this.db.deleteFrom('public.update_monitor').execute()
   }
 }

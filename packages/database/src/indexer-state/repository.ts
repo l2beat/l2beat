@@ -8,7 +8,7 @@ export class IndexerStateRepository {
     const row = toRow(record)
     const scope = trx ?? this.db
     await scope
-      .insertInto('indexer_state')
+      .insertInto('public.indexer_state')
       .values(row)
       .onConflict((cb) =>
         cb.doUpdateSet({
@@ -24,7 +24,7 @@ export class IndexerStateRepository {
 
   async findIndexerState(indexerId: string) {
     const row = await this.db
-      .selectFrom('indexer_state')
+      .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', '=', indexerId)
       .executeTakeFirst()
@@ -36,17 +36,20 @@ export class IndexerStateRepository {
     const scope = trx ?? this.db
 
     return scope
-      .updateTable('indexer_state')
+      .updateTable('public.indexer_state')
       .set({ safe_height: safeHeight })
       .where('indexer_id', '=', indexerId)
   }
 
   async getAll() {
-    const rows = await this.db.selectFrom('indexer_state').selectAll().execute()
+    const rows = await this.db
+      .selectFrom('public.indexer_state')
+      .selectAll()
+      .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll() {
-    await this.db.deleteFrom('indexer_state').execute()
+    await this.db.deleteFrom('public.indexer_state').execute()
   }
 }

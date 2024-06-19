@@ -1,25 +1,31 @@
 generator kysely {
-  provider     = "prisma-kysely"
-  output       = "../src/kysely/generated"
-  enumFileName = "enums.ts"
-  fileName     = "types.ts"
+  provider        = "prisma-kysely"
+  output          = "../src/kysely/generated"
+  enumFileName    = "enums.ts"
+  fileName        = "types.ts"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["public", "activity"]
 }
 
 model CurrentPrice {
   coingeckoId String   @id @db.VarChar(255)
   priceUsd    Float    @db.Real
   updatedAt   DateTime @db.Timestamp
+
+  @@schema("public")
 }
 
 model Stake {
   id             String @id @db.VarChar(255)
   totalStake     BigInt
   thresholdStake BigInt
+
+  @@schema("public")
 }
 
 model BridgeEscrow {
@@ -36,6 +42,7 @@ model BridgeEscrow {
   createdAt          DateTime        @default(now())
 
   @@unique([networkId, address])
+  @@schema("public")
 }
 
 enum ExternalBridgeType {
@@ -43,6 +50,8 @@ enum ExternalBridgeType {
   LayerZeroV1
   Orbit
   Wormhole
+
+  @@schema("public")
 }
 
 model ExternalBridge {
@@ -54,6 +63,8 @@ model ExternalBridge {
 
   updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
+
+  @@schema("public")
 }
 
 model Deployment {
@@ -69,10 +80,14 @@ model Deployment {
   sourceAvailable Boolean
   updatedAt       DateTime  @default(now()) @updatedAt
   createdAt       DateTime  @default(now())
+
+  @@schema("public")
 }
 
 enum ExplorerType {
   Etherscan
+
+  @@schema("public")
 }
 
 model NetworkRpc {
@@ -82,6 +97,8 @@ model NetworkRpc {
   url       String
   updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
+
+  @@schema("public")
 }
 
 model NetworkExplorer {
@@ -96,6 +113,7 @@ model NetworkExplorer {
 
   @@unique(networkId)
   @@unique([networkId, type])
+  @@schema("public")
 }
 
 model Network {
@@ -115,6 +133,8 @@ model Network {
   tokens                     Token[]
   updatedAt                  DateTime         @default(now()) @updatedAt
   createdAt                  DateTime         @default(now())
+
+  @@schema("public")
 }
 
 model TokenBridge {
@@ -127,6 +147,8 @@ model TokenBridge {
   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
   updatedAt        DateTime        @default(now()) @updatedAt
   createdAt        DateTime        @default(now())
+
+  @@schema("public")
 }
 
 model TokenMeta {
@@ -144,6 +166,7 @@ model TokenMeta {
   createdAt    DateTime @default(now())
 
   @@unique([tokenId, source])
+  @@schema("public")
 }
 
 model Token {
@@ -160,6 +183,7 @@ model Token {
   createdAt   DateTime       @default(now())
 
   @@unique([networkId, address])
+  @@schema("public")
 }
 
 model Cache {
@@ -169,6 +193,8 @@ model Cache {
   blockNumber Int?
   updatedAt   DateTime @default(now()) @updatedAt
   createdAt   DateTime @default(now())
+
+  @@schema("public")
 }
 
 model AggregatedL2Cost {
@@ -194,6 +220,7 @@ model AggregatedL2Cost {
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
   @@map("aggregated_l2_costs")
+  @@schema("public")
 }
 
 model Amount {
@@ -203,6 +230,7 @@ model Amount {
 
   @@id([configurationId, timestamp])
   @@map("amounts")
+  @@schema("public")
 }
 
 model BlockTimestamp {
@@ -212,6 +240,7 @@ model BlockTimestamp {
 
   @@id([chain, timestamp])
   @@map("block_timestamps")
+  @@schema("public")
 }
 
 model DailyDiscovery {
@@ -225,6 +254,7 @@ model DailyDiscovery {
 
   @@id([projectName, chainId, unixTimestamp])
   @@map("daily_discovery")
+  @@schema("public")
 }
 
 model DiscoveryCache {
@@ -234,6 +264,7 @@ model DiscoveryCache {
   chain       String @map("chain") @db.VarChar(255)
 
   @@map("discovery_cache")
+  @@schema("public")
 }
 
 model Finality {
@@ -246,6 +277,7 @@ model Finality {
 
   @@id([projectId, timestamp])
   @@map("finality")
+  @@schema("public")
 }
 
 model IndexerConfiguration {
@@ -258,6 +290,7 @@ model IndexerConfiguration {
 
   @@index([indexerId], map: "indexer_configurations_indexer_id_index")
   @@map("indexer_configurations")
+  @@schema("public")
 }
 
 model IndexerState {
@@ -267,6 +300,7 @@ model IndexerState {
   configHash   String?   @map("config_hash")
 
   @@map("indexer_state")
+  @@schema("public")
 }
 
 model L2Cost {
@@ -283,6 +317,7 @@ model L2Cost {
 
   @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
   @@map("l2_costs")
+  @@schema("public")
 }
 
 model L2CostPrice {
@@ -290,6 +325,7 @@ model L2CostPrice {
   priceUsd  Float    @map("price_usd") @db.Real
 
   @@map("l2_costs_prices")
+  @@schema("public")
 }
 
 model Liveness {
@@ -301,6 +337,7 @@ model Liveness {
 
   @@id(trackedTxId, map: "liveness_tracked_tx_id_index")
   @@map("liveness")
+  @@schema("public")
 }
 
 model Price {
@@ -310,6 +347,7 @@ model Price {
 
   @@id([configurationId, timestamp])
   @@map("prices")
+  @@schema("public")
 }
 
 model SequenceProcessor {
@@ -320,6 +358,7 @@ model SequenceProcessor {
   syncedOnce    Boolean  @default(false) @map("synced_once")
 
   @@map("sequence_processor")
+  @@schema("public")
 }
 
 model TrackedTxsConfig {
@@ -335,6 +374,7 @@ model TrackedTxsConfig {
   liveness                Liveness[]
 
   @@map("tracked_txs_configs")
+  @@schema("public")
 }
 
 model TvlCleaner {
@@ -343,6 +383,7 @@ model TvlCleaner {
   sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
 
   @@map("tvl_cleaner")
+  @@schema("public")
 }
 
 model UpdateMonitor {
@@ -356,6 +397,7 @@ model UpdateMonitor {
 
   @@id([projectName, chainId])
   @@map("update_monitor")
+  @@schema("public")
 }
 
 model UpdateNotifier {
@@ -370,6 +412,7 @@ model UpdateNotifier {
   @@index([blockNumber], map: "update_notifier_block_number_index")
   @@index([projectName], map: "update_notifier_project_name_index")
   @@map("update_notifier")
+  @@schema("public")
 }
 
 model Value {
@@ -385,6 +428,7 @@ model Value {
 
   @@id([timestamp, projectId, dataSource])
   @@map("values")
+  @@schema("public")
 }
 
 model VerifierStatus {
@@ -395,4 +439,5 @@ model VerifierStatus {
 
   @@id([address, chainId])
   @@map("verifier_status")
+  @@schema("public")
 }

@@ -8,7 +8,7 @@ export class AggregatedL2CostRepository {
 
   async getAll(): Promise<AggregatedL2Cost[]> {
     const rows = await this.db
-      .selectFrom('aggregated_l2_costs')
+      .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .execute()
 
@@ -23,7 +23,7 @@ export class AggregatedL2CostRepository {
     const rows = records.map(toRow)
 
     await scope
-      .insertInto('aggregated_l2_costs')
+      .insertInto('public.aggregated_l2_costs')
       .values(rows)
       .onConflict((cb) =>
         cb.columns(['timestamp', 'project_id']).doUpdateSet({
@@ -51,13 +51,13 @@ export class AggregatedL2CostRepository {
 
   async deleteAfter(from: UnixTime): Promise<void> {
     await this.db
-      .deleteFrom('aggregated_l2_costs')
+      .deleteFrom('public.aggregated_l2_costs')
       .where('timestamp', '>', from.toDate())
       .execute()
   }
 
   async deleteAll(): Promise<void> {
-    await this.db.deleteFrom('aggregated_l2_costs').execute()
+    await this.db.deleteFrom('public.aggregated_l2_costs').execute()
   }
 
   async getByProjectAndTimeRange(
@@ -66,7 +66,7 @@ export class AggregatedL2CostRepository {
   ): Promise<AggregatedL2Cost[]> {
     const [from, to] = timeRange
     const rows = await this.db
-      .selectFrom('aggregated_l2_costs')
+      .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .where((eb) =>
         eb.and([
