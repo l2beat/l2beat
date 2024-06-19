@@ -42,6 +42,7 @@ import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
+import { transporter } from './transporter'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
@@ -91,6 +92,7 @@ export const bridges: Bridge[] = [
   stargatev2,
   sygma,
   synapse,
+  transporter,
   portal,
   wormholeV1,
   xdai,
