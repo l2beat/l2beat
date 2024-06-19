@@ -8,63 +8,68 @@ import { StarkexTransactionCountRepository } from './StarkexCountRepository'
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 
-describeDatabase(StarkexTransactionCountRepository.name, (database) => {
-  const repository = new StarkexTransactionCountRepository(
-    database,
-    Logger.SILENT,
-  )
+describeDatabase(StarkexTransactionCountRepository.name, (knex, kysely) => {
+  const oldRepo = new StarkexTransactionCountRepository(knex, Logger.SILENT)
+  const newRepo = kysely.starkexTransactionCount
 
-  beforeEach(async () => {
-    await repository.deleteAll()
-  })
+  suite(oldRepo)
+  suite(newRepo)
 
-  describe(
-    StarkexTransactionCountRepository.prototype.findLastTimestampByProjectId
-      .name,
-    () => {
-      it('works with empty database', async () => {
-        expect(
-          await repository.findLastTimestampByProjectId(ProjectId('starknet')),
-        ).toEqual(undefined)
-      })
-    },
-  )
+  function suite(repository: typeof oldRepo | typeof newRepo) {
+    beforeEach(async () => {
+      await repository.deleteAll()
+    })
 
-  describe(
-    StarkexTransactionCountRepository.prototype.addOrUpdateMany.name,
-    () => {
-      it('adds multiple records', async () => {
-        const records = [
-          mockRecord(PROJECT_A, 0, 100),
-          mockRecord(PROJECT_B, 0, 200),
-        ]
+    describe(
+      StarkexTransactionCountRepository.prototype.findLastTimestampByProjectId
+        .name,
+      () => {
+        it('works with empty database', async () => {
+          expect(
+            await repository.findLastTimestampByProjectId(
+              ProjectId('starknet'),
+            ),
+          ).toEqual(undefined)
+        })
+      },
+    )
 
-        await repository.addOrUpdateMany(records)
+    describe(
+      StarkexTransactionCountRepository.prototype.addOrUpdateMany.name,
+      () => {
+        it('adds multiple records', async () => {
+          const records = [
+            mockRecord(PROJECT_A, 0, 100),
+            mockRecord(PROJECT_B, 0, 200),
+          ]
 
-        const result = await repository.getAll()
+          await repository.addOrUpdateMany(records)
 
-        expect(result).toEqual(records)
-      })
+          const result = await repository.getAll()
 
-      it('updates multiple records', async () => {
-        const records = [
-          mockRecord(PROJECT_A, 0, 100),
-          mockRecord(PROJECT_B, 0, 200),
-        ]
-        await repository.addOrUpdateMany(records)
+          expect(result).toEqual(records)
+        })
 
-        const updatedRecords = [
-          mockRecord(PROJECT_A, 0, 1000),
-          mockRecord(PROJECT_B, 0, 2000),
-        ]
-        await repository.addOrUpdateMany(updatedRecords)
+        it('updates multiple records', async () => {
+          const records = [
+            mockRecord(PROJECT_A, 0, 100),
+            mockRecord(PROJECT_B, 0, 200),
+          ]
+          await repository.addOrUpdateMany(records)
 
-        const result = await repository.getAll()
+          const updatedRecords = [
+            mockRecord(PROJECT_A, 0, 1000),
+            mockRecord(PROJECT_B, 0, 2000),
+          ]
+          await repository.addOrUpdateMany(updatedRecords)
 
-        expect(result).toEqual(updatedRecords)
-      })
-    },
-  )
+          const result = await repository.getAll()
+
+          expect(result).toEqual(updatedRecords)
+        })
+      },
+    )
+  }
 })
 
 const mockRecord = (projectId: ProjectId, offset: number, count: number) => ({

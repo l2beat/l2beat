@@ -5,41 +5,47 @@ import { expect } from 'earl'
 import { describeDatabase } from '../../../test/database'
 import { ZksyncTransactionRepository } from './ZksyncTransactionRepository'
 
-describeDatabase(ZksyncTransactionRepository.name, (database) => {
-  const repository = new ZksyncTransactionRepository(database, Logger.SILENT)
+describeDatabase(ZksyncTransactionRepository.name, (knex, kysely) => {
+  const oldRepo = new ZksyncTransactionRepository(knex, Logger.SILENT)
+  const newRepo = kysely.zksyncTransactionCount
 
-  beforeEach(async () => {
-    await repository.deleteAll()
-  })
+  suite(oldRepo)
+  suite(newRepo)
 
-  it(ZksyncTransactionRepository.prototype.addOrUpdateMany.name, async () => {
-    const records = [mockRecord(0), mockRecord(1)]
+  function suite(repository: typeof oldRepo | typeof newRepo) {
+    beforeEach(async () => {
+      await repository.deleteAll()
+    })
 
-    await repository.addOrUpdateMany(records)
+    it(ZksyncTransactionRepository.prototype.addOrUpdateMany.name, async () => {
+      const records = [mockRecord(0), mockRecord(1)]
 
-    const rows = await repository.getAll()
-
-    expect(rows).toEqual(records)
-  })
-
-  describe(ZksyncTransactionRepository.prototype.addOrUpdate.name, () => {
-    it('merges on conflict', async () => {
-      await repository.addOrUpdate(mockRecord(0))
-      await repository.addOrUpdate({
-        ...mockRecord(0),
-        timestamp: new UnixTime(2000),
-      })
+      await repository.addOrUpdateMany(records)
 
       const rows = await repository.getAll()
 
-      expect(rows).toEqual([
-        {
+      expect(rows).toEqual(records)
+    })
+
+    describe(ZksyncTransactionRepository.prototype.addOrUpdate.name, () => {
+      it('merges on conflict', async () => {
+        await repository.addOrUpdate(mockRecord(0))
+        await repository.addOrUpdate({
           ...mockRecord(0),
           timestamp: new UnixTime(2000),
-        },
-      ])
+        })
+
+        const rows = await repository.getAll()
+
+        expect(rows).toEqual([
+          {
+            ...mockRecord(0),
+            timestamp: new UnixTime(2000),
+          },
+        ])
+      })
     })
-  })
+  }
 })
 
 const mockRecord = (offset: number) => ({
