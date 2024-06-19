@@ -331,14 +331,11 @@ export class TvlService {
   // and keep only the current values in the database.
   private async getBreakdownMap(timestamp: UnixTime) {
     const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        this.$.configMapping.amounts.map((x) => x.configId),
-        timestamp,
-      )
-    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      this.$.configMapping.prices.map((x) => x.configId),
-      timestamp,
-    )
+      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
+    // TODO: if missing amounts then look 7D ago
+
+    const prices =
+      await this.$.dataService.getPricesByConfigIdsAndTimestamp(timestamp)
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()

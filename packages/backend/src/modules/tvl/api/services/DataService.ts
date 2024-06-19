@@ -85,32 +85,16 @@ export class DataService {
     return prices
   }
 
-  async getPricesByConfigIdsAndTimestamp(
-    priceConfigIds: string[],
-    timestamp: UnixTime,
-  ) {
-    const prices = await this.$.priceRepository.getByConfigIdsAndTimestamp(
-      priceConfigIds,
-      timestamp,
-    )
+  async getPricesByConfigIdsAndTimestamp(timestamp: UnixTime) {
+    const prices = await this.$.priceRepository.getByTimestamp(timestamp)
 
     // TODO: interpolate here
-    assert(
-      prices.length === priceConfigIds.length,
-      `Missing prices for ${timestamp.toNumber()}`,
-    )
 
     return prices
   }
 
-  async getAmountsByConfigIdsAndTimestamp(
-    configIds: string[],
-    timestamp: UnixTime,
-  ) {
+  async getAmountsByConfigIdsAndTimestamp(timestamp: UnixTime) {
     // TODO: what to do when there are missing values?
-    return await this.$.amountRepository.getByConfigIdsAndTimestamp(
-      configIds,
-      timestamp,
-    )
+    return await this.$.amountRepository.getByTimestamp(timestamp)
   }
 }

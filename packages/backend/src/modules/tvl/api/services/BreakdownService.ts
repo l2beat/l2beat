@@ -29,14 +29,9 @@ export class BreakdownService {
     timestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
     const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        this.$.configMapping.amounts.map((a) => a.configId),
-        timestamp,
-      )
-    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      this.$.configMapping.prices.map((x) => x.configId),
-      timestamp,
-    )
+      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
+    const prices =
+      await this.$.dataService.getPricesByConfigIdsAndTimestamp(timestamp)
 
     const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
     const breakdowns: Record<

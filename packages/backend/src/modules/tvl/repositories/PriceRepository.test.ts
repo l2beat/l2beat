@@ -22,6 +22,22 @@ describeDatabase(PriceRepository.name, (database) => {
     })
   })
 
+  describe(PriceRepository.prototype.getByTimestamp.name, () => {
+    it('gets by timestamp', async () => {
+      await repository.addMany([
+        saved('a', new UnixTime(100), 1),
+        saved('b', new UnixTime(100), 1),
+        saved('a', new UnixTime(200), 2),
+        saved('b', new UnixTime(200), 2),
+      ])
+      const result = await repository.getByTimestamp(new UnixTime(200))
+      expect(result).toEqual([
+        saved('a', new UnixTime(200), 2),
+        saved('b', new UnixTime(200), 2),
+      ])
+    })
+  })
+
   describe(PriceRepository.prototype.getByConfigIdsInRange.name, () => {
     it('gets by ids in inclusive range', async () => {
       await repository.addMany([
