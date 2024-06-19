@@ -72,10 +72,9 @@ export class ValuesDataService {
         valuesByTimestampForProject[timestamp] = configuredValues
       }
 
-      // TODO: Interpolate here
       assert(
         valuesByTimestamp[targetTimestamp.toString()],
-        `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString}`,
+        `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString()}`,
       )
 
       result.valuesByTimestampForProject[projectId] =
