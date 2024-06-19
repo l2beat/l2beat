@@ -4,8 +4,6 @@ import { AggregatedL2Cost, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
 
 export class AggregatedL2CostsRepository {
-  private readonly TABLE_NAME = 'aggregated_l2_costs'
-
   constructor(private readonly db: PostgresDatabase) {}
 
   async getAll(): Promise<AggregatedL2Cost[]> {
