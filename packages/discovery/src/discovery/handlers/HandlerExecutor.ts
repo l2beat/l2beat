@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { MulticallClient } from '../provider/multicall/MulticallClient'
 import { HandlerResult } from './Handler'
@@ -21,12 +22,14 @@ export class HandlerExecutor {
     address: EthereumAddress,
     abi: string[],
     overrides: ContractOverrides | undefined,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
   ): Promise<{
     results: HandlerResult[]
     values: Record<string, ContractValue> | undefined
     errors: Record<string, string> | undefined
+    usedTypes: DiscoveryCustomType[]
   }> {
     const handlers = getHandlers(abi, overrides, logger)
     const results = await executeHandlers(
@@ -37,7 +40,11 @@ export class HandlerExecutor {
       blockNumber,
       logger,
     )
-    const { values, errors } = getValuesAndErrors(results)
-    return { results, values, errors }
+    const { values, errors, usedTypes } = getValuesAndErrors(
+      results,
+      overrides?.fields,
+      types,
+    )
+    return { results, values, errors, usedTypes }
   }
 }

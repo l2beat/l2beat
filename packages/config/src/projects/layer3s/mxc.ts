@@ -46,30 +46,21 @@ export const mxc: Layer3 = {
     activityDataSource: 'Blockchain RPC',
   },
   config: {
+    associatedTokens: ['MXC'],
     escrows: [
-      {
-        ...discovery_ethereum.getEscrowDetails({
-          chain: 'ethereum',
-          address: EthereumAddress(
-            '0x7C954170305b11572522313b6AD514070ce0339c',
-          ),
-          tokens: ['MXC'],
-          description:
-            'MXC tokens that are bridged from Ethereum to MXC Moonchain are escrowed here.',
-        }),
-      },
-      {
-        ...discovery.getEscrowDetails({
-          includeInTotal: false,
-          chain: 'arbitrum',
-          address: EthereumAddress(
-            '0xC31a6C0C1087BBB6E6660F27014aD1321591c641',
-          ),
-          tokens: '*',
-          description:
-            'Tokens that are bridged from Arbitrum to MXC Moonchain are escrowed here.',
-        }),
-      },
+      discovery_ethereum.getEscrowDetails({
+        address: EthereumAddress('0x7C954170305b11572522313b6AD514070ce0339c'),
+        tokens: ['MXC'],
+        description:
+          'MXC tokens that are bridged from Ethereum to MXC Moonchain are escrowed here.',
+      }),
+      discovery.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0xC31a6C0C1087BBB6E6660F27014aD1321591c641'),
+        tokens: '*',
+        description:
+          'Tokens that are bridged from Arbitrum to MXC Moonchain are escrowed here.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',

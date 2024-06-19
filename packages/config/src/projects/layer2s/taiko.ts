@@ -110,6 +110,7 @@ export const taiko: Layer2 = {
     },
   },
   config: {
+    associatedTokens: ['TAIKO'],
     escrows: [
       {
         // Shared ETH bridge

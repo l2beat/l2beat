@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "build": "tsc",
     "db:generate": "prisma generate",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
+    "format": "prisma format && biome format .",
+    "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
     "lint": "biome check --formatter-enabled=false .",
     "typecheck": "tsc --noEmit"
@@ -19,6 +19,7 @@
     "prisma": "^5.15.0"
   },
   "devDependencies": {
-    "prisma-kysely": "^1.8.0"
+    "prisma-kysely": "^1.8.0",
+    "type-fest": "^4.20.0"
   }
 }

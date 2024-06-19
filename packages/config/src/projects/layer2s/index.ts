@@ -26,6 +26,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
+import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { form } from './form'
 import { frame } from './frame'
@@ -43,13 +44,14 @@ import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
+import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { lens } from './lens'
-import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
+import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
@@ -71,6 +73,7 @@ import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
+import { payy } from './payy'
 import { playchain } from './playchain'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
@@ -147,6 +150,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   edgeless,
+  ethernity,
   everclear,
   form,
   frame,
@@ -163,13 +167,14 @@ export const layer2s: Layer2[] = [
   karak,
   kinto,
   kroma,
+  lambda,
   layer2finance,
   layer2financezk,
   lens,
-  lightlink,
   linea,
   lisk,
   loopring,
+  lumia,
   lyra,
   mantapacific,
   mantle,
@@ -191,6 +196,7 @@ export const layer2s: Layer2[] = [
   palm,
   paradex,
   parallel,
+  payy,
   playchain,
   polygonmiden,
   polygonzkevm,

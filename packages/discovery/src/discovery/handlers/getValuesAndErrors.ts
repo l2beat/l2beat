@@ -1,112 +1,43 @@
-import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
-import { utils } from 'ethers'
+import { ContractParameters } from '@l2beat/discovery-types'
 
-import { assert } from '@l2beat/backend-tools'
-import { Type, getReturnType } from '../utils/parseReturnType'
+import {
+  DiscoveryContract,
+  DiscoveryCustomType,
+} from '../config/RawDiscoveryConfig'
+import { TypeApplier } from '../type-casters/TypeApplier'
 import { HandlerResult } from './Handler'
 
-export function getValuesAndErrors(results: HandlerResult[]): {
+export function getValuesAndErrors(
+  results: HandlerResult[],
+  fieldOverrides?: DiscoveryContract['fields'],
+  types?: Record<string, DiscoveryCustomType>,
+): {
   values: ContractParameters['values']
   errors: ContractParameters['errors']
+  usedTypes: DiscoveryCustomType[]
 } {
   const values: ContractParameters['values'] = {}
   const errors: ContractParameters['errors'] = {}
+  const typeApplier = new TypeApplier(types ?? {})
+
   for (const result of results) {
     if (result.value !== undefined) {
-      values[result.field] = reencodeWithABI(result.value, result.fragment)
+      const returnType = (fieldOverrides ?? {})[result.field]?.returnType
+      if (returnType !== undefined && returnType !== null) {
+        values[result.field] = typeApplier.applyReturnType(
+          result.value,
+          returnType,
+        )
+      } else {
+        values[result.field] = typeApplier.applyReturnFragment(
+          result.value,
+          result.fragment,
+        )
+      }
     }
     if (result.error !== undefined) {
       errors[result.field] = result.error
     }
   }
-  return { values, errors }
-}
-
-function reencodeWithABI(
-  value: ContractValue,
-  fragment: utils.FunctionFragment | undefined,
-): ContractValue {
-  if (fragment === undefined || fragment.outputs === undefined) {
-    return value
-  }
-
-  const type = getReturnType(fragment)
-  if (type.elements.length === 1) {
-    const firstElement = type.elements[0]
-    assert(firstElement !== undefined)
-    return reencodeType(value, firstElement.type)
-  } else {
-    assert(Array.isArray(value))
-    const names = type.elements.map((o) => o.name)
-    const entries = names.map((name, i) => {
-      const element = value[i]
-      const outputElement = type.elements[i]
-      assert(element !== undefined)
-      assert(outputElement !== undefined)
-      return [name, reencodeType(element, outputElement.type)]
-    })
-
-    return asObjectIfValidKeys(entries)
-  }
-}
-
-function reencodeType(value: ContractValue, paramType: Type): ContractValue {
-  assert(valueShapeMatchesType(value, paramType))
-
-  if (paramType.kind === 'array') {
-    const array = value as ContractValue[]
-    return array.map((v) => {
-      return reencodeType(v, paramType.childType)
-    })
-  }
-  if (paramType.kind === 'tuple') {
-    const array = value as ContractValue[]
-    const entries = array.map((v, i) => {
-      const element = paramType.elements[i]
-      assert(element !== undefined)
-      return [element.name, reencodeType(v, element.type)]
-    })
-
-    return asObjectIfValidKeys(entries)
-  }
-
-  return value
-}
-
-function valueShapeMatchesType(value: ContractValue, type: Type): boolean {
-  const valueIsArray = Array.isArray(value)
-  if (type.kind === 'array') {
-    if (!valueIsArray) {
-      return false
-    }
-
-    const arrayLength = type.length === 'dynamic' ? value.length : type.length
-    return (
-      value.length === arrayLength &&
-      value.every((v) => valueShapeMatchesType(v, type.childType))
-    )
-  }
-  if (type.kind === 'tuple') {
-    return (
-      valueIsArray &&
-      value.length === type.elements.length &&
-      value.every((v, i) => {
-        const element = type.elements[i]
-        assert(element !== undefined)
-        return valueShapeMatchesType(v, element.type)
-      })
-    )
-  }
-
-  return !valueIsArray
-}
-
-function asObjectIfValidKeys(
-  entries: (ContractValue | undefined)[][],
-): ContractValue {
-  if (entries.every((e) => e[0] !== undefined)) {
-    return Object.fromEntries(entries)
-  } else {
-    return entries.map((e) => e[1] as ContractValue)
-  }
+  return { values, errors, usedTypes: typeApplier.usedTypes }
 }

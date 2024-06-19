@@ -11,8 +11,6 @@ export const real: Layer2 = orbitStackL2({
   display: {
     name: 'Re.al',
     slug: 'real',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     purposes: ['RWA', 'Universal'],
@@ -47,6 +45,7 @@ export const real: Layer2 = orbitStackL2({
       },
     ],
     minTimestampForTvl: new UnixTime(1710580715),
+    coingeckoPlatform: 're-al',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
@@ -69,7 +68,14 @@ export const real: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('StrategyManager'),
+    discovery.getContractDetails(
+      'StrategyManager',
+      'A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2.',
+    ),
+    discovery.getContractDetails(
+      'SwapManager',
+      'Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault.',
+    ),
     discovery.getContractDetails(
       'RealVault',
       'This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.',
@@ -78,21 +84,28 @@ export const real: Layer2 = orbitStackL2({
       'AssetsVault',
       'This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.',
     ),
-    discovery.getContractDetails(
-      'Bridger',
-      'A Routing contract to the standard orbit stack bridge of the L2.',
-    ),
+    {
+      ...discovery.getContractDetails(
+        'Bridger',
+        'A Routing contract to the standard orbit stack bridge of the L2.',
+      ),
+      upgradableBy: ['Bridger Owner'],
+      upgradeDelay: 'No delay',
+    },
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'GelatoMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
+      'Multisig that can execute upgrades of the L2 system contracts via the UpgradeExecutor.',
+    ),
+    ...discovery.getMultisigPermission(
+      'EscrowMultisig',
+      'Multisig that owns reETH-strategy and escrow-related contracts and can move deposited funds. Also governs the reETH token as a minter.',
     ),
     {
-      name: 'RealVault Owner EOA',
-      accounts: [discovery.getPermissionedAccount('RealVault', 'owner')],
-      description:
-        'Can migrate the vault to a new contract, withdraw all ETH in the AssetVault and mint unlimited reETH, potentially stealing all user funds.',
+      name: 'Bridger Owner',
+      accounts: [discovery.getPermissionedAccount('Bridger', 'owner')],
+      description: 'Can upgrade the Bridger contract.',
     },
   ],
   milestones: [
@@ -102,6 +115,19 @@ export const real: Layer2 = orbitStackL2({
       date: '2024-05-15T00:00:00Z',
       description:
         'Re.al launches its mainnet with some initial dapps deployed.',
+    },
+    {
+      name: 'Arcana Launch',
+      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/t3MsS-cCeJJD4ljXgQef3U01t564VL2h_au6iM6rBk4',
+      date: '2024-05-15T00:00:00Z',
+      description:
+        'Arcana launches their platform for rebasing, delta-neutral yields on re.al.',
+    },
+    {
+      name: 'RWA Token Launch',
+      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/eUmaidSfGSsjKKzepfyus6YSMog_FRdAQ6q5bsRoF7Y',
+      date: '2024-05-15T00:00:00Z',
+      description: 'Re.al launches the RWA token and its governance protocol.',
     },
   ],
 })

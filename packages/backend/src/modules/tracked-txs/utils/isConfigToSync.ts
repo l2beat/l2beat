@@ -22,7 +22,11 @@ export function isConfigToSync(
 
   if (lastSyncedTimestamp?.lt(from)) {
     throw new Error(
-      'Programmer error: lastSyncedTimestamp should be after or equal to from',
+      `Programmer error: lastSyncedTimestamp should be after or equal to from; id: ${
+        databaseEntry.id
+      } from: ${from.toString()} lastSyncedTimestamp: ${lastSyncedTimestamp.toString()} to: ${to} lastSyncedTimestamp: ${lastSyncedTimestamp.toString()} config: ${JSON.stringify(
+        configEntry,
+      )} dbEntry: ${JSON.stringify(databaseEntry)}`,
     )
   }
 

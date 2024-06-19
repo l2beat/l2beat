@@ -33,6 +33,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.analyze(
         address,
         undefined,
+        undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
@@ -106,6 +107,7 @@ describe(AddressAnalyzer.name, () => {
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
             errors: {},
+            usedTypes: [],
           }),
         }),
         mockObject<TemplateService>({
@@ -116,6 +118,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(
         address,
+        undefined,
         undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
@@ -136,7 +139,10 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -205,6 +211,7 @@ describe(AddressAnalyzer.name, () => {
           execute: async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
+            usedTypes: [],
             errors: {},
           }),
         }),
@@ -216,6 +223,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(
         address,
+        undefined,
         undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
@@ -236,7 +244,10 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -303,6 +314,7 @@ describe(AddressAnalyzer.name, () => {
           execute: async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
+            usedTypes: [],
             errors: {},
           }),
         }),
@@ -314,6 +326,7 @@ describe(AddressAnalyzer.name, () => {
 
       const result = await addressAnalyzer.analyze(
         address,
+        undefined,
         undefined,
         BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
@@ -334,7 +347,10 @@ describe(AddressAnalyzer.name, () => {
         abis: sources.abis,
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
+        selfMeta: undefined,
+        targetsMeta: undefined,
         ignoreInWatchMode: undefined,
+        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -398,6 +414,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -406,6 +423,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -416,6 +434,7 @@ describe(AddressAnalyzer.name, () => {
           await addressAnalyzer.hasContractChanged(
             contractParameters,
             overrides,
+            undefined,
             BLOCK_NUMBER,
             abis,
           ),
@@ -472,6 +491,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -480,6 +500,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         abis,
       )
@@ -515,6 +536,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -524,6 +546,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -566,6 +589,7 @@ describe(AddressAnalyzer.name, () => {
       const result = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )
@@ -575,6 +599,7 @@ describe(AddressAnalyzer.name, () => {
       const changedResult = await addressAnalyzer.hasContractChanged(
         contractParameters,
         overrides,
+        undefined,
         BLOCK_NUMBER,
         {},
       )

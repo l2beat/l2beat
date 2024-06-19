@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xc763b890dd98be40330ef33a99980993c94acce2
+
+# Diff at Fri, 14 Jun 2024 09:10:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e0044dca50e937818bd705c0a4de3d1abb379fad block: 19697841
+- current block number: 20089055
+
+## Description
+
+Add Wormhole Relayer, NFTBridge and Circle adapter.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19697841 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: None
+      values.WETH:
++        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
+```diff
+    contract Wormhole (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      name:
+-        "Wormhole"
++        "WormholeCore"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xcdb93f13e524a5818a8fc4185305b9a8371e08bf
 
 # Diff at Sat, 20 Apr 2024 16:33:52 GMT:

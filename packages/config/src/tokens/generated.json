@@ -1247,6 +1247,21 @@
       "formula": "locked"
     },
     {
+      "id": "ekubo-ekubo-protocol",
+      "name": "Ekubo Protocol",
+      "coingeckoId": "ekubo-protocol",
+      "address": "0x04C46E830Bb56ce22735d5d8Fc9CB90309317d0f",
+      "symbol": "EKUBO",
+      "decimals": 18,
+      "deploymentTimestamp": 1714344731,
+      "coingeckoListingTimestamp": 1715731200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37715/large/135474885.png?1715330450",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ena-ena",
       "name": "ENA",
       "coingeckoId": "ethena",
@@ -2071,6 +2086,21 @@
       "formula": "locked"
     },
     {
+      "id": "lamb-lambda",
+      "name": "Lambda",
+      "coingeckoId": "lambda",
+      "address": "0x8971f9fd7196e5cEE2C1032B50F656855af7Dd26",
+      "symbol": "LAMB",
+      "decimals": 18,
+      "deploymentTimestamp": 1537280725,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4703/large/lambda_200.png?1696505268",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ldo-lido-dao-token",
       "name": "Lido DAO Token",
       "coingeckoId": "lido-dao",
@@ -2656,6 +2686,21 @@
       "formula": "locked"
     },
     {
+      "id": "ole-openleverage-token-v2",
+      "name": "OpenLeverage Token V2",
+      "coingeckoId": "openleverage",
+      "address": "0x1B6e9c73beE68102d9dd4A2627f97bFf4183ab0A",
+      "symbol": "OLE",
+      "decimals": 18,
+      "deploymentTimestamp": 1699254587,
+      "coingeckoListingTimestamp": 1657152000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26098/large/256x256_OLE_Token_Logo.png?1696525189",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "obi-orbofi",
       "name": "ORBOFI",
       "coingeckoId": "orbofi-ai",
@@ -3041,6 +3086,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1696504070",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "rbx-rabbitx",
+      "name": "RabbitX",
+      "coingeckoId": "rabbitx",
+      "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
+      "symbol": "RBX",
+      "decimals": 18,
+      "deploymentTimestamp": 1682520515,
+      "coingeckoListingTimestamp": 1682985600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30048/large/RBX.png?1696528970",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3716,6 +3776,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/3406/large/SNX.png?1696504103",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "taiko-taiko-token",
+      "name": "Taiko Token",
+      "coingeckoId": "taiko",
+      "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+      "symbol": "TAIKO",
+      "decimals": 18,
+      "deploymentTimestamp": 1714033799,
+      "coingeckoListingTimestamp": 1717545600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38058/large/icon.png?1717626867",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -4649,6 +4724,25 @@
       }
     },
     {
+      "id": "optimism:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710187105,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 10,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "optimism:stg-stargatetoken",
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
@@ -4702,6 +4796,25 @@
       "formula": "totalSupply"
     },
     {
+      "id": "optimism:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710186779,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 10,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "optimism:velo-velodrome-finance",
       "name": "VelodromeV2",
       "coingeckoId": "velodrome-finance",
@@ -4746,6 +4859,82 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "mantapacific:mbtc-mbtc",
+      "name": "mBTC",
+      "coingeckoId": "manta-mbtc",
+      "address": "0x1468177DbCb2a772F3d182d2F1358d442B553089",
+      "symbol": "mBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1715909089,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
+      "chainId": 169,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantapacific:meth-meth",
+      "name": "mETH",
+      "coingeckoId": "manta-meth",
+      "address": "0xACCBC418a994a27a75644d8d591afC22FaBA594e",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715909059,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
+      "chainId": 169,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantapacific:musd-musd",
+      "name": "mUSD",
+      "coingeckoId": "manta-musd",
+      "address": "0x649d4524897cE85A864DC2a2D5A11Adb3044f44a",
+      "symbol": "mUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1715909029,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
+      "chainId": 169,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantapacific:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709929439,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 169,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "mantapacific:stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
@@ -4780,6 +4969,63 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Hyperlane Nexus"
+      }
+    },
+    {
+      "id": "mantapacific:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709926649,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 169,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "fraxtal:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710281055,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 252,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "fraxtal:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710280993,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 252,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -5003,6 +5249,21 @@
       "coingeckoListingTimestamp": 1694476800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31633/large/zf.png?1696530449",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "zksync2:zk-zksync",
+      "name": "ZKsync",
+      "coingeckoId": "zksync",
+      "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "symbol": "ZK",
+      "decimals": 18,
+      "deploymentTimestamp": 1716317326,
+      "coingeckoListingTimestamp": 1718668800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38043/large/ZKTokenBlack.png?1718614502",
       "chainId": 324,
       "type": "NMV",
       "formula": "circulatingSupply"
@@ -5808,6 +6069,25 @@
       }
     },
     {
+      "id": "mode:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710281157,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 34443,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "mode:stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
@@ -5823,6 +6103,25 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "mode:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710280995,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 34443,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
         "slug": "stargate"
       }
     },
@@ -6358,6 +6657,25 @@
       }
     },
     {
+      "id": "arbitrum:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710118556,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "arbitrum:stg-stargatetoken",
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
@@ -6405,6 +6723,25 @@
       "chainId": 42161,
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "id": "arbitrum:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710118453,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
     },
     {
       "id": "arbitrum:vela-velatoken",
@@ -6628,6 +6965,25 @@
       }
     },
     {
+      "id": "linea:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710974953,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 59144,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "linea:stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
@@ -6644,6 +7000,25 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "linea:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710974905,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 59144,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -6681,6 +7056,25 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "blast:bwool-bwool",
+      "name": "bWOOL",
+      "coingeckoId": "wolf-game-wool",
+      "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
+      "symbol": "bWOOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1715703713,
+      "coingeckoListingTimestamp": 1637625600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20760/large/KM3RwIVx_400x400.jpg?1696520155",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "id": "blast:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",
@@ -6693,6 +7087,21 @@
       "chainId": 81457,
       "type": "CBV",
       "formula": "totalSupply"
+    },
+    {
+      "id": "blast:juice-juice",
+      "name": "Juice",
+      "coingeckoId": "juice-finance",
+      "address": "0x818a92bc81Aad0053d72ba753fb5Bc3d0C5C0923",
+      "symbol": "JUICE",
+      "decimals": 18,
+      "deploymentTimestamp": 1711151963,
+      "coingeckoListingTimestamp": 1711584000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36503/large/juice-logo-purple-200x200_%281%29.png?1711619018",
+      "chainId": 81457,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "blast:rseth-kelpdao-restaked-eth",
@@ -6748,6 +7157,25 @@
       }
     },
     {
+      "id": "blast:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1713651093,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "blast:usdb-usdb",
       "name": "USDB",
       "coingeckoId": "usdb",
@@ -6763,6 +7191,25 @@
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Blast"
+      }
+    },
+    {
+      "id": "blast:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1713651041,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {
@@ -6785,6 +7232,82 @@
       }
     },
     {
+      "id": "real:arcusd-arcusd",
+      "name": "arcUSD",
+      "coingeckoId": "arcana-2",
+      "address": "0xAEC9e50e3397f9ddC635C6c429C8C7eca418a143",
+      "symbol": "arcUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1715634151,
+      "coingeckoListingTimestamp": 1717632000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "real:more-more",
+      "name": "MORE",
+      "coingeckoId": "stack-2",
+      "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
+      "symbol": "MORE",
+      "decimals": 18,
+      "deploymentTimestamp": 1715905323,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "real:pearl-pearl",
+      "name": "Pearl",
+      "coingeckoId": "pearl",
+      "address": "0xCE1581d7b4bA40176f0e219b2CaC30088Ad50C7A",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "deploymentTimestamp": 1715394373,
+      "coingeckoListingTimestamp": 1687478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
+      "chainId": 111188,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "real:ustb-us-t-bill",
+      "name": "US T-Bill",
+      "coingeckoId": "real-us-t-bill",
+      "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
+      "symbol": "USTB",
+      "decimals": 18,
+      "deploymentTimestamp": 1713200024,
+      "coingeckoListingTimestamp": 1717459200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
+      "chainId": 111188,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "id": "scroll:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -6804,6 +7327,25 @@
       }
     },
     {
+      "id": "scroll:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710187704,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "chainId": 534352,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "id": "scroll:stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
@@ -6820,6 +7362,25 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "scroll:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1710186910,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 534352,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
       }
     },
     {

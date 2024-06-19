@@ -6,6 +6,7 @@ import {
   Layer2LivenessConfig,
   Layer2TxConfig,
   Layer3,
+  ScalingProjectEscrow,
   ScalingProjectTransactionApi,
   chains,
   getCanonicalTokenBySymbol,
@@ -49,6 +50,12 @@ export interface ProjectEscrow {
   tokens: Token[]
   chain?: string
   includeInTotal?: boolean
+  source?: ScalingProjectEscrow['source']
+  bridge?: {
+    name: string
+    slug?: string
+    warning?: string
+  }
 }
 
 export function layer2ToProject(layer2: Layer2): Project {
@@ -64,10 +71,15 @@ export function layer2ToProject(layer2: Layer2): Project {
       tokens:
         escrow.tokens === '*'
           ? tokenList.filter(
-              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+              (t) =>
+                t.type === 'CBV' &&
+                t.chainId === ChainId.ETHEREUM &&
+                !escrow.excludedTokens?.includes(t.symbol),
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
+      source: escrow.source,
+      bridge: escrow.bridge,
     })),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
@@ -94,10 +106,15 @@ export function bridgeToProject(bridge: Bridge): Project {
       tokens:
         escrow.tokens === '*'
           ? tokenList.filter(
-              (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+              (t) =>
+                t.type === 'CBV' &&
+                t.chainId === ChainId.ETHEREUM &&
+                !escrow.excludedTokens?.includes(t.symbol),
             )
           : escrow.tokens.map(getCanonicalTokenBySymbol),
       includeInTotal: escrow.includeInTotal,
+      source: escrow.source,
+      bridge: escrow.bridge,
     })),
     associatedTokens: bridge.config.associatedTokens,
   }
@@ -155,10 +172,14 @@ export function layer3ToProject(layer3: Layer3): Project {
         sinceTimestamp: escrow.sinceTimestamp,
         tokens:
           escrow.tokens === '*'
-            ? tokensOnChain
+            ? tokensOnChain.filter(
+                (t) => !escrow.excludedTokens?.includes(t.symbol),
+              )
             : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
         chain,
         includeInTotal: escrow.includeInTotal,
+        source: escrow.source,
+        bridge: escrow.bridge,
       }
     }),
     associatedTokens: layer3.config.associatedTokens,

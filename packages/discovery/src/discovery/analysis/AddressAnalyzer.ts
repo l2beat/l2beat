@@ -9,6 +9,7 @@ import { isEqual } from 'lodash'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -18,6 +19,7 @@ import {
 } from '../source/SourceCodeService'
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -38,6 +40,10 @@ export interface AnalyzedContract {
   extendedTemplate?: ExtendedTemplate
   ignoreInWatchMode?: string[]
   relatives: AddressesWithTemplates
+  selfMeta?: ContractMeta
+  targetsMeta?: Record<string, ContractMeta>
+  combinedMeta?: ContractMeta
+  usedTypes?: DiscoveryCustomType[]
 }
 
 export interface ExtendedTemplate {
@@ -65,6 +71,7 @@ export class AddressAnalyzer {
   async analyze(
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
@@ -143,13 +150,26 @@ export class AddressAnalyzer {
 
     logger.log(`  Template: ${templateLog}`)
 
-    const { results, values, errors } = await this.handlerExecutor.execute(
-      address,
-      sources.abi,
-      overrides,
-      blockNumber,
-      logger,
+    const { results, values, errors, usedTypes } =
+      await this.handlerExecutor.execute(
+        address,
+        sources.abi,
+        overrides,
+        types,
+        blockNumber,
+        logger,
+      )
+    const relatives = getRelativesWithSuggestedTemplates(
+      results,
+      overrides?.ignoreRelatives,
+      proxy?.relatives,
+      proxy?.implementations,
+      overrides?.fields,
     )
+    const targetsMeta =
+      overrides?.fields !== undefined
+        ? getTargetsMeta(address, results, overrides.fields)
+        : undefined
 
     return {
       type: 'Contract',
@@ -167,19 +187,17 @@ export class AddressAnalyzer {
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
-      relatives: getRelativesWithSuggestedTemplates(
-        results,
-        overrides?.ignoreRelatives,
-        proxy?.relatives,
-        proxy?.implementations,
-        overrides?.fields,
-      ),
+      relatives,
+      selfMeta: getSelfMeta(overrides),
+      targetsMeta,
+      usedTypes,
     }
   }
 
   async hasContractChanged(
     contract: ContractParameters,
     overrides: ContractOverrides,
+    types: Record<string, DiscoveryCustomType> | undefined,
     blockNumber: number,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
@@ -203,6 +221,7 @@ export class AddressAnalyzer {
       contract.address,
       abi,
       overrides,
+      types,
       blockNumber,
       this.logger,
     )

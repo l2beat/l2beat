@@ -27,6 +27,6 @@ export interface SubVerifier {
   proofSystem: string
   mainArithmetization: string
   mainPCS: string
-  trustedSetup?: string
+  trustedSetup?: 'None' | (string & {})
   link?: string
 }

@@ -5,19 +5,7 @@
   authorId: anastassis-oikonomopoulos
 ---
 
-## Table of Contents
-1. [Optimism](#Optimism)
-2. [Arbitrum](#Arbitrum)
-3. [Uniswap](#Uniswap)
-4. [Hop](#Hop)
-5. [Polygon](#Polygon)
-6. [Starknet](#Starknet)
-7. [Everclear](#Everclear)
-
-<a name="Optimism">
-
 ## **Optimism**
-</a>
 
 Preparing for Season 6, the Foundation is hosting election town hall meetings so delegates can learn more information about the self-nominees for the Grants Council and for the Developer Advisory Board.
 
@@ -63,11 +51,8 @@ You can find us to discuss all of the above and more during our [Optimism Office
 * [Builder Office Hours with the Foundation](meet.google.com/pop-kkus-bvf) on 12.6 at 4:30 pm
 * [ACC Office Hours](meet.google.com/wwr-kicc-zzi) on 13.6 at 4:00 pm
 
-<a name="Arbitrum">
-
 ## **Arbitrum**
 
-</a>
 
 Arbitrum continues to be buzzing with energy. The Foundation is working on upgrading the rollup contracts to use Arbitrum BOLD, and the DAO is seeing an increase in proposals surrounding the prudent use of the treasury.
 
@@ -114,8 +99,8 @@ Arbitrum GovHack returns, this time at Brussels in the context of EthCC!
 
 ### **[ARDC] Monthly Update**
 
-As per the mandate of the original proposal establishing the Arbitrum Research and Development Collective (ARDC), we (L2BEAT), in our capacity as DAO Advocate, [published a monthly update](https://forum.arbitrum.foundation/t/ardc-dao-advocate-communication-thread/22865/7) with everything the ARDC has worked on and everything currently on our plate. \
- \
+As per the mandate of the original proposal establishing the Arbitrum Research and Development Collective (ARDC), we (L2BEAT), in our capacity as DAO Advocate, [published a monthly update](https://forum.arbitrum.foundation/t/ardc-dao-advocate-communication-thread/22865/7) with everything the ARDC has worked on and everything currently on our plate.
+ 
 We remind everyone that you can follow along with ARDC’s progress on [our public Notion page](https://loving-bank-303.notion.site/ARDC-Homepage-955753d44ff74dc985d498c10cb361b0?pvs=74).
 
 
@@ -182,10 +167,8 @@ You can find us to discuss all of the above and more during our [Arbitrum Office
 * [Arbitrum’s Fees and Sequencer Revenue - Discussion](eet.google.com/fug-dcmu-sfm) on 14.6 at 1:00 pm
 
 
-<a name="Uniswap">
 
 ## **Uniswap**
-</a>
 
 
 ### **Arbitrum LTIPP Incentive Matching**
@@ -209,10 +192,8 @@ You can find us to discuss all the above and more during our [Uniswap Office Hou
 * [Uniswap Community Call](meet.google.com/fuj-mbkg-vdu) on 11.6 at 2:00 pm
 
 
-<a name="Hop">
-
 ## **Hop**
-</a>
+
 
 **Discuss with L2BEAT**
 
@@ -229,10 +210,7 @@ You can find us to discuss all things Hop during our [Hop Office Hours](http://m
 * [Hop Community Call](https://discord.com/events/789310208413270078/1237800308516851863) on 12.6 at 6:00 pm
 
 
-<a name="Polygon">
-
 ## **Polygon**
-</a>
 
 
 ### **PIP 38 - Phased expansion of Validator Slots on Polygon PoS**
@@ -240,7 +218,6 @@ You can find us to discuss all things Hop during our [Hop Office Hours](http://m
 Vasanti01 from PolygonLabs’ Validators Support Team [submitted a proposal](https://forum.polygon.technology/t/pip-38-phased-expansion-of-validator-slots-on-polygon-pos/14200) that outlines the considerations for expanding the number of validator slots to ensure robust network performance.
 
 The primary motivation for increasing the number of validator slots within the Polygon PoS network is to improve decentralization, which can be observed via the following metrics:
-
 
 
 * Geographical distribution of nodes.
@@ -260,11 +237,7 @@ You can find us to discuss all things Polygon during our [Polygon Office Hours](
 
 * [Polygon Protocol Governance Call](meet.google.com/kez-vsmk-kng) on 13.6 at 3:00 pm
 
-
-<a name="Starknet">
-
 ## **Starknet**
-</a>
 
 
 ### **StarkHack Hackathon Starts June 13th**
@@ -282,11 +255,7 @@ On the occasion of StarkHack, we’d like to connect with builders and key Stark
 You can find us to discuss the above and more during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
 
-<a name="Everclear">
-
 ## **Everclear**
-</a>
-
 
 ### **Connext rebrands to Everclear**
 
