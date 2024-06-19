@@ -4,7 +4,9 @@
     "getTransmitters",
     "getSupportedTokens",
     "getDestinationTokens",
-    "getAllowList"
+    "getAllowList",
+    "currentRateLimiterState",
+    "lastUpdated"
   ],
   "fields": {
     "commitStore": {

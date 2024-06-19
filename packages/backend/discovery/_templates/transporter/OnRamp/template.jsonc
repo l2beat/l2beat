@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getNops", "getAllowList", "getStaticConfig"],
+  "ignoreMethods": ["getNops", "getAllowList", "getStaticConfig", "lastUpdated", "currentRateLimiterState"],
   "ignoreRelatives": [
     "getSupportedTokens",
     "tokenAddresses",
