@@ -1,22 +1,22 @@
-import { readdirSync } from 'fs'
-import path from 'path'
 import { expect } from 'earl'
+import { readdirSync } from 'fs'
 import { afterEach } from 'mocha'
+import path from 'path'
 
 import { getTestDatabase } from '../../test/database'
 import { Database } from './Database'
 
 describe(Database.name, () => {
   it('can run and rollback all migrations', async function () {
-    const database = getTestDatabase()
-    if (!database) {
+    const databases = getTestDatabase()
+    if (!databases) {
       this.skip()
     }
 
-    await database.migrateToLatest()
-    await database.rollbackAll()
+    await databases.legacyDb.migrateToLatest()
+    await databases.legacyDb.rollbackAll()
 
-    const knex = await database.getKnex()
+    const knex = await databases.legacyDb.getKnex()
     const result = await knex.raw(
       'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()',
     )
@@ -24,7 +24,7 @@ describe(Database.name, () => {
 
     expect(tables).toEqual(['knex_migrations', 'knex_migrations_lock'])
 
-    await database.closeConnection()
+    await databases.legacyDb.closeConnection()
   })
 
   it('migrations have consecutive numbering except for 20', () => {
@@ -46,7 +46,7 @@ describe(Database.name, () => {
     })
 
     it('throws for mismatching version', async function () {
-      database = getTestDatabase({ requiredMajorVersion: 15 })
+      database = getTestDatabase({ requiredMajorVersion: 15 })?.legacyDb
       if (!database) {
         this.skip()
       }
@@ -56,7 +56,7 @@ describe(Database.name, () => {
     })
 
     it('does not throw for matching version', async function () {
-      database = getTestDatabase()
+      database = getTestDatabase()?.legacyDb
       if (!database) {
         this.skip()
       }
