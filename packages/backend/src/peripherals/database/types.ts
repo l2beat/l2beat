@@ -162,6 +162,18 @@ declare module 'knex/types/tables' {
     last_updated: Date
   }
 
+  export interface AggregatedLivenessRow {
+    project_id: string
+    subtype: string
+    range: string
+    min: number
+    avg: number
+    max: number
+    rolling_count?: number
+    rolling_sum?: number
+    timestamp: Date
+  }
+
   interface Tables {
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
@@ -186,6 +198,7 @@ declare module 'knex/types/tables' {
     indexer_configurations: IndexerConfigurationRow
     values: ValueRow
     verifier_state: VerifierStatusRow
+    aggregated_liveness: AggregatedLivenessRow
   }
 }
 
