@@ -7,8 +7,6 @@ import { IProvider } from '../../provider/IProvider'
 import { StateFromEventHandler } from './StateFromEventHandler'
 
 describe(StateFromEventHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new StateFromEventHandler(
@@ -45,11 +43,9 @@ describe(StateFromEventHandler.name, () => {
     it('no logs', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<IProvider>({
-        async getLogs(providedAddress, topics, fromBlock, toBlock) {
+        async getLogs(providedAddress, topics) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
-          expect(fromBlock).toEqual(0)
-          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -64,7 +60,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -100,7 +96,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       expect(value).toEqual({
         field: 'someName',
@@ -158,7 +154,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       // expect just last event, since it overrides all props
       expect(value).toEqual({
@@ -201,7 +197,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [
@@ -239,7 +235,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      await handler.execute(provider, address, BLOCK_NUMBER)
+      await handler.execute(provider, address)
     })
   })
 })

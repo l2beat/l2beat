@@ -7,8 +7,6 @@ import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
 describe(ArrayFromOneEventWithArgHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new ArrayFromOneEventWithArgHandler(
@@ -134,11 +132,9 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
     it('no logs', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<IProvider>({
-        async getLogs(providedAddress, topics, fromBlock, toBlock) {
+        async getLogs(providedAddress, topics) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('PermissionUpdate')])
-          expect(fromBlock).toEqual(0)
-          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -156,7 +152,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -197,7 +193,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [Charlie.toString(), Alice.toString()],
@@ -239,7 +235,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [Charlie.toString(), Alice.toString()],

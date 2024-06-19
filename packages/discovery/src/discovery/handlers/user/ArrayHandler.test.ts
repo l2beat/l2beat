@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -6,8 +6,6 @@ import { IProvider } from '../../provider/IProvider'
 import { ArrayHandler } from './ArrayHandler'
 
 describe(ArrayHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('dependencies', () => {
     it('detects no dependencies for a simple definition', () => {
       const handler = new ArrayHandler(
@@ -179,7 +177,6 @@ describe(ArrayHandler.name, () => {
 
   describe('execute', () => {
     const method = 'function owners(uint256 index) view returns (address)'
-    const signature = '0x025e7c27'
     const address = EthereumAddress.random()
     const owners = [
       EthereumAddress.random(),
@@ -189,18 +186,17 @@ describe(ArrayHandler.name, () => {
 
     it('calls the method "length" times', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress: EthereumAddress, data: Bytes) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
 
-          const index = data.get(35)
+          const index = data[0] as number
+          expect(data).toEqual([index])
 
-          expect(data).toEqual(
-            Bytes.fromHex(signature + index.toString().padStart(64, '0')),
-          )
-
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          return owners[index]!.toString() as T
         },
       })
 
@@ -210,7 +206,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -220,12 +216,14 @@ describe(ArrayHandler.name, () => {
 
     it('passes the ignoreRelative field', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          const index = data[0] as number
+          return owners[index]!.toString() as T
         },
       })
 
@@ -235,7 +233,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -245,12 +243,14 @@ describe(ArrayHandler.name, () => {
 
     it('resolves the "length" field', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          const index = data[0] as number
+          return owners[index]!.toString() as T
         },
       })
 
@@ -260,7 +260,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
+      const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 3 },
       })
       expect(result).toEqual({
@@ -272,15 +272,17 @@ describe(ArrayHandler.name, () => {
 
     it('handles errors when length is present', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
+          const index = data[0] as number
           if (index === 1) {
-            throw new Error('revert')
+            throw new Error('Execution reverted')
           }
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          return owners[index]!.toString() as T
         },
       })
 
@@ -290,7 +292,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Execution reverted',
@@ -299,15 +301,17 @@ describe(ArrayHandler.name, () => {
 
     it('calls the method until revert without length', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
+          const index = data[0] as number
           if (index >= 3) {
-            throw new Error('revert')
+            throw new Error('Execution reverted')
           }
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          return owners[index]!.toString() as T
         },
       })
 
@@ -317,7 +321,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         value: owners.map((x) => x.toString()),
@@ -327,15 +331,17 @@ describe(ArrayHandler.name, () => {
 
     it('handles non-revert errors without length', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
+          const index = data[0] as number
           if (index === 1) {
             throw new Error('oops')
           }
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          return owners[index]!.toString() as T
         },
       })
 
@@ -345,7 +351,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'oops',
@@ -354,8 +360,8 @@ describe(ArrayHandler.name, () => {
 
     it('has a builtin limit of 100', async () => {
       const provider = mockObject<IProvider>({
-        async call() {
-          return Bytes.fromHex('0'.repeat(64))
+        async callMethod<T>() {
+          return EthereumAddress.ZERO as T
         },
       })
 
@@ -365,7 +371,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
@@ -375,8 +381,8 @@ describe(ArrayHandler.name, () => {
 
     it('can have a different maxLength', async () => {
       const provider = mockObject<IProvider>({
-        async call() {
-          return Bytes.fromHex('0'.repeat(64))
+        async callMethod<T>() {
+          return EthereumAddress.ZERO as T
         },
       })
 
@@ -386,7 +392,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         error: 'Too many values. Provide a higher maxLength value',
@@ -396,12 +402,14 @@ describe(ArrayHandler.name, () => {
 
     it('calls indices if present', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          const index = data[0] as number
+          return owners[index]!.toString() as T
         },
       })
 
@@ -411,7 +419,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         value: [owners[0]!.toString(), owners[2]!.toString()],
@@ -422,16 +430,18 @@ describe(ArrayHandler.name, () => {
       const owners = new Array(10).fill(0).map(() => EthereumAddress.random())
 
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
           // simulate random order of responses
           if (Math.random() > 0.5) {
             await new Promise((resolve) => setTimeout(resolve, 0))
           }
-          const index = data.get(35)
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          const index = data[0] as number
+          return owners[index]!.toString() as T
         },
       })
 
@@ -441,7 +451,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'owners',
         value: [
@@ -458,12 +468,14 @@ describe(ArrayHandler.name, () => {
 
     it('resolves the "indices" field', async () => {
       const provider = mockObject<IProvider>({
-        async call(passedAddress, data) {
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          const index = data.get(35)
-          return Bytes.fromHex('00'.repeat(12)).concat(
-            Bytes.fromHex(owners[index]!.toString()),
-          )
+          const index = data[0] as number
+          return owners[index]!.toString() as T
         },
       })
 
@@ -473,7 +485,7 @@ describe(ArrayHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
+      const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: [0, 2] },
       })
       expect(result).toEqual({

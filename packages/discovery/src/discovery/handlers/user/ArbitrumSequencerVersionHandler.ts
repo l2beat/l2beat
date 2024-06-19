@@ -88,7 +88,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
         )}.${currentBlockNumber}`,
         ({ eventProvider }) => {
           return eventProvider.getLogs({
-            address,
+            address: address.toString(),
             topics: [abi.getEventTopic('SequencerBatchDelivered')],
             fromBlock: Math.max(0, currentBlockNumber - blockStep),
             toBlock: currentBlockNumber,

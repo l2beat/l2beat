@@ -11,7 +11,12 @@ export interface ContractSource {
 
 export function processSources(
   address: EthereumAddress,
-  { name, source, isVerified, solidityVersion }: Omit<IContractSource, 'abi'>,
+  {
+    name,
+    source,
+    isVerified,
+    solidityVersion,
+  }: Omit<IContractSource, 'abi' | 'constructorArguments'>,
 ): ContractSource {
   let files: Record<string, string> = {}
   let remappings: string[] = []

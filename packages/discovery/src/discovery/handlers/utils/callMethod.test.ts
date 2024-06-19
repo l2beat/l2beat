@@ -1,15 +1,13 @@
 import { ContractValue } from '@l2beat/discovery-types'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { callMethod } from './callMethod'
 
 describe('callMethod', () => {
   const ADDRESS = EthereumAddress.random()
-  const BLOCK_NUMBER = 1234
-  const encoder = utils.defaultAbiCoder
 
   it('decodes struct returns', async () => {
     const RESULT_VALUE = EthereumAddress.random().toString()
@@ -18,14 +16,14 @@ describe('callMethod', () => {
       'function testFunction() view returns (tuple(address r1, uint64 r2, address r3, uint64 r4))',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(
-          encoder.encode(
-            ['tuple(address r1, uint64 r2, address r3, uint64 r4)'],
-            [[RESULT_VALUE, 1234, RESULT_VALUE, 5678]],
-          ),
-        ),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [
+            [RESULT_VALUE, 1234, RESULT_VALUE, 5678],
+          ]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -33,7 +31,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['r1', 'r4'],
     )
 
@@ -47,21 +44,17 @@ describe('callMethod', () => {
       'function testFunction() view returns (tuple(tuple(address r1, uint64 r2) ra1, tuple(address r3, uint64 r4) rb1))',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(
-          encoder.encode(
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [
             [
-              'tuple(tuple(address r1, uint64 r2) ra1, tuple(address r3, uint64 r4) rb1)',
+              [RESULT_VALUE, 1234],
+              [RESULT_VALUE, 5678],
             ],
-            [
-              [
-                [RESULT_VALUE, 1234],
-                [RESULT_VALUE, 5678],
-              ],
-            ],
-          ),
-        ),
+          ]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -69,7 +62,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['ra1.r1', 'rb1.r4'],
     )
 
@@ -83,14 +75,17 @@ describe('callMethod', () => {
       'function testFunction() view returns (address r1, uint64 r2, address r3, uint64 r4)',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(
-          encoder.encode(
-            ['address r1', 'uint64 r2', 'address r3', 'uint64 r4'],
-            [RESULT_VALUE, 1234, RESULT_VALUE, 5678],
-          ),
-        ),
+    const provider = mockObject<IProvider>({
+      callMethod: async <T>() =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [
+            RESULT_VALUE,
+            1234,
+            RESULT_VALUE,
+            5678,
+          ]),
+        ) as T,
     })
 
     const result = await callMethod(
@@ -98,7 +93,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['r1', 'r4'],
     )
 
@@ -112,14 +106,17 @@ describe('callMethod', () => {
       'function testFunction() view returns (address r1, uint64 r2, address r3, uint64 r4)',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(
-          encoder.encode(
-            ['address r1', 'uint64 r2', 'address r3', 'uint64 r4'],
-            [RESULT_VALUE, 1234, RESULT_VALUE, 5678],
-          ),
-        ),
+    const provider = mockObject<IProvider>({
+      callMethod: async <T>() =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [
+            RESULT_VALUE,
+            1234,
+            RESULT_VALUE,
+            5678,
+          ]),
+        ) as T,
     })
 
     const result = await callMethod(
@@ -127,7 +124,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
     )
 
     expect(result.value).toEqual([RESULT_VALUE, 1234, RESULT_VALUE, 5678])
@@ -143,9 +139,12 @@ describe('callMethod', () => {
       'function testFunction() view returns (address[])',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(encoder.encode(['address[]'], [RESULT_VALUES])),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [RESULT_VALUES]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -153,7 +152,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['1'],
     )
 
@@ -170,9 +168,12 @@ describe('callMethod', () => {
       'function testFunction() view returns (address[])',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(encoder.encode(['address[]'], [RESULT_VALUES])),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [RESULT_VALUES]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -180,7 +181,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
     )
 
     expect(result.value).toEqual(RESULT_VALUES)
@@ -208,9 +208,12 @@ describe('callMethod', () => {
       'function testFunction() view returns (address[][][])',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () =>
-        Bytes.fromHex(encoder.encode(['address[][][]'], [RESULT_VALUES])),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [RESULT_VALUES]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -218,7 +221,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['1.0.2'],
     )
 
@@ -232,8 +234,12 @@ describe('callMethod', () => {
       'function testFunction() view returns (uint256)',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () => Bytes.randomOfLength(32),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [1234]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -241,7 +247,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
       ['field'],
     )
 
@@ -256,8 +261,12 @@ describe('callMethod', () => {
       'function testFunction() view returns (address)',
     ])
 
-    const provider = mockObject<DiscoveryProvider>({
-      call: async () => Bytes.fromHex(RETURN_VALUE.toString()).padStart(32),
+    const provider = mockObject<IProvider>({
+      callMethod: async () =>
+        abi.decodeFunctionResult(
+          'testFunction',
+          abi.encodeFunctionResult('testFunction', [RETURN_VALUE]),
+        )[0],
     })
 
     const result = await callMethod(
@@ -265,7 +274,6 @@ describe('callMethod', () => {
       ADDRESS,
       abi.getFunction('testFunction'),
       [],
-      BLOCK_NUMBER,
     )
 
     expect(result.value).toEqual(RETURN_VALUE.toString())

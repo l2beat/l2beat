@@ -31,10 +31,8 @@ describe(ConstructorArgsHandler.name, () => {
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
       const provider = mockObject<IProvider>({
-        getContractDeploymentTx:
-          mockFn<IProvider['getContractDeploymentTx']>().resolvesTo(txHash),
-        getTransaction:
-          mockFn<IProvider['getTransaction']>().resolvesTo(transaction),
+        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
+        getTransaction: mockFn().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -49,9 +47,7 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
       expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
 
@@ -68,10 +64,8 @@ describe(ConstructorArgsHandler.name, () => {
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
       const provider = mockObject<IProvider>({
-        getContractDeploymentTx:
-          mockFn<IProvider['getContractDeploymentTx']>().resolvesTo(txHash),
-        getTransaction:
-          mockFn<IProvider['getTransaction']>().resolvesTo(transaction),
+        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
+        getTransaction: mockFn().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -87,9 +81,7 @@ describe(ConstructorArgsHandler.name, () => {
           someNumber: '0',
         },
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
       expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
 
@@ -125,11 +117,10 @@ describe(ConstructorArgsHandler.name, () => {
       const contractAddress = EthereumAddress.random()
 
       const provider = mockObject<IProvider>({
-        getContractDeploymentTx:
-          mockFn<IProvider['getContractDeploymentTx']>().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
-        getConstructorArgs: mockFn<
-          IProvider['getConstructorArgs']
-        >().resolvesTo(sampleCtorEncodedArgs),
+        getDeployment: mockFn().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
+        getSource: mockFn().resolvesTo({
+          constructorArguments: sampleCtorEncodedArgs,
+        }),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -144,12 +135,8 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      ) // Assert it tried to use heuristic
-      expect(provider.getConstructorArgs).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress) // Assert it tried to use heuristic
+      expect(provider.getSource).toHaveBeenOnlyCalledWith(contractAddress)
     })
   })
 })

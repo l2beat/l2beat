@@ -1,6 +1,6 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
@@ -30,22 +30,17 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       name: 'name_of_' + address.toString(),
       solidityVersion: '1.0.0',
       source: 'source_of_' + address.toString(),
+      constructorArguments: '',
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
-    handler.createProviderForChain = (chain: string) =>
-      chain === 'nova'
-        ? undefined
-        : mockObject<IProvider>({
-            getMetadata: mockGetMetadata,
-          })
-
     const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_LOGS,
-      getMetadata: mockGetMetadata,
+      getSource: mockGetMetadata,
     })
+    provider.switchChain = mockFn().returns(provider) as any
 
     const contractAddress = EthereumAddress.random()
-    const response = await handler.execute(provider, contractAddress, 123456)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'scheduledTransactions',

@@ -18,14 +18,14 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_VALIDATORS_LOGS,
-      getDebugTransactionTrace: async (transactionHash: Hash256) => {
+      getDebugTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_VALIDATORS_TRACES[transactionHash.toString()],
         )
       },
     })
 
-    const response = await handler.execute(provider, contractAddress, 0)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'validators',
@@ -47,14 +47,14 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_BATCHPOSTERS_LOGS,
-      getDebugTransactionTrace: async (transactionHash: Hash256) => {
+      getDebugTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_BATCHPOSTERS_TRACES[transactionHash.toString()],
         )
       },
     })
 
-    const response = await handler.execute(provider, contractAddress, 0)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'batchPosters',
