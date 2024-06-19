@@ -1225,6 +1225,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDT",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
       "category": "stablecoin",
