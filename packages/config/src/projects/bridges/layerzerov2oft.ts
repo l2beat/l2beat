@@ -123,8 +123,13 @@ export const layerzerov2oft: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Omnichain Fungible Tokens (OFTs) are tokenized Token Bridges. Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, the OFT implementation details vary widely. 
-      The common interface of OFTs handles crosschain messaging through the LayerZero arbitrary message bridge (AMB). Each OFT is a LayerZero OApp and can be configured to use custom security stacks when interacting with the AMB.
+      description: `Omnichain Fungible Tokens (OFTs) are individually configurable Token Bridges. This means that an asset is usually locked or burned at its origin to start the bridging. 
+      Then a witness event of this is emitted, verfied and relayed to the destination by third verfiiers. Finally, a permissioned Executor submits a transaction at the destination chain to mint the bridged asset. 
+      
+      The shared feature among all OFTs is the messaging interface, which always uses the LayerZero message protocol (or arbitrary message bridge, AMB). 
+      Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, implementation details are highly customizable and vary widely. 
+      
+      Each OFT is a LayerZero OApp and can be configured to use custom security settings when interacting with the AMB.
       Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed. 
       These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
       Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
