@@ -190,10 +190,10 @@ model AggregatedL2Cost {
   overheadGasUsd Float    @map("overhead_gas_usd") @db.Real
   overheadGas    Int      @map("overhead_gas")
 
+  @@id([projectId, timestamp])
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
   @@map("aggregated_l2_costs")
-  @@id([projectId, timestamp])
 }
 
 model Amount {
@@ -332,7 +332,7 @@ model TrackedTxsConfig {
   untilTimestampExclusive DateTime?  @map("until_timestamp_exclusive") @db.Timestamp(6)
   lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
   l2Costs                 L2Cost[]
-  liveness                Liveness[] 
+  liveness                Liveness[]
 
   @@map("tracked_txs_configs")
 }
@@ -376,12 +376,12 @@ model Value {
   timestamp         DateTime @map("timestamp") @db.Timestamp(6)
   projectId         String   @map("project_id") @db.VarChar(255)
   dataSource        String   @map("data_source") @db.VarChar(255)
-  external          BigInt  @map("external")
-  externalForTotal  BigInt  @map("external_for_total")
-  canonical         BigInt  @map("canonical")
-  canonicalForTotal BigInt  @map("canonical_for_total")
-  native            BigInt  @map("native")
-  nativeForTotal    BigInt  @map("native_for_total")
+  external          BigInt   @map("external")
+  externalForTotal  BigInt   @map("external_for_total")
+  canonical         BigInt   @map("canonical")
+  canonicalForTotal BigInt   @map("canonical_for_total")
+  native            BigInt   @map("native")
+  nativeForTotal    BigInt   @map("native_for_total")
 
   @@id([timestamp, projectId, dataSource])
   @@map("values")
