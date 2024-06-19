@@ -1,14 +1,18 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
-import { getImplementation } from '../auto/Eip1967Proxy'
 import { IProvider } from '../../provider/IProvider'
+import { getImplementation } from '../auto/Eip1967Proxy'
 
 async function getRegistryAddress(
   provider: IProvider,
   address: EthereumAddress,
 ): Promise<EthereumAddress> {
-  const registry = await provider.callMethod<string>(address, 'function bridgeRegistry() view returns (address)', [])
+  const registry = await provider.callMethod<string>(
+    address,
+    'function bridgeRegistry() view returns (address)',
+    [],
+  )
   if (registry === undefined) {
     // Assume we're the registry
     return address
@@ -22,7 +26,11 @@ async function getAdminMultisig(
   address: EthereumAddress,
 ): Promise<EthereumAddress> {
   const registry = await getRegistryAddress(provider, address)
-  const multisig = await provider.callMethod<string>(registry, 'function getMultisig() view returns (address)', [])
+  const multisig = await provider.callMethod<string>(
+    registry,
+    'function getMultisig() view returns (address)',
+    [],
+  )
   assert(multisig !== undefined, 'Multisig not found')
 
   return EthereumAddress(multisig.toString())

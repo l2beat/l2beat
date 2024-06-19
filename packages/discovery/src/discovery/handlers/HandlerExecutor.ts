@@ -26,7 +26,11 @@ export class HandlerExecutor {
   }> {
     const handlers = getHandlers(abi, overrides, logger)
     const results = await executeHandlers(provider, handlers, address, logger)
-    const { values, errors, usedTypes } = getValuesAndErrors(results, overrides?.fields, types)
+    const { values, errors, usedTypes } = getValuesAndErrors(
+      results,
+      overrides?.fields,
+      types,
+    )
     return { results, values, errors, usedTypes }
   }
 }

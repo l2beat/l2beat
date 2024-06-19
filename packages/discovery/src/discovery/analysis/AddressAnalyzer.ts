@@ -152,7 +152,7 @@ export class AddressAnalyzer {
 
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(
-          provider,
+        provider,
         address,
         sources.abi,
         overrides,
