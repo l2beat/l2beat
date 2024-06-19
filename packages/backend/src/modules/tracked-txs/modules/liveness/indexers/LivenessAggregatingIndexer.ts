@@ -6,14 +6,14 @@ import {
 import { AggregatedLivenessRepository } from '../repositories/AggregatedLivenessRepository'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 
-export interface LivenessAggregatingnderIndexerDeps
+export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   livenessRepository: LivenessRepository
   aggregatedLivenessRepository: AggregatedLivenessRepository
 }
 
-export class LivenessAggregatingndexer extends ManagedChildIndexer {
-  constructor(private readonly $: LivenessAggregatingnderIndexerDeps) {
+export class LivenessAggregatingIndexer extends ManagedChildIndexer {
+  constructor(private readonly $: LivenessAggregatingIndexerDeps) {
     super({ ...$, name: 'liveness_aggregating' })
   }
 
