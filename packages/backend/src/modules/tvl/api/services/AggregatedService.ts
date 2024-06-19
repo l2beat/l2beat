@@ -33,7 +33,9 @@ export class AggregatedService {
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
       const valuesByTimestamp =
-        valuesByProjectByTimestamp[project.id.toString()]
+        valuesByProjectByTimestamp.valuesByTimestampForProject[
+          project.id.toString()
+        ]
 
       if (!valuesByTimestamp) {
         continue

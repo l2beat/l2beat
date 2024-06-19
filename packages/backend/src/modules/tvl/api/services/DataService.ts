@@ -35,12 +35,28 @@ export class DataService {
     )
     const valuesByProject = groupBy(values, 'projectId')
 
-    const result: Dictionary<Dictionary<ValueRecord[]>> = {}
+    const result = {
+      valuesByTimestampForProject: {} as Dictionary<Dictionary<ValueRecord[]>>,
+      lagging: new Map<
+        string,
+        { latestTimestamp: UnixTime; latestValue: ValueRecord }
+      >(),
+      syncing: new Set<string>(),
+    }
 
     for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
+
+      const { lagging, syncing } = getLaggingAndSyncing(
+        valuesByTimestamp,
+        targetTimestamp,
+        project,
+      )
+
+      lagging.forEach((l) => result.lagging.set(l.source, { ...l }))
+      syncing.forEach((s) => result.syncing.add(s))
 
       const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
@@ -49,17 +65,15 @@ export class DataService {
           continue
         }
 
-        const configuredSources = getConfiguredSourcesForTimestamp(
+        const configuredValues = getConfiguredValuesForTimestamp(
           values,
           project,
           new UnixTime(+timestamp),
+          result.lagging,
+          result.syncing,
         )
 
-        const onlyConfiguredValues = values.filter((v) =>
-          configuredSources.includes(v.dataSource),
-        )
-
-        valuesByTimestampForProject[timestamp] = onlyConfiguredValues
+        valuesByTimestampForProject[timestamp] = configuredValues
       }
 
       // TODO: Interpolate here
@@ -68,7 +82,8 @@ export class DataService {
         `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString}`,
       )
 
-      result[projectId] = valuesByTimestampForProject
+      result.valuesByTimestampForProject[projectId] =
+        valuesByTimestampForProject
     }
 
     return result
@@ -183,26 +198,98 @@ export class DataService {
   }
 }
 
-function getConfiguredSourcesForTimestamp(
+function getConfiguredValuesForTimestamp(
   values: ValueRecord[],
   project: ApiProject,
   timestamp: UnixTime,
+  lagging: Map<string, { latestTimestamp: UnixTime; latestValue: ValueRecord }>,
+  syncing: Set<string>,
 ) {
-  const valuesSources = values.map((x) => x.dataSource)
   const configuredSources = Array.from(project.sources.values())
     .filter((s) => s.minTimestamp.lte(timestamp))
+    .filter((s) => !syncing.has(`${project.id}-${s.name}`))
     .map((s) => s.name)
 
+  const configuredValues = values.filter((v) =>
+    configuredSources.includes(v.dataSource),
+  )
+
+  const valuesSources = values.map((x) => x.dataSource)
   const missingSources = configuredSources.filter(
     (s) => !valuesSources.includes(s),
   )
 
-  // TODO: Interpolate here
-  assert(
-    missingSources.length === 0,
-    `Missing data sources [${missingSources.join(
-      ', ',
-    )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
-  )
-  return configuredSources
+  for (const source of missingSources) {
+    const laggingEntry = lagging.get(`${project.id}-${source}`)
+    assert(laggingEntry, `Missing lagging entry for ${project.id}-${source}`)
+
+    configuredValues.push({
+      ...laggingEntry.latestValue,
+      timestamp: timestamp,
+    })
+  }
+
+  return configuredValues
+}
+
+function getLaggingAndSyncing(
+  valuesByTimestamp: Dictionary<ValueRecord[]>,
+  targetTimestamp: UnixTime,
+  project: ApiProject,
+) {
+  const lagging: {
+    source: string
+    latestTimestamp: UnixTime
+    latestValue: ValueRecord
+  }[] = []
+  const syncing: string[] = []
+
+  const latestValues = valuesByTimestamp[targetTimestamp.toString()]
+
+  const configuredSources = Array.from(project.sources.values())
+
+  for (const source of configuredSources) {
+    const v = latestValues.find((v) => v.dataSource === source.name)
+
+    if (v) {
+      continue
+    }
+
+    if (v === undefined) {
+      syncing.push(`${project.id}-${source.name}`)
+      continue
+    }
+
+    const vv = valuesByTimestamp[
+      targetTimestamp.add(-7, 'days').toString()
+    ].find((v) => v.dataSource === source.name)
+
+    if (vv === undefined) {
+      syncing.push(`${project.id}-${source.name}`)
+      continue
+    }
+
+    for (
+      let i = targetTimestamp.add(-1, 'hours').toNumber();
+      i <= targetTimestamp.add(-7, 'days').toNumber();
+      i += 3600
+    ) {
+      const vvv = valuesByTimestamp[i.toString()].find(
+        (v) => v.dataSource === source.name,
+      )
+
+      if (vvv) {
+        lagging.push({
+          source: `${project.id}-${source.name}`,
+          latestTimestamp: new UnixTime(i),
+          latestValue: vvv,
+        })
+      }
+    }
+  }
+
+  return {
+    lagging,
+    syncing,
+  }
 }

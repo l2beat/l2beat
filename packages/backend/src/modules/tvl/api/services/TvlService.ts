@@ -69,7 +69,9 @@ export class TvlService {
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of projects) {
       const valuesByTimestamp =
-        valuesByProjectByTimestamp[project.id.toString()]
+        valuesByProjectByTimestamp.valuesByTimestampForProject[
+          project.id.toString()
+        ]
 
       if (!valuesByTimestamp) {
         continue
