@@ -1,5 +1,10 @@
-import { Layer2TrackedTxUse } from '@l2beat/config'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { TrackedTxId } from './TrackedTxId'
 
@@ -12,8 +17,10 @@ export type TrackedTxConfigEntry =
   | TrackedTxTransferConfig
   | TrackedTxSharpSubmissionConfig
 
-export interface TrackedTxUseWithId extends Layer2TrackedTxUse {
+export interface TrackedTxUseWithId {
   id: TrackedTxId
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
 }
 
 interface TrackedTxConfigBase {
