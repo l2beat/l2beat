@@ -7,7 +7,6 @@ import { getDaRisks } from './utils/get-da-risks'
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaEconomicSecurity()
 
-  // Mapping
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => ({
       slug: daLayer.display.slug,

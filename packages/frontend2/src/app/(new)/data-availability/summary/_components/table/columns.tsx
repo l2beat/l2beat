@@ -7,6 +7,7 @@ import { type RosetteValue } from '~/app/_components/rosette/types'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { DaBridgeCell } from './da-bridge-cell'
+import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -75,14 +76,7 @@ export const columns = [
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) return EM_DASH
-      if (value.status === 'StakeNotSynced') return 'Stake not synced'
-      if (value.status === 'CurrentPriceNotSynced')
-        return 'Current price not synced'
-      return `$${formatNumber(value.economicSecurity, 0)}`
-    },
+    cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   }),
   columnHelper.accessor('usedBy', {
     header: 'Used by',
