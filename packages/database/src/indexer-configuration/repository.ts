@@ -60,7 +60,7 @@ export class IndexerConfigurationRepository {
       .execute()
   }
 
-  async deleteSavedConfigurations(
+  async deleteConfigurationsExcluding(
     indexerId: string,
     configurationIds: string[],
   ) {

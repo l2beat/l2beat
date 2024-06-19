@@ -9,52 +9,58 @@ import {
 } from './L2CostsPricesRepository'
 
 const NOW = UnixTime.now()
-describeDatabase(L2CostsPricesRepository.name, (database) => {
-  const repository = new L2CostsPricesRepository(database, Logger.SILENT)
+describeDatabase(L2CostsPricesRepository.name, (knex, kysely) => {
+  const oldRepo = new L2CostsPricesRepository(knex, Logger.SILENT)
+  const newRepo = kysely.l2CostPrice
 
-  beforeEach(async () => {
-    await repository.deleteAll()
-  })
+  suite(oldRepo)
+  suite(newRepo)
 
-  it(L2CostsPricesRepository.prototype.addMany.name, async () => {
-    const records = [record({ timestamp: NOW.add(-1, 'hours') }), record()]
+  function suite(repository: typeof oldRepo | typeof newRepo) {
+    beforeEach(async () => {
+      await repository.deleteAll()
+    })
 
-    await repository.addMany(records)
+    it(L2CostsPricesRepository.prototype.addMany.name, async () => {
+      const records = [record({ timestamp: NOW.add(-1, 'hours') }), record()]
 
-    const result = await repository.getAll()
-    expect(result).toEqual(records)
-  })
+      await repository.addMany(records)
 
-  it(L2CostsPricesRepository.prototype.getByTimestampRange.name, async () => {
-    const records = [
-      record({ timestamp: NOW.add(-2, 'hours') }),
-      record({ timestamp: NOW.add(-1, 'hours') }),
-      record(),
-      record({ timestamp: NOW.add(1, 'hours') }),
-      record({ timestamp: NOW.add(2, 'hours') }),
-    ]
-    await repository.addMany(records)
+      const result = await repository.getAll()
+      expect(result).toEqual(records)
+    })
 
-    const result = await repository.getByTimestampRange(
-      NOW.add(-1, 'hours'),
-      NOW.add(1, 'hours'),
-    )
-    expect(result).toEqual([records[1], records[2], records[3]])
-  })
+    it(L2CostsPricesRepository.prototype.getByTimestampRange.name, async () => {
+      const records = [
+        record({ timestamp: NOW.add(-2, 'hours') }),
+        record({ timestamp: NOW.add(-1, 'hours') }),
+        record(),
+        record({ timestamp: NOW.add(1, 'hours') }),
+        record({ timestamp: NOW.add(2, 'hours') }),
+      ]
+      await repository.addMany(records)
 
-  it(L2CostsPricesRepository.prototype.deleteAfter.name, async () => {
-    const records = [
-      record({ timestamp: NOW.add(-1, 'hours') }),
-      record(),
-      record({ timestamp: NOW.add(1, 'hours') }),
-    ]
-    await repository.addMany(records)
+      const result = await repository.getByTimestampRange(
+        NOW.add(-1, 'hours'),
+        NOW.add(1, 'hours'),
+      )
+      expect(result).toEqual([records[1], records[2], records[3]])
+    })
 
-    await repository.deleteAfter(NOW)
+    it(L2CostsPricesRepository.prototype.deleteAfter.name, async () => {
+      const records = [
+        record({ timestamp: NOW.add(-1, 'hours') }),
+        record(),
+        record({ timestamp: NOW.add(1, 'hours') }),
+      ]
+      await repository.addMany(records)
 
-    const result = await repository.getAll()
-    expect(result).toEqual([records[0], records[1]])
-  })
+      await repository.deleteAfter(NOW)
+
+      const result = await repository.getAll()
+      expect(result).toEqual([records[0], records[1]])
+    })
+  }
 })
 
 function record(data?: Partial<L2CostsPricesRecord>): L2CostsPricesRecord {

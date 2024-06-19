@@ -10,6 +10,7 @@ import { DeploymentRepository } from './deployment/repository'
 import { ExternalBridgeRepository } from './external-bridge/repository'
 import { FinalityRepository } from './finality/repository'
 import { IndexerConfigurationRepository } from './indexer-configuration/repository'
+import { IndexerStateRepository } from './indexer-state/repository'
 import { PostgresDatabase } from './kysely'
 import { L2CostPriceRepository } from './l2-cost-price/repository'
 import { L2CostRepository } from './l2-cost/repository'
@@ -56,7 +57,7 @@ export function createRepositories(config?: PoolConfig) {
     dailyDiscovery: new DailyDiscoveryRepository(db),
     finality: new FinalityRepository(db),
     indexerConfiguration: new IndexerConfigurationRepository(db),
-    indexerState: new IndexerConfigurationRepository(db),
+    indexerState: new IndexerStateRepository(db),
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),

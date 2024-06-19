@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import { Finality, toRecord, toRow } from './entitiy'
 import { selectFinality } from './select'
@@ -25,13 +26,13 @@ export class FinalityRepository {
     return row ? toRecord(row) : null
   }
 
-  async findProjectFinalityOnTimestamp(projectId: string, timestamp: Date) {
+  async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
     const row = await this.db
       .selectFrom('finality')
       .select(selectFinality)
       .where((eb) =>
         eb.and([
-          eb('timestamp', '=', timestamp),
+          eb('timestamp', '=', timestamp.toDate()),
           eb('project_id', '=', projectId),
         ]),
       )

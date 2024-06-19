@@ -6,9 +6,9 @@ export interface IndexerState {
   indexerId: string
   safeHeight: number
   // TODO: make it required in every indexer
-  configHash: string | null
+  configHash?: string
   // TODO: phase out minTimestamp
-  minTimestamp: UnixTime | null
+  minTimestamp?: UnixTime
 }
 
 export function toRow(record: IndexerState): Insertable<IndexerStateRow> {
@@ -24,9 +24,9 @@ export function toRecord(row: Selectable<IndexerStateRow>): IndexerState {
   return {
     indexerId: row.indexer_id,
     safeHeight: row.safe_height,
-    configHash: row.config_hash,
+    configHash: row.config_hash ?? undefined,
     minTimestamp: row.min_timestamp
       ? UnixTime.fromDate(row.min_timestamp)
-      : null,
+      : undefined,
   }
 }

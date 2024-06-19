@@ -1,4 +1,3 @@
-import { once } from 'events'
 import {
   LogFormatterPretty,
   Logger,
@@ -7,13 +6,16 @@ import {
 import { ProjectId } from '@l2beat/shared-pure'
 import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { MockFunction, expect, mockFn } from 'earl'
+import { once } from 'events'
 
 import { describeDatabase } from '../../test/database'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
 import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
-describeDatabase(SequenceProcessor.name, (database) => {
-  const repository = new SequenceProcessorRepository(database, Logger.SILENT)
+//! TODO: Due to repository drilling we skip legacy-to-new smoke test for now
+describeDatabase(SequenceProcessor.name, (knex) => {
+  const repository = new SequenceProcessorRepository(knex, Logger.SILENT)
+
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 
