@@ -12,6 +12,7 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
+  ArcologyIcon,
 } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
@@ -83,6 +84,12 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
         <TypeTooltip
           text="This project is based on Starknet's code base."
           Icon={StarknetIcon}
+        />
+      )}
+      {provider === 'Arcology' && (
+        <TypeTooltip
+          text="This project is based on Arcology's code base."
+          Icon={ArcologyIcon}
         />
       )}
     </span>

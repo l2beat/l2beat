@@ -118,6 +118,7 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
+import { arcology } from './arcology'
 export * from './common'
 export * from './types'
 
@@ -240,6 +241,7 @@ export const layer2s: Layer2[] = [
   zksyncera,
   zksynclite,
   zora,
+  arcology,
 ]
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
