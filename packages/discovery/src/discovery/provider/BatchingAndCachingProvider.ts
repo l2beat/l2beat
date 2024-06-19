@@ -450,7 +450,7 @@ function orderLogs(a: providers.Log, b: providers.Log) {
   return a.logIndex - b.logIndex
 }
 
-function parseCacheEntry(entry: any): any {
+function parseCacheEntry(entry: string) {
   return JSON.parse(entry, (_, value: unknown) => {
     if (
       typeof value === 'object' &&
