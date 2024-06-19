@@ -171,7 +171,7 @@ model Cache {
   createdAt   DateTime @default(now())
 }
 
-model AggregatedL2Costs {
+model AggregatedL2Cost {
   timestamp      DateTime @map("timestamp") @db.Timestamp(6)
   projectId      String   @map("project_id") @db.VarChar(255)
   totalGas       Int      @map("total_gas")
