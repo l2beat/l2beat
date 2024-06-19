@@ -82,9 +82,6 @@ function getAmountsConfig(
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
-      if (token.symbol === 'ETH') {
-        continue
-      }
       const projectId = chainToProject.get(chainConverter.toName(token.chainId))
       assert(projectId, 'Project is required for token')
 
@@ -106,7 +103,7 @@ function getAmountsConfig(
 
       const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-      switch (token.formula) {
+      switch (token.supply) {
         case 'totalSupply':
           assert(token.address, 'Token address is required for total supply')
 
@@ -117,7 +114,7 @@ function getAmountsConfig(
             sinceTimestamp,
             untilTimestamp: token.untilTimestamp,
             project: projectId,
-            source: toSource(token.type),
+            source: token.source,
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -133,15 +130,15 @@ function getAmountsConfig(
             untilTimestamp: token.untilTimestamp,
             coingeckoId: token.coingeckoId,
             project: projectId,
-            source: toSource(token.type),
+            source: token.source,
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
             isAssociated,
           })
           break
-        case 'locked':
-          throw new Error('Locked tokens are derived from projects list')
+        case 'zero':
+          break // we do not count supply for zero formula
       }
     }
   }
@@ -265,17 +262,4 @@ function getChainToProjectMapping(
   }
 
   return chainToProject
-}
-
-function toSource(
-  type: 'CBV' | 'EBV' | 'NMV',
-): 'native' | 'canonical' | 'external' {
-  switch (type) {
-    case 'CBV':
-      return 'canonical'
-    case 'EBV':
-      return 'external'
-    case 'NMV':
-      return 'native'
-  }
 }

@@ -140,7 +140,7 @@ const tokens = [
       address: '0xabac',
       name: x,
       info: {
-        type: 'EBV',
+        source: 'external',
         assetId: '0xabac',
         chainId: 12,
         chain: 'orbitrum',

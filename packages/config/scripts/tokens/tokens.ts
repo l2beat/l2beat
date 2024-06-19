@@ -35,7 +35,7 @@ async function main() {
   logger.notify('Running tokens script...\n')
   const coingeckoClient = getCoingeckoClient()
   let coinList: CoinListPlatformEntry[] | undefined = undefined
-  const source = readTokensFile(logger)
+  const sourceToken = readTokensFile(logger)
   const output = readGeneratedFile(logger)
   const result: GeneratedToken[] = output.tokens
 
@@ -52,7 +52,7 @@ async function main() {
     saveResults(sorted)
   }
 
-  for (const [chain, tokens] of Object.entries(source)) {
+  for (const [chain, tokens] of Object.entries(sourceToken)) {
     const chainLogger = logger.prefix(chain)
     const chainConfig = getChainConfiguration(chainLogger, chain)
     const chainId = getChainId(chainLogger, chainConfig)
@@ -60,8 +60,8 @@ async function main() {
     for (const token of tokens) {
       const tokenLogger: ScriptLogger = chainLogger.addMetadata(token.symbol)
 
-      const type = getType(tokenLogger, chain, token)
-      const formula = getFormula(tokenLogger, chain, token)
+      const source = getSource(tokenLogger, chain, token)
+      const supply = getSupply(tokenLogger, chain, token)
       const category = token.category ?? 'other'
 
       const existingToken = findTokenInOutput(output, chainId, token)
@@ -70,8 +70,8 @@ async function main() {
         const overrides = {
           coingeckoId: token.coingeckoId ?? existingToken.coingeckoId,
           category,
-          type,
-          formula,
+          source,
+          supply,
         }
         for (const [key, value] of Object.entries(overrides)) {
           const existing = existingToken[key as keyof typeof existingToken]
@@ -149,8 +149,8 @@ async function main() {
         category,
         iconUrl: info.iconUrl,
         chainId,
-        type,
-        formula,
+        source,
+        supply,
         bridgedUsing: token.bridgedUsing,
       })
 
@@ -186,18 +186,22 @@ function getChainId(logger: ScriptLogger, chain: ChainConfig) {
   return chainId
 }
 
-function getType(tokenLogger: ScriptLogger, chain: string, entry: SourceEntry) {
-  const type = chain === 'ethereum' ? 'CBV' : entry.type
-  tokenLogger.assert(type !== undefined, `Missing type`)
-  return type
-}
-
-function getFormula(
+function getSource(
   tokenLogger: ScriptLogger,
   chain: string,
   entry: SourceEntry,
 ) {
-  const formula = chain === 'ethereum' ? 'locked' : entry.formula
+  const type = chain === 'ethereum' ? 'canonical' : entry.source
+  tokenLogger.assert(type !== undefined, `Missing type`)
+  return type
+}
+
+function getSupply(
+  tokenLogger: ScriptLogger,
+  chain: string,
+  entry: SourceEntry,
+) {
+  const formula = chain === 'ethereum' ? 'zero' : entry.supply
   tokenLogger.assert(formula !== undefined, `Missing formula`)
   return formula
 }
