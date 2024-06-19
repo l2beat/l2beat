@@ -3,14 +3,10 @@ import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider, RawProviders } from '../../provider/IProvider'
-import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
 
 describe(LimitedArrayHandler.name, () => {
   const method = 'function owners(uint256 index) view returns (address)'
-  const returnFragment = toFunctionFragment(
-    'function owners(uint256 index) view returns (address[])',
-  )
 
   it('calls the passed method n times', async () => {
     const address = EthereumAddress.random()
@@ -40,7 +36,6 @@ describe(LimitedArrayHandler.name, () => {
       field: 'owners',
       value: owners.map((x) => x.toString()),
       error: 'Too many values. Update configuration to explore fully',
-      fragment: returnFragment,
     })
   })
 
@@ -71,7 +66,6 @@ describe(LimitedArrayHandler.name, () => {
     expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()).slice(0, 2),
-      fragment: returnFragment,
     })
   })
 
@@ -102,7 +96,6 @@ describe(LimitedArrayHandler.name, () => {
     expect(result).toEqual({
       field: 'owners',
       error: 'foo bar',
-      fragment: returnFragment,
     })
   })
 })
