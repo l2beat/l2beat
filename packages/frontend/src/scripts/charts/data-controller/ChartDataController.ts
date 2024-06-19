@@ -103,7 +103,7 @@ export class ChartDataController {
         return {
           type: 'token-tvl',
           tokenSymbol: chartType.info.symbol,
-          tokenType: chartType.info.type,
+          tokenType: chartType.info.source,
           values: TokenTvlResponse.parse(data),
         }
 
