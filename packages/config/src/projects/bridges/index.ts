@@ -16,6 +16,7 @@ import { harmony } from './harmony'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
 import { immutablezkevm } from './immutablezkevm'
+import { lightlink } from './lightlink'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
@@ -37,9 +38,11 @@ import { skaleIMA } from './skaleIMA'
 import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
+import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
+import { transporter } from './transporter'
 import { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
@@ -65,6 +68,7 @@ export const bridges: Bridge[] = [
   hyphen,
   immutablezkevm,
   lzOmnichain,
+  lightlink,
   multichain,
   near,
   fraxferry,
@@ -85,8 +89,10 @@ export const bridges: Bridge[] = [
   socket,
   sollet,
   stargate,
+  stargatev2,
   sygma,
   synapse,
+  transporter,
   portal,
   wormholeV1,
   xdai,

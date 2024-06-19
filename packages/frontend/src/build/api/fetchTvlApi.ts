@@ -13,7 +13,7 @@ import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
 
 interface Options {
-  tvl2: boolean
+  tvl: boolean
   excludeAssociatedTokens?: boolean
 }
 

@@ -4,12 +4,12 @@ import { Layer2 } from './types'
 export const move: Layer2 = upcomingL2({
   id: 'move',
   display: {
-    name: 'Move',
+    name: 'M2',
     slug: 'move',
     description:
       'M2 is the first MoveVM L2 leveraging Celestia for Data Availability.',
     purposes: ['Universal'],
-    category: 'Optimium',
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://movementlabs.xyz'],
       apps: [],

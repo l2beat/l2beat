@@ -5,6 +5,9 @@ const backendFeaturesToConfigFeatures: Partial<
 > = {
   costsPage: 'tracked-txs.l2costs',
   liveness: 'tracked-txs.liveness',
+  zkCatalog: 'verifiers',
+  implementationChange: 'implementationChangeReporter',
+  tvlBreakdown: 'tvl',
 }
 
 export function getCommonFeatures(
@@ -15,6 +18,11 @@ export function getCommonFeatures(
     Object.entries(features).map(([key, value]) => {
       const backendKey =
         backendFeaturesToConfigFeatures[key as keyof ConfigFeatures] ?? key
+
+      if (backendKey.includes('.')) {
+        const [parentFeature] = backendKey.split('.')
+        if (!backendFeatures[parentFeature]) return [key, false]
+      }
 
       return [
         key,

@@ -21,6 +21,9 @@ const base = {
   sourceBundles: [],
   matchingTemplates: {},
   relatives: {},
+  selfMeta: undefined,
+  targetsMeta: undefined,
+  combinedMeta: undefined,
 }
 
 describe(DiscoveryEngine.name, () => {

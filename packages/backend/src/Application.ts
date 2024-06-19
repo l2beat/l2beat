@@ -1,10 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
+import { createRepositories } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createActivityModule } from './modules/activity/ActivityModule'
+import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
@@ -13,7 +15,7 @@ import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
-import { createTvl2Module } from './modules/tvl2/modules/Tvl2Module'
+import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
@@ -26,13 +28,16 @@ export class Application {
 
   constructor(config: Config, logger: Logger) {
     const database = new Database(config.database, logger, config.name)
+
+    const kyselyDatabase = createRepositories(config.database.connection)
+
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
     )
 
     const http = new HttpClient()
-    const peripherals = new Peripherals(database, http, logger)
+    const peripherals = new Peripherals(database, kyselyDatabase, http, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
       config,
@@ -56,9 +61,10 @@ export class Application {
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvl2Module(config, logger, peripherals, clock),
+      createTvlModule(config, logger, peripherals, clock),
       createVerifiersModule(config, logger, peripherals),
       createFeaturesModule(config),
+      createDaBeatModule(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

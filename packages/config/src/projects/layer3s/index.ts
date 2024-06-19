@@ -2,7 +2,9 @@ import { bugless } from './bugless'
 import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
+import { l3x } from './l3x'
 import { molten } from './molten'
+import { muster } from './muster'
 import { mxc } from './mxc'
 import { orb3 } from './orb3'
 import { popapex } from './popapex'
@@ -33,4 +35,6 @@ export const layer3s: Layer3[] = [
   syndicateframe,
   mxc,
   molten,
+  muster,
+  l3x,
 ]

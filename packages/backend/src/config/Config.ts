@@ -7,7 +7,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
@@ -25,7 +24,7 @@ export interface Config {
   readonly database: DatabaseConfig
   readonly api: ApiConfig
   readonly health: HealthConfig
-  readonly tvl2: Tvl2Config | false
+  readonly tvl: TvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -36,6 +35,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly verifiers: boolean
+  readonly daBeat: DABeatConfig | false
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel'> &
@@ -57,7 +57,12 @@ export interface ApiConfig {
 }
 
 export interface DatabaseConfig {
-  readonly connection: Knex.Config['connection']
+  readonly connection: {
+    connectionString: string
+    ssl?: {
+      rejectUnauthorized?: boolean
+    }
+  }
   readonly freshStart: boolean
   readonly enableQueryLogging: boolean
   readonly requiredMajorVersion?: number
@@ -73,7 +78,7 @@ export interface ClockConfig {
   readonly safeTimeOffsetSeconds: number
 }
 
-export interface Tvl2Config {
+export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
@@ -178,3 +183,11 @@ export interface DiscoveryCacheChainConfig {
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
   DiscoveryCacheChainConfig
+
+export interface DABeatConfig {
+  readonly coingeckoApiKey: string
+  readonly quicknodeApiUrl: string
+  readonly quicknodeCallsPerMinute: number
+  readonly celestiaApiUrl: string
+  readonly celestiaCallsPerMinute: number
+}

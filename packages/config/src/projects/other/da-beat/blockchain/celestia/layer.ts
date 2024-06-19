@@ -17,6 +17,7 @@ import { noBridge } from './bridges/no-bridge'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const celestia: DaLayer = {
+  id: 'celestia',
   kind: DaLayerKind.PublicBlockchain,
   display: {
     name: 'Celestia',
@@ -41,5 +42,8 @@ export const celestia: DaLayer = {
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
+  },
+  economicSecurity: {
+    type: 'Ethereum',
   },
 }

@@ -44,7 +44,9 @@ export function getTestDatabase(
 
   return new Database(
     {
-      connection,
+      connection: {
+        connectionString: connection,
+      },
       connectionPoolSize: {
         min: 5,
         max: 20,

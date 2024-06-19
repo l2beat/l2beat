@@ -1,9 +1,9 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 20061082,
-  "configHash": "0x0598dee875a111455223d9566c9dff2ba2ecd0cc9d42bc4fa3cea13e784d7317",
-  "version": 5,
+  "blockNumber": 20117905,
+  "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
+  "version": 6,
   "contracts": [
     {
       "name": "Challenge",
@@ -22,10 +22,10 @@
         "challengePeriod": 172800,
         "challengeReward": "200000000000000000",
         "challengeWindow": 259200,
-        "daNamespace": [
-          "0x00",
-          "0x00000000000000000000000000000000000000000000000000000000"
-        ],
+        "daNamespace": {
+          "version": "0x00",
+          "id": "0x00000000000000000000000000000000000000000000000000000000"
+        },
         "daOracle": "0x0000000000000000000000000000000000000000",
         "defender": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "isDAChallengeEnabled": false,
@@ -59,7 +59,7 @@
       "derivedName": "ChainOracle"
     },
     {
-      "name": "Multisig",
+      "name": "LightLinkMultisig",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
       "upgradeability": {
         "type": "immutable"
@@ -83,9 +83,9 @@
       "name": "LightLinkBridge",
       "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0x468b89D930ca7974196D7195033600B658011756",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0x468b89D930ca7974196D7195033600B658011756"],
       "sinceTimestamp": 1692155207,
@@ -102,9 +102,9 @@
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"],
       "sinceTimestamp": 1692154667,
@@ -113,11 +113,26 @@
         "getMultisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "getSystemVerifier": "0x0000000000000000000000000000000000000000",
         "getValidators": [
-          ["0x12eCE4AA73ee8ea958bE327daE41Dd785c997118", 40],
-          ["0x6f933814903561F79137099587737DFB24c6E86D", 20],
-          ["0xB44C32Dd1ec374224eED43FD827EBE64db16b0df", 20],
-          ["0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9", 40],
-          ["0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938", 40]
+          {
+            "addr": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
+            "power": 40
+          },
+          {
+            "addr": "0x6f933814903561F79137099587737DFB24c6E86D",
+            "power": 20
+          },
+          {
+            "addr": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+            "power": 20
+          },
+          {
+            "addr": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+            "power": 40
+          },
+          {
+            "addr": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+            "power": 40
+          }
         ],
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "proxiableUUID": "EXPECT_REVERT",
@@ -129,9 +144,9 @@
       "name": "LightLinkERC20Bridge",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "upgradeability": {
-        "type": "EIP1967 proxy",
+        "type": "LightLink proxy",
         "implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
-        "admin": "0x0000000000000000000000000000000000000000"
+        "admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "implementations": ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"],
       "sinceTimestamp": 1692155531,
@@ -147,6 +162,7 @@
     {
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+      "ignoreInWatchMode": ["chainHead", "getHead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5",
@@ -155,37 +171,121 @@
       "implementations": ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"],
       "sinceTimestamp": 1717522271,
       "values": {
-        "chainHead": 25,
+        "chainHead": 60,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
-        "getHead": [
-          20060097,
-          85903865,
-          "0xe2de16d1d7045da26de0c42ee0812969211aab2d55ed465c68a700828fc5ba1e",
-          "0xf6bd427e0e530510e19126af9db34f7af784c0ec4a8473ba5afefbb723e246dc",
-          [
-            [1639470, 192, 3664],
-            [1639474, 256, 3664],
-            [1639478, 320, 3664],
-            [1639482, 192, 3664],
-            [1639485, 256, 3664],
-            [1639491, 384, 3664],
-            [1639495, 192, 3664],
-            [1639498, 64, 3665],
-            [1639501, 256, 3664],
-            [1639505, 128, 3664],
-            [1639513, 192, 3662],
-            [1639518, 128, 3657],
-            [1639521, 384, 3665],
-            [1639524, 128, 3665],
-            [1639528, 192, 3664],
-            [1639534, 192, 3661],
-            [1639540, 128, 3664],
-            [1639545, 384, 3664],
-            [1639550, 384, 3663],
-            [1639554, 128, 3664],
-            [1639559, 128, 3664]
+        "getHead": {
+          "epoch": 20117310,
+          "l2Height": 87257874,
+          "prevHash": "0x6a188d90f003535fa320cfd3a371f92dc67f2290f27b6dae242637f495eba38f",
+          "stateRoot": "0xd96a50fc0e0f7b411cc36ab1ea5301beeb45d66343cc84de7e178ed8f179ab44",
+          "celestiaPointers": [
+            {
+              "height": 1697709,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697712,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1697717,
+              "shareStart": 192,
+              "shareLen": 3663
+            },
+            {
+              "height": 1697720,
+              "shareStart": 256,
+              "shareLen": 3661
+            },
+            {
+              "height": 1697723,
+              "shareStart": 128,
+              "shareLen": 3663
+            },
+            {
+              "height": 1697726,
+              "shareStart": 256,
+              "shareLen": 3663
+            },
+            {
+              "height": 1697729,
+              "shareStart": 256,
+              "shareLen": 3657
+            },
+            {
+              "height": 1697732,
+              "shareStart": 256,
+              "shareLen": 3653
+            },
+            {
+              "height": 1697737,
+              "shareStart": 128,
+              "shareLen": 3653
+            },
+            {
+              "height": 1697740,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697743,
+              "shareStart": 128,
+              "shareLen": 3665
+            },
+            {
+              "height": 1697746,
+              "shareStart": 256,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697750,
+              "shareStart": 192,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697754,
+              "shareStart": 128,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697757,
+              "shareStart": 384,
+              "shareLen": 3655
+            },
+            {
+              "height": 1697761,
+              "shareStart": 192,
+              "shareLen": 3662
+            },
+            {
+              "height": 1697764,
+              "shareStart": 128,
+              "shareLen": 3662
+            },
+            {
+              "height": 1697767,
+              "shareStart": 192,
+              "shareLen": 3664
+            },
+            {
+              "height": 1697770,
+              "shareStart": 256,
+              "shareLen": 3653
+            },
+            {
+              "height": 1697773,
+              "shareStart": 192,
+              "shareLen": 3665
+            },
+            {
+              "height": 1697776,
+              "shareStart": 128,
+              "shareLen": 3664
+            }
           ]
-        ],
+        },
         "maxPointers": 21,
         "owner": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
         "proxiableUUID": "EXPECT_REVERT",

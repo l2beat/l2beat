@@ -78,7 +78,7 @@ export function getExternallyBridgedColumns() {
     {
       name: 'BRIDGED USING',
       headClassName: 'md:pl-4',
-      getValue: (token) => <BridgedUsingCell assetId={token.assetId} />,
+      getValue: (token) => <BridgedUsingCell bridge={token.bridge} />,
     },
     {
       name: 'AMOUNT',

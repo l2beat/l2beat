@@ -28,7 +28,7 @@ export function formatNumber(value: number, decimals = 2): string {
     Math.floor(value * Math.pow(10, decimals)) / Math.pow(10, decimals)
 
   const unit = units[unitIndex]
-  assert(unit, `No unit for value ${value}`)
+  assert(unit !== undefined, `No unit for value ${value}`)
 
   return roundedDownValue.toFixed(decimals) + withSpace(unit)
 }

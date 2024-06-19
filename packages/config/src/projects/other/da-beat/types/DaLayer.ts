@@ -1,29 +1,25 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 
-export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
-
-const PublicBlockchain = {
-  type: 'PublicBlockchain',
-  display: 'Public blockchain',
-} as const
-
-const DAC = {
-  type: 'DAC',
-  display: 'DAC',
-} as const
-
 export const DaLayerKind = {
-  PublicBlockchain: PublicBlockchain,
-  DAC: DAC,
-}
+  PublicBlockchain: 'PublicBlockchain',
+  DAC: 'DAC',
+} as const
+
+export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
+export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
+  PublicBlockchain: 'Public blockchain',
+  DAC: 'DAC',
+}
+
 export type BlockchainDaLayer = CommonDaLayer & {
-  kind: typeof PublicBlockchain
+  kind: typeof DaLayerKind.PublicBlockchain
 
   bridges: (OnChainDaBridge | NoDaBridge)[]
 
@@ -44,15 +40,25 @@ export type BlockchainDaLayer = CommonDaLayer & {
    * @unit seconds
    */
   unbondingPeriod: number
+
+  /**
+   * Economic security configuration.
+   */
+  economicSecurity?: DaEconomicSecurity
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: typeof DAC
+  kind: typeof DaLayerKind.DAC
 
   bridges: DacBridge[]
 }
 
 export type CommonDaLayer = {
+  /**
+   * Unique identifier of the data availability layer
+   */
+  id: string
+
   display: {
     /**
      * The name of the data availability layer.

@@ -19,7 +19,7 @@ import {
   TableRow,
 } from '~/app/_components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry } from '../../_utils/da-summary-entry'
+import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { columns } from './columns'
 
 interface Props {

@@ -11,7 +11,7 @@ import {
   getProjectsWithActivity,
 } from './features/activity'
 import { getFinalityConfigurations } from './features/finality'
-import { getTvl2Config } from './features/tvl2'
+import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -28,7 +28,7 @@ export function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
+  const tvlConfig = getTvlConfig(flags, env, minTimestampOverride)
 
   const isReadonly = env.boolean(
     'READONLY',
@@ -46,12 +46,12 @@ export function makeConfig(
     },
     database: isLocal
       ? {
-          connection: env.string('LOCAL_DB_URL').includes('localhost')
-            ? env.string('LOCAL_DB_URL')
-            : {
-                connectionString: env.string('LOCAL_DB_URL'),
-                ssl: { rejectUnauthorized: false },
-              },
+          connection: {
+            connectionString: env.string('LOCAL_DB_URL'),
+            ssl: !env.string('LOCAL_DB_URL').includes('localhost')
+              ? { rejectUnauthorized: false }
+              : undefined,
+          },
           freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
@@ -94,7 +94,7 @@ export function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl2: flags.isEnabled('tvl2') && tvl2Config,
+    tvl: flags.isEnabled('tvl') && tvlConfig,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
         clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
@@ -186,6 +186,35 @@ export function makeConfig(
       'implementationChangeReporter',
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+
+    daBeat: flags.isEnabled('da-beat') && {
+      coingeckoApiKey: env.string([
+        'COINGECKO_API_KEY_FOR_DA_BEAT',
+        'COINGECKO_API_KEY',
+      ]),
+      quicknodeApiUrl: env.string([
+        'QUICKNODE_API_URL_FOR_DA_BEAT',
+        'QUICKNODE_API_URL',
+      ]),
+      quicknodeCallsPerMinute: env.integer(
+        [
+          'QUICKNODE_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
+          'QUICKNODE_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      celestiaApiUrl: env.string([
+        'CELESTIA_API_URL_FOR_DA_BEAT',
+        'CELESTIA_API_URL',
+      ]),
+      celestiaCallsPerMinute: env.integer(
+        [
+          'CELESTIA_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
+          'CELESTIA_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+    },
 
     // Must be last
     flags: flags.getResolved(),

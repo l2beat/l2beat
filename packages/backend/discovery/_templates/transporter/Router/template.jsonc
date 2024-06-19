@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "onRamps": {
+      "target": {
+        "template": "transporter/OnRamp"
+      },
+      "handler": {
+        "type": "stateFromEvent",
+        "event": "OnRampSet",
+        "returnParams": ["destChainSelector", "onRamp"],
+        "groupBy": "destChainSelector",
+        "onlyValue": true
+      }
+    },
+    "offRamps": {
+      "target": {
+        "template": "transporter/OffRamp"
+      },
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getOffRamps"
+      }
+    }
+  },
+  "ignoreMethods": ["getOffRamps"],
+  "ignoreRelatives": ["getWrappedNative"]
+}

@@ -91,8 +91,8 @@ export const mantle: Layer2 = opStackL2({
     chainId: 5000,
     explorerUrl: 'https://explorer.mantle.xyz/',
     explorerApi: {
-      url: 'https://explorer.mantle.xyz/api',
-      type: 'blockscout',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+      type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1688314886),
     multicallContracts: [

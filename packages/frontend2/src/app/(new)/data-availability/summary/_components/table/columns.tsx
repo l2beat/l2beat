@@ -1,12 +1,49 @@
+import { type DaBridgeRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaBridge'
+import { type DaLayerRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaLayer'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
+import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
-import { mapRisksToRosetteValues as mapDaRisksToRosetteValues } from '../../../_utils/get-da-risks'
-import { type DaSummaryEntry } from '../../_utils/da-summary-entry'
 import { DaBridgeCell } from './da-bridge-cell'
+import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
+
+export function mapRisksToRosetteValues(
+  risks: DaBridgeRisks & DaLayerRisks,
+): RosetteValue[] {
+  const values: RosetteValue[] = [
+    {
+      name: 'Economic security',
+      value: risks.economicSecurity.value,
+      sentiment: risks.economicSecurity.sentiment,
+    },
+    {
+      name: 'Fraud detection',
+      value: risks.fraudDetection.value,
+      sentiment: risks.fraudDetection.sentiment,
+    },
+    {
+      name: 'Attestations',
+      value: risks.attestations.value,
+      sentiment: risks.attestations.sentiment,
+    },
+    {
+      name: 'Exit window',
+      value: risks.exitWindow.value,
+      sentiment: risks.exitWindow.sentiment,
+    },
+    {
+      name: 'Accessibility',
+      value: risks.accessibility.value,
+      sentiment: risks.accessibility.sentiment,
+    },
+  ]
+
+  return values
+}
 
 export const columns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -23,7 +60,7 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <RosetteCell values={mapDaRisksToRosetteValues(ctx.getValue())} />
+      <RosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
     ),
     enableSorting: false,
     meta: {
@@ -39,7 +76,7 @@ export const columns = [
   }),
   columnHelper.accessor('economicSecurity', {
     header: 'Economic security',
-    cell: (ctx) => `$${formatNumber(ctx.getValue(), 2)}`,
+    cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   }),
   columnHelper.accessor('usedBy', {
     header: 'Used by',

@@ -114,6 +114,8 @@ export class ProjectDiscovery {
     upgradeDelay,
     isUpcoming,
     includeInTotal,
+    source,
+    bridge,
     isHistorical,
     untilTimestamp,
   }: {
@@ -127,6 +129,12 @@ export class ProjectDiscovery {
     upgradeDelay?: string
     isUpcoming?: boolean
     includeInTotal?: boolean
+    source?: ScalingProjectEscrow['source']
+    bridge?: {
+      name: string
+      slug?: string
+      warning?: string
+    }
     isHistorical?: boolean
     untilTimestamp?: UnixTime
   }): ScalingProjectEscrow {
@@ -157,6 +165,8 @@ export class ProjectDiscovery {
       chain: this.chain,
       includeInTotal:
         includeInTotal ?? this.chain === 'ethereum' ? true : includeInTotal,
+      source,
+      bridge,
       isHistorical,
       untilTimestamp,
     }

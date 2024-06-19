@@ -137,6 +137,7 @@ export const zksyncera: Layer2 = {
     },
   },
   config: {
+    associatedTokens: ['ZK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB'),
@@ -661,7 +662,7 @@ export const zksyncera: Layer2 = {
       ],
       verifiers: [
         {
-          name: 'zkSyncEraVerifier',
+          name: 'ZKsyncEraVerifier',
           description:
             'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
           verified: 'no',
@@ -682,6 +683,7 @@ export const zksyncera: Layer2 = {
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
+              trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
             },
             {
@@ -689,6 +691,7 @@ export const zksyncera: Layer2 = {
               proofSystem: 'Redshift',
               mainArithmetization: 'Plonk',
               mainPCS: 'LPC',
+              trustedSetup: 'None',
               link: 'https://github.com/matter-labs/era-zkevm_circuits',
             },
           ],
