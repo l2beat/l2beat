@@ -34,7 +34,6 @@ export interface ApiProject {
   sources: Map<
     string,
     {
-      name: string
       minTimestamp: UnixTime
     }
   >

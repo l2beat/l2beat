@@ -7,6 +7,7 @@ import {
   ValueRepository,
 } from '../../../repositories/ValueRepository'
 import { SyncOptimizer } from '../../../utils/SyncOptimizer'
+import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
@@ -105,10 +106,10 @@ function getConfiguredValuesForTimestamp(
   lagging: Map<string, { latestTimestamp: UnixTime; latestValue: ValueRecord }>,
   syncing: Set<string>,
 ) {
-  const configuredSources = Array.from(project.sources.values())
-    .filter((s) => s.minTimestamp.lte(timestamp))
-    .filter((s) => !syncing.has(`${project.id}-${s.name}`))
-    .map((s) => s.name)
+  const configuredSources = Array.from(project.sources.entries())
+    .filter(([_, source]) => source.minTimestamp.lte(timestamp))
+    .filter(([name, _]) => !syncing.has(`${project.id}-${name}`))
+    .map(([name, _]) => name)
 
   const configuredValues = values.filter((v) =>
     configuredSources.includes(v.dataSource),
@@ -130,66 +131,4 @@ function getConfiguredValuesForTimestamp(
   }
 
   return configuredValues
-}
-
-function getLaggingAndSyncing(
-  valuesByTimestamp: Dictionary<ValueRecord[]>,
-  targetTimestamp: UnixTime,
-  project: ApiProject,
-) {
-  const lagging: {
-    source: string
-    latestTimestamp: UnixTime
-    latestValue: ValueRecord
-  }[] = []
-  const syncing: string[] = []
-
-  const latestValues = valuesByTimestamp[targetTimestamp.toString()]
-
-  const configuredSources = Array.from(project.sources.values())
-
-  for (const source of configuredSources) {
-    const v = latestValues.find((v) => v.dataSource === source.name)
-
-    if (v) {
-      continue
-    }
-
-    if (v === undefined) {
-      syncing.push(`${project.id}-${source.name}`)
-      continue
-    }
-
-    const vv = valuesByTimestamp[
-      targetTimestamp.add(-7, 'days').toString()
-    ].find((v) => v.dataSource === source.name)
-
-    if (vv === undefined) {
-      syncing.push(`${project.id}-${source.name}`)
-      continue
-    }
-
-    for (
-      let i = targetTimestamp.add(-1, 'hours').toNumber();
-      i <= targetTimestamp.add(-7, 'days').toNumber();
-      i += 3600
-    ) {
-      const vvv = valuesByTimestamp[i.toString()].find(
-        (v) => v.dataSource === source.name,
-      )
-
-      if (vvv) {
-        lagging.push({
-          source: `${project.id}-${source.name}`,
-          latestTimestamp: new UnixTime(i),
-          latestValue: vvv,
-        })
-      }
-    }
-  }
-
-  return {
-    lagging,
-    syncing,
-  }
 }
