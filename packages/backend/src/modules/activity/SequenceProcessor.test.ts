@@ -1,3 +1,4 @@
+import { once } from 'events'
 import {
   LogFormatterPretty,
   Logger,
@@ -6,7 +7,6 @@ import {
 import { ProjectId } from '@l2beat/shared-pure'
 import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { MockFunction, expect, mockFn } from 'earl'
-import { once } from 'events'
 
 import { describeDatabase } from '../../test/database'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'

@@ -7,6 +7,7 @@ import { CacheRepository } from './cache/repository'
 import { CurrentPriceRepository } from './current-price'
 import { DailyDiscoveryRepository } from './daily-discovery/repository'
 import { DeploymentRepository } from './deployment/repository'
+import { DiscoveryCacheRepository } from './discovery-cache/repository'
 import { ExternalBridgeRepository } from './external-bridge/repository'
 import { FinalityRepository } from './finality/repository'
 import { IndexerConfigurationRepository } from './indexer-configuration/repository'
@@ -50,11 +51,12 @@ export function createRepositories(config?: PoolConfig) {
     token: new TokenRepository(db),
     cache: new CacheRepository(db),
 
-    // L2BEAT
+    // L2BEAT - public
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     amount: new AmountRepository(db),
     blockTimestamp: new BlockTimestampRepository(db),
     dailyDiscovery: new DailyDiscoveryRepository(db),
+    discoveryCache: new DiscoveryCacheRepository(db),
     finality: new FinalityRepository(db),
     indexerConfiguration: new IndexerConfigurationRepository(db),
     indexerState: new IndexerStateRepository(db),
@@ -69,6 +71,8 @@ export function createRepositories(config?: PoolConfig) {
     value: new ValueRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
   }
+
+  // L2BEAT - activity
 }
 
 export type Database = ReturnType<typeof createRepositories>
