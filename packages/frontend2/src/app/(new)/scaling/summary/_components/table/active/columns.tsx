@@ -1,10 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
 
 const columnHelper = createColumnHelper<ScalingSummaryActiveEntry>()
@@ -37,26 +34,26 @@ export const columns = [
     header: 'Purposes',
     cell: (ctx) => ctx.getValue().join(', '),
   }),
-  columnHelper.accessor('tvlData.tvl', {
-    header: 'Total',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return <UpcomingBadge />
-      }
+  // columnHelper.accessor('tvlData.tvl', {
+  //   header: 'Total',
+  //   cell: (ctx) => {
+  //     const value = ctx.getValue()
+  //     if (!value) {
+  //       return <UpcomingBadge />
+  //     }
 
-      return <span>{formatNumber(value)}</span>
-    },
-  }),
-  columnHelper.accessor('tvlData.marketShare', {
-    header: 'Market share',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return EM_DASH
-      }
+  //     return <span>{formatNumber(value)}</span>
+  //   },
+  // }),
+  // columnHelper.accessor('tvlData.marketShare', {
+  //   header: 'Market share',
+  //   cell: (ctx) => {
+  //     const value = ctx.getValue()
+  //     if (!value) {
+  //       return EM_DASH
+  //     }
 
-      return <span>{formatNumber(value)}%</span>
-    },
-  }),
+  //     return <span>{formatNumber(value)}%</span>
+  //   },
+  // }),
 ]

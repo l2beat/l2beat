@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import { HOMEPAGE_MILESTONES, type Milestone, layer2s } from '@l2beat/config'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import {
   Tabs,
@@ -12,10 +12,42 @@ import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
 import { SummaryActiveTable } from './_components/table/active/summary-active-table'
 import { toScalingSummaryEntry } from './_utils/scaling-summary-entry'
+import { TvlApiResponse } from '@l2beat/shared-pure'
+import { SummaryChart } from './_components/summary-chart'
+import { readFile } from 'fs/promises'
+import path from 'path'
 
-export default function Page() {
+export default async function Page() {
+  // NOTE: This is too big to cache, we should split this into multiple smaller
+  // endpoint.
+  const tvlData = await readFile(
+    path.join(process.cwd(), '/src/app/(new)/scaling/summary/tvl.json'),
+    'utf8',
+  )
+    .then((data) => JSON.parse(data) as unknown)
+    .then((data) => TvlApiResponse.parse(data))
+
+  const milestones = getMilestones(HOMEPAGE_MILESTONES)
+
+  const columns = tvlData.layers2s.daily.data.map((d) => {
+    const timestamp = d[0]
+    const usdValue = d[1]
+    const ethValue = d[5]
+
+    return {
+      values: [usdValue],
+      data: {
+        timestamp: timestamp.toNumber(),
+        usdValue,
+        ethValue,
+      },
+      milestone: milestones[timestamp.toNumber()],
+    }
+  })
+
   return (
     <div>
+      <SummaryChart columns={columns} />
       <Tabs defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
@@ -51,4 +83,13 @@ export default function Page() {
       </Tabs>
     </div>
   )
+}
+
+function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
+  const result: Record<number, Milestone> = {}
+  for (const milestone of milestones) {
+    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
+    result[timestamp] = milestone
+  }
+  return result
 }
