@@ -24,8 +24,59 @@ describe(getLaggingAndSyncing.name, () => {
     expect(result.lagging).toBeEmpty()
     expect(result.syncing).toBeEmpty()
   })
-  it('data source syncing', () => {})
-  it('data source lagging', () => {})
+
+  it('data source syncing', () => {
+    const targetTimestamp = UnixTime.ZERO.add(14, 'days')
+
+    // It is later than 7D ago, so will be considered syncing
+    const timestamp = targetTimestamp.add(-10, 'days').toNumber()
+    const valuesByTimestamp = {
+      [timestamp]: [mockValue('A', timestamp)],
+      // No entry for "B", will be considered syncing
+    }
+
+    const project = mockProject(['A', 'B'])
+
+    const result = getLaggingAndSyncing(
+      valuesByTimestamp,
+      targetTimestamp,
+      project,
+    )
+
+    expect(result.lagging).toBeEmpty()
+    expect(result.syncing).toEqual([`${projectId}-A`, `${projectId}-B`])
+  })
+
+  it('data source lagging', () => {
+    const targetTimestamp = UnixTime.ZERO.add(14, 'days')
+
+    // It is earlier than 7D ago, so will be considered lagging
+    const timestamp = targetTimestamp.add(-4, 'hours').toNumber()
+    const timestamp7DaysAgo = targetTimestamp.add(-7, 'days').toNumber()
+    const valuesByTimestamp = {
+      // this one is needed for the function assumptions about the data
+      [timestamp7DaysAgo]: [mockValue('A', timestamp7DaysAgo)],
+      // there should be consecutive records in prod data
+      [timestamp]: [mockValue('A', timestamp)],
+    }
+
+    const project = mockProject(['A'])
+
+    const result = getLaggingAndSyncing(
+      valuesByTimestamp,
+      targetTimestamp,
+      project,
+    )
+
+    expect(result.lagging).toEqual([
+      {
+        source: `${projectId}-A`,
+        latestTimestamp: new UnixTime(timestamp),
+        latestValue: mockValue('A', timestamp),
+      },
+    ])
+    expect(result.syncing).toBeEmpty()
+  })
 })
 
 function mockValue(source: string, timestamp: number) {
