@@ -31,7 +31,7 @@ import { VerifierStatusRepository } from './verifier-status/repository'
 export * from './tracked-tx-config'
 
 export function createRepositories(config?: PoolConfig) {
-  const db = new PostgresDatabase({ ...config, log: console.dir })
+  const db = new PostgresDatabase({ ...config })
 
   return {
     // DA-BEAT
