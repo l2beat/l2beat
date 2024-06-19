@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { UpdateConfiguration } from '../../tools/uif/multi/types'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -22,19 +23,21 @@ export class TrackedTxsClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getData(
-    configurations: TrackedTxConfigEntry[],
+    configurations: UpdateConfiguration<TrackedTxConfigEntry>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxResult[]> {
     const transfersConfig = configurations.filter(
-      (c): c is TrackedTxTransferConfig => c.formula === 'transfer',
+      (c): c is UpdateConfiguration<TrackedTxTransferConfig> =>
+        c.properties.formula === 'transfer',
     )
     const functionCallsConfig = configurations.filter(
-      (c): c is TrackedTxFunctionCallConfig => c.formula === 'functionCall',
+      (c): c is UpdateConfiguration<TrackedTxFunctionCallConfig> =>
+        c.properties.formula === 'functionCall',
     )
     const sharpSubmissionsConfig = configurations.filter(
-      (c): c is TrackedTxSharpSubmissionConfig =>
-        c.formula === 'sharpSubmission',
+      (c): c is UpdateConfiguration<TrackedTxSharpSubmissionConfig> =>
+        c.properties.formula === 'sharpSubmission',
     )
 
     const [transfers, functionCalls] = await Promise.all([
@@ -51,22 +54,29 @@ export class TrackedTxsClient {
   }
 
   async getTransfers(
-    transfersConfig: TrackedTxTransferConfig[],
+    transfersConfig: UpdateConfiguration<TrackedTxTransferConfig>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxTransferResult[]> {
     if (transfersConfig.length === 0) return Promise.resolve([])
 
-    const query = getTransferQuery(transfersConfig, from, to)
+    const query = getTransferQuery(
+      transfersConfig.map((t) => t.properties),
+      from,
+      to,
+    )
 
     const queryResult = await this.bigquery.query(query)
     const parsedResult = BigQueryTransferResult.array().parse(queryResult)
-    return transformTransfersQueryResult(transfersConfig, parsedResult)
+    return transformTransfersQueryResult(
+      transfersConfig.map((t) => t.properties),
+      parsedResult,
+    )
   }
 
   async getFunctionCalls(
-    functionCallsConfig: TrackedTxFunctionCallConfig[],
-    sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
+    functionCallsConfig: UpdateConfiguration<TrackedTxFunctionCallConfig>[],
+    sharpSubmissionsConfig: UpdateConfiguration<TrackedTxSharpSubmissionConfig>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxFunctionCallResult[]> {
@@ -75,7 +85,10 @@ export class TrackedTxsClient {
 
     // function calls and sharp submissions will be batched into one query to save costs
     const query = getFunctionCallQuery(
-      combineCalls(functionCallsConfig, sharpSubmissionsConfig),
+      combineCalls(
+        functionCallsConfig.map((c) => c.properties),
+        sharpSubmissionsConfig.map((c) => c.properties),
+      ),
       from,
       to,
     )
@@ -88,8 +101,8 @@ export class TrackedTxsClient {
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
     return transformFunctionCallsQueryResult(
-      functionCallsConfig,
-      sharpSubmissionsConfig,
+      functionCallsConfig.map((c) => c.properties),
+      sharpSubmissionsConfig.map((c) => c.properties),
       parsedResult,
     )
   }
