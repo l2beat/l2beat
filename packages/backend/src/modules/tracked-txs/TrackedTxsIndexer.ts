@@ -83,7 +83,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         const filteredTxs = txs.filter((tx) => tx.use.type === type)
         await updater?.update(filteredTxs, trx)
       }
-      this.logger.info('Saving prices into DB', {
+      this.logger.info('Saving txs into DB', {
         from,
         to: syncTo.toNumber(),
         configurationsToSync: configurationsToSync.length,
