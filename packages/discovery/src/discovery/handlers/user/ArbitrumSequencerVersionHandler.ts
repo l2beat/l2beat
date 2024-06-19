@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
@@ -45,19 +45,11 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       'Checking Arbitrum Sequencer Version',
     ])
 
-    const recentEvents = await provider.raw(
-      `arbitrum_sequencer_batches.${address}.${provider.blockNumber}`,
-      ({ eventProvider }) => {
-        return eventProvider.getLogs({
-          address: address.toString(),
-          topics: [abi.getEventTopic('SequencerBatchDelivered')],
-          // We need .raw because we cannot query from 0. Too many events.
-          fromBlock: provider.blockNumber - 1000,
-          toBlock: provider.blockNumber,
-        })
-      },
+    const lastEvent = await this.getLastEventWithTxInput(
+      provider,
+      address,
+      provider.blockNumber,
     )
-    const lastEvent = recentEvents.pop()
     assert(lastEvent !== undefined, 'No event found')
 
     const tx = await provider.getTransaction(Hash256(lastEvent.transactionHash))
@@ -79,5 +71,49 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     } else {
       throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }
+  }
+
+  async getLastEventWithTxInput(
+    provider: IProvider,
+    address: EthereumAddress,
+    blockNumber: number,
+  ): Promise<providers.Log | undefined> {
+    let currentBlockNumber = blockNumber
+    const blockStep = 1000
+    while (currentBlockNumber > 0) {
+      const events = await provider.raw(
+        `arbitrum_sequencer_batches.${address}.${Math.max(
+          0,
+          currentBlockNumber - blockStep,
+        )}.${currentBlockNumber}`,
+        ({ eventProvider }) => {
+          return eventProvider.getLogs({
+            address,
+            topics: [abi.getEventTopic('SequencerBatchDelivered')],
+            fromBlock: Math.max(0, currentBlockNumber - blockStep),
+            toBlock: currentBlockNumber,
+          })
+        },
+      )
+      currentBlockNumber -= blockStep
+
+      while (events.length > 0) {
+        const last = events.pop()
+        if (last === undefined) {
+          break
+        }
+
+        const decoded = abi.parseLog(last)
+        assert(
+          decoded.name === 'SequencerBatchDelivered',
+          'Unexpected event name',
+        )
+        if (decoded.args.dataLocation === 0) {
+          return last
+        }
+      }
+    }
+
+    return undefined
   }
 }
