@@ -7,6 +7,7 @@ import {
   ValueRepository,
 } from '../../../repositories/ValueRepository'
 import { SyncOptimizer } from '../../../utils/SyncOptimizer'
+import { getConfiguredValuesForTimestamp } from '../../utils/getConfiguredValuesForTimestamp'
 import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
 import { ApiProject } from '../../utils/types'
 
@@ -97,38 +98,4 @@ export class ValuesDataService {
       return timestamp.gte(this.$.syncOptimizer.hourlyCutOff)
     }
   }
-}
-
-function getConfiguredValuesForTimestamp(
-  values: ValueRecord[],
-  project: ApiProject,
-  timestamp: UnixTime,
-  lagging: Map<string, { latestTimestamp: UnixTime; latestValue: ValueRecord }>,
-  syncing: Set<string>,
-) {
-  const configuredSources = Array.from(project.sources.entries())
-    .filter(([_, source]) => source.minTimestamp.lte(timestamp))
-    .filter(([name, _]) => !syncing.has(`${project.id}-${name}`))
-    .map(([name, _]) => name)
-
-  const configuredValues = values.filter((v) =>
-    configuredSources.includes(v.dataSource),
-  )
-
-  const valuesSources = values.map((x) => x.dataSource)
-  const missingSources = configuredSources.filter(
-    (s) => !valuesSources.includes(s),
-  )
-
-  for (const source of missingSources) {
-    const laggingEntry = lagging.get(`${project.id}-${source}`)
-    assert(laggingEntry, `Missing lagging entry for ${project.id}-${source}`)
-
-    configuredValues.push({
-      ...laggingEntry.latestValue,
-      timestamp: timestamp,
-    })
-  }
-
-  return configuredValues
 }
