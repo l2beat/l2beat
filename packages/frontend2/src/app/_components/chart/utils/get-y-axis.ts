@@ -1,4 +1,5 @@
-import { calculateTicks } from './calculateTicks'
+import { assert } from '@l2beat/shared-pure'
+import { calculateTicks } from './calculate-ticks'
 
 export function getYAxis(
   values: number[],
@@ -10,6 +11,7 @@ export function getYAxis(
   const labels = ticks.map(format)
   const min = ticks[0]
   const max = ticks[ticks.length - 1]
+  assert(min !== undefined && max !== undefined, 'No min or max')
   const getY = isLogScale ? getLogY(min, max) : getLinY(min, max)
   return {
     labels,

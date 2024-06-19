@@ -1,22 +1,71 @@
 import { useEffect, useRef } from 'react'
 import { useChartContext } from './chart-context'
+import { useTheme } from 'next-themes'
+import { getRenderPaths } from './utils/get-render-paths'
+import { getFillStyle, getStrokeStyle } from './utils/get-style'
+import { getLineDashSegments } from './utils/get-line-dash-segments'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
   const context = useChartContext()
+  const { theme: rawTheme } = useTheme()
+  const theme = rawTheme === 'dark' ? 'dark' : 'light'
 
   useEffect(() => {
     const chart = ref.current
     const ctx = chart?.getContext('2d')
     if (!chart || !ctx) return
-    // Setup canvas
-    const rect = chart.parentElement?.getBoundingClientRect()
-    if (rect) {
-      chart.width = rect.width * window.devicePixelRatio
-      chart.height = rect.height * window.devicePixelRatio
+
+    const render = () =>
+      requestAnimationFrame(() => {
+        // Setup canvas
+        const rect = chart.parentElement?.getBoundingClientRect()
+        if (rect) {
+          chart.width = rect.width * window.devicePixelRatio
+          chart.height = rect.height * window.devicePixelRatio
+        }
+        ctx.clearRect(0, 0, chart.width, chart.height)
+
+        const renderPaths = getRenderPaths({ chart, context })
+
+        for (const { style, paths } of renderPaths) {
+          if (style.fill) {
+            for (const path of paths) {
+              ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
+              const fillPath = new Path2D(path.path)
+              fillPath.lineTo(path.lastX, chart.height)
+              fillPath.lineTo(path.startX ?? 0, chart.height)
+              fillPath.closePath()
+              ctx.fill(fillPath)
+            }
+          }
+        }
+
+        for (const { style, paths } of renderPaths) {
+          if (style.line) {
+            for (const path of paths) {
+              ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
+              ctx.strokeStyle = getStrokeStyle(ctx, style.line, theme)
+              if (path.dashed) {
+                const segments = getLineDashSegments(context.range)
+                ctx.setLineDash(segments)
+              } else {
+                ctx.setLineDash([])
+              }
+
+              ctx.stroke(path.path)
+            }
+          }
+        }
+      })
+
+    window.addEventListener('resize', render)
+    render()
+
+    return () => {
+      window.removeEventListener('resize', render)
     }
-    ctx.clearRect(0, 0, chart.width, chart.height)
-  }, [])
+  }, [context, theme])
 
   return (
     <canvas

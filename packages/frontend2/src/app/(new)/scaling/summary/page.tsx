@@ -35,7 +35,7 @@ export default async function Page() {
     const ethValue = d[5]
 
     return {
-      values: [usdValue],
+      values: [{ value: usdValue }],
       data: {
         timestamp: timestamp.toNumber(),
         usdValue,

@@ -5,7 +5,7 @@ import { formatCurrency } from '~/utils/format'
 
 interface Props {
   columns: {
-    values: number[]
+    values: { value: number; dashed?: boolean }[]
     data: {
       timestamp: number
       usdValue: number

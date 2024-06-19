@@ -15,8 +15,8 @@ export function ChartLabels({
         className,
       )}
     >
-      {context.labels.map((label) => (
-        <ChartLabel key={label}>{label}</ChartLabel>
+      {context.labels.map((label, i) => (
+        <ChartLabel key={i}>{label}</ChartLabel>
       ))}
     </div>
   )

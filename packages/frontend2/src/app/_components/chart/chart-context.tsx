@@ -1,10 +1,14 @@
 import { type Milestone } from '@l2beat/config'
 import { type ReactNode, createContext, useContext } from 'react'
 import { type SeriesStyle } from './styles'
-import { getYAxis } from './utils/getYAxis'
+import { getYAxis } from './utils/get-y-axis'
 
+interface Value {
+  value: number
+  dashed?: boolean
+}
 export interface ChartColumn<T> {
-  values: number[]
+  values: Value[]
   data: T
   milestone?: Milestone
 }
@@ -39,7 +43,7 @@ export function ChartContextProvider<T>({
   const { columns, useLogScale, formatYAxisLabel } = params
   const values = columns.flatMap((column) => column.values)
   const { labels, getY } = getYAxis(
-    values,
+    values.map((v) => v.value),
     useLogScale,
     formatYAxisLabel,
     LABEL_COUNT,
