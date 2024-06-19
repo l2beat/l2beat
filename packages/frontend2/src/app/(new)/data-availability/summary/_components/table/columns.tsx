@@ -81,7 +81,7 @@ export const columns = [
       if (value.status === 'StakeNotSynced') return 'Stake not synced'
       if (value.status === 'CurrentPriceNotSynced')
         return 'Current price not synced'
-      return `$${formatNumber(Number(value.economicSecurity), 2)}`
+      return `$${formatNumber(value.economicSecurity, 0)}`
     },
   }),
   columnHelper.accessor('usedBy', {
