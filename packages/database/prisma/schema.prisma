@@ -1,29 +1,29 @@
 generator kysely {
   provider        = "prisma-kysely"
   output          = "../src/kysely/generated"
+  previewFeatures = ["multiSchema"]
   enumFileName    = "enums.ts"
   fileName        = "types.ts"
-  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["public", "activity"]
+  schemas  = ["activity", "public"]
 }
 
 model CurrentPrice {
   coingeckoId String   @id @db.VarChar(255)
   priceUsd    Float    @db.Real
-  updatedAt   DateTime @db.Timestamp
+  updatedAt   DateTime @db.Timestamp(6)
 
   @@schema("public")
 }
 
 model Stake {
   id             String @id @db.VarChar(255)
-  totalStake     BigInt
-  thresholdStake BigInt
+  totalStake     Float  @db.Real
+  thresholdStake Float  @db.Real
 
   @@schema("public")
 }
@@ -440,4 +440,34 @@ model VerifierStatus {
   @@id([address, chainId])
   @@map("verifier_status")
   @@schema("public")
+}
+
+model Block {
+  projectId     String   @map("project_id") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  count         Int
+  blockNumber   Int      @map("block_number")
+
+  @@id([projectId, blockNumber])
+  @@map("block")
+  @@schema("activity")
+}
+
+model Starkex {
+  projectId     String   @map("project_id") @db.VarChar(255)
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+  count         Int
+
+  @@id([projectId, unixTimestamp])
+  @@map("starkex")
+  @@schema("activity")
+}
+
+model ZkSync {
+  blockNumber   Int      @map("block_number")
+  blockIndex    Int      @map("block_index")
+  unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+
+  @@id([blockNumber, blockIndex])
+  @@schema("activity")
 }
