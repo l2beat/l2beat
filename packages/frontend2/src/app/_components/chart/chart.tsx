@@ -21,7 +21,10 @@ export function Chart<T>({
         <ChartHover />
         <ChartLabels />
         <ChartMilestones />
-        <Logo className="absolute right-2 bottom-2 z-30 h-[25px] w-[60px] opacity-20" />
+        <Logo
+          animated={false}
+          className="absolute right-2 bottom-2 z-30 h-[25px] w-[60px] opacity-20"
+        />
       </div>
     </ChartContextProvider>
   )
