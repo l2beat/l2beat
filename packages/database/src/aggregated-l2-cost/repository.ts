@@ -3,7 +3,7 @@ import { PostgresDatabase, Transaction } from '../kysely'
 import { AggregatedL2Cost, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
 
-export class AggregatedL2CostsRepository {
+export class AggregatedL2CostRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getAll(): Promise<AggregatedL2Cost[]> {

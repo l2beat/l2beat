@@ -1,4 +1,5 @@
 import { PoolConfig } from 'pg'
+import { AggregatedL2CostRepository } from './aggregated-l2-cost/repository'
 import { AmountRepository } from './amount/repository'
 import { BlockTimestampRepository } from './block-timestamp/repository'
 import { BridgeEscrowRepository } from './bridge-escrow/repository'
@@ -28,8 +29,6 @@ import { UpdateMonitorRepository } from './update-monitor/repository'
 import { ValueRepository } from './value/repository'
 import { VerifierStatusRepository } from './verifier-status/repository'
 
-export * from './tracked-tx-config'
-
 export function createRepositories(config?: PoolConfig) {
   const db = new PostgresDatabase({ ...config })
 
@@ -51,6 +50,7 @@ export function createRepositories(config?: PoolConfig) {
     cache: new CacheRepository(db),
 
     // L2BEAT
+    aggregatedL2Cost: new AggregatedL2CostRepository(db),
     amount: new AmountRepository(db),
     blockTimestamp: new BlockTimestampRepository(db),
     dailyDiscovery: new DailyDiscoveryRepository(db),
