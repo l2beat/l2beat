@@ -12,7 +12,7 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
   const newRepo = kysely.amount
 
   function suite(amountRepository: AmountRepository | Database['amount']) {
-    describe.only(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
+    describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
       it('gets by ids in inclusive range', async () => {
         await amountRepository.addMany([
           amount('a', new UnixTime(50), 100n),
@@ -45,7 +45,7 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
       })
     })
 
-    describe.only(AmountRepository.prototype.addMany.name, () => {
+    describe(AmountRepository.prototype.addMany.name, () => {
       it('adds new rows', async () => {
         await amountRepository.addMany([
           amount('a', UnixTime.ZERO, 111n),
@@ -73,41 +73,38 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
       })
     })
 
-    describe.only(
-      AmountRepository.prototype.deleteByConfigInTimeRange.name,
-      () => {
-        it('deletes data in range for matching config', async () => {
-          await amountRepository.addMany([
-            amount('b', new UnixTime(1), 0n),
-            amount('b', new UnixTime(2), 0n),
-            amount('b', new UnixTime(3), 0n),
-          ])
+    describe(AmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
+      it('deletes data in range for matching config', async () => {
+        await amountRepository.addMany([
+          amount('b', new UnixTime(1), 0n),
+          amount('b', new UnixTime(2), 0n),
+          amount('b', new UnixTime(3), 0n),
+        ])
 
-          await amountRepository.deleteByConfigInTimeRange(
-            'b'.repeat(12),
-            new UnixTime(1),
-            new UnixTime(2),
-          )
+        await amountRepository.deleteByConfigInTimeRange(
+          'b'.repeat(12),
+          new UnixTime(1),
+          new UnixTime(2),
+        )
 
-          const results = await amountRepository.getAll()
-          expect(results).toEqualUnsorted([amount('b', new UnixTime(3), 0n)])
-        })
-        it('does not delete data if matching config not found', async () => {
-          await amountRepository.addMany([amount('b', new UnixTime(1), 0n)])
+        const results = await amountRepository.getAll()
+        expect(results).toEqualUnsorted([amount('b', new UnixTime(3), 0n)])
+      })
+      it('does not delete data if matching config not found', async () => {
+        await amountRepository.addMany([amount('b', new UnixTime(1), 0n)])
 
-          await amountRepository.deleteByConfigInTimeRange(
-            'c',
-            new UnixTime(1),
-            new UnixTime(2),
-          )
+        await amountRepository.deleteByConfigInTimeRange(
+          'c',
+          new UnixTime(1),
+          new UnixTime(2),
+        )
 
-          const results = await amountRepository.getAll()
-          expect(results).toEqualUnsorted([amount('b', new UnixTime(1), 0n)])
-        })
-      },
-    )
+        const results = await amountRepository.getAll()
+        expect(results).toEqualUnsorted([amount('b', new UnixTime(1), 0n)])
+      })
+    })
 
-    describe.only(AmountRepository.prototype.deleteByConfigAfter.name, () => {
+    describe(AmountRepository.prototype.deleteByConfigAfter.name, () => {
       it('deletes data in range for matching config', async () => {
         await amountRepository.addMany([
           amount('b', new UnixTime(1), 0n),
