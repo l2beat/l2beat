@@ -1,4 +1,7 @@
 import { PoolConfig } from 'pg'
+import { ZksyncTransactionRepository } from './acitivity-zksync/repository'
+import { BlockTransactionCountRepository } from './activity-block/repository'
+import { StarkexTransactionCountRepository } from './activity-starkex/repository'
 import { AggregatedL2CostRepository } from './aggregated-l2-cost/repository'
 import { AmountRepository } from './amount/repository'
 import { BlockTimestampRepository } from './block-timestamp/repository'
@@ -70,9 +73,12 @@ export function createRepositories(config?: PoolConfig) {
     updateMonitor: new UpdateMonitorRepository(db),
     value: new ValueRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
-  }
 
-  // L2BEAT - activity
+    // L2BEAT - activity
+    blockTransactionCount: new BlockTransactionCountRepository(db),
+    starkexTransactionCount: new StarkexTransactionCountRepository(db),
+    zksyncTransactionCount: new ZksyncTransactionRepository(db),
+  }
 }
 
 export type Database = ReturnType<typeof createRepositories>
