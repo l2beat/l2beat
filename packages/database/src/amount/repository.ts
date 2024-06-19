@@ -69,6 +69,9 @@ export class AmountRepository {
   }
 
   async addMany(records: Amount[], trx?: Transaction) {
+    if (records.length === 0) {
+      return
+    }
     const scope = trx ?? this.db
 
     const rows = records.map(toRow)
