@@ -4460,7 +4460,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 10,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "optimism:exa-exactly-token",
@@ -4841,7 +4841,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 169,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "mantapacific:manta-manta",
@@ -5077,7 +5077,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 324,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "zksync2:frax-frax",
@@ -5599,7 +5599,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 5000,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "mantle:susde-staked-usde",
@@ -5844,7 +5844,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 8453,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "base:friend-friend",
@@ -6269,7 +6269,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 42161,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "arbitrum:frax-frax",
@@ -6834,7 +6834,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 59144,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "linea:foxy-foxy",
@@ -7086,7 +7086,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "chainId": 81457,
       "source": "canonical",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "blast:juice-juice",
