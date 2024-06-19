@@ -469,5 +469,6 @@ model ZkSync {
   unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
 
   @@id([blockNumber, blockIndex])
+  @@map("zksync")
   @@schema("activity")
 }
