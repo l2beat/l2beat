@@ -9,5 +9,5 @@ export function DaEconomicSecurityCell({
   if (value.status === 'StakeNotSynced') return 'Stake not synced'
   if (value.status === 'CurrentPriceNotSynced')
     return 'Current price not synced'
-  return `$${formatNumber(value.economicSecurity, 0)}`
+  return `$${formatNumber(value.economicSecurity, 2)}`
 }
