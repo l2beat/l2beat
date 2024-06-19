@@ -171,7 +171,6 @@ model Cache {
   createdAt   DateTime @default(now())
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model AggregatedL2Costs {
   timestamp      DateTime @map("timestamp") @db.Timestamp(6)
   projectId      String   @map("project_id") @db.VarChar(255)
@@ -194,7 +193,7 @@ model AggregatedL2Costs {
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
   @@map("aggregated_l2_costs")
-  @@ignore
+  @@id([projectId, timestamp])
 }
 
 model Amount {
@@ -293,7 +292,6 @@ model L2CostPrice {
   @@map("l2_costs_prices")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Liveness {
   timestamp         DateTime         @map("timestamp") @db.Timestamp(6)
   blockNumber       Int              @map("block_number")
@@ -301,11 +299,11 @@ model Liveness {
   trackedTxId       String           @map("tracked_tx_id") @db.VarChar(8)
   trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
 
-  @@index([trackedTxId], map: "liveness_tracked_tx_id_index")
-  @@ignore
+  @@id(trackedTxId, map: "liveness_tracked_tx_id_index")
+  @@map("liveness")
 }
 
-model Prices {
+model Price {
   timestamp       DateTime @map("timestamp") @db.Timestamp(6)
   priceUsd        Float    @map("price_usd") @db.Real
   configurationId String   @map("configuration_id") @db.Char(12)
@@ -334,7 +332,7 @@ model TrackedTxsConfig {
   untilTimestampExclusive DateTime?  @map("until_timestamp_exclusive") @db.Timestamp(6)
   lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
   l2Costs                 L2Cost[]
-  liveness                Liveness[] @ignore
+  liveness                Liveness[] 
 
   @@map("tracked_txs_configs")
 }
@@ -378,12 +376,12 @@ model Value {
   timestamp         DateTime @map("timestamp") @db.Timestamp(6)
   projectId         String   @map("project_id") @db.VarChar(255)
   dataSource        String   @map("data_source") @db.VarChar(255)
-  external          BigInt?  @map("external")
-  externalForTotal  BigInt?  @map("external_for_total")
-  canonical         BigInt?  @map("canonical")
-  canonicalForTotal BigInt?  @map("canonical_for_total")
-  native            BigInt?  @map("native")
-  nativeForTotal    BigInt?  @map("native_for_total")
+  external          BigInt  @map("external")
+  externalForTotal  BigInt  @map("external_for_total")
+  canonical         BigInt  @map("canonical")
+  canonicalForTotal BigInt  @map("canonical_for_total")
+  native            BigInt  @map("native")
+  nativeForTotal    BigInt  @map("native_for_total")
 
   @@id([timestamp, projectId, dataSource])
   @@map("values")
