@@ -3,11 +3,11 @@ import { EtherscanClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { BlockTimestampService } from './BlockTimestampService'
+import { BlockTimestampProvider } from './BlockTimestampProvider'
 
-describe(BlockTimestampService.name, () => {
+describe(BlockTimestampProvider.name, () => {
   describe(
-    BlockTimestampService.prototype.getBlockNumberAtOrBefore.name,
+    BlockTimestampProvider.prototype.getBlockNumberAtOrBefore.name,
     () => {
       it('fetches using provider if configured', async () => {
         const BLOCK_NUMBER = 1
@@ -15,8 +15,8 @@ describe(BlockTimestampService.name, () => {
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
 
-        const service = new BlockTimestampService({
-          blockTimestampProvider: provider,
+        const service = new BlockTimestampProvider({
+          blockTimestampClient: provider,
           rpcClient: mockObject<RpcClient>({}),
           logger: Logger.SILENT,
         })
@@ -37,8 +37,8 @@ describe(BlockTimestampService.name, () => {
         const rpc = mockObject<RpcClient>({
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
-        const service = new BlockTimestampService({
-          blockTimestampProvider: undefined,
+        const service = new BlockTimestampProvider({
+          blockTimestampClient: undefined,
           rpcClient: rpc,
           logger: Logger.SILENT,
         })
@@ -62,8 +62,8 @@ describe(BlockTimestampService.name, () => {
         const rpc = mockObject<RpcClient>({
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
-        const service = new BlockTimestampService({
-          blockTimestampProvider: provider,
+        const service = new BlockTimestampProvider({
+          blockTimestampClient: provider,
           rpcClient: rpc,
           logger: Logger.SILENT,
         })

@@ -25,7 +25,7 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { PriceRepository } from '../repositories/PriceRepository'
 import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
-import { BlockTimestampService } from '../services/BlockTimestampService'
+import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { ValueService } from '../services/ValueService'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -86,8 +86,9 @@ function createChainModule(
   }
   logger = logger.tag(chain)
 
-  const blockNumberProviderConfig = chainConfig.config.blockNumberProviderConfig
-  const blockTimestampProvider = blockNumberProviderConfig
+  const blockNumberProviderConfig =
+    chainConfig.config.blockTimestampClientConfig
+  const blockTimestampClient = blockNumberProviderConfig
     ? blockNumberProviderConfig.type === 'etherscan'
       ? peripherals.getClient(EtherscanClient, {
           apiKey: blockNumberProviderConfig.etherscanApiKey,
@@ -105,8 +106,8 @@ function createChainModule(
     callsPerMinute: chainConfig.config.providerCallsPerMinute,
   })
 
-  const blockTimestampService = new BlockTimestampService({
-    blockTimestampProvider,
+  const blockTimestampProvider = new BlockTimestampProvider({
+    blockTimestampClient,
     rpcClient,
     logger,
   })
@@ -118,7 +119,7 @@ function createChainModule(
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
     chain,
-    blockTimestampService,
+    blockTimestampProvider,
     blockTimestampRepository: peripherals.getRepository(
       BlockTimestampRepository,
     ),
