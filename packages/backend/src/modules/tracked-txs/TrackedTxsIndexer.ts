@@ -80,7 +80,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
 
     dbMiddleware.add(async (trx?: DatabaseTransaction) => {
       for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
-        const filteredTxs = txs.filter((tx) => tx.use.type === type)
+        const filteredTxs = txs.filter((tx) => tx.type === type)
         await updater?.update(filteredTxs, trx)
       }
       this.logger.info('Saving txs into DB', {
