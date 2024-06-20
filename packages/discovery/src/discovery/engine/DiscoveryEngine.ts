@@ -133,9 +133,9 @@ export class DiscoveryEngine {
       (a): a is AnalyzedContract => a.type === 'Contract',
     )
     const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
-    analyzedContracts.forEach((a) => {
+    Object.values(resolved).forEach((a) => {
       a.combinedMeta = mergeContractMeta(
-        a.selfMeta,
+        a.type === 'Contract' ? a.selfMeta : undefined,
         inverted[a.address.toString()],
       )
     })

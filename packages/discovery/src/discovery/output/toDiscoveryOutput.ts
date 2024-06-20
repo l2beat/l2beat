@@ -62,8 +62,8 @@ export function processAnalysis(
       ),
     eoas: results
       .filter((x) => x.type === 'EOA')
-      .map((x) => x.address)
-      .sort((a, b) => a.localeCompare(b.toString())),
+      .sort((a, b) => a.address.localeCompare(b.address.toString()))
+      .map((x) => ({ address: x.address, ...(x.combinedMeta ?? {}) })),
     abis,
   }
 }

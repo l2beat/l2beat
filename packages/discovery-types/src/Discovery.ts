@@ -7,7 +7,7 @@ export interface DiscoveryOutput {
   chain: string
   blockNumber: number
   contracts: ContractParameters[]
-  eoas: EthereumAddress[]
+  eoas: { address: EthereumAddress }[]
   abis: Record<string, string[]>
   configHash: Hash256
   version: number

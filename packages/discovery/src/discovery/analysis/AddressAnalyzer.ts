@@ -54,6 +54,7 @@ export interface ExtendedTemplate {
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
+  combinedMeta?: ContractMeta
 }
 
 export type AddressesWithTemplates = Record<string, Set<string>>
