@@ -28,14 +28,6 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.createTable('total_supplies_status', function (table) {
-    table.string('config_hash').notNullable()
-    table.dateTime('unix_timestamp', { useTz: false }).notNullable()
-    table.integer('chain_id').notNullable()
-    table.index(['chain_id', 'config_hash'])
-    table.primary(['chain_id', 'unix_timestamp'])
-  })
-
   // Aggregated Reports
   await knex.schema.createTable('aggregated_reports', function (table) {
     table.dateTime('unix_timestamp', { useTz: false }).notNullable()
