@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { IProvider, RawProviders } from '../../provider/IProvider'
+import { IProvider } from '../../provider/IProvider'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
 
 describe(LimitedArrayHandler.name, () => {
@@ -17,15 +17,18 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async raw<T>(
-        cacheKey: string,
-        _fn: (providers: RawProviders) => Promise<T>,
+      async callMethodUnbatched<T>(
+        passedAddress: EthereumAddress,
+        _abi: string,
+        data: unknown[],
       ) {
-        const index = parseInt(cacheKey.split('.').pop()!)
+        expect(passedAddress).toEqual(address)
+
+        const index = data[0] as number
+        expect(data).toEqual([index])
 
         return owners[index]!.toString() as T
       },
-      blockNumber: 1,
     })
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
@@ -48,17 +51,21 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async raw<T>(
-        cacheKey: string,
-        _fn: (providers: RawProviders) => Promise<T>,
+      async callMethodUnbatched<T>(
+        passedAddress: EthereumAddress,
+        _abi: string,
+        data: unknown[],
       ) {
-        const index = parseInt(cacheKey.split('.').pop()!)
+        expect(passedAddress).toEqual(address)
+
+        const index = data[0] as number
+        expect(data).toEqual([index])
         if (index === 2) {
           return undefined as T
         }
+
         return owners[index]!.toString() as T
       },
-      blockNumber: 1,
     })
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)
@@ -78,17 +85,21 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async raw<T>(
-        cacheKey: string,
-        _fn: (providers: RawProviders) => Promise<T>,
+      async callMethodUnbatched<T>(
+        passedAddress: EthereumAddress,
+        _abi: string,
+        data: unknown[],
       ) {
-        const index = parseInt(cacheKey.split('.').pop()!)
+        expect(passedAddress).toEqual(address)
+
+        const index = data[0] as number
+        expect(data).toEqual([index])
         if (index === 2) {
           throw 'foo bar'
         }
+
         return owners[index]!.toString() as T
       },
-      blockNumber: 1,
     })
 
     const handler = new LimitedArrayHandler(method, 3, DiscoveryLogger.SILENT)

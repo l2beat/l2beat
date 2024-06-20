@@ -59,11 +59,12 @@ export class HighLevelProvider implements IProvider {
 
     let decodedResult: utils.Result
     try {
-      const result = await this.provider.call(address, callData, this.blockNumber)
-      decodedResult = coder.decodeFunctionResult(
-          fragment,
-          result.toString(),
+      const result = await this.provider.call(
+        address,
+        callData,
+        this.blockNumber,
       )
+      decodedResult = coder.decodeFunctionResult(fragment, result.toString())
     } catch (e) {
       if (isRevert(e)) {
         return undefined
@@ -91,10 +92,7 @@ export class HighLevelProvider implements IProvider {
         callData,
         this.blockNumber,
       )
-      decodedResult = coder.decodeFunctionResult(
-          fragment,
-          result.toString(),
-      )
+      decodedResult = coder.decodeFunctionResult(fragment, result.toString())
     } catch (e) {
       if (isRevert(e)) {
         return undefined
