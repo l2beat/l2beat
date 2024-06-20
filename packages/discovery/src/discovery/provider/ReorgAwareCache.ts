@@ -3,7 +3,7 @@ export interface DiscoveryCache {
     key: string,
     value: string,
     chain: string,
-    blockNumber: number | undefined,
+    blockNumber: number,
   ): Promise<void>
   get(key: string): Promise<string | undefined>
 }
@@ -51,7 +51,8 @@ export class ReorgAwareCache {
 
     return {
       read: () => value,
-      write: (value: string) => void this.writeEntry(key, value, blockNumber),
+      write: (value: string) =>
+        void this.writeEntry(key, value, blockNumber ?? -1),
     }
   }
 
@@ -62,14 +63,10 @@ export class ReorgAwareCache {
     value: string,
   ) {
     const key = this.buildKey(invocation, params)
-    void this.writeEntry(key, value, blockNumber)
+    void this.writeEntry(key, value, blockNumber ?? -1)
   }
 
-  private async writeEntry(
-    key: string,
-    value: string,
-    blockNumber: number | undefined,
-  ) {
+  private async writeEntry(key: string, value: string, blockNumber: number) {
     const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
     if (isReorgSafe) {
       await this.cache.set(key, value, this.chain, blockNumber)

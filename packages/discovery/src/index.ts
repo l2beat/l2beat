@@ -33,7 +33,6 @@ export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
-export type { DiscoveryCache } from './discovery/provider/DiscoveryCache'
 export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
@@ -41,6 +40,7 @@ export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
+export { type DiscoveryCache } from './discovery/provider/ReorgAwareCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
