@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016201,
   "configHash": "0xa703089081ef30a3fd1b4acef291868581ef007690cb07321cd53ee16bfb795b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1ERC20TokenBridge",

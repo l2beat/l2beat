@@ -67,12 +67,6 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `DISCOVERY_${ENV_NAME}_RPC_URL`,
     ]),
     eventRpcUrl: env.optionalString(`${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`),
-    rpcGetLogsMaxRange: env.optionalInteger([
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-      //support for legacy local configs
-      `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-    ]),
     reorgSafeDepth: env.optionalInteger([
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,

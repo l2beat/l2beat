@@ -1,22 +1,18 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
+import { IProvider } from '../../provider/IProvider'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 
 export async function getZkSyncLiteProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectEip1967Proxy(provider, address, blockNumber)
+  const detection = await detectEip1967Proxy(provider, address)
   if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
     return undefined
   }
-  const additional = bytes32ToAddress(
-    await provider.getStorage(address, 19, blockNumber),
-  )
+  const additional = await provider.getStorageAsAddress(address, 19)
   return {
     implementations: [...detection.implementations, additional],
     relatives: [detection.upgradeability.admin],

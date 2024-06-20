@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20069391,
   "configHash": "0x81b822153354640628f0cbfdea73c93ad02f0d19ffa932cecf6ec43b31f434da",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "LivenessModule",

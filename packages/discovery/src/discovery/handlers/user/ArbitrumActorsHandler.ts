@@ -4,8 +4,8 @@ import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumActorsHandlerDefinition = z.infer<
   typeof ArbitrumActorsHandlerDefinition
@@ -15,7 +15,7 @@ export const ArbitrumActorsHandlerDefinition = z.strictObject({
   actorType: z.union([z.literal('validator'), z.literal('batchPoster')]),
 })
 
-export class ArbitrumActorsHandler implements ClassicHandler {
+export class ArbitrumActorsHandler implements Handler {
   readonly dependencies: string[] = []
   readonly setValidatorFn = 'setValidator(address[] _validator, bool[] _val)'
   readonly setIsBatchPosterFn =
@@ -38,9 +38,8 @@ export class ArbitrumActorsHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       this.definition.actorType === 'validator'
@@ -49,14 +48,14 @@ export class ArbitrumActorsHandler implements ClassicHandler {
     ])
 
     // Find transactions in which setValidator/setIsBatchPoster was called
-    const logs = await this.getRelevantLogs(provider, address, blockNumber)
+    const logs = await this.getRelevantLogs(provider, address)
     const txHashes = logs.map((log) => Hash256(log.transactionHash))
 
     // Extract setValidator/setIsBatchPoster call parameters
     // from transaction traces and process them
     const isActor: Record<string, boolean> = {}
     for (const txHash of txHashes) {
-      const trace = await provider.getDebugTransactionTrace(txHash)
+      const trace = await provider.getDebugTrace(txHash)
       this.definition.actorType === 'validator'
         ? this.processSetValidatorCalls(trace.calls, isActor)
         : this.processSetIsBatchPosterCalls(trace.calls, isActor)
@@ -71,22 +70,15 @@ export class ArbitrumActorsHandler implements ClassicHandler {
     }
   }
 
-  private async getRelevantLogs(
-    provider: DiscoveryProvider,
+  private getRelevantLogs(
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<providers.Log[]> {
     const topic0 = this.interface.getEventTopic(this.ownerFunctionCalledEvent)
     // eventParam is 6 for validators and 1 for batch posters
     const eventParam = this.definition.actorType === 'validator' ? 6 : 1
     const topic1 = utils.defaultAbiCoder.encode(['uint256'], [eventParam])
-    const logs = await provider.getLogs(
-      address,
-      [topic0, topic1],
-      0,
-      blockNumber,
-    )
-    return logs
+    return provider.getLogs(address, [topic0, topic1])
   }
 
   processSetValidatorCalls(

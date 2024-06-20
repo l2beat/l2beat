@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Committee",
@@ -145,6 +145,9 @@
       "name": "GovernanceMultisig",
       "address": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
       "template": "GnosisSafe",
+      "descriptions": [
+        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
+      ],
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

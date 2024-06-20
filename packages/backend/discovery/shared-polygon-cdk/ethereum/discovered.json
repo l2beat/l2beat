@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20110313,
   "configHash": "0x5a529688ea8025268a685477ce2ad5456c44973fc921aa33acd1788df6949b29",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Permit2",

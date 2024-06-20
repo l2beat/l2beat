@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532023,
   "configHash": "0xf4d522e6a76c655c0c448063299964cc131f8af0b7e12d3b1a91e5de9f315683",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ReplicaUpgradeBeacon",

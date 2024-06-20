@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19925902,
   "configHash": "0xb56edcec5a60d117451653c0c7dce41fdc35ce284a4171f3bec6c5370ff590dd",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -39,6 +39,9 @@
     {
       "name": "RegistryCoordinator",
       "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+      "descriptions": [
+        "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF",
@@ -74,6 +77,9 @@
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "template": "eigenlayer/EjectionManager",
+      "descriptions": [
+        "Contract used for ejection of operators from the RegistryCoordinator."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa",

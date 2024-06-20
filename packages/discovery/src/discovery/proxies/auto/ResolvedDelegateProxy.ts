@@ -13,14 +13,11 @@ import { ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 
 async function getAddressManager(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<EthereumAddress> {
   // addressManager is stored in libAddressManager[address(this)] (slot 1)
   const slot = Bytes.fromHex(
@@ -28,13 +25,12 @@ async function getAddressManager(
       new utils.AbiCoder().encode(['address', 'uint'], [address, 1]),
     ),
   )
-  return bytes32ToAddress(await provider.getStorage(address, slot, blockNumber))
+  return await provider.getStorageAsAddress(address, slot)
 }
 
 async function getImplementationName(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<string> {
   // implementationName is stored in implementationName[address(this)] (slot 0)
   const slot = Bytes.fromHex(
@@ -42,9 +38,7 @@ async function getImplementationName(
       new utils.AbiCoder().encode(['address', 'uint'], [address, 0]),
     ),
   )
-  const nameEncoded = (
-    await provider.getStorage(address, slot, blockNumber)
-  ).toString()
+  const nameEncoded = (await provider.getStorage(address, slot)).toString()
   const length = parseInt(nameEncoded.slice(-2), 16) / 2
   if (length > 31) {
     throw new Error(
@@ -55,38 +49,29 @@ async function getImplementationName(
 }
 
 async function getImplementation(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   addressManager: EthereumAddress,
   implementationName: string,
-  blockNumber: number,
 ): Promise<EthereumAddress> {
-  const implementation = await getCallResult<string>(
-    provider,
+  const implementation = await provider.callMethod<EthereumAddress>(
     addressManager,
     'function getAddress(string implementationName) view returns(address)',
     [implementationName],
-    blockNumber,
   )
-
+  // TODO: This should be handled more gracefully, it's just a heuristic!
   assert(implementation, 'missing implementation')
-
-  return EthereumAddress(implementation)
+  return implementation
 }
 
 export async function detectResolvedDelegateProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const addressManager = await getAddressManager(provider, address, blockNumber)
+  const addressManager = await getAddressManager(provider, address)
   if (addressManager === EthereumAddress.ZERO) {
     return
   }
-  const implementationName = await getImplementationName(
-    provider,
-    address,
-    blockNumber,
-  )
+  const implementationName = await getImplementationName(provider, address)
   if (implementationName === '') {
     return
   }
@@ -94,7 +79,6 @@ export async function detectResolvedDelegateProxy(
     provider,
     addressManager,
     implementationName,
-    blockNumber,
   )
   return {
     implementations: [implementation],

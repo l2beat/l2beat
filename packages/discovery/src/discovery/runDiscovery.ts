@@ -2,56 +2,43 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { providers } from 'ethers'
 
 import { printSharedModuleInfo } from '../cli/printSharedModuleInfo'
-import { DiscoveryModuleConfig } from '../config/types'
-import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
+import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
+import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
-import { AddressAnalyzer, Analysis } from './analysis/AddressAnalyzer'
-import { TemplateService } from './analysis/TemplateService'
+import { Analysis } from './analysis/AddressAnalyzer'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
-import { DiscoveryEngine } from './engine/DiscoveryEngine'
-import { HandlerExecutor } from './handlers/HandlerExecutor'
+import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
-import { getBlockNumberTwoProviders } from './provider/DiscoveryProvider'
-import { ProviderWithCache } from './provider/ProviderWithCache'
 import { SQLiteCache } from './provider/SQLiteCache'
-import { MulticallClient } from './provider/multicall/MulticallClient'
-import { MulticallConfig } from './provider/multicall/types'
-import { ProxyDetector } from './proxies/ProxyDetector'
-import { SourceCodeService } from './source/SourceCodeService'
 
 export async function runDiscovery(
-  provider: providers.StaticJsonRpcProvider,
-  eventProvider: providers.StaticJsonRpcProvider,
-  etherscanClient: EtherscanLikeClient,
-  multicallConfig: MulticallConfig,
+  http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
+  chainConfigs: DiscoveryChainConfig[],
 ): Promise<void> {
   const projectConfig = configReader.readConfig(
     config.project,
     config.chain.name,
   )
 
-  const blockNumber =
+  const configuredBlockNumber =
     config.blockNumber ??
     (config.dev
       ? configReader.readDiscovery(config.project, config.chain.name)
           .blockNumber
-      : await getBlockNumberTwoProviders(provider, eventProvider))
+      : undefined)
 
   const logger = DiscoveryLogger.CLI
-  const result = await discover(
-    provider,
-    eventProvider,
-    etherscanClient,
-    multicallConfig,
+  const { result, blockNumber } = await discover(
+    chainConfigs,
     projectConfig,
     logger,
-    blockNumber,
-    config.chain.rpcGetLogsMaxRange,
+    configuredBlockNumber,
+    http,
   )
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
@@ -68,13 +55,12 @@ export async function runDiscovery(
 }
 
 export async function dryRunDiscovery(
-  provider: providers.StaticJsonRpcProvider,
-  eventProvider: providers.StaticJsonRpcProvider,
-  etherscanClient: EtherscanLikeClient,
-  multicallConfig: MulticallConfig,
+  http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
+  chainConfigs: DiscoveryChainConfig[],
 ): Promise<void> {
+  const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
   const blockNumber = await provider.getBlockNumber()
   const BLOCKS_PER_DAY = 86400 / 12
   const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
@@ -85,24 +71,8 @@ export async function dryRunDiscovery(
   )
 
   const [discovered, discoveredYesterday] = await Promise.all([
-    justDiscover(
-      provider,
-      eventProvider,
-      etherscanClient,
-      multicallConfig,
-      projectConfig,
-      blockNumber,
-      config.chain.rpcGetLogsMaxRange,
-    ),
-    justDiscover(
-      provider,
-      eventProvider,
-      etherscanClient,
-      multicallConfig,
-      projectConfig,
-      blockNumberYesterday,
-      config.chain.rpcGetLogsMaxRange,
-    ),
+    justDiscover(chainConfigs, projectConfig, blockNumber, http),
+    justDiscover(chainConfigs, projectConfig, blockNumberYesterday, http),
   ])
 
   const diff = diffDiscovery(
@@ -117,80 +87,49 @@ export async function dryRunDiscovery(
   }
 }
 
-export async function justDiscover(
-  provider: providers.StaticJsonRpcProvider,
-  eventProvider: providers.StaticJsonRpcProvider,
-  etherscanClient: EtherscanLikeClient,
-  multicallConfig: MulticallConfig,
+async function justDiscover(
+  chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   blockNumber: number,
-  getLogsMaxRange?: number,
+  http: HttpClient,
 ): Promise<DiscoveryOutput> {
-  const result = await discover(
-    provider,
-    eventProvider,
-    etherscanClient,
-    multicallConfig,
+  const { result } = await discover(
+    chainConfigs,
     config,
     DiscoveryLogger.CLI,
     blockNumber,
-    getLogsMaxRange,
+    http,
   )
-
-  const { name } = config
-
-  if (!name) {
-    throw new Error('name is required')
-  }
-
-  return toDiscoveryOutput(name, config.chain, config.hash, blockNumber, result)
+  return toDiscoveryOutput(
+    config.name,
+    config.chain,
+    config.hash,
+    blockNumber,
+    result,
+  )
 }
 
 export async function discover(
-  provider: providers.StaticJsonRpcProvider,
-  eventProvider: providers.StaticJsonRpcProvider,
-  etherscanClient: EtherscanLikeClient,
-  multicallConfig: MulticallConfig,
+  chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
-  blockNumber: number,
-  getLogsMaxRange?: number,
-  reorgSafeDepth?: number,
-): Promise<Analysis[]> {
+  blockNumber: number | undefined,
+  http: HttpClient,
+): Promise<{ result: Analysis[]; blockNumber: number }> {
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
 
-  const discoveryProvider = new ProviderWithCache(
-    provider,
-    eventProvider,
-    etherscanClient,
+  const { allProviders, discoveryEngine } = getDiscoveryEngine(
+    chainConfigs,
+    sqliteCache,
+    http,
     logger,
     config.chain,
-    sqliteCache,
-    getLogsMaxRange,
-    reorgSafeDepth,
   )
-
-  const proxyDetector = new ProxyDetector(discoveryProvider, logger)
-  const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const multicallClient = new MulticallClient(
-    discoveryProvider,
-    multicallConfig,
-  )
-  const handlerExecutor = new HandlerExecutor(
-    discoveryProvider,
-    multicallClient,
-    logger,
-  )
-  const templateService = new TemplateService()
-  const addressAnalyzer = new AddressAnalyzer(
-    discoveryProvider,
-    proxyDetector,
-    sourceCodeService,
-    handlerExecutor,
-    templateService,
-    logger,
-  )
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
-  return discoveryEngine.discover(config, blockNumber)
+  blockNumber ??= await allProviders.getLatestBlockNumber(config.chain)
+  const provider = allProviders.get(config.chain, blockNumber)
+  return {
+    result: await discoveryEngine.discover(provider, config),
+    blockNumber,
+  }
 }

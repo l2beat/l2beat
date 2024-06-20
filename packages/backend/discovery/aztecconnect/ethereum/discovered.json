@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19816414,
   "configHash": "0x79ab0e953135f51ef67edee8308d7def1f7b57f24e77fe39d6d60da30592bd08",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DefiBridgeProxy",

@@ -1,5 +1,3 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import {
@@ -10,6 +8,7 @@ import {
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
@@ -18,7 +17,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 6
+export const DISCOVERY_LOGIC_VERSION = 7
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -26,8 +25,8 @@ export class DiscoveryEngine {
   ) {}
 
   async discover(
+    provider: IProvider,
     config: DiscoveryConfig,
-    blockNumber: number,
   ): Promise<Analysis[]> {
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
@@ -71,7 +70,7 @@ export class DiscoveryEngine {
         ),
       )
 
-      // find addresses that are still reachable from initial adresses
+      // find addresses that are still reachable from initial addresses
       const reachableAddresses = gatherReachableAddresses(
         config.initialAddresses,
         relativesGraph,
@@ -98,10 +97,10 @@ export class DiscoveryEngine {
 
           bufferedLogger.log(`Analyzing ${address.toString()}`)
           const analysis = await this.addressAnalyzer.analyze(
+            provider,
             address,
             config.overrides.get(address),
             config.types,
-            blockNumber,
             bufferedLogger,
             templates,
           )
@@ -144,47 +143,6 @@ export class DiscoveryEngine {
     this.logger.flushServer(config.name)
     this.checkErrors(Object.values(resolved))
     return Object.values(resolved)
-  }
-
-  async hasOutputChanged(
-    config: DiscoveryConfig,
-    prevOutput: DiscoveryOutput,
-    blockNumber: number,
-  ): Promise<boolean> {
-    const contracts = prevOutput.contracts
-
-    const contractsChanged = await Promise.all(
-      contracts.map(async (contract) => {
-        const overrides = config.overrides.get(contract.address)
-
-        return await this.addressAnalyzer.hasContractChanged(
-          contract,
-          overrides,
-          config.types,
-          blockNumber,
-          prevOutput.abis,
-        )
-      }),
-    )
-
-    if (contractsChanged.some((x) => x)) {
-      this.logger.log('Some contracts changed')
-      return true
-    }
-
-    const eoas = prevOutput.eoas
-    const eoasChanged = await Promise.all(
-      eoas.map(async (eoa) => {
-        return await this.addressAnalyzer.hasEoaBecomeContract(eoa, blockNumber)
-      }),
-    )
-
-    if (eoasChanged.some((x) => x)) {
-      this.logger.log('Some EOAs became contracts')
-      return true
-    }
-
-    return false
   }
 
   private checkErrors(resolved: Analysis[]): void {

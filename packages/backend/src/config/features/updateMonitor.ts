@@ -1,13 +1,11 @@
 import { Env } from '@l2beat/backend-tools'
 import { chains } from '@l2beat/config'
-import { getMulticall3Config } from '@l2beat/discovery'
-
-import { UpdateMonitorChainConfig } from '../Config'
+import { DiscoveryChainConfig, getMulticall3Config } from '@l2beat/discovery'
 
 export function getChainDiscoveryConfig(
   env: Env,
   chain: string,
-): UpdateMonitorChainConfig {
+): DiscoveryChainConfig {
   const chainConfig = chains.find((c) => c.name === chain)
   if (!chainConfig) {
     throw new Error('Unknown chain: ' + chain)
@@ -37,17 +35,9 @@ export function getChainDiscoveryConfig(
       `${ENV_NAME}_RPC_URL`,
     ]),
     eventRpcUrl: env.optionalString(`${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`),
-    rpcGetLogsMaxRange: env.optionalInteger([
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-    ]),
     reorgSafeDepth: env.optionalInteger([
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
-    ]),
-    enableCache: env.optionalBoolean([
-      `${ENV_NAME}_DISCOVERY_CACHE_ENABLED`,
-      'DISCOVERY_CACHE_ENABLED',
     ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,

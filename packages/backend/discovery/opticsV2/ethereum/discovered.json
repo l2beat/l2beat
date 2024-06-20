@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532028,
   "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",

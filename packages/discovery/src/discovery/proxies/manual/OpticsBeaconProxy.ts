@@ -4,13 +4,12 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { serializeResult } from '../../handlers/user/ConstructorArgsHandler'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
 
 export async function getOpticsBeaconProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
   const proxyConstructorFragment = ethers.utils.Fragment.from(
     'constructor(address _upgradeBeacon, bytes memory _initializationCalldata)',
@@ -35,9 +34,9 @@ export async function getOpticsBeaconProxy(
   const implementationCallResult = await provider.call(
     upgradeBeacon,
     Bytes.fromHex('0x'),
-    blockNumber,
   )
 
+  // TODO: (sz-piotr) what about reverts?
   const implementation = bytes32ToAddress(implementationCallResult)
 
   return {
@@ -53,15 +52,15 @@ export async function getOpticsBeaconProxy(
 }
 
 async function getAddressFromConstructor(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
   constructorFragment: ethers.utils.Fragment,
   index: number,
 ): Promise<EthereumAddress> {
-  const result = await provider.getConstructorArgs(address)
+  const { constructorArguments } = await provider.getSource(address)
   const decodedArgs = ethers.utils.defaultAbiCoder.decode(
     constructorFragment.inputs,
-    '0x' + result,
+    '0x' + constructorArguments,
   )
 
   const args = serializeResult(decodedArgs)

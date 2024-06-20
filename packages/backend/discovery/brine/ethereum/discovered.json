@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825361,
   "configHash": "0xe5c5527c32f8e0ff915cc45e850bec0f059b6ae23a19a29818429a6a864dd994",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "StarkExchange",

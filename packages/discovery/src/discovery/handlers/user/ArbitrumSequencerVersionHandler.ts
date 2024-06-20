@@ -1,11 +1,11 @@
 import { assert } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumSequencerVersionDefinition = z.infer<
   typeof ArbitrumSequencerVersionDefinition
@@ -28,7 +28,7 @@ const abi = new utils.Interface([
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
 
-export class ArbitrumSequencerVersionHandler implements ClassicHandler {
+export class ArbitrumSequencerVersionHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -38,34 +38,18 @@ export class ArbitrumSequencerVersionHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
-    _previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Checking Arbitrum Sequencer Version',
     ])
 
-    const lastEvents = await provider.getLogs(
+    const lastEvent = await this.getLastEventWithTxInput(
+      provider,
       address,
-      [[abi.getEventTopic('SequencerBatchDelivered')]],
-      0,
-      blockNumber,
-      {
-        howManyEvents: 1,
-        filter: (log): boolean => {
-          const decoded = abi.parseLog(log)
-          assert(
-            decoded.name === 'SequencerBatchDelivered',
-            'Unexpected event name',
-          )
-          return decoded.args.dataLocation === 0
-        },
-        maxRange: 1000,
-      },
+      provider.blockNumber,
     )
-    const lastEvent = lastEvents[0]
     assert(lastEvent !== undefined, 'No event found')
 
     const tx = await provider.getTransaction(Hash256(lastEvent.transactionHash))
@@ -87,5 +71,49 @@ export class ArbitrumSequencerVersionHandler implements ClassicHandler {
     } else {
       throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }
+  }
+
+  async getLastEventWithTxInput(
+    provider: IProvider,
+    address: EthereumAddress,
+    blockNumber: number,
+  ): Promise<providers.Log | undefined> {
+    let currentBlockNumber = blockNumber
+    const blockStep = 1000
+    while (currentBlockNumber > 0) {
+      const events = await provider.raw(
+        `arbitrum_sequencer_batches.${address}.${Math.max(
+          0,
+          currentBlockNumber - blockStep,
+        )}.${currentBlockNumber}`,
+        ({ eventProvider }) => {
+          return eventProvider.getLogs({
+            address: address.toString(),
+            topics: [abi.getEventTopic('SequencerBatchDelivered')],
+            fromBlock: Math.max(0, currentBlockNumber - blockStep),
+            toBlock: currentBlockNumber,
+          })
+        },
+      )
+      currentBlockNumber -= blockStep
+
+      while (events.length > 0) {
+        const last = events.pop()
+        if (last === undefined) {
+          break
+        }
+
+        const decoded = abi.parseLog(last)
+        assert(
+          decoded.name === 'SequencerBatchDelivered',
+          'Unexpected event name',
+        )
+        if (decoded.args.dataLocation === 0) {
+          return last
+        }
+      }
+    }
+
+    return undefined
   }
 }

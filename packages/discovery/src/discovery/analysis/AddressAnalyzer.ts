@@ -11,7 +11,7 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import {
   PerContractSource,
@@ -60,7 +60,6 @@ export type AddressesWithTemplates = Record<string, Set<string>>
 
 export class AddressAnalyzer {
   constructor(
-    private readonly provider: DiscoveryProvider,
     private readonly proxyDetector: ProxyDetector,
     private readonly sourceCodeService: SourceCodeService,
     private readonly handlerExecutor: HandlerExecutor,
@@ -69,20 +68,20 @@ export class AddressAnalyzer {
   ) {}
 
   async analyze(
+    provider: IProvider,
     address: EthereumAddress,
     overrides: ContractOverrides | undefined,
     types: Record<string, DiscoveryCustomType> | undefined,
-    blockNumber: number,
     logger: DiscoveryLogger,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
-    const code = await this.provider.getCode(address, blockNumber)
+    const code = await provider.getBytecode(address)
     if (code.length === 0) {
       logger.logEoa()
       return { type: 'EOA', address }
     }
 
-    const deployment = await this.provider.getDeploymentInfo(address)
+    const deployment = await provider.getDeployment(address)
 
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
@@ -108,13 +107,14 @@ export class AddressAnalyzer {
     }
 
     const proxy = await this.proxyDetector.detectProxy(
+      provider,
       address,
-      blockNumber,
       logger,
       overrides?.proxyType,
     )
 
     const sources = await this.sourceCodeService.getSources(
+      provider,
       address,
       proxy?.implementations,
     )
@@ -152,11 +152,11 @@ export class AddressAnalyzer {
 
     const { results, values, errors, usedTypes } =
       await this.handlerExecutor.execute(
+        provider,
         address,
         sources.abi,
         overrides,
         types,
-        blockNumber,
         logger,
       )
     const relatives = getRelativesWithSuggestedTemplates(
@@ -195,15 +195,16 @@ export class AddressAnalyzer {
   }
 
   async hasContractChanged(
+    provider: IProvider,
     contract: ContractParameters,
     overrides: ContractOverrides,
     types: Record<string, DiscoveryCustomType> | undefined,
-    blockNumber: number,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
     if (contract.unverified) {
       // Check if the contract is verified now
       const { isVerified } = await this.sourceCodeService.getSources(
+        provider,
         contract.address,
         contract.implementations,
       )
@@ -218,11 +219,11 @@ export class AddressAnalyzer {
     )
 
     const { values: newValues, errors } = await this.handlerExecutor.execute(
+      provider,
       contract.address,
       abi,
       overrides,
       types,
-      blockNumber,
       this.logger,
     )
 
@@ -249,10 +250,10 @@ export class AddressAnalyzer {
   }
 
   async hasEoaBecomeContract(
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<boolean> {
-    const code = await this.provider.getCode(address, blockNumber)
+    const code = await provider.getBytecode(address)
     if (code.length > 0) {
       this.logger.log(`EOA ${address.toString()} became a contract`)
       return true

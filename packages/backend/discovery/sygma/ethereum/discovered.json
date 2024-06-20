@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532229,
   "configHash": "0xab514b0310c481b6a325f6922fdd16a9bddd9aa666b3392e430d15f61def83c7",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "FeeHandlerRouter",
