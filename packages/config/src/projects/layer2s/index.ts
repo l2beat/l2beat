@@ -16,6 +16,7 @@ import { camp } from './camp'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
+import { celo } from './celo'
 import { coti } from './coti'
 import { cronos } from './cronos'
 import { cyber } from './cyber'
@@ -138,6 +139,7 @@ export const layer2s: Layer2[] = [
   camp,
   canto,
   capx,
+  celo,
   cyber,
   canvasconnect,
   coti,
