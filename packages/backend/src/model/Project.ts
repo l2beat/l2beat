@@ -148,9 +148,7 @@ function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
 }
 
 function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
-  const chain = escrow.chain
-  assert(chain, `${escrow.address}: chain is required for escrow`)
-  const chainId = chainConverter.toChainId(chain)
+  const chainId = chainConverter.toChainId(escrow.chain)
 
   const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
 
@@ -162,8 +160,8 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
         ? tokensOnChain.filter(
             (t) => !escrow.excludedTokens?.includes(t.symbol),
           )
-        : mapTokens(escrow.tokens, escrow.address, tokensOnChain, chain),
-    chain,
+        : mapTokens(escrow, tokensOnChain),
+    chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,
     bridge: escrow.bridge,
@@ -171,16 +169,17 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
 }
 
 function mapTokens(
-  tokens: string[],
-  escrowAddress: EthereumAddress,
+  escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
-  chain: string,
 ): Token[] {
-  return tokens.map((tokenSymbol) => {
+  assert(escrow.tokens !== '*')
+  return escrow.tokens.map((tokenSymbol) => {
     const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
     assert(
       token,
-      `Token with symbol ${tokenSymbol} not found on ${chain} @ ${escrowAddress.toString()}`,
+      `Token with symbol ${tokenSymbol} not found on ${
+        escrow.chain
+      } @ ${escrow.address.toString()}`,
     )
     return token
   })
