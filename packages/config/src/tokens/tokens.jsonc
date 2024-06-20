@@ -2703,6 +2703,11 @@
   ],
   "metis": [
     {
+      "symbol": "Metis",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "WETH",
       "address": "0x420000000000000000000000000000000000000A",
       "coingeckoId": "ethereum",

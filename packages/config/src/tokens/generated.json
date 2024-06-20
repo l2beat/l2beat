@@ -5713,6 +5713,20 @@
       "supply": "zero"
     },
     {
+      "id": "metis:metis-metis-token",
+      "name": "Metis Token",
+      "coingeckoId": "metis-token",
+      "symbol": "Metis",
+      "decimals": 18,
+      "deploymentTimestamp": 1637270379,
+      "coingeckoListingTimestamp": 1621296000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
+      "chainId": 1088,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "metis:m.usdt-usdt-token",
       "name": "USDT Token",
       "coingeckoId": "tether",

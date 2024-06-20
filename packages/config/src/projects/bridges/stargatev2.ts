@@ -266,13 +266,12 @@ export const stargatev2: Bridge = {
         tokens: ['WETH'],
         description: 'Stargate liquidity pool for ETH on Metis.',
       }),
-      // discovery_metis.getEscrowDetails({
-      //   chain: 'metis',
-      //   includeInTotal: false,
-      //   address: EthereumAddress('0xD9050e7043102a0391F81462a3916326F86331F0'),
-      //   tokens: ['Metis'],
-      //   description: 'Stargate liquidity pool for METIS on Metis.',
-      // }),
+      discovery_metis.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0xD9050e7043102a0391F81462a3916326F86331F0'),
+        tokens: ['Metis'],
+        description: 'Stargate liquidity pool for METIS on Metis.',
+      }),
       discovery_metis.getEscrowDetails({
         includeInTotal: false,
         address: EthereumAddress('0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125'),
