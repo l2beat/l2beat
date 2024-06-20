@@ -189,9 +189,6 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
-      transitionDuration: {
-        '250': '250ms',
-      },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
         'roboto-serif': [

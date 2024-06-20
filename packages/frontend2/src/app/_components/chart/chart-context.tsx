@@ -1,8 +1,9 @@
 import { type Milestone } from '@l2beat/config'
-import { type ReactNode, createContext, useContext } from 'react'
+import { type ReactNode, createContext, useContext, useState } from 'react'
 import { type SeriesStyle } from './styles'
 import { getYAxis } from './utils/get-y-axis'
 
+const LABEL_COUNT = 5
 interface Value {
   value: number
   dashed?: boolean
@@ -18,7 +19,6 @@ export interface ChartContextProviderParams<T> {
   range: [number, number]
   valuesStyle: SeriesStyle[]
   formatYAxisLabel: (value: number) => string
-  renderHoverContents: (pointData: T) => string
   useLogScale: boolean
   children?: ReactNode
 }
@@ -29,9 +29,9 @@ export type ChartContextValue<T> = Omit<
 > & {
   labels: string[]
   getY: (value: number) => number
+  rect: DOMRect | undefined
+  setRect: (rect: DOMRect | undefined) => void
 }
-
-const LABEL_COUNT = 5
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChartContext = createContext<ChartContextValue<any> | null>(null)
@@ -40,6 +40,7 @@ export function ChartContextProvider<T>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
+  const [rect, setRect] = useState<DOMRect>()
   const { columns, useLogScale, formatYAxisLabel } = params
   const values = columns.flatMap((column) => column.values)
   const { labels, getY } = getYAxis(
@@ -50,7 +51,7 @@ export function ChartContextProvider<T>({
   )
 
   return (
-    <ChartContext.Provider value={{ ...params, labels, getY }}>
+    <ChartContext.Provider value={{ ...params, labels, getY, rect, setRect }}>
       {children}
     </ChartContext.Provider>
   )

@@ -9,18 +9,40 @@ import {
 import { ChartHover } from './chart-hover'
 import { ChartRenderer } from './chart-renderer'
 import { ChartMilestones } from './chart-milestones'
+import { ChartInteractionZone } from './chart-interaction-zone'
+import {
+  ChartHoverContextProvider,
+  type ChartHoverContextProviderParams,
+} from './chart-hover-context'
+
+interface Props<T>
+  extends ChartContextProviderParams<T>,
+    ChartHoverContextProviderParams<T> {
+  className?: string
+}
 
 export function Chart<T>({
   className,
+  renderHoverContents,
   ...rest
-}: { className?: string } & ChartContextProviderParams<T>) {
+}: Props<T>) {
   return (
     <ChartContextProvider {...rest}>
-      <div className={cn('relative', className)} role="img" aria-label="chart">
+      <div
+        className={cn(
+          'relative h-[160px] sm:h-[260px] xs:h-[200px]',
+          className,
+        )}
+        role="img"
+        aria-label="chart"
+      >
         <ChartRenderer />
-        <ChartHover />
         <ChartLabels />
-        <ChartMilestones />
+        <ChartHoverContextProvider renderHoverContents={renderHoverContents}>
+          <ChartInteractionZone />
+          <ChartHover />
+          <ChartMilestones />
+        </ChartHoverContextProvider>
         <Logo
           animated={false}
           className="absolute right-2 bottom-2 z-30 h-[25px] w-[60px] opacity-20"

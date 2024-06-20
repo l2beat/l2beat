@@ -1,22 +1,23 @@
 'use client'
 
 import { Chart } from '~/app/_components/chart/chart'
-import { formatCurrency } from '~/utils/format'
+import { type ChartColumn } from '~/app/_components/chart/chart-context'
+import { formatTimestamp } from '~/utils/dates'
+import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+
+interface SummaryChartPointData {
+  timestamp: number
+  usdValue: number
+  ethValue: number
+}
+type SummaryChartColumn = ChartColumn<SummaryChartPointData>
 
 interface Props {
-  columns: {
-    values: { value: number; dashed?: boolean }[]
-    data: {
-      timestamp: number
-      usdValue: number
-      ethValue: number
-    }
-  }[]
+  columns: SummaryChartColumn[]
 }
 export function SummaryChart({ columns }: Props) {
   return (
     <Chart
-      className="h-60 w-full"
       columns={columns}
       valuesStyle={[
         {
@@ -31,7 +32,29 @@ export function SummaryChart({ columns }: Props) {
       }
       range={[1687039200, 1718661600]}
       useLogScale={false}
-      renderHoverContents={(x) => `${x.ethValue}`}
+      renderHoverContents={(data) => <ChartHover data={data} />}
     />
+  )
+}
+
+function ChartHover({ data }: { data: SummaryChartPointData }) {
+  const formattedUsd = formatCurrencyExactValue(data.usdValue, 'USD')
+  const formattedEth = formatCurrencyExactValue(data.ethValue, 'ETH')
+  return (
+    <div>
+      <div className="mb-1 whitespace-nowrap">
+        {formatTimestamp(data.timestamp, {
+          mode: 'datetime',
+        })}
+      </div>
+      <div className="flex w-full justify-between items-center gap-2">
+        <span className="dark:text-gray-50 text-gray-700 text-sm">USD</span>
+        {formattedUsd}
+      </div>
+      <div className="flex w-full justify-between items-center gap-2">
+        <span className="dark:text-gray-50 text-gray-700 text-sm">ETH</span>
+        {formattedEth}
+      </div>
+    </div>
   )
 }

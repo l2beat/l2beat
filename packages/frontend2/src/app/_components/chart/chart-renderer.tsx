@@ -23,6 +23,7 @@ export function ChartRenderer() {
         if (rect) {
           chart.width = rect.width * window.devicePixelRatio
           chart.height = rect.height * window.devicePixelRatio
+          context.setRect(rect)
         }
         ctx.clearRect(0, 0, chart.width, chart.height)
 

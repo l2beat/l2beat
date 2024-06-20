@@ -2,6 +2,8 @@ import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
 import { type ReactNode } from 'react'
 
+export const FIRST_LABEL_HEIGHT_PX = 20
+
 export function ChartLabels({
   className,
 }: {
@@ -11,7 +13,7 @@ export function ChartLabels({
   return (
     <div
       className={cn(
-        'pointer-events-none relative z-25 flex h-full justify-between flex-col-reverse pt-[20px]',
+        'pointer-events-none relative z-25 flex h-full justify-between flex-col-reverse pt-5',
         className,
       )}
     >
