@@ -2066,6 +2066,30 @@
   ],
   "mantapacific": [
     {
+      "symbol": "wUSDM",
+      "address": "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
       "source": "canonical",
       "supply": "zero",
@@ -2196,13 +2220,13 @@
     }
   ],
   "linea": [
-  {
-    "symbol": "wBTC",
-    "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
-    "coingeckoId": "wrapped-bitcoin",
-    "source": "canonical",
-    "supply": "zero"
-  },
+    {
+      "symbol": "wBTC",
+      "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "USDC.e",
       "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",

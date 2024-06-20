@@ -5134,6 +5134,21 @@
       }
     },
     {
+      "id": "mantapacific:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "bridged-tether-manta-pacific",
+      "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1694653559,
+      "coingeckoListingTimestamp": 1696809600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32214/large/usdt_%281%29.png?1696831809",
+      "chainId": 169,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "mantapacific:tia-celestia",
       "name": "TIA",
       "coingeckoId": "celestia",
@@ -5150,6 +5165,21 @@
       "bridgedUsing": {
         "bridge": "Hyperlane Nexus"
       }
+    },
+    {
+      "id": "mantapacific:usdc-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "bridged-usd-coin-manta-pacific",
+      "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1694653599,
+      "coingeckoListingTimestamp": 1696809600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32215/large/usdc.png?1696832099",
+      "chainId": 169,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "mantapacific:usde-usde",
@@ -5169,6 +5199,36 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "id": "mantapacific:wbtc-wrapped-btc",
+      "name": "Wrapped BTC",
+      "coingeckoId": "bridged-wrapped-bitcoin-manta-pacific",
+      "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1694653639,
+      "coingeckoListingTimestamp": 1703894400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32217/large/wbtc_%281%29.png?1696832481",
+      "chainId": 169,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "mantapacific:wusdm-wrapped-mountain-protocol-usd",
+      "name": "Wrapped Mountain Protocol USD",
+      "coingeckoId": "wrapped-usdm",
+      "address": "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
+      "symbol": "wUSDM",
+      "decimals": 18,
+      "deploymentTimestamp": 1702532779,
+      "coingeckoListingTimestamp": 1703721600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 169,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "fraxtal:susde-staked-usde",

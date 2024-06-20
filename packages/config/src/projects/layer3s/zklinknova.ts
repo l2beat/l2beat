@@ -65,7 +65,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x62cE247f34dc316f93D3830e4Bf10959FCe630f8'),
       sinceTimestamp: new UnixTime(1709218113),
-      tokens: '*', // missing ~ 800k: USDT, USDC.e, wBTC
+      tokens: '*',
     },
     {
       chain: 'ethereum',
@@ -79,7 +79,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xAd16eDCF7DEB7e90096A259c81269d811544B6B6'),
       sinceTimestamp: new UnixTime(1709295323),
-      tokens: '*', // missing ~5M: ARPA, CYBER, BEL
+      tokens: '*',
     },
     {
       chain: 'mantapacific',
@@ -93,7 +93,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x44a65dc12865a1e5249b45b4868f32b0e37168ff'),
       sinceTimestamp: new UnixTime(1709295839),
-      tokens: '*', // missing ~3M: wUSDM, USDC, USDT
+      tokens: '*',
     },
     // {
     //   chain: 'mantle',
