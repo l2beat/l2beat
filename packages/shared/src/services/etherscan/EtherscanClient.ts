@@ -33,6 +33,7 @@ export class EtherscanClient {
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.logger = logger.for(this).tag(chainId.toString())
   }
 
   static create(
