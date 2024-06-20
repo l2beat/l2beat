@@ -51,7 +51,8 @@ export class ReorgAwareCache {
 
     return {
       read: () => value,
-      write: (value: string) => void this.writeEntry(key, value, blockNumber ?? -1),
+      write: (value: string) =>
+        void this.writeEntry(key, value, blockNumber ?? -1),
     }
   }
 
@@ -65,11 +66,7 @@ export class ReorgAwareCache {
     void this.writeEntry(key, value, blockNumber ?? -1)
   }
 
-  private async writeEntry(
-    key: string,
-    value: string,
-    blockNumber: number,
-  ) {
+  private async writeEntry(key: string, value: string, blockNumber: number) {
     const isReorgSafe = await this.isBlockNumberReorgSafe(blockNumber)
     if (isReorgSafe) {
       await this.cache.set(key, value, this.chain, blockNumber)
