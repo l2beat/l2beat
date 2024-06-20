@@ -49,10 +49,13 @@ export function parseSocial(href: string): SocialDetails {
       platform: 'discord',
       text: 'Discord',
     }
-  } else if (link.startsWith('twitter.com')) {
+  } else if (link.startsWith('twitter.com') || link.startsWith('x.com')) {
     return {
-      platform: 'twitter',
-      text: '@' + link.slice('twitter.com/'.length),
+      platform: 'x',
+      text:
+        '@' + link.startsWith('x.com')
+          ? link.slice('x.com/'.length)
+          : link.slice('twitter.com/'.length),
     }
   } else if (link.startsWith('medium.com')) {
     return {
