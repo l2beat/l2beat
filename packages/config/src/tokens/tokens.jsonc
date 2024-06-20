@@ -2077,6 +2077,11 @@
   ],
   "mantle": [
     {
+      "symbol": "MNT",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "mETH",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
       "source": "canonical",
