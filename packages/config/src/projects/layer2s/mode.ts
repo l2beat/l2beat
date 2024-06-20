@@ -34,7 +34,7 @@ export const mode: Layer2 = opStackL2({
     purposes: ['Universal'],
     links: {
       websites: ['https://mode.network/'],
-      apps: [],
+      apps: ['https://app.mode.network/'],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://modescan.io'],
       repositories: [],
