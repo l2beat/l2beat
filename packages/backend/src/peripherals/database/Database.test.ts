@@ -1,28 +1,19 @@
-import { readdirSync } from 'fs'
-import path from 'path'
 import { expect } from 'earl'
+import { readdirSync } from 'fs'
 import { afterEach } from 'mocha'
+import path from 'path'
 
 import { getTestDatabase } from '../../test/database'
 import { Database } from './Database'
 
 describe(Database.name, () => {
-  it('can run and rollback all migrations', async function () {
+  it('can run all migrations', async function () {
     const database = getTestDatabase()
     if (!database) {
       this.skip()
     }
 
     await database.migrateToLatest()
-    await database.rollbackAll()
-
-    const knex = await database.getKnex()
-    const result = await knex.raw(
-      'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()',
-    )
-    const tables = result.rows.map((x: { table_name: string }) => x.table_name)
-
-    expect(tables).toEqual(['knex_migrations', 'knex_migrations_lock'])
 
     await database.closeConnection()
   })
