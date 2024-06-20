@@ -1,7 +1,7 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 
 import { chains } from '@l2beat/config'
-import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
@@ -41,10 +41,6 @@ export function createTvlModule(
     logger.info('TvlModule disabled')
     return
   }
-
-  const a = config.tvl.amounts.filter(
-    (a) => a.project === ProjectId('stargatev2'),
-  )
 
   const indexerStateRepository = peripherals.getRepository(
     IndexerStateRepository,

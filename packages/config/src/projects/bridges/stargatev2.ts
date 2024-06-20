@@ -10,7 +10,7 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
-const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
+// const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
 const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
 const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
