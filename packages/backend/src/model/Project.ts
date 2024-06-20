@@ -47,7 +47,7 @@ export interface ProjectEscrow {
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   tokens: Token[]
-  chain?: string
+  chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
   bridge?: {
