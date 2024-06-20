@@ -72,7 +72,7 @@ export function layer2ToProject(layer2: Layer2): Project {
         escrow.tokens === '*'
           ? tokenList.filter(
               (t) =>
-                t.type === 'CBV' &&
+                t.source === 'canonical' &&
                 t.chainId === ChainId.ETHEREUM &&
                 !escrow.excludedTokens?.includes(t.symbol),
             )
@@ -107,7 +107,7 @@ export function bridgeToProject(bridge: Bridge): Project {
         escrow.tokens === '*'
           ? tokenList.filter(
               (t) =>
-                t.type === 'CBV' &&
+                t.source === 'canonical' &&
                 t.chainId === ChainId.ETHEREUM &&
                 !escrow.excludedTokens?.includes(t.symbol),
             )

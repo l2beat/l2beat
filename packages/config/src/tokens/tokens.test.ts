@@ -191,13 +191,15 @@ describe('tokens', () => {
   describe('external', () => {
     it('every external token has a bridgedUsing property', () => {
       const externalTokens = tokenList
-        .filter((token) => token.type === 'EBV' && !token.bridgedUsing)
+        .filter((token) => token.source === 'external' && !token.bridgedUsing)
         .map((token) => token.symbol)
       expect(externalTokens).toHaveLength(0)
     })
     it('every bridge slug in bridgedUsing property is valid', () => {
       const tokenSlugs = tokenList
-        .filter((token) => token.type === 'EBV' && token.bridgedUsing?.slug)
+        .filter(
+          (token) => token.source === 'external' && token.bridgedUsing?.slug,
+        )
         .map((token) => token.bridgedUsing?.slug)
       const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
       const invalidSlugs = tokenSlugs.filter(

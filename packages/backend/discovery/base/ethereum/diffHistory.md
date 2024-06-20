@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf228a5ff2e3a3c2ada29c09b72442ac5d7e0ecdd
+
+# Diff at Wed, 19 Jun 2024 09:08:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fa0a456becead1002fbe41b5a2a1fee09a9dcd2 block: 20060546
+- current block number: 20124790
+
+## Description
+
+Gas limit raised by the amount of a baby step.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        90000000
++        97500000
+    }
+```
+
 Generated with discovered.json: 0x61b72355cab6f0ef3d15d150fddf01ba8bd4a1b7
 
 # Diff at Mon, 10 Jun 2024 09:30:26 GMT:

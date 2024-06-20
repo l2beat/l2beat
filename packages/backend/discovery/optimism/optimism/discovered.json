@@ -1,9 +1,9 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 121250937,
-  "configHash": "0xbaad1d82a2b8b919da5cd901ace58fea1f0703c97d30191ab524240bf1b276aa",
-  "version": 5,
+  "blockNumber": 121593875,
+  "configHash": "0xd7f7ce9d127fdc33d8b5598a3a17b934faa23df38aab0efa4228abef552f4858",
+  "version": 6,
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -63,7 +63,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637564",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637819",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -90,13 +90,13 @@
       "values": {
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 1,
+        "blobBaseFee": 3,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 16056580902,
+        "l1BaseFee": 5200849598,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -205,18 +205,18 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 16056580902,
+        "basefee": 5200849598,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 1,
+        "blobBaseFee": 3,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x94c718f26a80991be1082f037418bd0cefad0aaaef6250940e41481258765dac",
+        "hash": "0x4e766839b41a9e088e11b51df57b310d08d08ef7a28678ddc8f0f8baf3022af6",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20067889,
-        "sequenceNumber": 3,
-        "timestamp": 1718100503,
+        "number": 20124649,
+        "sequenceNumber": 5,
+        "timestamp": 1718786387,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -340,6 +340,7 @@
     {
       "name": "OPToken",
       "address": "0x4200000000000000000000000000000000000042",
+      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
@@ -350,7 +351,7 @@
         "name": "Optimism",
         "owner": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
         "symbol": "OP",
-        "totalSupply": "4294967294989853760711675076"
+        "totalSupply": "4294967294179743819541674335"
       },
       "derivedName": "GovernanceToken"
     },
