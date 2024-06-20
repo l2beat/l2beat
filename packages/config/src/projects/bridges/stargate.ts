@@ -148,6 +148,7 @@ export const stargate: Bridge = {
         address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
         sinceTimestamp: new UnixTime(1656108257),
         tokens: ['ETH'],
+        chain: 'ethereum',
       },
       //      "0x590d4f8A68583639f215f675F3a259Ed84790580": "sUSD Pool",
       //      "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "MAI Pool",

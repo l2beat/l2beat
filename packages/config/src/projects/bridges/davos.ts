@@ -32,6 +32,7 @@ export const davos: Bridge = {
         address: EthereumAddress('0x6DeF4570251E1f435E121b3Ee47174496D851C99'),
         sinceTimestamp: new UnixTime(1685433000),
         tokens: [],
+        chain: 'ethereum',
       },
     ],
   },

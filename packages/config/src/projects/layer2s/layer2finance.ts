@@ -38,6 +38,7 @@ export const layer2finance: Layer2 = {
         address: EthereumAddress('0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05'),
         sinceTimestamp: new UnixTime(1619011215),
         tokens: ['BUSD', 'DAI', 'USDC', 'USDT', 'WETH'],
+        chain: 'ethereum',
       },
     ],
   },

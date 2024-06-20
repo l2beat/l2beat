@@ -148,6 +148,7 @@ function getAmountsConfig(
       for (const token of escrow.tokens) {
         const chain = chains.find((x) => x.chainId === +token.chainId)
         assert(chain, `Chain not found for token ${token.id}`)
+        assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
 
         assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
         const chainMinTimestamp = UnixTime.max(
@@ -163,7 +164,7 @@ function getAmountsConfig(
         entries.push({
           type: 'escrow',
           address: token.address ?? 'native',
-          chain: chainConverter.toName(token.chainId),
+          chain: chain.name,
           sinceTimestamp: UnixTime.max(
             tokenSinceTimestamp,
             escrow.sinceTimestamp,

@@ -92,6 +92,7 @@ export const metis: Layer2 = {
         address: EthereumAddress('0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b'),
         sinceTimestamp: new UnixTime(1637077208),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
     transactionApi: {

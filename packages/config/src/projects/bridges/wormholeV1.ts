@@ -32,6 +32,7 @@ export const wormholeV1: Bridge = {
           'FRAX',
           'WBTC',
         ],
+        chain: 'ethereum',
       },
     ],
   },
