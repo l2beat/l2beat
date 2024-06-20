@@ -76,11 +76,11 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     this.logger.info('Recalculating liveness data', { syncFrom, syncTo })
 
-    // const updatedLivenessRecords = await this.generateLiveness(syncFrom, syncTo)
+    const updatedLivenessRecords = await this.generateLiveness(syncFrom, syncTo)
 
-    // await this.$.aggregatedLivenessRepository.addOrUpdateMany(
-    //   updatedLivenessRecords,
-    // )
+    await this.$.aggregatedLivenessRepository.addOrUpdateMany(
+      updatedLivenessRecords,
+    )
 
     return await Promise.resolve(parentSafeHeight)
   }
@@ -128,7 +128,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       aggregatedRecords.push(
         ...this.getAggregatedRecords(
           project.projectId,
-          'batchSubmissions',
+          'stateUpdates',
           stateUpdates,
           syncTo,
           ['30D', '90D', 'MAX'],
@@ -137,7 +137,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       aggregatedRecords.push(
         ...this.getAggregatedRecords(
           project.projectId,
-          'batchSubmissions',
+          'proofSubmissions',
           proofSubmissions,
           syncTo,
           ['30D', '90D', 'MAX'],
@@ -162,26 +162,23 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     ranges.forEach((range) => {
       const filteredItervals = this.filterByRange(intervals, syncTo, range)
 
-      if (filteredItervals.length > 0) {
-        const stats = this.calculateStats(filteredItervals)
-
-        const record: AggregatedLivenessRecord = {
-          projectId: projectId,
-          subtype,
-          range,
-          min: stats.minimumInSeconds,
-          avg: stats.averageInSeconds,
-          max: stats.maximumInSeconds,
-          timestamp: syncTo,
-        }
-
-        aggregatedRecords.push(record)
-      } else {
-        this.logger.warn('No records found', {
-          type: 'batchSubmissions',
-          range: '30D',
-        })
+      if (filteredItervals.length === 0) {
+        return
       }
+
+      const stats = this.calculateStats(filteredItervals)
+
+      const record: AggregatedLivenessRecord = {
+        projectId: projectId,
+        subtype,
+        range,
+        min: stats.minimumInSeconds,
+        avg: stats.averageInSeconds,
+        max: stats.maximumInSeconds,
+        timestamp: syncTo,
+      }
+
+      aggregatedRecords.push(record)
     })
 
     return aggregatedRecords
