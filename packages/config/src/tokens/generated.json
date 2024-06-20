@@ -1872,8 +1872,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33895/large/2023-12-20_21.21.41_%281%29.jpg?1703230771",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "hot-holotoken",
@@ -2547,8 +2547,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37844/large/av_02_2.jpg?1715754813",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "usdn-neutrino-usd",
@@ -2802,8 +2802,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/37697/large/param200.png?1715234889",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "pbx-paribus",
@@ -2862,8 +2862,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33711/large/NAzHgbTW_400x400.png?1702856653",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "pendle-pendle",
@@ -2967,8 +2967,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33608/large/pxETH-icon-transbg_72dpi.png?1702512024",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "pla-playdapp-token",
@@ -3417,8 +3417,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "rss3-rss3",
@@ -3897,8 +3897,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35612/large/200x200.png?1709281616",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "tbtc-tbtc-v2",
@@ -4062,8 +4062,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "tribe-tribe",
@@ -4422,8 +4422,8 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36385/large/trestle.jpeg?1711349480",
       "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "toncoin-wrapped-ton-coin",
