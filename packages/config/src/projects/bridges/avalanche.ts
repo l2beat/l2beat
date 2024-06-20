@@ -51,6 +51,7 @@ export const avalanche: Bridge = {
           'GRT',
           'MKR',
         ],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x8EB8a3b98659Cce290402893d0123abb75E3ab28'), // new
@@ -73,6 +74,7 @@ export const avalanche: Bridge = {
           'GRT',
           'MKR',
         ],
+        chain: 'ethereum',
       },
     ],
   },

@@ -163,7 +163,7 @@ function getAmountsConfig(
         entries.push({
           type: 'escrow',
           address: token.address ?? 'native',
-          chain: chainConverter.toName(token.chainId),
+          chain: chain.name,
           sinceTimestamp: UnixTime.max(
             tokenSinceTimestamp,
             escrow.sinceTimestamp,

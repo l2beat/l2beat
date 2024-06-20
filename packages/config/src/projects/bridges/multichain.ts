@@ -26,6 +26,7 @@ export const multichain: Bridge = {
       address: EthereumAddress(escrow.address),
       sinceTimestamp: new UnixTime(escrow.sinceTimestamp),
       tokens: escrow.tokens,
+      chain: 'ethereum',
     })),
   },
   technology: {

@@ -69,6 +69,7 @@ export const aztecV1: Layer2 = {
     escrows: [
       {
         address: EthereumAddress('0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba'),
+        chain: 'ethereum',
         sinceTimestamp: new UnixTime(1614799636),
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },

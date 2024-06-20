@@ -158,6 +158,7 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1610668212),
         tokens: ['SNX'],
         isHistorical: true,
+        chain: 'ethereum',
       },
       {
         // also old snx bridge
@@ -165,6 +166,7 @@ export const optimism: Layer2 = {
         sinceTimestamp: new UnixTime(1620680934),
         tokens: ['SNX'],
         isHistorical: true,
+        chain: 'ethereum',
       },
       discovery.getEscrowDetails({
         address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
