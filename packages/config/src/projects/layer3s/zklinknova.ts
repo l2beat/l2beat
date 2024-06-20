@@ -95,13 +95,13 @@ export const zklinknova: Layer3 = underReviewL3({
       sinceTimestamp: new UnixTime(1709295839),
       tokens: '*', // missing ~3M: wUSDM, USDC, USDT
     },
-    {
-      chain: 'mantle',
-      includeInTotal: false,
-      address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
-      sinceTimestamp: new UnixTime(1709279309),
-      tokens: ['WETH'], // actually MNT, but we do not support CBV yet
-    },
+    // {
+    //   chain: 'mantle',
+    //   includeInTotal: false,
+    //   address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
+    //   sinceTimestamp: new UnixTime(1709279309),
+    //   tokens: ['MNT'],
+    // },
     {
       chain: 'mantle',
       includeInTotal: false,
