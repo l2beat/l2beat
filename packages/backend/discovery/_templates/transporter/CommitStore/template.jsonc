@@ -18,7 +18,7 @@
       }
     },
     "getStaticConfig": {
-        "returnType": "(tuple(ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address armProxy))"
+      "returnType": "(tuple(ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address armProxy))"
     }
   }
 }
