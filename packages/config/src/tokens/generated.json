@@ -6258,20 +6258,6 @@
       }
     },
     {
-      "id": "mantle:mnt-mantle",
-      "name": "Mantle",
-      "coingeckoId": "mantle",
-      "symbol": "MNT",
-      "decimals": 18,
-      "deploymentTimestamp": 1688314886,
-      "coingeckoListingTimestamp": 1689552000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
-      "chainId": 15000,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "id": "mode:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",

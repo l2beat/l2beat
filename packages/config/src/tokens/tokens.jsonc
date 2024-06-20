@@ -1626,6 +1626,13 @@
       "supply": "zero"
     },
     {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
       "source": "canonical",
       "supply": "zero",
@@ -2131,11 +2138,6 @@
     }
   ],
   "mantle": [
-    {
-      "symbol": "MNT",
-      "source": "canonical",
-      "supply": "zero"
-    },
     {
       "symbol": "mETH",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
