@@ -1,6 +1,42 @@
 {
   "ethereum": [
     {
+      "symbol": "TRESTLE",
+      "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
+    },
+    {
+      "symbol": "wTIA",
+      "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
+    },
+    {
+      "symbol": "PARAM",
+      "address": "0x69a1e699f562d7af66fc6cc473d99f4430c3acd2"
+    },
+    {
+      "symbol": "MYT",
+      "address": "0x5fde99e121f3ac02e7d6acb081db1f89c1e93c17"
+    },
+    {
+      "symbol": "PEAS",
+      "address": "0x02f92800f57bcd74066f5709f1daa1a4302df875"
+    },
+    {
+      "symbol": "pxETH",
+      "address": "0x04c154b66cb340f3ae24111cc767e0184ed00cc6"
+    },
+    {
+      "symbol": "MAVIA",
+      "address": "0x24fcfc492c1393274b6bcd568ac9e225bec93584"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7"
+    },
+    {
+      "symbol": "TBANK",
+      "address": "0x95ccffae3eb8767d4a941ec43280961dde89f4de"
+    },
+    {
       "symbol": "10SET",
       "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84",
       "coingeckoId": "tenset"

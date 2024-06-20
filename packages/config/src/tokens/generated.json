@@ -1861,6 +1861,21 @@
       "supply": "zero"
     },
     {
+      "id": "mavia-heroes-of-mavia",
+      "name": "Heroes of Mavia",
+      "coingeckoId": "heroes-of-mavia",
+      "address": "0x24fcFC492C1393274B6bcd568ac9e225BEc93584",
+      "symbol": "MAVIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1701651443,
+      "coingeckoListingTimestamp": 1707177600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33895/large/2023-12-20_21.21.41_%281%29.jpg?1703230771",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "hot-holotoken",
       "name": "HoloToken",
       "coingeckoId": "holotoken",
@@ -2521,6 +2536,21 @@
       "supply": "zero"
     },
     {
+      "id": "myt-myso-token",
+      "name": "MYSO Token",
+      "coingeckoId": "myso-token",
+      "address": "0x5fDe99e121F3aC02e7d6ACb081dB1f89c1e93C17",
+      "symbol": "MYT",
+      "decimals": 18,
+      "deploymentTimestamp": 1703949743,
+      "coingeckoListingTimestamp": 1717027200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37844/large/av_02_2.jpg?1715754813",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "usdn-neutrino-usd",
       "name": "Neutrino USD",
       "coingeckoId": "neutrino",
@@ -2761,6 +2791,21 @@
       "supply": "zero"
     },
     {
+      "id": "param-param",
+      "name": "Param",
+      "coingeckoId": "param",
+      "address": "0x69A1e699f562D7Af66Fc6cc473d99f4430C3AcD2",
+      "symbol": "PARAM",
+      "decimals": 18,
+      "deploymentTimestamp": 1711016099,
+      "coingeckoListingTimestamp": 1716940800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37697/large/param200.png?1715234889",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "pbx-paribus",
       "name": "Paribus",
       "coingeckoId": "paribus",
@@ -2801,6 +2846,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "peas-peapods",
+      "name": "Peapods",
+      "coingeckoId": "peapods-finance",
+      "address": "0x02f92800F57BCD74066F5709F1Daa1A4302Df875",
+      "symbol": "PEAS",
+      "decimals": 18,
+      "deploymentTimestamp": 1702408019,
+      "coingeckoListingTimestamp": 1702771200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33711/large/NAzHgbTW_400x400.png?1702856653",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2891,6 +2951,21 @@
       "coingeckoListingTimestamp": 1701388800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33314/large/phemex_logo.png?1701959611",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "pxeth-pirex-ether",
+      "name": "Pirex Ether",
+      "coingeckoId": "dinero-staked-eth",
+      "address": "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6",
+      "symbol": "pxETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1702330955,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33608/large/pxETH-icon-transbg_72dpi.png?1702512024",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3326,6 +3401,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "rseth-rseth",
+      "name": "rsETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1702241207,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3796,6 +3886,21 @@
       "supply": "zero"
     },
     {
+      "id": "tbank-taobank",
+      "name": "TaoBank",
+      "coingeckoId": "taobank",
+      "address": "0x95CcffaE3Eb8767D4a941Ec43280961dde89F4dE",
+      "symbol": "TBANK",
+      "decimals": 18,
+      "deploymentTimestamp": 1708011263,
+      "coingeckoListingTimestamp": 1709251200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35612/large/200x200.png?1709281616",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "tbtc-tbtc-v2",
       "name": "tBTC v2",
       "coingeckoId": "tbtc",
@@ -3941,6 +4046,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/1877/large/TRAC.jpg?1696502873",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "trestle-trestle",
+      "name": "Trestle",
+      "coingeckoId": "trestle",
+      "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+      "symbol": "TRESTLE",
+      "decimals": 18,
+      "deploymentTimestamp": 1705196147,
+      "coingeckoListingTimestamp": 1706918400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4286,6 +4406,21 @@
       "coingeckoListingTimestamp": 1703721600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "wtia-wrapped-tia",
+      "name": "Wrapped TIA",
+      "coingeckoId": "trestle-wrapped-tia",
+      "address": "0x6aD2d2C22Bb58eA94Be18Cff11EF67e8bb97B652",
+      "symbol": "wTIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1709684855,
+      "coingeckoListingTimestamp": 1711324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36385/large/trestle.jpeg?1711349480",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
