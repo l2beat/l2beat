@@ -97,7 +97,7 @@ export const optimism: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://optimism.io/'],
-      apps: [],
+      apps: ['https://app.optimism.io'],
       documentation: ['https://community.optimism.io'],
       explorers: [
         'https://optimistic.etherscan.io',

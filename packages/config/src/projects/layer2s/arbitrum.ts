@@ -98,7 +98,7 @@ export const arbitrum: Layer2 = {
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
-      apps: [],
+      apps: ['https://bridge.arbitrum.io'],
       documentation: ['https://developer.arbitrum.io/'],
       explorers: [
         'https://arbiscan.io',
