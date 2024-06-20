@@ -4,7 +4,7 @@
     "getNops",
     "getAllowList",
     "getStaticConfig",
-    "currentRateLimiterState",
+    "currentRateLimiterState"
   ],
   "ignoreRelatives": [
     "getSupportedTokens",
