@@ -2721,6 +2721,22 @@
   ],
   "scroll": [
     {
+      "symbol": "USDC",
+      "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "tether"
+    },
+    {
       "symbol": "ETH",
       "source": "canonical",
       "supply": "zero",
