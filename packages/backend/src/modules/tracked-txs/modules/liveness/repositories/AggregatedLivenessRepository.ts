@@ -7,12 +7,12 @@ import {
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
 
-export type Range = '30D' | '90D' | 'MAX'
+export type AggregatedLivenessRange = '30D' | '90D' | 'MAX'
 
 export interface AggregatedLivenessRecord {
   projectId: string
   subtype: TrackedTxsConfigSubtype
-  range: Range
+  range: AggregatedLivenessRange
   min: number
   avg: number
   max: number
@@ -57,7 +57,7 @@ function toRecord(row: AggregatedLivenessRow): AggregatedLivenessRecord {
   return {
     projectId: row.project_id,
     subtype: row.subtype as TrackedTxsConfigSubtype,
-    range: row.range as Range,
+    range: row.range as AggregatedLivenessRange,
     min: row.min,
     avg: row.avg,
     max: row.max,
