@@ -7312,6 +7312,36 @@
       }
     },
     {
+      "id": "linea:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "bridged-tether-linea",
+      "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1691070286,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095",
+      "chainId": 59144,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "linea:usdc.e-usdc",
+      "name": "USDC",
+      "coingeckoId": "bridged-usd-coin-linea",
+      "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1691084270,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31270/large/USDC-icon.png?1696530094",
+      "chainId": 59144,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "linea:usde-usde",
       "name": "USDe",
       "coingeckoId": "ethena-usde",
@@ -7329,6 +7359,21 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "id": "linea:wbtc-wrapped-btc",
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1691070334,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 59144,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "linea:weeth-wrapped-eeth",
