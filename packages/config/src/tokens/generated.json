@@ -5648,6 +5648,20 @@
       "supply": "zero"
     },
     {
+      "id": "mantle:mnt-mantle",
+      "name": "Mantle",
+      "coingeckoId": "mantle",
+      "symbol": "MNT",
+      "decimals": 18,
+      "deploymentTimestamp": 1688314886,
+      "coingeckoListingTimestamp": 1689552000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
+      "chainId": 5000,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "mantle:meth-meth",
       "name": "mETH",
       "coingeckoId": "mantle-staked-ether",
@@ -6087,20 +6101,6 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
-    },
-    {
-      "id": "mantle:mnt-mantle",
-      "name": "Mantle",
-      "coingeckoId": "mantle",
-      "symbol": "MNT",
-      "decimals": 18,
-      "deploymentTimestamp": 1688314886,
-      "coingeckoListingTimestamp": 1689552000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
-      "chainId": 15000,
-      "source": "canonical",
-      "supply": "zero"
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",
