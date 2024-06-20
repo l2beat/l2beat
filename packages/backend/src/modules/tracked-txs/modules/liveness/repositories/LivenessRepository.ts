@@ -79,7 +79,6 @@ export class LivenessRepository extends BaseRepository {
 
   async getWithSubtypeByProjectIdsWithinTimeRange(
     projectId: ProjectId,
-    from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecordWithSubtype[]> {
     const knex = await this.knex()
@@ -87,7 +86,6 @@ export class LivenessRepository extends BaseRepository {
       .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .select('l.timestamp', 'c.subtype', 'c.project_id')
       .where('c.project_id', projectId.toString())
-      .andWhere('l.timestamp', '>=', from.toDate())
       .andWhere('l.timestamp', '<', to.toDate())
       .distinct('l.timestamp')
       .orderBy('l.timestamp', 'desc')

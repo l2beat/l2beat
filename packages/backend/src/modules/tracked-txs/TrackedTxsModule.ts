@@ -24,10 +24,10 @@ import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/Agg
 import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
-import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { AggregatedLivenessRepository } from './modules/liveness/repositories/AggregatedLivenessRepository'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 
 export function createTrackedTxsModule(
   config: Config,

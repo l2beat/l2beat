@@ -4,10 +4,12 @@ import {
   UnixTime,
   assertUnreachable,
 } from '@l2beat/shared-pure'
+import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
+import { getLivenessTrackedTxsConfig } from '../../utils/getLivenessTrackedTxsConfig'
 import {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
@@ -17,8 +19,6 @@ import {
   LivenessRecordWithSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
-import { Project } from '../../../../../model/Project'
-import { getLivenessTrackedTxsConfig } from '../../utils/getLivenessTrackedTxsConfig'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -59,7 +59,6 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     const syncTo =
       endOfSyncedDay < endOfPreviuosDay ? endOfPreviuosDay : endOfSyncedDay
-    const syncFrom = syncTo.toStartOf('day').add(-90, 'days')
 
     if (parentSafeHeight < startOfCurrentDay.toNumber()) {
       this.logger.info('Not enough data to calculate', { parentSafeHeight })
@@ -74,9 +73,9 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       return parentSafeHeight
     }
 
-    this.logger.info('Recalculating liveness data', { syncFrom, syncTo })
+    this.logger.info('Recalculating liveness data', { syncTo })
 
-    const updatedLivenessRecords = await this.generateLiveness(syncFrom, syncTo)
+    const updatedLivenessRecords = await this.generateLiveness(syncTo)
 
     await this.$.aggregatedLivenessRepository.addOrUpdateMany(
       updatedLivenessRecords,
@@ -92,7 +91,6 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   }
 
   async generateLiveness(
-    syncFrom: UnixTime,
     syncTo: UnixTime,
   ): Promise<AggregatedLivenessRecord[]> {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
@@ -102,7 +100,6 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       const livenessRecords =
         await this.$.livenessRepository.getWithSubtypeByProjectIdsWithinTimeRange(
           project.projectId,
-          syncFrom,
           syncTo,
         )
 
@@ -112,6 +109,11 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         })
         continue
       }
+
+      this.logger.debug('Liveness records loaded', {
+        projectId: project.projectId,
+        count: livenessRecords.length,
+      })
 
       const [batchSubmissions, stateUpdates, proofSubmissions] =
         this.groupByType(livenessRecords)
