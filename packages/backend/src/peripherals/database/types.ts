@@ -169,8 +169,6 @@ declare module 'knex/types/tables' {
     min: number
     avg: number
     max: number
-    rolling_count?: number
-    rolling_sum?: number
     timestamp: Date
   }
 

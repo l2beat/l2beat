@@ -61,8 +61,6 @@ function toRecord(row: AggregatedLivenessRow): AggregatedLivenessRecord {
     min: row.min,
     avg: row.avg,
     max: row.max,
-    rollingCount: row.rolling_count,
-    rollingSum: row.rolling_sum,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
@@ -75,8 +73,6 @@ function toRow(record: AggregatedLivenessRecord): AggregatedLivenessRow {
     min: record.min,
     avg: record.avg,
     max: record.max,
-    rolling_count: record.rollingCount,
-    rolling_sum: record.rollingSum,
     timestamp: record.timestamp.toDate(),
   }
 }
