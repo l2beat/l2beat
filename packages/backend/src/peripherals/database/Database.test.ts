@@ -1,7 +1,7 @@
-import { expect } from 'earl'
 import { readdirSync } from 'fs'
-import { afterEach } from 'mocha'
 import path from 'path'
+import { expect } from 'earl'
+import { afterEach } from 'mocha'
 
 import { getTestDatabase } from '../../test/database'
 import { Database } from './Database'
