@@ -18,6 +18,7 @@ import {
 } from './model'
 
 export class EtherscanError extends Error {}
+const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 6
 
 export class EtherscanClient implements BlockNumberProvider {
   private readonly rateLimiter = new RateLimiter({
@@ -29,7 +30,6 @@ export class EtherscanClient implements BlockNumberProvider {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
-    private readonly minTimestamp: UnixTime,
     private readonly chainId: ChainId,
     private readonly logger = Logger.SILENT,
   ) {
@@ -49,7 +49,6 @@ export class EtherscanClient implements BlockNumberProvider {
       services.httpClient,
       options.url,
       options.apiKey,
-      options.minTimestamp,
       options.chainId,
       services.logger,
     )
@@ -64,13 +63,7 @@ export class EtherscanClient implements BlockNumberProvider {
     apiKey: string,
     chainId: ChainId,
   ) {
-    return new EtherscanClient(
-      httpClient,
-      url,
-      apiKey,
-      new UnixTime(0),
-      chainId,
-    )
+    return new EtherscanClient(httpClient, url, apiKey, chainId)
   }
 
   getChainId(): ChainId {
@@ -87,35 +80,41 @@ export class EtherscanClient implements BlockNumberProvider {
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
-    while (current.gte(this.minTimestamp)) {
+    let counter = 1
+    while (counter <= MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
           closest: 'before',
         })
 
+        this.reportCalls(counter)
         return stringAsInt().parse(result)
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
             typeof error === 'string' ? error : 'Unknown error type caught'
+          this.reportCalls(counter)
           throw new Error(errorString)
         }
 
         const errorObject = error as EtherscanError
         if (!errorObject.message.includes('No closest block found')) {
+          this.reportCalls(counter)
           throw new Error(errorObject.message)
         }
 
         current = current.add(-10, 'minutes')
       }
+      counter++
     }
 
+    this.reportCalls(counter)
     throw new Error('Could not fetch block number', {
       cause: {
         current,
         timestamp,
-        minTimestamp: this.minTimestamp,
+        calls: MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP,
       },
     })
   }
@@ -191,6 +190,12 @@ export class EtherscanClient implements BlockNumberProvider {
     message: string,
   ) {
     this.logger.debug({ type: 'error', message, timeMs, module, action })
+  }
+
+  private reportCalls(counter: number) {
+    this.logger.info('Client calls report', {
+      calls: counter,
+    })
   }
 }
 
