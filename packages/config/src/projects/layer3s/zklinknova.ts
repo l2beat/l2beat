@@ -49,7 +49,7 @@ export const zklinknova: Layer3 = underReviewL3({
     {
       chain: 'optimism',
       includeInTotal: false,
-      address: EthereumAddress('0x5Bd51296423A9079b931414C1De65e7057326EaA'),
+      address: EthereumAddress('0x68f180fcCe6836688e9084f035309E29Bf0A2095'),
       sinceTimestamp: new UnixTime(1711095511),
       tokens: '*', // missing ~450k: USDT, wBTC, DAI
     },
