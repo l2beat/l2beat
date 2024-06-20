@@ -4565,6 +4565,21 @@
       }
     },
     {
+      "id": "optimism:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:usx-dforce-usd",
       "name": "dForce USD",
       "coingeckoId": "token-dforce-usd",
