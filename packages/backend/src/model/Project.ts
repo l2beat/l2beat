@@ -162,7 +162,7 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
         ? tokensOnChain.filter(
             (t) => !escrow.excludedTokens?.includes(t.symbol),
           )
-        : mapTokens(escrow.tokens, tokensOnChain, chain),
+        : mapTokens(escrow.tokens, escrow.address, tokensOnChain, chain),
     chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,
@@ -172,12 +172,16 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
 
 function mapTokens(
   tokens: string[],
+  escrowAddress: EthereumAddress,
   tokensOnChain: Token[],
   chain: string,
 ): Token[] {
   return tokens.map((tokenSymbol) => {
     const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
-    assert(token, `Token with symbol ${tokenSymbol} not found on ${chain}`)
+    assert(
+      token,
+      `Token with symbol ${tokenSymbol} not found on ${chain} @ ${escrowAddress.toString()}`,
+    )
     return token
   })
 }
