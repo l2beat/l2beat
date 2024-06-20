@@ -47,11 +47,13 @@ export async function runDiscovery(
     discoveryFilename: config.discoveryFilename,
   })
 
-  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
-  const backrefConfigs = allConfigs.filter((c) =>
-    c.sharedModules.includes(config.project),
-  )
-  printSharedModuleInfo(backrefConfigs)
+  if (config.project.startsWith('shared-')) {
+    const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+    const backrefConfigs = allConfigs.filter((c) =>
+      c.sharedModules.includes(config.project),
+    )
+    printSharedModuleInfo(backrefConfigs)
+  }
 }
 
 export async function dryRunDiscovery(
