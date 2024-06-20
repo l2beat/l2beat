@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017695,
   "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "AxelarGasService",

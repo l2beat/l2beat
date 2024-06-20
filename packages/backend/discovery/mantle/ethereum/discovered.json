@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531981,
   "configHash": "0x7b4443a7e17b174dc610b0eb42695f821608a6139d42809fdf1aca12b41076c3",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -700,7 +700,12 @@
       "implementations": ["0xd8d731624d97a66e012E62208cFc921d7033c564"],
       "sinceTimestamp": 1687931951,
       "values": {
-        "getZeroPolyMerkleRoot": []
+        "getZeroPolyMerkleRoot": [
+          "0xe82cea94884b1b895ea0742840a3b19249a723810fd1b04d8564d675b0a416f1",
+          "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
+          "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
+          "0x092d3e5f87f5293e7ab0cc2ca6b0b5e4adb5e0011656544915f7cea34e69e5ab"
+        ]
       },
       "derivedName": "DataLayrChallengeUtils"
     },

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19831040,
   "configHash": "0xf21cabf6fde3846caa3739fbbe003663cfc4f5a273048ba20d6aa18b0042218b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SuperchainConfig",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976276,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -525,11 +525,19 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getApproved": ["0x0000000000000000000000000000000000000000"],
-        "locked": [true],
+        "getApproved": [
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "locked": [true, true, true],
         "name": "KromaSecurityCouncil",
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-        "ownerOf": ["0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"],
+        "ownerOf": [
+          "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+          "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
+          "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+        ],
         "paused": false,
         "symbol": "KSC",
         "tokenOwners": [
@@ -545,7 +553,11 @@
           "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
         ],
         "tokens": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        "tokenURI": ["https://nft.kroma.network/sc/1.png"],
+        "tokenURI": [
+          "https://nft.kroma.network/sc/1.png",
+          "https://nft.kroma.network/sc/2.png",
+          "https://nft.kroma.network/sc/3.png"
+        ],
         "totalSupply": 10,
         "version": "1.0.1"
       },

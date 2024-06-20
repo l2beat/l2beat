@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927728,
   "configHash": "0x1556cca6a43d40327c72021678db58a02c5dcb18b6d8b1c8301d3657294568c5",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "AddressManager",

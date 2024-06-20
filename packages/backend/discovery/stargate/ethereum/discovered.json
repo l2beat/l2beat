@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532207,
   "configHash": "0x00386bee018153f5ccd18d3bc0cd5c5dbe5cc420fe92706140f661856f134387",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Factory",

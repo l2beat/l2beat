@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19926649,
   "configHash": "0x6550d030fed3b00ba55a8cbdceab43d131d61699b914915ddbd5fb38b8a3c710",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -107,6 +107,9 @@
       "name": "Metis Multisig",
       "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
       "template": "GnosisSafe",
+      "descriptions": [
+        "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system."
+      ],
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

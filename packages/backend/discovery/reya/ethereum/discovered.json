@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20024504,
   "configHash": "0xe1d673231ca5f2c962b937026d1b9abaea422017a4cda186035dabda2ec70a48",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -128,6 +128,9 @@
       "name": "RollupProxy",
       "address": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
       "template": "orbitstack/RollupProxy",
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

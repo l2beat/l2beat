@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017490,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",

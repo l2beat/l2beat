@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20073649,
   "configHash": "0xd13302d6a275e2febd912ad610a77780313e4647bdb7e24c7edfd04abbc8a3f3",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -28,6 +28,7 @@
       "name": "GuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
+      "roles": ["Guardian"],
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -51,6 +52,9 @@
       "name": "OptimismPortal",
       "address": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
       "template": "opstack/OptimismPortal",
+      "descriptions": [
+        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+      ],
       "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -94,6 +98,10 @@
       "name": "L1StandardBridge",
       "address": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
       "template": "opstack/L1StandardBridge",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
+      ],
+      "categories": ["Gateways&Escrows"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
@@ -227,6 +235,7 @@
       "name": "L1ERC721Bridge",
       "address": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
       "template": "opstack/L1ERC721Bridge",
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
@@ -279,6 +288,10 @@
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "template": "opstack/SuperchainConfig",
+      "descriptions": [
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ],
+      "categories": ["Upgrades&Governance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
@@ -328,6 +341,9 @@
       "name": "L2OutputOracle",
       "address": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
       "template": "opstack/L2OutputOracle",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -367,6 +383,9 @@
       "name": "SystemConfig",
       "address": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
       "template": "opstack/SystemConfig",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -459,6 +478,9 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
       "template": "opstack/OptimismMintableERC20Factory",
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
@@ -508,6 +530,7 @@
       "name": "ChallengerMultisig",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "template": "GnosisSafe",
+      "roles": ["Challenger"],
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
@@ -551,6 +574,10 @@
       "name": "L1CrossDomainMessenger",
       "address": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
       "template": "opstack/L1CrossDomainMessenger",
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",

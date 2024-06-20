@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531425,
   "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "TreasuryV2",

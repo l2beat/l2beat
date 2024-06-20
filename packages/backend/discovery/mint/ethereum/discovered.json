@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032860,
   "configHash": "0x01eaf3d259572d9d2473cd46a774b5753e167a8babcf1f2db67dfe72a996e649",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -59,6 +59,9 @@
       "name": "OptimismPortal",
       "address": "0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
       "template": "opstack/OptimismPortal",
+      "descriptions": [
+        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+      ],
       "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -86,6 +89,9 @@
       "name": "L2OutputOracle",
       "address": "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
       "template": "opstack/L2OutputOracle",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -133,6 +139,9 @@
       "name": "SystemConfig",
       "address": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
       "template": "opstack/SystemConfig",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -183,6 +192,9 @@
       "name": "L1CrossDomainMessenger",
       "address": "0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
       "template": "opstack/L1CrossDomainMessenger",
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
       "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",

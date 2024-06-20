@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032828,
   "configHash": "0x58948ec9c78e306432f92054013a1d25b458c2f09d79881ec191a9031916f302",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -248,6 +248,9 @@
       "name": "L2OutputOracle",
       "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
       "template": "opstack/L2OutputOracle",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
