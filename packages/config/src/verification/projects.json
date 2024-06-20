@@ -27,6 +27,7 @@
   "canvasconnect": true,
   "capx": true,
   "cbridge": true,
+  "celo": true,
   "chainport": false,
   "connext": true,
   "coti": true,
