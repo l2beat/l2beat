@@ -5306,6 +5306,36 @@
       }
     },
     {
+      "id": "zksync2:usdc.e-bridged-usdc-(zksync)",
+      "name": "Bridged USDC (zkSync)",
+      "coingeckoId": "zksync-bridged-usdc-zksync",
+      "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1679338839,
+      "coingeckoListingTimestamp": 1707955200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35262/large/USDC_Icon.png?1708008941",
+      "chainId": 324,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zksync2:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1697891932,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 324,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "zksync2:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",
@@ -5449,6 +5479,21 @@
       }
     },
     {
+      "id": "zksync2:usdt-tether-usd",
+      "name": "Tether USD",
+      "coingeckoId": "bridged-usdt",
+      "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1683103764,
+      "coingeckoListingTimestamp": 1706918400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
+      "chainId": 324,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "zksync2:usdc-usdc",
       "name": "USDC",
       "coingeckoId": "usd-coin",
@@ -5462,6 +5507,21 @@
       "chainId": 324,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "id": "zksync2:wbtc-wrapped-btc",
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1683205551,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 324,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "zksync2:meow-zeek-coin",

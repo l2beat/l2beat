@@ -117,11 +117,11 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
     },
     {
-      chain: 'zksync2', // zkync-era?
+      chain: 'zksync2',
       includeInTotal: false,
       address: EthereumAddress('0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08'),
       sinceTimestamp: new UnixTime(1709297040),
-      tokens: '*', // missing ~700K: wBTC, DAI, USDC.e, USDT
+      tokens: '*',
     },
     {
       chain: 'arbitrum',
