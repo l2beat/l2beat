@@ -39,7 +39,13 @@ export interface IProvider {
   ): Promise<T>
 
   call(address: EthereumAddress, data: Bytes): Promise<Bytes>
+  callUnbatched(address: EthereumAddress, data: Bytes): Promise<Bytes>
   callMethod<T>(
+    address: EthereumAddress,
+    abi: string | utils.FunctionFragment,
+    args: unknown[],
+  ): Promise<T | undefined>
+  callMethodUnbatched<T>(
     address: EthereumAddress,
     abi: string | utils.FunctionFragment,
     args: unknown[],

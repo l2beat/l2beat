@@ -42,6 +42,10 @@ export class HighLevelProvider implements IProvider {
     return this.provider.call(address, data, this.blockNumber)
   }
 
+  callUnbatched(address: EthereumAddress, data: Bytes): Promise<Bytes> {
+    return this.provider.callUnbatched(address, data, this.blockNumber)
+  }
+
   async callMethod<T>(
     address: EthereumAddress,
     abi: string | utils.FunctionFragment,
@@ -53,19 +57,50 @@ export class HighLevelProvider implements IProvider {
     assert(fragment, `Unknown fragment for method: ${abi}`)
     const callData = Bytes.fromHex(coder.encodeFunctionData(fragment, args))
 
-    let result: Bytes
+    let decodedResult: utils.Result
     try {
-      result = await this.provider.call(address, callData, this.blockNumber)
+      const result = await this.provider.call(address, callData, this.blockNumber)
+      decodedResult = coder.decodeFunctionResult(
+          fragment,
+          result.toString(),
+      )
     } catch (e) {
       if (isRevert(e)) {
         return undefined
       }
       throw e
     }
-    const decodedResult = coder.decodeFunctionResult(
-      fragment,
-      result.toString(),
-    )
+    return decodedResult.length === 1 ? decodedResult[0] : (decodedResult as T)
+  }
+
+  async callMethodUnbatched<T>(
+    address: EthereumAddress,
+    abi: string | utils.FunctionFragment,
+    args: unknown[],
+  ): Promise<T | undefined> {
+    const coder = new utils.Interface([abi])
+    const fragment =
+      typeof abi === 'string' ? Object.values(coder.functions)[0] : abi
+    assert(fragment, `Unknown fragment for method: ${abi}`)
+    const callData = Bytes.fromHex(coder.encodeFunctionData(fragment, args))
+
+    let decodedResult: utils.Result
+    try {
+      const result = await this.provider.callUnbatched(
+        address,
+        callData,
+        this.blockNumber,
+      )
+      decodedResult = coder.decodeFunctionResult(
+          fragment,
+          result.toString(),
+      )
+    } catch (e) {
+      if (isRevert(e)) {
+        return undefined
+      }
+      throw e
+    }
     return decodedResult.length === 1 ? decodedResult[0] : (decodedResult as T)
   }
 

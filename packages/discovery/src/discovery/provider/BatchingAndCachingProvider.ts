@@ -86,6 +86,25 @@ export class BatchingAndCachingProvider {
     })
   }
 
+  async callUnbatched(
+    address: EthereumAddress,
+    data: Bytes,
+    blockNumber: number,
+  ): Promise<Bytes> {
+    const entry = await this.cache.entry(
+      'call',
+      [blockNumber, address, data],
+      blockNumber,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return Bytes.fromHex(cached)
+    }
+    const result = await this.provider.call(address, data, blockNumber)
+    entry.write(result.toString())
+    return result
+  }
+
   private async flushCalls() {
     const calls = [...this.calls]
     this.calls = []
