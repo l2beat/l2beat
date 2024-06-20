@@ -5727,11 +5727,11 @@
       "supply": "zero"
     },
     {
-      "id": "metis:m.usdt-usdt-token",
+      "id": "metis:usdt-usdt-token",
       "name": "USDT Token",
       "coingeckoId": "tether",
       "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-      "symbol": "m.USDT",
+      "symbol": "USDT",
       "decimals": 6,
       "deploymentTimestamp": 1637429315,
       "coingeckoListingTimestamp": 1573689600,

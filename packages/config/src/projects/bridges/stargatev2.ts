@@ -275,7 +275,7 @@ export const stargatev2: Bridge = {
       discovery_metis.getEscrowDetails({
         includeInTotal: false,
         address: EthereumAddress('0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125'),
-        tokens: ['m.USDT'],
+        tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Metis.',
       }),
       discovery_linea.getEscrowDetails({
