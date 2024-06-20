@@ -30,7 +30,6 @@ export interface DiscoveryChainConfig {
   name: string
   rpcUrl: string
   eventRpcUrl?: string
-  rpcGetLogsMaxRange?: number
   reorgSafeDepth?: number
   multicall: MulticallConfig
   etherscanApiKey: string
