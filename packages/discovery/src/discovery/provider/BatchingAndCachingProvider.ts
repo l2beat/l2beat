@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, providers } from 'ethers'
+import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
@@ -40,6 +41,8 @@ interface LogExecutionItem {
     errored: boolean
   }[]
 }
+
+const REVERT_MARKER_VALUE = '{execution reverted}'
 
 export class BatchingAndCachingProvider {
   private calls: ScheduledCall[] = []
@@ -98,11 +101,23 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      return Bytes.fromHex(cached)
+      if (cached === REVERT_MARKER_VALUE) {
+        throw new Error('Execution reverted')
+      } else {
+        return Bytes.fromHex(cached)
+      }
     }
-    const result = await this.provider.call(address, data, blockNumber)
-    entry.write(result.toString())
-    return result
+
+    try {
+      const result = await this.provider.call(address, data, blockNumber)
+      entry.write(result.toString())
+      return result
+    } catch (e) {
+      if (isRevert(e)) {
+        entry.write(REVERT_MARKER_VALUE)
+      }
+      throw e
+    }
   }
 
   private async flushCalls() {
@@ -131,7 +146,11 @@ export class BatchingAndCachingProvider {
         calls.push(checked)
         toExecute.set(checked.call.blockNumber, calls)
       } else {
-        checked.call.resolve(Bytes.fromHex(cached))
+        if (cached === REVERT_MARKER_VALUE) {
+          checked.call.reject(new Error('Execution reverted'))
+        } else {
+          checked.call.resolve(Bytes.fromHex(cached))
+        }
       }
     }
 
@@ -162,6 +181,7 @@ export class BatchingAndCachingProvider {
           item.entry.write(result.data.toString())
         } else {
           item.call.reject(new Error('Multicall item reverted'))
+          item.entry.write(REVERT_MARKER_VALUE)
         }
       }
     } catch (e) {
@@ -351,7 +371,7 @@ export class BatchingAndCachingProvider {
       byTopic.set(topic, topicLogs)
     }
 
-    for (const topic of byTopic.keys()) {
+    for (const topic of topics) {
       const topicLogs = byTopic.get(topic) ?? []
 
       // We bypass the entries mechanism to avoid repeated writes
