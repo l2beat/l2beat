@@ -92,7 +92,6 @@ function createChainModule(
       ? peripherals.getClient(EtherscanClient, {
           apiKey: blockNumberProviderConfig.etherscanApiKey,
           url: blockNumberProviderConfig.etherscanApiUrl,
-          minTimestamp: chainConfig.config.minBlockTimestamp,
           chainId: chainConfig.config.chainId,
         })
       : peripherals.getClient(BlockscoutClient, {

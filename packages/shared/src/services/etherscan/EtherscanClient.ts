@@ -41,7 +41,6 @@ export class EtherscanClient implements BlockNumberProvider {
     options: {
       url: string
       apiKey: string
-      minTimestamp: UnixTime
       chainId: ChainId
     },
   ) {
