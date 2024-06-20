@@ -26,10 +26,7 @@ export class DataService {
     this.$.logger = $.logger.for(this)
   }
 
-  async getValuesForProjects(
-    projects: ApiProject[],
-    targetTimestamp: UnixTime,
-  ) {
+  async getValuesForProjects(projects: ApiProject[], target: UnixTime) {
     const values = await this.$.valueRepository.getForProjects(
       projects.map((p) => p.id),
     )
@@ -64,8 +61,8 @@ export class DataService {
 
       // TODO: Interpolate here
       assert(
-        valuesByTimestamp[targetTimestamp.toString()],
-        `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString}`,
+        valuesByTimestamp[target.toString()],
+        `Missing value for last hour for ${projectId}, timestamp: ${target.toString}`,
       )
 
       result[projectId] = valuesByTimestampForProject
@@ -78,17 +75,17 @@ export class DataService {
     amountConfigIds: string[],
     priceConfigId: string,
     minTimestamp: UnixTime,
-    lastHour: UnixTime,
+    target: UnixTime,
   ) {
     const amounts = await this.$.amountRepository.getByConfigIdsInRange(
       amountConfigIds,
       minTimestamp,
-      lastHour,
+      target,
     )
     const prices = await this.$.priceRepository.getByConfigIdsInRange(
       [priceConfigId],
       minTimestamp,
-      lastHour,
+      target,
     )
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
@@ -123,18 +120,16 @@ export class DataService {
     }
   }
 
-  async getEthPrices() {
+  async getEthPrices(target: UnixTime) {
     const records = await this.$.priceRepository.getByConfigId(
       this.$.ethPriceId,
     )
     const prices = new Map(
       records.map((x) => [x.timestamp.toNumber(), x.priceUsd]),
     )
-    const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
-
     assert(
-      timestamps.every((x) => prices.has(x.toNumber())),
-      `Missing prices for ethereum`,
+      prices.get(target.toNumber()),
+      `Missing latest price for ethereum @ ${target.toString()}`,
     )
     return prices
   }
