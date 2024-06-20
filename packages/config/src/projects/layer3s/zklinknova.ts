@@ -107,7 +107,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2'),
       sinceTimestamp: new UnixTime(1709296907),
-      tokens: '*', // missing ~12M: wMNT, mETH, USDT, USDC
+      tokens: '*',
     },
     {
       chain: 'zksync2',

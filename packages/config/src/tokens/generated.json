@@ -5142,7 +5142,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1694653559,
       "coingeckoListingTimestamp": 1696809600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32214/large/usdt_%281%29.png?1696831809",
       "chainId": 169,
       "source": "canonical",
@@ -5175,7 +5175,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1694653599,
       "coingeckoListingTimestamp": 1696809600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32215/large/usdc.png?1696832099",
       "chainId": 169,
       "source": "canonical",
@@ -5224,7 +5224,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1702532779,
       "coingeckoListingTimestamp": 1703721600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
       "chainId": 169,
       "source": "canonical",
@@ -5954,6 +5954,21 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "mantle:wmnt-wrapped-mantle",
+      "name": "Wrapped Mantle",
+      "coingeckoId": "wrapped-mantle",
+      "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+      "symbol": "wMNT",
+      "decimals": 18,
+      "deploymentTimestamp": 1689072674,
+      "coingeckoListingTimestamp": 1689724800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30983/large/mantle.jpeg?1696529822",
+      "chainId": 5000,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "kinto:dai-dai-stablecoin",

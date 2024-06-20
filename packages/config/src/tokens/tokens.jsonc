@@ -2068,6 +2068,7 @@
     {
       "symbol": "wUSDM",
       "address": "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
+      "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
     },
@@ -2075,12 +2076,14 @@
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
+      "category": "stablecoin",
       "supply": "zero"
     },
     {
       "symbol": "USDT",
       "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
       "source": "canonical",
+      "category": "stablecoin",
       "supply": "zero"
     },
     {
@@ -2168,6 +2171,12 @@
     }
   ],
   "mantle": [
+    {
+      "symbol": "wMNT",
+      "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "mETH",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
