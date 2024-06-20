@@ -10,7 +10,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
-import { BlockNumberProvider } from '../providers/BlockNumberProvider'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
@@ -20,7 +19,7 @@ import {
 export class EtherscanError extends Error {}
 const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 6
 
-export class EtherscanClient implements BlockNumberProvider {
+export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })

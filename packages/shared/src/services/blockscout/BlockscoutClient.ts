@@ -10,6 +10,7 @@ import { HttpClient } from '../HttpClient'
 import { BlockscoutGetBlockNoByTime, parseBlockscoutResponse } from './model'
 
 class BlockscoutError extends Error {}
+const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 10
 
 export class BlockscoutClient {
   private readonly rateLimiter = new RateLimiter({
@@ -20,7 +21,6 @@ export class BlockscoutClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly url: string,
-    readonly minTimestamp: UnixTime,
     private readonly chainId: ChainId,
     private readonly logger = Logger.SILENT,
   ) {
@@ -29,12 +29,11 @@ export class BlockscoutClient {
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
-    options: { url: string; minTimestamp: UnixTime; chainId: ChainId },
+    options: { url: string; chainId: ChainId },
   ) {
     return new BlockscoutClient(
       services.httpClient,
       options.url,
-      options.minTimestamp,
       options.chainId,
       services.logger,
     )
@@ -47,31 +46,44 @@ export class BlockscoutClient {
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
-    while (current.gte(this.minTimestamp)) {
+    let counter = 1
+    while (counter <= MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
           closest: 'before',
         })
 
+        this.reportCalls(counter)
         return BlockscoutGetBlockNoByTime.parse(result).blockNumber
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
             typeof error === 'string' ? error : 'Unknown error type caught'
+          this.reportCalls(counter)
           throw new Error(errorString)
         }
 
         const errorObject = error as BlockscoutError
         if (!errorObject.message.includes('Block does not exist')) {
+          this.reportCalls(counter)
           throw new Error(errorObject.message)
         }
 
         current = current.add(-1, 'minutes')
       }
+
+      counter++
     }
 
-    throw new Error('Could not fetch block number')
+    this.reportCalls(counter)
+    throw new Error('Could not fetch block number', {
+      cause: {
+        current,
+        timestamp,
+        calls: MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP,
+      },
+    })
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
@@ -129,6 +141,12 @@ export class BlockscoutClient {
     message: string,
   ) {
     this.logger.debug({ type: 'error', message, timeMs, module, action })
+  }
+
+  private reportCalls(counter: number) {
+    this.logger.info('Client calls report', {
+      calls: counter,
+    })
   }
 }
 

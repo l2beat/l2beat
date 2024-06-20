@@ -96,7 +96,6 @@ function createChainModule(
         })
       : peripherals.getClient(BlockscoutClient, {
           url: blockNumberProviderConfig.blockscoutApiUrl,
-          minTimestamp: chainConfig.config.minBlockTimestamp,
           chainId: chainConfig.config.chainId,
         })
     : undefined
