@@ -798,7 +798,7 @@ library ECDSA {
     /**
      * @dev Returns an Ethereum Signed Message, created from a `hash`. This
      * produces hash corresponding to the one signed with the
-     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]
+     * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign[`eth_sign`]
      * JSON-RPC method as part of EIP-191.
      *
      * See {recover}.
@@ -817,7 +817,7 @@ library ECDSA {
     /**
      * @dev Returns an Ethereum Signed Message, created from `s`. This
      * produces hash corresponding to the one signed with the
-     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]
+     * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign[`eth_sign`]
      * JSON-RPC method as part of EIP-191.
      *
      * See {recover}.
