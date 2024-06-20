@@ -7,9 +7,9 @@ import { TemplateService } from './analysis/TemplateService'
 import { DiscoveryEngine } from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { AllProviders } from './provider/AllProviders'
-import { DiscoveryCache } from './provider/DiscoveryCache'
 import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
+import { DiscoveryCache } from './provider/ReorgAwareCache'
 
 export function getDiscoveryEngine(
   chainConfigs: DiscoveryChainConfig[],
