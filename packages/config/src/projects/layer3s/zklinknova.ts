@@ -135,7 +135,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585'),
       sinceTimestamp: new UnixTime(1709296973),
-      tokens: '*', // missing ~3M: USDT, wBTC, wstETH, USDC.e
+      tokens: '*',
     },
     {
       chain: 'blast',
@@ -149,7 +149,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b'),
       sinceTimestamp: new UnixTime(1710427013),
-      tokens: '*', // missing 300k BAJA
+      tokens: '*',
     },
     {
       chain: 'base',
@@ -163,7 +163,7 @@ export const zklinknova: Layer3 = underReviewL3({
       includeInTotal: false,
       address: EthereumAddress('0x80d12A78EfE7604F00ed07aB2f16F643301674D5'),
       sinceTimestamp: new UnixTime(1711098033),
-      tokens: '*', // missing 100k USDC
+      tokens: '*',
     },
   ],
 })

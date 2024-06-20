@@ -1271,6 +1271,27 @@
       }
     },
     {
+      "symbol": "USDC.e",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",

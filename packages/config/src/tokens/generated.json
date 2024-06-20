@@ -7169,6 +7169,21 @@
       "supply": "totalSupply"
     },
     {
+      "id": "arbitrum:usdc.e-usd-coin-(arb1)",
+      "name": "USD Coin (Arb1)",
+      "coingeckoId": "usd-coin",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1623868379,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:usde-usde",
       "name": "USDe",
       "coingeckoId": "ethena-usde",
@@ -7218,6 +7233,21 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "arbitrum:wbtc-wrapped-btc",
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "symbol": "wBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1623867469,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:weeth-wrapped-eeth",
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
@@ -7235,6 +7265,21 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "id": "arbitrum:wsteth-wrapped-liquid-staked-ether-2.0",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "coingeckoId": "wrapped-steth",
+      "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "symbol": "wstETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1659608815,
+      "coingeckoListingTimestamp": 1633564800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "arbitrum:xai-xai",
