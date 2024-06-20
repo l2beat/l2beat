@@ -5,6 +5,7 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { KnexMiddleware } from '../../peripherals/database/KnexMiddleware'
 import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -24,7 +25,9 @@ import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/Agg
 import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
+import { createTrackedTxConfigId } from './utils/createTrackedTxConfigId'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -51,7 +54,7 @@ export function createTrackedTxsModule(
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
   const runtimeConfigurations = config.projects
-    .flatMap((project) => project.trackedTxsConfig?.entries)
+    .flatMap((project) => project.trackedTxsConfig)
     .filter(notUndefined)
 
   const livenessModule = createLivenessModule(
@@ -76,16 +79,22 @@ export function createTrackedTxsModule(
     TrackedTxsConfigsRepository,
   )
 
-  const trackedTxsIndexer = new TrackedTxsIndexer(
+  const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
-    hourlyIndexer,
-    updaters,
+    parents: [hourlyIndexer],
+    indexerService,
     trackedTxsClient,
-    peripherals.getRepository(IndexerStateRepository),
-    trackedTxsConfigsRepository,
-    runtimeConfigurations,
-    config.trackedTxsConfig.minTimestamp,
-  )
+    configurations: runtimeConfigurations.map((config) => ({
+      properties: config,
+      minHeight: config.sinceTimestampInclusive.toNumber(),
+      maxHeight: config.untilTimestampExclusive?.toNumber() ?? null,
+      id: createTrackedTxConfigId(config),
+    })),
+    updaters,
+    createDatabaseMiddleware: async () =>
+      new KnexMiddleware(peripherals.getRepository(LivenessRepository)),
+    serializeConfiguration: (config) => JSON.stringify(config),
+  })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
   let l2CostsAggregatorIndexer: L2CostsAggregatorIndexer | undefined

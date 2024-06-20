@@ -220,16 +220,3 @@ function mapL3Tokens(
     return token
   })
 }
-
-// function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
-//   const { untilTimestampExclusive: _, ...queryWithoutUntilTimestamp } =
-//     config.query
-
-//   return config.uses.map((use) => ({
-//     ...use,
-//     id: TrackedTxId([
-//       JSON.stringify(use),
-//       JSON.stringify(queryWithoutUntilTimestamp),
-//     ]),
-//   }))
-// }
