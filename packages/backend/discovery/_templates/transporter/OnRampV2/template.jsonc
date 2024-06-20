@@ -5,9 +5,6 @@
     "getAllowList",
     "getStaticConfig",
     "currentRateLimiterState",
-    "lastUpdated",
-    "getNopFeesJuels",
-    "getExpectedNextSequenceNumber"
   ],
   "ignoreRelatives": [
     "getSupportedTokens",
