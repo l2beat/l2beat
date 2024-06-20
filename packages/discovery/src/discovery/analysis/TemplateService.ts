@@ -34,11 +34,16 @@ export class TemplateService {
       return result
     }
 
-    const flatSource = removeComments(flattenFirstSource(sources))
+    const flatSource = flattenFirstSource(sources)
+    if (flatSource === undefined) {
+      return result
+    }
+
+    const processedSource = removeComments(flatSource)
     const sourceHashed: HashedFileContent = {
       path: '',
-      hashChunks: buildSimilarityHashmap(flatSource),
-      content: flatSource,
+      hashChunks: buildSimilarityHashmap(processedSource),
+      content: processedSource,
     }
 
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)

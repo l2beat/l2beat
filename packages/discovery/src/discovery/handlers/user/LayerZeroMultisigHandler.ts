@@ -5,8 +5,8 @@ import { providers, utils } from 'ethers'
 import { z } from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 import { toEventFragment } from '../utils/toEventFragment'
 import { ConstructorArgsHandler } from './ConstructorArgsHandler'
@@ -36,7 +36,7 @@ const ABI = new utils.Interface([
   UPDATE_QUORUM_EVENT_FRAGMENT,
 ])
 
-export class LayerZeroMultisigHandler implements ClassicHandler {
+export class LayerZeroMultisigHandler implements Handler {
   readonly dependencies: string[] = []
   readonly constructorArgsHandler: ConstructorArgsHandler
 
@@ -57,9 +57,8 @@ export class LayerZeroMultisigHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     const constructorArgs = await this.constructorArgsHandler.execute(
       provider,
@@ -74,12 +73,7 @@ export class LayerZeroMultisigHandler implements ClassicHandler {
     ])
 
     async function getLogs(topic: string): Promise<providers.Log[]> {
-      return await provider.getLogs(
-        address,
-        [ABI.getEventTopic(topic)],
-        0,
-        blockNumber,
-      )
+      return await provider.getLogs(address, [ABI.getEventTopic(topic)])
     }
     const [signer_logs, quorum_logs] = await Promise.all([
       getLogs(ABI.getEventTopic(UPDATE_SIGNER_EVENT_FRAGMENT)),

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016116,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",

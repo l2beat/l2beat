@@ -3,23 +3,17 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import {
-  ContractMetadata,
-  DiscoveryProvider,
-} from '../provider/DiscoveryProvider'
+import { ContractSource, IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 
 export class FunctionSelectorDecoder {
   readonly proxyDetector: ProxyDetector
   readonly knownTargets: Set<EthereumAddress> = new Set<EthereumAddress>()
   readonly implementations: Record<string, EthereumAddress[]> = {}
-  readonly targetMetadatas: Record<string, ContractMetadata> = {}
+  readonly targetSources: Record<string, ContractSource> = {}
 
-  constructor(
-    readonly provider: DiscoveryProvider,
-    readonly blockNumber: number,
-  ) {
-    this.proxyDetector = new ProxyDetector(provider, DiscoveryLogger.SILENT)
+  constructor(readonly provider: IProvider) {
+    this.proxyDetector = new ProxyDetector()
   }
 
   async fetchTargets(targets: EthereumAddress[]): Promise<void> {
@@ -29,8 +23,8 @@ export class FunctionSelectorDecoder {
     await Promise.all(
       [...filtered].map(async (address) => {
         const proxy = await this.proxyDetector.detectProxy(
+          this.provider,
           address,
-          this.blockNumber,
           DiscoveryLogger.SILENT,
         )
 
@@ -46,8 +40,8 @@ export class FunctionSelectorDecoder {
     const toFetch: EthereumAddress[] = [...filtered, ...implementationContracts]
     await Promise.all(
       toFetch.map(async (address) => {
-        this.targetMetadatas[address.toString()] =
-          await this.provider.getMetadata(address)
+        this.targetSources[address.toString()] =
+          await this.provider.getSource(address)
       }),
     )
 
@@ -67,7 +61,7 @@ export class FunctionSelectorDecoder {
       target,
       ...(this.implementations[target.toString()] ?? []),
     ]
-      .map((addr) => this.targetMetadatas[addr.toString()])
+      .map((addr) => this.targetSources[addr.toString()])
       .filter(notUndefined)
 
     const ifaces = metadatas.map(

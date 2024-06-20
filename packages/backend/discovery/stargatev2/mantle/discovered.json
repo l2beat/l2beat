@@ -1,9 +1,9 @@
 {
   "name": "stargatev2",
   "chain": "mantle",
-  "blockNumber": 64646015,
+  "blockNumber": 65329557,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
-  "version": 4,
+  "version": 6,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -19,7 +19,10 @@
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -69,27 +72,30 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x2BC3141AaeA1d84bcd557EeB543253fd9685c0C4",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
-          "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-          "0x4141Eb977a8646EC60C4c2891AEA645118183221",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x2BC3141AaeA1d84bcd557EeB543253fd9685c0C4",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
+          "tokenMessaging": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+          "creditMessaging": "0x4141Eb977a8646EC60C4c2891AEA645118183221",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xc2c3Cc203FB607f2f93e6A15f45556bc83620644",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "13271961174829283295",
-        "poolBalance": "1271545457000000000000",
+        "plannerFee": "30259308523113258",
+        "poolBalance": "1710010979000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "treasuryFee": 211512,
-        "tvl": "1153855166000000000000"
+        "treasuryFee": 805342,
+        "tvl": "1245578571000000000000"
       }
     },
     {
@@ -112,27 +118,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x288968ffF40543F168eAf29A54D5C0affD3C8df7",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
-          "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-          "0x4141Eb977a8646EC60C4c2891AEA645118183221",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x288968ffF40543F168eAf29A54D5C0affD3C8df7",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
+          "tokenMessaging": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+          "creditMessaging": "0x4141Eb977a8646EC60C4c2891AEA645118183221",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0x5D131cb99cE5642f3d539417A187a93EEae48177",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "20041910750159618423",
-        "poolBalance": 4714153046745,
+        "plannerFee": "346862827018495804",
+        "poolBalance": 12621142228200,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "treasuryFee": 866147516,
-        "tvl": 3770629010217
+        "treasuryFee": 2585389512,
+        "tvl": 9572670439765
       }
     },
     {
@@ -155,27 +164,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0xa81274AFac523D639DbcA2C32c1470f1600cCEBe",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
-          "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-          "0x4141Eb977a8646EC60C4c2891AEA645118183221",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0xa81274AFac523D639DbcA2C32c1470f1600cCEBe",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
+          "tokenMessaging": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+          "creditMessaging": "0x4141Eb977a8646EC60C4c2891AEA645118183221",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "16103875917889191755",
-        "poolBalance": 4449174985512,
+        "plannerFee": "56087345876298471",
+        "poolBalance": 10967515157977,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "treasuryFee": 477278363,
-        "tvl": 3995904563341
+        "treasuryFee": 1470829790,
+        "tvl": 9547683654710
       }
     },
     {
@@ -196,27 +208,30 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x6eC3EfD27d8b1070Fe96910EF416D54e845045c9",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
-          "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-          "0x4141Eb977a8646EC60C4c2891AEA645118183221",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x6eC3EfD27d8b1070Fe96910EF416D54e845045c9",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x4e8c9BaC25CEF251352aCe831270D564615b9Ce1",
+          "tokenMessaging": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
+          "creditMessaging": "0x4141Eb977a8646EC60C4c2891AEA645118183221",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xfe1e5Ff7FFE3672C085a4b1Dd6b95273c9164022",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": 0,
-        "poolBalance": "420075000000000000",
+        "poolBalance": "3070973294000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-        "treasuryFee": 0,
-        "tvl": "420075000000000000"
+        "treasuryFee": 45374,
+        "tvl": "3001565521000000000000"
       }
     }
   ],

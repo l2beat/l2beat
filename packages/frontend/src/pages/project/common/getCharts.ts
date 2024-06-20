@@ -2,7 +2,6 @@ import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   assert,
   ActivityApiResponse,
-  AssetType,
   EthereumAddress,
   L2CostsApiResponse,
   ProjectId,
@@ -83,10 +82,10 @@ export function getTokens(
   const compatibleTokenList = unifyTokensResponse(tokens)
 
   return compatibleTokenList
-    .map(({ assetId, usdValue, assetType, chain }) => {
+    .map(({ assetId, usdValue, source, chain }) => {
       const token = safeGetTokenByAssetId(assetId)
       let symbol = token?.symbol
-      if (symbol === 'USDC' && assetType === 'CBV') {
+      if (symbol === 'USDC' && source === 'canonical') {
         if (
           projectId.toString() === 'arbitrum' ||
           projectId.toString() === 'optimism'
@@ -110,7 +109,7 @@ export function getTokens(
           name,
           info: getTokenInfo({
             projectId,
-            assetType,
+            source,
             address,
             chain,
             symbol,
@@ -126,14 +125,14 @@ export function getTokens(
 
 function getTokenInfo({
   projectId,
-  assetType,
+  source,
   chain,
   symbol,
   address,
   isLayer2orLayer3,
 }: {
   projectId: ProjectId
-  assetType: AssetType
+  source: string
   chain: string
   symbol: string
   address: EthereumAddress | 'native'
@@ -141,7 +140,7 @@ function getTokenInfo({
 }): TokenInfo {
   if (!isLayer2orLayer3) {
     return {
-      type: 'regular',
+      source: 'regular',
       projectId: projectId.toString(),
       symbol,
       chain,
@@ -149,7 +148,7 @@ function getTokenInfo({
     }
   }
   return {
-    type: assetType,
+    source: source as 'canonical' | 'external' | 'native',
     projectId: projectId.toString(),
     symbol,
     chain,

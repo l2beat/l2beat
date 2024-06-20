@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArbitrumActorsHandler } from './ArbitrumActorsHandler'
 
 describe(ArbitrumActorsHandler.name, () => {
@@ -16,16 +16,16 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_VALIDATORS_LOGS,
-      getDebugTransactionTrace: async (transactionHash: Hash256) => {
+      getDebugTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_VALIDATORS_TRACES[transactionHash.toString()],
         )
       },
     })
 
-    const response = await handler.execute(provider, contractAddress, 0)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'validators',
@@ -45,16 +45,16 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_BATCHPOSTERS_LOGS,
-      getDebugTransactionTrace: async (transactionHash: Hash256) => {
+      getDebugTrace: async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_BATCHPOSTERS_TRACES[transactionHash.toString()],
         )
       },
     })
 
-    const response = await handler.execute(provider, contractAddress, 0)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'batchPosters',

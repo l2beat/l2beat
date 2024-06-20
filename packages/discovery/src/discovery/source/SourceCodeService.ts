@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { IProvider } from '../provider/IProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'
 import { ContractSource, processSources } from './processSources'
@@ -22,15 +22,14 @@ export interface ContractSources {
 }
 
 export class SourceCodeService {
-  constructor(private readonly provider: DiscoveryProvider) {}
-
   async getSources(
+    provider: IProvider,
     address: EthereumAddress,
     implementations?: EthereumAddress[],
   ): Promise<ContractSources> {
     const addresses = [address, ...(implementations ?? [])]
     const metadata = await Promise.all(
-      addresses.map((x) => this.provider.getMetadata(x)),
+      addresses.map((x) => provider.getSource(x)),
     )
 
     const name = getLegacyDerivedName(metadata.map((x) => x.name))

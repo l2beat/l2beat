@@ -3,118 +3,127 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { IProvider } from '../provider/IProvider'
 import { FunctionSelectorDecoder } from './FunctionSelectorDecoder'
-import { addressToBytes32 } from './address'
 
 describe(FunctionSelectorDecoder.name, () => {
-  const EIP2535_CALLDATA = Bytes.fromHex('0x52ef6b2c')
+  const EIP2535_METHOD =
+    'function facetAddresses() external view returns (address[] memory facetAd)'
   const EIP1967_IMPLEMENTATION_SLOT = Bytes.fromHex(
     '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc',
   )
 
-  const BLOCK_NUMBER = 1234
-
-  const abiCoder = utils.defaultAbiCoder
+  const callMethodStub = async <T>(
+    _address: EthereumAddress,
+    abi: string | utils.FunctionFragment,
+  ) => {
+    const coder = new utils.Interface([abi])
+    const functionName = Object.values(coder.functions)[0]?.name
+    assert(functionName !== undefined)
+    // This is a hack to get around the problem with detecting EIP2535 proxies
+    try {
+      return coder.decodeFunctionResult(
+        functionName,
+        coder.encodeFunctionData(functionName, [0]),
+      ) as T
+    } catch {
+      return undefined
+    }
+  }
 
   describe(FunctionSelectorDecoder.prototype.fetchTargets.name, () => {
     it('can fetch a single target address that is not a proxy', async () => {
       const target = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenCalledTimes(1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
 
     it('can fetch a two target addresses that are not a proxy', async () => {
       const target1 = EthereumAddress.random()
       const target2 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
+      expect(provider.getSource).toHaveBeenCalledTimes(2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, target2)
     })
 
     it('can fetch a single target address that is an eip1967 proxy', async () => {
       const target = EthereumAddress.random()
       const implementation = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn()
-          .given(target, EIP1967_IMPLEMENTATION_SLOT, BLOCK_NUMBER)
-          .returnsOnce(addressToBytes32(implementation))
-          .returns(Bytes.fromHex('0'.repeat(66))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(66))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn()
+          .given(target, EIP1967_IMPLEMENTATION_SLOT)
+          .returnsOnce(implementation)
+          .returns(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, implementation)
+      expect(provider.getSource).toHaveBeenCalledTimes(2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, implementation)
     })
 
     it('can fetch a single target address that is an eip2535 proxy', async () => {
       const target = EthereumAddress.random()
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().returns(Bytes.fromHex('0'.repeat(66))),
-        call: mockFn()
-          .given(target, EIP2535_CALLDATA, BLOCK_NUMBER)
-          .resolvesToOnce(
-            abiCoder.encode(
-              ['address[]'],
-              [[implementation1, implementation2]],
-            ),
-          )
-          .resolvesTo(Bytes.fromHex('0'.repeat(66))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().returns(EthereumAddress.ZERO),
+        callMethod: mockFn()
+          .given(target, EIP2535_METHOD, [])
+          .resolvesToOnce([implementation1, implementation2])
+          .executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(3)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation2)
+      expect(provider.getSource).toHaveBeenCalledTimes(3)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation2)
     })
 
     it('can fetch a two target addresses that are both a eip1967 proxy', async () => {
@@ -122,30 +131,30 @@ describe(FunctionSelectorDecoder.name, () => {
       const target2 = EthereumAddress.random()
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT, BLOCK_NUMBER)
-          .returnsOnce(addressToBytes32(implementation1))
-          .given(target2, EIP1967_IMPLEMENTATION_SLOT, BLOCK_NUMBER)
-          .returnsOnce(addressToBytes32(implementation2))
-          .resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn()
+          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
+          .returnsOnce(implementation1)
+          .given(target2, EIP1967_IMPLEMENTATION_SLOT)
+          .returnsOnce(implementation2)
+          .resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(4)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation2)
+      expect(provider.getSource).toHaveBeenCalledTimes(4)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, target2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation2)
     })
 
     it('can fetch a two target addresses that are both a eip2535 proxy', async () => {
@@ -155,42 +164,32 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2 = EthereumAddress.random()
       const implementation3 = EthereumAddress.random()
       const implementation4 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().returns(Bytes.fromHex('0'.repeat(66))),
-        call: mockFn()
-          .given(target1, EIP2535_CALLDATA, BLOCK_NUMBER)
-          .resolvesToOnce(
-            abiCoder.encode(
-              ['address[]'],
-              [[implementation1, implementation2]],
-            ),
-          )
-          .given(target2, EIP2535_CALLDATA, BLOCK_NUMBER)
-          .resolvesToOnce(
-            abiCoder.encode(
-              ['address[]'],
-              [[implementation3, implementation4]],
-            ),
-          )
-          .resolvesTo(Bytes.fromHex('0'.repeat(66))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().returns(EthereumAddress.ZERO),
+        callMethod: mockFn()
+          .given(target1, EIP2535_METHOD, [])
+          .resolvesToOnce([implementation1, implementation2])
+          .given(target2, EIP2535_METHOD, [])
+          .resolvesToOnce([implementation3, implementation4])
+          .executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(6)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation3)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(6, implementation4)
+      expect(provider.getSource).toHaveBeenCalledTimes(6)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, target2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(5, implementation3)
+      expect(provider.getSource).toHaveBeenNthCalledWith(6, implementation4)
     })
 
     it('can fetch a two target addresses that are an eip1967 and an eip2535', async () => {
@@ -199,37 +198,32 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
       const implementation3 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT, BLOCK_NUMBER)
-          .returnsOnce(addressToBytes32(implementation1))
-          .returns(Bytes.fromHex('0'.repeat(66))),
-        call: mockFn()
-          .given(target2, EIP2535_CALLDATA, BLOCK_NUMBER)
-          .resolvesToOnce(
-            abiCoder.encode(
-              ['address[]'],
-              [[implementation2, implementation3]],
-            ),
-          )
-          .resolvesTo(Bytes.fromHex('0'.repeat(66))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn()
+          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
+          .returnsOnce(implementation1)
+          .returns(EthereumAddress.ZERO),
+        callMethod: mockFn()
+          .given(target2, EIP2535_METHOD, [])
+          .resolvesToOnce([implementation2, implementation3])
+          .executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
 
-      expect(provider.getMetadata).toHaveBeenCalledTimes(5)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, implementation2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation3)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation1)
+      expect(provider.getSource).toHaveBeenCalledTimes(5)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, target2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, implementation2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation3)
+      expect(provider.getSource).toHaveBeenNthCalledWith(5, implementation1)
     })
   })
 
@@ -246,88 +240,88 @@ describe(FunctionSelectorDecoder.name, () => {
 
     it('can decode a single selector that is already known', async () => {
       const target = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclA, FunctionDeclB],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
       expect(result).toEqual(FunctionA)
-      expect(provider.getMetadata).toHaveBeenCalledTimes(1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenCalledTimes(1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
 
     it('handles decoding a wrong selector in a contract that is already known', async () => {
       const target = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
       expect(result).toEqual(FunctionSigA)
-      expect(provider.getMetadata).toHaveBeenCalledTimes(1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenCalledTimes(1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
 
     it('can decode a single selector that is not known', async () => {
       const target = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
       expect(result).toEqual(FunctionSigA)
-      expect(provider.getMetadata).toHaveBeenCalledTimes(1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenCalledTimes(1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
 
     it('handles decoding a wrong selector in a contract that is not known', async () => {
       const target = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-        getMetadata: mockFn().resolvesTo({
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+        callMethod: mockFn().executes(callMethodStub),
+        getSource: mockFn().resolvesTo({
           name: 'name',
           isVerified: true,
           abi: [FunctionDeclB],
           source: 'name',
         }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
 
       expect(result).toEqual(FunctionSigA)
-      expect(provider.getMetadata).toHaveBeenCalledTimes(1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target)
+      expect(provider.getSource).toHaveBeenCalledTimes(1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target)
     })
 
     it('can decoder selectors of two target addresses that are an eip1967 and an eip2535', async () => {
@@ -336,21 +330,16 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
       const implementation3 = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn()
-          .given(target1, EIP1967_IMPLEMENTATION_SLOT, BLOCK_NUMBER)
-          .returnsOnce(addressToBytes32(implementation1))
-          .returns(Bytes.fromHex('0'.repeat(66))),
-        call: mockFn()
-          .given(target2, EIP2535_CALLDATA, BLOCK_NUMBER)
-          .resolvesToOnce(
-            abiCoder.encode(
-              ['address[]'],
-              [[implementation2, implementation3]],
-            ),
-          )
-          .resolvesTo(Bytes.fromHex('0'.repeat(66))),
-        getMetadata: mockFn()
+      const provider = mockObject<IProvider>({
+        getStorageAsAddress: mockFn()
+          .given(target1, EIP1967_IMPLEMENTATION_SLOT)
+          .returnsOnce(implementation1)
+          .returns(EthereumAddress.ZERO),
+        callMethod: mockFn()
+          .given(target2, EIP2535_METHOD, [])
+          .resolvesToOnce([implementation2, implementation3])
+          .executes(callMethodStub),
+        getSource: mockFn()
           .given(target1)
           .resolvesToOnce({
             name: 'name',
@@ -393,7 +382,7 @@ describe(FunctionSelectorDecoder.name, () => {
             source: 'name',
           }),
       })
-      const decoder = new FunctionSelectorDecoder(provider, BLOCK_NUMBER)
+      const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1])
 
@@ -410,12 +399,12 @@ describe(FunctionSelectorDecoder.name, () => {
       expect(result4).toEqual(FunctionA)
       expect(result5).toEqual(FunctionB)
       expect(result6).toEqual(FunctionC)
-      expect(provider.getMetadata).toHaveBeenCalledTimes(5)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(1, target1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(2, implementation1)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(3, target2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(4, implementation2)
-      expect(provider.getMetadata).toHaveBeenNthCalledWith(5, implementation3)
+      expect(provider.getSource).toHaveBeenCalledTimes(5)
+      expect(provider.getSource).toHaveBeenNthCalledWith(1, target1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(2, implementation1)
+      expect(provider.getSource).toHaveBeenNthCalledWith(3, target2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(4, implementation2)
+      expect(provider.getSource).toHaveBeenNthCalledWith(5, implementation3)
     })
   })
 })

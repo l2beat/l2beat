@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927721,
   "configHash": "0x54dc07a6df929a8b9aa383c904b50b54cf1e8d36588b9c27c71fad7d2f845d80",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Inbox",
@@ -199,6 +199,9 @@
       "name": "RollupProxy",
       "address": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
       "template": "orbitstack/RollupProxy",
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

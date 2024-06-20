@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20061811,
   "configHash": "0xe49d3b0cd6b5050b2f2e9a1b0b7488acbc7fa50c887152525fc359af317d3c66",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Governance",
@@ -263,6 +263,9 @@
       "name": "Matter Labs Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "template": "GnosisSafe",
+      "descriptions": [
+        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+      ],
       "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",

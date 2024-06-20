@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927696,
   "configHash": "0x13459d3d441c15286942077c1d443e8c8e890e3b2a9bb3dad48a509d9b138acb",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1StandardBridge",

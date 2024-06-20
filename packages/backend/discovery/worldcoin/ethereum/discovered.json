@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976298,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",

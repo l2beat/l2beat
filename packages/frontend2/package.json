@@ -16,6 +16,7 @@
   "dependencies": {
     "@l2beat/backend": "*",
     "@l2beat/config": "*",
+    "@l2beat/database": "*",
     "@l2beat/shared-pure": "*",
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-tooltip": "^1.0.7",

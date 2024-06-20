@@ -15,6 +15,7 @@ import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const noBridge = {
+  id: 'no-bridge',
   kind: DaBridgeKind.NoBridge,
   display: {
     name: 'No Bridge',

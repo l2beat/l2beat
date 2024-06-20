@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976230,
   "configHash": "0xbf8a75c2324bf6c697e8835ddf2906d4c888f2d365a9eadc973c59039013627c",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -102,6 +102,9 @@
       "name": "RollupProxy",
       "address": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
       "template": "orbitstack/RollupProxy",
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "AggregationRouterV4",

@@ -1,10 +1,18 @@
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { DiscoveryProvider } from '../DiscoveryProvider'
 import { MulticallConfig, MulticallRequest, MulticallResponse } from './types'
+
+export interface CallProvider {
+  call(
+    address: EthereumAddress,
+    data: Bytes,
+    blockNumber: number,
+  ): Promise<Bytes>
+}
 
 export class MulticallClient {
   constructor(
-    private readonly provider: DiscoveryProvider,
+    private readonly provider: CallProvider,
     private readonly config: MulticallConfig,
   ) {}
 
@@ -38,23 +46,14 @@ export class MulticallClient {
     requests: MulticallRequest[],
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
-    try {
-      if (this.config.sinceBlock > blockNumber) {
-        return this.executeIndividual(requests, blockNumber)
-      } else {
-        const batches = toBatches(requests, this.config.batchSize)
-        const batchedResults = await Promise.all(
-          batches.map((batch) => this.executeBatch(batch, blockNumber)),
-        )
-        return batchedResults.flat()
-      }
-    } catch (e) {
-      const ethersError = parseEthersError(e)
-
-      if (ethersError) {
-        throw ethersError
-      }
-      throw e
+    if (this.config.sinceBlock > blockNumber) {
+      return this.executeIndividual(requests, blockNumber)
+    } else {
+      const batches = toBatches(requests, this.config.batchSize)
+      const batchedResults = await Promise.all(
+        batches.map((batch) => this.executeBatch(batch, blockNumber)),
+      )
+      return batchedResults.flat()
     }
   }
 

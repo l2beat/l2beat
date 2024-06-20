@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, ethers, providers } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import {
   ConstructorArgsHandler,
   decodeConstructorArgs,
@@ -30,13 +30,9 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<DiscoveryProvider>({
-        getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
-            txHash,
-          ),
-        getTransaction:
-          mockFn<DiscoveryProvider['getTransaction']>().resolvesTo(transaction),
+      const provider = mockObject<IProvider>({
+        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
+        getTransaction: mockFn().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -51,9 +47,7 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
       expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
 
@@ -69,13 +63,9 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<DiscoveryProvider>({
-        getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().resolvesTo(
-            txHash,
-          ),
-        getTransaction:
-          mockFn<DiscoveryProvider['getTransaction']>().resolvesTo(transaction),
+      const provider = mockObject<IProvider>({
+        getDeployment: mockFn().resolvesTo({ transactionHash: txHash }),
+        getTransaction: mockFn().resolvesTo(transaction),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -91,9 +81,7 @@ describe(ConstructorArgsHandler.name, () => {
           someNumber: '0',
         },
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress)
       expect(provider.getTransaction).toHaveBeenOnlyCalledWith(txHash)
     })
 
@@ -128,14 +116,11 @@ describe(ConstructorArgsHandler.name, () => {
 
       const contractAddress = EthereumAddress.random()
 
-      const provider = mockObject<DiscoveryProvider>({
-        getContractDeploymentTx:
-          mockFn<DiscoveryProvider['getContractDeploymentTx']>().rejectsWith(
-            'error',
-          ), // We could cover the error during decode but any exception within the block will skip the heruistic approach
-        getConstructorArgs: mockFn<
-          DiscoveryProvider['getConstructorArgs']
-        >().resolvesTo(sampleCtorEncodedArgs),
+      const provider = mockObject<IProvider>({
+        getDeployment: mockFn().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
+        getSource: mockFn().resolvesTo({
+          constructorArguments: sampleCtorEncodedArgs,
+        }),
       })
 
       const response = await handler.execute(provider, contractAddress)
@@ -150,12 +135,8 @@ describe(ConstructorArgsHandler.name, () => {
           '0',
         ],
       })
-      expect(provider.getContractDeploymentTx).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      ) // Assert it tried to use heuristic
-      expect(provider.getConstructorArgs).toHaveBeenOnlyCalledWith(
-        contractAddress,
-      )
+      expect(provider.getDeployment).toHaveBeenOnlyCalledWith(contractAddress) // Assert it tried to use heuristic
+      expect(provider.getSource).toHaveBeenOnlyCalledWith(contractAddress)
     })
   })
 })

@@ -1,21 +1,12 @@
 import {
-  AddressAnalyzer,
   ConfigReader,
-  DiscoveryEngine,
+  DiscoveryChainConfig,
   DiscoveryLogger,
-  DiscoveryProvider,
-  EtherscanLikeClient,
-  HandlerExecutor,
   HttpClient,
-  MulticallClient,
-  ProviderWithCache,
-  ProxyDetector,
-  SourceCodeService,
-  TemplateService,
+  DiscoveryCache as IDiscoveryCache,
+  getDiscoveryEngine,
 } from '@l2beat/discovery'
-import { providers } from 'ethers'
 
-import { UpdateMonitorChainConfig } from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -26,86 +17,30 @@ export function createDiscoveryRunner(
   configReader: ConfigReader,
   peripherals: Peripherals,
   discoveryLogger: DiscoveryLogger,
-  chainConfig: UpdateMonitorChainConfig,
+  chainConfigs: DiscoveryChainConfig[],
+  chain: string,
+  enableCache: boolean,
 ) {
-  const discoveryProvider = getDiscoveryProvider(
-    http,
-    discoveryLogger,
-    peripherals,
-    chainConfig,
+  const discoveryCacheRepository = peripherals.getRepository(
+    DiscoveryCacheRepository,
   )
-
-  const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
-  const sourceCodeService = new SourceCodeService(discoveryProvider)
-  const multicallClient = new MulticallClient(
-    discoveryProvider,
-    chainConfig.multicall,
+  let discoveryCache: IDiscoveryCache = new DiscoveryCache(
+    discoveryCacheRepository,
   )
-  const handlerExecutor = new HandlerExecutor(
-    discoveryProvider,
-    multicallClient,
-    discoveryLogger,
-  )
-  const templateService = new TemplateService()
-  const addressAnalyzer = new AddressAnalyzer(
-    discoveryProvider,
-    proxyDetector,
-    sourceCodeService,
-    handlerExecutor,
-    templateService,
-    discoveryLogger,
-  )
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-  const discoveryRunner = new DiscoveryRunner(
-    discoveryProvider,
-    discoveryEngine,
-    configReader,
-    chainConfig.name,
-  )
-
-  return discoveryRunner
-}
-
-function getDiscoveryProvider(
-  http: HttpClient,
-  discoveryLogger: DiscoveryLogger,
-  peripherals: Peripherals,
-  chainConfig: UpdateMonitorChainConfig,
-) {
-  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const eventProvider =
-    chainConfig.eventRpcUrl === undefined
-      ? provider
-      : new providers.StaticJsonRpcProvider(chainConfig.eventRpcUrl)
-  const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
-    http,
-    chainConfig.etherscanUrl,
-    chainConfig.etherscanApiKey,
-    chainConfig.etherscanUnsupported,
-  )
-
-  if (chainConfig.enableCache) {
-    const discoveryCacheRepository = peripherals.getRepository(
-      DiscoveryCacheRepository,
-    )
-    const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
-    return new ProviderWithCache(
-      provider,
-      eventProvider,
-      etherscanLikeClient,
-      discoveryLogger,
-      chainConfig.name,
-      discoveryCache,
-      chainConfig.rpcGetLogsMaxRange,
-      chainConfig.reorgSafeDepth,
-    )
+  if (!enableCache) {
+    discoveryCache = {
+      get: async () => undefined,
+      set: async () => {},
+    }
   }
 
-  return new DiscoveryProvider(
-    provider,
-    eventProvider,
-    etherscanLikeClient,
+  const { allProviders, discoveryEngine } = getDiscoveryEngine(
+    chainConfigs,
+    discoveryCache,
+    http,
     discoveryLogger,
-    chainConfig.rpcGetLogsMaxRange,
+    chain,
   )
+
+  return new DiscoveryRunner(allProviders, discoveryEngine, configReader, chain)
 }

@@ -67,6 +67,7 @@ export function gatherAddressesFromUpgradeability(
     case 'Custom':
     case 'CustomWithoutAdmin':
     case 'EIP1967 proxy':
+    case 'LightLink proxy':
     case 'Polygon proxy':
     case 'ZeppelinOS proxy':
     case 'StarkWare diamond':

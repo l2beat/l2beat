@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20110288,
   "configHash": "0x8c1fe2ea35e3e9d3ce2b472c13c894127ac3703d838d0c97bbbe56232de0804b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ConduitMultisig",

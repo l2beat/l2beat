@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20074008,
   "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -172,7 +172,7 @@
         "currentValidatorSetSize": 105,
         "currentValidatorSetTotalStake": "3667273775969498321200984057",
         "delegationEnabled": true,
-        "delegatorsReward": [],
+        "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
         "epoch": 63737,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
@@ -189,7 +189,12 @@
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
         "NFTCounter": 173,
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-        "ownerOf": [],
+        "ownerOf": [
+          "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
+          "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF",
+          "0x62a8029CDAf8576e337b86187B82474EFcE712d8",
+          "0xf748a187303940856A367D57Dc45D1ac4A597305"
+        ],
         "prevBlockInterval": 1,
         "proposerBonus": 10,
         "proxyType": 2,
@@ -203,7 +208,7 @@
         "totalRewards": "201179489204211582010647007",
         "totalRewardsLiquidated": "104583549104802024285393594",
         "totalStaked": "10818056051541609241833718",
-        "validatorReward": [],
+        "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
           "amount": "3667273775969498321200984057",
@@ -462,15 +467,19 @@
     "0x0000000000000000000000000000000000000000",
     "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
     "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
+    "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
     "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
     "0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
+    "0x62a8029CDAf8576e337b86187B82474EFcE712d8",
     "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
     "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
     "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
+    "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF",
     "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
     "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-    "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
+    "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
+    "0xf748a187303940856A367D57Dc45D1ac4A597305"
   ],
   "abis": {
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [

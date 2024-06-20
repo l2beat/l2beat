@@ -3,9 +3,8 @@ import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
 import { Semver, parseSemver } from '../../../utils/semver'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
+
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implemntation-slot")
@@ -13,28 +12,18 @@ const IMPLEMENTATION_SLOT = Bytes.fromHex(
   '0x177667240aeeea7e35eabe3a35e18306f336219e1386f7710a6bf8783f761b24',
 )
 
-async function getImplementation(
-  provider: DiscoveryProvider,
-  address: EthereumAddress,
-  blockNumber: number,
-): Promise<EthereumAddress> {
-  return bytes32ToAddress(
-    await provider.getStorage(address, IMPLEMENTATION_SLOT, blockNumber),
-  )
-}
-
 // keccak256("'StarkWare2020.CallProxy.Implemntation.Slot'")
 const CALL_IMPLEMENTATION_SLOT = Bytes.fromHex(
   '0x7184681641399eb4ad2fdb92114857ee6ff239f94ad635a1779978947b8843be',
 )
 
 async function getCallImplementation(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<EthereumAddress | undefined> {
-  const callImplementation = bytes32ToAddress(
-    await provider.getStorage(address, CALL_IMPLEMENTATION_SLOT, blockNumber),
+  const callImplementation = await provider.getStorageAsAddress(
+    address,
+    CALL_IMPLEMENTATION_SLOT,
   )
 
   if (callImplementation === EthereumAddress.ZERO) return
@@ -48,15 +37,10 @@ const UPGRADE_DELAY_SLOT = Bytes.fromHex(
 )
 
 async function getUpgradeDelay(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<number> {
-  const value = await provider.getStorage(
-    address,
-    UPGRADE_DELAY_SLOT,
-    blockNumber,
-  )
+  const value = await provider.getStorage(address, UPGRADE_DELAY_SLOT)
   return BigNumber.from(value.toString()).toNumber()
 }
 
@@ -66,29 +50,21 @@ const FINALIZED_STATE_SLOT = Bytes.fromHex(
 )
 
 async function getFinalizedState(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<boolean> {
-  const stored = await provider.getStorage(
-    address,
-    FINALIZED_STATE_SLOT,
-    blockNumber,
-  )
+  const stored = await provider.getStorage(address, FINALIZED_STATE_SLOT)
   return !BigNumber.from(stored.toString()).eq(0)
 }
 
 async function getProxyVersion(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<Semver | undefined> {
-  const versionString = await getCallResult<string>(
-    provider,
+  const versionString = await provider.callMethod<string>(
     address,
     'function PROXY_VERSION() view returns (string)',
     [],
-    blockNumber,
   )
 
   if (!versionString) {
@@ -108,26 +84,28 @@ async function getProxyVersion(
 }
 
 export async function detectStarkWareProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const implementation = await getImplementation(provider, address, blockNumber)
+  const implementation = await provider.getStorageAsAddress(
+    address,
+    IMPLEMENTATION_SLOT,
+  )
   if (implementation === EthereumAddress.ZERO) {
     return
   }
 
-  const proxyVersion = await getProxyVersion(provider, address, blockNumber)
+  const proxyVersion = await getProxyVersion(provider, address)
   if (!proxyVersion) {
     return undefined
   }
 
   const [callImplementation, upgradeDelay, isFinal, proxyGovernance] =
     await Promise.all([
-      getCallImplementation(provider, address, blockNumber),
-      getUpgradeDelay(provider, address, blockNumber),
-      getFinalizedState(provider, address, blockNumber),
-      getProxyGovernance(provider, address, blockNumber, proxyVersion),
+      getCallImplementation(provider, address),
+      getUpgradeDelay(provider, address),
+      getFinalizedState(provider, address),
+      getProxyGovernance(provider, address, proxyVersion),
     ])
 
   const diamond = await getStarkWareDiamond(
@@ -137,7 +115,6 @@ export async function detectStarkWareProxy(
     upgradeDelay,
     isFinal,
     proxyGovernance,
-    blockNumber,
   )
 
   if (diamond) {
@@ -168,25 +145,20 @@ const coder = new utils.Interface([
 
 // if returns false, it means that the proxy is not a StarkWare diamond
 async function getStarkWareDiamond(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
   implementation: EthereumAddress,
   upgradeDelay: number,
   isFinal: boolean,
   proxyGovernance: EthereumAddress[],
-  blockNumber: number,
 ): Promise<ProxyDetails | false> {
-  const upgrades = await provider.getLogs(
-    address,
+  // TODO: (sz-piotr) new provider Promise.all
+  const upgrades = await provider.getLogs(address, [
     [
-      [
-        coder.getEventTopic('Upgraded'),
-        coder.getEventTopic('ImplementationUpgraded'),
-      ],
+      coder.getEventTopic('Upgraded'),
+      coder.getEventTopic('ImplementationUpgraded'),
     ],
-    0,
-    blockNumber,
-  )
+  ])
 
   const lastUpgrade = upgrades.at(-1)
   if (!lastUpgrade) {
@@ -219,12 +191,9 @@ async function getStarkWareDiamond(
       // so we cannot get the info from their tx data
       // we need to find the ImplementationAdded event that holds the initializer
       console.log('Trying to find corresponding ImplementationAdded event')
-      const implementationsAdded = await provider.getLogs(
-        address,
-        [coder.getEventTopic('ImplementationAdded')],
-        0,
-        blockNumber,
-      )
+      const implementationsAdded = await provider.getLogs(address, [
+        coder.getEventTopic('ImplementationAdded'),
+      ])
       const correspondingImplementationAdded = implementationsAdded.find(
         (log) => {
           return log.topics[1] === lastUpgrade.topics[1]
@@ -254,12 +223,10 @@ async function getStarkWareDiamond(
       break
     }
     const facet = EthereumAddress('0x' + bytes32.slice(24))
-    const name = await getCallResult<string>(
-      provider,
+    const name = await provider.callMethod<string>(
       facet,
       'function identify() view returns (string)',
       [],
-      blockNumber,
     )
     if (!name) {
       break

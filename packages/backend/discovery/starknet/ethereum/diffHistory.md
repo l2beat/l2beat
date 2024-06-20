@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe0ddaa69e1e050f4e57073fe363b26e775b79cd7
+
+# Diff at Wed, 19 Jun 2024 09:19:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8fa0a456becead1002fbe41b5a2a1fee09a9dcd2 block: 20084426
+- current block number: 20124846
+
+## Description
+
+The Dai Gateway for starknet is paused by Maker, preventing deposits and forced withdrawals in the contract.
+
+## Watched changes
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: None
+      values.isOpen:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0xf7441a8727825d8791f09a020f6a8e4595a25ac4
 
 # Diff at Thu, 13 Jun 2024 17:36:10 GMT:

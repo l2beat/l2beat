@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ContractMetadata } from '../provider/DiscoveryProvider'
+import { type ContractSource as IContractSource } from '../provider/IProvider'
 import { decodeEtherscanSource } from './sourceToEntries'
 
 export interface ContractSource {
@@ -11,14 +11,19 @@ export interface ContractSource {
 
 export function processSources(
   address: EthereumAddress,
-  { name, source, isVerified, solidityVersion }: Omit<ContractMetadata, 'abi'>,
+  {
+    name,
+    source,
+    isVerified,
+    solidityVersion,
+  }: Omit<IContractSource, 'abi' | 'constructorArguments'>,
 ): ContractSource {
   let files: Record<string, string> = {}
   let remappings: string[] = []
 
   if (isVerified) {
     try {
-      const decodedSource = decodeEtherscanSource(name, source)
+      const decodedSource = decodeEtherscanSource(name, source, solidityVersion)
       files = Object.fromEntries(decodedSource.sources)
       remappings = decodedSource.remappings
     } catch (e) {

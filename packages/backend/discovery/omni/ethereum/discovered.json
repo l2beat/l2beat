@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "BridgeGovernance",

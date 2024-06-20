@@ -1,12 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { getCallResult } from './getCallResult'
+import { IProvider } from '../provider/IProvider'
 
 export async function getModules(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<EthereumAddress[] | undefined> {
   // Sentinel value used by Gnosis Safe to indicate the beginning and
   // the end of the circular linked list.
@@ -18,13 +16,10 @@ export async function getModules(
   const modules: EthereumAddress[] = []
   do {
     // Result: [modules[], next]
-    const result = await getCallResult<[string[], string]>(
-      provider,
+    const result = await provider.callMethod<[string[], string]>(
       address,
       'function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)',
       [next, PAGINATION_SIZE],
-      blockNumber,
-      true,
     )
 
     if (result === undefined) {
