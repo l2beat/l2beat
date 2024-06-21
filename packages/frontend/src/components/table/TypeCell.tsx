@@ -4,6 +4,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
+  ArcologyIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
@@ -12,7 +13,6 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
-  ArcologyIcon,
 } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 

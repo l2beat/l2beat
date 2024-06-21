@@ -2,6 +2,7 @@ import React from 'react'
 
 import {
   ArbitrumIcon,
+  ArcologyIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
@@ -10,7 +11,6 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
-  ArcologyIcon,
 } from './icons'
 
 export function ScalingLegend() {

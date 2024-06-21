@@ -127,6 +127,7 @@ export const layer2s: Layer2[] = [
   ancient,
   apex,
   arbitrum,
+  arcology,
   astarzkevm,
   axonum,
   aztecV1,
@@ -241,7 +242,6 @@ export const layer2s: Layer2[] = [
   zksyncera,
   zksynclite,
   zora,
-  arcology,
 ]
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
