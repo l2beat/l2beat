@@ -118,7 +118,7 @@ export function ContractsSection(props: ContractsSectionProps) {
               <div key={chainName}>
                 <h3 className="font-bold">
                   The system consists of the following smart contracts on{' '}
-                  <span className="italic">{chainName}:</span>
+                  {chainName}:
                 </h3>
                 <div className="my-4">
                   {unchangedContracts.map((contract, i) => (
