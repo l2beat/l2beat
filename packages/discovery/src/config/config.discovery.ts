@@ -34,6 +34,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dryRun: cli.dryRun,
       dev: cli.dev,
       printStats: cli.printStats,
+      saveSources: cli.saveSources,
       blockNumber: cli.blockNumber,
       sourcesFolder: cli.sourcesFolder,
       flatSourcesFolder: cli.flatSourcesFolder,

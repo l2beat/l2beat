@@ -16,6 +16,7 @@ export interface DiscoveryModuleConfig {
   readonly dryRun?: boolean
   readonly dev?: boolean
   readonly printStats?: boolean
+  readonly saveSources?: boolean
   readonly blockNumber?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string

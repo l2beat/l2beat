@@ -52,6 +52,7 @@ export function discover(
     dryRun: config.dryRun === true,
     dev: config.dev === true,
     printStats: config.printStats === true,
+    saveSources: config.saveSources === true,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,

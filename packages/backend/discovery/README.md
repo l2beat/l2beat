@@ -4,6 +4,8 @@
 - `yarn discover [chain] [project] --block-number=<block_number>` run discovery on a specific block number
 - `yarn discover [chain] [project] --dry-run` check simulated update-monitor output
 - `yarn discover [chain] [project] --dev` run discovery on the same block number as in discovered.json (useful for development)
+- `yarn discover [chain] [project] --save-sources` save raw sources in `.code`
+- `yarn discover [chain] [project] --stats` prints provider statistics at the end of the discovery
 - `yarn invert [chain] [project]` print addresses and their functions
 - `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
 - `yarn discover:single [chain] [address]` run a discovery on the address (no config needed, useful for experimenting)
