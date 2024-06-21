@@ -53,7 +53,7 @@ export class L2CostsRepository extends BaseRepository {
   ): Promise<L2CostsRecordWithProjectId[]> {
     const [from, to] = timeRange
     const knex = await this.knex()
-    const query = knex('l2_costs')
+    const rows = await knex('l2_costs')
       .where('timestamp', '>=', from.toDate())
       .andWhere('timestamp', '<=', to.toDate())
       .join(
@@ -64,15 +64,6 @@ export class L2CostsRepository extends BaseRepository {
       .distinct('tx_hash')
       .select('tracked_txs_configs.project_id', 'l2_costs.*')
       .orderBy('timestamp', 'asc')
-
-    const rows = await query
-    const sql = query.toSQL()
-
-    console.dir({
-      type: 'Legacy',
-      sql: sql.sql,
-      params: sql.bindings,
-    })
 
     return rows.map(toRecordWithProjectId)
   }
