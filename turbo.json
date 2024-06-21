@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["TEST_DB_URL", "CI"],
   "globalDependencies": ["tsconfig.json"],
   "tasks": {
     "build": {
@@ -15,6 +14,7 @@
       "inputs": ["**/*.ts", "**/*.tsx"]
     },
     "test": {
+      "env": ["TEST_DB_URL", "CI"],
       "dependsOn": ["^build", "db:generate"],
       "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
     },
