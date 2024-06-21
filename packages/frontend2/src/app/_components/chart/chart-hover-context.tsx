@@ -14,7 +14,7 @@ export interface ChartHoverContextProviderParams<T> {
 
 interface Position {
   left: number;
-  bottom: Record<number, number>;
+  bottom: (number | null)[];
 }
 
 export interface ChartHoverContextValue<T> {

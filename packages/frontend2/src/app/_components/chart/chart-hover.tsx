@@ -62,15 +62,16 @@ export function ChartHover() {
       >
         {Object.entries(position?.bottom ?? {}).map(([index, bottom]) => {
           const style = valuesStyle[Number(index)]?.point;
+          if (bottom === null || style === undefined) return null;
           return (
             <div
               key={index}
               className={cn(
                 "absolute z-40 -left-[3px]",
                 milestone && POINT_CLASS_NAMES.milestone.className,
-                !milestone && style && POINT_CLASS_NAMES[style].className
+                !milestone && POINT_CLASS_NAMES[style].className
               )}
-              style={{ bottom }}
+              style={{ bottom: bottom - 4 }}
             />
           );
         })}
