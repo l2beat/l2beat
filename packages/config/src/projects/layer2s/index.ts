@@ -28,6 +28,7 @@ import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
+import { fhenix } from './fhenix'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -152,6 +153,7 @@ export const layer2s: Layer2[] = [
   edgeless,
   ethernity,
   everclear,
+  fhenix,
   form,
   frame,
   fraxtal,
