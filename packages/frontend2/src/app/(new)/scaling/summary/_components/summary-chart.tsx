@@ -9,6 +9,7 @@ import { ChartTimeRangeControls } from "~/app/_components/chart/controls/chart-t
 import { getEntriesByDays } from "~/app/_components/chart/utils/get-entries-by-days";
 import { PercentChange } from "~/app/_components/percent-change";
 import { RadioGroup, RadioGroupItem } from "~/app/_components/radio-group";
+import { useLocalStorage } from "~/hooks/use-local-storage";
 import { formatRange, formatTimestamp } from "~/utils/dates";
 import { formatCurrency, formatCurrencyExactValue } from "~/utils/format";
 import { getPercentageChange } from "~/utils/get-percentage-change";
@@ -24,12 +25,11 @@ interface Props {
   milestones: Milestone[];
 }
 export function SummaryChart({ data, milestones }: Props) {
-  const [timeRange, setTimeRange] = useState("1y");
-  const [unit, setUnit] = useState("usd");
-  const [scale, setScale] = useState("lin");
+  const [timeRange, setTimeRange] = useLocalStorage("summary-time-range", "1y");
+  const [unit, setUnit] = useLocalStorage("summary-unit", "usd");
+  const [scale, setScale] = useLocalStorage("summary-scale", "lin");
 
   const mappedMilestones = getMilestones(milestones);
-
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
     trimLeft: true,
   });
@@ -39,7 +39,6 @@ export function SummaryChart({ data, milestones }: Props) {
     rangeStart !== undefined && rangeEnd !== undefined,
     "Programmer error: rangeStart and rangeEnd are undefined"
   );
-  const dataRange = [rangeStart, rangeEnd] as const;
 
   const columns = dataInRange.map((d) => {
     const timestamp = d[0];
@@ -73,7 +72,7 @@ export function SummaryChart({ data, milestones }: Props) {
           { value: "1y", label: "1Y" },
           { value: "max", label: "MAX" },
         ]}
-        range={dataRange}
+        range={[rangeStart, rangeEnd]}
       />
       <Chart
         columns={columns}
