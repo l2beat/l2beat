@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb41bad104f66494ec0d926acf641070227a6d969
+
+# Diff at Fri, 21 Jun 2024 07:11:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba6434de248c46d9e6b140264866a3072082af4 block: 20119772
+- current block number: 20138516
+
+## Description
+
+Ignore Verifier fees.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20119772 (main branch discovery), not current.
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      values.feeBalance:
+-        "2918325000000000000"
+    }
+```
+
 Generated with discovered.json: 0x7146967f0fe12eb84f3dd406cb52c5cc557a8f49
 
 # Diff at Tue, 18 Jun 2024 16:16:58 GMT:

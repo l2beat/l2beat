@@ -1,9 +1,9 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 20119772,
-  "configHash": "0x1ef0930524a5ea624fcf99ea13f4e4fe32fe6ef64278df1775fe5ce3e967b632",
-  "version": 6,
+  "blockNumber": 20138516,
+  "configHash": "0x6c06bee495c0499b9dc0570041beaf5e4ce22781303715e9b8dfde548ad21360",
+  "version": 7,
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -529,7 +529,6 @@
       "implementations": ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"],
       "sinceTimestamp": 1708740203,
       "values": {
-        "feeBalance": "2918325000000000000",
         "getLzMessageLibLength": 1,
         "layerZeroEndpointV1": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "layerZeroEndpointV2": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -595,7 +594,7 @@
           "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
         ],
         "getThreshold": 3,
-        "nonce": 18,
+        "nonce": 20,
         "VERSION": "1.3.0"
       }
     },
@@ -774,7 +773,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 120,
+        "nonce": 125,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -67,6 +67,7 @@ const ownerAddressToName: Record<string, string> = {
   '0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82': 'KintoMultisig',
   '0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF': 'HookOwnerEOA',
   '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
+  '0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13': 'LooksRareMultisig',
   // Add more owner addresses and their corresponding names here to get them integrated in the output
 }
 
