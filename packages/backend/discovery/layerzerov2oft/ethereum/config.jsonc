@@ -44,7 +44,8 @@
         "mptValidator",
         "owner",
         "zkMptValidator"
-      ]
+      ],
+      "ignoreMethods": ["feeBalance"]
     },
     "SendUln302": {
       "fields": {

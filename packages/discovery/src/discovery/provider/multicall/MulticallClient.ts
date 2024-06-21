@@ -62,9 +62,17 @@ export class MulticallClient {
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
     const results = await Promise.all(
-      requests.map((request) =>
-        this.provider.call(request.address, request.data, blockNumber),
-      ),
+      requests.map(async (request) => {
+        try {
+          return await this.provider.call(
+            request.address,
+            request.data,
+            blockNumber,
+          )
+        } catch {
+          return Bytes.EMPTY
+        }
+      }),
     )
     return results.map(
       (result): MulticallResponse => ({
@@ -79,12 +87,25 @@ export class MulticallClient {
     blockNumber: number,
   ): Promise<MulticallResponse[]> {
     const encoded = this.config.encodeBatch(requests)
-    const result = await this.provider.call(
-      this.config.address,
-      encoded,
-      blockNumber,
-    )
-    return this.config.decodeBatch(result)
+    try {
+      const result = await this.provider.call(
+        this.config.address,
+        encoded,
+        blockNumber,
+      )
+      return this.config.decodeBatch(result)
+    } catch (e) {
+      const parsed = ethersError.safeParse(e)
+      if (parsed.success) {
+        // NOTE(radomski): If we batch a call that will execute an INVALID
+        // opcode we have no way of knowing which call failed. Just execute
+        // them individually.
+        if (parsed.data.error.error.message === 'out of gas') {
+          return await this.executeIndividual(requests, blockNumber)
+        }
+      }
+      throw e
+    }
   }
 }
 
@@ -111,6 +132,11 @@ const ethersError = z.object({
     code: z.string().optional(),
     reason: z.string().optional(),
     requestMethod: z.string().optional(),
+    error: z.object({
+      code: z.number(),
+      message: z.string(),
+    }),
     timeout: z.number().optional(),
+    status: z.number().optional(),
   }),
 })

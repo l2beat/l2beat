@@ -140,7 +140,7 @@
   "satellite": true,
   "scroll": true,
   "skale-ima": true,
-  "socket": true,
+  "socket": false,
   "sollet": true,
   "sophon": true,
   "sorare": true,
