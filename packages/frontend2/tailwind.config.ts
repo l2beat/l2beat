@@ -8,31 +8,6 @@ const config: Config = {
     hoverOnlyWhenSupported: true,
   },
   theme: {
-    keyframes: {
-      pulse: {
-        '0%': {
-          transform: 'scale(1,1)',
-        },
-        '80%': {
-          transform: 'scale(1, 1)',
-        },
-        '85%': {
-          transform: 'scale(1.05, 1.05)',
-        },
-        '90%': {
-          transform: 'scale(1, 1)',
-        },
-        '95%': {
-          transform: 'scale(1.05, 1.05)',
-        },
-        '100%': {
-          transform: 'scale(1, 1)',
-        },
-      },
-    },
-    animation: {
-      pulse: 'pulse 5s ease-in-out infinite forwards',
-    },
     fontSize: {
       '3xs': ['10px', '15px'],
       '2xs': ['12px', '16px'],
@@ -189,6 +164,31 @@ const config: Config = {
       999: '999', // Mobile side menu
     },
     extend: {
+      keyframes: {
+        beat: {
+          '0%': {
+            transform: 'scale(1,1)',
+          },
+          '80%': {
+            transform: 'scale(1, 1)',
+          },
+          '85%': {
+            transform: 'scale(1.05, 1.05)',
+          },
+          '90%': {
+            transform: 'scale(1, 1)',
+          },
+          '95%': {
+            transform: 'scale(1.05, 1.05)',
+          },
+          '100%': {
+            transform: 'scale(1, 1)',
+          },
+        },
+      },
+      animation: {
+        beat: 'beat 5s ease-in-out infinite forwards',
+      },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
         'roboto-serif': [

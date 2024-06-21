@@ -31,6 +31,8 @@ export type ChartContextValue<T> = Omit<
   getY: (value: number) => number
   rect: DOMRect | undefined
   setRect: (rect: DOMRect | undefined) => void
+  loading: boolean
+  setLoading: (loading: boolean) => void
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,6 +42,7 @@ export function ChartContextProvider<T>({
   children,
   ...params
 }: ChartContextProviderParams<T>) {
+  const [loading, setLoading] = useState(true)
   const [rect, setRect] = useState<DOMRect>()
   const { columns, useLogScale, formatYAxisLabel } = params
   const values = columns.flatMap((column) => column.values)
@@ -51,7 +54,9 @@ export function ChartContextProvider<T>({
   )
 
   return (
-    <ChartContext.Provider value={{ ...params, labels, getY, rect, setRect }}>
+    <ChartContext.Provider
+      value={{ ...params, labels, getY, rect, setRect, loading, setLoading }}
+    >
       {children}
     </ChartContext.Provider>
   )

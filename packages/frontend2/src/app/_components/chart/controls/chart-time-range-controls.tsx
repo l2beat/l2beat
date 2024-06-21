@@ -1,6 +1,9 @@
 import React from 'react'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
+import { useChartContext } from '../chart-context'
+import { cn } from '~/utils/cn'
+import { Skeleton } from '../../skeleton'
 
 interface Props {
   value: string
@@ -15,9 +18,24 @@ export function ChartTimeRangeControls({
   range,
   options,
 }: Props) {
+  const { loading } = useChartContext()
+
+  if (loading) {
+    return (
+      <div className="flex flex-wrap justify-between gap-2">
+        <Skeleton className="h-8 w-40" />
+        <Skeleton className="h-8 w-[292px]" />
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-wrap justify-between gap-2">
-      <p className="flex h-8 max-w-[130px] items-center font-bold transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none sm:max-w-full group-data-[interactivity-disabled]/chart:opacity-0">
+      <p
+        className={cn(
+          'flex h-8 max-w-[130px] items-center font-bold transition-opacity duration-200 sm:max-w-full',
+        )}
+      >
         {formatRange(...range)}
       </p>
       <RadioGroup value={value} onValueChange={setValue}>

@@ -71,6 +71,7 @@ export function ChartRenderer() {
             }
           }
         }
+        context.setLoading(false)
       })
 
     window.addEventListener('resize', render)

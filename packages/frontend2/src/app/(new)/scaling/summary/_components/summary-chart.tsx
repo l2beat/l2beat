@@ -2,17 +2,19 @@
 
 import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { useState } from 'react'
-import { z } from 'zod'
 import { Chart } from '~/app/_components/chart/chart'
+import { ChartProvider } from '~/app/_components/chart/chart-provider'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { formatRange, formatTimestamp } from '~/utils/dates'
+import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { getPercentageChange } from '~/utils/get-percentage-change'
+import { AggregateDetailedTvlResponse } from '../tvl'
+import { useChartContext } from '~/app/_components/chart/chart-context'
+import { Skeleton } from '~/app/_components/skeleton'
 
 interface SummaryChartPointData {
   timestamp: number
@@ -59,49 +61,47 @@ export function SummaryChart({ data, milestones }: Props) {
   const { tvl, tvlWeeklyChange } = getTvlWithChange(data, unit)
 
   return (
-    <section className="flex gap-4 flex-col">
-      <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
-      <ChartTimeRangeControls
-        value={timeRange}
-        setValue={setTimeRange}
-        options={[
-          { value: '7d', label: '7D' },
-          { value: '30d', label: '30D' },
-          { value: '90d', label: '90D' },
-          { value: '180d', label: '180D' },
-          { value: '1y', label: '1Y' },
-          { value: 'max', label: 'MAX' },
-        ]}
-        range={[rangeStart, rangeEnd]}
-      />
-      <Chart
-        columns={columns}
-        valuesStyle={[
-          {
-            fill: 'signature gradient',
-            line: 'signature gradient',
-            point: 'circle',
-          },
-        ]}
-        formatYAxisLabel={(value: number) =>
-          // Pass UNIT from controls
-          formatCurrency(value, unit, { showLessThanMinimum: false })
-        }
-        range={[1687039200, 1718661600]}
-        useLogScale={scale === 'log'}
-        renderHoverContents={(data) => <ChartHover data={data} />}
-      />
-      <div className="flex justify-between gap-2 items-center">
-        <RadioGroup value={unit} onValueChange={setUnit}>
-          <RadioGroupItem value="usd">USD</RadioGroupItem>
-          <RadioGroupItem value="eth">ETH</RadioGroupItem>
-        </RadioGroup>
-        <RadioGroup value={scale} onValueChange={setScale}>
-          <RadioGroupItem value="log">LOG</RadioGroupItem>
-          <RadioGroupItem value="lin">LIN</RadioGroupItem>
-        </RadioGroup>
-      </div>
-    </section>
+    <ChartProvider
+      columns={columns}
+      valuesStyle={[
+        {
+          fill: 'signature gradient',
+          line: 'signature gradient',
+          point: 'circle',
+        },
+      ]}
+      formatYAxisLabel={(value: number) =>
+        // Pass UNIT from controls
+        formatCurrency(value, unit, { showLessThanMinimum: false })
+      }
+      range={[1687039200, 1718661600]}
+      useLogScale={scale === 'log'}
+      renderHoverContents={(data) => <ChartHover data={data} />}
+    >
+      <section className="flex gap-4 flex-col">
+        <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
+        <ChartTimeRangeControls
+          value={timeRange}
+          setValue={setTimeRange}
+          options={[
+            { value: '7d', label: '7D' },
+            { value: '30d', label: '30D' },
+            { value: '90d', label: '90D' },
+            { value: '180d', label: '180D' },
+            { value: '1y', label: '1Y' },
+            { value: 'max', label: 'MAX' },
+          ]}
+          range={[rangeStart, rangeEnd]}
+        />
+        <Chart />
+        <UnitAndScaleControls
+          unit={unit}
+          scale={scale}
+          setUnit={setUnit}
+          setScale={setScale}
+        />
+      </section>
+    </ChartProvider>
   )
 }
 
@@ -136,11 +136,10 @@ function Header({
   value: number
   weeklyChange: string
 }) {
+  const { loading } = useChartContext()
+
   return (
-    <header
-      className="mb-4 flex flex-col justify-between text-base md:flex-row"
-      data-role="chart-header"
-    >
+    <header className="mb-4 flex flex-col justify-between text-base md:flex-row">
       <div>
         <h1 className="mb-1 font-bold text-3xl">Value Locked</h1>
         <p className="hidden text-gray-500 md:block dark:text-gray-600">
@@ -149,17 +148,62 @@ function Header({
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none md:flex-col md:items-end md:gap-1 group-data-[interactivity-disabled]/chart:opacity-0">
-        <p className="whitespace-nowrap text-right font-bold text-lg md:text-3xl">
-          {formatCurrency(value, unit, {
-            showLessThanMinimum: false,
-          })}
-        </p>
-        <p className="whitespace-nowrap text-right font-bold text-xs md:text-base">
-          <PercentChange value={weeklyChange} /> / 7 days
-        </p>
+        {loading ? (
+          <>
+            <Skeleton className="w-[124px] h-9" />
+            <Skeleton className="w-[119px] h-6" />
+          </>
+        ) : (
+          <>
+            <p className="whitespace-nowrap text-right font-bold text-lg md:text-3xl">
+              {formatCurrency(value, unit, {
+                showLessThanMinimum: false,
+              })}
+            </p>
+            <p className="whitespace-nowrap text-right font-bold text-xs md:text-base">
+              <PercentChange value={weeklyChange} /> / 7 days
+            </p>
+          </>
+        )}
       </div>
       <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t mt-2 md:hidden" />
     </header>
+  )
+}
+
+function UnitAndScaleControls({
+  unit,
+  scale,
+  setUnit,
+  setScale,
+}: {
+  unit: string
+  scale: string
+  setUnit: (value: string) => void
+  setScale: (value: string) => void
+}) {
+  const { loading } = useChartContext()
+
+  if (loading) {
+    return (
+      <div className="flex justify-between gap-2 items-center">
+        <Skeleton className="h-8 w-[104.82px]" />
+        <Skeleton className="h-8 w-[98.63px]" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex justify-between gap-2 items-center">
+      <RadioGroup value={unit} onValueChange={setUnit}>
+        <RadioGroupItem value="usd">USD</RadioGroupItem>
+        <RadioGroupItem value="eth">ETH</RadioGroupItem>
+      </RadioGroup>
+      <RadioGroup value={scale} onValueChange={setScale}>
+        <RadioGroupItem value="log">LOG</RadioGroupItem>
+        <RadioGroupItem value="lin">LIN</RadioGroupItem>
+      </RadioGroup>
+    </div>
   )
 }
 
@@ -174,42 +218,6 @@ export function getTvlWithChange(
   const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
   return { tvl, tvlWeeklyChange }
 }
-
-const AggregateDetailedTvlChart = z.object({
-  types: z.tuple([
-    z.literal('timestamp'),
-    z.literal('valueUsd'),
-    z.literal('cbvUsd'),
-    z.literal('ebvUsd'),
-    z.literal('nmvUsd'),
-    z.literal('valueEth'),
-    z.literal('cbvEth'),
-    z.literal('ebvEth'),
-    z.literal('nmvEth'),
-  ]),
-  data: z.array(
-    z.tuple([
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
-    ]),
-  ),
-})
-
-export type AggregateDetailedTvlResponse = z.infer<
-  typeof AggregateDetailedTvlResponse
->
-export const AggregateDetailedTvlResponse = z.object({
-  hourly: AggregateDetailedTvlChart,
-  sixHourly: AggregateDetailedTvlChart,
-  daily: AggregateDetailedTvlChart,
-})
 
 function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
   const result: Record<number, Milestone> = {}
