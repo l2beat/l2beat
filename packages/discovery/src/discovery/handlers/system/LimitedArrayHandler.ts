@@ -36,7 +36,7 @@ export class LimitedArrayHandler implements Handler {
 
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
-        provider.callMethodUnbatched(address, this.fragment, [index]).then(
+        provider.callMethod(address, this.fragment, [index]).then(
           (value) => ({ type: 'success' as const, value }),
           (error) => ({ type: 'error' as const, error }),
         ),

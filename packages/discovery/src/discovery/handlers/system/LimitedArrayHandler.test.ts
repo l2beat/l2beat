@@ -17,7 +17,7 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethodUnbatched<T>(
+      async callMethod<T>(
         passedAddress: EthereumAddress,
         _abi: string,
         data: unknown[],
@@ -51,7 +51,7 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethodUnbatched<T>(
+      async callMethod<T>(
         passedAddress: EthereumAddress,
         _abi: string,
         data: unknown[],
@@ -85,7 +85,7 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethodUnbatched<T>(
+      async callMethod<T>(
         passedAddress: EthereumAddress,
         _abi: string,
         data: unknown[],
