@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react'
 
-import { TrendArrowDownIcon, TrendArrowUpIcon } from "~/icons/trend-arrow";
-import { cn } from "~/utils/cn";
+import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/trend-arrow'
+import { cn } from '~/utils/cn'
 
 interface Props {
-  value: string;
-  className?: string;
+  value: string
+  className?: string
 }
 
 export function PercentChange({ value, className }: Props) {
-  const isMore = value.startsWith("+");
-  const isLess = value.startsWith("-");
+  const isMore = value.startsWith('+')
+  const isLess = value.startsWith('-')
 
   return (
     <span
       className={cn(
-        isMore && "text-green-300 dark:text-green-450",
-        isLess && "text-red-300",
-        "relative",
-        className
+        isMore && 'text-green-300 dark:text-green-450',
+        isLess && 'text-red-300',
+        'relative',
+        className,
       )}
     >
       {isMore && (
@@ -29,5 +29,5 @@ export function PercentChange({ value, className }: Props) {
       )}
       <span className="relative pl-3.5">{value.substring(1)}</span>
     </span>
-  );
+  )
 }

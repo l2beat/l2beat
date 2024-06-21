@@ -1,12 +1,12 @@
-import React from "react";
-import { formatRange } from "~/utils/dates";
-import { RadioGroup, RadioGroupItem } from "../../radio-group";
+import React from 'react'
+import { formatRange } from '~/utils/dates'
+import { RadioGroup, RadioGroupItem } from '../../radio-group'
 
 interface Props {
-  value: string;
-  setValue: (range: string) => void;
-  range: readonly [number, number];
-  options: { value: string; label: string }[];
+  value: string
+  setValue: (range: string) => void
+  range: readonly [number, number]
+  options: { value: string; label: string }[]
 }
 
 export function ChartTimeRangeControls({
@@ -28,5 +28,5 @@ export function ChartTimeRangeControls({
         ))}
       </RadioGroup>
     </div>
-  );
+  )
 }

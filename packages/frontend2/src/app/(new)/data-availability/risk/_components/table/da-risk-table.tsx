@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import {
   flexRender,
   getCoreRowModel,
@@ -6,7 +6,9 @@ import {
   getFacetedUniqueValues,
   getFilteredRowModel,
   getSortedRowModel,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table'
+import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
+import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import {
   Table,
   TableBody,
@@ -15,15 +17,13 @@ import {
   TableHeader,
   TableHeaderRow,
   TableRow,
-} from "~/app/_components/table/table";
-import { TableFacetedFilter } from "~/app/_components/table/filters/table-faceted-filter";
-import { FilterWrapper } from "~/app/_components/table/filters/filter-wrapper";
-import { useTable } from "~/hooks/use-table";
-import { type DaRiskEntry } from "~/server/features/data-availability/get-da-risk-entries";
-import { columns } from "./columns";
+} from '~/app/_components/table/table'
+import { useTable } from '~/hooks/use-table'
+import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
+import { columns } from './columns'
 
 interface Props {
-  items: DaRiskEntry[];
+  items: DaRiskEntry[]
 }
 
 export function DaRiskTable({ items }: Props) {
@@ -35,14 +35,14 @@ export function DaRiskTable({ items }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  });
+  })
 
   return (
     <>
       <FilterWrapper>
         <TableFacetedFilter
           title="DA Layer"
-          column={table.getColumn("daLayer")}
+          column={table.getColumn('daLayer')}
         />
       </FilterWrapper>
       <Table>
@@ -67,7 +67,7 @@ export function DaRiskTable({ items }: Props) {
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </TableHead>
               ))}
@@ -90,5 +90,5 @@ export function DaRiskTable({ items }: Props) {
         </TableBody>
       </Table>
     </>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-import { type Milestone } from "@l2beat/config";
-import { useMemo, useRef } from "react";
-import { useChartContext } from "./chart-context";
+import { type Milestone } from '@l2beat/config'
+import { useMemo, useRef } from 'react'
+import { useChartContext } from './chart-context'
 
 export function ChartMilestones() {
-  const ref = useRef<HTMLDivElement>(null);
-  const chartContext = useChartContext();
+  const ref = useRef<HTMLDivElement>(null)
+  const chartContext = useChartContext()
 
-  if (!chartContext.rect) return null;
+  if (!chartContext.rect) return null
 
   return (
     <div
@@ -21,21 +21,21 @@ export function ChartMilestones() {
               x={i / (chartContext.columns.length - 1)}
               milestone={c.milestone}
             />
-          )
+          ),
       )}
     </div>
-  );
+  )
 }
 
-const milestoneSize = 20;
+const milestoneSize = 20
 interface Props {
-  x: number;
-  milestone: Milestone;
+  x: number
+  milestone: Milestone
 }
 
 function ChartMilestone({ x, milestone }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { rect } = useChartContext();
+  const ref = useRef<HTMLDivElement>(null)
+  const { rect } = useChartContext()
   const style = useMemo(
     () =>
       rect
@@ -44,8 +44,8 @@ function ChartMilestone({ x, milestone }: Props) {
             top: -milestoneSize / 2,
           }
         : undefined,
-    [rect, x]
-  );
+    [rect, x],
+  )
 
   return (
     <div
@@ -78,5 +78,5 @@ function ChartMilestone({ x, milestone }: Props) {
         </svg>
       </a>
     </div>
-  );
+  )
 }

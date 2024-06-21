@@ -28,7 +28,7 @@ export function useLocalStorage<T>(
   const { initializeWithValue = true } = options
 
   const serializer = useCallback<(value: T) => string>(
-    value => {
+    (value) => {
       if (options.serializer) {
         return options.serializer(value)
       }
@@ -39,7 +39,7 @@ export function useLocalStorage<T>(
   )
 
   const deserializer = useCallback<(value: string) => T>(
-    value => {
+    (value) => {
       if (options.deserializer) {
         return options.deserializer(value)
       }
@@ -94,7 +94,7 @@ export function useLocalStorage<T>(
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue: Dispatch<SetStateAction<T>> = useEventCallback(value => {
+  const setValue: Dispatch<SetStateAction<T>> = useEventCallback((value) => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
       console.warn(

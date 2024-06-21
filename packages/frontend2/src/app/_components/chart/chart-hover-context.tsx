@@ -1,48 +1,48 @@
-import { type Milestone } from "@l2beat/config";
+import { type Milestone } from '@l2beat/config'
 import {
   type ReactNode,
   createContext,
   useContext,
   useMemo,
   useState,
-} from "react";
+} from 'react'
 
 export interface ChartHoverContextProviderParams<T> {
-  renderHoverContents: (pointData: T) => ReactNode;
-  children?: ReactNode;
+  renderHoverContents: (pointData: T) => ReactNode
+  children?: ReactNode
 }
 
 interface Position {
-  left: number;
-  bottom: (number | null)[];
+  left: number
+  bottom: (number | null)[]
 }
 
 export interface ChartHoverContextValue<T> {
-  setData: (data: T) => void;
-  position: Position | undefined;
-  setPosition: (position: Position | undefined) => void;
-  milestone: Milestone | undefined;
-  setMilestone: (milestone: Milestone | undefined) => void;
-  content: ReactNode;
+  setData: (data: T) => void
+  position: Position | undefined
+  setPosition: (position: Position | undefined) => void
+  milestone: Milestone | undefined
+  setMilestone: (milestone: Milestone | undefined) => void
+  content: ReactNode
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChartHoverContext = createContext<ChartHoverContextValue<any> | null>(
-  null
-);
+  null,
+)
 
 export function ChartHoverContextProvider<T>({
   children,
   ...params
 }: ChartHoverContextProviderParams<T>) {
-  const [data, setData] = useState<T>();
-  const [position, setPosition] = useState<Position>();
-  const [milestone, setMilestone] = useState<Milestone | undefined>(undefined);
+  const [data, setData] = useState<T>()
+  const [position, setPosition] = useState<Position>()
+  const [milestone, setMilestone] = useState<Milestone | undefined>(undefined)
 
   const content: ReactNode = useMemo(() => {
-    if (!data) return null;
-    return params.renderHoverContents(data);
-  }, [data, params]);
+    if (!data) return null
+    return params.renderHoverContents(data)
+  }, [data, params])
 
   return (
     <ChartHoverContext.Provider
@@ -57,13 +57,13 @@ export function ChartHoverContextProvider<T>({
     >
       {children}
     </ChartHoverContext.Provider>
-  );
+  )
 }
 
 export function useChartHoverContext() {
-  const context = useContext(ChartHoverContext);
+  const context = useContext(ChartHoverContext)
   if (!context) {
-    throw new Error("useChartContext must be used within a Chart");
+    throw new Error('useChartContext must be used within a Chart')
   }
-  return context;
+  return context
 }
