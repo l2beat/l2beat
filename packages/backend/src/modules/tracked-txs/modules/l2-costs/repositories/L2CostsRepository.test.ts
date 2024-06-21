@@ -14,6 +14,14 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const newRepo = kysely.l2Cost
   const newConfigRepo = kysely.trackedTxConfig
 
+  // Extracted since we have single describe and two running contexts
+  // in tandem with database constraints and data integrity
+  // it results in failed constraints and errors - simple race conditions
+  const txIdA = TrackedTxId.random()
+  const txIdB = TrackedTxId.random()
+  const txIdC = TrackedTxId.random()
+  const txIdD = TrackedTxId.random()
+
   suite(oldRepo, oldConfigRepo)
   suite(newRepo, newConfigRepo)
 
@@ -26,7 +34,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START,
         txHash: '0x1',
-        trackedTxId: TrackedTxId.random(),
+        trackedTxId: txIdA,
         gasUsed: 100,
         gasPrice: 1n,
         calldataLength: 100,
@@ -37,7 +45,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-1, 'hours'),
         txHash: '0x2',
-        trackedTxId: TrackedTxId.random(),
+        trackedTxId: txIdB,
         gasUsed: 200,
         gasPrice: 2n,
         calldataLength: 200,
@@ -48,7 +56,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-2, 'hours'),
         txHash: '0x3',
-        trackedTxId: TrackedTxId.random(),
+        trackedTxId: txIdC,
         gasUsed: 150,
         gasPrice: 2n,
         calldataLength: 400,
@@ -72,6 +80,11 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       )
       await repository.deleteAll()
       await repository.addMany(DATA)
+    })
+
+    afterEach(async () => {
+      await repository.deleteAll()
+      await configRepository.deleteAll()
     })
 
     describe(L2CostsRepository.prototype.addMany.name, () => {
@@ -153,13 +166,12 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
     describe(L2CostsRepository.prototype.deleteFromById.name, () => {
       it('should delete rows inserted after certain timestamp for given configuration id', async () => {
         await repository.deleteAll()
-        const trackedTxId = TrackedTxId.random()
 
         const records: L2CostsRecord[] = [
           {
             timestamp: START.add(-1, 'hours'),
             txHash: '0x4',
-            trackedTxId,
+            trackedTxId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -170,7 +182,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(1, 'hours'),
             txHash: '0x45',
-            trackedTxId,
+            trackedTxId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -181,7 +193,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(2, 'hours'),
             txHash: '0x5',
-            trackedTxId,
+            trackedTxId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -193,7 +205,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
 
         await configRepository.addMany([
           {
-            id: trackedTxId,
+            id: txIdD,
             projectId: ProjectId('project'),
             type: 'liveness',
             sinceTimestampInclusive: START,
@@ -202,7 +214,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
         ])
         await repository.addMany(records)
 
-        await repository.deleteFromById(trackedTxId, START)
+        await repository.deleteFromById(txIdD, START)
 
         const result = await repository.getAll()
 
