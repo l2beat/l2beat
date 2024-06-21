@@ -35,6 +35,7 @@ import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
+import { gravity } from './gravity'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -160,6 +161,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   gluon,
+  gravity,
   grvt,
   hermez,
   hychain,
