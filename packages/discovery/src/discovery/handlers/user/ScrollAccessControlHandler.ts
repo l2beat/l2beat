@@ -3,9 +3,9 @@ import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ScrollAccessControlHandlerDefinition = z.infer<
   typeof ScrollAccessControlHandlerDefinition
@@ -26,7 +26,7 @@ const abi = new utils.Interface([
   'event RevokeAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)',
 ])
 
-export class ScrollAccessControlHandler implements ClassicHandler {
+export class ScrollAccessControlHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly knownNames = new Map<string, string>()
 
@@ -55,25 +55,19 @@ export class ScrollAccessControlHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking ScrollAccessControl'])
-    const logs = await provider.getLogs(
-      address,
+    const logs = await provider.getLogs(address, [
       [
-        [
-          abi.getEventTopic('RoleGranted'),
-          abi.getEventTopic('RoleRevoked'),
-          abi.getEventTopic('RoleAdminChanged'),
-          abi.getEventTopic('GrantAccess'),
-          abi.getEventTopic('RevokeAccess'),
-        ],
+        abi.getEventTopic('RoleGranted'),
+        abi.getEventTopic('RoleRevoked'),
+        abi.getEventTopic('RoleAdminChanged'),
+        abi.getEventTopic('GrantAccess'),
+        abi.getEventTopic('RevokeAccess'),
       ],
-      0,
-      blockNumber,
-    )
+    ])
 
     const roles: Record<
       string,
@@ -123,7 +117,7 @@ export class ScrollAccessControlHandler implements ClassicHandler {
       accessChangeLogs.map((parsed) => parsed.target),
     )
 
-    const decoder = new FunctionSelectorDecoder(provider, blockNumber)
+    const decoder = new FunctionSelectorDecoder(provider)
     await decoder.fetchTargets([...contracts])
 
     for (const log of logs) {

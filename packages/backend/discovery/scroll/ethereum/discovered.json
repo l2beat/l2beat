@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19974091,
   "configHash": "0x39a8e1b7d25617654f4f9ceeadfe54d59bef30b45f6450451937cef8847432e7",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1MessageQueue",
@@ -121,6 +121,9 @@
     {
       "name": "MultipleVersionRollupVerifier",
       "address": "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6",
+      "descriptions": [
+        "Used to update the verifier and keep track of current and old versions."
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -392,6 +395,9 @@
     {
       "name": "ScrollOwner",
       "address": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
+      "descriptions": [
+        "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role."
+      ],
       "upgradeability": {
         "type": "immutable"
       },

@@ -1,6 +1,42 @@
 {
   "ethereum": [
     {
+      "symbol": "TRESTLE",
+      "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
+    },
+    {
+      "symbol": "wTIA",
+      "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
+    },
+    {
+      "symbol": "PARAM",
+      "address": "0x69a1e699f562d7af66fc6cc473d99f4430c3acd2"
+    },
+    {
+      "symbol": "MYT",
+      "address": "0x5fde99e121f3ac02e7d6acb081db1f89c1e93c17"
+    },
+    {
+      "symbol": "PEAS",
+      "address": "0x02f92800f57bcd74066f5709f1daa1a4302df875"
+    },
+    {
+      "symbol": "pxETH",
+      "address": "0x04c154b66cb340f3ae24111cc767e0184ed00cc6"
+    },
+    {
+      "symbol": "MAVIA",
+      "address": "0x24fcfc492c1393274b6bcd568ac9e225bec93584"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7"
+    },
+    {
+      "symbol": "TBANK",
+      "address": "0x95ccffae3eb8767d4a941ec43280961dde89f4de"
+    },
+    {
       "symbol": "10SET",
       "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84",
       "coingeckoId": "tenset"
@@ -1225,6 +1261,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDT",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
       "category": "stablecoin",
@@ -1549,6 +1592,13 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "USDT",
+      "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "ETH",
       "source": "canonical",
@@ -2056,7 +2106,28 @@
   ],
   "mantle": [
     {
-      "symbol": "ETH",
+      "symbol": "mETH",
+      "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
       "source": "canonical",
       "supply": "zero",
       "category": "ether"
@@ -2511,7 +2582,31 @@
       }
     }
   ],
+  "metis": [
+    {
+      "symbol": "WETH",
+      "address": "0x420000000000000000000000000000000000000A",
+      "coingeckoId": "ethereum",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
+      "symbol": "m.USDT",
+      "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+      "coingeckoId": "tether",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "stablecoin"
+    }
+  ],
   "scroll": [
+    {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
     {
       "symbol": "rsETH",
       "address": "0x65421ba909200b81640d98B979d07487C9781B66",

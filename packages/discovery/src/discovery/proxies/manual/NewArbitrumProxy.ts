@@ -1,33 +1,27 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 
 export async function getNewArbitrumProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectEip1967Proxy(provider, address, blockNumber)
+  const detection = await detectEip1967Proxy(provider, address)
   if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
     return undefined
   }
   const [adminFacet, userFacet] = await Promise.all([
-    getCallResult<EthereumAddress>(
-      provider,
+    provider.callMethod<EthereumAddress>(
       address,
       'function getAdminFacet() view returns (address)',
       [],
-      blockNumber,
     ),
-    getCallResult<EthereumAddress>(
-      provider,
+    provider.callMethod<EthereumAddress>(
       address,
       'function getUserFacet() view returns (address)',
       [],
-      blockNumber,
     ),
   ])
   if (!adminFacet || !userFacet) {

@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19940448,
   "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "EthCrossChainManager",
       "address": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+      "descriptions": [
+        "Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs."
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -81,6 +84,9 @@
     {
       "name": "EthCrossChainManagerProxy",
       "address": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+      "descriptions": [
+        "Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it."
+      ],
       "upgradeability": {
         "type": "immutable"
       },
@@ -148,6 +154,9 @@
     {
       "name": "EthCrossChainData",
       "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
+      "descriptions": [
+        "Used to store Keepers’ signatures and other parameters used by EthCrossChainManager."
+      ],
       "ignoreInWatchMode": ["getEthTxHashIndex", "EthToPolyTxHashIndex"],
       "upgradeability": {
         "type": "immutable"

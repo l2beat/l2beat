@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20054750,
   "configHash": "0x3ee82ae3da637efe42306f14e9b036bc583cd3d1d3ae2a33ca4d665dac50e6ee",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "WETH Vault Kinto",

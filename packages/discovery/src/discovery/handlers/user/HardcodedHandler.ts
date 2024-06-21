@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { Handler, HandlerResult } from '../Handler'
 
 export type HardCodedDefinition = z.infer<typeof HardCodedDefinition>
 export const HardCodedDefinition = z.strictObject({
@@ -9,7 +9,7 @@ export const HardCodedDefinition = z.strictObject({
   value: z.any(),
 })
 
-export class HardCodedHandler implements ClassicHandler {
+export class HardCodedHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -18,11 +18,10 @@ export class HardCodedHandler implements ClassicHandler {
     readonly logger: DiscoveryLogger,
   ) {}
 
-  // biome-ignore lint/suspicious/useAwait: this is a handler
-  async execute(): Promise<HandlerResult> {
-    return {
+  execute(): Promise<HandlerResult> {
+    return Promise.resolve({
       field: this.field,
       value: this.definition.value,
-    }
+    })
   }
 }

@@ -1,7 +1,7 @@
 import { getErrorMessage } from '../../../utils/getErrorMessage'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { Handler, HandlerResult } from '../Handler'
 
-export class ErrorHandler implements ClassicHandler {
+export class ErrorHandler implements Handler {
   readonly dependencies = []
   private readonly errorMessage: string
 

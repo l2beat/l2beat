@@ -114,6 +114,7 @@ export const sygma: Bridge = {
         address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'), // sygma erc-20 bridge handler address used to hold liquidity
         sinceTimestamp: new UnixTime(1685659954),
         tokens: ['PHA'],
+        chain: 'ethereum',
       },
     ],
   },

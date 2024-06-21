@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19432103,
   "configHash": "0x73afccc819928023fc410ec9984703b0c8e2a366353cf570e6f7369a3ce9dbd6",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Governance",

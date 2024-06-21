@@ -1,4 +1,893 @@
-Generated with discovered.json: 0x9443180ce87f12b0dbecaa84bc63318c33f6867f
+Generated with discovered.json: 0xef91d62a61251a159c367651354c03291f9e2a51
+
+# Diff at Thu, 20 Jun 2024 14:11:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf726e5da31db25973635b239fd2b25758ca112e block: 20067895
+- current block number: 20133449
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.10:
++        {"sourceChainSelector":"4411394078118774322","offRamp":"0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599"}
+      values.onRamps.4411394078118774322:
++        "0x4545F9a17DA50110632C14704a15d893BF9CBD27"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.10:
++        "0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0x4545F9a17DA50110632C14704a15d893BF9CBD27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x6452d693860ab7e18fC5858C05980F63d93F37a6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99.sol |  998 +++++++
+ ...-0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53.sol | 1089 ++++++++
+ ...-0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599.sol | 2894 ++++++++++++++++++++
+ ...-0x4545F9a17DA50110632C14704a15d893BF9CBD27.sol | 2732 ++++++++++++++++++
+ ...-0x6452d693860ab7e18fC5858C05980F63d93F37a6.sol | 1407 ++++++++++
+ 5 files changed, 9120 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20067895 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: None
+```
+
+```diff
+    contract OffRamp7 (0x0af338F0E314c7551bcE0EF516d46d855b0Ee395) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"1000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"1000000000000000000000000","rate":"277000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4051577828743386545"
++        "polygon"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp11 (0x0f27c8532457b66D6037141DEB0ed479Dad04B3c) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "4051577828743386545"
++        "polygon"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore2 (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "465200170687744372"
++        "gnosis"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp10 (0x1C207dabc46902dF9028b27D6d301c3849b2D12c) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "6433500567565415381"
++        "avalanche"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore11 (0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4051577828743386545"
++        "polygon"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore5 (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "6433500567565415381"
++        "avalanche"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore14 (0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "15971525489660198786"
++        "base"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "5142893604156789321"
++        "wemix"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp12 (0x333f976915195ba9044fD0cd603cEcE936f6264e) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "4949039107694359620"
++        "arbitrum"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp2 (0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"1000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"1000000000000000000000000","rate":"277000000000000000000"}
+      values.staticConfigChains.1:
+-        "4051577828743386545"
++        "polygon"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp1 (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "5142893604156789321"
++        "wemix"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore12 (0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4949039107694359620"
++        "arbitrum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp4 (0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"1000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"1000000000000000000000000","rate":"277000000000000000000"}
+      values.staticConfigChains.1:
+-        "6433500567565415381"
++        "avalanche"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore10 (0x40c558575093eC1099CC21B020d9b8D13c74417F) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "6433500567565415381"
++        "avalanche"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp9 (0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "3734403246176062136"
++        "optimism"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x466a078d17e3706a9414ACc48029EE9Bae4C9b65) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.staticConfigChains.1:
+-        "7264351850409363825"
++        "mode"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "3734403246176062136"
++        "optimism"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp5 (0x569940e02D4425eac61A7601632eC00d69f75c17) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"1000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"1000000000000000000000000","rate":"277000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "6433500567565415381"
++        "avalanche"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp12 (0x61135E701a2214C170c5F596D0067798FEfbaaE4) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4949039107694359620"
++        "arbitrum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "7264351850409363825"
++        "mode"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore13 (0x7986C9892389854cAAbAC785ff18123B0070a5Fd) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "11344663589394136015"
++        "bnb"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp3 (0x7Afe7088aff57173565F4b034167643AA8b9171c) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "11344663589394136015"
++        "bnb"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.9:
+-        ["7264351850409363825","0xE8af3b68eDfFf65Ce48648009982380701f09B92"]
++        {"sourceChainSelector":"mode","offRamp":"0xE8af3b68eDfFf65Ce48648009982380701f09B92"}
+      values.offRamps.8:
+-        ["1346049177634351622","0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46"]
++        {"sourceChainSelector":"celo","offRamp":"0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46"}
+      values.offRamps.7:
+-        ["465200170687744372","0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4"]
++        {"sourceChainSelector":"gnosis","offRamp":"0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4"}
+      values.offRamps.6:
+-        ["5142893604156789321","0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5"]
++        {"sourceChainSelector":"wemix","offRamp":"0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5"}
+      values.offRamps.5:
+-        ["15971525489660198786","0xdf85c8381954694E74abD07488f452b4c2Cddfb3"]
++        {"sourceChainSelector":"base","offRamp":"0xdf85c8381954694E74abD07488f452b4c2Cddfb3"}
+      values.offRamps.4:
+-        ["11344663589394136015","0x7Afe7088aff57173565F4b034167643AA8b9171c"]
++        {"sourceChainSelector":"bnb","offRamp":"0x7Afe7088aff57173565F4b034167643AA8b9171c"}
+      values.offRamps.3:
+-        ["6433500567565415381","0x569940e02D4425eac61A7601632eC00d69f75c17"]
++        {"sourceChainSelector":"avalanche","offRamp":"0x569940e02D4425eac61A7601632eC00d69f75c17"}
+      values.offRamps.2:
+-        ["4949039107694359620","0xeFC4a18af59398FF23bfe7325F2401aD44286F4d"]
++        {"sourceChainSelector":"arbitrum","offRamp":"0xeFC4a18af59398FF23bfe7325F2401aD44286F4d"}
+      values.offRamps.1:
+-        ["4051577828743386545","0x0af338F0E314c7551bcE0EF516d46d855b0Ee395"]
++        {"sourceChainSelector":"polygon","offRamp":"0x0af338F0E314c7551bcE0EF516d46d855b0Ee395"}
+      values.offRamps.0:
+-        ["3734403246176062136","0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"]
++        {"sourceChainSelector":"optimism","offRamp":"0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7"}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "1346049177634351622"
++        "celo"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.staticConfigChains.1:
+-        "3734403246176062136"
++        "optimism"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore3 (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "11344663589394136015"
++        "bnb"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore9 (0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "3734403246176062136"
++        "optimism"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore6 (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "15971525489660198786"
++        "base"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp5 (0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.staticConfigChains.1:
+-        "11344663589394136015"
++        "bnb"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp3 (0x925228D7B82d883Dde340A55Fe8e6dA56244A22C) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.staticConfigChains.1:
+-        "4949039107694359620"
++        "arbitrum"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BETS (0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5)
+    +++ description: None
+```
+
+```diff
+    contract CommitStore8 (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4949039107694359620"
++        "arbitrum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp4 (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "3734403246176062136"
++        "optimism"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: None
+```
+
+```diff
+    contract OffRamp11 (0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4051577828743386545"
++        "polygon"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: None
+```
+
+```diff
+    contract OffRamp13 (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "11344663589394136015"
++        "bnb"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp7 (0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "5142893604156789321"
++        "wemix"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp9 (0xCC19bC4D43d17eB6859F0d22BA300967C97780b0) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "3734403246176062136"
++        "optimism"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp10 (0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "6433500567565415381"
++        "avalanche"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract CommitStore7 (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4051577828743386545"
++        "polygon"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "1346049177634351622"
++        "celo"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp13 (0xdF1d7FD22aC3aB5171E275796f123224039f3b24) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "11344663589394136015"
++        "bnb"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp6 (0xdf85c8381954694E74abD07488f452b4c2Cddfb3) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "15971525489660198786"
++        "base"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp6 (0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.staticConfigChains.1:
+-        "15971525489660198786"
++        "base"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp14 (0xe2Eb229e88F56691e96bb98256707Bc62160FE73) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "15971525489660198786"
++        "base"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE8af3b68eDfFf65Ce48648009982380701f09B92) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "7264351850409363825"
++        "mode"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp2 (0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "465200170687744372"
++        "gnosis"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"2000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"2000000000000000000000000","rate":"555550000000000000000"}
+      values.staticConfigChains.1:
+-        "1346049177634351622"
++        "celo"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OffRamp8 (0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"5000000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"5000000000000000000000000","rate":"1389000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "4949039107694359620"
++        "arbitrum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+    contract OnRamp8 (0xF538dA6c673A30338269655f4e019B71ba58CFd4) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"100000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"100000000000000000000000","rate":"167000000000000000000"}
+      values.staticConfigChains.1:
+-        "465200170687744372"
++        "gnosis"
+      values.staticConfigChains.0:
+-        "5009297550715157269"
++        "ethereum"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CCIPTokenProxy (0xF9F5bcd3a50653387ee0b9d60C1905854093e8Fb)
+    +++ description: None
+```
+
+```diff
+    contract OffRamp14 (0xfF51C00546AA3d9051a4B96Ae81346E14709CD24) {
+    +++ description: None
+      values.currentRateLimiterState:
+-        {"tokens":"600000000000000000000000","lastUpdated":1718100575,"isEnabled":true,"capacity":"600000000000000000000000","rate":"167000000000000000000"}
+      values.getStaticConfig.chainSelector:
+-        "5009297550715157269"
++        "ethereum"
+      values.getStaticConfig.sourceChainSelector:
+-        "15971525489660198786"
++        "base"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"465200170687744372":"gnosis","5009297550715157269":"ethereum","3734403246176062136":"optimism","4949039107694359620":"arbitrum","4051577828743386545":"polygon","6433500567565415381":"avalanche","5142893604156789321":"wemix","3719320017875267166":"kroma","1346049177634351622":"celo","7264351850409363825":"mode","11344663589394136015":"bnb","15971525489660198786":"base"}}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Proxy (0xffffffaEff0B96Ea8e4f94b2253f31abdD875847)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x4125745c53ae7e2baa16f1d46316faf92f7ea21c
 
 # Diff at Tue, 11 Jun 2024 10:09:59 GMT:
 

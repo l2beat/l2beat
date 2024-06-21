@@ -3,12 +3,10 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArrayFromOneEventWithArgHandler } from './ArrayFromOneEventWithArgHandler'
 
 describe(ArrayFromOneEventWithArgHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new ArrayFromOneEventWithArgHandler(
@@ -133,12 +131,10 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        async getLogs(providedAddress, topics, fromBlock, toBlock) {
+      const provider = mockObject<IProvider>({
+        async getLogs(providedAddress, topics) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('PermissionUpdate')])
-          expect(fromBlock).toEqual(0)
-          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -156,7 +152,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -170,7 +166,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             PermissionUpdate(Alice, '0x53228430', true),
@@ -197,7 +193,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [Charlie.toString(), Alice.toString()],
@@ -211,7 +207,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             PermissionUpdate(Alice, '0x53228430', true),
@@ -239,7 +235,7 @@ describe(ArrayFromOneEventWithArgHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [Charlie.toString(), Alice.toString()],

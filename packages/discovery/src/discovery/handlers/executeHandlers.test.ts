@@ -1,10 +1,9 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { MulticallClient } from '../provider/multicall/MulticallClient'
-import { ClassicHandler, HandlerResult } from './Handler'
+import { IProvider } from '../provider/IProvider'
+import { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler } from './user/ArrayHandler'
@@ -12,10 +11,8 @@ import { StorageHandler } from './user/StorageHandler'
 import { toFunctionFragment } from './utils/toFunctionFragment'
 
 describe(executeHandlers.name, () => {
-  const BLOCK_NUMBER = 1234
-
   function providerWithStorage(layout: Record<string, number>) {
-    return mockObject<DiscoveryProvider>({
+    return mockObject<IProvider>({
       async getStorage(_, slot) {
         const number = Number(BigInt(slot.toString()))
         const value = layout[number]
@@ -31,7 +28,6 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'foo',
@@ -45,7 +41,6 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
@@ -63,7 +58,6 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'xxx',
@@ -87,7 +81,6 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
@@ -109,7 +102,6 @@ describe(executeHandlers.name, () => {
     })
     const values = await executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'aab',
@@ -163,7 +155,6 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([
@@ -177,10 +168,9 @@ describe(executeHandlers.name, () => {
   })
 
   it('unresolvable self', async () => {
-    const provider = mockObject<DiscoveryProvider>()
+    const provider = mockObject<IProvider>()
     const promise = executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -189,17 +179,15 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable unknown', async () => {
-    const provider = mockObject<DiscoveryProvider>()
+    const provider = mockObject<IProvider>()
     const promise = executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -208,17 +196,15 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('unresolvable cycle', async () => {
-    const provider = mockObject<DiscoveryProvider>()
+    const provider = mockObject<IProvider>()
     const promise = executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [
         new StorageHandler(
           'a',
@@ -232,14 +218,13 @@ describe(executeHandlers.name, () => {
         ),
       ],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
 
   it('handles handlers with errors', async () => {
-    class FunkyHandler implements ClassicHandler {
+    class FunkyHandler implements Handler {
       dependencies: string[] = []
       field = 'foo'
       logger = DiscoveryLogger.SILENT
@@ -248,13 +233,11 @@ describe(executeHandlers.name, () => {
       }
     }
 
-    const provider = mockObject<DiscoveryProvider>()
+    const provider = mockObject<IProvider>()
     const values = await executeHandlers(
       provider,
-      mockObject<MulticallClient>(),
       [new FunkyHandler()],
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
     expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
@@ -264,34 +247,12 @@ describe(executeHandlers.name, () => {
     const ADDRESS = EthereumAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
-    const selector = 'c2985578'
-    const provider = providerWithStorage({
-      1: 123,
-    })
-    const multicall = mockObject<MulticallClient>({
-      multicallNamed: async (requests) => {
-        expect(requests).toEqual({
-          foo: [
-            {
-              address: ADDRESS,
-              data: Bytes.fromHex(selector),
-            },
-          ],
-        })
-
-        return {
-          foo: [
-            {
-              success: true,
-              data: Bytes.fromHex('0x' + '12345678'.padStart(64, '0')),
-            },
-          ],
-        }
-      },
+    const provider = mockObject<IProvider>({
+      getStorage: mockFn().returnsOnce(123),
+      callMethod: mockFn().returns(0x12345678),
     })
     const values = await executeHandlers(
       provider,
-      multicall,
       [
         new StorageHandler(
           'a',
@@ -301,11 +262,10 @@ describe(executeHandlers.name, () => {
         new SimpleMethodHandler(method, DiscoveryLogger.SILENT),
       ],
       ADDRESS,
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
 
-    expect(values).toEqual([
+    expect(values).toEqualUnsorted([
       { field: 'foo', fragment, value: 0x12345678 },
       { field: 'a', value: 123, ignoreRelative: undefined },
     ])
@@ -315,36 +275,11 @@ describe(executeHandlers.name, () => {
     const ADDRESS = EthereumAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
-    const selector = 'c2985578'
-    const provider = mockObject<DiscoveryProvider>({
-      async call() {
-        return Bytes.fromHex('0x' + '12345678'.padStart(64, '0'))
-      },
-    })
-    const multicall = mockObject<MulticallClient>({
-      multicallNamed: async (requests) => {
-        expect(requests).toEqual({
-          foo: [
-            {
-              address: ADDRESS,
-              data: Bytes.fromHex(selector),
-            },
-          ],
-        })
-
-        return {
-          foo: [
-            {
-              success: true,
-              data: Bytes.fromHex('0x' + '3'.padStart(64, '0')),
-            },
-          ],
-        }
-      },
+    const provider = mockObject<IProvider>({
+      callMethod: mockFn().returnsOnce(3).returns(0x12345678),
     })
     const values = await executeHandlers(
       provider,
-      multicall,
       [
         new ArrayHandler(
           'bar',
@@ -359,7 +294,6 @@ describe(executeHandlers.name, () => {
         new SimpleMethodHandler(method, DiscoveryLogger.SILENT),
       ],
       ADDRESS,
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
 

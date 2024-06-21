@@ -19,7 +19,7 @@ import { LinkedInIcon } from './products/LinkedInIcon'
 import { MediumIcon } from './products/MediumIcon'
 import { RedditIcon } from './products/RedditIcon'
 import { TelegramIcon } from './products/TelegramIcon'
-import { TwitterIcon } from './products/TwitterIcon'
+import { XIcon } from './products/XIcon'
 import { YouTubeIcon } from './products/YouTubeIcon'
 import { OptimismIcon } from './providers/OptimismIcon'
 import { StarkWareIcon } from './providers/StarkWareIcon'
@@ -108,7 +108,7 @@ export function ProductIcons() {
       <MediumIcon />
       <RedditIcon />
       <TelegramIcon />
-      <TwitterIcon />
+      <XIcon />
       <YouTubeIcon />
     </Template>
   )

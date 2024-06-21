@@ -245,7 +245,7 @@ export const starknet: Layer2 = {
     category: 'ZK Rollup',
 
     links: {
-      apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
+      apps: ['https://starkgate.starknet.io/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',

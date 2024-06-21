@@ -84,6 +84,7 @@ export const OMNICHAIN_ESCROWS = escrows.map((escrow) => ({
   contract: {
     name: getName(escrow) + ' Token',
   },
+  chain: 'ethereum',
 }))
 
 function getName(escrow: LzTokenEscrow) {

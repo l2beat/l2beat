@@ -27,6 +27,10 @@ export function createTvlRouter(
 ) {
   const router = new Router()
 
+  const getTargetTimestamp = () => {
+    return clock.getLastHour().add(-1, 'hours')
+  }
+
   router.get(
     '/api/tvl',
     withTypedContext(
@@ -40,16 +44,13 @@ export function createTvlRouter(
         // remember to add "isAssociated" to createValueId.ts
         if (ctx.query.excludeAssociatedTokens) {
           const excluded = await tvlService.getExcludedTvl(
-            clock.getLastHour().add(-1, 'hours'),
+            getTargetTimestamp(),
             projects,
             associatedTokens,
           )
           ctx.body = excluded
         } else {
-          const tvl = await tvlService.getTvl(
-            clock.getLastHour().add(-1, 'hours'),
-            projects,
-          )
+          const tvl = await tvlService.getTvl(getTargetTimestamp(), projects)
           ctx.body = tvl
         }
       },
@@ -83,7 +84,7 @@ export function createTvlRouter(
         )
 
         const tvl = await aggregatedService.getAggregatedTvl(
-          clock.getLastHour().add(-1, 'hours'),
+          getTargetTimestamp(),
           filteredProjects,
           filteredAssociatedTokens,
         )
@@ -109,7 +110,7 @@ export function createTvlRouter(
         assert(apiProject, 'Project not found!')
 
         ctx.body = await tokenService.getTokenChart(
-          clock.getLastHour().add(-1, 'hours'),
+          getTargetTimestamp(),
           apiProject,
           { chain, address },
         )
@@ -122,9 +123,7 @@ export function createTvlRouter(
       // TODO: This is a temporary solution. We should use the last hour
       // instead of the hour before the last hour.
       // This should be fixed by interpolating the data for the last hour when not every project has data for it.
-      clock
-        .getLastHour()
-        .add(-1, 'hours'),
+      getTargetTimestamp(),
     )
 
     ctx.body = breakdown

@@ -47,6 +47,7 @@ export const debridge: Bridge = {
           'MATIC',
           'RAI',
         ],
+        chain: 'ethereum',
       },
     ],
   },
