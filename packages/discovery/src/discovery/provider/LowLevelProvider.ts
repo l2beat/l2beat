@@ -9,9 +9,12 @@ import { providers } from 'ethers'
 import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
+import { ProviderStats, getZeroStats } from './Stats'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 export class LowLevelProvider {
+  public stats: ProviderStats = getZeroStats()
+
   constructor(
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
@@ -31,6 +34,7 @@ export class LowLevelProvider {
     data: Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    this.stats.callCount++
     const result = await this.provider.call(
       { to: address.toString(), data: data.toString() },
       blockNumber,
@@ -43,6 +47,7 @@ export class LowLevelProvider {
     slot: number | bigint | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
+    this.stats.getStorageCount++
     const result = await this.provider.getStorageAt(
       address.toString(),
       slot instanceof Bytes ? slot.toString() : slot,
@@ -57,6 +62,7 @@ export class LowLevelProvider {
     fromBlock: number,
     toBlock: number,
   ) {
+    this.stats.getLogsCount++
     return await this.eventProvider.getLogs({
       address: address.toString(),
       fromBlock,
@@ -68,12 +74,14 @@ export class LowLevelProvider {
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse> {
+    this.stats.getTransactionCount++
     return await this.provider.getTransaction(transactionHash.toString())
   }
 
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
+    this.stats.getDebugTraceCount++
     const response = await this.provider.send('debug_traceTransaction', [
       transactionHash.toString(),
       { tracer: 'callTracer' },
@@ -85,11 +93,13 @@ export class LowLevelProvider {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Bytes> {
+    this.stats.getBytecodeCount++
     const result = await this.provider.getCode(address.toString(), blockNumber)
     return Bytes.fromHex(result)
   }
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
+    this.stats.getSourceCount++
     const result = await this.etherscanLikeClient.getContractSource(address)
     const isVerified = result.ABI !== 'Contract source code not verified'
 
@@ -106,6 +116,7 @@ export class LowLevelProvider {
   async getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined> {
+    this.stats.getDeploymentCount++
     const transactionHash =
       await this.etherscanLikeClient.getContractDeploymentTx(address)
     if (transactionHash === undefined) {
@@ -139,10 +150,12 @@ export class LowLevelProvider {
   }
 
   async getBlock(blockNumber: number): Promise<providers.Block> {
+    this.stats.getBlockCount++
     return await this.provider.getBlock(blockNumber)
   }
 
   async getBlockNumber(): Promise<number> {
+    this.stats.getBlockNumberCount++
     return await this.provider.getBlockNumber()
   }
 }
