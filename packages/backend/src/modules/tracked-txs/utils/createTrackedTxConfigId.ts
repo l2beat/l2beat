@@ -4,7 +4,7 @@ import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 export type TrackedTxId = string
 
 export function createTrackedTxId(
-  trackedTxConfig: TrackedTxConfigEntry,
+  trackedTxConfig: Omit<TrackedTxConfigEntry, 'id'>,
 ): TrackedTxId {
   const input = []
 

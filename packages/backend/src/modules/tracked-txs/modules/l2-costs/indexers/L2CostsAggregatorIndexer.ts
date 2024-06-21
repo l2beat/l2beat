@@ -5,7 +5,8 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { TrackedTxCostsConfig } from '../../../types/TrackedTxsConfig'
+import { TrackedTxId } from '../../../utils/createTrackedTxConfigId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -251,16 +252,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const projectMultipliers = project.trackedTxsConfig.entries.flatMap(
-        (e) => {
-          return e.uses
-            .filter((u) => u.type === 'l2costs')
-            .map((use) => ({
-              id: use.id,
-              factor: e.costMultiplier ?? 1,
-            }))
-        },
-      )
+      const projectMultipliers = project.trackedTxsConfig
+        .filter((u): u is TrackedTxCostsConfig => u.type === 'l2costs')
+        .map((e) => {
+          return {
+            id: e.id,
+            factor: e.costMultiplier ?? 1,
+          }
+        })
 
       multipliers.push(...projectMultipliers)
     }

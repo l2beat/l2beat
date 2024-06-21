@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { TrackedTxId } from './TrackedTxId'
+import { TrackedTxId } from '../utils/createTrackedTxConfigId'
 import { TrackedTxResult } from './model'
 
 export interface TxUpdaterInterface {

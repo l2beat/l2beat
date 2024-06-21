@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-import { TrackedTxId } from '../../types/TrackedTxId'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
+import { TrackedTxId } from '../../utils/createTrackedTxConfigId'
 import {
   L2CostsRecord,
   L2CostsRepository,
@@ -40,7 +40,7 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,
-      trackedTxId: tx.use.id,
+      trackedTxId: tx.id,
       gasUsed: tx.receiptGasUsed,
       gasPrice: tx.gasPrice,
       calldataLength: tx.dataLength,

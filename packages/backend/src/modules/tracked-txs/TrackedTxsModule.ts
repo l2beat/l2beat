@@ -27,7 +27,6 @@ import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsReposi
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
-import { createTrackedTxConfigId } from './utils/createTrackedTxConfigId'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -88,7 +87,7 @@ export function createTrackedTxsModule(
       properties: config,
       minHeight: config.sinceTimestampInclusive.toNumber(),
       maxHeight: config.untilTimestampExclusive?.toNumber() ?? null,
-      id: createTrackedTxConfigId(config),
+      id: config.id,
     })),
     updaters,
     createDatabaseMiddleware: async () =>

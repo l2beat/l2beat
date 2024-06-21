@@ -24,6 +24,7 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxConfigEntry,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
+import { createTrackedTxId } from '../modules/tracked-txs/utils/createTrackedTxConfigId'
 import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {
@@ -136,26 +137,36 @@ function toBackendTrackedTxsConfig(
       }
 
       switch (config.query.formula) {
-        case 'functionCall':
-          return {
+        case 'functionCall': {
+          const withParams = {
             ...base,
             params: {
               formula: 'functionCall',
               address: config.query.address,
               selector: config.query.selector,
             },
-          }
-        case 'transfer':
+          } as const
           return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
+        case 'transfer': {
+          const withParams = {
             ...base,
             params: {
               formula: 'transfer',
               from: config.query.from,
               to: config.query.to,
             },
-          }
-        case 'sharpSubmission':
+          } as const
           return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
+        case 'sharpSubmission': {
+          const withParams = {
             ...base,
             params: {
               formula: 'sharpSubmission',
@@ -163,7 +174,12 @@ function toBackendTrackedTxsConfig(
               selector: SHARP_SUBMISSION_SELECTOR,
               programHashes: config.query.programHashes,
             },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
           }
+        }
       }
     }),
   )
