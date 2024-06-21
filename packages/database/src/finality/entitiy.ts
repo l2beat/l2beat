@@ -12,6 +12,12 @@ export interface Finality {
   averageStateUpdate: number | null
 }
 
+export interface ProjectFinality {
+  minimumTimeToInclusion: number
+  maximumTimeToInclusion: number
+  averageTimeToInclusion: number
+}
+
 export function toRecord(row: Selectable<FinalityRow>): Finality {
   return {
     projectId: ProjectId(row.project_id),
@@ -31,5 +37,15 @@ export function toRow(record: Finality): Insertable<FinalityRow> {
     maximum_time_to_inclusion: record.maximumTimeToInclusion,
     average_time_to_inclusion: record.averageTimeToInclusion,
     average_state_update: record.averageStateUpdate,
+  }
+}
+
+export function toProjectFinalityRecord(
+  row: Selectable<FinalityRow>,
+): ProjectFinality {
+  return {
+    minimumTimeToInclusion: row.minimum_time_to_inclusion,
+    maximumTimeToInclusion: row.maximum_time_to_inclusion,
+    averageTimeToInclusion: row.average_time_to_inclusion,
   }
 }

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { Finality, toRecord, toRow } from './entitiy'
+import { Finality, toProjectFinalityRecord, toRecord, toRow } from './entitiy'
 import { selectFinality } from './select'
 
 export class FinalityRepository {
@@ -23,7 +23,7 @@ export class FinalityRepository {
       .orderBy('timestamp', 'desc')
       .executeTakeFirst()
 
-    return row ? toRecord(row) : null
+    return row ? toRecord(row) : undefined
   }
 
   async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
@@ -33,12 +33,13 @@ export class FinalityRepository {
       .where((eb) =>
         eb.and([
           eb('timestamp', '=', timestamp.toDate()),
-          eb('project_id', '=', projectId),
+          eb('project_id', '=', projectId.toString()),
         ]),
       )
+      .limit(1)
       .executeTakeFirst()
 
-    return row ? toRecord(row) : null
+    return row ? toProjectFinalityRecord(row) : undefined
   }
 
   async getLatestGroupedByProjectId(projectIds: string[]) {
@@ -60,13 +61,17 @@ export class FinalityRepository {
           .onRef('f.project_id', '=', 'max_f.project_id')
           .onRef('f.timestamp', '=', 'max_f.max_timestamp'),
       )
-      .select(selectFinality)
+      .select(selectFinality.map((column) => `f.${column}` as const))
       .execute()
 
     return rows.map(toRecord)
   }
 
   async addMany(records: Finality[], trx?: Transaction) {
+    if (records.length === 0) {
+      return 0
+    }
+
     const scope = trx ?? this.db
     const rows = records.map(toRow)
     await scope.insertInto('public.finality').values(rows).execute()

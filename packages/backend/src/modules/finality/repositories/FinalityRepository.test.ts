@@ -132,6 +132,7 @@ describeDatabase(FinalityRepository.name, (knex, kysely) => {
             ProjectId('project-a'),
             target,
           )
+
           expect(result).toEqual({
             minimumTimeToInclusion: 2,
             maximumTimeToInclusion: 4,
