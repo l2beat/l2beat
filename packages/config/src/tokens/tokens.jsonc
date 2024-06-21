@@ -2059,16 +2059,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "mBTC",
-      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
       "symbol": "mETH",
       "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
       "category": "ether",

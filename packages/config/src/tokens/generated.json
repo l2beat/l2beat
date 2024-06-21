@@ -5028,25 +5028,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "id": "mantapacific:mbtc-mbtc",
-      "name": "mBTC",
-      "coingeckoId": "manta-mbtc",
-      "address": "0x1468177DbCb2a772F3d182d2F1358d442B553089",
-      "symbol": "mBTC",
-      "decimals": 18,
-      "deploymentTimestamp": 1715909089,
-      "coingeckoListingTimestamp": 1717113600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
-      "chainId": 169,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
       "id": "mantapacific:meth-meth",
       "name": "mETH",
       "coingeckoId": "manta-meth",
