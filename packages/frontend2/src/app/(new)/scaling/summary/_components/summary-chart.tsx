@@ -5,6 +5,7 @@ import { assert } from "@l2beat/shared-pure";
 import { useState } from "react";
 import { z } from "zod";
 import { Chart } from "~/app/_components/chart/chart";
+import { ChartTimeRangeControls } from "~/app/_components/chart/controls/chart-time-range-controls";
 import { getEntriesByDays } from "~/app/_components/chart/utils/get-entries-by-days";
 import { PercentChange } from "~/app/_components/percent-change";
 import { RadioGroup, RadioGroupItem } from "~/app/_components/radio-group";
@@ -26,6 +27,7 @@ export function SummaryChart({ data, milestones }: Props) {
   const [timeRange, setTimeRange] = useState("1y");
   const [unit, setUnit] = useState("usd");
   const [scale, setScale] = useState("lin");
+
   const mappedMilestones = getMilestones(milestones);
 
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
@@ -60,23 +62,19 @@ export function SummaryChart({ data, milestones }: Props) {
   return (
     <section className="flex gap-4 flex-col">
       <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
-      <div className="flex flex-wrap justify-between gap-2">
-        <p className="flex h-8 max-w-[130px] items-center font-bold transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none sm:max-w-full group-data-[interactivity-disabled]/chart:opacity-0">
-          {formatRange(...dataRange)}
-        </p>
-        <RadioGroup
-          value={timeRange}
-          onValueChange={(range) => setTimeRange(range)}
-          className="ml-auto"
-        >
-          <RadioGroupItem value="7d">7D</RadioGroupItem>
-          <RadioGroupItem value="30d">30D</RadioGroupItem>
-          <RadioGroupItem value="90d">90D</RadioGroupItem>
-          <RadioGroupItem value="180d">180D</RadioGroupItem>
-          <RadioGroupItem value="1y">1Y</RadioGroupItem>
-          <RadioGroupItem value="max">MAX</RadioGroupItem>
-        </RadioGroup>
-      </div>
+      <ChartTimeRangeControls
+        value={timeRange}
+        setValue={setTimeRange}
+        options={[
+          { value: "7d", label: "7D" },
+          { value: "30d", label: "30D" },
+          { value: "90d", label: "90D" },
+          { value: "180d", label: "180D" },
+          { value: "1y", label: "1Y" },
+          { value: "max", label: "MAX" },
+        ]}
+        range={dataRange}
+      />
       <Chart
         columns={columns}
         valuesStyle={[

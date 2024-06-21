@@ -6,6 +6,8 @@ export function ChartMilestones() {
   const ref = useRef<HTMLDivElement>(null);
   const chartContext = useChartContext();
 
+  if (!chartContext.rect) return null;
+
   return (
     <div
       ref={ref}
