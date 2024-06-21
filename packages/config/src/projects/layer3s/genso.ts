@@ -19,9 +19,9 @@ export const genso: Layer3 = underReviewL3({
       apps: [
         'https://bridge.arbitrum.io/?destinationChain=arbitrum-one&sourceChain=ethereum',
       ],
-      documentation: [''],
+      documentation: [],
       explorers: [],
-      repositories: [''],
+      repositories: [],
       socialMedia: [
         'https://x.com/genso_meta',
         'https://t.me/gensometamain',
