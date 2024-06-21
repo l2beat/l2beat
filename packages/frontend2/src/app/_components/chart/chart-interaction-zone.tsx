@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { FIRST_LABEL_HEIGHT_PX } from './chart-labels'

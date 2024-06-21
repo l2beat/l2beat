@@ -1,19 +1,19 @@
 'use client'
 import { cn } from '~/utils/cn'
 import { Logo } from '../logo'
-import { ChartLabels } from './chart-labels'
 import {
   ChartContextProvider,
   type ChartContextProviderParams,
 } from './chart-context'
 import { ChartHover } from './chart-hover'
-import { ChartRenderer } from './chart-renderer'
-import { ChartMilestones } from './chart-milestones'
-import { ChartInteractionZone } from './chart-interaction-zone'
 import {
   ChartHoverContextProvider,
   type ChartHoverContextProviderParams,
 } from './chart-hover-context'
+import { ChartInteractionZone } from './chart-interaction-zone'
+import { ChartLabels } from './chart-labels'
+import { ChartMilestones } from './chart-milestones'
+import { ChartRenderer } from './chart-renderer'
 
 interface Props<T>
   extends ChartContextProviderParams<T>,

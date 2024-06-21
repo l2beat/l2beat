@@ -1,6 +1,6 @@
+import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
-import { type ReactNode } from 'react'
 
 export const FIRST_LABEL_HEIGHT_PX = 20
 

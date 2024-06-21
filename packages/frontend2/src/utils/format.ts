@@ -1,7 +1,7 @@
 import round from 'lodash/round'
 
-import { formatNumber } from './format-number'
 import { assert } from '@l2beat/shared-pure'
+import { formatNumber } from './format-number'
 
 const currencyToSymbol: Record<string, string> = {
   usd: '$',

@@ -1,6 +1,6 @@
+import { type Milestone } from '@l2beat/config'
 import { useEffect, useMemo, useRef } from 'react'
 import { type ChartColumn, useChartContext } from './chart-context'
-import { type Milestone } from '@l2beat/config'
 import { useChartHoverContext } from './chart-hover-context'
 import { FIRST_LABEL_HEIGHT_PX } from './chart-labels'
 
