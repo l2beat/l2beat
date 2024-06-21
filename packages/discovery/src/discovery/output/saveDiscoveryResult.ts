@@ -41,8 +41,8 @@ export async function saveDiscoveryResult(
 
   await saveDiscoveredJson(root, results, config, blockNumber, options)
   await saveFlatSources(root, results, logger, options)
-  if(options.saveSources) {
-      await saveSources(root, results, options)
+  if (options.saveSources) {
+    await saveSources(root, results, options)
   }
 }
 
