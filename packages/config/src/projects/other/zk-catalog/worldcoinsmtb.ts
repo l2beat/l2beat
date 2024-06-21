@@ -70,7 +70,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
           '0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1',
         ),
         chainId: ChainId.ETHEREUM,
-        verified: 'no',
+        verified: 'yes',
         subVerifiers: [
           {
             name: 'DeleteCircuitSize10',
@@ -103,8 +103,18 @@ export const worldcoinsmtb: ZkCatalogProject = {
     requiredTools: [
       {
         name: 'Semaphore MTB Setup',
-        version: 'v0.1.0',
+        version: 'd46ef6be3eb0c43303d7e817f7d0c005530addf0',
         link: 'https://github.com/worldcoin/semaphore-mtb-setup',
+      },
+      {
+        name: 'Semaphore MTB',
+        version: '113f8a8a4d2aecf42b9173fd0a52bef5120fcaec',
+        link: 'https://github.com/worldcoin/semaphore-mtb',
+      },
+      {
+        name: 'PTAU deserializer',
+        version: '922115452ffdb4b92972e3b81277e5931fb90efa',
+        link: 'https://github.com/worldcoin/ptau-deserializer',
       },
     ],
   },
