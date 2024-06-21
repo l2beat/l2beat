@@ -7,8 +7,7 @@ import {
   branded,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
-
-import { TrackedTxConfigId } from '../utils/createTrackedTxConfigId'
+import { TrackedTxId } from '../utils/createTrackedTxConfigId'
 
 export type TrackedTxResult =
   | TrackedTxTransferResult
@@ -35,7 +34,7 @@ export const BigQueryFunctionCallResult = z.object({
 
 export type TrackedTxFunctionCallResult = {
   formula: 'functionCall'
-  id: TrackedTxConfigId
+  id: TrackedTxId
   projectId: ProjectId
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
@@ -72,7 +71,7 @@ export const BigQueryTransferResult = z.object({
 export type TrackedTxTransferResult = {
   formula: 'transfer'
   projectId: ProjectId
-  id: TrackedTxConfigId
+  id: TrackedTxId
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
   hash: string
