@@ -126,6 +126,10 @@ export class LivenessRepository {
   }
 
   async addMany(records: Liveness[]) {
+    if (records.length === 0) {
+      return 0
+    }
+
     const rows = records.map(toRow)
 
     await this.db.insertInto('public.liveness').values(rows).execute()

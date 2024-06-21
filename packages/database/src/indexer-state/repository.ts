@@ -11,7 +11,7 @@ export class IndexerStateRepository {
       .insertInto('public.indexer_state')
       .values(row)
       .onConflict((cb) =>
-        cb.doUpdateSet({
+        cb.column('indexer_id').doUpdateSet({
           safe_height: (eb) => eb.ref('excluded.safe_height'),
           config_hash: (eb) => eb.ref('excluded.config_hash'),
           min_timestamp: (eb) => eb.ref('excluded.min_timestamp'),
@@ -32,13 +32,20 @@ export class IndexerStateRepository {
     return row ? toRecord(row) : undefined
   }
 
-  setSafeHeight(indexerId: string, safeHeight: number, trx?: Transaction) {
+  async setSafeHeight(
+    indexerId: string,
+    safeHeight: number,
+    trx?: Transaction,
+  ) {
     const scope = trx ?? this.db
 
-    return scope
+    const [result] = await scope
       .updateTable('public.indexer_state')
       .set({ safe_height: safeHeight })
       .where('indexer_id', '=', indexerId)
+      .execute()
+
+    return Number(result?.numUpdatedRows ?? 0)
   }
 
   async getAll() {

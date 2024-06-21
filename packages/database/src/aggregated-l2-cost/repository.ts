@@ -22,29 +22,7 @@ export class AggregatedL2CostRepository {
     const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await scope
-      .insertInto('public.aggregated_l2_costs')
-      .values(rows)
-      .onConflict((cb) =>
-        cb.columns(['timestamp', 'project_id']).doUpdateSet({
-          total_gas: (eb) => eb.ref('excluded.total_gas'),
-          total_gas_eth: (eb) => eb.ref('excluded.total_gas_eth'),
-          total_gas_usd: (eb) => eb.ref('excluded.total_gas_usd'),
-          blobs_gas: (eb) => eb.ref('excluded.blobs_gas'),
-          blobs_gas_eth: (eb) => eb.ref('excluded.blobs_gas_eth'),
-          blobs_gas_usd: (eb) => eb.ref('excluded.blobs_gas_usd'),
-          calldata_gas: (eb) => eb.ref('excluded.calldata_gas'),
-          calldata_gas_eth: (eb) => eb.ref('excluded.calldata_gas_eth'),
-          calldata_gas_usd: (eb) => eb.ref('excluded.calldata_gas_usd'),
-          compute_gas: (eb) => eb.ref('excluded.compute_gas'),
-          compute_gas_eth: (eb) => eb.ref('excluded.compute_gas_eth'),
-          compute_gas_usd: (eb) => eb.ref('excluded.compute_gas_usd'),
-          overhead_gas: (eb) => eb.ref('excluded.overhead_gas'),
-          overhead_gas_eth: (eb) => eb.ref('excluded.overhead_gas_eth'),
-          overhead_gas_usd: (eb) => eb.ref('excluded.overhead_gas_usd'),
-        }),
-      )
-      .execute()
+    await scope.insertInto('public.aggregated_l2_costs').values(rows).execute()
 
     return rows.length
   }

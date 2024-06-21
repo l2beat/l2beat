@@ -1,5 +1,5 @@
 import { PostgresDatabase, Transaction } from '../kysely'
-import { SequenceProcessor, toRecord, toRow } from './entitiy'
+import { SequenceProcessor, toRecord, toRow } from './entity'
 import { selectSequenceProcessor } from './select'
 
 export class SequenceProcessorRepository {

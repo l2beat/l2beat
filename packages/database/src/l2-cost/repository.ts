@@ -1,7 +1,7 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { L2Cost, toRecord, toRecordWithProjectId, toRow } from './entitiy'
+import { L2Cost, toRecord, toRecordWithProjectId, toRow } from './entity'
 import { joinTrackedTxs } from './join'
 import { selectL2Cost } from './select'
 
@@ -16,6 +16,9 @@ export class L2CostRepository {
   }
 
   async addMany(records: L2Cost[], trx?: Transaction): Promise<number> {
+    if (records.length === 0) {
+      return 0
+    }
     const scope = trx ?? this.db
     const rows = records.map(toRow)
     await scope.insertInto('public.l2_costs').values(rows).execute()
@@ -27,18 +30,18 @@ export class L2CostRepository {
 
     const rows = await this.db
       .selectFrom('public.l2_costs')
-      .innerJoin(...joinTrackedTxs)
-      .select([
-        ...selectL2Cost.map((column) => `public.l2_costs.${column}` as const),
-        'public.tracked_txs_configs.project_id',
-      ])
       .where((eb) =>
         eb.and([
           eb('timestamp', '>=', from.toDate()),
           eb('timestamp', '<=', to.toDate()),
         ]),
       )
-      .distinctOn('tx_hash')
+      .innerJoin(...joinTrackedTxs)
+      .select([
+        ...selectL2Cost.map((column) => `public.l2_costs.${column}` as const),
+        'public.tracked_txs_configs.project_id',
+      ])
+      .distinct()
       .orderBy('timestamp', 'asc')
       .execute()
 

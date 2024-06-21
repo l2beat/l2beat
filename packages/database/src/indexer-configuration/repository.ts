@@ -69,7 +69,7 @@ export class IndexerConfigurationRepository {
       .where((eb) =>
         eb.and([
           eb('indexer_id', '=', indexerId),
-          eb('id', 'in', configurationIds),
+          eb('id', 'not in', configurationIds),
         ]),
       )
       .execute()

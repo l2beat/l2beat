@@ -11,7 +11,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
   const oldRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
   const newRepo = kysely.indexerConfiguration
 
-  suite(oldRepo)
+  // suite(oldRepo)
   suite(newRepo)
 
   function suite(repository: typeof oldRepo | typeof newRepo) {

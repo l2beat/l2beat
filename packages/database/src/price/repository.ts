@@ -59,6 +59,10 @@ export class PriceRepository {
   }
 
   async addMany(records: Price[]) {
+    if (records.length === 0) {
+      return 0
+    }
+
     const rows = records.map(toRow)
 
     await this.db.insertInto('public.prices').values(rows).execute()

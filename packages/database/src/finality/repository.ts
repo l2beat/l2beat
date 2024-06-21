@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { Finality, toProjectFinalityRecord, toRecord, toRow } from './entitiy'
+import { Finality, toProjectFinalityRecord, toRecord, toRow } from './entity'
 import { selectFinality } from './select'
 
 export class FinalityRepository {

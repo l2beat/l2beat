@@ -1,5 +1,5 @@
 import { PostgresDatabase } from '../kysely'
-import { DiscoveryCache, toRecord, toRow } from './entitiy'
+import { DiscoveryCache, toRecord, toRow } from './entity'
 import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository {
