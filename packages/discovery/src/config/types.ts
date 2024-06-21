@@ -19,6 +19,7 @@ export interface DiscoveryModuleConfig {
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
+  readonly printStats: boolean
 }
 
 export interface SingleDiscoveryModuleConfig {
