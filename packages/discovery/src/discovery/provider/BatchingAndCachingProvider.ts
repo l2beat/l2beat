@@ -345,19 +345,12 @@ export class BatchingAndCachingProvider {
 
     let logs: providers.Log[] = []
     try {
-      // TODO: how do we do batching?
-      const logLogs = await Promise.all(
-        topics.map(
-          async (topic) =>
-            await this.provider.getLogs(
-              first.address,
-              [topic],
-              0,
-              first.toBlock,
-            ),
-        ),
+      logs = await this.provider.getLogs(
+        first.address,
+        [topics],
+        0,
+        first.toBlock,
       )
-      logs = logLogs.flat()
     } catch (e) {
       for (const item of items) {
         for (const nested of item.items) {
