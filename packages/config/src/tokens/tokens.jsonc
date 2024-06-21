@@ -2087,13 +2087,6 @@
   ],
   "mantapacific": [
     {
-      "symbol": "wUSDM",
-      "address": "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
-      "category": "stablecoin",
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",

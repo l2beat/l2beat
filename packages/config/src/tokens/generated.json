@@ -5216,21 +5216,6 @@
       "supply": "zero"
     },
     {
-      "id": "mantapacific:wusdm-wrapped-mountain-protocol-usd",
-      "name": "Wrapped Mountain Protocol USD",
-      "coingeckoId": "wrapped-usdm",
-      "address": "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
-      "symbol": "wUSDM",
-      "decimals": 18,
-      "deploymentTimestamp": 1702532779,
-      "coingeckoListingTimestamp": 1703721600,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
-      "chainId": 169,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "id": "fraxtal:susde-staked-usde",
       "name": "Staked USDe",
       "coingeckoId": "ethena-staked-usde",
