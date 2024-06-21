@@ -1261,6 +1261,16 @@
   ],
   "arbitrum": [
     {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -1593,6 +1603,16 @@
   ],
   "optimism": [
     {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
       "category": "stablecoin",
@@ -1815,6 +1835,16 @@
     }
   ],
   "base": [
+    {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
     {
       "symbol": "AERO",
       "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",

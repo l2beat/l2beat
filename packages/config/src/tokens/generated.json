@@ -4757,6 +4757,25 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "optimism:zro-layerzero",
+      "name": "LayerZero",
+      "coingeckoId": "layerzero",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "symbol": "ZRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718220153,
+      "coingeckoListingTimestamp": 1718928000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+      "chainId": 10,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "op-optimism",
       "name": "Optimism",
       "coingeckoId": "optimism",
@@ -6107,6 +6126,25 @@
       }
     },
     {
+      "id": "base:zro-layerzero",
+      "name": "LayerZero",
+      "coingeckoId": "layerzero",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "symbol": "ZRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718220409,
+      "coingeckoListingTimestamp": 1718928000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "base:mochi-mochi",
       "name": "Mochi",
       "coingeckoId": "mochi-thecatcoin",
@@ -6706,6 +6744,25 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "arbitrum:zro-layerzero",
+      "name": "LayerZero",
+      "coingeckoId": "layerzero",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "symbol": "ZRO",
+      "decimals": 18,
+      "deploymentTimestamp": 1718220129,
+      "coingeckoListingTimestamp": 1718928000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
       }
     },
     {
