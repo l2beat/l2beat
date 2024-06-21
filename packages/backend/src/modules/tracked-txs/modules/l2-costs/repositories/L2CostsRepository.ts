@@ -8,7 +8,7 @@ import {
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { TrackedTxId } from '../../../utils/createTrackedTxConfigId'
 
 export interface L2CostsRecord {
   timestamp: UnixTime
@@ -84,6 +84,19 @@ export class L2CostsRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('l2_costs').delete()
   }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('l2_costs')
+      .where('tracked_tx_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .delete()
+  }
 }
 
 function toRow(record: L2CostsRecord): L2CostsRow {
@@ -104,7 +117,7 @@ function toRecord(row: L2CostsRow): L2CostsRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    trackedTxId: row.tracked_tx_id,
     gasUsed: row.gas_used,
     gasPrice: BigInt(row.gas_price),
     calldataGasUsed: row.calldata_gas_used,

@@ -12,7 +12,7 @@ import {
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { TrackedTxId } from '../../../utils/createTrackedTxConfigId'
 
 export interface LivenessRecord {
   timestamp: UnixTime
@@ -162,6 +162,19 @@ export class LivenessRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('liveness').delete()
   }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('liveness')
+      .where('tracked_tx_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .delete()
+  }
 }
 
 function toRecord(row: LivenessRow): LivenessRecord {
@@ -169,7 +182,7 @@ function toRecord(row: LivenessRow): LivenessRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    trackedTxId: row.tracked_tx_id,
   }
 }
 

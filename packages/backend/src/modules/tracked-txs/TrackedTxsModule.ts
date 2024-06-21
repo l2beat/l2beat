@@ -94,6 +94,8 @@ export function createTrackedTxsModule(
     createDatabaseMiddleware: async () =>
       new KnexMiddleware(peripherals.getRepository(LivenessRepository)),
     serializeConfiguration: (config) => JSON.stringify(config),
+    livenessRepository: peripherals.getRepository(LivenessRepository),
+    l2CostsRepository: peripherals.getRepository(L2CostsRepository),
   })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined

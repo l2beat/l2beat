@@ -1,11 +1,11 @@
 import { createHash } from 'crypto'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
-export type TrackedTxConfigId = string
+export type TrackedTxId = string
 
-export function createTrackedTxConfigId(
+export function createTrackedTxId(
   trackedTxConfig: TrackedTxConfigEntry,
-): TrackedTxConfigId {
+): TrackedTxId {
   const input = []
 
   input.push(trackedTxConfig.projectId)

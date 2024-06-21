@@ -14,8 +14,13 @@ import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from '../../tools/uif/multi/ManagedMultiIndexer'
-import { UpdateConfiguration } from '../../tools/uif/multi/types'
+import {
+  RemovalConfiguration,
+  UpdateConfiguration,
+} from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
+import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
@@ -28,6 +33,8 @@ export interface TrackedTxsIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
   updaters: TrackedTxsIndexerUpdaters
   trackedTxsClient: TrackedTxsClient
+  livenessRepository: LivenessRepository
+  l2CostsRepository: L2CostsRepository
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
@@ -92,25 +99,39 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     return syncTo.toNumber()
   }
 
-  // override async removeData(
-  //   configurations: RemovalConfiguration[],
-  // ): Promise<void> {
-  //   for (const configuration of configurations) {
-  //     const deletedRecords =
-  //       await this.$.priceRepository.deleteByConfigInTimeRange(
-  //         configuration.id,
-  //         new UnixTime(configuration.from),
-  //         new UnixTime(configuration.to),
-  //       )
+  override async removeData(
+    configurations: RemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      const livenessDeletedRecords =
+        await this.$.livenessRepository.deleteByConfigInTimeRange(
+          configuration.id,
+          new UnixTime(configuration.from),
+          new UnixTime(configuration.to),
+        )
+      const l2CostsDeletedRecords =
+        await this.$.l2CostsRepository.deleteByConfigInTimeRange(
+          configuration.id,
+          new UnixTime(configuration.from),
+          new UnixTime(configuration.to),
+        )
 
-  //     if (deletedRecords > 0) {
-  //       this.logger.info('Deleted records', {
-  //         from: configuration.from,
-  //         to: configuration.to,
-  //         id: configuration.id,
-  //         deletedRecords,
-  //       })
-  //     }
-  //   }
-  // }
+      if (livenessDeletedRecords > 0) {
+        this.logger.info('Deleted liveness records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          livenessDeletedRecords,
+        })
+      }
+      if (l2CostsDeletedRecords > 0) {
+        this.logger.info('Deleted liveness records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          l2CostsDeletedRecords,
+        })
+      }
+    }
+  }
 }
