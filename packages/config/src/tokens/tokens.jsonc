@@ -1603,6 +1603,12 @@
   ],
   "optimism": [
     {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",
