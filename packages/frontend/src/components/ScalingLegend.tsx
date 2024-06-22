@@ -2,7 +2,6 @@ import React from 'react'
 
 import {
   ArbitrumIcon,
-  ArcologyIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
@@ -60,11 +59,6 @@ export function ScalingLegend() {
         <StarknetIcon className="-top-0.5 relative min-w-[24px]" />
         <span>&ndash;</span>
         <span>This project is based on Starknet&apos;s code base.</span>
-      </p>
-      <p className="flex gap-1">
-        <ArcologyIcon className="-top-0.5 relative min-w-[24px]" />
-        <span>&ndash;</span>
-        <span>This project is based on Arcology&apos;s code base.</span>
       </p>
     </div>
   )

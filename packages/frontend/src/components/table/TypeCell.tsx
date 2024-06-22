@@ -4,7 +4,6 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
-  ArcologyIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
@@ -84,12 +83,6 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
         <TypeTooltip
           text="This project is based on Starknet's code base."
           Icon={StarknetIcon}
-        />
-      )}
-      {provider === 'Arcology' && (
-        <TypeTooltip
-          text="This project is based on Arcology's code base."
-          Icon={ArcologyIcon}
         />
       )}
     </span>
