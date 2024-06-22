@@ -51,6 +51,7 @@ export function discover(
     chain: config.chain.name,
     dryRun: config.dryRun === true,
     dev: config.dev === true,
+    printStats: config.printStats === true,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
