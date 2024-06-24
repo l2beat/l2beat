@@ -105,7 +105,7 @@ function createChainModule(
         : {
             type: 'Blockscout' as const,
             url: chainConfig.config.blockTimestampClientConfig.blockscoutApiUrl,
-            maximumCallsForBlockTimestamp: 30,
+            maximumCallsForBlockTimestamp: 10,
           }
 
   const blockTimestampClient = options
