@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20073649,
   "configHash": "0xd13302d6a275e2febd912ad610a77780313e4647bdb7e24c7edfd04abbc8a3f3",
-  "version": 6,
+  "version": 7,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -28,14 +28,14 @@
       "name": "GuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
-      "roles": ["Guardian"],
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": ["0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"],
         "threshold": "1 of 1 (100%)"
       },
+      "roles": ["Guardian"],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1716902219,
       "values": {
@@ -52,15 +52,15 @@
       "name": "OptimismPortal",
       "address": "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
       "template": "opstack/OptimismPortal",
-      "descriptions": [
-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
-      ],
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2D778797049FE9259d947D1ED8e5442226dFB589",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "descriptions": [
+        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+      ],
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x2D778797049FE9259d947D1ED8e5442226dFB589"],
       "sinceTimestamp": 1686694031,
       "values": {
@@ -98,15 +98,15 @@
       "name": "L1StandardBridge",
       "address": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
       "template": "opstack/L1StandardBridge",
-      "descriptions": [
-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
-      ],
-      "categories": ["Gateways&Escrows"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
+      ],
+      "categories": ["Gateways&Escrows"],
       "implementations": ["0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"],
       "sinceTimestamp": 1686693995,
       "values": {
@@ -125,13 +125,13 @@
       "name": "GnosisSafe",
       "address": "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678243007,
       "values": {
@@ -150,13 +150,13 @@
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
       "values": {
@@ -183,6 +183,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"]
+      },
       "sinceTimestamp": 1685377355,
       "values": {
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
@@ -195,13 +198,13 @@
       "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1707420875,
       "values": {
@@ -235,12 +238,12 @@
       "name": "L1ERC721Bridge",
       "address": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
       "template": "opstack/L1ERC721Bridge",
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
       "implementations": ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"],
       "sinceTimestamp": 1686694055,
       "values": {
@@ -257,13 +260,13 @@
       "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "5 of 7 (71%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1707420755,
       "values": {
@@ -288,15 +291,15 @@
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "template": "opstack/SuperchainConfig",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
-      "categories": ["Upgrades&Governance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
         "admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
+      "descriptions": [
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ],
+      "categories": ["Upgrades&Governance"],
       "implementations": ["0x53c165169401764778F780a69701385eb0FF19B7"],
       "sinceTimestamp": 1705954799,
       "values": {
@@ -341,6 +344,11 @@
       "name": "L2OutputOracle",
       "address": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
       "template": "opstack/L2OutputOracle",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
+        "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
+      },
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
@@ -350,11 +358,6 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xF243BEd163251380e78068d317ae10f26042B292",
-        "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
-      },
       "implementations": ["0xF243BEd163251380e78068d317ae10f26042B292"],
       "sinceTimestamp": 1686694007,
       "values": {
@@ -383,15 +386,15 @@
       "name": "SystemConfig",
       "address": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
       "template": "opstack/SystemConfig",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
-      ],
-      "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "implementations": ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"],
       "sinceTimestamp": 1686694067,
       "values": {
@@ -441,13 +444,13 @@
       "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "threshold": "10 of 13 (77%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1707420419,
       "values": {
@@ -478,14 +481,14 @@
       "name": "OptimismMintableERC20Factory",
       "address": "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
       "template": "opstack/OptimismMintableERC20Factory",
-      "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
+      ],
       "implementations": ["0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"],
       "sinceTimestamp": 1686694043,
       "values": {
@@ -498,13 +501,13 @@
       "name": "ZoraMultisig",
       "address": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 8 (25%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686592343,
       "values": {
@@ -530,14 +533,14 @@
       "name": "ChallengerMultisig",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "template": "GnosisSafe",
-      "roles": ["Challenger"],
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
+      "roles": ["Challenger"],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686592547,
       "values": {
@@ -563,6 +566,16 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x1a0ad011913A150f69f6A19DF447A0CfD9551054",
+          "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
+          "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
+          "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
+          "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
+          "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
+        ]
+      },
       "sinceTimestamp": 1686693947,
       "values": {
         "addressManager": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
@@ -574,17 +587,17 @@
       "name": "L1CrossDomainMessenger",
       "address": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
       "template": "opstack/L1CrossDomainMessenger",
-      "descriptions": [
-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
-      "categories": ["Core"],
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
       },
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"],
       "sinceTimestamp": 1686694019,
       "values": {
@@ -632,47 +645,131 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000dEaD",
-    "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-    "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8",
-    "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
-    "0x3041BA32f451F5850c147805F5521AC206421623",
-    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-    "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
-    "0x4200000000000000000000000000000000000007",
-    "0x4200000000000000000000000000000000000010",
-    "0x4200000000000000000000000000000000000014",
-    "0x4665374939642965EfD8357D4568D2A77f677429",
-    "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
-    "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
-    "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
-    "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-    "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-    "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
-    "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e",
-    "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
-    "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
-    "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
-    "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
-    "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
-    "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-    "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
-    "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
-    "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
-    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-    "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
-    "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
-    "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-    "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
-    "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
-    "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",
-    "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
-    "0xE895076cD050F1f042d1040E47b5929bE989E514",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-    "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4",
-    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073"
+    },
+    {
+      "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8"
+    },
+    {
+      "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
+    },
+    {
+      "address": "0x3041BA32f451F5850c147805F5521AC206421623"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    },
+    {
+      "address": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000007"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000014"
+    },
+    {
+      "address": "0x4665374939642965EfD8357D4568D2A77f677429"
+    },
+    {
+      "address": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
+      "roles": ["Proposer"]
+    },
+    {
+      "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"
+    },
+    {
+      "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15"
+    },
+    {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    },
+    {
+      "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa"
+    },
+    {
+      "address": "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+    },
+    {
+      "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
+    },
+    {
+      "address": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
+      "roles": ["Sequencer"]
+    },
+    {
+      "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865"
+    },
+    {
+      "address": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf"
+    },
+    {
+      "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
+    },
+    {
+      "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f"
+    },
+    {
+      "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39"
+    },
+    {
+      "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4"
+    },
+    {
+      "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
+    },
+    {
+      "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
+      "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5"
+    },
+    {
+      "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
+    },
+    {
+      "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9"
+    },
+    {
+      "address": "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+    },
+    {
+      "address": "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+    },
+    {
+      "address": "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+    },
+    {
+      "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
+    },
+    {
+      "address": "0xE895076cD050F1f042d1040E47b5929bE989E514"
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    },
+    {
+      "address": "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+    },
+    {
+      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    }
   ],
   "abis": {
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
