@@ -20,7 +20,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         'url',
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       expect(etherscanClient.getChainId()).toEqual(ChainId.ETHEREUM)
@@ -41,7 +40,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'KEY123',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
@@ -58,7 +56,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -77,7 +74,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -96,7 +92,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
@@ -114,7 +109,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const result = await etherscanClient.call('mod', 'act', {})
@@ -137,7 +131,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -161,7 +154,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ARBITRUM,
       )
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
@@ -205,7 +197,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ARBITRUM,
       )
       const blockNumber =
@@ -255,7 +246,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -300,7 +290,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -344,7 +333,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -367,83 +355,38 @@ describe(EtherscanClient.name, () => {
       )
     })
 
-    it('tries to find blockNumber until minTimestamp then throw', async () => {
+    it('tries to find blockNumber until MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP then throw', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
-      const result = 1234
+      const NOT_OK = new Response(
+        JSON.stringify({
+          status: '1',
+          message: 'NOTOK',
+          result: `Error! No closest block found`,
+        }),
+      )
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! No closest block found`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'OK',
-                result: `${result}`,
-              }),
-            ),
-          ),
+          // MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 6
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK),
       })
 
       const etherscanClient = new EtherscanClient(
         httpClient,
         API_URL,
         'key',
-        timestamp.add(-20, 'minutes'),
         ChainId.ETHEREUM,
       )
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
-      ).toBeRejectedWith('Could not fetch block number')
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
-      )
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-10, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
-      )
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        3,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-20, 'minutes')
-          .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
-      )
+      ).toBeRejected()
     })
   })
 
@@ -476,7 +419,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const source = await etherscanClient.getContractSource(
@@ -510,7 +452,6 @@ describe(EtherscanClient.name, () => {
         httpClient,
         API_URL,
         'key',
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const source = await etherscanClient.getContractDeploymentTx(

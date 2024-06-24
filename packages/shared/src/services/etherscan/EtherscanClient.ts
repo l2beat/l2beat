@@ -10,7 +10,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
-import { BlockNumberProvider } from '../providers/BlockNumberProvider'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
@@ -18,8 +17,9 @@ import {
 } from './model'
 
 export class EtherscanError extends Error {}
+const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 6
 
-export class EtherscanClient implements BlockNumberProvider {
+export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -29,11 +29,11 @@ export class EtherscanClient implements BlockNumberProvider {
     private readonly httpClient: HttpClient,
     private readonly url: string,
     private readonly apiKey: string,
-    private readonly minTimestamp: UnixTime,
     private readonly chainId: ChainId,
     private readonly logger = Logger.SILENT,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.logger = logger.for(this).tag(chainId.toString())
   }
 
   static create(
@@ -41,7 +41,6 @@ export class EtherscanClient implements BlockNumberProvider {
     options: {
       url: string
       apiKey: string
-      minTimestamp: UnixTime
       chainId: ChainId
     },
   ) {
@@ -49,7 +48,6 @@ export class EtherscanClient implements BlockNumberProvider {
       services.httpClient,
       options.url,
       options.apiKey,
-      options.minTimestamp,
       options.chainId,
       services.logger,
     )
@@ -64,13 +62,7 @@ export class EtherscanClient implements BlockNumberProvider {
     apiKey: string,
     chainId: ChainId,
   ) {
-    return new EtherscanClient(
-      httpClient,
-      url,
-      apiKey,
-      new UnixTime(0),
-      chainId,
-    )
+    return new EtherscanClient(httpClient, url, apiKey, chainId)
   }
 
   getChainId(): ChainId {
@@ -87,7 +79,8 @@ export class EtherscanClient implements BlockNumberProvider {
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
-    while (current.gte(this.minTimestamp)) {
+    let counter = 1
+    while (counter <= MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
@@ -109,13 +102,14 @@ export class EtherscanClient implements BlockNumberProvider {
 
         current = current.add(-10, 'minutes')
       }
+      counter++
     }
 
     throw new Error('Could not fetch block number', {
       cause: {
         current,
         timestamp,
-        minTimestamp: this.minTimestamp,
+        calls: MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP,
       },
     })
   }
