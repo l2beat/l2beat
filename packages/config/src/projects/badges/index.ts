@@ -1,6 +1,10 @@
 /**
  * In order to add a new badge, you need to:
- * - add it to the const Badge object, specifying the type
+ * - add it to the const badges object below, specifying the type and display properties
+ * - add images to the respective folder in frontend2 (TBD)
+ *
+ * In order to add a new badge type, you need to:
+ * - add it to the BadgeType object below & that's it
  */
 
 export const BadgeType = {
