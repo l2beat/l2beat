@@ -1,7 +1,7 @@
 import { type Milestone } from '@l2beat/config'
 import { type ReactNode, createContext, useContext, useState } from 'react'
 import { type SeriesStyle } from './styles'
-import { getYAxis } from './utils/get-y-axis'
+import { getYAxis } from '../utils/get-y-axis'
 
 const LABEL_COUNT = 5
 interface Value {

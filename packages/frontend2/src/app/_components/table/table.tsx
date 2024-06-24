@@ -2,7 +2,7 @@ import { type SortDirection } from '@tanstack/react-table'
 import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
-import { SortingArrows } from './sorting-arrows'
+import { SortingArrows } from './sorting/sorting-arrows'
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -110,16 +110,19 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'h-9 md:h-14 align-middle whitespace-pre',
+      'h-9 md:h-14 align-middle whitespace-pre group',
       !href && 'first:pl-2 pr-3 last:pr-2',
-      className,
+      !href && className,
     )}
     {...props}
   >
     {href ? (
       <Link
         href={href}
-        className="flex size-full items-center first:pl-2 pr-3 last:pr-2"
+        className={cn(
+          'flex size-full items-center group-first:pl-2 pr-3 md:pr-4 group-last:pr-2',
+          className,
+        )}
       >
         {children}
       </Link>

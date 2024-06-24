@@ -1,6 +1,6 @@
 'use client'
 import { cn } from '~/utils/cn'
-import { Logo } from '../logo'
+import { Logo } from '../../logo'
 import { ChartHover } from './chart-hover'
 import { ChartInteractionZone } from './chart-interaction-zone'
 import { ChartLabels } from './chart-labels'

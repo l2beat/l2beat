@@ -1,10 +1,6 @@
 'use client'
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
 import React from 'react'
+import { type ScalingSummaryLayer2sEntry as ScalingSummaryLayer2sEntry } from '../../../_utils/scaling-summary-entry'
 import {
   Table,
   TableBody,
@@ -14,15 +10,19 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/app/_components/table/table'
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingSummaryActiveEntry } from '../../../_utils/scaling-summary-entry'
 import { columns } from './columns'
 
 interface Props {
-  items: ScalingSummaryActiveEntry[]
+  items: ScalingSummaryLayer2sEntry[]
 }
 
-export function SummaryActiveTable({ items }: Props) {
+export function SummaryLayer2sTable({ items }: Props) {
   const table = useTable({
     data: items,
     columns: columns,
@@ -67,6 +67,7 @@ export function SummaryActiveTable({ items }: Props) {
               <TableCell
                 key={cell.id}
                 href={`/scaling/projects/${row.original.slug}`}
+                className={cell.column.columnDef.meta?.cellClassName}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableCell>

@@ -2,8 +2,8 @@
 
 import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { Chart } from '~/app/_components/chart/chart'
-import { ChartProvider } from '~/app/_components/chart/chart-provider'
+import { Chart } from '~/app/_components/chart/core/chart'
+import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
@@ -12,11 +12,11 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { getPercentageChange } from '~/utils/get-percentage-change'
-import { type AggregateDetailedTvlResponse } from '../tvl'
-import { useChartContext } from '~/app/_components/chart/chart-context'
+import { type AggregateDetailedTvlResponse } from '../../(new)/scaling/summary/tvl'
+import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { Skeleton } from '~/app/_components/skeleton'
 
-interface SummaryChartPointData {
+interface TvlChartPointData {
   timestamp: number
   usdValue: number
   ethValue: number
@@ -25,11 +25,13 @@ interface SummaryChartPointData {
 interface Props {
   data: AggregateDetailedTvlResponse
   milestones: Milestone[]
+  tag?: string
 }
-export function SummaryChart({ data, milestones }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage('summary-time-range', '1y')
-  const [unit, setUnit] = useLocalStorage('summary-unit', 'usd')
-  const [scale, setScale] = useLocalStorage('summary-scale', 'lin')
+
+export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
+  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+  const [unit, setUnit] = useLocalStorage(`${tag}-unit`, 'usd')
+  const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
   const mappedMilestones = getMilestones(milestones)
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
@@ -105,7 +107,7 @@ export function SummaryChart({ data, milestones }: Props) {
   )
 }
 
-function ChartHover({ data }: { data: SummaryChartPointData }) {
+function ChartHover({ data }: { data: TvlChartPointData }) {
   const formattedUsd = formatCurrencyExactValue(data.usdValue, 'USD')
   const formattedEth = formatCurrencyExactValue(data.ethValue, 'ETH')
   return (

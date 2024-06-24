@@ -9,7 +9,7 @@ import { type TokenBreakdownProps } from '~/app/_components/breakdown/TokenBreak
 import { type RosetteValue } from '~/app/_components/rosette/types'
 import { getL2Risks } from '../../_utils/get-l2-risks'
 
-export interface ScalingSummaryActiveEntry {
+export interface ScalingSummaryLayer2sEntry {
   name: string
   shortName: string | undefined
   slug: string
@@ -38,7 +38,7 @@ export interface TvlData {
 
 export function toScalingSummaryEntry(
   layer2: Layer2,
-): ScalingSummaryActiveEntry {
+): ScalingSummaryLayer2sEntry {
   return {
     name: layer2.display.name,
     shortName: layer2.display.shortName,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
-import { useChartContext } from '../chart-context'
+import { useChartContext } from '../core/chart-context'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../../skeleton'
 

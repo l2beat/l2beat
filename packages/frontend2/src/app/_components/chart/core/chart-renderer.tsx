@@ -1,9 +1,9 @@
 import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef } from 'react'
 import { useChartContext } from './chart-context'
-import { getLineDashSegments } from './utils/get-line-dash-segments'
-import { getRenderPaths } from './utils/get-render-paths'
-import { getFillStyle, getStrokeStyle } from './utils/get-style'
+import { getLineDashSegments } from '../utils/get-line-dash-segments'
+import { getRenderPaths } from '../utils/get-render-paths'
+import { getFillStyle, getStrokeStyle } from '../utils/get-style'
 import { useEventListener } from '~/hooks/use-event-listener'
 
 export function ChartRenderer() {

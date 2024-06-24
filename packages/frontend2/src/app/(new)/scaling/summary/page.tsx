@@ -10,25 +10,29 @@ import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
-import { SummaryChart } from './_components/summary-chart'
-import { SummaryActiveTable } from './_components/table/active/summary-active-table'
+import { TvlChart } from '../../../_components/chart/tvl-chart'
+import { SummaryLayer2sTable } from './_components/table/layer2s/summary-layer2s-table'
 import { toScalingSummaryEntry } from './_utils/scaling-summary-entry'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
+
+export const metadata = getDefaultMetadata({
+  openGraph: {
+    url: '/scaling/summary',
+  },
+})
 import { layer2sTvl } from './tvl'
 
 export default async function Page() {
-  // NOTE: This is too big to cache, we should split this into multiple smaller
-  // endpoint.
-
   return (
     <div>
-      <SummaryChart data={layer2sTvl} milestones={HOMEPAGE_MILESTONES} />
-      <Tabs defaultValue="active" className="w-full">
+      <TvlChart data={layer2sTvl} milestones={HOMEPAGE_MILESTONES} />
+      <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
-            <TabsTrigger value="active" className="gap-1.5">
+            <TabsTrigger value="layer2s" className="gap-1.5">
               <ActiveIcon />
-              <span className="md:hidden">Active</span>
-              <span className="hidden md:inline">Active projects</span>
+              <span className="md:hidden">Layer2s</span>
+              <span className="hidden md:inline">Layer 2 projects</span>
             </TabsTrigger>
             <TabsTrigger value="layer3s" className="gap-1.5">
               <Layer3sIcon />
@@ -48,8 +52,8 @@ export default async function Page() {
           </TabsList>
         </OverflowWrapper>
 
-        <TabsContent value="active">
-          <SummaryActiveTable items={layer2s.map(toScalingSummaryEntry)} />
+        <TabsContent value="layer2s">
+          <SummaryLayer2sTable items={layer2s.map(toScalingSummaryEntry)} />
         </TabsContent>
         <TabsContent value="layer3s">Active Layer3s</TabsContent>
         <TabsContent value="upcoming">Upcoming Layer2s</TabsContent>

@@ -3,7 +3,7 @@ import {
   LINE_STYLES,
   type SeriesStyleFill,
   type SeriesStyleLine,
-} from '../styles'
+} from '../core/styles'
 
 export function getFillStyle(
   ctx: CanvasRenderingContext2D,
