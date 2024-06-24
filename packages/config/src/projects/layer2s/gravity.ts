@@ -14,7 +14,7 @@ export const gravity: Layer2 = upcomingL2({
     links: {
       websites: ['https://gravity.xyz'],
       apps: [],
-      documentation: [''],
+      documentation: [],
       explorers: [],
       repositories: [],
       socialMedia: [
