@@ -10,17 +10,13 @@ export class BlockTransactionCountRepository {
     records: BlockTransactionCount[],
     trx?: Transaction,
   ): Promise<number> {
-    const scope = trx ?? this.db
     for (const record of records) {
-      await this.addOrUpdate(record, scope)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async addOrUpdate(
-    record: BlockTransactionCount,
-    trx?: Transaction | PostgresDatabase,
-  ) {
+  async addOrUpdate(record: BlockTransactionCount, trx?: Transaction) {
     const scope = trx ?? this.db
     await scope
       .insertInto('activity.block')
