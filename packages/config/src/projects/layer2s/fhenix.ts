@@ -12,7 +12,7 @@ export const fhenix: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.fhenix.io/'],
+      websites: ['https://fhenix.io/'],
       apps: [],
       documentation: [
         'https://www.fhenix.io/fhe-rollups-scaling-confidential-smart-contracts-on-ethereum-and-beyond-whitepaper/',
