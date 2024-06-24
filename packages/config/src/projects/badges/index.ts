@@ -144,6 +144,7 @@ export const Badge: {
       : never]: K
   }
 } = Object.entries(badges).reduce((acc, [key, value]) => {
+  if (!acc[value.type]) acc[value.type] = {}
   acc[value.type][key] = key
   return acc
   // biome-ignore lint/suspicious/noExplicitAny: just believe
