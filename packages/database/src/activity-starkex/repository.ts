@@ -1,19 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { StarkexTransactionCount, toRecord, toRow } from './entity'
-import { selectStarkexTransactionCount } from './select'
+import { StarkExTransactionCount, toRecord, toRow } from './entity'
+import { selectStarkExTransactionCount } from './select'
 
-export class StarkexTransactionCountRepository {
+export class StarkExTransactionCountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdateMany(records: StarkexTransactionCount[], trx?: Transaction) {
+  async addOrUpdateMany(records: StarkExTransactionCount[], trx?: Transaction) {
     for (const record of records) {
       await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async addOrUpdate(record: StarkexTransactionCount, trx?: Transaction) {
+  async addOrUpdate(record: StarkExTransactionCount, trx?: Transaction) {
     const scope = trx ?? this.db
     await scope
       .insertInto('activity.starkex')
@@ -47,7 +47,7 @@ export class StarkexTransactionCountRepository {
   async getAll() {
     const rows = await this.db
       .selectFrom('activity.starkex')
-      .select(selectStarkexTransactionCount)
+      .select(selectStarkExTransactionCount)
       .execute()
 
     return rows.map(toRecord)

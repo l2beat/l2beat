@@ -1,7 +1,7 @@
 import { PoolConfig } from 'pg'
-import { ZksyncTransactionRepository } from './acitivity-zksync/repository'
+import { ZkSyncTransactionRepository } from './acitivity-zksync/repository'
 import { BlockTransactionCountRepository } from './activity-block/repository'
-import { StarkexTransactionCountRepository } from './activity-starkex/repository'
+import { StarkExTransactionCountRepository } from './activity-starkex/repository'
 import { AggregatedL2CostRepository } from './aggregated-l2-cost/repository'
 import { AmountRepository } from './amount/repository'
 import { BlockTimestampRepository } from './block-timestamp/repository'
@@ -28,7 +28,7 @@ import { StakeRepository } from './stake/repository'
 import { TokenBridgeRepository } from './token-bridge/repository'
 import { TokenMetaRepository } from './token-meta/repository'
 import { TokenRepository } from './token/repository'
-import { TrackedTxsConfigsRepository } from './tracked-tx-config/repository'
+import { TrackedTxsConfigRepository } from './tracked-tx-config/repository'
 import { TvlCleanerRepository } from './tvl-cleaner/repository'
 import { UpdateMonitorRepository } from './update-monitor/repository'
 import { ValueRepository } from './value/repository'
@@ -68,7 +68,7 @@ export function createRepositories(config?: PoolConfig) {
     liveness: new LivenessRepository(db),
     price: new PriceRepository(db),
     sequenceProcessor: new SequenceProcessorRepository(db),
-    trackedTxConfig: new TrackedTxsConfigsRepository(db),
+    trackedTxConfig: new TrackedTxsConfigRepository(db),
     tvlCleaner: new TvlCleanerRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     value: new ValueRepository(db),
@@ -76,8 +76,8 @@ export function createRepositories(config?: PoolConfig) {
 
     // L2BEAT - activity
     blockTransactionCount: new BlockTransactionCountRepository(db),
-    starkexTransactionCount: new StarkexTransactionCountRepository(db),
-    zksyncTransactionCount: new ZksyncTransactionRepository(db),
+    starkExTransactionCount: new StarkExTransactionCountRepository(db),
+    zkSyncTransactionCount: new ZkSyncTransactionRepository(db),
   }
 }
 

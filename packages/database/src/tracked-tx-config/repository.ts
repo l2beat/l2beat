@@ -12,7 +12,7 @@ import {
 import { DeleteResult } from 'kysely'
 import { TrackedTxsConfig, toRecord, toRow } from './entity'
 
-export class TrackedTxsConfigsRepository {
+export class TrackedTxsConfigRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getAll(trx?: Transaction) {

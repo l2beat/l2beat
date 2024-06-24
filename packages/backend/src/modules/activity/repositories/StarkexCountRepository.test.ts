@@ -10,7 +10,7 @@ const PROJECT_B = ProjectId('project-b')
 
 describeDatabase(StarkexTransactionCountRepository.name, (knex, kysely) => {
   const oldRepo = new StarkexTransactionCountRepository(knex, Logger.SILENT)
-  const newRepo = kysely.starkexTransactionCount
+  const newRepo = kysely.starkExTransactionCount
 
   suite(oldRepo)
   suite(newRepo)

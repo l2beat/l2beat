@@ -7,7 +7,7 @@ import { ZksyncTransactionRepository } from './ZksyncTransactionRepository'
 
 describeDatabase(ZksyncTransactionRepository.name, (knex, kysely) => {
   const oldRepo = new ZksyncTransactionRepository(knex, Logger.SILENT)
-  const newRepo = kysely.zksyncTransactionCount
+  const newRepo = kysely.zkSyncTransactionCount
 
   suite(oldRepo)
   suite(newRepo)
