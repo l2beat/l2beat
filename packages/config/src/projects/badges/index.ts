@@ -147,7 +147,7 @@ export const Badge: {
   if (!acc[value.type]) acc[value.type] = {}
   acc[value.type][key] = key
   return acc
-  // biome-ignore lint/suspicious/noExplicitAny: just believe
+  // biome-ignore lint/suspicious/noExplicitAny: it's way easier to type this as any than to do typecasting gymnastics above (trust)
 }, {} as any)
 
 export type BadgeId = keyof typeof badges
