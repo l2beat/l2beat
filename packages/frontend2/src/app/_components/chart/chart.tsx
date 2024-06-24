@@ -8,11 +8,11 @@ import { ChartMilestones } from './chart-milestones'
 import { ChartRenderer } from './chart-renderer'
 import { ChartLoader } from './chart-loader'
 
-interface Props<T> {
+interface Props {
   className?: string
 }
 
-export function Chart<T>({ className }: Props<T>) {
+export function Chart({ className }: Props) {
   return (
     <div
       className={cn('relative h-[160px] sm:h-[260px] xs:h-[200px]', className)}

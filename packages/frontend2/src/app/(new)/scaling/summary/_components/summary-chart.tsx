@@ -12,7 +12,7 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { getPercentageChange } from '~/utils/get-percentage-change'
-import { AggregateDetailedTvlResponse } from '../tvl'
+import { type AggregateDetailedTvlResponse } from '../tvl'
 import { useChartContext } from '~/app/_components/chart/chart-context'
 import { Skeleton } from '~/app/_components/skeleton'
 

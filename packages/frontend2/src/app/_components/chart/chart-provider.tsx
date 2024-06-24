@@ -1,10 +1,10 @@
 import {
   ChartContextProvider,
-  ChartContextProviderParams,
+  type ChartContextProviderParams,
 } from './chart-context'
 import {
   ChartHoverContextProvider,
-  ChartHoverContextProviderParams,
+  type ChartHoverContextProviderParams,
 } from './chart-hover-context'
 
 export interface ChartProviderProps<T>

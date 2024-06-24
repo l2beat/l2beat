@@ -1,9 +1,10 @@
 import { useTheme } from 'next-themes'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useChartContext } from './chart-context'
 import { getLineDashSegments } from './utils/get-line-dash-segments'
 import { getRenderPaths } from './utils/get-render-paths'
 import { getFillStyle, getStrokeStyle } from './utils/get-style'
+import { useEventListener } from '~/hooks/use-event-listener'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
@@ -11,76 +12,71 @@ export function ChartRenderer() {
   const { theme: rawTheme } = useTheme()
   const theme = rawTheme === 'dark' ? 'dark' : 'light'
 
-  useEffect(() => {
+  const setupCanvas = useCallback(() => {
     const chart = ref.current
-    const ctx = chart?.getContext('2d')
-    if (!chart || !ctx) return
-    const setupCanvas = () =>
-      requestAnimationFrame(() => {
-        const rect = chart.parentElement?.getBoundingClientRect()
-        if (rect) {
-          chart.width = rect.width * window.devicePixelRatio
-          chart.height = rect.height * window.devicePixelRatio
-          context.setRect(rect)
-        }
-      })
+    if (!chart) return
 
-    setupCanvas()
-    window.addEventListener('resize', setupCanvas)
-    return () => {
-      window.removeEventListener('resize', setupCanvas)
-    }
-  }, [])
+    requestAnimationFrame(() => {
+      const rect = chart.parentElement?.getBoundingClientRect()
+      if (rect) {
+        chart.width = rect.width * window.devicePixelRatio
+        chart.height = rect.height * window.devicePixelRatio
+        context.setRect(rect)
+      }
+    })
+  }, [ref, context])
 
-  useEffect(() => {
+  const render = useCallback(() => {
     const chart = ref.current
     const ctx = chart?.getContext('2d')
     if (!chart || !ctx) return
 
-    const render = () =>
-      requestAnimationFrame(() => {
-        ctx.clearRect(0, 0, chart.width, chart.height)
-        const renderPaths = getRenderPaths({ chart, context })
+    requestAnimationFrame(() => {
+      ctx.clearRect(0, 0, chart.width, chart.height)
+      const renderPaths = getRenderPaths({ chart, context })
 
-        for (const { style, paths } of renderPaths) {
-          if (style.fill) {
-            for (const path of paths) {
-              ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
-              const fillPath = new Path2D(path.path)
-              fillPath.lineTo(path.lastX, chart.height)
-              fillPath.lineTo(path.startX ?? 0, chart.height)
-              fillPath.closePath()
-              ctx.fill(fillPath)
-            }
+      for (const { style, paths } of renderPaths) {
+        if (style.fill) {
+          for (const path of paths) {
+            ctx.fillStyle = getFillStyle(ctx, style.fill, theme)
+            const fillPath = new Path2D(path.path)
+            fillPath.lineTo(path.lastX, chart.height)
+            fillPath.lineTo(path.startX ?? 0, chart.height)
+            fillPath.closePath()
+            ctx.fill(fillPath)
           }
         }
+      }
 
-        for (const { style, paths } of renderPaths) {
-          if (style.line) {
-            for (const path of paths) {
-              ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
-              ctx.strokeStyle = getStrokeStyle(ctx, style.line, theme)
-              if (path.dashed) {
-                const segments = getLineDashSegments(context.range)
-                ctx.setLineDash(segments)
-              } else {
-                ctx.setLineDash([])
-              }
-
-              ctx.stroke(path.path)
+      for (const { style, paths } of renderPaths) {
+        if (style.line) {
+          for (const path of paths) {
+            ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
+            ctx.strokeStyle = getStrokeStyle(ctx, style.line, theme)
+            if (path.dashed) {
+              const segments = getLineDashSegments(context.range)
+              ctx.setLineDash(segments)
+            } else {
+              ctx.setLineDash([])
             }
+
+            ctx.stroke(path.path)
           }
         }
-        context.setLoading(false)
-      })
-
-    window.addEventListener('resize', render)
-    render()
-
-    return () => {
-      window.removeEventListener('resize', render)
-    }
+      }
+      context.setLoading(false)
+    })
   }, [context, theme])
+
+  useEffect(() => {
+    setupCanvas()
+    render()
+  }, [render, setupCanvas])
+
+  useEventListener('resize', () => {
+    setupCanvas()
+    render()
+  })
 
   return (
     <canvas

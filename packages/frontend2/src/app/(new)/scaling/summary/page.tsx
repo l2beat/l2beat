@@ -1,7 +1,4 @@
-import path from 'path'
 import { HOMEPAGE_MILESTONES, layer2s } from '@l2beat/config'
-import { readFile } from 'fs/promises'
-import { z } from 'zod'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import {
   Tabs,

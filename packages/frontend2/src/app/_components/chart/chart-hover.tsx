@@ -1,5 +1,5 @@
 import { mean } from 'lodash'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
