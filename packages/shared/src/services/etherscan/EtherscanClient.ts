@@ -1,14 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  RateLimiter,
-  UnixTime,
-  stringAsInt,
-} from '@l2beat/shared-pure'
-
-import { z } from 'zod'
+import { EthereumAddress, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 import { HttpClient } from '../HttpClient'
-import { ContractSourceResult, EtherscanResponse } from './EtherscanResponse'
+import {
+  BlockTimestampResponse,
+  ContractSourceResult,
+  EtherscanResponse,
+} from './types'
 
 interface EtherscanOptions {
   type: 'Etherscan'
@@ -58,13 +55,7 @@ export class EtherscanClient {
           closest: 'before',
         })
 
-        return this.options.type === 'Etherscan'
-          ? stringAsInt().parse(result)
-          : z
-              .object({
-                blockNumber: z.coerce.number(),
-              })
-              .parse(result).blockNumber
+        return BlockTimestampResponse.parse(result)
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
