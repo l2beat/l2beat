@@ -102,19 +102,24 @@ export const worldcoinsmtb: ZkCatalogProject = {
     ],
     requiredTools: [
       {
-        name: 'Semaphore MTB Setup',
-        version: 'd46ef6be3eb0c43303d7e817f7d0c005530addf0',
-        link: 'https://github.com/worldcoin/semaphore-mtb-setup',
-      },
-      {
         name: 'Semaphore MTB',
         version: '113f8a8a4d2aecf42b9173fd0a52bef5120fcaec',
         link: 'https://github.com/worldcoin/semaphore-mtb',
       },
       {
+        name: 'Semaphore MTB Setup',
+        version: 'd46ef6be3eb0c43303d7e817f7d0c005530addf0',
+        link: 'https://github.com/worldcoin/semaphore-mtb-setup',
+      },
+      {
         name: 'PTAU deserializer',
         version: '922115452ffdb4b92972e3b81277e5931fb90efa',
         link: 'https://github.com/worldcoin/ptau-deserializer',
+      },
+      {
+        name: 'GNARK contract generator',
+        version: '1eb487a151323cbc41ac4a6b7b24f71268d61be2',
+        link: 'https://github.com/worldcoin/gnark-contract-generator',
       },
     ],
   },
