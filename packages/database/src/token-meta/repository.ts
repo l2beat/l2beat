@@ -8,7 +8,7 @@ export class TokenMetaRepository {
     const entities = tokenMetas.map(toRow)
 
     return this.db
-      .insertInto('TokenMeta')
+      .insertInto('public.TokenMeta')
       .values(entities)
       .onConflict((conflict) =>
         conflict.columns(['tokenId', 'source']).doUpdateSet({
@@ -16,7 +16,7 @@ export class TokenMetaRepository {
           source: (excluded) => excluded.ref('excluded.source'),
         }),
       )
-      .returning('TokenMeta.id')
+      .returning('public.TokenMeta.id')
       .execute()
   }
 }

@@ -7,312 +7,319 @@ import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsCon
 import { TRACKED_TXS_RECORDS } from '../../../repositories/TrackedTxsConfigsRepository.test'
 import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
-describeDatabase(LivenessRepository.name, (database) => {
-  const repository = new LivenessRepository(database, Logger.SILENT)
-  const configRepository = new TrackedTxsConfigsRepository(
-    database,
-    Logger.SILENT,
-  )
+describeDatabase(LivenessRepository.name, (knex, kysely) => {
+  const oldRepo = new LivenessRepository(knex, Logger.SILENT)
+  const oldConfigRepo = new TrackedTxsConfigsRepository(knex, Logger.SILENT)
+  const newRepo = kysely.liveness
+  const newConfigRepo = kysely.trackedTxConfig
 
-  const START = UnixTime.now()
-  const DATA = [
-    {
-      timestamp: START.add(-1, 'hours'),
-      blockNumber: 12345,
-      txHash: '0x1234567890abcdef',
-      trackedTxId: TRACKED_TXS_RECORDS[0].id,
-    },
-    {
-      timestamp: START.add(-2, 'hours'),
-      blockNumber: 12340,
-      txHash: '0x1234567890abcdef',
-      trackedTxId: TRACKED_TXS_RECORDS[0].id,
-    },
-    {
-      timestamp: START.add(-2, 'hours'),
-      blockNumber: 12346,
-      txHash: '0xabcdef1234567890',
-      trackedTxId: TRACKED_TXS_RECORDS[1].id,
-    },
-    {
-      timestamp: START.add(-3, 'hours'),
-      blockNumber: 12347,
-      txHash: '0x12345678901abcdef',
-      trackedTxId: TRACKED_TXS_RECORDS[2].id,
-    },
-  ]
+  suite(oldRepo, oldConfigRepo)
+  suite(newRepo, newConfigRepo)
 
-  beforeEach(async function () {
-    this.timeout(10000)
-    await configRepository.deleteAll()
-    await configRepository.addMany(TRACKED_TXS_RECORDS)
-    await repository.deleteAll()
-    await repository.addMany(DATA)
-  })
+  function suite(
+    repository: typeof oldRepo | typeof newRepo,
+    configRepository: typeof oldConfigRepo | typeof newConfigRepo,
+  ) {
+    const START = UnixTime.now()
+    const DATA = [
+      {
+        timestamp: START.add(-1, 'hours'),
+        blockNumber: 12345,
+        txHash: '0x1234567890abcdef',
+        trackedTxId: TRACKED_TXS_RECORDS[0].id,
+      },
+      {
+        timestamp: START.add(-2, 'hours'),
+        blockNumber: 12340,
+        txHash: '0x1234567890abcdef',
+        trackedTxId: TRACKED_TXS_RECORDS[0].id,
+      },
+      {
+        timestamp: START.add(-2, 'hours'),
+        blockNumber: 12346,
+        txHash: '0xabcdef1234567890',
+        trackedTxId: TRACKED_TXS_RECORDS[1].id,
+      },
+      {
+        timestamp: START.add(-3, 'hours'),
+        blockNumber: 12347,
+        txHash: '0x12345678901abcdef',
+        trackedTxId: TRACKED_TXS_RECORDS[2].id,
+      },
+    ]
 
-  describe(LivenessRepository.prototype.addMany.name, () => {
-    it('only new rows', async () => {
-      const newRows = [
-        {
-          timestamp: START.add(-5, 'hours'),
-          blockNumber: 12349,
-          txHash: '0x1234567890abcdef1',
-          trackedTxId: TRACKED_TXS_RECORDS[0].id,
-        },
-        {
-          timestamp: START.add(-6, 'hours'),
-          blockNumber: 12350,
-          txHash: '0xabcdef1234567892',
-          trackedTxId: TRACKED_TXS_RECORDS[0].id,
-        },
-      ]
-      await repository.addMany(newRows)
-
-      const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        ...DATA.map((e) => ({
-          ...e,
-        })),
-        ...newRows,
-      ])
-    })
-
-    it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
-    })
-
-    it('big query', async () => {
-      const records: LivenessRecord[] = []
-      for (let i = 0; i < 15_000; i++) {
-        records.push({
-          timestamp: START.add(-i, 'hours'),
-          blockNumber: i,
-          txHash: `0xabcdef1234567892${i}`,
-          trackedTxId: TRACKED_TXS_RECORDS[0].id,
-        })
-      }
-      await expect(repository.addMany(records)).not.toBeRejected()
-    })
-  })
-
-  describe(LivenessRepository.prototype.getAll.name, () => {
-    it('should return all rows', async () => {
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
-    })
-  })
-
-  describe(LivenessRepository.prototype.deleteAll.name, () => {
-    it('should delete all rows', async () => {
+    beforeEach(async function () {
+      this.timeout(10000)
+      await configRepository.deleteAll()
+      await configRepository.addMany(TRACKED_TXS_RECORDS)
       await repository.deleteAll()
-
-      const results = await repository.getAll()
-
-      expect(results).toEqual([])
+      await repository.addMany(DATA)
     })
-  })
 
-  describe(LivenessRepository.prototype.deleteFromById.name, () => {
-    it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
-      await repository.deleteAll()
+    describe(LivenessRepository.prototype.addMany.name, () => {
+      it('only new rows', async () => {
+        const newRows = [
+          {
+            timestamp: START.add(-5, 'hours'),
+            blockNumber: 12349,
+            txHash: '0x1234567890abcdef1',
+            trackedTxId: TRACKED_TXS_RECORDS[0].id,
+          },
+          {
+            timestamp: START.add(-6, 'hours'),
+            blockNumber: 12350,
+            txHash: '0xabcdef1234567892',
+            trackedTxId: TRACKED_TXS_RECORDS[0].id,
+          },
+        ]
+        await repository.addMany(newRows)
 
-      const configurationId = TRACKED_TXS_RECORDS[0].id
-      const records: LivenessRecord[] = [
-        {
-          timestamp: START,
-          blockNumber: 12345,
-          txHash: '0x1234567890abcdef',
-          trackedTxId: configurationId,
-        },
-        {
-          timestamp: START.add(1, 'hours'),
-          blockNumber: 12345,
-          txHash: '0x1234567890abcdef',
-          trackedTxId: configurationId,
-        },
-        {
-          timestamp: START.add(2, 'hours'),
-          blockNumber: 12346,
-          txHash: '0xabcdef1234567890',
-          trackedTxId: configurationId,
-        },
-        {
-          timestamp: START.add(2, 'hours'),
-          blockNumber: 12346,
-          txHash: '0xabcdef1234567890',
-          trackedTxId: TRACKED_TXS_RECORDS[1].id,
-        },
-      ]
-      await repository.addMany(records)
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          ...DATA.map((e) => ({
+            ...e,
+          })),
+          ...newRows,
+        ])
+      })
 
-      await repository.deleteFromById(configurationId, START.add(1, 'hours'))
+      it('empty array', async () => {
+        await expect(repository.addMany([])).not.toBeRejected()
+      })
 
-      const result = await repository.getAll()
-
-      expect(result).toEqual([records[0], records[3]])
+      it('big query', async () => {
+        const records: LivenessRecord[] = []
+        for (let i = 0; i < 15_000; i++) {
+          records.push({
+            timestamp: START.add(-i, 'hours'),
+            blockNumber: i,
+            txHash: `0xabcdef1234567892${i}`,
+            trackedTxId: TRACKED_TXS_RECORDS[0].id,
+          })
+        }
+        await expect(repository.addMany(records)).not.toBeRejected()
+      })
     })
-  })
 
-  describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
-    it('should return rows with given project id and type', async () => {
-      const results = await repository.getByProjectIdAndType(
-        TRACKED_TXS_RECORDS[0].projectId,
-        TRACKED_TXS_RECORDS[0].subtype!,
-        START.add(-1, 'hours'),
-      )
+    describe(LivenessRepository.prototype.getAll.name, () => {
+      it('should return all rows', async () => {
+        const results = await repository.getAll()
 
-      expect(results).toEqual([
-        {
-          timestamp: DATA[0].timestamp,
-          subtype: TRACKED_TXS_RECORDS[0].subtype!,
-        },
-      ])
+        expect(results).toEqualUnsorted(
+          DATA.map((e) => ({
+            ...e,
+          })),
+        )
+      })
     })
-  })
 
-  describe(
-    LivenessRepository.prototype.getTransactionsWithinTimeRange.name,
-    () => {
-      it('should return rows within given time range', async () => {
-        const results = await repository.getTransactionsWithinTimeRange(
+    describe(LivenessRepository.prototype.deleteAll.name, () => {
+      it('should delete all rows', async () => {
+        await repository.deleteAll()
+
+        const results = await repository.getAll()
+
+        expect(results).toEqual([])
+      })
+    })
+
+    describe(LivenessRepository.prototype.deleteFromById.name, () => {
+      it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
+        await repository.deleteAll()
+
+        const configurationId = TRACKED_TXS_RECORDS[0].id
+        const records: LivenessRecord[] = [
+          {
+            timestamp: START,
+            blockNumber: 12345,
+            txHash: '0x1234567890abcdef',
+            trackedTxId: configurationId,
+          },
+          {
+            timestamp: START.add(1, 'hours'),
+            blockNumber: 12345,
+            txHash: '0x1234567890abcdef',
+            trackedTxId: configurationId,
+          },
+          {
+            timestamp: START.add(2, 'hours'),
+            blockNumber: 12346,
+            txHash: '0xabcdef1234567890',
+            trackedTxId: configurationId,
+          },
+          {
+            timestamp: START.add(2, 'hours'),
+            blockNumber: 12346,
+            txHash: '0xabcdef1234567890',
+            trackedTxId: TRACKED_TXS_RECORDS[1].id,
+          },
+        ]
+        await repository.addMany(records)
+
+        await repository.deleteFromById(configurationId, START.add(1, 'hours'))
+
+        const result = await repository.getAll()
+
+        expect(result).toEqual([records[0], records[3]])
+      })
+    })
+
+    describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
+      it('should return rows with given project id and type', async () => {
+        const results = await repository.getByProjectIdAndType(
           TRACKED_TXS_RECORDS[0].projectId,
           TRACKED_TXS_RECORDS[0].subtype!,
-          START.add(-2, 'hours'),
-          START.add(0, 'hours'),
+          START.add(-1, 'hours'),
         )
 
-        expect(results).toEqualUnsorted([DATA[0], DATA[1]])
-      })
-    },
-  )
-
-  describe(
-    LivenessRepository.prototype.getWithSubtypeDistinctTimestamp.name,
-    () => {
-      it('join and returns data with type', async () => {
-        const result = await repository.getWithSubtypeDistinctTimestamp(
-          TRACKED_TXS_RECORDS[0].projectId,
-        )
-        const expected = [
+        expect(results).toEqual([
           {
             timestamp: DATA[0].timestamp,
             subtype: TRACKED_TXS_RECORDS[0].subtype!,
           },
-          {
-            timestamp: DATA[1].timestamp,
-            subtype: TRACKED_TXS_RECORDS[0].subtype!,
-          },
-        ]
-
-        expect(result).toEqual(expected)
+        ])
       })
+    })
 
-      it('filters out transactions with the same timestamp', async () => {
-        await repository.deleteAll()
-        const NEW_DATA = [
-          {
-            timestamp: START.add(-3, 'hours'),
-            blockNumber: 12347,
-            txHash: '0xabcdef1234567890',
-          },
-          {
-            timestamp: START.add(-3, 'hours'),
-            blockNumber: 12347,
-            txHash: '0xabcdef1234567891',
-          },
-          {
-            timestamp: START.add(-4, 'hours'),
-            blockNumber: 12348,
-            txHash: '0xabcdef1234567892',
-          },
-        ]
-        await repository.addMany(
-          NEW_DATA.map((e) => ({
-            ...e,
-            trackedTxId: TRACKED_TXS_RECORDS[2].id,
-          })),
-        )
-        const result = await repository.getWithSubtypeDistinctTimestamp(
-          TRACKED_TXS_RECORDS[2].projectId,
-        )
+    describe(
+      LivenessRepository.prototype.getTransactionsWithinTimeRange.name,
+      () => {
+        it('should return rows within given time range', async () => {
+          const results = await repository.getTransactionsWithinTimeRange(
+            TRACKED_TXS_RECORDS[0].projectId,
+            TRACKED_TXS_RECORDS[0].subtype!,
+            START.add(-2, 'hours'),
+            START.add(0, 'hours'),
+          )
 
-        const expected = [
-          {
-            timestamp: NEW_DATA[1].timestamp,
-            subtype: TRACKED_TXS_RECORDS[2].subtype!,
-          },
-          {
-            timestamp: NEW_DATA[2].timestamp,
-            subtype: TRACKED_TXS_RECORDS[2].subtype!,
-          },
-        ]
-        expect(result).toEqualUnsorted(expected)
-      })
+          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+        })
+      },
+    )
 
-      it('returns filtered records', async () => {
-        await repository.deleteAll()
-        const NEW_DATA = [
-          {
-            timestamp: START.add(-4, 'hours'),
-            blockNumber: 12347,
-            txHash: '0xabcdef1234567890',
-          },
-          {
-            timestamp: START.add(-3, 'hours'),
-            blockNumber: 12347,
-            txHash: '0xabcdef1234567891',
-          },
-          {
-            timestamp: START.add(-2, 'hours'),
-            blockNumber: 12348,
-            txHash: '0xabcdef1234567892',
-          },
-          {
-            timestamp: START.add(-5, 'hours'),
-            blockNumber: 12348,
-            txHash: '0xabcdef1234567893',
-          },
-        ]
+    describe(
+      LivenessRepository.prototype.getWithSubtypeDistinctTimestamp.name,
+      () => {
+        it('join and returns data with type', async () => {
+          const result = await repository.getWithSubtypeDistinctTimestamp(
+            TRACKED_TXS_RECORDS[0].projectId,
+          )
+          const expected = [
+            {
+              timestamp: DATA[0].timestamp,
+              subtype: TRACKED_TXS_RECORDS[0].subtype!,
+            },
+            {
+              timestamp: DATA[1].timestamp,
+              subtype: TRACKED_TXS_RECORDS[0].subtype!,
+            },
+          ]
 
-        await repository.addMany(
-          NEW_DATA.map((e) => ({
-            ...e,
-            trackedTxId: TRACKED_TXS_RECORDS[2].id,
-          })),
-        )
+          expect(result).toEqual(expected)
+        })
 
-        const result = await repository.getWithSubtypeDistinctTimestamp(
-          TRACKED_TXS_RECORDS[2].projectId,
-        )
+        it('filters out transactions with the same timestamp', async () => {
+          await repository.deleteAll()
+          const NEW_DATA = [
+            {
+              timestamp: START.add(-3, 'hours'),
+              blockNumber: 12347,
+              txHash: '0xabcdef1234567890',
+            },
+            {
+              timestamp: START.add(-3, 'hours'),
+              blockNumber: 12347,
+              txHash: '0xabcdef1234567891',
+            },
+            {
+              timestamp: START.add(-4, 'hours'),
+              blockNumber: 12348,
+              txHash: '0xabcdef1234567892',
+            },
+          ]
+          await repository.addMany(
+            NEW_DATA.map((e) => ({
+              ...e,
+              trackedTxId: TRACKED_TXS_RECORDS[2].id,
+            })),
+          )
+          const result = await repository.getWithSubtypeDistinctTimestamp(
+            TRACKED_TXS_RECORDS[2].projectId,
+          )
 
-        const subtype = TRACKED_TXS_RECORDS[2].subtype!
+          const expected = [
+            {
+              timestamp: NEW_DATA[1].timestamp,
+              subtype: TRACKED_TXS_RECORDS[2].subtype!,
+            },
+            {
+              timestamp: NEW_DATA[2].timestamp,
+              subtype: TRACKED_TXS_RECORDS[2].subtype!,
+            },
+          ]
+          expect(result).toEqualUnsorted(expected)
+        })
 
-        const expected = [
-          {
-            timestamp: NEW_DATA[2].timestamp,
-            subtype,
-          },
-          {
-            timestamp: NEW_DATA[1].timestamp,
-            subtype,
-          },
-          {
-            timestamp: NEW_DATA[0].timestamp,
-            subtype,
-          },
-          {
-            timestamp: NEW_DATA[3].timestamp,
-            subtype,
-          },
-        ]
+        it('returns filtered records', async () => {
+          await repository.deleteAll()
+          const NEW_DATA = [
+            {
+              timestamp: START.add(-4, 'hours'),
+              blockNumber: 12347,
+              txHash: '0xabcdef1234567890',
+            },
+            {
+              timestamp: START.add(-3, 'hours'),
+              blockNumber: 12347,
+              txHash: '0xabcdef1234567891',
+            },
+            {
+              timestamp: START.add(-2, 'hours'),
+              blockNumber: 12348,
+              txHash: '0xabcdef1234567892',
+            },
+            {
+              timestamp: START.add(-5, 'hours'),
+              blockNumber: 12348,
+              txHash: '0xabcdef1234567893',
+            },
+          ]
 
-        expect(result).toEqual(expected)
-      })
-    },
-  )
+          await repository.addMany(
+            NEW_DATA.map((e) => ({
+              ...e,
+              trackedTxId: TRACKED_TXS_RECORDS[2].id,
+            })),
+          )
+
+          const result = await repository.getWithSubtypeDistinctTimestamp(
+            TRACKED_TXS_RECORDS[2].projectId,
+          )
+
+          const subtype = TRACKED_TXS_RECORDS[2].subtype!
+
+          const expected = [
+            {
+              timestamp: NEW_DATA[2].timestamp,
+              subtype,
+            },
+            {
+              timestamp: NEW_DATA[1].timestamp,
+              subtype,
+            },
+            {
+              timestamp: NEW_DATA[0].timestamp,
+              subtype,
+            },
+            {
+              timestamp: NEW_DATA[3].timestamp,
+              subtype,
+            },
+          ]
+
+          expect(result).toEqual(expected)
+        })
+      },
+    )
+  }
 })
