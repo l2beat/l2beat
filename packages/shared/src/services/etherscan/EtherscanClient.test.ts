@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
@@ -13,18 +8,6 @@ import { EtherscanClient } from './EtherscanClient'
 const API_URL = 'https://example.com/api'
 
 describe(EtherscanClient.name, () => {
-  describe(EtherscanClient.prototype.getChainId.name, () => {
-    it('returns ethereum chainId', async () => {
-      const httpClient = mockObject<HttpClient>()
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        'url',
-        'key',
-        ChainId.ETHEREUM,
-      )
-      expect(etherscanClient.getChainId()).toEqual(ChainId.ETHEREUM)
-    })
-  })
   describe(EtherscanClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
@@ -32,16 +15,13 @@ describe(EtherscanClient.name, () => {
           expect(url).toEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=KEY123`,
           )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+          return new Response(
+            JSON.stringify({ status: '1', message: 'OK', result: '' }),
+          )
         },
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'KEY123',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'KEY123')
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
@@ -52,32 +32,9 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
         'Server responded with non-2XX result: 404 Not Found',
-      )
-    })
-
-    it('throws on non-json response', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response('mytestresp')
-        },
-      })
-
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
-      await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
-        `Invalid Etherscan response [mytestresp] for request [${API_URL}?module=mod&action=act&apikey=key].`,
       )
     })
 
@@ -88,12 +45,7 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejected()
     })
 
@@ -105,12 +57,7 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       const result = await etherscanClient.call('mod', 'act', {})
       expect(result).toEqual(response.result)
     })
@@ -127,12 +74,7 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       await expect(etherscanClient.call('mod', 'act', {})).toBeRejectedWith(
         response.result,
       )
@@ -150,12 +92,7 @@ describe(EtherscanClient.name, () => {
         },
       })
 
-      const arbiscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ARBITRUM,
-      )
+      const arbiscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
         new UnixTime(3141592653),
       )
@@ -193,12 +130,7 @@ describe(EtherscanClient.name, () => {
           ),
       })
 
-      const arbiscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ARBITRUM,
-      )
+      const arbiscanClient = new EtherscanClient(httpClient, API_URL, 'key')
       const blockNumber =
         await arbiscanClient.getBlockNumberAtOrBefore(timestamp)
 
@@ -242,12 +174,7 @@ describe(EtherscanClient.name, () => {
           .resolvesToOnce(new Response(gatewayErrorJsonString)),
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -286,12 +213,7 @@ describe(EtherscanClient.name, () => {
           .throwsOnce(errorString),
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -329,12 +251,7 @@ describe(EtherscanClient.name, () => {
           .throwsOnce(1234),
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
@@ -377,92 +294,11 @@ describe(EtherscanClient.name, () => {
           .resolvesToOnce(NOT_OK),
       })
 
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
+      const etherscanClient = new EtherscanClient(httpClient, API_URL, 'key')
 
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejected()
-    })
-  })
-
-  describe(EtherscanClient.prototype.getContractSource.name, () => {
-    it('constructs a correct url', async () => {
-      const result = {
-        SourceCode: '',
-        ABI: 'Contract source code not verified',
-        ContractName: '',
-        CompilerVersion: '',
-        OptimizationUsed: '',
-        Runs: '',
-        ConstructorArguments: '',
-        EVMVersion: 'Default',
-        Library: '',
-        LicenseType: 'Unknown',
-        Proxy: '0',
-        Implementation: '',
-        SwarmSource: '',
-      }
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
-          )
-        },
-      })
-
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
-      const source = await etherscanClient.getContractSource(
-        EthereumAddress.ZERO,
-      )
-
-      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
-        `${API_URL}?module=contract&action=getsourcecode&address=0x0000000000000000000000000000000000000000&apikey=key`,
-        expect.anything(),
-      )
-      expect(source).toEqual(result)
-    })
-  })
-
-  describe(EtherscanClient.prototype.getContractDeploymentTx.name, () => {
-    it('constructs a correct url', async () => {
-      const result = {
-        contractAddress: EthereumAddress.random(),
-        contractCreator: EthereumAddress.random(),
-        txHash: Hash256.random(),
-      }
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
-          )
-        },
-      })
-
-      const etherscanClient = new EtherscanClient(
-        httpClient,
-        API_URL,
-        'key',
-        ChainId.ETHEREUM,
-      )
-      const source = await etherscanClient.getContractDeploymentTx(
-        EthereumAddress.ZERO,
-      )
-
-      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
-        `${API_URL}?module=contract&action=getcontractcreation&contractaddresses=0x0000000000000000000000000000000000000000&apikey=key`,
-        expect.anything(),
-      )
-      expect(source).toEqual(result.txHash)
     })
   })
 })
