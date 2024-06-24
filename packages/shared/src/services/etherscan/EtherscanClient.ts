@@ -9,12 +9,14 @@ import {
 
 interface EtherscanOptions {
   type: 'Etherscan'
+  maximumCallsForBlockTimestamp: number
   url: string
   apiKey: string
 }
 
 interface BlockscoutOptions {
   type: 'Blockscout'
+  maximumCallsForBlockTimestamp: number
   url: string
 }
 
@@ -23,7 +25,6 @@ export class EtherscanClient {
     callsPerMinute: 150,
   })
   private readonly timeoutMs = 20_000
-  private readonly maximumCallForBlockTimestamp
   private readonly minimumTimestampInterval
 
   constructor(
@@ -32,7 +33,6 @@ export class EtherscanClient {
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
     this.minimumTimestampInterval = options.type === 'Etherscan' ? 10 : 1
-    this.maximumCallForBlockTimestamp = options.type === 'Etherscan' ? 3 : 30
   }
 
   static create(
@@ -48,7 +48,7 @@ export class EtherscanClient {
     let current = new UnixTime(timestamp.toNumber())
 
     let counter = 1
-    while (counter <= this.maximumCallForBlockTimestamp) {
+    while (counter <= this.options.maximumCallsForBlockTimestamp) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
@@ -77,7 +77,7 @@ export class EtherscanClient {
       cause: {
         current,
         timestamp,
-        calls: this.maximumCallForBlockTimestamp,
+        calls: this.options.maximumCallsForBlockTimestamp,
       },
     })
   }

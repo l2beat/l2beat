@@ -11,6 +11,7 @@ const OPTIONS = {
   type: 'Etherscan' as const,
   apiKey: 'key',
   url: API_URL,
+  maximumCallsForBlockTimestamp: 3,
 }
 
 describe(EtherscanClient.name, () => {
@@ -205,7 +206,7 @@ describe(EtherscanClient.name, () => {
       )
     })
 
-    it('tries to find blockNumber until MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP then throw', async () => {
+    it('tries to find blockNumber until maximumCallsForBlockTimestamp then throw', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const NOT_OK = new Response(
@@ -217,7 +218,7 @@ describe(EtherscanClient.name, () => {
       )
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          // MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 3
+          // maximumCallsForBlockTimestamp = 3
           .resolvesToOnce(NOT_OK)
           .resolvesToOnce(NOT_OK)
           .resolvesToOnce(NOT_OK)
@@ -302,6 +303,7 @@ describe(EtherscanClient.name, () => {
       const etherscanClient = new EtherscanClient(httpClient, {
         type: 'Blockscout',
         url: API_URL,
+        maximumCallsForBlockTimestamp: 30,
       })
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })

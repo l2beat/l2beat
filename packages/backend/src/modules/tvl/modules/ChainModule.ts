@@ -100,10 +100,12 @@ function createChainModule(
             apiKey:
               chainConfig.config.blockTimestampClientConfig.etherscanApiKey,
             url: chainConfig.config.blockTimestampClientConfig.etherscanApiUrl,
+            maximumCallsForBlockTimestamp: 3,
           }
         : {
             type: 'Blockscout' as const,
             url: chainConfig.config.blockTimestampClientConfig.blockscoutApiUrl,
+            maximumCallsForBlockTimestamp: 30,
           }
 
   const blockTimestampClient = options
