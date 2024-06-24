@@ -7,17 +7,13 @@ export class StarkexTransactionCountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(records: StarkexTransactionCount[], trx?: Transaction) {
-    const scope = trx ?? this.db
     for (const record of records) {
-      await this.addOrUpdate(record, scope)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async addOrUpdate(
-    record: StarkexTransactionCount,
-    trx?: Transaction | PostgresDatabase,
-  ) {
+  async addOrUpdate(record: StarkexTransactionCount, trx?: Transaction) {
     const scope = trx ?? this.db
     await scope
       .insertInto('activity.starkex')

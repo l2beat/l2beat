@@ -10,17 +10,13 @@ export class ZksyncTransactionRepository {
     records: ZksyncTransaction[],
     trx?: Transaction,
   ): Promise<number> {
-    const scope = trx ?? this.db
     for (const record of records) {
-      await this.addOrUpdate(record, scope)
+      await this.addOrUpdate(record, trx)
     }
     return records.length
   }
 
-  async addOrUpdate(
-    record: ZksyncTransaction,
-    trx?: Transaction | PostgresDatabase,
-  ) {
+  async addOrUpdate(record: ZksyncTransaction, trx?: Transaction) {
     const scope = trx ?? this.db
     const row = toRow(record)
     await scope
