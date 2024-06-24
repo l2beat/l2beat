@@ -3041,7 +3041,8 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "TRON Foundation"
+        "bridge": "TRON Foundation",
+        "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
       },
       "coingeckoId": "bitcoin-trc20"
     },
