@@ -15,7 +15,7 @@ export const fhenix: Layer2 = upcomingL2({
       websites: ['https://fhenix.io/'],
       apps: [],
       documentation: [
-        'https://www.fhenix.io/fhe-rollups-scaling-confidential-smart-contracts-on-ethereum-and-beyond-whitepaper/',
+        'https://fhenix.io/fhe-rollups-scaling-confidential-smart-contracts-on-ethereum-and-beyond-whitepaper/',
       ],
       explorers: [],
       repositories: ['https://github.com/orgs/FhenixProtocol/'],
