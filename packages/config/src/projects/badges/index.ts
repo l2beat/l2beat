@@ -1,0 +1,149 @@
+/**
+ * In order to add a new badge, you need to:
+ * - add it to the const Badge object, specifying the type
+ */
+
+export const BadgeType = {
+  RaaS: 'RaaS',
+  DA: 'DA',
+  VM: 'VM',
+  Other: 'Other',
+} as const
+
+export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
+
+export const badges = {
+  // RaaS
+  Conduit: {
+    display: {
+      name: 'Conduit',
+      description: 'Lorem Conduit dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  StarkEx: {
+    display: {
+      name: 'StarkEx',
+      description: 'Lorem StarkEx dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  Caldera: {
+    display: {
+      name: 'Caldera',
+      description: 'Lorem Caldera dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  Syndicate: {
+    display: {
+      name: 'Syndicate',
+      description: 'Lorem Syndicate dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  // DA
+  Celestia: {
+    display: {
+      name: 'Celestia',
+      description: 'Lorem Celestia dolor sit amet...',
+    },
+    type: BadgeType.DA,
+  },
+  EigenDA: {
+    display: {
+      name: 'EigenDA',
+      description: 'Lorem EigenDA dolor sit amet...',
+    },
+    type: BadgeType.DA,
+  },
+  EthereumBlobs: {
+    display: {
+      name: 'Ethereum with blobs',
+      description: 'Lorem Ethereum with blobs dolor sit amet...',
+    },
+    type: BadgeType.DA,
+  },
+  EthereumCalldata: {
+    display: {
+      name: 'Ethereum with calldata',
+      description: 'Lorem Ethereum with calldata dolor sit amet...',
+    },
+    type: BadgeType.DA,
+  },
+  // VM
+  EVM: {
+    display: {
+      name: 'EVM',
+      description: 'Lorem EVM dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  EVMLike: {
+    display: {
+      name: 'EVM-like',
+      description: 'Lorem EVM-like dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  Cairo: {
+    display: {
+      name: 'Cairo',
+      description: 'Lorem Cairo dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  CustomVM: {
+    display: {
+      name: 'Custom',
+      description: 'Lorem Custom dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  // Other
+  AccountAbstraction: {
+    display: {
+      name: 'Account Abstraction',
+      description: 'Lorem Account Abstraction dolor sit amet...',
+    },
+    type: BadgeType.Other,
+  },
+  Governance: {
+    display: {
+      name: 'Governance',
+      description: 'Lorem Governance dolor sit amet...',
+    },
+    type: BadgeType.Other,
+  },
+  L3HostChain: {
+    display: {
+      name: 'L3 Host Chain',
+      description: 'Lorem L3 Host Chain dolor sit amet...',
+    },
+    type: BadgeType.Other,
+  },
+} as const satisfies Record<
+  string,
+  {
+    display: {
+      name: string
+      description: string
+    }
+    type: BadgeType
+  }
+>
+
+export const Badge: {
+  [T in BadgeType]: {
+    [K in keyof typeof badges as (typeof badges)[K]['type'] extends T
+      ? K
+      : never]: K
+  }
+} = Object.entries(badges).reduce((acc, [key, value]) => {
+  acc[value.type][key] = key
+  return acc
+  // biome-ignore lint/suspicious/noExplicitAny: just believe
+}, {} as any)
+
+export type BadgeId = keyof typeof badges
+export type AnyBadge = (typeof badges)[BadgeId]
