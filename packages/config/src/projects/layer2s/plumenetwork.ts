@@ -1,7 +1,7 @@
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const frame: Layer2 = upcomingL2({
+export const plumenetwork: Layer2 = upcomingL2({
   id: 'plumenetwork',
   display: {
     name: 'Plume Network',
