@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PERFORMED_BY } from '.'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoinsmtb: ZkCatalogProject = {
@@ -71,10 +72,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         ),
         chainId: ChainId.ETHEREUM,
         verified: 'yes',
-        performedBy: {
-          name: 'L2BEAT',
-          link: 'https://l2beat.com',
-        },
+        performedBy: PERFORMED_BY.l2beat,
         subVerifiers: [
           {
             name: 'DeleteCircuitSize10',
