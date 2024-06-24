@@ -8,9 +8,9 @@ import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import { formatPercent } from '~/utils/get-percentage-change'
-import { TotalCell } from './total-cell'
+import { TotalCell } from '../total-cell'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 
@@ -38,21 +38,48 @@ export const columns = [
   columnHelper.accessor('risks', {
     cell: (ctx) => <RosetteCell values={ctx.getValue()} />,
     enableSorting: false,
+    meta: {
+      cellClassName: 'justify-center',
+      tooltip: 'Risks associated with this project.',
+    },
   }),
   columnHelper.accessor('type', {
     cell: (ctx) => {
       const value = ctx.getValue()
       return <TypeCell provider={value.provider}>{value.category}</TypeCell>
     },
+    meta: {
+      tooltip: (
+        <div>
+          <div className="mb-1">
+            Type of this project. Determines data availability and proof system
+            used.
+          </div>
+          ZK Rollups = Validity Proofs + onchain data
+          <br />
+          Optimistic Rollups = Fraud Proofs + onchain data
+          <br />
+          Validiums = Validity Proofs + offchain data
+          <br />
+          Optimiums = Fraud Proofs + offchain data
+        </div>
+      ),
+    },
   }),
   columnHelper.accessor('stage', {
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
     sortingFn: sortStages,
+    meta: {
+      tooltip: 'Rollup stage based on its features and maturity.',
+    },
   }),
   columnHelper.accessor('purposes', {
     header: 'Purpose',
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
+    meta: {
+      tooltip: 'Functionality supported by this project.',
+    },
   }),
   columnHelper.accessor('tvlData', {
     id: 'total',
@@ -68,6 +95,8 @@ export const columns = [
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
   columnHelper.accessor('tvlData.marketShare', {
@@ -83,6 +112,7 @@ export const columns = [
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
+      tooltip: 'Share of the sum of total value locked of all projects.',
     },
   }),
 ]

@@ -1,4 +1,5 @@
 import '@tanstack/react-table'
+import { type ReactNode } from 'react'
 
 declare module '@tanstack/react-table' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -6,5 +7,6 @@ declare module '@tanstack/react-table' {
     hash?: string
     cellClassName?: string
     headClassName?: string
+    tooltip?: ReactNode
   }
 }

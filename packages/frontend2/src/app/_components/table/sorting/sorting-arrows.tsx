@@ -5,14 +5,23 @@ import SortingArrowIcon from '~/icons/sorting-arrow.svg'
 import { cn } from '~/utils/cn'
 
 interface Props {
+  onClick?: (event: unknown) => void
   direction: false | SortDirection
   nextDirection: false | SortDirection
   children: React.ReactNode
 }
 
-export function SortingArrows({ children, direction, nextDirection }: Props) {
+export function SortingArrows({
+  children,
+  direction,
+  nextDirection,
+  onClick,
+}: Props) {
   return (
-    <div className="group/sorting-arrows w-max cursor-pointer select-none flex items-center gap-1.5">
+    <div
+      className="group/sorting-arrows w-max cursor-pointer select-none flex items-center gap-1.5"
+      onClick={onClick}
+    >
       <div className="flex flex-col items-end gap-0.5">
         <SortingArrowIcon
           width={10}

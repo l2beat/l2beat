@@ -22,11 +22,12 @@ export const metadata = getDefaultMetadata({
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { SummaryLayer3sTable } from './_components/table/layer3s/summary-layer3s-table'
 
 export default async function Page() {
   const tvl = await getTvl()
-  const { layer2s } = await getScalingSummaryEntries(tvl)
-
+  const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
+  console.log(layer3s)
   return (
     <div>
       <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
@@ -60,7 +61,9 @@ export default async function Page() {
         <TabsContent value="layer2s">
           <SummaryLayer2sTable items={layer2s} />
         </TabsContent>
-        <TabsContent value="layer3s">Active Layer3s</TabsContent>
+        <TabsContent value="layer3s">
+          <SummaryLayer3sTable items={layer3s} />
+        </TabsContent>
         <TabsContent value="upcoming">Upcoming Layer2s</TabsContent>
         <TabsContent value="archived">Archived Layer2s</TabsContent>
       </Tabs>

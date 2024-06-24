@@ -1,0 +1,18 @@
+import { TooltipTrigger } from '@radix-ui/react-tooltip'
+import { Tooltip, TooltipContent } from '../tooltip'
+import InfoIcon from '~/icons/info.svg'
+
+interface Props {
+  children: React.ReactNode
+}
+
+export function TableTooltip({ children }: Props) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <InfoIcon className="fill-current md:size-3.5" />
+      </TooltipTrigger>
+      <TooltipContent>{children}</TooltipContent>
+    </Tooltip>
+  )
+}

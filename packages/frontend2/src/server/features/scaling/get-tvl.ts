@@ -1,13 +1,20 @@
 import { AssetId, ChainId, branded } from '@l2beat/shared-pure'
+import { readFile } from 'fs/promises'
+import path from 'path'
 import { z } from 'zod'
 
 export async function getTvl() {
-  const response = await fetch('https://api.l2beat.com/api/tvl', {
-    next: {
-      revalidate: 60 * 60,
-    },
-  })
-  const json: unknown = await response.json()
+  const response = await readFile(
+    path.join(process.cwd(), 'src/server/features/scaling/tvl.json'),
+    'utf-8',
+  )
+  // await fetch('https://api.l2beat.com/api/tvl', {
+  //   next: {
+  //     revalidate: 60 * 60,
+  //   },
+  // })
+  // const json: unknown = await response.json()
+  const json: unknown = JSON.parse(response)
   const data = TvlResponse.parse(json)
   return data
 }
