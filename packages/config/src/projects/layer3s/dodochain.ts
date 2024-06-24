@@ -15,7 +15,7 @@ export const dodochain: Layer3 = underReviewL3({
     purposes: ['DeFi'],
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.dodochain.com/'],
+      websites: ['https://dodochain.com/'],
       apps: [],
       documentation: ['https://docs.dodochain.com/en/dodochain'],
       explorers: [],
