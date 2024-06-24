@@ -15,6 +15,6 @@ export interface ZkCatalogProofVerification {
   requiredTools: RequiredTool[]
 }
 
-export interface ZkCatalogOnchainVerifier extends OnchainVerifier {
+export type ZkCatalogOnchainVerifier = OnchainVerifier & {
   lastUsedDaysAgo: number | undefined
 }
