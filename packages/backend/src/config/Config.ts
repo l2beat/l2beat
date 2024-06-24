@@ -165,7 +165,8 @@ export interface MetricsAuthConfig {
 
 export interface UpdateMonitorConfig {
   readonly runOnStart?: boolean
-  readonly chains: UpdateMonitorChainConfig[]
+  readonly enableCache?: boolean
+  readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
 }
 
@@ -175,14 +176,6 @@ export interface DiscordConfig {
   readonly internalChannelId: string
   readonly callsPerMinute: number
 }
-
-export interface DiscoveryCacheChainConfig {
-  reorgSafeDepth?: number
-  enableCache?: boolean
-}
-
-export type UpdateMonitorChainConfig = DiscoveryChainConfig &
-  DiscoveryCacheChainConfig
 
 export interface DABeatConfig {
   readonly coingeckoApiKey: string

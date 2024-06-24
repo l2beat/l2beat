@@ -35,17 +35,10 @@ export const lambda: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  usesBlobs: true,
   associatedTokens: ['LAMB'],
   upgradeability,
   rpcUrl: 'https://nrpc.lambda.im',
-  finality: {
-    type: 'OPStack-blob',
-    minTimestamp: new UnixTime(1713363515),
-    genesisTimestamp: new UnixTime(1713345623),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   genesisTimestamp: new UnixTime(1713345623),
   isNodeAvailable: true,
   milestones: [

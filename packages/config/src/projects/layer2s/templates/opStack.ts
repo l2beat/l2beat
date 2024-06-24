@@ -83,7 +83,7 @@ export interface OpStackConfigCommon {
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateNativePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: ScalingProjectContract[]
+  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]

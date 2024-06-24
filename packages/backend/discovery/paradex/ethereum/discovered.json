@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20110229,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",

@@ -191,7 +191,7 @@ export const zksynclite: Layer2 = {
       sentiment: 'warning',
       description: `Users have ${formatSeconds(
         upgradeDelay - forcedWithdrawalDelay,
-      )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
+      )} to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
         forcedWithdrawalDelay,
       )} to be processed.`,
       warning: {

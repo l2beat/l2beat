@@ -3,12 +3,10 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { StateFromEventHandler } from './StateFromEventHandler'
 
 describe(StateFromEventHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new StateFromEventHandler(
@@ -44,12 +42,10 @@ describe(StateFromEventHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        async getLogs(providedAddress, topics, fromBlock, toBlock) {
+      const provider = mockObject<IProvider>({
+        async getLogs(providedAddress, topics) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('OwnerChanged')])
-          expect(fromBlock).toEqual(0)
-          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -64,7 +60,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [],
@@ -78,7 +74,7 @@ describe(StateFromEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -100,7 +96,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       expect(value).toEqual({
         field: 'someName',
@@ -136,7 +132,7 @@ describe(StateFromEventHandler.name, () => {
       const Charlie = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             OwnerChanged(Alice, true),
@@ -158,7 +154,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       // expect just last event, since it overrides all props
       expect(value).toEqual({
@@ -184,7 +180,7 @@ describe(StateFromEventHandler.name, () => {
     it('passes ignoreRelative', async () => {
       const Alice = EthereumAddress.random()
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [OwnerChanged(Alice, true)]
         },
@@ -201,7 +197,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
       expect(value).toEqual({
         field: 'someName',
         value: [
@@ -218,7 +214,7 @@ describe(StateFromEventHandler.name, () => {
       const Alice = EthereumAddress.random()
 
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs(_address, topics) {
           expect(topics).toEqual([
             abi.getEventTopic('OwnerChanged'),
@@ -239,7 +235,7 @@ describe(StateFromEventHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      await handler.execute(provider, address, BLOCK_NUMBER)
+      await handler.execute(provider, address)
     })
   })
 })

@@ -16,6 +16,7 @@ import { camp } from './camp'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
+import { celo } from './celo'
 import { coti } from './coti'
 import { cronos } from './cronos'
 import { cyber } from './cyber'
@@ -76,6 +77,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { payy } from './payy'
 import { playchain } from './playchain'
+import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -139,6 +141,7 @@ export const layer2s: Layer2[] = [
   camp,
   canto,
   capx,
+  celo,
   cyber,
   canvasconnect,
   coti,
@@ -200,6 +203,7 @@ export const layer2s: Layer2[] = [
   parallel,
   payy,
   playchain,
+  plumenetwork,
   polygonmiden,
   polygonzkevm,
   polygonpos2,

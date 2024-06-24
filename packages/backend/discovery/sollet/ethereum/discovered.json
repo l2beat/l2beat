@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x55cbc16ba9446d3735b73865468a11d4f0fb92404912bf08048aae525a8029aa",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SplTokenSwap",

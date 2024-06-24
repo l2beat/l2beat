@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20082446,
   "configHash": "0x29931306a2f49fce65dad2e589a736709e1930f6b4159c1fa824ed857b8f9194",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -66,7 +66,12 @@
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
         "totalSupply": "119758391175615490488415018",
-        "totalSupplyAt": []
+        "totalSupplyAt": [
+          "100000000000000000000000000",
+          "100000000000000000000000000",
+          "100034524092695877009538769",
+          "100150034524092695877009517"
+        ]
       }
     },
     {

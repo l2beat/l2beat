@@ -1,7 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { DiscoveryProvider } from '../DiscoveryProvider'
+import { IProvider } from '../IProvider'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticall3,
@@ -30,20 +30,19 @@ describe(MulticallClient.name, () => {
   interface Call {
     address?: EthereumAddress
     data?: Bytes
-    blockNumber: number
   }
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const DiscoveryProvider = mockObject<DiscoveryProvider>({
-      async call(address, data, blockNumber) {
-        calls.push({ address, data, blockNumber })
+    const discoveryProvider = mockObject<IProvider>({
+      async call(address, data) {
+        calls.push({ address, data })
         return data
       },
     })
 
     const multicallClient = new MulticallClient(
-      DiscoveryProvider,
+      discoveryProvider,
       TEST_MULTICALL_CONFIG,
     )
     const blockNumber = MULTICALL3_BLOCK - 1
@@ -62,17 +61,17 @@ describe(MulticallClient.name, () => {
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
     expect(calls).toEqual([
-      { address: ADDRESS_A, data: Bytes.fromHex('0x123456'), blockNumber },
-      { address: ADDRESS_B, data: Bytes.fromHex('0x'), blockNumber },
-      { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef'), blockNumber },
+      { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
+      { address: ADDRESS_B, data: Bytes.fromHex('0x') },
+      { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
     ])
   })
 
   it('uses multicall for new blocks', async () => {
     const calls: Call[] = []
-    const discoveryProvider = mockObject<DiscoveryProvider>({
-      async call(address, data, blockNumber) {
-        calls.push({ address, data, blockNumber })
+    const discoveryProvider = mockObject<IProvider>({
+      async call(address, data) {
+        calls.push({ address, data })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
             [
@@ -112,14 +111,13 @@ describe(MulticallClient.name, () => {
           { address: ADDRESS_B, data: Bytes.fromHex('0x') },
           { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
         ]),
-        blockNumber,
       },
     ])
   })
 
   it('batches calls', async () => {
     const calls: number[] = []
-    const discoveryProvider = mockObject<DiscoveryProvider>({
+    const discoveryProvider = mockObject<IProvider>({
       async call(_, data) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
@@ -152,7 +150,7 @@ describe(MulticallClient.name, () => {
   })
 
   it('offers a named interface', async () => {
-    const discoveryProvider = mockObject<DiscoveryProvider>({
+    const discoveryProvider = mockObject<IProvider>({
       async call() {
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [

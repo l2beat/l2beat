@@ -5,9 +5,9 @@ import { isEmpty, zip } from 'lodash'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { Handler, HandlerResult } from '../Handler'
 
 export type LineaRolesModuleHandlerDefinition = z.infer<
   typeof LineaRolesModuleHandlerDefinition
@@ -64,7 +64,7 @@ interface Role {
   compValuesOneOf: Record<string, string[]>
 }
 
-export class LineaRolesModuleHandler implements ClassicHandler {
+export class LineaRolesModuleHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -75,32 +75,26 @@ export class LineaRolesModuleHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking LineaRolesModule'])
-    const logs = await provider.getLogs(
-      address,
+    const logs = await provider.getLogs(address, [
       [
-        [
-          abi.getEventTopic('AllowTarget'),
-          abi.getEventTopic('RevokeTarget'),
-          abi.getEventTopic('ScopeTarget'),
-          abi.getEventTopic('ScopeAllowFunction'),
-          abi.getEventTopic('ScopeRevokeFunction'),
-          abi.getEventTopic('ScopeFunction'),
-          abi.getEventTopic('ScopeFunctionExecutionOptions'),
-          abi.getEventTopic('ScopeParameter'),
-          abi.getEventTopic('ScopeParameterAsOneOf'),
-          abi.getEventTopic('UnscopeParameter'),
-          abi.getEventTopic('AssignRoles'),
-          abi.getEventTopic('SetDefaultRole'),
-        ],
+        abi.getEventTopic('AllowTarget'),
+        abi.getEventTopic('RevokeTarget'),
+        abi.getEventTopic('ScopeTarget'),
+        abi.getEventTopic('ScopeAllowFunction'),
+        abi.getEventTopic('ScopeRevokeFunction'),
+        abi.getEventTopic('ScopeFunction'),
+        abi.getEventTopic('ScopeFunctionExecutionOptions'),
+        abi.getEventTopic('ScopeParameter'),
+        abi.getEventTopic('ScopeParameterAsOneOf'),
+        abi.getEventTopic('UnscopeParameter'),
+        abi.getEventTopic('AssignRoles'),
+        abi.getEventTopic('SetDefaultRole'),
       ],
-      0,
-      blockNumber,
-    )
+    ])
     const events = logs.map(parseRoleLog)
     const roles: Record<number, Role> = {}
     const defaultRoles: Record<string, number> = {}
@@ -119,7 +113,7 @@ export class LineaRolesModuleHandler implements ClassicHandler {
       ),
     ]
 
-    const decoder = new FunctionSelectorDecoder(provider, blockNumber)
+    const decoder = new FunctionSelectorDecoder(provider)
     await decoder.fetchTargets(targets)
 
     for (const event of events) {

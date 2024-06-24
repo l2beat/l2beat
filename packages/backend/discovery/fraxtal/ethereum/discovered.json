@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032836,
   "configHash": "0x82302d2f83f4b92e2adf822fe7cfc2c1981b0930381ba7c5ee23803de5dc52ec",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DepositContract",
@@ -86,6 +86,9 @@
       "name": "SystemConfig",
       "address": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
       "template": "opstack/SystemConfig",
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",

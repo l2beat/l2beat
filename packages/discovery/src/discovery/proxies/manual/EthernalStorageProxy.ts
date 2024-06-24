@@ -1,27 +1,21 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 
 export async function getEternalStorageProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const implementation = await getCallResult<EthereumAddress>(
-    provider,
+  const implementation = await provider.callMethod<EthereumAddress>(
     address,
     'function implementation() view returns (address)',
     [],
-    blockNumber,
   )
-  const admin = await getCallResult<EthereumAddress>(
-    provider,
+  const admin = await provider.callMethod<EthereumAddress>(
     address,
     'function upgradeabilityOwner() view returns (address)',
     [],
-    blockNumber,
   )
   if (!implementation || !admin) {
     return undefined

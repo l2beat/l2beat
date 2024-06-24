@@ -2,14 +2,14 @@
   "hourly": {
     "types": [
       "timestamp",
-      "valueUsd",
-      "cbvUsd",
-      "ebvUsd",
-      "nmvUsd",
-      "valueEth",
-      "cbvEth",
-      "ebvEth",
-      "nmvEth"
+      "totalUsd",
+      "canonicalUsd",
+      "externalUsd",
+      "nativeUsd",
+      "totalEth",
+      "canonicalEth",
+      "externalEth",
+      "nativeEth"
     ],
     "data": [
       [
@@ -693,14 +693,14 @@
   "sixHourly": {
     "types": [
       "timestamp",
-      "valueUsd",
-      "cbvUsd",
-      "ebvUsd",
-      "nmvUsd",
-      "valueEth",
-      "cbvEth",
-      "ebvEth",
-      "nmvEth"
+      "totalUsd",
+      "canonicalUsd",
+      "externalUsd",
+      "nativeUsd",
+      "totalEth",
+      "canonicalEth",
+      "externalEth",
+      "nativeEth"
     ],
     "data": [
       [
@@ -2148,14 +2148,14 @@
   "daily": {
     "types": [
       "timestamp",
-      "valueUsd",
-      "cbvUsd",
-      "ebvUsd",
-      "nmvUsd",
-      "valueEth",
-      "cbvEth",
-      "ebvEth",
-      "nmvEth"
+      "totalUsd",
+      "canonicalUsd",
+      "externalUsd",
+      "nativeUsd",
+      "totalEth",
+      "canonicalEth",
+      "externalEth",
+      "nativeEth"
     ],
     "data": [
       [1573689600, 0, 0, 0, 0, 0, 0, 0, 0],

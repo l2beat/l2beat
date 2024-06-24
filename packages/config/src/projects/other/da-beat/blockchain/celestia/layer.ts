@@ -17,6 +17,7 @@ import { noBridge } from './bridges/no-bridge'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const celestia: DaLayer = {
+  id: 'celestia',
   kind: DaLayerKind.PublicBlockchain,
   display: {
     name: 'Celestia',

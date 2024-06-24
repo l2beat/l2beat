@@ -43,7 +43,8 @@
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
     },
     "OPToken": {
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "L2CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",

@@ -3,11 +3,10 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
 
 describe(ArbitrumDACKeysetHandler.name, () => {
-  const BLOCK_NUMBER = 1234
   const abi = new utils.Interface([
     'event SetValidKeyset(bytes32 indexed keysetHash, bytes keysetBytes)',
   ])
@@ -27,12 +26,10 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('fetches last event and decodes the values correctly', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock, toBlock) {
+    const provider = mockObject<IProvider>({
+      async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
-        expect(fromBlock).toEqual(0)
-        expect(toBlock).toEqual(BLOCK_NUMBER)
         return [
           SetValidKeyset(1, 2),
           SetValidKeyset(2, 3),
@@ -49,7 +46,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -61,12 +58,10 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('returns zero for no events found', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock, toBlock) {
+    const provider = mockObject<IProvider>({
+      async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([[abi.getEventTopic('SetValidKeyset')]])
-        expect(fromBlock).toEqual(0)
-        expect(toBlock).toEqual(BLOCK_NUMBER)
         return []
       },
     })
@@ -77,7 +72,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {

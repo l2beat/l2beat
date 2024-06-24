@@ -1,9 +1,9 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 19283248,
+  "blockNumber": 20138533,
   "configHash": "0x4eaf473ec4829f729e46281e9380868bd675148f18bc11243c7918b04b02c147",
-  "version": 5,
+  "version": 7,
   "contracts": [
     {
       "name": "RoninBridgeAdminMultiSig",
@@ -29,7 +29,7 @@
         ],
         "required": 2,
         "spentToday": 0,
-        "transactionCount": 24
+        "transactionCount": 25
       },
       "derivedName": "MultiSigWalletWithDailyLimit"
     },
@@ -62,7 +62,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 61002,
+        "depositCount": 85446,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
         "getHighTierVoteWeightThreshold": [90, 100],
@@ -166,7 +166,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "3128340812187676999893094"
+        "totalSupply": "2801755531445763023002558"
       },
       "derivedName": "WETH9"
     },

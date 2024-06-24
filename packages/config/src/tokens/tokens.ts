@@ -20,7 +20,7 @@ export const tokenList: Token[] = tokens
   .map(toToken)
 
 export const canonicalTokenList: Token[] = tokenList.filter(
-  (t) => t.type === 'CBV' && t.chainId === ChainId.ETHEREUM,
+  (t) => t.source === 'canonical' && t.chainId === ChainId.ETHEREUM,
 )
 
 const canonicalTokenMap = new Map(

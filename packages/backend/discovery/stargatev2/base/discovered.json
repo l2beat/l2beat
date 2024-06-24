@@ -1,9 +1,9 @@
 {
   "name": "stargatev2",
   "chain": "base",
-  "blockNumber": 15303298,
+  "blockNumber": 15999031,
   "configHash": "0xc0a7d7c47e2dbe233b490f384061748fd864b11466ecb85dfa1b0c26f30b66d7",
-  "version": 4,
+  "version": 6,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
@@ -25,27 +25,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x08ed1d79D509A6f1020685535028ae60C144441E",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-          "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
-          "0x12dC9256Acc9895B076f6638D628382881e62CeE",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x08ed1d79D509A6f1020685535028ae60C144441E",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
+          "tokenMessaging": "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
+          "creditMessaging": "0x12dC9256Acc9895B076f6638D628382881e62CeE",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30184,
         "lpToken": "0x53983F31E8E0D0c3Fd0b8d85654989A1336317d7",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "28783793687909028",
-        "poolBalance": 5100486639962,
+        "plannerFee": "178144685021710130",
+        "poolBalance": 7147540103594,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        "treasuryFee": 641411393,
-        "tvl": 6160763424004
+        "treasuryFee": 2354476061,
+        "tvl": 6748552799568
       }
     },
     {
@@ -62,7 +65,10 @@
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -103,27 +109,30 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x17E450Be3Ba9557F2378E20d64AD417E59Ef9A34",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
-          "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
-          "0x12dC9256Acc9895B076f6638D628382881e62CeE",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x17E450Be3Ba9557F2378E20d64AD417E59Ef9A34",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0xd47b03ee6d86Cf251ee7860FB2ACf9f91B9fD4d7",
+          "tokenMessaging": "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47",
+          "creditMessaging": "0x12dC9256Acc9895B076f6638D628382881e62CeE",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30184,
         "lpToken": "0x98fB8522d891F43B771e2d27367b41Ba138D0B80",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "280083518405152869",
-        "poolBalance": "1900696733000000000000",
+        "plannerFee": "692452773280578133",
+        "poolBalance": "2638685080000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 652553,
-        "tvl": "2202495930000000000000"
+        "treasuryFee": 3397562,
+        "tvl": "2431776563000000000000"
       }
     }
   ],

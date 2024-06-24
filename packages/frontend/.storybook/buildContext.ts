@@ -10,7 +10,7 @@ export const storybookBuildContext: PageBuildContext = {
       tvlBreakdown: true,
       implementationChange: true,
       gitcoinOption: true,
-      hiringBadge: true,
+      hiringBadge: false,
       buildAllProjectPages: true,
       costsPage: true,
       zkCatalog: true,

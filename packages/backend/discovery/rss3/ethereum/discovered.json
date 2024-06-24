@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19918622,
   "configHash": "0x851dcefde7568133fa263a9fffe22037cc44668d4ad094c716282c29d4b5ba2a",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ProxyAdmin",

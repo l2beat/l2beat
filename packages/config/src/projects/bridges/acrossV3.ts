@@ -95,6 +95,7 @@ export const acrossV3: Bridge = {
           'ACX',
         ],
         isHistorical: true,
+        chain: 'ethereum',
       },
     ],
   },

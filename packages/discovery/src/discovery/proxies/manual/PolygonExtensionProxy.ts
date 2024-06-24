@@ -1,23 +1,21 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
+import { IProvider } from '../../provider/IProvider'
 import { detectPolygonProxy } from '../auto/PolygonProxy'
 
 export async function getPolygonExtensionProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectPolygonProxy(provider, address, blockNumber)
+  const detection = await detectPolygonProxy(provider, address)
   if (!detection || detection.upgradeability.type !== 'Polygon proxy') {
     return undefined
   }
+  // TODO: (sz-piotr) console.log, really!?
   console.log('PolygonExtensionProxy', address)
-  const extension = bytes32ToAddress(
-    await provider.getStorage(address, 37, blockNumber),
-  )
+  const extension = await provider.getStorageAsAddress(address, 37)
+  // TODO: (sz-piotr) console.log, really!?
   console.log('Extension', extension)
   return {
     implementations: [...detection.implementations, extension],

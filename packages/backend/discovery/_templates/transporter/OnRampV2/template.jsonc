@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "getNops",
+    "getAllowList",
+    "getStaticConfig",
+    "currentRateLimiterState"
+  ],
+  "ignoreRelatives": [
+    "getSupportedTokens",
+    "tokenAddresses",
+    "linkToken",
+    "owner"
+  ],
+  "ignoreInWatchMode": [
+    "getExpectedNextSequenceNumber",
+    "getNopFeesJuels",
+    "linkAvailableForPayment",
+    "tokenAddresses",
+    "tokenPools"
+  ],
+  "fields": {
+    "getTokenLimitAdmin": {
+      "target": {
+        "template": "transporter/ManyChainMultiSig"
+      }
+    },
+    "tokenPools": {
+      "target": {
+        "template": "transporter/TokenPool"
+      },
+      "handler": {
+        "type": "arrayFromTwoEvents",
+        "addEvent": "PoolAdded",
+        "addKey": "pool",
+        "removeEvent": "PoolRemoved",
+        "removeKey": "pool"
+      }
+    },
+    "linkToken": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["linkToken"]
+      }
+    },
+    "staticConfigAddresses": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["prevOnRamp", "armProxy"]
+      }
+    },
+    "staticConfigChains": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig",
+        "pickFields": ["chainSelector", "destChainSelector"]
+      },
+      "returnType": "(ChainIdMap[])"
+    },
+    "tokenAddresses": {
+      "handler": {
+        "type": "call",
+        "method": "getSupportedTokens",
+        "args": [],
+        "ignoreRelative": true
+      }
+    }
+  }
+}

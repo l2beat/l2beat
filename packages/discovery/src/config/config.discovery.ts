@@ -33,6 +33,8 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       chain: getChainConfig(cli.chain),
       dryRun: cli.dryRun,
       dev: cli.dev,
+      printStats: cli.printStats,
+      saveSources: cli.saveSources,
       blockNumber: cli.blockNumber,
       sourcesFolder: cli.sourcesFolder,
       flatSourcesFolder: cli.flatSourcesFolder,
@@ -60,6 +62,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
   const ENV_NAME = chainConfig.name.toUpperCase()
   return {
     name: chainConfig.name,
+    chainId: chainConfig.chainId,
     rpcUrl: env.string([
       `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
       `${ENV_NAME}_RPC_URL`,
@@ -67,12 +70,6 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `DISCOVERY_${ENV_NAME}_RPC_URL`,
     ]),
     eventRpcUrl: env.optionalString(`${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`),
-    rpcGetLogsMaxRange: env.optionalInteger([
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
-      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-      //support for legacy local configs
-      `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-    ]),
     reorgSafeDepth: env.optionalInteger([
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,

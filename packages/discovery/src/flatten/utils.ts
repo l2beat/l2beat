@@ -19,7 +19,9 @@ export interface HashedFileContent {
 // even when there are multiple sources.
 // In the future it may be reimplemented to support
 // all sources for comparison with templates.
-export function flattenFirstSource(sources: ContractSources): string {
+export function flattenFirstSource(
+  sources: ContractSources,
+): string | undefined {
   const source =
     sources.sources.length === 1 ? sources.sources[0] : sources.sources[1]
 
@@ -33,6 +35,10 @@ export function flattenFirstSource(sources: ContractSources): string {
       content,
     }))
     .filter((e) => e.path.endsWith('.sol'))
+
+  if (input.length === 0) {
+    return undefined
+  }
 
   const parsedFileManager = ParsedFilesManager.parseFiles(
     input,

@@ -1,14 +1,12 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
 import { CallHandler } from './CallHandler'
 
 describe(CallHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('dependencies', () => {
     it('detects no dependencies for a simple definition', () => {
       const handler = new CallHandler(
@@ -187,22 +185,19 @@ describe(CallHandler.name, () => {
 
   describe('execute', () => {
     const method = 'function add(uint256 a, uint256 b) view returns (uint256)'
-    const signature = '0x771602f7'
     const address = EthereumAddress.random()
-    const revertErrorMessage =
-      '(code: 3, message: execution reverted: xDomainMessageSender is not set, data: Some(String("0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f78446f6d61696e4d65737361676553656e646572206973206e6f742073657400")))'
 
     it('calls the method with the provided parameters', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call(passedAddress, data) {
+      const provider = mockObject<IProvider>({
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          expect(data).toEqual(
-            Bytes.fromHex(
-              signature + '1'.padStart(64, '0') + '2'.padStart(64, '0'),
-            ),
-          )
+          expect(data).toEqual([1, 2])
 
-          return Bytes.fromHex('3'.padStart(64, '0'))
+          return 3 as T
         },
       })
 
@@ -212,7 +207,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
         value: 3,
@@ -221,16 +216,16 @@ describe(CallHandler.name, () => {
     })
 
     it('calls the method with the resolved parameters', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call(passedAddress, data) {
+      const provider = mockObject<IProvider>({
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          expect(data).toEqual(
-            Bytes.fromHex(
-              signature + '1'.padStart(64, '0') + '2'.padStart(64, '0'),
-            ),
-          )
+          expect(data).toEqual([1, 2])
 
-          return Bytes.fromHex('3'.padStart(64, '0'))
+          return 3 as T
         },
       })
 
@@ -240,7 +235,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {
+      const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
@@ -252,8 +247,8 @@ describe(CallHandler.name, () => {
     })
 
     it('handles errors', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
+      const provider = mockObject<IProvider>({
+        async callMethod() {
           throw new Error('oops')
         },
       })
@@ -264,7 +259,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
         error: 'oops',
@@ -273,9 +268,9 @@ describe(CallHandler.name, () => {
     })
 
     it('passes ignoreRelative', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
-          return Bytes.fromHex('3'.padStart(64, '0'))
+      const provider = mockObject<IProvider>({
+        async callMethod<T>() {
+          return 3 as T
         },
       })
 
@@ -285,7 +280,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
         value: 3,
@@ -294,9 +289,9 @@ describe(CallHandler.name, () => {
     })
 
     it('should catch revert error', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
-          throw new Error(revertErrorMessage)
+      const provider = mockObject<IProvider>({
+        async callMethod() {
+          return undefined
         },
       })
 
@@ -306,7 +301,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
         value: 'EXPECT_REVERT',
@@ -315,9 +310,9 @@ describe(CallHandler.name, () => {
     })
 
     it('should not catch revert error when expectRevert is false', async () => {
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
-          throw new Error(revertErrorMessage)
+      const provider = mockObject<IProvider>({
+        async callMethod() {
+          return undefined
         },
       })
 
@@ -327,7 +322,7 @@ describe(CallHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'add',
         error: EXEC_REVERT_MSG,

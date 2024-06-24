@@ -3,12 +3,12 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
-import { callMethod } from '../utils/callMethod'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
+import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
-export class LimitedArrayHandler implements ClassicHandler {
+export class LimitedArrayHandler implements Handler {
   readonly field: string
   readonly dependencies = []
   private readonly fragment: utils.FunctionFragment
@@ -24,9 +24,8 @@ export class LimitedArrayHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Calling array (max: ',
@@ -34,36 +33,37 @@ export class LimitedArrayHandler implements ClassicHandler {
       ') ',
       this.fragment.name + '(i)',
     ])
+
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>
-        callMethod(provider, address, this.fragment, [index], blockNumber),
+        provider.callMethod(address, this.fragment, [index]).then(
+          (value) => ({ type: 'success' as const, value }),
+          (error) => ({ type: 'error' as const, error }),
+        ),
       ),
     )
-    const value: ContractValue[] = []
+    const values: ContractValue[] = []
     let error: string | undefined
     for (const result of results) {
-      if (result.error !== undefined) {
-        if (result.error !== 'Execution reverted') {
-          error = result.error
-        }
+      if (result.type === 'error') {
+        error = result.error
         break
       } else {
-        // FIXME: Had no if condition here
         if (result.value !== undefined) {
-          value.push(result.value)
+          values.push(toContractValue(result.value))
         }
       }
     }
 
     if (!error) {
-      if (value.length === this.limit) {
+      if (values.length === this.limit) {
         return {
           field: this.field,
-          value,
+          value: values,
           error: 'Too many values. Update configuration to explore fully',
         }
       } else {
-        return { field: this.field, value }
+        return { field: this.field, value: values }
       }
     }
 

@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { valueToAddress } from '../utils/valueToAddress'
 
@@ -35,7 +35,7 @@ const BLOB_TX_TYPE = 3
  * This is a OP Stack specific handler that is used to check if
  * the OP Stack project is still posting the transaction data on Ethereum.
  */
-export class OpStackDAHandler implements ClassicHandler {
+export class OpStackDAHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -50,9 +50,8 @@ export class OpStackDAHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     _address: EthereumAddress,
-    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking OP Stack DA mode'])
@@ -62,9 +61,13 @@ export class OpStackDAHandler implements ClassicHandler {
       previousResults,
     )
     const sequencerAddress = valueToAddress(resolved)
-    const last10Txs = await provider.getLast10OutgoingTxs(
-      sequencerAddress,
-      blockNumber,
+    const last10Txs = await provider.raw(
+      `optimism_sequencer_100.${sequencerAddress}.${provider.blockNumber}`,
+      ({ etherscanLikeClient }) =>
+        etherscanLikeClient.getLast10OutgoingTxs(
+          sequencerAddress,
+          provider.blockNumber,
+        ),
     )
 
     const isSomeTxsLengthEqualToCelestiaDAExample = last10Txs.some(

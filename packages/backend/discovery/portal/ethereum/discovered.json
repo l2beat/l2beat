@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20089055,
   "configHash": "0x195ddce914e9f413f3a0b36e6718ae330961a2e3419eab147ab0fb6cec090d8b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "TokenImplementation",

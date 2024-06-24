@@ -57,6 +57,7 @@ export const hermez: Layer2 = {
         address: EthereumAddress('0xA68D85dF56E733A06443306A095646317B5Fa633'),
         sinceTimestamp: new UnixTime(1616482490),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
   },

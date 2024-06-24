@@ -11,6 +11,7 @@ import { DaBridge, DaBridgeKind } from '../../types/DaBridge'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const immutableXDac = {
+  id: 'immutablex-dac',
   kind: DaBridgeKind.DAC,
   display: {
     name: 'ImmutableX DAC',

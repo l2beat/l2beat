@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532088,
   "configHash": "0xe1a60acb537887f5379f5ef47c07caff2cedb412828a9018fcba876f674fd447",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ERC1155Predicate",

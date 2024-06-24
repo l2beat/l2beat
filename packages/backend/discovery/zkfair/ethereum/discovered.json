@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19726116,
   "configHash": "0x87319ffc81b8bb1bb0b08aef29643f604664bba90c854426c2bde7387833a65a",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
@@ -162,6 +162,9 @@
     {
       "name": "DataAvailabilityCommittee",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
+      "descriptions": [
+        "Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc",

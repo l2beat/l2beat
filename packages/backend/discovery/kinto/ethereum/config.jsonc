@@ -42,16 +42,25 @@
       "ignoreRelatives": [
         "DAI",
         "ETH",
-        "l2Vault",
         "sDAI",
         "sUSDe",
         "USDe",
         "weETH",
         "WETH",
         "wstETH",
+        "PERMIT2",
+        "USDM",
+        "USDC",
+        "usdmCurvePool",
+        "wUSDM",
         "swapRouter"
       ],
-      "ignoreMethods": ["proxiableUUID", "depositCount", "domainSeparator"]
+      "ignoreMethods": [
+        "proxiableUUID",
+        "depositCount",
+        "domainSeparator",
+        "__depositCount"
+      ]
     },
     "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],

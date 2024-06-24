@@ -1,5 +1,5 @@
 import React from 'react'
-import { type DaSummaryEntry } from './columns'
+import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 
 interface Props {
   daBridge: DaSummaryEntry['daBridge']
