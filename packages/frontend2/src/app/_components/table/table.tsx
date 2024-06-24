@@ -82,23 +82,24 @@ interface HeaderSorting {
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement> & { sorting?: HeaderSorting }
+  React.ThHTMLAttributes<HTMLTableCellElement> & {
+    sorting?: HeaderSorting
+  }
 >(({ className, children, sorting, ...props }, ref) => (
   <th
     ref={ref}
-    className={cn(
-      'h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground',
-      className,
-    )}
+    className="h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground"
     {...props}
   >
-    {children !== null ? (
-      sorting ? (
-        <SortingArrows {...sorting}>{children}</SortingArrows>
-      ) : (
-        children
-      )
-    ) : null}
+    <div className={cn('flex items-center gap-1.5', className)}>
+      {children !== null ? (
+        sorting ? (
+          <SortingArrows {...sorting}>{children}</SortingArrows>
+        ) : (
+          children
+        )
+      ) : null}
+    </div>
   </th>
 ))
 TableHead.displayName = 'TableHead'

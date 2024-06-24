@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import { type ScalingSummaryLayer2sEntry as ScalingSummaryLayer2sEntry } from '../../../_utils/scaling-summary-entry'
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import {
 } from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
 import { columns } from './columns'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 
 interface Props {
   items: ScalingSummaryLayer2sEntry[]
@@ -28,6 +28,14 @@ export function SummaryLayer2sTable({ items }: Props) {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      sorting: [
+        {
+          id: 'total',
+          desc: true,
+        },
+      ],
+    },
   })
 
   return (
@@ -48,6 +56,7 @@ export function SummaryLayer2sTable({ items }: Props) {
                       }
                     : undefined
                 }
+                className={header.column.columnDef.meta?.headClassName}
               >
                 {header.isPlaceholder
                   ? null

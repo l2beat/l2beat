@@ -1,4 +1,4 @@
-import { HOMEPAGE_MILESTONES, layer2s } from '@l2beat/config'
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import {
   Tabs,
@@ -12,7 +12,6 @@ import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
 import { TvlChart } from '../../../_components/chart/tvl-chart'
 import { SummaryLayer2sTable } from './_components/table/layer2s/summary-layer2s-table'
-import { toScalingSummaryEntry } from './_utils/scaling-summary-entry'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
 export const metadata = getDefaultMetadata({
@@ -20,12 +19,16 @@ export const metadata = getDefaultMetadata({
     url: '/scaling/summary',
   },
 })
-import { layer2sTvl } from './tvl'
+import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
+import { getTvl } from '~/server/features/scaling/get-tvl'
 
 export default async function Page() {
+  const tvl = await getTvl()
+  const { layer2s } = await getScalingSummaryEntries(tvl)
+
   return (
     <div>
-      <TvlChart data={layer2sTvl} milestones={HOMEPAGE_MILESTONES} />
+      <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
@@ -53,7 +56,7 @@ export default async function Page() {
         </OverflowWrapper>
 
         <TabsContent value="layer2s">
-          <SummaryLayer2sTable items={layer2s.map(toScalingSummaryEntry)} />
+          <SummaryLayer2sTable items={layer2s} />
         </TabsContent>
         <TabsContent value="layer3s">Active Layer3s</TabsContent>
         <TabsContent value="upcoming">Upcoming Layer2s</TabsContent>

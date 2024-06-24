@@ -1,6 +1,6 @@
 import React from 'react'
 import { cn } from '~/utils/cn'
-import { Breakdown } from './Breakdown'
+import { Breakdown } from './breakdown'
 
 export interface TokenBreakdownProps extends Props {
   warning?: string

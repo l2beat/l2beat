@@ -1,15 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { type ScalingSummaryLayer2sEntry } from '../../../_utils/scaling-summary-entry'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { formatNumber } from '~/utils/format-number'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/get-scaling-summary-entries'
+import { formatPercent } from '~/utils/get-percentage-change'
+import { TotalCell } from './total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 
@@ -57,7 +58,8 @@ export const columns = [
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
   }),
-  columnHelper.accessor('tvlData.tvl', {
+  columnHelper.accessor('tvlData', {
+    id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
@@ -65,7 +67,11 @@ export const columns = [
         return <UpcomingBadge />
       }
 
-      return <span>{formatNumber(value)}</span>
+      return <TotalCell data={value} />
+    },
+    meta: {
+      headClassName: 'justify-end',
+      cellClassName: 'justify-end',
     },
   }),
   columnHelper.accessor('tvlData.marketShare', {
@@ -76,7 +82,11 @@ export const columns = [
         return EM_DASH
       }
 
-      return <span>{formatNumber(value)}%</span>
+      return formatPercent(value)
+    },
+    meta: {
+      headClassName: 'justify-end',
+      cellClassName: 'justify-end',
     },
   }),
 ]

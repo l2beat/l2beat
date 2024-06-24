@@ -11,10 +11,10 @@ import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
-import { getPercentageChange } from '~/utils/get-percentage-change'
-import { type AggregateDetailedTvlResponse } from '../../(new)/scaling/summary/tvl'
 import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { Skeleton } from '~/app/_components/skeleton'
+import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
+import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 
 interface TvlChartPointData {
   timestamp: number
@@ -23,22 +23,22 @@ interface TvlChartPointData {
 }
 
 interface Props {
-  data: AggregateDetailedTvlResponse
+  data: TvlCharts
   milestones: Milestone[]
   tag?: string
 }
 
 export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
   const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
-  const [unit, setUnit] = useLocalStorage(`${tag}-unit`, 'usd')
+  const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
   const mappedMilestones = getMilestones(milestones)
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
     trimLeft: true,
   })
-  const rangeStart = dataInRange?.at(0)?.at(0)
-  const rangeEnd = dataInRange?.at(dataInRange.length - 1)?.at(0)
+  const rangeStart = dataInRange[0]?.[0]
+  const rangeEnd = dataInRange[dataInRange.length - 1]?.[0]
   assert(
     rangeStart !== undefined && rangeEnd !== undefined,
     'Programmer error: rangeStart and rangeEnd are undefined',
@@ -181,7 +181,7 @@ function UnitAndScaleControls({
 }: {
   unit: string
   scale: string
-  setUnit: (value: string) => void
+  setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
   const { loading } = useChartContext()
@@ -207,18 +207,6 @@ function UnitAndScaleControls({
       </RadioGroup>
     </div>
   )
-}
-
-export function getTvlWithChange(
-  charts: AggregateDetailedTvlResponse,
-  currency?: string,
-) {
-  const data = charts?.hourly.data ?? []
-  const dataIndex = currency === 'eth' ? 5 : 1
-  const tvl = data.at(-1)?.[dataIndex] ?? 0
-  const tvlSevenDaysAgo = data.at(0)?.[dataIndex] ?? 0
-  const tvlWeeklyChange = getPercentageChange(tvl, tvlSevenDaysAgo)
-  return { tvl, tvlWeeklyChange }
 }
 
 function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
