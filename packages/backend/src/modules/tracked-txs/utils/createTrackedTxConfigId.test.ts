@@ -2,9 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
-import { createTrackedTxConfigId } from './createTrackedTxConfigId'
+import { createTrackedTxId } from './createTrackedTxConfigId'
 
-describe(createTrackedTxConfigId.name, () => {
+describe(createTrackedTxId.name, () => {
   const fields = [
     {
       key: 'projectId',
@@ -44,9 +44,9 @@ describe(createTrackedTxConfigId.name, () => {
 
   for (const f of fields) {
     it(f.key, () => {
-      const pre = createTrackedTxConfigId(mock())
+      const pre = createTrackedTxId(mock())
 
-      const post = createTrackedTxConfigId(mock({ [f.key]: f.newValue }))
+      const post = createTrackedTxId(mock({ [f.key]: f.newValue }))
 
       if (f.shouldUpdateHash) {
         expect(pre).not.toEqual(post)
@@ -57,7 +57,9 @@ describe(createTrackedTxConfigId.name, () => {
   }
 })
 
-function mock(v?: Partial<TrackedTxConfigEntry>): TrackedTxConfigEntry {
+function mock(
+  v?: Partial<TrackedTxConfigEntry>,
+): Omit<TrackedTxConfigEntry, 'id'> {
   return {
     projectId: ProjectId('project-id'),
     sinceTimestampInclusive: UnixTime.ZERO,

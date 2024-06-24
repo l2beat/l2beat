@@ -33,3 +33,8 @@ export function createTrackedTxId(
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
 }
+
+createTrackedTxId.random = function random(): TrackedTxId {
+  const letter = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
+  return Array.from({ length: 8 }).map(letter).join('')
+}

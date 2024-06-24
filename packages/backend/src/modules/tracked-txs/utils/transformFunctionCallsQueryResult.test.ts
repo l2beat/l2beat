@@ -1,9 +1,15 @@
 import { readFileSync } from 'fs'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { TrackedTxId } from '../types/TrackedTxId'
+import { UpdateConfiguration } from '../../../tools/uif/multi/types'
 import {
+  TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
@@ -11,6 +17,7 @@ import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { TrackedTxId, createTrackedTxId } from './createTrackedTxConfigId'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -34,53 +41,38 @@ const paradexProgramHash =
 
 describe(transformFunctionCallsQueryResult.name, () => {
   it('should transform results', () => {
-    const functionCalls: TrackedTxFunctionCallConfig[] = [
-      {
-        formula: 'functionCall',
+    const functionCalls = [
+      mockFunctionCall({
+        id: createTrackedTxId.random(),
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'batchSubmissions',
-            id: TrackedTxId.random(),
-          },
-        ],
-      },
-      {
         formula: 'functionCall',
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        subtype: 'batchSubmissions',
+      }),
+      mockFunctionCall({
+        id: createTrackedTxId.random(),
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
         selector: SELECTOR_2,
+        formula: 'functionCall',
         sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'stateUpdates',
-            id: TrackedTxId.random(),
-          },
-        ],
-      },
+        subtype: 'stateUpdates',
+      }),
     ]
 
-    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
-      {
-        formula: 'sharpSubmission',
+    const sharpSubmissions = [
+      mockSharpSubmission({
+        id: createTrackedTxId.random(),
         projectId: ProjectId('project2'),
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'proofSubmissions',
-            id: TrackedTxId.random(),
-          },
-        ],
-      },
+        formula: 'sharpSubmission',
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        subtype: 'proofSubmissions',
+        programHashes: [paradexProgramHash],
+      }),
     ]
 
     const queryResults: BigQueryFunctionCallResult[] = [
@@ -115,7 +107,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_number: block,
         block_timestamp: timestamp,
         input: sharpInput,
-        to_address: sharpSubmissions[0].address,
+        to_address: sharpSubmissions[0].properties.params.address,
         gas_price: 30n,
         receipt_gas_used: 300,
         calldata_gas_used: 300,
@@ -126,9 +118,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
     ]
     const expected: TrackedTxFunctionCallResult[] = [
       {
-        type: 'functionCall',
-        projectId: functionCalls[0].projectId,
-        use: functionCalls[0].uses[0],
+        formula: 'functionCall',
+        projectId: functionCalls[0].properties.projectId,
+        id: functionCalls[0].id,
+        type: functionCalls[0].properties.type,
+        subtype: functionCalls[0].properties.subtype,
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,
@@ -142,9 +136,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         receiptBlobGasUsed: null,
       },
       {
-        type: 'functionCall',
-        projectId: functionCalls[1].projectId,
-        use: functionCalls[1].uses[0],
+        formula: 'functionCall',
+        projectId: functionCalls[1].properties.projectId,
+        id: functionCalls[1].id,
+        type: functionCalls[1].properties.type,
+        subtype: functionCalls[1].properties.subtype,
         hash: txHashes[1],
         blockNumber: block,
         blockTimestamp: timestamp,
@@ -158,13 +154,15 @@ describe(transformFunctionCallsQueryResult.name, () => {
         receiptBlobGasUsed: null,
       },
       {
-        type: 'functionCall',
-        projectId: sharpSubmissions[0].projectId,
-        use: sharpSubmissions[0].uses[0],
+        formula: 'functionCall',
+        projectId: sharpSubmissions[0].properties.projectId,
+        id: sharpSubmissions[0].id,
+        subtype: sharpSubmissions[0].properties.subtype,
+        type: sharpSubmissions[0].properties.type,
         hash: txHashes[2],
         blockNumber: block,
         blockTimestamp: timestamp,
-        toAddress: sharpSubmissions[0].address,
+        toAddress: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         gasPrice: 30n,
         receiptGasUsed: 300,
@@ -184,15 +182,16 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('throws when there is no matching configuration', () => {
-    const functionCalls: TrackedTxFunctionCallConfig[] = [
-      {
-        formula: 'functionCall',
+    const functionCalls = [
+      mockFunctionCall({
+        id: createTrackedTxId.random(),
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
+        formula: 'functionCall',
         sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [],
-      },
+        subtype: 'batchSubmissions',
+      }),
     ]
 
     const queryResults: BigQueryFunctionCallResult[] = [
@@ -217,37 +216,33 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('includes only configurations which program hashes were proven', () => {
-    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
-      {
-        formula: 'sharpSubmission',
+    const sharpSubmissions = [
+      mockSharpSubmission({
+        id: createTrackedTxId.random(),
         projectId: ProjectId('project1'),
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'proofSubmissions',
-            id: TrackedTxId.random(),
-          },
-        ],
-      },
-      {
         formula: 'sharpSubmission',
-        projectId: ProjectId('project2'),
         sinceTimestampInclusive: SINCE_TIMESTAMP,
-        programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
+        subtype: 'proofSubmissions',
+        programHashes: [paradexProgramHash],
+      }),
+      mockSharpSubmission({
+        id: createTrackedTxId.random(),
+        projectId: ProjectId('project2'),
         address: EthereumAddress.random(),
         selector: 'random-selector-2',
-        uses: [],
-      },
+        formula: 'sharpSubmission',
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        subtype: 'proofSubmissions',
+        programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
+      }),
     ]
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
         hash: txHashes[0],
-        to_address: sharpSubmissions[0].address,
+        to_address: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         block_number: block,
         block_timestamp: timestamp,
@@ -262,13 +257,15 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const expected: TrackedTxFunctionCallResult[] = [
       {
-        type: 'functionCall',
-        projectId: sharpSubmissions[0].projectId,
-        use: sharpSubmissions[0].uses[0],
+        formula: 'functionCall',
+        projectId: sharpSubmissions[0].properties.projectId,
+        type: sharpSubmissions[0].properties.type,
+        id: sharpSubmissions[0].id,
+        subtype: sharpSubmissions[0].properties.subtype,
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,
-        toAddress: sharpSubmissions[0].address,
+        toAddress: sharpSubmissions[0].properties.params.address,
         input: sharpInput,
         gasPrice: 10n,
         receiptGasUsed: 100,
@@ -288,3 +285,88 @@ describe(transformFunctionCallsQueryResult.name, () => {
     expect(result).toEqual(expected)
   })
 })
+
+function mockFunctionCall({
+  id,
+  projectId,
+  subtype,
+  address,
+  selector,
+  sinceTimestampInclusive,
+  formula,
+}: {
+  id: TrackedTxId
+  projectId: ProjectId
+  subtype: TrackedTxsConfigSubtype
+  address: EthereumAddress
+  selector: string
+  sinceTimestampInclusive: UnixTime
+  formula: TrackedTxFunctionCallConfig['formula']
+}): UpdateConfiguration<
+  TrackedTxConfigEntry & {
+    params: TrackedTxFunctionCallConfig
+  }
+> {
+  return {
+    id,
+    hasData: true,
+    minHeight: 0,
+    maxHeight: 0,
+    properties: {
+      id,
+      projectId,
+      type: 'liveness',
+      subtype,
+      sinceTimestampInclusive,
+      params: {
+        formula,
+        address,
+        selector,
+      },
+    },
+  }
+}
+
+function mockSharpSubmission({
+  id,
+  projectId,
+  subtype,
+  address,
+  selector,
+  sinceTimestampInclusive,
+  formula,
+  programHashes,
+}: {
+  id: TrackedTxId
+  projectId: ProjectId
+  subtype: TrackedTxsConfigSubtype
+  address: EthereumAddress
+  selector: string
+  sinceTimestampInclusive: UnixTime
+  formula: TrackedTxSharpSubmissionConfig['formula']
+  programHashes: string[]
+}): UpdateConfiguration<
+  TrackedTxConfigEntry & {
+    params: TrackedTxSharpSubmissionConfig
+  }
+> {
+  return {
+    id,
+    hasData: true,
+    minHeight: 0,
+    maxHeight: 0,
+    properties: {
+      id,
+      projectId,
+      type: 'liveness',
+      subtype,
+      sinceTimestampInclusive,
+      params: {
+        formula,
+        address,
+        selector,
+        programHashes,
+      },
+    },
+  }
+}
