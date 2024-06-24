@@ -47,6 +47,10 @@ const zksMock: ZkCatalogProject[] = [
           contractAddress: zkVerfifierAddress,
           chainId: ChainId.ETHEREUM,
           subVerifiers: [],
+          performedBy: {
+            name: 'L2BEAT',
+            link: 'https://l2beat.com',
+          },
         },
       ],
     }),
@@ -76,6 +80,10 @@ const l2sMock: Layer2[] = [
             contractAddress: l2VerfifierAddress,
             chainId: ChainId.ETHEREUM,
             subVerifiers: [],
+            performedBy: {
+              name: 'L2BEAT',
+              link: 'https://l2beat.com',
+            },
           },
         ],
       }),
