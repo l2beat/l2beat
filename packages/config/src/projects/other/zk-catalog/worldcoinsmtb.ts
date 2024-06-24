@@ -1,5 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
-import { PERFORMED_BY } from '.'
+import { PERFORMED_BY } from './common'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoinsmtb: ZkCatalogProject = {
