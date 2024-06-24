@@ -8,13 +8,13 @@ export const gravity: Layer2 = upcomingL2({
     slug: 'gravity',
     description:
       'Gravity is an upcoming Layer 2 by Galxe team, built on the Orbit stack aiming to evolve into Layer 1 PoS chain',
-    purposes: ['Community'],
+    purposes: ['Social'],
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {
       websites: ['https://gravity.xyz'],
       apps: [],
-      documentation: [''],
+      documentation: [],
       explorers: [],
       repositories: [],
       socialMedia: [
