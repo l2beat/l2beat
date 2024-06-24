@@ -10,7 +10,7 @@ const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
 const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
-// const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
+const discovery_metis = new ProjectDiscovery('stargatev2', 'metis')
 const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
 const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
@@ -248,40 +248,36 @@ export const stargatev2: Bridge = {
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for USDC on Base.',
       }),
-      // TODO: add USDC on scroll
-      // discovery_scroll.getEscrowDetails({
-      //   includeInTotal: false,
-      //   address: EthereumAddress('0x3Fc69CC4A842838bCDC9499178740226062b14E4'),
-      //   tokens: ['USDC'],
-      //   description: 'Stargate liquidity pool for USDC on Scroll.',
-      // }),
+      discovery_scroll.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0x3Fc69CC4A842838bCDC9499178740226062b14E4'),
+        tokens: ['USDC'],
+        description: 'Stargate liquidity pool for USDC on Scroll.',
+      }),
       discovery_scroll.getEscrowDetails({
         includeInTotal: false,
         address: EthereumAddress('0xC2b638Cb5042c1B3c5d5C969361fB50569840583'),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Scroll.',
       }),
-      // TODO: add ETH on Metis
-      // discovery_metis.getEscrowDetails({
-      //   includeInTotal: false,
-      //   address: EthereumAddress('0x36ed193dc7160D3858EC250e69D12B03Ca087D08'),
-      //   tokens: ['ETH'],
-      //   description: 'Stargate liquidity pool for ETH on Metis.',
-      // }),
-      // discovery_metis.getEscrowDetails({
-      //   chain: 'metis',
-      //   includeInTotal: false,
-      //   address: EthereumAddress('0xD9050e7043102a0391F81462a3916326F86331F0'),
-      //   tokens: ['Metis'],
-      //   description: 'Stargate liquidity pool for METIS on Metis.',
-      // }),
-      // TODO: add USDT on Metis
-      // discovery_metis.getEscrowDetails({
-      //   includeInTotal: false,
-      //   address: EthereumAddress('0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125'),
-      //   tokens: ['USDT'],
-      //   description: 'Stargate liquidity pool for USDT on Metis.',
-      // }),
+      discovery_metis.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0x36ed193dc7160D3858EC250e69D12B03Ca087D08'),
+        tokens: ['WETH'],
+        description: 'Stargate liquidity pool for ETH on Metis.',
+      }),
+      discovery_metis.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0xD9050e7043102a0391F81462a3916326F86331F0'),
+        tokens: ['Metis'],
+        description: 'Stargate liquidity pool for METIS on Metis.',
+      }),
+      discovery_metis.getEscrowDetails({
+        includeInTotal: false,
+        address: EthereumAddress('0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125'),
+        tokens: ['USDT'],
+        description: 'Stargate liquidity pool for USDT on Metis.',
+      }),
       discovery_linea.getEscrowDetails({
         includeInTotal: false,
         address: EthereumAddress('0x81F6138153d473E8c5EcebD3DC8Cd4903506B075'),

@@ -18,7 +18,7 @@ export interface OnchainVerifier {
 
 export interface RequiredTool {
   name: string
-  version: `v${string}`
+  version: string
   link?: string
 }
 

@@ -8,6 +8,7 @@ import { HighLevelProvider } from './HighLevelProvider'
 import { IProvider, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { DiscoveryCache, ReorgAwareCache } from './ReorgAwareCache'
+import { AllProviderStats, addStats, getZeroStats } from './Stats'
 import { getBlockNumberTwoProviders } from './getBlockNumberTwoProviders'
 import { MulticallClient } from './multicall/MulticallClient'
 
@@ -18,6 +19,8 @@ export class AllProviders {
   > = new Map()
 
   private lowLevelProviders: Map<string, LowLevelProvider> = new Map()
+  private batchingAndCachingProviders: Map<string, BatchingAndCachingProvider> =
+    new Map()
   private multicallClients: Map<string, MulticallClient> = new Map()
   private highLevelProviders: Map<string, HighLevelProvider> = new Map()
 
@@ -27,11 +30,17 @@ export class AllProviders {
     private discoveryCache: DiscoveryCache,
   ) {
     for (const config of chainConfigs) {
-      const baseProvider = new providers.StaticJsonRpcProvider(config.rpcUrl)
+      const baseProvider = new providers.StaticJsonRpcProvider(
+        config.rpcUrl,
+        config.chainId,
+      )
       const eventProvider =
         config.eventRpcUrl === undefined
           ? baseProvider
-          : new providers.StaticJsonRpcProvider(config.eventRpcUrl)
+          : new providers.StaticJsonRpcProvider(
+              config.eventRpcUrl,
+              config.chainId,
+            )
       const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
         httpClient,
         config.etherscanUrl,
@@ -83,11 +92,14 @@ export class AllProviders {
       new MulticallClient(lowLevelProvider, config.config.multicall)
     this.multicallClients.set(chain, multicallClient)
 
-    const batchingAndCachingProvider = new BatchingAndCachingProvider(
-      reorgAwareCache,
-      lowLevelProvider,
-      multicallClient,
-    )
+    const batchingAndCachingProvider =
+      this.batchingAndCachingProviders.get(chain) ??
+      new BatchingAndCachingProvider(
+        reorgAwareCache,
+        lowLevelProvider,
+        multicallClient,
+      )
+    this.batchingAndCachingProviders.set(chain, batchingAndCachingProvider)
 
     const chainKey = `${chain}:${blockNumber}`
     const provider =
@@ -101,5 +113,20 @@ export class AllProviders {
     this.highLevelProviders.set(chainKey, provider)
 
     return provider
+  }
+
+  getStats(chain: string): AllProviderStats {
+    const highLevelCounts = [...this.highLevelProviders.keys()]
+      .filter((key) => key.startsWith(chain))
+      .map((key) => this.highLevelProviders.get(key)?.stats ?? getZeroStats())
+      .reduce((a, b) => addStats(a, b), getZeroStats())
+
+    return {
+      highLevelCounts: highLevelCounts,
+      cacheCounts:
+        this.batchingAndCachingProviders.get(chain)?.stats ?? getZeroStats(),
+      lowLevelCounts:
+        this.lowLevelProviders.get(chain)?.stats ?? getZeroStats(),
+    }
   }
 }

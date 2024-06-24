@@ -21,6 +21,8 @@ export interface DiscoverCliParameters {
   chain: string
   dryRun: boolean
   dev: boolean
+  printStats: boolean
+  saveSources: boolean
   sourcesFolder?: string
   flatSourcesFolder?: string
   discoveryFilename?: string
@@ -72,6 +74,8 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
 
     let dryRun = false
     let dev = false
+    let printStats = false
+    let saveSources = false
     let blockNumber: number | undefined
     let sourcesFolder: string | undefined
     let flatSourcesFolder: string | undefined
@@ -85,6 +89,16 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
     if (remaining.includes('--dev')) {
       dev = true
       remaining.splice(remaining.indexOf('--dev'), 1)
+    }
+
+    if (remaining.includes('--stats')) {
+      printStats = true
+      remaining.splice(remaining.indexOf('--stats'), 1)
+    }
+
+    if (remaining.includes('--save-sources')) {
+      saveSources = true
+      remaining.splice(remaining.indexOf('--save-sources'), 1)
     }
 
     const blockNumberArg = extractArgWithValue(remaining, '--block-number')
@@ -145,6 +159,8 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       project,
       dryRun,
       dev,
+      printStats,
+      saveSources,
       sourcesFolder,
       flatSourcesFolder,
       discoveryFilename,

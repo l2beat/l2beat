@@ -1271,6 +1271,27 @@
       }
     },
     {
+      "symbol": "USDC.e",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -1579,16 +1600,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "weETH",
-      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
-      }
-    },
-    {
       "symbol": "WINR",
       "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
       "source": "native",
@@ -1603,6 +1614,12 @@
   ],
   "optimism": [
     {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",
@@ -1613,9 +1630,22 @@
       }
     },
     {
+      "symbol": "DAI",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "USDT",
       "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
       "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       "source": "canonical",
       "supply": "zero"
     },
@@ -2047,6 +2077,26 @@
   ],
   "mantapacific": [
     {
+      "symbol": "USDC",
+      "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
+      "source": "canonical",
+      "category": "stablecoin",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
+      "source": "canonical",
+      "category": "stablecoin",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
       "source": "canonical",
       "supply": "zero",
@@ -2126,6 +2176,17 @@
   ],
   "mantle": [
     {
+      "symbol": "MNT",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wMNT",
+      "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "mETH",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
       "source": "canonical",
@@ -2177,6 +2238,27 @@
     }
   ],
   "linea": [
+    {
+      "symbol": "wBTC",
+      "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "ETH",
       "source": "canonical",
@@ -2604,6 +2686,11 @@
   ],
   "metis": [
     {
+      "symbol": "Metis",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "WETH",
       "address": "0x420000000000000000000000000000000000000A",
       "coingeckoId": "ethereum",
@@ -2612,7 +2699,7 @@
       "category": "ether"
     },
     {
-      "symbol": "m.USDT",
+      "symbol": "USDT",
       "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
       "coingeckoId": "tether",
       "source": "canonical",
@@ -2621,6 +2708,22 @@
     }
   ],
   "scroll": [
+    {
+      "symbol": "USDC",
+      "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "tether"
+    },
     {
       "symbol": "ETH",
       "source": "canonical",
@@ -2674,6 +2777,33 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "wBTC",
+      "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
     {
       "symbol": "ETH",
       "source": "canonical",
@@ -2901,7 +3031,8 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "TRON Foundation"
+        "bridge": "TRON Foundation",
+        "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
       },
       "coingeckoId": "bitcoin-trc20"
     },
