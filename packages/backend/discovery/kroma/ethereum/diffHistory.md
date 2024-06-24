@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x418d954910200516bb9194b4ad45a5d8342701e1
+Generated with discovered.json: 0x550974795ab857ca02a641c1f56710bd2f52a7d6
+
+# Diff at Fri, 21 Jun 2024 10:36:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3ec2af791e025f39dac189a183e6a382ceece70f block: 19976276
+- current block number: 20139536
+
+## Description
+
+Small ZKVerifier upgrade:
+- libraries Strings, SignedMath and Math are dropped.
+- formatting
+- change of constants
+
+## Watched changes
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x7E79726560B140fd6e089547bD049509F5423BFf"
++        "0x4cd05aB629055a449617a28E3466660403eA7126"
+      implementations.0:
+-        "0x7E79726560B140fd6e089547bD049509F5423BFf"
++        "0x4cd05aB629055a449617a28E3466660403eA7126"
+      values.version:
+-        "0.1.4"
++        "0.1.5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZKVerifier/ZKVerifier.sol                      | 629 +++------------------
+ 1 file changed, 65 insertions(+), 564 deletions(-)
+```
+
+Generated with discovered.json: 0xce4214285c00751fd2d5541be9ba2bb5272615c6
 
 # Diff at Wed, 29 May 2024 15:01:43 GMT:
 

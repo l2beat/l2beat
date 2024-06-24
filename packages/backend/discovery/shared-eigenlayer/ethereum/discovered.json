@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19925898,
   "configHash": "0xc23e741729cca75ecb7c0995d99dee62c5adaaa0f0fd1168cc77b702dbe85ae4",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DepositContract",

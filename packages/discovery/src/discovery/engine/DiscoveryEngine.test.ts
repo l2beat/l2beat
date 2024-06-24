@@ -6,6 +6,7 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
+import { IProvider } from '../provider/IProvider'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 const base = {
@@ -27,15 +28,14 @@ const base = {
 }
 
 describe(DiscoveryEngine.name, () => {
-  const BLOCK_NUMBER = 1234
   const A = EthereumAddress.from('0xA')
   const B = EthereumAddress.from('0xB')
   const C = EthereumAddress.from('0xC')
   const D = EthereumAddress.from('0xD')
-  // const strA = A.toString()
   const strB = B.toString()
   const strC = C.toString()
   const strD = D.toString()
+  const provider = mockObject<IProvider>({})
 
   it('can perform a discovery', async () => {
     const config = generateFakeConfig([A], {
@@ -76,7 +76,7 @@ describe(DiscoveryEngine.name, () => {
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, discoveryLogger)
-    const result = await engine.discover(config, BLOCK_NUMBER)
+    const result = await engine.discover(provider, config)
 
     expect(result).toEqual([
       {

@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 
@@ -21,7 +21,7 @@ export const ArrayFromTwoEventsHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class ArrayFromTwoEventsHandler implements ClassicHandler {
+export class ArrayFromTwoEventsHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly addFragment: utils.EventFragment
   private readonly removeFragment: utils.EventFragment
@@ -54,9 +54,8 @@ export class ArrayFromTwoEventsHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Querying ',
@@ -64,17 +63,13 @@ export class ArrayFromTwoEventsHandler implements ClassicHandler {
       ' and ',
       this.removeFragment.name,
     ])
-    const logs = await provider.getLogs(
-      address,
+    // TODO: (sz-piotr) Promise.all provider.getEvents!
+    const logs = await provider.getLogs(address, [
       [
-        [
-          this.abi.getEventTopic(this.addFragment),
-          this.abi.getEventTopic(this.removeFragment),
-        ],
+        this.abi.getEventTopic(this.addFragment),
+        this.abi.getEventTopic(this.removeFragment),
       ],
-      0,
-      blockNumber,
-    )
+    ])
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)

@@ -61,21 +61,25 @@ export const orbit: Bridge = {
           // 'HANDY', Coingecko rank > 300
           'MATIC',
         ],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cDAI'],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x830433dE03ABedE062660CC629e1A2c714272474'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cUSDC'],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xd910f6F23889919fAd9C8cE3171dd557cE0308Da'),
         sinceTimestamp: new UnixTime(1603950507),
         tokens: ['cWBTC'],
+        chain: 'ethereum',
       },
     ],
   },
@@ -195,7 +199,7 @@ export const orbit: Bridge = {
   ],
   milestones: [
     {
-      name: 'Orbit Bridge hacked for $81.5',
+      name: 'Orbit Bridge hacked for $81.5M',
       date: '2024-01-01T00:00:00.00Z',
       link: 'https://digifinex.medium.com/orbit-bridge-hacked-for-81-5-million-orbit-chain-ecosystem-plummets-1fe5b8d85ff3',
     },

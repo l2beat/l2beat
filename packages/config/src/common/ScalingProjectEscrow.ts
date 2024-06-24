@@ -18,7 +18,7 @@ interface OldProjectEscrow {
   newVersion?: false
   /** Upcoming projects needs upcoming escrows (needed for TVL) */
   isUpcoming?: boolean
-  chain?: string
+  chain: string
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean
@@ -51,7 +51,7 @@ interface NewProjectEscrow {
   isUpcoming?: boolean
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
-  chain?: string
+  chain: string
   /** Inclusive */
   untilTimestamp?: UnixTime
   includeInTotal?: boolean

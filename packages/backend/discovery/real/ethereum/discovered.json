@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20073454,
   "configHash": "0xf49084bcd2304924927b3acfc819cfa1255d4c3c2db098e2fe8b2fc64e6f1a58",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -150,6 +150,7 @@
       "name": "SequencerInbox",
       "address": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
       "template": "orbitstack/SequencerInbox",
+      "descriptions": ["State batches / commitments get posted here."],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -395,6 +396,9 @@
       "name": "RollupProxy",
       "address": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
       "template": "orbitstack/RollupProxy",
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

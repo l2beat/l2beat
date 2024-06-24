@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20063194,
   "configHash": "0xa84e78187a82cd64cb1eed2be4f1ea39926ae20c90426528f8d6e8ac34ca360c",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -16,6 +16,9 @@
     {
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "descriptions": [
+        "This contract provides functionalities for proposing, proving, and verifying blocks."
+      ],
       "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -236,6 +239,9 @@
     {
       "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "descriptions": [
+        "Verifier contract for blocks proven by Guardian minority."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
@@ -294,6 +300,9 @@
     {
       "name": "ProverSetProxy",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+      "descriptions": [
+        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
@@ -436,6 +445,7 @@
     {
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "descriptions": ["Verifier contract for SGX proven blocks."],
       "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -523,6 +533,7 @@
     {
       "name": "GuardianProver",
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "descriptions": ["Verifier contract for Guardian proven blocks."],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",

@@ -21,14 +21,14 @@ export class AggregatedService {
   constructor(private readonly $: Dependencies) {}
 
   async getAggregatedTvl(
-    timestamp: UnixTime,
+    target: UnixTime,
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.$.dataService.getEthPrices()
+    const ethPrices = await this.$.dataService.getEthPrices(target)
 
     const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(projects, timestamp)
+      await this.$.dataService.getValuesForProjects(projects, target)
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
@@ -73,7 +73,7 @@ export class AggregatedService {
       dailyStart,
       sixHourlyStart,
       hourlyStart,
-      lastHour: timestamp,
+      lastHour: target,
       aggregate,
       ethPrices,
     })
@@ -85,7 +85,7 @@ export class AggregatedService {
           assert(project, 'Project not found!')
 
           const data = await this.$.tokenService.getTokenChart(
-            timestamp,
+            target,
             project,
             token,
           )

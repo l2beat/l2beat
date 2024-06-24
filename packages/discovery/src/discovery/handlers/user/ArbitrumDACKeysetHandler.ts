@@ -4,8 +4,8 @@ import { providers, utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumDACKeysetHandlerDefinition = z.infer<
   typeof ArbitrumDACKeysetHandlerDefinition
@@ -19,7 +19,7 @@ const abi = new utils.Interface([
   'event SetValidKeyset(bytes32 indexed keysetHash, bytes keysetBytes)',
 ])
 
-export class ArbitrumDACKeysetHandler implements ClassicHandler {
+export class ArbitrumDACKeysetHandler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
@@ -29,18 +29,14 @@ export class ArbitrumDACKeysetHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Resolving Arbitrum DAC Keyset'])
 
-    const events = await provider.getLogs(
-      address,
-      [[abi.getEventTopic('SetValidKeyset')]],
-      0,
-      blockNumber,
-    )
+    const events = await provider.getLogs(address, [
+      [abi.getEventTopic('SetValidKeyset')],
+    ])
 
     const { requiredSignatures, membersCount } = decodeLastEvent(events)
 

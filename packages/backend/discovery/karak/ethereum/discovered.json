@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531626,
   "configHash": "0xf3064f249b7da6c6840d0ab6b1c33caf9555132bdcab0d8d85cac937cb20db0c",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L2OutputOracle",

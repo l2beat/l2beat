@@ -56,6 +56,7 @@ export const portal: Bridge = {
           'DAI',
           'stETH',
         ],
+        chain: 'ethereum',
       },
     ],
   },

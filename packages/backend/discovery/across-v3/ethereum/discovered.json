@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976242,
   "configHash": "0xcffebba091e4ed4e857f8933a919d410f67cec3001021555f861d13088eac059",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "VotingToken",
@@ -19,7 +19,12 @@
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
         "totalSupply": "119318055685610205968488991",
-        "totalSupplyAt": []
+        "totalSupplyAt": [
+          "100000000000000000000000000",
+          "100000000000000000000000000",
+          "100034524092695877009538769",
+          "100150034524092695877009517"
+        ]
       },
       "derivedName": "VotingToken"
     },

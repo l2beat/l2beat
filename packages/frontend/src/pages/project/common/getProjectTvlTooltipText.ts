@@ -1,5 +1,5 @@
 import { Layer2, tokenList } from '@l2beat/config'
-import { AssetType, ChainId } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 
 import { languageJoin } from '../../../utils/utils'
 
@@ -12,14 +12,14 @@ export function getProjectTvlTooltipText(
     chainId &&
     tokenList.some(
       (token) =>
-        token.chainId === ChainId(chainId) && token.type === AssetType('EBV'),
+        token.chainId === ChainId(chainId) && token.source === 'external',
     )
 
   const hasNative =
     chainId &&
     tokenList.some(
       (token) =>
-        token.chainId === ChainId(chainId) && token.type === AssetType('NMV'),
+        token.chainId === ChainId(chainId) && token.source === 'native',
     )
 
   if (!hasExternal && !hasNative) {

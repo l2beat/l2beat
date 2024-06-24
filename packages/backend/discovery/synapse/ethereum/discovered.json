@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SynapseBridge",

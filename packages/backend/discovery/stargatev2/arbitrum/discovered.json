@@ -1,9 +1,9 @@
 {
   "name": "stargatev2",
   "chain": "arbitrum",
-  "blockNumber": 217346877,
+  "blockNumber": 223440408,
   "configHash": "0x2dedeb686ae7973502d6a4c436d14370f30589fa594b644de6706b9310331a28",
-  "version": 4,
+  "version": 6,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -19,7 +19,10 @@
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -60,27 +63,30 @@
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-          "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
-          "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
+          "tokenMessaging": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+          "creditMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30110,
         "lpToken": "0x993614e1c8c9C5AbE49462Ce5702431978Fd767F",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": "85151124203818528",
-        "poolBalance": "3597789812000000000000",
+        "plannerFee": "570342375776408019",
+        "poolBalance": "2544759057000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 874919,
-        "tvl": "3641145919000000000000"
+        "treasuryFee": 4110660,
+        "tvl": "5787295619000000000000"
       }
     },
     {
@@ -103,27 +109,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x1F605162282570dFa6255D27895587f4117F52FA",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-          "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
-          "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x1F605162282570dFa6255D27895587f4117F52FA",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
+          "tokenMessaging": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+          "creditMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30110,
         "lpToken": "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": 8642154819758762,
-        "poolBalance": 9573027722472,
+        "plannerFee": "324660928625212839",
+        "poolBalance": 11362492626939,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-        "treasuryFee": 259557888,
-        "tvl": 9707797354751
+        "treasuryFee": 5870492031,
+        "tvl": 11370537766578
       }
     },
     {
@@ -146,27 +155,30 @@
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
-          "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
-          "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a",
+          "tokenMessaging": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+          "creditMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30110,
         "lpToken": "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d",
-        "plannerFee": "22457376268418778",
-        "poolBalance": 13656829693159,
+        "plannerFee": "395096253033314598",
+        "poolBalance": 13908069279022,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "treasuryFee": 895658700,
-        "tvl": 12440034628346
+        "treasuryFee": 4175028204,
+        "tvl": 17252782342453
       }
     }
   ],

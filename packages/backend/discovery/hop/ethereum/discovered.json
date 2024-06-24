@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531595,
   "configHash": "0xb65597dc170a417db4f9924962294d8b248d20068901b7ecf5ea3307ec89d78d",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Hop Multisig",

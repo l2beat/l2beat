@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927688,
   "configHash": "0x0876316962c6441bc5e24151d6475ac4c9a4b8ec32007e06d20482c92948e77e",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

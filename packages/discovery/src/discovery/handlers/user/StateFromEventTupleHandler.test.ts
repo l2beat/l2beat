@@ -3,15 +3,13 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { StateFromEventTupleHandler } from './StateFromEventTupleHandler'
 
 const EVENT =
   'event TupleEvent(tuple(uint32 eid, tuple(uint64 foo, uint8 bar, uint8 baz, uint8 qux) config)[] params)'
 
 describe(StateFromEventTupleHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('constructor', () => {
     it('finds the specified event by name', () => {
       const handler = new StateFromEventTupleHandler(
@@ -49,12 +47,10 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('no logs', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        async getLogs(providedAddress, topics, fromBlock, toBlock) {
+      const provider = mockObject<IProvider>({
+        async getLogs(providedAddress, topics) {
           expect(providedAddress).toEqual(address)
           expect(topics).toEqual([abi.getEventTopic('TupleEvent')])
-          expect(fromBlock).toEqual(0)
-          expect(toBlock).toEqual(BLOCK_NUMBER)
           return []
         },
       })
@@ -69,7 +65,7 @@ describe(StateFromEventTupleHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       expect(value).toEqual({
         field: 'someName',
@@ -80,7 +76,7 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('many logs as array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             TupleEvent(1, {
@@ -122,7 +118,7 @@ describe(StateFromEventTupleHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       expect(value).toEqual({
         field: 'someName',
@@ -133,7 +129,7 @@ describe(StateFromEventTupleHandler.name, () => {
 
     it('many logs as array with param expansion', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
         async getLogs() {
           return [
             TupleEvent(1, {
@@ -169,7 +165,7 @@ describe(StateFromEventTupleHandler.name, () => {
         [],
         DiscoveryLogger.SILENT,
       )
-      const value = await handler.execute(provider, address, BLOCK_NUMBER)
+      const value = await handler.execute(provider, address)
 
       expect(value).toEqual({
         field: 'someName',

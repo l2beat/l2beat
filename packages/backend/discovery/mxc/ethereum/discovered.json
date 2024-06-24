@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032128,
   "configHash": "0x3459f654cea5dcf018eac5553ee358c562d05a1e77feb12445ea837ef972b230",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "MXCL1Bridge",

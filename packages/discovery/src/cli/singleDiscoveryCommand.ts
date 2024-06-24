@@ -1,21 +1,19 @@
 import { execSync } from 'child_process'
 import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
-import { providers } from 'ethers'
 import { rimraf } from 'rimraf'
 
-import { DiscoveryCliConfig } from '../config/types'
+import { DiscoveryChainConfig, DiscoveryCliConfig } from '../config/types'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
-import { getBlockNumberTwoProviders } from '../discovery/provider/DiscoveryProvider'
-import { discover as discovery } from '../discovery/runDiscovery'
-import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
+import { discover } from '../discovery/runDiscovery'
 import { HttpClient } from '../utils/HttpClient'
 
 export async function singleDiscoveryCommand(
   { singleDiscovery }: DiscoveryCliConfig,
+  chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
   if (!singleDiscovery) {
@@ -31,48 +29,28 @@ export async function singleDiscoveryCommand(
     },
     configReader,
   )
-
   const http = new HttpClient()
-  const provider = new providers.StaticJsonRpcProvider(
-    singleDiscovery.chain.rpcUrl,
-  )
-  const eventProvider =
-    singleDiscovery.chain.eventRpcUrl === undefined
-      ? provider
-      : new providers.StaticJsonRpcProvider(singleDiscovery.chain.eventRpcUrl)
-  const etherscanClient = EtherscanLikeClient.createForDiscovery(
-    http,
-    singleDiscovery.chain.etherscanUrl,
-    singleDiscovery.chain.etherscanApiKey,
-    singleDiscovery.chain.etherscanUnsupported,
-  )
-  const blockNumber = await getBlockNumberTwoProviders(provider, eventProvider)
 
   logger = logger.for('SingleDiscovery')
   logger.info('Starting')
 
-  const results = await discovery(
-    provider,
-    eventProvider,
-    etherscanClient,
-    singleDiscovery.chain.multicall,
+  const { result, blockNumber } = await discover(
+    chainConfigs,
     projectConfig,
     DiscoveryLogger.CLI,
-    blockNumber,
-    singleDiscovery.chain.rpcGetLogsMaxRange,
+    undefined,
+    http,
   )
 
   const rootFolder = `./cache/single-discovery`
   await rimraf(rootFolder)
 
   await saveDiscoveryResult(
-    results,
+    result,
     projectConfig,
     blockNumber,
     DiscoveryLogger.CLI,
-    {
-      rootFolder,
-    },
+    { rootFolder },
   )
 
   logger.info(

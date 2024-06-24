@@ -21,9 +21,10 @@
         "type": "call",
         "args": [],
         "method": "getOffRamps"
-      }
+      },
+      "returnType": "(tuple(ChainIdMap sourceChainSelector, address offRamp)[])"
     }
   },
   "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative"]
+  "ignoreRelatives": ["getWrappedNative", "owner"]
 }

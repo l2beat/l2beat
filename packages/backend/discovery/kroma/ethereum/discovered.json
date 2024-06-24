@@ -1,9 +1,9 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 19976276,
+  "blockNumber": 20139536,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 5,
+  "version": 7,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -25,10 +25,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11556000,
-        "latestOutputIndex": 6420,
-        "nextBlockNumber": 11557800,
-        "nextOutputIndex": 6421,
+        "latestBlockNumber": 12540600,
+        "latestOutputIndex": 6967,
+        "nextBlockNumber": 12542400,
+        "nextOutputIndex": 6968,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -101,7 +101,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 19976270
+          "prevBlockNum": 20139350
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -193,7 +193,7 @@
       "sinceTimestamp": 1693880591,
       "values": {
         "MESSAGE_VERSION": 0,
-        "messageNonce": 2860,
+        "messageNonce": 3103,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -242,13 +242,13 @@
       "address": "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x7E79726560B140fd6e089547bD049509F5423BFf",
+        "implementation": "0x4cd05aB629055a449617a28E3466660403eA7126",
         "admin": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
       },
-      "implementations": ["0x7E79726560B140fd6e089547bD049509F5423BFf"],
+      "implementations": ["0x4cd05aB629055a449617a28E3466660403eA7126"],
       "sinceTimestamp": 1693287719,
       "values": {
-        "version": "0.1.4"
+        "version": "0.1.5"
       }
     },
     {
@@ -396,12 +396,12 @@
             "defaultFeeAmount": 2000000000000000
           },
           "spSnap": {
-            "evalValue": "1121056277580669528788"
+            "evalValue": "1178268484331681958330"
           },
           "assets": ["0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"],
           "snaps": [
             {
-              "evalValue": "1121056277580669528788"
+              "evalValue": "1178268484331681958330"
             }
           ]
         },
@@ -458,7 +458,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 19976276,
+        "clock": 20139536,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -513,7 +513,7 @@
       "implementations": ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 19976276,
+        "clock": 20139536,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -525,11 +525,19 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getApproved": ["0x0000000000000000000000000000000000000000"],
-        "locked": [true],
+        "getApproved": [
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000"
+        ],
+        "locked": [true, true, true],
         "name": "KromaSecurityCouncil",
         "owner": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
-        "ownerOf": ["0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"],
+        "ownerOf": [
+          "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+          "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
+          "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+        ],
         "paused": false,
         "symbol": "KSC",
         "tokenOwners": [
@@ -545,7 +553,11 @@
           "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
         ],
         "tokens": [0, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        "tokenURI": ["https://nft.kroma.network/sc/1.png"],
+        "tokenURI": [
+          "https://nft.kroma.network/sc/1.png",
+          "https://nft.kroma.network/sc/2.png",
+          "https://nft.kroma.network/sc/3.png"
+        ],
         "totalSupply": 10,
         "version": "1.0.1"
       },
@@ -590,7 +602,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "symbol": "spETH",
-        "totalSupply": "1078444498852167076944"
+        "totalSupply": "1131693473051353004943"
       },
       "derivedName": "SPETH"
     },
@@ -618,7 +630,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0xcfBA39c653cae1C2d8271Ca17752a557335eba3B",
+        "nextValidator": "0x7c361821b30F020F6bdc9e41529ffeeA60d699c8",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -626,7 +638,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 358,
+        "validatorCount": 362,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
       },
@@ -647,12 +659,12 @@
     "0x61e0D34b5206Fa8005EC1De8000df9B9dDee23Db",
     "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
     "0x7B3225ADc5D908668FaA050246680CBE4e75A93f",
+    "0x7c361821b30F020F6bdc9e41529ffeeA60d699c8",
     "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
     "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e",
     "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
     "0xbDeE962137373A755a71C716E01B9946B1a27686",
-    "0xcfBA39c653cae1C2d8271Ca17752a557335eba3B",
     "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
     "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
     "0xfF00000000000000000000000000000000000255"
@@ -1000,6 +1012,11 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x4cd05aB629055a449617a28E3466660403eA7126": [
+      "constructor(uint256 _hashScalar, uint256 _m56Px, uint256 _m56Py)",
+      "function verify(uint256[] proof, uint256[] target_circuit_final_pair, bytes32 publicInputHash) view returns (bool)",
+      "function version() view returns (string)"
+    ],
     "0x5d55AEC0a39c660f369F147c4133cc099f095508": [
       "constructor()",
       "error AccessControlBadConfirmation()",
@@ -1229,11 +1246,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x7E79726560B140fd6e089547bD049509F5423BFf": [
-      "constructor(uint256 _hashScalar, uint256 _m56Px, uint256 _m56Py)",
-      "function verify(uint256[] proof, uint256[] target_circuit_final_pair, bytes32 publicInputHash) view returns (bool)",
-      "function version() view returns (string)"
     ],
     "0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5": [
       "constructor(address proxyAdminLogic, address _logic, bytes _data) payable",

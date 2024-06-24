@@ -98,7 +98,7 @@ export const arbitrum: Layer2 = {
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
-      apps: [],
+      apps: ['https://bridge.arbitrum.io'],
       documentation: ['https://developer.arbitrum.io/'],
       explorers: [
         'https://arbiscan.io',
@@ -175,6 +175,7 @@ export const arbitrum: Layer2 = {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
         address: VALUES.ARBITRUM.OLD_BRIDGE,
+        chain: 'ethereum',
         sinceTimestamp: new UnixTime(1622243344),
         tokens: ['ETH'],
         isHistorical: true,

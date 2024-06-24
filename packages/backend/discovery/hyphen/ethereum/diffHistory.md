@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x8f4253a3f07ec9432b5bac07be8f3384be8c3916
+Generated with discovered.json: 0x71e79c634b6e30c47d753eb6cb1c26ea0384829e
+
+# Diff at Fri, 21 Jun 2024 07:06:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba6434de248c46d9e6b140264866a3072082af4 block: 19062459
+- current block number: 20138492
+
+## Description
+
+Fee ignored.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19062459 (main branch discovery), not current.
+
+```diff
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9) {
+    +++ description: None
+      values.getFeeAccumulatedOnNft:
+-        [635333863248404,230,0,249]
+    }
+```
+
+Generated with discovered.json: 0x1cdd398d02c759d7e020b1e98c34f8872de8e3eb
 
 # Diff at Mon, 22 Jan 2024 13:06:40 GMT:
 

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531527,
   "configHash": "0xda2ff96fd6b62e3e863cfa2a09f32c1024251fbb46b4a150e1db5ed44869d008",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DeBridgeGate",

@@ -4,8 +4,8 @@ import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 
 export type StarkWareNamedStorageHandlerDefinition = z.infer<
@@ -18,7 +18,7 @@ export const StarkWareNamedStorageHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class StarkWareNamedStorageHandler implements ClassicHandler {
+export class StarkWareNamedStorageHandler implements Handler {
   readonly dependencies = []
 
   constructor(
@@ -28,9 +28,8 @@ export class StarkWareNamedStorageHandler implements ClassicHandler {
   ) {}
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Reading named storage at ',
@@ -41,7 +40,7 @@ export class StarkWareNamedStorageHandler implements ClassicHandler {
       const slot = Bytes.fromHex(
         utils.solidityKeccak256(['string'], [this.definition.tag]),
       )
-      storage = await provider.getStorage(address, slot, blockNumber)
+      storage = await provider.getStorage(address, slot)
     } catch (e) {
       return { field: this.field, error: getErrorMessage(e) }
     }

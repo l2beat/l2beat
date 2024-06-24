@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x1ec97603db98dffdb993ea79f846aa206fad37e514741e0ee5d3f1d9bbfae717",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Erc20Vault",
@@ -35,7 +35,7 @@
         "getMaintainer": "0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
         "getVersion": "1.0.4+a69c763",
         "isChildChainActivated": true,
-        "isDeposit": [],
+        "isDeposit": [true],
         "minExitPeriod": 604800,
         "nextChildBlock": 5282000,
         "nextDeposit": 1,

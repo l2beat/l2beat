@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { Reference, getReferencedName, resolveReference } from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -25,7 +25,7 @@ export const ArrayHandlerDefinition = z.strictObject({
 
 const DEFAULT_MAX_LENGTH = 100
 
-export class ArrayHandler implements ClassicHandler {
+export class ArrayHandler implements Handler {
   readonly dependencies: string[] = []
   readonly fragment: utils.FunctionFragment
 
@@ -55,9 +55,8 @@ export class ArrayHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
@@ -73,7 +72,6 @@ export class ArrayHandler implements ClassicHandler {
       provider,
       address,
       this.fragment,
-      blockNumber,
       this.definition.pickFields,
     )
     if (resolved.indices) {
@@ -131,21 +129,13 @@ export class ArrayHandler implements ClassicHandler {
   }
 }
 function createCallIndex(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
   fragment: utils.FunctionFragment,
-  blockNumber: number,
   pickFields?: string[],
 ) {
   return async (index: number) => {
-    return await callMethod(
-      provider,
-      address,
-      fragment,
-      [index],
-      blockNumber,
-      pickFields,
-    )
+    return await callMethod(provider, address, fragment, [index], pickFields)
   }
 }
 

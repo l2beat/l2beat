@@ -2,24 +2,20 @@ import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { DynamicArrayHandler } from './DynamicArrayHandler'
 
 describe(DynamicArrayHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe('integration', () => {
     it('can return non-empty address array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
+      const provider = mockObject<IProvider>({
+        getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
+          expect(passedAddress).toEqual(address)
+          expect(slot).toEqual(85n)
+          return 2n
+        }),
         getStorage: mockFn()
-          .executesOnce((passedAddress, slot) => {
-            expect(passedAddress).toEqual(address)
-            expect(slot).toEqual(85n)
-            return Bytes.fromHex(
-              '0x0000000000000000000000000000000000000000000000000000000000000002',
-            )
-          })
           .executesOnce((passedAddress, slot) => {
             expect(passedAddress).toEqual(address)
             expect(slot).toEqual(
@@ -54,7 +50,7 @@ describe(DynamicArrayHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'someName',
         value: [
@@ -67,13 +63,11 @@ describe(DynamicArrayHandler.name, () => {
 
     it('does nothing on empty address array', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        getStorage: mockFn().executesOnce((passedAddress, slot) => {
+      const provider = mockObject<IProvider>({
+        getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(85n)
-          return Bytes.fromHex(
-            '0x0000000000000000000000000000000000000000000000000000000000000000',
-          )
+          return 0n
         }),
       })
 
@@ -87,7 +81,7 @@ describe(DynamicArrayHandler.name, () => {
       )
       expect(handler.field).toEqual('someName')
 
-      const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+      const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'someName',
         value: [],
@@ -134,13 +128,13 @@ describe(DynamicArrayHandler.name, () => {
       DiscoveryLogger.SILENT,
     )
 
-    const provider = mockObject<DiscoveryProvider>({
-      async getStorage() {
+    const provider = mockObject<IProvider>({
+      async getStorageAsBigint() {
         throw new Error('foo bar')
       },
     })
     const address = EthereumAddress.random()
-    const result = await handler.execute(provider, address, BLOCK_NUMBER, {})
+    const result = await handler.execute(provider, address, {})
     expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
