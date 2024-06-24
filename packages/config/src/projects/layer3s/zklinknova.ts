@@ -47,7 +47,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Optimism',
       },
     },
     {
@@ -58,7 +58,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Optimism',
       },
     },
     {
@@ -83,7 +83,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Ethereum',
       },
     },
     {
@@ -94,7 +94,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Ethereum',
       },
     },
     {
@@ -105,7 +105,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Mantapacific',
       },
     },
     {
@@ -116,7 +116,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Mantapacific',
       },
     },
     // {
@@ -134,7 +134,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Mantle',
       },
     },
     {
@@ -145,7 +145,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from ZKsync Era',
       },
     },
     {
@@ -156,7 +156,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from ZKsync Era',
       },
     },
     {
@@ -167,7 +167,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Arbitrum',
       },
     },
     {
@@ -178,7 +178,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Arbitrum',
       },
     },
     {
@@ -189,7 +189,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Blast',
       },
     },
     {
@@ -200,7 +200,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Blast',
       },
     },
     {
@@ -211,7 +211,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: ['ETH'],
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Base',
       },
     },
     {
@@ -222,7 +222,7 @@ export const zklinknova: Layer3 = underReviewL3({
       tokens: '*',
       source: 'external',
       bridge: {
-        name: 'zkLink Nova Bridge',
+        name: 'zkLink Nova Bridge from Base',
       },
     },
   ],
