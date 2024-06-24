@@ -21,6 +21,7 @@ export const metadata = getDefaultMetadata({
 })
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
 export default async function Page() {
   const tvl = await getTvl()
@@ -29,6 +30,7 @@ export default async function Page() {
   return (
     <div>
       <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
+      <HorizontalSeparator className="my-4 md:my-6" />
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
