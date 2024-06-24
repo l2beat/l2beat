@@ -112,7 +112,7 @@ export const mantle: Layer2 = opStackL2({
     }),
     discovery.getContractDetails('BLSRegistry', {
       description:
-        'This contract strores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
+        'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
     }),
     discovery.getContractDetails('InvestmentManager', {
       description:
