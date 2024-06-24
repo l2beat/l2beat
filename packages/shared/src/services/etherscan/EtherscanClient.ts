@@ -25,14 +25,14 @@ export class EtherscanClient {
     callsPerMinute: 150,
   })
   private readonly timeoutMs = 20_000
-  private readonly minimumTimestampInterval
+  private readonly timestampIndexingInterval
 
   constructor(
     private readonly httpClient: HttpClient,
     private readonly options: EtherscanOptions | BlockscoutOptions,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.minimumTimestampInterval = options.type === 'Etherscan' ? 10 : 1
+    this.timestampIndexingInterval = options.type === 'Etherscan' ? 10 : 1
   }
 
   static create(
@@ -43,7 +43,7 @@ export class EtherscanClient {
   }
 
   // There is a case when there is not enough activity on a given chain
-  // so that blocks come in a greater than minimumTimestampInterval intervals
+  // so that blocks come in a greater than timestampIndexingInterval intervals
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
@@ -68,7 +68,7 @@ export class EtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-this.minimumTimestampInterval, 'minutes')
+        current = current.add(-this.timestampIndexingInterval, 'minutes')
       }
       counter++
     }
