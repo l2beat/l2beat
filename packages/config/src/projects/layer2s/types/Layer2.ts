@@ -41,7 +41,7 @@ export interface Layer2 {
   config: Layer2Config
   /** Technical chain configuration */
   chainConfig?: ChainConfig
-  /** Data availability of scaling project project */
+  /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
