@@ -84,7 +84,15 @@
       "ignoreRelatives": ["esXaiAddress", "xaiAddress"]
     },
     "NodeLicenseRegistry": {
-      "ignoreMethods": ["getPricingTier", "tokenByIndex"],
+      "ignoreMethods": [
+        "getPricingTier",
+        "tokenByIndex",
+        "getApproved",
+        "getAverageCost",
+        "getMintTimestamp",
+        "ownerOf",
+        "tokenURI"
+      ],
       "ignoreInWatchMode": ["totalSupply"]
     },
     "StakingPool": {

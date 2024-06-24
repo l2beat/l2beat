@@ -90,6 +90,7 @@ export const loopring: Layer2 = {
         sinceTimestamp: new UnixTime(1575539271),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
+        chain: 'ethereum',
       },
       // WeDEX: Beta 2
       {
@@ -97,11 +98,13 @@ export const loopring: Layer2 = {
         sinceTimestamp: new UnixTime(1578284114),
         tokens: ['LRC', 'USDT'],
         isHistorical: true,
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x674bdf20A0F284D710BC40872100128e2d66Bd3f'),
         sinceTimestamp: new UnixTime(1603949642),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
     transactionApi: {

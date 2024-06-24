@@ -1,13 +1,33 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getNops", "getAllowList", "getStaticConfig"],
+  "ignoreMethods": [
+    "getNops",
+    "getAllowList",
+    "getStaticConfig",
+    "lastUpdated",
+    "currentRateLimiterState"
+  ],
   "ignoreRelatives": [
     "getSupportedTokens",
     "tokenAddresses",
     "linkToken",
-    "getAllowList"
+    "getAllowList",
+    "getNopFeesJuels",
+    "owner"
+  ],
+  "ignoreInWatchMode": [
+    "getExpectedNextSequenceNumber",
+    "getNopFeesJuels",
+    "linkAvailableForPayment",
+    "tokenAddresses",
+    "tokenPools"
   ],
   "fields": {
+    "getTokenLimitAdmin": {
+      "target": {
+        "template": "transporter/ManyChainMultiSig"
+      }
+    },
     "tokenPools": {
       "target": {
         "template": "transporter/TokenPool"
@@ -42,7 +62,8 @@
         "args": [],
         "method": "getStaticConfig",
         "pickFields": ["chainSelector", "destChainSelector"]
-      }
+      },
+      "returnType": "(ChainIdMap[])"
     },
     "tokenAddresses": {
       "handler": {

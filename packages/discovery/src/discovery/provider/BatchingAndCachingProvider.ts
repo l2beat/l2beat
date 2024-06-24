@@ -7,10 +7,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, providers } from 'ethers'
+import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { CacheEntry, ReorgAwareCache } from './ReorgAwareCache'
+import { ProviderStats, getZeroStats } from './Stats'
 import { MulticallClient } from './multicall/MulticallClient'
 
 interface ScheduledCall {
@@ -41,7 +43,10 @@ interface LogExecutionItem {
   }[]
 }
 
+const REVERT_MARKER_VALUE = '{execution reverted}'
+
 export class BatchingAndCachingProvider {
+  public stats: ProviderStats = getZeroStats()
   private calls: ScheduledCall[] = []
   private callsTimeout: ReturnType<typeof setTimeout> | undefined
 
@@ -98,11 +103,24 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
-      return Bytes.fromHex(cached)
+      this.stats.callCount++
+      if (cached === REVERT_MARKER_VALUE) {
+        throw new Error('Execution reverted')
+      } else {
+        return Bytes.fromHex(cached)
+      }
     }
-    const result = await this.provider.call(address, data, blockNumber)
-    entry.write(result.toString())
-    return result
+
+    try {
+      const result = await this.provider.call(address, data, blockNumber)
+      entry.write(result.toString())
+      return result
+    } catch (e) {
+      if (isRevert(e)) {
+        entry.write(REVERT_MARKER_VALUE)
+      }
+      throw e
+    }
   }
 
   private async flushCalls() {
@@ -131,7 +149,12 @@ export class BatchingAndCachingProvider {
         calls.push(checked)
         toExecute.set(checked.call.blockNumber, calls)
       } else {
-        checked.call.resolve(Bytes.fromHex(cached))
+        this.stats.callCount++
+        if (cached === REVERT_MARKER_VALUE) {
+          checked.call.reject(new Error('Execution reverted'))
+        } else {
+          checked.call.resolve(Bytes.fromHex(cached))
+        }
       }
     }
 
@@ -162,6 +185,7 @@ export class BatchingAndCachingProvider {
           item.entry.write(result.data.toString())
         } else {
           item.call.reject(new Error('Multicall item reverted'))
+          item.entry.write(REVERT_MARKER_VALUE)
         }
       }
     } catch (e) {
@@ -183,6 +207,7 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getStorageCount++
       return Bytes.fromHex(cached)
     }
     const storage = await this.provider.getStorage(address, slot, blockNumber)
@@ -209,6 +234,7 @@ export class BatchingAndCachingProvider {
       )
       const cached = entry.read()
       if (cached !== undefined) {
+        this.stats.getLogsCount++
         return parseCacheEntry(cached)
       }
       const logs = await this.provider.getLogs(
@@ -268,6 +294,7 @@ export class BatchingAndCachingProvider {
           missingTopics.push(checked.logRequest.topic0[i]!)
           return []
         }
+        this.stats.getLogsCount++
         return parseCacheEntry(cached) as providers.Log[]
       })
 
@@ -318,19 +345,12 @@ export class BatchingAndCachingProvider {
 
     let logs: providers.Log[] = []
     try {
-      // TODO: how do we do batching?
-      const logLogs = await Promise.all(
-        topics.map(
-          async (topic) =>
-            await this.provider.getLogs(
-              first.address,
-              [topic],
-              0,
-              first.toBlock,
-            ),
-        ),
+      logs = await this.provider.getLogs(
+        first.address,
+        [topics],
+        0,
+        first.toBlock,
       )
-      logs = logLogs.flat()
     } catch (e) {
       for (const item of items) {
         for (const nested of item.items) {
@@ -351,7 +371,7 @@ export class BatchingAndCachingProvider {
       byTopic.set(topic, topicLogs)
     }
 
-    for (const topic of byTopic.keys()) {
+    for (const topic of topics) {
       const topicLogs = byTopic.get(topic) ?? []
 
       // We bypass the entries mechanism to avoid repeated writes
@@ -386,6 +406,7 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getTransactionCount++
       // This recovers BigNumber instances from the cache
       // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
       return parseCacheEntry(cached)
@@ -409,6 +430,7 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getDebugTraceCount++
       return DebugTransactionCallResponse.parse(parseCacheEntry(cached))
     }
     const trace = await this.provider.getDebugTrace(transactionHash)
@@ -427,6 +449,7 @@ export class BatchingAndCachingProvider {
     )
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getBytecodeCount++
       return Bytes.fromHex(cached)
     }
     const bytecode = await this.provider.getBytecode(address, blockNumber)
@@ -438,6 +461,7 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry('getSource', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getSourceCount++
       return parseCacheEntry(cached)
     }
     const source = await this.provider.getSource(address)
@@ -451,6 +475,7 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry('getDeployment', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
+      this.stats.getDeploymentCount++
       const parsed = parseCacheEntry(cached)
       parsed.timestamp = new UnixTime(parsed.timestamp)
       return parsed

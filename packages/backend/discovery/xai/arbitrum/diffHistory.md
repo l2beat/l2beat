@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2cbac527446a8c031849cc9799ceb178e7dc99a6
+
+# Diff at Fri, 21 Jun 2024 07:41:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba6434de248c46d9e6b140264866a3072082af4 block: 220738640
+- current block number: 224114463
+
+## Description
+
+Ignore token/nft related values from NodeLicenseRegistry.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 220738640 (main branch discovery), not current.
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: None
+      values.getApproved:
+-        []
+      values.getAverageCost:
+-        []
+      values.getMintTimestamp:
+-        []
+      values.ownerOf:
+-        []
+      values.tokenURI:
+-        []
+    }
+```
+
 Generated with discovered.json: 0x385764a3dd28cad9e8c9e780ace3e871e4504fcb
 
 # Diff at Tue, 11 Jun 2024 13:13:52 GMT:

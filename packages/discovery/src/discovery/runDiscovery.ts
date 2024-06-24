@@ -13,6 +13,7 @@ import { diffDiscovery } from './output/diffDiscovery'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
 import { SQLiteCache } from './provider/SQLiteCache'
+import { AllProviderStats, printProviderStats } from './provider/Stats'
 
 export async function runDiscovery(
   http: HttpClient,
@@ -33,7 +34,7 @@ export async function runDiscovery(
       : undefined)
 
   const logger = DiscoveryLogger.CLI
-  const { result, blockNumber } = await discover(
+  const { result, blockNumber, providerStats } = await discover(
     chainConfigs,
     projectConfig,
     logger,
@@ -45,13 +46,20 @@ export async function runDiscovery(
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
+    saveSources: config.saveSources,
   })
 
-  const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
-  const backrefConfigs = allConfigs.filter((c) =>
-    c.sharedModules.includes(config.project),
-  )
-  printSharedModuleInfo(backrefConfigs)
+  if (config.project.startsWith('shared-')) {
+    const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+    const backrefConfigs = allConfigs.filter((c) =>
+      c.sharedModules.includes(config.project),
+    )
+    printSharedModuleInfo(backrefConfigs)
+  }
+
+  if (config.printStats) {
+    printProviderStats(providerStats)
+  }
 }
 
 export async function dryRunDiscovery(
@@ -115,7 +123,11 @@ export async function discover(
   logger: DiscoveryLogger,
   blockNumber: number | undefined,
   http: HttpClient,
-): Promise<{ result: Analysis[]; blockNumber: number }> {
+): Promise<{
+  result: Analysis[]
+  blockNumber: number
+  providerStats: AllProviderStats
+}> {
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
 
@@ -131,5 +143,6 @@ export async function discover(
   return {
     result: await discoveryEngine.discover(provider, config),
     blockNumber,
+    providerStats: allProviders.getStats(config.chain),
   }
 }

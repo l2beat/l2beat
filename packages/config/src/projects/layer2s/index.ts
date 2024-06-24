@@ -29,6 +29,7 @@ import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
+import { fhenix } from './fhenix'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -76,6 +77,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { payy } from './payy'
 import { playchain } from './playchain'
+import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
@@ -154,6 +156,7 @@ export const layer2s: Layer2[] = [
   edgeless,
   ethernity,
   everclear,
+  fhenix,
   form,
   frame,
   fraxtal,
@@ -200,6 +203,7 @@ export const layer2s: Layer2[] = [
   parallel,
   payy,
   playchain,
+  plumenetwork,
   polygonmiden,
   polygonzkevm,
   polygonpos2,

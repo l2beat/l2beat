@@ -1,7 +1,6 @@
 import { existsSync, mkdirSync } from 'fs'
 import sqlite3 from 'sqlite3' // SQLite Client
-
-import { DiscoveryCache } from './DiscoveryCache'
+import { DiscoveryCache } from './ReorgAwareCache'
 
 const DEFAULT_DATABASE_DIR = 'cache'
 const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'

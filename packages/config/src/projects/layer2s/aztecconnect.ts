@@ -48,6 +48,7 @@ export const aztecconnect: Layer2 = {
         address: EthereumAddress('0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455'),
         sinceTimestamp: new UnixTime(1654587783),
         tokens: ['ETH', 'DAI', 'wstETH'],
+        chain: 'ethereum',
       },
     ],
     trackedTxs: [

@@ -4,8 +4,11 @@
     "getTransmitters",
     "getSupportedTokens",
     "getDestinationTokens",
-    "getAllowList"
+    "getAllowList",
+    "currentRateLimiterState",
+    "lastUpdated"
   ],
+  "ignoreRelatives": ["owner"],
   "fields": {
     "commitStore": {
       "target": {
@@ -17,6 +20,9 @@
         "args": [],
         "pickFields": ["commitStore"]
       }
+    },
+    "getStaticConfig": {
+      "returnType": "(tuple(address commitStore, ChainIdMap chainSelector, ChainIdMap sourceChainSelector, address onRamp, address prevOffRamp, address armProxy))"
     }
   }
 }

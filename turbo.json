@@ -1,53 +1,24 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "tsconfig.json"
-  ],
+  "globalDependencies": ["tsconfig.json"],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build",
-        "db:generate"
-      ],
-      "outputs": [
-        "build/**",
-        ".next/**",
-        "!.next/cache/**",
-        "dist/**"
-      ]
+      "dependsOn": ["^build", "db:generate"],
+      "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
     },
     "db:generate": {
-      "outputs": [
-        "src/kysely/generated/**"
-      ]
+      "outputs": ["src/kysely/generated/**"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^build",
-        "db:generate"
-      ],
-      "inputs": [
-        "**/*.ts",
-        "**/*.tsx"
-      ]
+      "dependsOn": ["^build", "db:generate"],
+      "inputs": ["**/*.ts", "**/*.tsx"]
     },
     "test": {
-      "dependsOn": [
-        "^build",
-        "db:generate"
-      ],
-      "inputs": [
-        "**/*.ts",
-        "**/*.test.ts",
-        "**/*.json",
-        "**/*.jsonc"
-      ]
+      "dependsOn": ["^build", "db:generate"],
+      "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
     },
     "lint": {
-      "dependsOn": [
-        "^build",
-        "db:generate"
-      ]
+      "dependsOn": ["^build", "db:generate"]
     },
     "format": {},
     "clean": {

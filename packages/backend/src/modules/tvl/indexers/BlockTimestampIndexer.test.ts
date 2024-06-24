@@ -5,7 +5,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
-import { BlockTimestampService } from '../services/BlockTimestampService'
+import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
 
@@ -23,7 +23,7 @@ describe(BlockTimestampIndexer.name, () => {
         getTimestampToSync: mockFn().returnsOnce(timestampToSync),
       })
 
-      const blockTimestampService = mockObject<BlockTimestampService>({
+      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
         getBlockNumberAtOrBefore: async () => 666,
       })
       const blockTimestampRepository = mockObject<BlockTimestampRepository>({
@@ -34,7 +34,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [],
-        blockTimestampService,
+        blockTimestampProvider,
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain,
@@ -47,7 +47,7 @@ describe(BlockTimestampIndexer.name, () => {
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(
-        blockTimestampService.getBlockNumberAtOrBefore,
+        blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync)
 
       expect(blockTimestampRepository.add).toHaveBeenOnlyCalledWith({
@@ -70,7 +70,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [],
-        blockTimestampService: mockObject<BlockTimestampService>({}),
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
         chain: 'chain',
@@ -95,7 +95,7 @@ describe(BlockTimestampIndexer.name, () => {
       const indexer = new BlockTimestampIndexer({
         logger: Logger.SILENT,
         parents: [],
-        blockTimestampService: mockObject<BlockTimestampService>({}),
+        blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
         indexerService: mockObject<IndexerService>({}),
         blockTimestampRepository,
         chain: 'ethereum',

@@ -20,11 +20,13 @@ export const harmony: Bridge = {
         address: EthereumAddress('0xF9Fb1c508Ff49F78b60d3A96dea99Fa5d7F3A8A6'),
         sinceTimestamp: new UnixTime(1610602801),
         tokens: ['ETH'],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xfD53b1B4AF84D59B20bF2C20CA89a6BeeAa2c628'),
         sinceTimestamp: new UnixTime(1602456041),
         tokens: ['BUSD'],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2dCCDB493827E15a5dC8f8b72147E6c4A5620857'),
@@ -43,6 +45,7 @@ export const harmony: Bridge = {
           'WETH',
           'MATIC',
         ],
+        chain: 'ethereum',
       },
     ],
   },

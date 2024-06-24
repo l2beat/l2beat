@@ -58,6 +58,7 @@ export const zkswap: Layer2 = {
         address: EthereumAddress('0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad'),
         sinceTimestamp: new UnixTime(1613135194),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
   },

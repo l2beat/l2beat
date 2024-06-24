@@ -16,11 +16,10 @@ import { ContractsUpdated } from './ContractsUpdated'
 export interface ContractsSectionProps {
   id: ProjectSectionId
   chainName: string
-  nativeChainName: string
   title: string
   sectionOrder: number
   contracts: TechnologyContract[]
-  nativeContracts: TechnologyContract[]
+  nativeContracts: Record<string, TechnologyContract[]>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
@@ -45,10 +44,16 @@ export function ContractsSection(props: ContractsSectionProps) {
     props.contracts,
     (c) => c.implementationHasChanged,
   )
-  const [changedNativeContracts, unchangedNativeContracts] = partition(
-    props.nativeContracts,
-    (c) => c.implementationHasChanged,
+
+  const paritionedNativeContracts = Object.fromEntries(
+    Object.entries(props.nativeContracts).map(([chainName, contracts]) => {
+      return [
+        chainName,
+        partition(contracts, (c) => c.implementationHasChanged),
+      ]
+    }),
   )
+
   const [changedEscrows, unchangedEscrows] = partition(
     props.escrows,
     (c) => c.implementationHasChanged,
@@ -106,33 +111,42 @@ export function ContractsSection(props: ContractsSectionProps) {
           </div>
         </>
       )}
-      {props.nativeContracts.length > 0 && (
-        <>
-          <h3 className="font-bold">
-            The system consists of the following smart contracts on{' '}
-            {props.nativeChainName}:
-          </h3>
-          <div className="my-4">
-            {unchangedNativeContracts.map((contract, i) => (
-              <React.Fragment key={i}>
-                <ContractEntry
-                  contract={contract}
-                  verificationStatus={props.verificationStatus}
-                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="my-4"
-                />
-              </React.Fragment>
-            ))}
-            {changedNativeContracts.length > 0 && (
-              <ImplementationHasChangedContracts
-                contracts={changedNativeContracts}
-                manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                verificationStatus={props.verificationStatus}
-              />
-            )}
-          </div>
-        </>
-      )}
+      {Object.keys(paritionedNativeContracts).length > 0 &&
+        Object.entries(paritionedNativeContracts).map(
+          ([chainName, [changedContracts, unchangedContracts]]) => {
+            return (
+              <div key={chainName}>
+                <h3 className="font-bold">
+                  The system consists of the following smart contracts on{' '}
+                  {chainName}:
+                </h3>
+                <div className="my-4">
+                  {unchangedContracts.map((contract, i) => (
+                    <React.Fragment key={i}>
+                      <ContractEntry
+                        contract={contract}
+                        verificationStatus={props.verificationStatus}
+                        manuallyVerifiedContracts={
+                          props.manuallyVerifiedContracts
+                        }
+                        className="my-4"
+                      />
+                    </React.Fragment>
+                  ))}
+                  {changedContracts.length > 0 && (
+                    <ImplementationHasChangedContracts
+                      contracts={changedContracts}
+                      manuallyVerifiedContracts={
+                        props.manuallyVerifiedContracts
+                      }
+                      verificationStatus={props.verificationStatus}
+                    />
+                  )}
+                </div>
+              </div>
+            )
+          },
+        )}
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>

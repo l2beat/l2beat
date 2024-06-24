@@ -41,11 +41,13 @@ export const chainport: Bridge = {
         address: EthereumAddress('0xD2238E8c085E5059F8DFC52256530210bc7250F6'), // Vault 3
         sinceTimestamp: new UnixTime(1626181305),
         tokens: '*',
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x873089bC765a1C0AFAd48e34fCd305d17D81be87'), // Vault 5
         sinceTimestamp: new UnixTime(1636903885),
         tokens: '*',
+        chain: 'ethereum',
       },
       discovery.getEscrowDetails({
         address: EthereumAddress('0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a'), // Vault 6
@@ -55,11 +57,13 @@ export const chainport: Bridge = {
         address: EthereumAddress('0x894107B7b5051409f279E8300774B2f62Febe057'),
         tokens: '*',
         sinceTimestamp: new UnixTime(1626181305),
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xfE83475880d3592833249BAAacfEC5eD51E29D82'),
         tokens: '*',
         sinceTimestamp: new UnixTime(1626181305),
+        chain: 'ethereum',
       },
     ],
   },

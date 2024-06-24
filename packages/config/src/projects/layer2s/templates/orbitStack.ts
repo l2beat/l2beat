@@ -272,11 +272,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<number[]>(
-    'SequencerInbox',
-    'maxTimeVariation',
-  )
-  const selfSequencingDelay = maxTimeVariation[2]
+  const maxTimeVariation = templateVars.discovery.getContractValue<{
+    delayBlocks: number
+    futureBlocks: number
+    delaySeconds: number
+    futureSeconds: number
+  }>('SequencerInbox', 'maxTimeVariation')
+
+  const selfSequencingDelay = maxTimeVariation.delaySeconds
 
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
@@ -417,11 +420,14 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<number[]>(
-    'SequencerInbox',
-    'maxTimeVariation',
-  )
-  const selfSequencingDelay = maxTimeVariation[2]
+  const maxTimeVariation = templateVars.discovery.getContractValue<{
+    delayBlocks: number
+    futureBlocks: number
+    delaySeconds: number
+    futureSeconds: number
+  }>('SequencerInbox', 'maxTimeVariation')
+
+  const selfSequencingDelay = maxTimeVariation.delaySeconds
 
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
