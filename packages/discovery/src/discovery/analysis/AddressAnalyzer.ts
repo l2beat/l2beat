@@ -167,9 +167,12 @@ export class AddressAnalyzer {
       proxy?.implementations,
       overrides?.fields,
     )
+
+    const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
+
     const targetsMeta =
       overrides?.fields !== undefined
-        ? getTargetsMeta(address, results, overrides.fields)
+        ? getTargetsMeta(address, upgradeability, results, overrides.fields)
         : undefined
 
     return {
@@ -180,7 +183,7 @@ export class AddressAnalyzer {
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
-      upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+      upgradeability,
       implementations: proxy?.implementations ?? [],
       values: values ?? {},
       errors: { ...templateErrors, ...(errors ?? {}) },
