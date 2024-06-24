@@ -53,9 +53,10 @@ export function parseSocial(href: string): SocialDetails {
     return {
       platform: 'x',
       text:
-        '@' + link.startsWith('x.com')
+        '@' +
+        (link.startsWith('x.com')
           ? link.slice('x.com/'.length)
-          : link.slice('twitter.com/'.length),
+          : link.slice('twitter.com/'.length)),
     }
   } else if (link.startsWith('medium.com')) {
     return {
