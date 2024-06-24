@@ -30,11 +30,17 @@ export class AllProviders {
     private discoveryCache: DiscoveryCache,
   ) {
     for (const config of chainConfigs) {
-      const baseProvider = new providers.StaticJsonRpcProvider(config.rpcUrl)
+      const baseProvider = new providers.StaticJsonRpcProvider(
+        config.rpcUrl,
+        config.chainId,
+      )
       const eventProvider =
         config.eventRpcUrl === undefined
           ? baseProvider
-          : new providers.StaticJsonRpcProvider(config.eventRpcUrl)
+          : new providers.StaticJsonRpcProvider(
+              config.eventRpcUrl,
+              config.chainId,
+            )
       const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
         httpClient,
         config.etherscanUrl,

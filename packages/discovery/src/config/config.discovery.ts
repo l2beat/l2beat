@@ -62,6 +62,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
   const ENV_NAME = chainConfig.name.toUpperCase()
   return {
     name: chainConfig.name,
+    chainId: chainConfig.chainId,
     rpcUrl: env.string([
       `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
       `${ENV_NAME}_RPC_URL`,
