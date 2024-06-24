@@ -30,6 +30,7 @@ export function getChainDiscoveryConfig(
 
   return {
     name: chainConfig.name,
+    chainId: chainConfig.chainId,
     rpcUrl: env.string([
       `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
       `${ENV_NAME}_RPC_URL`,
