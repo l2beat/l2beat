@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 
 interface Dependencies {
-  readonly blockTimestampClient?: EtherscanClient | BlockscoutClient
+  readonly blockTimestampClient?: EtherscanClient
   readonly rpcClient: RpcClient
   logger: Logger
 }

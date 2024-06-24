@@ -1,53 +1,56 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
-  ChainId,
+  EthereumAddress,
   RateLimiter,
   UnixTime,
   stringAsInt,
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../HttpClient'
-import { EtherscanResponse } from './EtherscanResponse'
+import { ContractSourceResult, EtherscanResponse } from './EtherscanResponse'
 
-const MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 6
+interface EtherscanOptions {
+  type: 'Etherscan'
+  url: string
+  apiKey: string
+}
+
+interface BlockscoutOptions {
+  type: 'Blockscout'
+  url: string
+}
 
 export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
   private readonly timeoutMs = 20_000
+  private readonly maximumCallForBlockTimestamp
+  private readonly minimumTimestampInterval
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly url: string,
-    private readonly apiKey: string,
+    private readonly options: EtherscanOptions | BlockscoutOptions,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
+    this.minimumTimestampInterval = options.type === 'Etherscan' ? 10 : 1
+    this.maximumCallForBlockTimestamp = options.type === 'Etherscan' ? 3 : 30
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
-    options: {
-      url: string
-      apiKey: string
-      chainId: ChainId
-    },
+    options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new EtherscanClient(services.httpClient, options.url, options.apiKey)
+    return new EtherscanClient(services.httpClient, options)
   }
 
-  // Etherscan API is not stable enough to trust it to return "closest" block.
   // There is a case when there is not enough activity on a given chain
-  // so that blocks come in a greater than 10 minutes intervals,
-  // e.g block 0 @ 22:45 and block 1 @ 23:15
-  // if you query for 23:00 Etherscan API returns "No closes block found".
-  //
-  // To mitigate this, we need to go back in time by 10 minutes until we find a block
+  // so that blocks come in a greater than minimumTimestampInterval intervals
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     let current = new UnixTime(timestamp.toNumber())
 
     let counter = 1
-    while (counter <= MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP) {
+    while (counter <= this.maximumCallForBlockTimestamp) {
       try {
         const result = await this.call('block', 'getblocknobytime', {
           timestamp: current.toString(),
@@ -67,7 +70,7 @@ export class EtherscanClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-10, 'minutes')
+        current = current.add(-this.minimumTimestampInterval, 'minutes')
       }
       counter++
     }
@@ -76,9 +79,16 @@ export class EtherscanClient {
       cause: {
         current,
         timestamp,
-        calls: MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP,
+        calls: this.maximumCallForBlockTimestamp,
       },
     })
+  }
+
+  async getContractSource(address: EthereumAddress) {
+    const response = await this.call('contract', 'getsourcecode', {
+      address: address.toString(),
+    })
+    return ContractSourceResult.parse(response)[0]
   }
 
   async call(module: string, action: string, params: Record<string, string>) {
@@ -86,9 +96,12 @@ export class EtherscanClient {
       module,
       action,
       ...params,
-      apikey: this.apiKey,
     })
-    const url = `${this.url}?${query.toString()}`
+
+    if (this.options.type === 'Etherscan') {
+      query.append('apikey', this.options.apiKey)
+    }
+    const url = `${this.options.url}?${query.toString()}`
 
     const { httpResponse, error } = await this.httpClient
       .fetch(url, { timeout: this.timeoutMs })
