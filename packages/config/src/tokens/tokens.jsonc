@@ -1600,16 +1600,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "weETH",
-      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
-      }
-    },
-    {
       "symbol": "WINR",
       "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
       "source": "native",
