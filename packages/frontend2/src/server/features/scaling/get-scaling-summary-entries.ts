@@ -5,6 +5,7 @@ import {
   type StageConfig,
   type WarningWithSentiment,
   type Layer2,
+  type Layer2Provider,
 } from '@l2beat/config'
 import { getL2Risks } from '~/app/(new)/scaling/_utils/get-l2-risks'
 import { type RosetteValue } from '~/app/_components/rosette/types'
@@ -20,7 +21,7 @@ export interface ScalingSummaryLayer2sEntry {
   name: string
   shortName: string | undefined
   slug: string
-  category: ScalingProjectCategory
+  type: Type
   warning: string | undefined
   redWarning: string | undefined
   isVerified: boolean
@@ -32,6 +33,11 @@ export interface ScalingSummaryLayer2sEntry {
   stage: StageConfig
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
+}
+
+interface Type {
+  category: ScalingProjectCategory
+  provider: Layer2Provider | undefined
 }
 
 interface TvlData {
@@ -78,7 +84,10 @@ function getLayer2s(
         name: layer2.display.name,
         shortName: layer2.display.shortName,
         slug: layer2.display.slug,
-        category: layer2.display.category,
+        type: {
+          category: layer2.display.category,
+          provider: layer2.display.provider,
+        },
         warning: layer2.display.warning,
         redWarning: layer2.display.redWarning,
         isVerified: true,

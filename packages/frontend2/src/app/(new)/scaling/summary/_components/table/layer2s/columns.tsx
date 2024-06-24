@@ -33,23 +33,19 @@ export const columns = [
     meta: { cellClassName: '!pr-0' },
   }),
   columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
   columnHelper.accessor('risks', {
-    header: 'Risks',
     cell: (ctx) => <RosetteCell values={ctx.getValue()} />,
     enableSorting: false,
   }),
-  columnHelper.accessor('category', {
-    header: 'Category',
+  columnHelper.accessor('type', {
     cell: (ctx) => {
       const value = ctx.getValue()
-      return <TypeCell>{value}</TypeCell>
+      return <TypeCell provider={value.provider}>{value.category}</TypeCell>
     },
   }),
   columnHelper.accessor('stage', {
-    header: 'Stage',
     cell: (ctx) => <StageCell stageConfig={ctx.getValue()} />,
     sortingFn: sortStages,
   }),

@@ -1,7 +1,6 @@
 import React from 'react'
 import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import { PercentChange } from '~/app/_components/percent-change'
-import { Badge } from '~/app/_components/badge/badge'
 import {
   Tooltip,
   TooltipContent,
@@ -13,19 +12,11 @@ import { WarningBar } from '~/app/_components/warning-bar'
 import { formatNumber } from '~/utils/format-number'
 
 export interface TotalCellProps {
-  data: ScalingSummaryLayer2sEntry['tvlData']
+  data: NonNullable<ScalingSummaryLayer2sEntry['tvlData']>
   className?: string
 }
 
 export function TotalCell({ data }: TotalCellProps) {
-  if (!data) {
-    return (
-      <Badge type="gray" className="mx-auto translate-x-[11.5px]">
-        Coming soon
-      </Badge>
-    )
-  }
-
   const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
 
   return (

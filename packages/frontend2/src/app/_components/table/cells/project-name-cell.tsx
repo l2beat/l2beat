@@ -21,22 +21,22 @@ export interface ProjectCellProps {
     isUpcoming?: boolean
     isArchived?: boolean
     redWarning?: string
-    type?: 'layer2' | 'layer3' | 'bridge' | undefined
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
     warning?: string
     data?: { syncStatus?: SyncStatus }
   }
+  type: 'layer2' | 'layer3' | 'bridge' | undefined
   showIsL3?: boolean
 }
 
-export function ProjectNameCell({ project, showIsL3 }: ProjectCellProps) {
+export function ProjectNameCell({ project, showIsL3, type }: ProjectCellProps) {
   return (
     <div className="pl-2 2xl:pl-3">
       <span className="font-bold text-base md:text-lg group-hover:underline">
         {project.shortName ?? project.name}
       </span>
-      {showIsL3 && project.type === 'layer3' && (
+      {showIsL3 && type === 'layer3' && (
         <span className="pl-1.5">
           <div className="inline-block">
             <Layer3sIcon className="relative top-px size-4" />
