@@ -29,5 +29,6 @@ export function getEtherscanClient(chain: string): EtherscanClient {
     type: 'Etherscan',
     apiKey: ETHERSCAN_API_KEY,
     url: chainConfig.explorerApi.url,
+    maximumCallsForBlockTimestamp: 1, // not important here
   })
 }

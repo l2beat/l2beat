@@ -22,9 +22,8 @@ interface BlockscoutOptions {
 
 export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
-    callsPerMinute: 150,
+    callsPerMinute: 60,
   })
-  private readonly timeoutMs = 20_000
   private readonly timestampIndexingInterval
 
   constructor(
@@ -101,12 +100,10 @@ export class EtherscanClient {
     }
     const url = `${this.options.url}?${query.toString()}`
 
-    const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: this.timeoutMs })
-      .then(
-        (httpResponse) => ({ httpResponse, error: undefined }),
-        (error: unknown) => ({ httpResponse: undefined, error }),
-      )
+    const { httpResponse, error } = await this.httpClient.fetch(url).then(
+      (httpResponse) => ({ httpResponse, error: undefined }),
+      (error: unknown) => ({ httpResponse: undefined, error }),
+    )
 
     if (!httpResponse) {
       throw error
