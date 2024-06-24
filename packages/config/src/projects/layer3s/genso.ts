@@ -31,5 +31,4 @@ export const genso: Layer3 = underReviewL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: '',
 })
