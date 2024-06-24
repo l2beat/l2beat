@@ -24,6 +24,7 @@ import type { StageConfig } from '../common/stages/types'
 import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import type { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import type { Layer2TxConfig } from './Layer2TrackedTxsConfig'
+import { type BadgeId } from '../../badges'
 
 export interface Layer2 {
   type: 'layer2'
@@ -65,6 +66,8 @@ export interface Layer2 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+  /** List of badges */
+  badges?: BadgeId[]
 }
 
 export interface Layer2Display extends ScalingProjectDisplay {
