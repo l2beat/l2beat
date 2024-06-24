@@ -71,6 +71,10 @@ export const worldcoinsmtb: ZkCatalogProject = {
         ),
         chainId: ChainId.ETHEREUM,
         verified: 'yes',
+        performedBy: {
+          name: 'L2BEAT',
+          link: 'https://l2beat.com',
+        },
         subVerifiers: [
           {
             name: 'DeleteCircuitSize10',

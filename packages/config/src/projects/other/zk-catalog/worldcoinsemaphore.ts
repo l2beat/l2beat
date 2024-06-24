@@ -18,6 +18,10 @@ export const worldcoinsemaphore: ZkCatalogProject = {
         ),
         chainId: ChainId.OPTIMISM,
         verified: 'failed',
+        performedBy: {
+          name: 'L2BEAT',
+          link: 'https://l2beat.com',
+        },
         subVerifiers: [
           {
             name: 'Semaphore30',
@@ -38,6 +42,10 @@ export const worldcoinsemaphore: ZkCatalogProject = {
         ),
         chainId: ChainId.OPTIMISM,
         verified: 'failed',
+        performedBy: {
+          name: 'L2BEAT',
+          link: 'https://l2beat.com',
+        },
         subVerifiers: [
           {
             name: 'Semaphore30',
