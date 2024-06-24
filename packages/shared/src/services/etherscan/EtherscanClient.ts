@@ -6,6 +6,7 @@ import {
   stringAsInt,
 } from '@l2beat/shared-pure'
 
+import { z } from 'zod'
 import { HttpClient } from '../HttpClient'
 import { ContractSourceResult, EtherscanResponse } from './EtherscanResponse'
 
@@ -57,7 +58,13 @@ export class EtherscanClient {
           closest: 'before',
         })
 
-        return stringAsInt().parse(result)
+        return this.options.type === 'Etherscan'
+          ? stringAsInt().parse(result)
+          : z
+              .object({
+                blockNumber: z.coerce.number(),
+              })
+              .parse(result).blockNumber
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
