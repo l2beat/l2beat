@@ -87,19 +87,16 @@ export class EtherscanClient {
           closest: 'before',
         })
 
-        this.reportCalls(counter)
         return stringAsInt().parse(result)
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
             typeof error === 'string' ? error : 'Unknown error type caught'
-          this.reportCalls(counter)
           throw new Error(errorString)
         }
 
         const errorObject = error as EtherscanError
         if (!errorObject.message.includes('No closest block found')) {
-          this.reportCalls(counter)
           throw new Error(errorObject.message)
         }
 
@@ -108,7 +105,6 @@ export class EtherscanClient {
       counter++
     }
 
-    this.reportCalls(counter)
     throw new Error('Could not fetch block number', {
       cause: {
         current,
@@ -189,12 +185,6 @@ export class EtherscanClient {
     message: string,
   ) {
     this.logger.debug({ type: 'error', message, timeMs, module, action })
-  }
-
-  private reportCalls(counter: number) {
-    this.logger.info('Client calls report', {
-      calls: counter,
-    })
   }
 }
 

@@ -55,19 +55,16 @@ export class BlockscoutClient {
           closest: 'before',
         })
 
-        this.reportCalls(counter)
         return BlockscoutGetBlockNoByTime.parse(result).blockNumber
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
             typeof error === 'string' ? error : 'Unknown error type caught'
-          this.reportCalls(counter)
           throw new Error(errorString)
         }
 
         const errorObject = error as BlockscoutError
         if (!errorObject.message.includes('Block does not exist')) {
-          this.reportCalls(counter)
           throw new Error(errorObject.message)
         }
 
@@ -77,7 +74,6 @@ export class BlockscoutClient {
       counter++
     }
 
-    this.reportCalls(counter)
     throw new Error('Could not fetch block number', {
       cause: {
         current,
@@ -142,12 +138,6 @@ export class BlockscoutClient {
     message: string,
   ) {
     this.logger.debug({ type: 'error', message, timeMs, module, action })
-  }
-
-  private reportCalls(counter: number) {
-    this.logger.info('Client calls report', {
-      calls: counter,
-    })
   }
 }
 
