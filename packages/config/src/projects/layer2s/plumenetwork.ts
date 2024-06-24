@@ -12,7 +12,7 @@ export const plumenetwork: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.plumenetwork.xyz/'],
+      websites: ['https://plumenetwork.xyz/'],
       apps: [],
       documentation: ['https://docs.plumenetwork.xyz/plume'],
       explorers: [],
