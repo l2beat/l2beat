@@ -105,7 +105,7 @@ export function getTargetsMeta(
   return isEmptyObject(result) ? undefined : result
 }
 
-function getMetaFromUpgradeability(
+export function getMetaFromUpgradeability(
   self: EthereumAddress,
   upgradeability: UpgradeabilityParameters,
 ): AddressToMetaMap {
