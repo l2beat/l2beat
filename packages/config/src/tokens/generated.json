@@ -7790,6 +7790,21 @@
       }
     },
     {
+      "id": "blast:yes-yesv2(real)",
+      "name": "YESv2(real)",
+      "coingeckoId": "yes-money",
+      "address": "0x1a49351bdB4BE48C0009b661765D01ed58E8C2d8",
+      "symbol": "YES",
+      "decimals": 18,
+      "deploymentTimestamp": 1717758791,
+      "coingeckoListingTimestamp": 1709424000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35657/large/yes-money.jpeg?1709437181",
+      "chainId": 81457,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "real:arcusd-arcusd",
       "name": "arcUSD",
       "coingeckoId": "arcana-2",

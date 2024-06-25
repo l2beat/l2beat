@@ -2605,6 +2605,12 @@
       "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "YES",
+      "address": "0x1a49351bdb4be48c0009b661765d01ed58e8c2d8",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "mode": [
