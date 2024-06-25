@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { UpdateConfiguration } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import {
   TrackedTxConfigEntry,
@@ -27,7 +28,11 @@ describe(TrackedTxsClient.name, () => {
       const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
       const trackedTxsClient = new TrackedTxsClient(bigquery)
 
-      const data = await trackedTxsClient.getData(CONFIGURATIONS, FROM, TO)
+      const data = await trackedTxsClient.getData(
+        CONFIGURATIONS as unknown as UpdateConfiguration<TrackedTxConfigEntry>[],
+        FROM,
+        TO,
+      )
 
       // calls both internal methods
       expect(bigquery.query).toHaveBeenCalledTimes(2)
@@ -74,40 +79,76 @@ const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
-const CONFIGURATIONS: TrackedTxConfigEntry[] = [
+const CONFIGURATIONS = [
   {
-    projectId: ProjectId('project1'),
-    formula: 'transfer',
-    from: ADDRESS_1,
-    to: ADDRESS_2,
-    sinceTimestampInclusive: FROM,
-    untilTimestampExclusive: FROM.add(2, 'days'),
-    uses: [],
-  },
+    id: '1',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '1',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'batchSubmissions',
+      sinceTimestampInclusive: FROM,
+      untilTimestampExclusive: FROM.add(2, 'days'),
+      params: {
+        formula: 'transfer',
+        from: ADDRESS_1,
+        to: ADDRESS_2,
+      },
+    },
+  } as UpdateConfiguration<
+    TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+  >,
   {
-    projectId: ProjectId('project1'),
-    formula: 'functionCall',
-    address: ADDRESS_3,
-    selector: '0x9aaab648',
-    sinceTimestampInclusive: FROM,
-    uses: [],
-  },
+    id: '2',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '2',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'batchSubmissions',
+      sinceTimestampInclusive: FROM,
+      params: {
+        formula: 'functionCall',
+        address: ADDRESS_3,
+        selector: '0x9aaab648',
+      },
+    },
+  } as UpdateConfiguration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >,
   {
-    projectId: ProjectId('project1'),
-    formula: 'sharpSubmission',
-    programHashes: [paradexProgramHash],
-    sinceTimestampInclusive: FROM,
-    address: EthereumAddress.random(),
-    selector: '0x9b3b76cc',
-    uses: [],
-  },
-]
+    id: '3',
+    hasData: true,
+    minHeight: 1,
+    maxHeight: 100,
+    properties: {
+      id: '3',
+      projectId: ProjectId('project1'),
+      type: 'l2costs',
+      subtype: 'batchSubmissions',
+      sinceTimestampInclusive: FROM,
+      params: {
+        formula: 'sharpSubmission',
+        address: EthereumAddress.random(),
+        selector: '0x9b3b76cc',
+        programHashes: [paradexProgramHash] as string[],
+      },
+    },
+  } as UpdateConfiguration<
+    TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
+  >,
+] as const
 
 const TRANSFERS_RESPONSE = [
   {
     hash: TX_HASH,
-    from_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).from,
-    to_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).to,
+    from_address: CONFIGURATIONS[0].properties.params.from,
+    to_address: CONFIGURATIONS[0].properties.params.to,
     block_timestamp: toBigQueryDate(FROM),
     block_number: BLOCK,
     gas_price: 25,
@@ -122,7 +163,7 @@ const TRANSFERS_RESPONSE = [
 
 const parsedTransfers = BigQueryTransferResult.array().parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
-  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
+  [CONFIGURATIONS[0]],
   parsedTransfers,
 )
 
@@ -131,10 +172,10 @@ const FUNCTIONS_RESPONSE = [
     hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).address,
+    to_address: CONFIGURATIONS[1].properties.params.address,
     gas_price: 1000,
     receipt_gas_used: 200000,
-    input: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).selector,
+    input: CONFIGURATIONS[1].properties.params.selector,
     transaction_type: 2,
     calldata_gas_used: 100,
     data_length: 100,
@@ -145,7 +186,7 @@ const FUNCTIONS_RESPONSE = [
     hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCallConfig).address,
+    to_address: CONFIGURATIONS[2].properties.params.address,
     gas_price: 1500,
     receipt_gas_used: 200000,
     input: sharpInput,
@@ -160,26 +201,27 @@ const FUNCTIONS_RESPONSE = [
 const parsedFunctionCalls =
   BigQueryFunctionCallResult.array().parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
-  [CONFIGURATIONS[1] as TrackedTxFunctionCallConfig],
-  [CONFIGURATIONS[2] as TrackedTxSharpSubmissionConfig],
+  [CONFIGURATIONS[1]],
+  [CONFIGURATIONS[2]],
   parsedFunctionCalls,
 )
 
 const TRANSFERS_SQL = getTransferQuery(
-  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
+  [CONFIGURATIONS[0].properties.params],
   FROM,
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
   (
-    CONFIGURATIONS.slice(1) as (
-      | TrackedTxFunctionCallConfig
-      | TrackedTxSharpSubmissionConfig
-    )[]
+    CONFIGURATIONS.slice(1) as UpdateConfiguration<
+      TrackedTxConfigEntry & {
+        params: TrackedTxSharpSubmissionConfig | TrackedTxFunctionCallConfig
+      }
+    >[]
   ).map((c) => ({
-    address: c.address,
-    selector: c.selector,
-    getFullInput: c.formula === 'sharpSubmission',
+    address: c.properties.params.address,
+    selector: c.properties.params.selector,
+    getFullInput: c.properties.params.formula === 'sharpSubmission',
   })),
   FROM,
   TO,
