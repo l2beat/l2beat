@@ -16,7 +16,7 @@ export function useBreakpoint() {
     setBreakpoint(breakpoint)
   }
 
-  useEffect(() => onResize(), [])
+  useEffect(onResize, [])
   useEventListener('resize', onResize)
 
   return breakpoint
