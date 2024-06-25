@@ -109,6 +109,9 @@ export class ValueRepository {
 
   //# region DA-BEAT
 
+  /**
+   * For each projectId x data source pick the latest value according to latest timestamp
+   */
   async getLatestValuesForProjects(projectIds: ProjectId[]): Promise<Value[]> {
     const rows = await this.db
       .with('latest_values', (cb) =>

@@ -21,26 +21,26 @@ const getCachedDaProjectsTvl = cache(async (projectIds: ProjectId[]) => {
     const external = values.reduce((acc, value) => acc + value.external, 0n)
     const native = values.reduce((acc, value) => acc + value.native, 0n)
 
-    const sum = canonical + external + native
+    const tvl = Number(canonical + external + native)
 
     return {
       projectId: ProjectId(projectId),
-      tvl: sum,
+      tvl,
     }
   })
 
   return aggregated
 })
 
-// helper
 export function pickTvlForProjects(
   aggregate: Awaited<ReturnType<typeof getCachedDaProjectsTvl>>,
 ) {
   return function (projects: ProjectId[]) {
     const included = aggregate.filter((x) => projects.includes(x.projectId))
 
-    const sum = included.reduce((acc, curr) => acc + curr.tvl, 0n)
+    const sum = included.reduce((acc, curr) => acc + curr.tvl, 0)
 
-    return sum
+    // Fiat denomination to cents
+    return sum / 100
   }
 }
