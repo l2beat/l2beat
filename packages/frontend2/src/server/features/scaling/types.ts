@@ -21,6 +21,8 @@ export interface ScalingSummaryLayer2sEntry {
   isVerified: boolean
   showProjectUnderReview: boolean
   hasImplementationChanged: boolean
+  isUpcoming: boolean
+  isArchived: boolean
   purposes: ScalingProjectPurpose[]
   risks: RosetteValue[]
   tvlData: L2TvlData | undefined
@@ -34,14 +36,16 @@ export interface ScalingSummaryLayer3sEntry {
   shortName: string | undefined
   slug: string
   // TODO: Is it the best way?
-  type: ProjectType
   href: string
+  type: ProjectType
   hostChainName: string
   warning: string | undefined
   redWarning: string | undefined
   isVerified: boolean
   showProjectUnderReview: boolean
   hasImplementationChanged: boolean
+  isUpcoming: boolean
+  isArchived: boolean
   purposes: ScalingProjectPurpose[]
   tvlData: L3TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell

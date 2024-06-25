@@ -23,11 +23,24 @@ import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { SummaryLayer3sTable } from './_components/table/layer3s/summary-layer3s-table'
+import { SummaryUpcomingTable } from './_components/table/upcoming/summary-upcoming-table'
+import { SummaryArchivedTable } from './_components/table/archived.tsx/summary-archived.table'
 
 export default async function Page() {
   const tvl = await getTvl()
   const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
-  console.log(layer3s)
+
+  const layer2sProjects = layer2s.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const layer3sProjects = layer3s.filter(
+    (item) => !item.isArchived && !item.isUpcoming,
+  )
+  const upcomingProjects = [...layer2s, ...layer3s].filter(
+    (item) => item.isUpcoming,
+  )
+  const archivedProjects = layer2s.filter((item) => item.isArchived)
+
   return (
     <div>
       <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
@@ -59,13 +72,17 @@ export default async function Page() {
         </OverflowWrapper>
 
         <TabsContent value="layer2s">
-          <SummaryLayer2sTable items={layer2s} />
+          <SummaryLayer2sTable items={layer2sProjects} />
         </TabsContent>
         <TabsContent value="layer3s">
-          <SummaryLayer3sTable items={layer3s} />
+          <SummaryLayer3sTable items={layer3sProjects} />
         </TabsContent>
-        <TabsContent value="upcoming">Upcoming Layer2s</TabsContent>
-        <TabsContent value="archived">Archived Layer2s</TabsContent>
+        <TabsContent value="upcoming">
+          <SummaryUpcomingTable items={upcomingProjects} />
+        </TabsContent>
+        <TabsContent value="archived">
+          <SummaryArchivedTable items={archivedProjects} />
+        </TabsContent>
       </Tabs>
     </div>
   )

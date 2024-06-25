@@ -24,7 +24,7 @@ export function RosetteTooltip({ values }: RosetteTooltipProps) {
           <UnderReviewBadge />
         </div>
 
-        <p>
+        <p className="text-wrap">
           Projects under review might present uncompleted information & data.
           <br />
           L2BEAT Team is working to research & validate content before
