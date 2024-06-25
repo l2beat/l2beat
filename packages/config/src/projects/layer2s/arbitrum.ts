@@ -336,7 +336,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
       sentiment: 'bad',
       description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
         l2TimelockDelay,

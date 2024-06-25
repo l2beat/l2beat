@@ -21,6 +21,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
+  pickWorseRisk,
+  sumRisk,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -297,6 +299,83 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
+  const riskView = makeBridgeCompatible({
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+    dataAvailability:
+      templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+            return RISK_VIEW.DATA_EXTERNAL_DAC({
+              membersCount,
+              requiredSignatures,
+            })
+          })()
+        : RISK_VIEW.DATA_ON_CHAIN_L3,
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+    sequencerFailure:
+      templateVars.nonTemplateRiskView?.sequencerFailure ??
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
+    validatedBy:
+      templateVars.nonTemplateRiskView?.validatedBy ??
+      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
+    destinationToken:
+      templateVars.nonTemplateRiskView?.destinationToken ??
+      RISK_VIEW.NATIVE_AND_CANONICAL(),
+  })
+
+  const getStackedRisks = () => {
+    assert(
+      templateVars.hostChain !== 'Multiple',
+      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
+    )
+    const layer2s = require('..').layer2s as Layer2[]
+
+    const baseChainRiskView = layer2s.find(
+      (l2) => l2.id === templateVars.hostChain,
+    )?.riskView
+    assert(
+      baseChainRiskView,
+      `Could not find base chain ${templateVars.hostChain} in layer2s`,
+    )
+    return makeBridgeCompatible({
+      stateValidation: pickWorseRisk(
+        riskView.stateValidation,
+        baseChainRiskView.stateValidation,
+      ),
+      dataAvailability: pickWorseRisk(
+        riskView.dataAvailability,
+        baseChainRiskView.dataAvailability,
+      ),
+      exitWindow: pickWorseRisk(
+        riskView.exitWindow,
+        baseChainRiskView.exitWindow,
+      ),
+      sequencerFailure: sumRisk(
+        riskView.sequencerFailure,
+        baseChainRiskView.sequencerFailure,
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+      ),
+      proposerFailure: sumRisk(
+        riskView.proposerFailure,
+        baseChainRiskView.proposerFailure,
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+      ),
+      validatedBy: riskView.validatedBy,
+      destinationToken: riskView.destinationToken,
+    })
+  }
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -334,41 +413,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           bridge: { type: 'Enshrined' },
           mode: 'Transaction data (compressed)',
         }),
-    stackedRiskView: templateVars.stackedRiskView,
-    riskView: makeBridgeCompatible({
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-      dataAvailability:
-        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
-          ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            })()
-          : RISK_VIEW.DATA_ON_CHAIN_L3,
-      exitWindow:
-        templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
-      sequencerFailure:
-        templateVars.nonTemplateRiskView?.sequencerFailure ??
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
-      proposerFailure:
-        templateVars.nonTemplateRiskView?.proposerFailure ??
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
-    }),
+    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: unionBy(

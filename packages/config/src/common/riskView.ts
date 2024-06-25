@@ -1,4 +1,9 @@
-import { ProjectId, Sentiment, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  Sentiment,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
@@ -21,6 +26,7 @@ export const STATE_NONE: ScalingProjectRiskViewEntry = {
   description:
     'Currently the system permits invalid state roots. More details in project overview.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export const STATE_FP: ScalingProjectRiskViewEntry = {
@@ -28,6 +34,7 @@ export const STATE_FP: ScalingProjectRiskViewEntry = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_FP_1R: ScalingProjectRiskViewEntry = {
@@ -35,6 +42,7 @@ export const STATE_FP_1R: ScalingProjectRiskViewEntry = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_FP_INT: ScalingProjectRiskViewEntry = {
@@ -42,6 +50,7 @@ export const STATE_FP_INT: ScalingProjectRiskViewEntry = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
@@ -49,6 +58,7 @@ export const STATE_FP_INT_ZK: ScalingProjectRiskViewEntry = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_ZKP_SN: ScalingProjectRiskViewEntry = {
@@ -56,6 +66,7 @@ export const STATE_ZKP_SN: ScalingProjectRiskViewEntry = {
   description:
     'zkSNARKS are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_ZKP_ST: ScalingProjectRiskViewEntry = {
@@ -63,6 +74,7 @@ export const STATE_ZKP_ST: ScalingProjectRiskViewEntry = {
   description:
     'zkSTARKS are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
@@ -70,6 +82,7 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
   description:
     'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
@@ -106,6 +119,7 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
     sentiment: sentiment,
+    definingMetric: nOfChallengers,
   }
 }
 
@@ -116,6 +130,7 @@ export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
   description:
     'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
@@ -123,6 +138,7 @@ export const DATA_ON_CHAIN_L3: ScalingProjectRiskViewEntry = {
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const DATA_ON_CHAIN_STATE_DIFFS: ScalingProjectRiskViewEntry = {
@@ -130,6 +146,7 @@ export const DATA_ON_CHAIN_STATE_DIFFS: ScalingProjectRiskViewEntry = {
   description:
     'All of the data (SD = state diffs) needed for proof construction is published on chain.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const DATA_MIXED: ScalingProjectRiskViewEntry = {
@@ -137,12 +154,14 @@ export const DATA_MIXED: ScalingProjectRiskViewEntry = {
   description:
     'Some of the data needed for proof construction is not published on chain.',
   sentiment: 'warning',
+  definingMetric: 0,
 }
 
 export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
   value: 'External (MEMO)',
   description: 'Transaction data is kept in MEMO decentralized storage.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export function DATA_EXTERNAL_DAC(DAC?: {
@@ -158,6 +177,7 @@ export function DATA_EXTERNAL_DAC(DAC?: {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment: DATA_AVAILABILITY.DAC_SENTIMENT(DAC),
+    definingMetric: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
   }
 }
 
@@ -282,6 +302,7 @@ export function SEQUENCER_SELF_SEQUENCE(
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1.${delayString}`,
     sentiment: 'good',
+    definingMetric: delay,
   }
 }
 
@@ -305,6 +326,7 @@ export function SEQUENCER_FORCE_VIA_L1(
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
     sentiment: 'good',
+    definingMetric: delay,
   }
 }
 
@@ -316,6 +338,7 @@ export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
     value: 'Force via L1',
     description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
     sentiment: 'good',
+    definingMetric: delay,
   }
 }
 
@@ -335,6 +358,7 @@ export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
     sentiment: 'good',
+    definingMetric: delay,
   }
 }
 
@@ -368,6 +392,7 @@ export const PROPOSER_CANNOT_WITHDRAW: ScalingProjectRiskViewEntry = {
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: ScalingProjectRiskViewEntry = {
@@ -375,6 +400,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_ZK: ScalingProjectRiskViewEntry = {
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP: ScalingProjectRiskViewEntry = {
@@ -382,6 +408,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP: ScalingProjectRiskViewEntry = {
   description:
     'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ScalingProjectRiskViewEntry = {
@@ -389,6 +416,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: ScalingProjectRiskViewEntry = {
   description:
     PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' NFTs will be minted on L1 to exit.',
+  definingMetric: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ScalingProjectRiskViewEntry =
@@ -397,6 +425,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: ScalingProjectRiskViewEntry 
     description:
       PROPOSER_USE_ESCAPE_HATCH_MP.description +
       ' Positions will be closed using the average price from the last batch state update.',
+    definingMetric: Infinity,
   }
 
 export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
@@ -407,6 +436,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
     value: 'Self propose',
     description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
     sentiment: 'good',
+    definingMetric: delay,
   }
 }
 
@@ -465,6 +495,7 @@ export function EXIT_WINDOW(
     value: windowText,
     description: description,
     sentiment,
+    definingMetric: window,
   }
 }
 
@@ -473,6 +504,7 @@ export const EXIT_WINDOW_NON_UPGRADABLE: ScalingProjectRiskViewEntry = {
   description:
     'Users can exit funds at any time because contracts are not upgradeable.',
   sentiment: 'good',
+  definingMetric: Infinity,
 }
 
 export const EXIT_WINDOW_UNKNOWN: ScalingProjectRiskViewEntry = {
@@ -480,6 +512,7 @@ export const EXIT_WINDOW_UNKNOWN: ScalingProjectRiskViewEntry = {
   description:
     'Some contracts are not verified, so there is no way to assess the exit window.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export const UPGRADABLE_YES: ScalingProjectRiskViewEntry = {
@@ -487,6 +520,7 @@ export const UPGRADABLE_YES: ScalingProjectRiskViewEntry = {
   description:
     'The code that secures the system can be changed arbitrarily and without notice.',
   sentiment: 'bad',
+  definingMetric: -Infinity,
 }
 
 export const RISK_VIEW = {
@@ -532,4 +566,52 @@ export const RISK_VIEW = {
   EXIT_WINDOW,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
+}
+
+export function pickWorseRisk(
+  a: ScalingProjectRiskViewEntry,
+  b: ScalingProjectRiskViewEntry,
+): ScalingProjectRiskViewEntry {
+  if (a.sentiment === 'UnderReview' || b.sentiment === 'UnderReview') {
+    return a.sentiment === 'UnderReview' ? a : b
+  }
+
+  const sentimentValue: Record<Sentiment, number> = {
+    good: 0,
+    neutral: 1,
+    warning: 2,
+    bad: 3,
+    UnderReview: 4,
+  }
+
+  const aVal = sentimentValue[a.sentiment]
+  const bVal = sentimentValue[b.sentiment]
+  if (aVal === bVal) {
+    assert(
+      a.definingMetric !== undefined && b.definingMetric !== undefined,
+      'Unable to pick worse risk without a defining metric',
+    )
+    return a.definingMetric < b.definingMetric ? a : b
+  }
+  if (aVal > bVal) {
+    return a
+  }
+
+  return b
+}
+
+export function sumRisk(
+  a: ScalingProjectRiskViewEntry,
+  b: ScalingProjectRiskViewEntry,
+  formattingFunction: (delay: number) => ScalingProjectRiskViewEntry,
+): ScalingProjectRiskViewEntry {
+  if (a.sentiment === b.sentiment) {
+    assert(
+      a.definingMetric !== undefined && b.definingMetric !== undefined,
+      'Cannot sum good risks without delaySeconds',
+    )
+    return formattingFunction(a.definingMetric + b.definingMetric)
+  }
+
+  return pickWorseRisk(a, b)
 }
