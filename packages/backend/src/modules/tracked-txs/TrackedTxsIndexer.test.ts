@@ -8,6 +8,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { DatabaseMiddleware } from '../../peripherals/database/DatabaseMiddleware'
 import { IndexerService } from '../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { mockDbMiddleware } from '../../tools/uif/multi/MultiIndexer.test'
 import { removal, update } from '../../tools/uif/multi/test/mockConfigurations'
 import {
@@ -25,6 +26,9 @@ import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
 
 describe(TrackedTxsIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
   describe(TrackedTxsIndexer.prototype.multiUpdate.name, () => {
     it('fetches txs and calls updaters', async () => {
       const from = 100
@@ -83,6 +87,87 @@ describe(TrackedTxsIndexer.name, () => {
         undefined,
       )
       expect(safeHeight).toEqual(to)
+    })
+
+    it('correctly clamps FROM and TO to day', async () => {
+      const from = UnixTime.fromDate(new Date('2024-01-01T12:00:00Z'))
+      const to = UnixTime.fromDate(new Date('2024-01-02T12:00:00Z'))
+      const expected = UnixTime.fromDate(new Date('2024-01-02T00:00:00Z'))
+
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => [],
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        trackedTxsClient,
+      })
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
+      }
+
+      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
+        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(
+        from.toNumber(),
+        to.toNumber(),
+        configurations,
+        mockDbMiddleware,
+      )
+
+      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
+        1,
+        [configurations[0]],
+        from,
+        expected,
+      )
+      expect(safeHeight).toEqual(expected.toNumber())
+    })
+
+    it('calls getData with the lowest timestamp', async () => {
+      const from = 100
+      const to = 300
+
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => [],
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        trackedTxsClient,
+      })
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
+      }
+
+      const LOWEST_TIMESTAMP = 200
+      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
+        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
+        update<TrackedTxConfigEntry>(
+          'a',
+          100,
+          LOWEST_TIMESTAMP,
+          false,
+          parameters,
+        ),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        configurations,
+        mockDbMiddleware,
+      )
+
+      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
+        1,
+        [configurations[0], configurations[1]],
+        new UnixTime(from),
+        new UnixTime(LOWEST_TIMESTAMP),
+      )
+      expect(safeHeight).toEqual(LOWEST_TIMESTAMP)
     })
 
     it('returns to if no configurations to sync', async () => {
