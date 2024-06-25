@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
@@ -230,44 +230,6 @@ describe(EtherscanClient.name, () => {
       await expect(() =>
         etherscanClient.getBlockNumberAtOrBefore(timestamp),
       ).toBeRejected()
-    })
-  })
-
-  describe(EtherscanClient.prototype.getContractSource.name, () => {
-    it('constructs a correct url', async () => {
-      const result = {
-        SourceCode: '',
-        ABI: 'Contract source code not verified',
-        ContractName: '',
-        CompilerVersion: '',
-        OptimizationUsed: '',
-        Runs: '',
-        ConstructorArguments: '',
-        EVMVersion: 'Default',
-        Library: '',
-        LicenseType: 'Unknown',
-        Proxy: '0',
-        Implementation: '',
-        SwarmSource: '',
-      }
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
-          return new Response(
-            JSON.stringify({ status: '1', message: 'OK', result: [result] }),
-          )
-        },
-      })
-
-      const etherscanClient = new EtherscanClient(httpClient, OPTIONS)
-      const source = await etherscanClient.getContractSource(
-        EthereumAddress.ZERO,
-      )
-
-      expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
-        `${API_URL}?module=contract&action=getsourcecode&address=0x0000000000000000000000000000000000000000&apikey=key`,
-        expect.anything(),
-      )
-      expect(source).toEqual(result)
     })
   })
 

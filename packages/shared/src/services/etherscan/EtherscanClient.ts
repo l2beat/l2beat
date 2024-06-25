@@ -1,11 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress, RateLimiter, UnixTime } from '@l2beat/shared-pure'
+import { RateLimiter, UnixTime } from '@l2beat/shared-pure'
 import { HttpClient } from '../HttpClient'
-import {
-  BlockTimestampResponse,
-  ContractSourceResult,
-  EtherscanResponse,
-} from './types'
+import { BlockTimestampResponse, EtherscanResponse } from './types'
 
 interface EtherscanOptions {
   type: 'Etherscan'
@@ -20,6 +16,7 @@ interface BlockscoutOptions {
   url: string
 }
 
+// TODO: rename to BlockTimestampClient
 export class EtherscanClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 60,
@@ -79,13 +76,6 @@ export class EtherscanClient {
         calls: this.options.maximumCallsForBlockTimestamp,
       },
     })
-  }
-
-  async getContractSource(address: EthereumAddress) {
-    const response = await this.call('contract', 'getsourcecode', {
-      address: address.toString(),
-    })
-    return ContractSourceResult.parse(response)[0]
   }
 
   async call(module: string, action: string, params: Record<string, string>) {

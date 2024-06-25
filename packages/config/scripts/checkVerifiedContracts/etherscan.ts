@@ -3,13 +3,19 @@ import { EtherscanClient, HttpClient } from '@l2beat/shared'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import { chains } from '../../src'
+import { ContractSourceResult } from './types'
 
 export async function isContractVerified(
   etherscanClient: EtherscanClient,
   address: EthereumAddress,
 ): Promise<boolean> {
-  const resp = await etherscanClient.getContractSource(address)
-  return resp.SourceCode !== ''
+  const response = await etherscanClient.call('contract', 'getsourcecode', {
+    address: address.toString(),
+  })
+
+  const parsed = ContractSourceResult.parse(response)[0]
+
+  return parsed.SourceCode !== ''
 }
 
 export function getEtherscanClient(chain: string): EtherscanClient {
