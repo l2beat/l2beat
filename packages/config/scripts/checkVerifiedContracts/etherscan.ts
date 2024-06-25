@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { EtherscanClient, HttpClient } from '@l2beat/shared'
-import { assert, ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 
 import { chains } from '../../src'
 
@@ -29,7 +29,6 @@ export function getEtherscanClient(chain: string): EtherscanClient {
     new HttpClient(),
     chainConfig.explorerApi.url,
     ETHERSCAN_API_KEY,
-    new UnixTime(0),
     ChainId(chainConfig.chainId),
   )
 }

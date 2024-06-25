@@ -15,139 +15,97 @@ import {
 
 const CONFIG_HASH = Hash256.random()
 
-describeDatabase(DiscoveryHistoryRepository.name, (database) => {
-  const repository = new DiscoveryHistoryRepository(database, Logger.SILENT)
+describeDatabase(DiscoveryHistoryRepository.name, (knex, kysely) => {
+  const oldRepo = new DiscoveryHistoryRepository(knex, Logger.SILENT)
+  const newRepo = kysely.dailyDiscovery
 
-  beforeEach(async () => {
-    await repository.deleteAll()
-  })
+  suite(oldRepo)
+  suite(newRepo)
 
-  it(DiscoveryHistoryRepository.prototype.findLatest.name, async () => {
-    const projectName = 'project'
+  function suite(repository: typeof oldRepo | typeof newRepo) {
+    beforeEach(async () => {
+      await repository.deleteAll()
+    })
 
-    const expectedEth: DiscoveryHistoryRecord = {
-      projectName,
-      chainId: ChainId.ETHEREUM,
-      blockNumber: 1,
-      timestamp: new UnixTime(1),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-
-    const secondEth: DiscoveryHistoryRecord = {
-      projectName,
-      chainId: ChainId.ETHEREUM,
-      blockNumber: 0,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-
-    const expectedArb: DiscoveryHistoryRecord = {
-      projectName,
-      chainId: ChainId.ARBITRUM,
-      blockNumber: -1,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-
-    await repository.addOrUpdate(expectedEth)
-    await repository.addOrUpdate(secondEth)
-    await repository.addOrUpdate(expectedArb)
-
-    const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)
-    const resultArb = await repository.findLatest(projectName, ChainId.ARBITRUM)
-
-    expect(resultEth).toEqual(expectedEth)
-    expect(resultArb).toEqual(expectedArb)
-  })
-
-  it(DiscoveryHistoryRepository.prototype.getTimestamps.name, async () => {
-    const projectName = 'project'
-
-    const discovery: DiscoveryHistoryRecord = {
-      projectName,
-      chainId: ChainId.ETHEREUM,
-      blockNumber: -1,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-    const discovery2 = {
-      ...discovery,
-      timestamp: new UnixTime(2),
-    }
-    await repository.addOrUpdate(discovery)
-    await repository.addOrUpdate(discovery2)
-    const timestamps = await repository.getTimestamps(
-      projectName,
-      ChainId.ETHEREUM,
-    )
-
-    expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
-  })
-
-  describe(DiscoveryHistoryRepository.prototype.getProject.name, () => {
-    it('sanitizes errors', async () => {
+    it(DiscoveryHistoryRepository.prototype.findLatest.name, async () => {
       const projectName = 'project'
 
-      const mockContractWithoutError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
-        {
-          name: 'MockContract1',
-          address: EthereumAddress.random(),
-          upgradeability: { type: 'immutable' },
-        }
-      const mockContractWithError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
-        {
-          name: 'MockContract2',
-          address: EthereumAddress.random(),
-          upgradeability: { type: 'immutable' },
-          errors: {
-            nonce: 'https://endpoint.com/potential-api-key',
-            totalLiquidity: 'https://endpoint.com/potential-api-key2',
-          },
-        }
+      const expectedEth: DiscoveryHistoryRecord = {
+        projectName,
+        chainId: ChainId.ETHEREUM,
+        blockNumber: 1,
+        timestamp: new UnixTime(1),
+        discovery: {
+          name: projectName,
+          chain: 'ethereum',
+          blockNumber: -1,
+          configHash: Hash256.random(),
+          contracts: [],
+          eoas: [],
+          abis: {},
+          version: 0,
+        },
+        configHash: CONFIG_HASH,
+        version: 0,
+      }
+
+      const secondEth: DiscoveryHistoryRecord = {
+        projectName,
+        chainId: ChainId.ETHEREUM,
+        blockNumber: 0,
+        timestamp: new UnixTime(0),
+        discovery: {
+          name: projectName,
+          chain: 'ethereum',
+          blockNumber: -1,
+          configHash: Hash256.random(),
+          contracts: [],
+          eoas: [],
+          abis: {},
+          version: 0,
+        },
+        configHash: CONFIG_HASH,
+        version: 0,
+      }
+
+      const expectedArb: DiscoveryHistoryRecord = {
+        projectName,
+        chainId: ChainId.ARBITRUM,
+        blockNumber: -1,
+        timestamp: new UnixTime(0),
+        discovery: {
+          name: projectName,
+          chain: 'ethereum',
+          blockNumber: -1,
+          configHash: Hash256.random(),
+          contracts: [],
+          eoas: [],
+          abis: {},
+          version: 0,
+        },
+        configHash: CONFIG_HASH,
+        version: 0,
+      }
+
+      await repository.addOrUpdate(expectedEth)
+      await repository.addOrUpdate(secondEth)
+      await repository.addOrUpdate(expectedArb)
+
+      const resultEth = await repository.findLatest(
+        projectName,
+        ChainId.ETHEREUM,
+      )
+      const resultArb = await repository.findLatest(
+        projectName,
+        ChainId.ARBITRUM,
+      )
+
+      expect(resultEth).toEqual(expectedEth)
+      expect(resultArb).toEqual(expectedArb)
+    })
+
+    it(DiscoveryHistoryRepository.prototype.getTimestamps.name, async () => {
+      const projectName = 'project'
 
       const discovery: DiscoveryHistoryRecord = {
         projectName,
@@ -159,7 +117,7 @@ describeDatabase(DiscoveryHistoryRepository.name, (database) => {
           chain: 'ethereum',
           blockNumber: -1,
           configHash: Hash256.random(),
-          contracts: [mockContractWithoutError, mockContractWithError],
+          contracts: [],
           eoas: [],
           abis: {},
           version: 0,
@@ -167,36 +125,40 @@ describeDatabase(DiscoveryHistoryRepository.name, (database) => {
         configHash: CONFIG_HASH,
         version: 0,
       }
-
+      const discovery2 = {
+        ...discovery,
+        timestamp: new UnixTime(2),
+      }
       await repository.addOrUpdate(discovery)
+      await repository.addOrUpdate(discovery2)
+      const timestamps = await repository.getTimestamps(
+        projectName,
+        ChainId.ETHEREUM,
+      )
 
-      const result = await repository.getProject(projectName, ChainId.ETHEREUM)
-      expect(result.length).toEqual(1)
-      expect(result[0].discovery.contracts).toEqual([
-        mockContractWithoutError,
-        {
-          ...mockContractWithError,
-          errors: {
-            nonce: 'Processing error occurred.',
-            totalLiquidity: 'Processing error occurred.',
-          },
-        },
-      ])
+      expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
     })
-  })
 
-  describe(
-    DiscoveryHistoryRepository.prototype.deleteStaleProjectDiscoveries.name,
-    () => {
-      it('removes stale discoveries', async () => {
+    describe(DiscoveryHistoryRepository.prototype.getProject.name, () => {
+      it('sanitizes errors', async () => {
         const projectName = 'project'
-        const hash = Hash256.random()
 
-        const contract: DiscoveryHistoryRecord['discovery']['contracts'][0] = {
-          name: 'MockContract1',
-          address: EthereumAddress.random(),
-          upgradeability: { type: 'immutable' },
-        }
+        const mockContractWithoutError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+          {
+            name: 'MockContract1',
+            address: EthereumAddress.random(),
+            upgradeability: { type: 'immutable' },
+          }
+        const mockContractWithError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+          {
+            name: 'MockContract2',
+            address: EthereumAddress.random(),
+            upgradeability: { type: 'immutable' },
+            errors: {
+              nonce: 'https://endpoint.com/potential-api-key',
+              totalLiquidity: 'https://endpoint.com/potential-api-key2',
+            },
+          }
 
         const discovery: DiscoveryHistoryRecord = {
           projectName,
@@ -207,8 +169,8 @@ describeDatabase(DiscoveryHistoryRepository.name, (database) => {
             name: projectName,
             chain: 'ethereum',
             blockNumber: -1,
-            configHash: hash,
-            contracts: [contract],
+            configHash: Hash256.random(),
+            contracts: [mockContractWithoutError, mockContractWithError],
             eoas: [],
             abis: {},
             version: 0,
@@ -218,17 +180,77 @@ describeDatabase(DiscoveryHistoryRepository.name, (database) => {
         }
 
         await repository.addOrUpdate(discovery)
-        const stale = await repository.getProject(projectName, ChainId.ETHEREUM)
-        expect(stale).toEqual([discovery])
 
-        await repository.deleteStaleProjectDiscoveries(
+        const result = await repository.getProject(
           projectName,
           ChainId.ETHEREUM,
-          hash,
         )
-        const fresh = await repository.getProject(projectName, ChainId.ETHEREUM)
-        expect(fresh).toEqual([])
+        expect(result.length).toEqual(1)
+        expect(result[0].discovery.contracts).toEqual([
+          mockContractWithoutError,
+          {
+            ...mockContractWithError,
+            errors: {
+              nonce: 'Processing error occurred.',
+              totalLiquidity: 'Processing error occurred.',
+            },
+          },
+        ])
       })
-    },
-  )
+    })
+
+    describe(
+      DiscoveryHistoryRepository.prototype.deleteStaleProjectDiscoveries.name,
+      () => {
+        it('removes stale discoveries', async () => {
+          const projectName = 'project'
+          const hash = Hash256.random()
+
+          const contract: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+            {
+              name: 'MockContract1',
+              address: EthereumAddress.random(),
+              upgradeability: { type: 'immutable' },
+            }
+
+          const discovery: DiscoveryHistoryRecord = {
+            projectName,
+            chainId: ChainId.ETHEREUM,
+            blockNumber: -1,
+            timestamp: new UnixTime(0),
+            discovery: {
+              name: projectName,
+              chain: 'ethereum',
+              blockNumber: -1,
+              configHash: hash,
+              contracts: [contract],
+              eoas: [],
+              abis: {},
+              version: 0,
+            },
+            configHash: CONFIG_HASH,
+            version: 0,
+          }
+
+          await repository.addOrUpdate(discovery)
+          const stale = await repository.getProject(
+            projectName,
+            ChainId.ETHEREUM,
+          )
+          expect(stale).toEqual([discovery])
+
+          await repository.deleteStaleProjectDiscoveries(
+            projectName,
+            ChainId.ETHEREUM,
+            hash,
+          )
+          const fresh = await repository.getProject(
+            projectName,
+            ChainId.ETHEREUM,
+          )
+          expect(fresh).toEqual([])
+        })
+      },
+    )
+  }
 })

@@ -1,38 +1,37 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 
+import { Database as NewDatabase, createRepositories } from '@l2beat/database'
 import { DatabaseConfig } from '../config/Config'
-import { Database } from '../peripherals/database/Database'
+import { Database as LegacyDatabase } from '../peripherals/database/Database'
 
 export function describeDatabase(
   name: string,
-  suite: (database: Database) => void,
+  suite: (legacyDb: LegacyDatabase, newDb: NewDatabase) => void,
 ) {
-  const database = getTestDatabase()
+  const databases = getTestDatabase()
 
   describe(name, function () {
     before(async function () {
-      if (!database) {
+      if (!databases) {
         this.skip()
       } else {
-        await database.migrateToLatest()
+        await databases.legacyDb.migrateToLatest()
       }
     })
 
     after(async () => {
-      await database?.closeConnection()
+      await databases?.legacyDb.closeConnection()
     })
 
-    if (database) {
-      suite(database)
+    if (databases) {
+      suite(databases.legacyDb, databases.newDb)
     } else {
       it.skip('Database tests skipped')
     }
   })
 }
 
-export function getTestDatabase(
-  opts?: Partial<DatabaseConfig>,
-): Database | undefined {
+export function getTestDatabase(opts?: Partial<DatabaseConfig>) {
   const env = getEnv()
   const connection = env.optionalString('TEST_DB_URL')
   if (!connection) {
@@ -42,7 +41,7 @@ export function getTestDatabase(
     return
   }
 
-  return new Database(
+  const legacyDb = new LegacyDatabase(
     {
       connection: {
         connectionString: connection,
@@ -59,4 +58,9 @@ export function getTestDatabase(
     Logger.SILENT,
     'Backend/Test',
   )
+  const newDb = createRepositories({
+    connectionString: connection,
+  })
+
+  return { newDb, legacyDb }
 }

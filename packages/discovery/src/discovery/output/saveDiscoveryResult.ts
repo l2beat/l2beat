@@ -25,6 +25,7 @@ export interface SaveDiscoveryResultOptions {
   flatSourcesFolder?: string
   discoveryFilename?: string
   metaFilename?: string
+  saveSources?: boolean
 }
 
 export async function saveDiscoveryResult(
@@ -39,8 +40,10 @@ export async function saveDiscoveryResult(
   await mkdirp(root)
 
   await saveDiscoveredJson(root, results, config, blockNumber, options)
-  await saveSources(root, results, options)
   await saveFlatSources(root, results, logger, options)
+  if (options.saveSources) {
+    await saveSources(root, results, options)
+  }
 }
 
 async function saveDiscoveredJson(

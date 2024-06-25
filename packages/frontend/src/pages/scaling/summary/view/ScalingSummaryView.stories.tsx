@@ -2031,7 +2031,7 @@ const meta = {
           sequencerFailure: {
             sentiment: 'good',
             description:
-              'Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for  for more than 7d, users can use the exit hatch to withdraw their funds.',
+              'Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for more than 7d, users can use the exit hatch to withdraw their funds.',
             warning: undefined,
             value: 'Force via L1',
           },

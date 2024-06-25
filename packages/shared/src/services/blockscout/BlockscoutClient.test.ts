@@ -22,7 +22,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await blockscoutClient.call('mod', 'act', { foo: 'bar', baz: '123' })
@@ -38,7 +37,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -56,7 +54,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -74,7 +71,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejected()
@@ -91,7 +87,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const result = await blockscoutClient.call('mod', 'act', {})
@@ -113,7 +108,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       await expect(blockscoutClient.call('mod', 'act', {})).toBeRejectedWith(
@@ -140,7 +134,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
@@ -183,7 +176,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        new UnixTime(0),
         ChainId.ETHEREUM,
       )
       const blockNumber =
@@ -232,7 +224,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -276,7 +267,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -319,7 +309,6 @@ describe(BlockscoutClient.name, () => {
       const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        timestamp.add(-40, 'minutes'),
         ChainId.ETHEREUM,
       )
 
@@ -342,82 +331,41 @@ describe(BlockscoutClient.name, () => {
       )
     })
 
-    it('tries to find blockNumber until minTimestamp then throw', async () => {
+    it('tries to find blockNumber until MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP then throw', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
-      const result = 1234
+      const NOT_OK = new Response(
+        JSON.stringify({
+          status: '1',
+          message: 'NOTOK',
+          result: `Error! Block does not exist`,
+        }),
+      )
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! Block does not exist`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! Block does not exist`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'NOTOK',
-                result: `Error! Block does not exist`,
-              }),
-            ),
-          )
-          .resolvesToOnce(
-            new Response(
-              JSON.stringify({
-                status: '1',
-                message: 'OK',
-                result: `${result}`,
-              }),
-            ),
-          ),
+          // MAXIMUM_CALLS_FOR_BLOCK_TIMESTAMP = 10
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK)
+          .resolvesToOnce(NOT_OK),
       })
 
       const blockscoutLikeClient = new BlockscoutClient(
         httpClient,
         API_URL,
-        timestamp.add(-2, 'minutes'),
         ChainId.ETHEREUM,
       )
 
       await expect(() =>
         blockscoutLikeClient.getBlockNumberAtOrBefore(timestamp),
-      ).toBeRejectedWith('Could not fetch block number')
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        1,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before`,
-        expect.anything(),
-      )
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        2,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-1, 'minutes')
-          .toNumber()}&closest=before`,
-        expect.anything(),
-      )
-
-      expect(httpClient.fetch).toHaveBeenNthCalledWith(
-        3,
-        `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
-          .add(-2, 'minutes')
-          .toNumber()}&closest=before`,
-        expect.anything(),
-      )
+      ).toBeRejected()
     })
   })
 })

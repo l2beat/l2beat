@@ -46,6 +46,7 @@ export async function runDiscovery(
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
+    saveSources: config.saveSources,
   })
 
   if (config.project.startsWith('shared-')) {

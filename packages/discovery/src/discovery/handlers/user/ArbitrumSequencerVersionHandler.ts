@@ -5,6 +5,7 @@ import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
+import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumSequencerVersionDefinition = z.infer<
@@ -86,12 +87,14 @@ export class ArbitrumSequencerVersionHandler implements Handler {
           0,
           currentBlockNumber - blockStep,
         )}.${currentBlockNumber}`,
-        ({ eventProvider }) => {
-          return eventProvider.getLogs({
-            address: address.toString(),
-            topics: [abi.getEventTopic('SequencerBatchDelivered')],
-            fromBlock: Math.max(0, currentBlockNumber - blockStep),
-            toBlock: currentBlockNumber,
+        async ({ eventProvider }) => {
+          return await rpcWithRetries(async () => {
+            return await eventProvider.getLogs({
+              address: address.toString(),
+              topics: [abi.getEventTopic('SequencerBatchDelivered')],
+              fromBlock: Math.max(0, currentBlockNumber - blockStep),
+              toBlock: currentBlockNumber,
+            })
           })
         },
       )

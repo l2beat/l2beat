@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xea57e846c103c00f51719d02e72fe54941b10b02
+
+# Diff at Mon, 24 Jun 2024 10:18:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@b54e27671cccd831f2f6414fffe3bd374840c6b7 block: 213445891
+- current block number: 225188961
+
+## Description
+
+Scheduled SC threshold increase is executed.
+
+## Watched changes
+
+```diff
+    contract SC7 (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      upgradeability.threshold:
+-        "7 of 12 (58%)"
++        "9 of 12 (75%)"
+      values.getThreshold:
+-        7
++        9
+    }
+```
+
 Generated with discovered.json: 0xedcb031a30b4bdc43edf5e8acb9624b656a40898
 
 # Diff at Tue, 21 May 2024 06:31:07 GMT:

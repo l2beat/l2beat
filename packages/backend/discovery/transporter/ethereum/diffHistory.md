@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6159a6e8b6814a26839e667ca4a5cceb65e79fee
+
+# Diff at Mon, 24 Jun 2024 10:03:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@b54e27671cccd831f2f6414fffe3bd374840c6b7 block: 20133449
+- current block number: 20160808
+
+## Description
+
+A new offramp config is added to the LINK token pool on Ethereum.
+The pool is already present in Transporter ecrows, although TVL is currently disabled for Transporter.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4) {
+    +++ description: None
+      values.getOffRamps.5:
++        "0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599"
+    }
+```
+
 Generated with discovered.json: 0xef91d62a61251a159c367651354c03291f9e2a51
 
 # Diff at Thu, 20 Jun 2024 14:11:06 GMT:

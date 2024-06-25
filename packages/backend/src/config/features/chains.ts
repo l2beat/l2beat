@@ -71,7 +71,7 @@ export function getChainTvlConfig(
         ],
         DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
-      blockNumberProviderConfig: chainConfig.explorerApi
+      blockTimestampClientConfig: chainConfig.explorerApi
         ? chainConfig.explorerApi.type === 'etherscan'
           ? {
               type: chainConfig.explorerApi.type,

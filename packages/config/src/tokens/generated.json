@@ -7261,25 +7261,6 @@
       "supply": "zero"
     },
     {
-      "id": "arbitrum:weeth-wrapped-eeth",
-      "name": "Wrapped eETH",
-      "coingeckoId": "wrapped-eeth",
-      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
-      "symbol": "weETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1701625072,
-      "coingeckoListingTimestamp": 1701648000,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
-      "chainId": 42161,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
-      }
-    },
-    {
       "id": "arbitrum:wsteth-wrapped-liquid-staked-ether-2.0",
       "name": "Wrapped liquid staked Ether 2.0",
       "coingeckoId": "wrapped-steth",

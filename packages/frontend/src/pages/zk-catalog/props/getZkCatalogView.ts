@@ -5,7 +5,7 @@ import { Project } from '../../../utils/zk-catalog/types'
 import { ZkCatalogViewProps } from '../view/ZkCatalogView'
 
 export const ZK_CATALOG_ASK_FOR_VERIFICATION_LINK =
-  'https://forms.gle/Ga3qpd5qnminA5rz5'
+  'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25'
 
 export function getZkCatalogView(
   projects: Project[],

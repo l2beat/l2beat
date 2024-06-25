@@ -58,6 +58,9 @@ export function Verifiers(props: Props) {
               <VerifiedCell
                 verified={item.verified}
                 askForVerificationLink={props.askForVerificationLink}
+                performedBy={
+                  item.verified !== 'no' ? item.performedBy : undefined
+                }
               />
             </td>
             <td className="hidden pr-4 md:table-cell">
