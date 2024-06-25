@@ -35,7 +35,7 @@ import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
-import { gravity } from './gravity'
+import { galxegravity } from './galxegravity'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -121,6 +121,7 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
+import { gravity } from '../bridges/gravity'
 export * from './common'
 export * from './types'
 
@@ -162,7 +163,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   gluon,
-  gravity,
+  galxegravity,
   grvt,
   hermez,
   hychain,

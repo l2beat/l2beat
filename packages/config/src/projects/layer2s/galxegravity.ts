@@ -1,13 +1,13 @@
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const gravity: Layer2 = upcomingL2({
+export const galxegravity: Layer2 = upcomingL2({
   id: 'gravity',
   display: {
     name: 'Gravity',
-    slug: 'gravity',
+    slug: 'galxegravity',
     description:
-      'Gravity is an upcoming Layer 2 by Galxe team, built on the Orbit stack aiming to evolve into Layer 1 PoS chain',
+      'Gravity is an upcoming Layer 2 by Galxe team, built on the Orbit stack aiming to evolve into Layer 1 PoS chain.',
     purposes: ['Social'],
     category: 'Optimium',
     provider: 'Arbitrum',
