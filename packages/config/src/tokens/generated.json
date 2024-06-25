@@ -2476,6 +2476,21 @@
       "supply": "zero"
     },
     {
+      "id": "msweth-msweth",
+      "name": "mswETH",
+      "coingeckoId": "eigenpie-sweth",
+      "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678",
+      "symbol": "mswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706523719,
+      "coingeckoListingTimestamp": 1713484800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37167/large/mswETH.png?1713507053",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "mute-mute.io",
       "name": "Mute.io",
       "coingeckoId": "mute",
@@ -4136,6 +4151,21 @@
       "coingeckoListingTimestamp": 1600300800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "unieth-universal-eth",
+      "name": "Universal ETH",
+      "coingeckoId": "universal-eth",
+      "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+      "symbol": "uniETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1664425175,
+      "coingeckoListingTimestamp": 1700092800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
