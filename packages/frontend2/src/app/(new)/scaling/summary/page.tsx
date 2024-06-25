@@ -25,6 +25,9 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { SummaryLayer3sTable } from './_components/table/layer3s/summary-layer3s-table'
 import { SummaryUpcomingTable } from './_components/table/upcoming/summary-upcoming-table'
 import { SummaryArchivedTable } from './_components/table/archived.tsx/summary-archived.table'
+import { ScalingLegend } from './_components/table/layer2s/legend'
+import { OtherSites } from '~/app/_components/other-sites'
+import { About } from '~/app/_components/about'
 
 export default async function Page() {
   const tvl = await getTvl()
@@ -42,7 +45,7 @@ export default async function Page() {
   const archivedProjects = layer2s.filter((item) => item.isArchived)
 
   return (
-    <div>
+    <div className="mb-20">
       <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
       <HorizontalSeparator className="my-4 md:my-6" />
       <Tabs defaultValue="layer2s" className="w-full">
@@ -73,6 +76,7 @@ export default async function Page() {
 
         <TabsContent value="layer2s">
           <SummaryLayer2sTable items={layer2sProjects} />
+          <ScalingLegend />
         </TabsContent>
         <TabsContent value="layer3s">
           <SummaryLayer3sTable items={layer3sProjects} />
@@ -84,6 +88,8 @@ export default async function Page() {
           <SummaryArchivedTable items={archivedProjects} />
         </TabsContent>
       </Tabs>
+      <OtherSites />
+      <About />
     </div>
   )
 }

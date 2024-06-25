@@ -19,8 +19,8 @@ export function SummaryLayer2sTable({ items }: Props) {
     initialState: {
       sorting: [
         {
-          id: 'total',
-          desc: true,
+          id: '#',
+          desc: false,
         },
       ],
     },

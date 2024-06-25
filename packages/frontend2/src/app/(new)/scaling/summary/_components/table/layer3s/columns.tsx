@@ -89,6 +89,7 @@ export const columns = [
 
       return <TotalCell data={value} />
     },
+    sortUndefined: 'last',
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
