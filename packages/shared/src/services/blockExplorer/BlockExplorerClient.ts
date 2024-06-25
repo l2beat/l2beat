@@ -16,8 +16,7 @@ interface BlockscoutOptions {
   url: string
 }
 
-// TODO: rename to BlockTimestampClient
-export class EtherscanClient {
+export class BlockExplorerClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 60,
   })
@@ -35,7 +34,7 @@ export class EtherscanClient {
     services: { httpClient: HttpClient; logger: Logger },
     options: EtherscanOptions | BlockscoutOptions,
   ) {
-    return new EtherscanClient(services.httpClient, options)
+    return new BlockExplorerClient(services.httpClient, options)
   }
 
   // There is a case when there is not enough activity on a given chain

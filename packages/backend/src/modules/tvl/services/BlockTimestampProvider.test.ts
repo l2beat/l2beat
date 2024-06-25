@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EtherscanClient } from '@l2beat/shared'
+import { BlockExplorerClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -11,12 +11,12 @@ describe(BlockTimestampProvider.name, () => {
     () => {
       it('fetches using provider if configured', async () => {
         const BLOCK_NUMBER = 1
-        const provider = mockObject<EtherscanClient>({
+        const explorerClient = mockObject<BlockExplorerClient>({
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
 
         const service = new BlockTimestampProvider({
-          blockTimestampClient: provider,
+          blockExplorerClient: explorerClient,
           rpcClient: mockObject<RpcClient>({}),
           logger: Logger.SILENT,
         })
@@ -26,9 +26,9 @@ describe(BlockTimestampProvider.name, () => {
         )
 
         expect(blockNumber).toEqual(BLOCK_NUMBER)
-        expect(provider.getBlockNumberAtOrBefore).toHaveBeenOnlyCalledWith(
-          UnixTime.ZERO,
-        )
+        expect(
+          explorerClient.getBlockNumberAtOrBefore,
+        ).toHaveBeenOnlyCalledWith(UnixTime.ZERO)
       })
 
       it('fetches using RPC if provider not defined', async () => {
@@ -38,7 +38,7 @@ describe(BlockTimestampProvider.name, () => {
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
         const service = new BlockTimestampProvider({
-          blockTimestampClient: undefined,
+          blockExplorerClient: undefined,
           rpcClient: rpc,
           logger: Logger.SILENT,
         })
@@ -56,14 +56,14 @@ describe(BlockTimestampProvider.name, () => {
       it('fetches using RPC if there is an issue with provider', async () => {
         const BLOCK_NUMBER = 1
 
-        const provider = mockObject<EtherscanClient>({
+        const explorerClient = mockObject<BlockExplorerClient>({
           getBlockNumberAtOrBefore: mockFn().throwsOnce('ERROR'),
         })
         const rpc = mockObject<RpcClient>({
           getBlockNumberAtOrBefore: async () => BLOCK_NUMBER,
         })
         const service = new BlockTimestampProvider({
-          blockTimestampClient: provider,
+          blockExplorerClient: explorerClient,
           rpcClient: rpc,
           logger: Logger.SILENT,
         })
